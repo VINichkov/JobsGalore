@@ -1,0 +1,23 @@
+h1 Listing industryresumes
+
+table
+  thead
+    tr
+      th Industry
+      th Resume
+      th
+      th
+      th
+
+  tbody
+    - @industryresumes.each do |industryresume|
+      tr
+        td = industryresume.industry
+        td = industryresume.resume
+        td = link_to 'Show', industryresume
+        td = link_to 'Edit', edit_industryresume_path(industryresume)
+        td = link_to 'Destroy', industryresume, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Industryresume', new_industryresume_path

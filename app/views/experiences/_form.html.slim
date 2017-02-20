@@ -1,0 +1,33 @@
+= form_for @experience do |f|
+  - if @experience.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@experience.errors.count, "error")} prohibited this experience from being saved:"
+      ul
+        - @experience.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :employer
+    = f.text_field :employer
+  .field
+    = f.label :location
+    = f.text_field :location
+  .field
+    = f.label :site
+    = f.text_field :site
+  .field
+    = f.label :titlejob
+    = f.text_field :titlejob
+  .field
+    = f.label :datestart
+    = f.date_select :datestart
+  .field
+    = f.label :dateend
+    = f.date_select :dateend
+  .field
+    = f.label :description
+    = f.text_field :description
+  .field
+    = f.label :resume
+    = f.text_field :resume
+  .actions = f.submit

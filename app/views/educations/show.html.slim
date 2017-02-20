@@ -1,0 +1,9 @@
+p#notice = notice
+
+p
+  strong Education:
+  = @education.education
+
+= link_to 'Edit', edit_education_path(@education)
+'|
+= link_to 'Back', educations_path

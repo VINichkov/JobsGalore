@@ -1,0 +1,57 @@
+= form_for @job do |f|
+  - if @job.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@job.errors.count, "error")} prohibited this job from being saved:"
+      ul
+        - @job.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    = f.label :locations
+    = f.text_field :locations
+  .field
+    = f.label :salarymin
+    = f.text_field :salarymin
+  .field
+    = f.label :salarymax
+    = f.text_field :salarymax
+  .field
+    = f.label :permanent
+    = f.check_box :permanent
+  .field
+    = f.label :casual
+    = f.check_box :casual
+  .field
+    = f.label :temp
+    = f.check_box :temp
+  .field
+    = f.label :contract
+    = f.check_box :contract
+  .field
+    = f.label :fulltime
+    = f.check_box :fulltime
+  .field
+    = f.label :parttime
+    = f.check_box :parttime
+  .field
+    = f.label :flextime
+    = f.check_box :flextime
+  .field
+    = f.label :remote
+    = f.check_box :remote
+  .field
+    = f.label :description
+    = f.check_box :description
+  .field
+    = f.label :companies
+    = f.text_field :companies
+  .field
+    = f.label :education
+    = f.text_field :education
+  .field
+    = f.label :career
+    = f.text_field :career
+  .actions = f.submit

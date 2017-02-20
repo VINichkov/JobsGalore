@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  locations: one
+  salarymin: 1.5
+  salarymax: 1.5
+  permanent: false
+  casual: false
+  temp: false
+  contract: false
+  fulltime: false
+  parttime: false
+  flextime: false
+  remote: false
+  description: false
+  companies: one
+  education: one
+  career: MyString
+
+two:
+  title: MyString
+  locations: two
+  salarymin: 1.5
+  salarymax: 1.5
+  permanent: false
+  casual: false
+  temp: false
+  contract: false
+  fulltime: false
+  parttime: false
+  flextime: false
+  remote: false
+  description: false
+  companies: two
+  education: two
+  career: MyString

@@ -1,0 +1,2 @@
+class Propert < ApplicationRecord
+end

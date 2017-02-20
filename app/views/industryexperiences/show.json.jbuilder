@@ -1,0 +1,1 @@
+json.partial! "industryexperiences/industryexperience", industryexperience: @industryexperience

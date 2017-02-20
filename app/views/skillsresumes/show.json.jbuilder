@@ -1,0 +1,1 @@
+json.partial! "skillsresumes/skillsresume", skillsresume: @skillsresume

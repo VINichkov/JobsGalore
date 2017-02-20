@@ -1,0 +1,23 @@
+h1 Listing responsibles
+
+table
+  thead
+    tr
+      th Company
+      th Client
+      th
+      th
+      th
+
+  tbody
+    - @responsibles.each do |responsible|
+      tr
+        td = responsible.company
+        td = responsible.client
+        td = link_to 'Show', responsible
+        td = link_to 'Edit', edit_responsible_path(responsible)
+        td = link_to 'Destroy', responsible, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Responsible', new_responsible_path

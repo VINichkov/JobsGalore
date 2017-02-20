@@ -1,0 +1,1 @@
+json.array! @industryresumes, partial: 'industryresumes/industryresume', as: :industryresume

@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @skillsjob.name
+p
+  strong Level:
+  = @skillsjob.level
+p
+  strong Job:
+  = @skillsjob.job
+
+= link_to 'Edit', edit_skillsjob_path(@skillsjob)
+'|
+= link_to 'Back', skillsjobs_path

@@ -1,0 +1,35 @@
+h1 Listing companies
+
+table
+  thead
+    tr
+      th Name
+      th Size
+      th Location
+      th Site
+      th Logo
+      th Recrutmentagency
+      th Description
+      th Realy
+      th
+      th
+      th
+
+  tbody
+    - @companies.each do |company|
+      tr
+        td = company.name
+        td = company.size.size
+        td = company.location.suburb
+        td = company.site
+        td = company.logo
+        td = company.recrutmentagency
+        td = company.description
+        td = company.realy
+        td = link_to 'Show', company
+        td = link_to 'Edit', edit_company_path(company)
+        td = link_to 'Destroy', company, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Company', new_company_path

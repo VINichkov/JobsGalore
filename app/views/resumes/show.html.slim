@@ -1,0 +1,42 @@
+p#notice = notice
+
+p
+  strong Desiredjobtitle:
+  = @resume.desiredjobtitle
+p
+  strong Salary:
+  = @resume.salary
+p
+  strong Permanent:
+  = @resume.permanent
+p
+  strong Casual:
+  = @resume.casual
+p
+  strong Temp:
+  = @resume.temp
+p
+  strong Contract:
+  = @resume.contract
+p
+  strong Fulltime:
+  = @resume.fulltime
+p
+  strong Parttime:
+  = @resume.parttime
+p
+  strong Flextime:
+  = @resume.flextime
+p
+  strong Remote:
+  = @resume.remote
+p
+  strong Abouteme:
+  = @resume.abouteme
+p
+  strong Client:
+  = @resume.client
+
+= link_to 'Edit', edit_resume_path(@resume)
+'|
+= link_to 'Back', resumes_path

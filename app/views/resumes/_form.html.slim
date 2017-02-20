@@ -1,0 +1,45 @@
+= form_for @resume do |f|
+  - if @resume.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@resume.errors.count, "error")} prohibited this resume from being saved:"
+      ul
+        - @resume.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :desiredjobtitle
+    = f.text_field :desiredjobtitle
+  .field
+    = f.label :salary
+    = f.text_field :salary
+  .field
+    = f.label :permanent
+    = f.check_box :permanent
+  .field
+    = f.label :casual
+    = f.check_box :casual
+  .field
+    = f.label :temp
+    = f.check_box :temp
+  .field
+    = f.label :contract
+    = f.check_box :contract
+  .field
+    = f.label :fulltime
+    = f.check_box :fulltime
+  .field
+    = f.label :parttime
+    = f.check_box :parttime
+  .field
+    = f.label :flextime
+    = f.check_box :flextime
+  .field
+    = f.label :remote
+    = f.check_box :remote
+  .field
+    = f.label :abouteme
+    = f.text_field :abouteme
+  .field
+    = f.label :client
+    = f.text_field :client
+  .actions = f.submit

@@ -1,0 +1,23 @@
+h1 Listing industrycompanies
+
+table
+  thead
+    tr
+      th Industry
+      th Company
+      th
+      th
+      th
+
+  tbody
+    - @industrycompanies.each do |industrycompany|
+      tr
+        td = industrycompany.industry
+        td = industrycompany.company
+        td = link_to 'Show', industrycompany
+        td = link_to 'Edit', edit_industrycompany_path(industrycompany)
+        td = link_to 'Destroy', industrycompany, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Industrycompany', new_industrycompany_path

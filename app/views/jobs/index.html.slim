@@ -1,0 +1,51 @@
+h1 Listing jobs
+
+table
+  thead
+    tr
+      th Title
+      th Locations
+      th Salarymin
+      th Salarymax
+      th Permanent
+      th Casual
+      th Temp
+      th Contract
+      th Fulltime
+      th Parttime
+      th Flextime
+      th Remote
+      th Description
+      th Companies
+      th Education
+      th Career
+      th
+      th
+      th
+
+  tbody
+    - @jobs.each do |job|
+      tr
+        td = job.title
+        td = job.locations
+        td = job.salarymin
+        td = job.salarymax
+        td = job.permanent
+        td = job.casual
+        td = job.temp
+        td = job.contract
+        td = job.fulltime
+        td = job.parttime
+        td = job.flextime
+        td = job.remote
+        td = job.description
+        td = job.companies
+        td = job.education
+        td = job.career
+        td = link_to 'Show', job
+        td = link_to 'Edit', edit_job_path(job)
+        td = link_to 'Destroy', job, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Job', new_job_path

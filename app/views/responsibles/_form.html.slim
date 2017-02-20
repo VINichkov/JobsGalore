@@ -1,0 +1,15 @@
+= form_for @responsible do |f|
+  - if @responsible.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@responsible.errors.count, "error")} prohibited this responsible from being saved:"
+      ul
+        - @responsible.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :company
+    = f.text_field :company
+  .field
+    = f.label :client
+    = f.text_field :client
+  .actions = f.submit

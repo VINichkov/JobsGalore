@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Industry:
+  = @industrycompany.industry
+p
+  strong Company:
+  = @industrycompany.company
+
+= link_to 'Edit', edit_industrycompany_path(@industrycompany)
+'|
+= link_to 'Back', industrycompanies_path

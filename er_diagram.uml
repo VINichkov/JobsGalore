@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>91e1c278-6269-4e63-9f71-67dbe903abe7</OriginalElement>
+  <nodes>
+    <node x="1403.5208333333335" y="750.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.educations</node>
+    <node x="108.25" y="1642.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industryexperiences</node>
+    <node x="1079.8125" y="1630.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.skillsresumes</node>
+    <node x="258.0" y="1852.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.ar_internal_metadata</node>
+    <node x="1521.0209770114943" y="1249.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.levels</node>
+    <node x="1491.8125" y="1630.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.skillsjobs</node>
+    <node x="396.45000000000005" y="1237.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industries</node>
+    <node x="760.1459770114943" y="1249.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.responsibles</node>
+    <node x="489.0" y="1852.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.schema_migrations</node>
+    <node x="0.0" y="1852.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.properts</node>
+    <node x="1752.5625" y="1630.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.languageresumes</node>
+    <node x="565.2584770114943" y="1642.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industrycompanies</node>
+    <node x="1028.0209770114943" y="1081.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.jobs</node>
+    <node x="935.4584770114943" y="666.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.companies</node>
+    <node x="837.9584770114943" y="1642.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industryjobs</node>
+    <node x="0.0" y="1177.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.experiences</node>
+    <node x="1035.5625" y="343.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.sizes</node>
+    <node x="1856.5625" y="1261.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.languages</node>
+    <node x="567.7" y="0.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.locations</node>
+    <node x="359.8834770114943" y="618.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.resumes</node>
+    <node x="493.38347701149434" y="247.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.clients</node>
+    <node x="321.25" y="1642.0">91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industryresumes</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industryresumes" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.resumes">
+      <point x="-48.25" y="-76.5" />
+      <point x="369.5" y="1600.0" />
+      <point x="349.25" y="1600.0" />
+      <point x="349.25" y="1061.0" />
+      <point x="507.2584770114943" y="1061.0" />
+      <point x="-49.125" y="196.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industryresumes" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industries">
+      <point x="48.25" y="-76.5" />
+      <point x="466.0" y="1610.0" />
+      <point x="502.95000000000005" y="1610.0" />
+      <point x="0.0" y="88.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industryexperiences" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industries">
+      <point x="48.25" y="-76.5" />
+      <point x="253.0" y="1610.0" />
+      <point x="460.35" y="1610.0" />
+      <point x="-42.60000000000002" y="88.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.resumes" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.clients">
+      <point x="0.0" y="-196.5" />
+      <point x="556.3834770114943" y="593.0" />
+      <point x="576.6334770114943" y="593.0" />
+      <point x="-83.25" y="160.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industryjobs" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.jobs">
+      <point x="48.25" y="-76.5" />
+      <point x="982.7084770114943" y="1610.0" />
+      <point x="1146.2709770114943" y="1610.0" />
+      <point x="-118.25" y="244.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.experiences" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.resumes">
+      <point x="78.25" y="-148.5" />
+      <point x="234.75" y="1051.0" />
+      <point x="409.0084770114943" y="1051.0" />
+      <point x="-147.375" y="196.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.languageresumes" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.languages">
+      <point x="71.0" y="-88.5" />
+      <point x="1930.0625" y="1610.0" />
+      <point x="1943.0625" y="1610.0" />
+      <point x="0.0" y="64.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.languageresumes" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.resumes">
+      <point x="0.0" y="-88.5" />
+      <point x="1859.0625" y="1610.0" />
+      <point x="1846.0625" y="1610.0" />
+      <point x="1846.0625" y="1031.0" />
+      <point x="703.7584770114943" y="1031.0" />
+      <point x="147.375" y="196.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.companies" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.sizes">
+      <point x="78.25" y="-148.5" />
+      <point x="1170.2084770114943" y="593.0" />
+      <point x="1122.0625" y="593.0" />
+      <point x="0.0" y="64.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.responsibles" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.companies">
+      <point x="48.25" y="-76.5" />
+      <point x="904.8959770114943" y="1051.0" />
+      <point x="987.625143678161" y="1051.0" />
+      <point x="-104.33333333333337" y="148.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.jobs" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.locations">
+      <point x="0.0" y="-244.5" />
+      <point x="1264.5209770114943" y="1061.0" />
+      <point x="1393.0208333333335" y="1061.0" />
+      <point x="1393.0208333333335" y="217.0" />
+      <point x="759.4000000000001" y="217.0" />
+      <point x="85.20000000000005" y="88.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industrycompanies" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.companies">
+      <point x="48.25" y="-76.5" />
+      <point x="710.0084770114943" y="1610.0" />
+      <point x="975.3959770114943" y="1610.0" />
+      <point x="975.3959770114943" y="1061.0" />
+      <point x="1091.9584770114943" y="1061.0" />
+      <point x="0.0" y="148.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.jobs" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.educations">
+      <point x="157.66666666666674" y="-244.5" />
+      <point x="1422.187643678161" y="1061.0" />
+      <point x="1490.0208333333335" y="1061.0" />
+      <point x="0.0" y="64.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.companies" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.locations">
+      <point x="-78.25" y="-148.5" />
+      <point x="1013.7084770114943" y="593.0" />
+      <point x="1025.0625" y="593.0" />
+      <point x="1025.0625" y="227.0" />
+      <point x="716.8" y="227.0" />
+      <point x="42.60000000000002" y="88.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.clients" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.locations">
+      <point x="0.0" y="-160.5" />
+      <point x="659.8834770114943" y="227.0" />
+      <point x="674.2" y="227.0" />
+      <point x="0.0" y="88.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industryexperiences" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.experiences">
+      <point x="-48.25" y="-76.5" />
+      <point x="0.0" y="148.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industrycompanies" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industries">
+      <point x="-48.25" y="-76.5" />
+      <point x="613.5084770114943" y="1610.0" />
+      <point x="545.5500000000001" y="1610.0" />
+      <point x="42.60000000000002" y="88.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.skillsresumes" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.levels">
+      <point x="53.25" y="-88.5" />
+      <point x="1239.5625" y="1610.0" />
+      <point x="1553.187643678161" y="1610.0" />
+      <point x="-64.33333333333326" y="76.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.responsibles" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.clients">
+      <point x="-48.25" y="-76.5" />
+      <point x="808.3959770114943" y="1041.0" />
+      <point x="924.9584770114943" y="1041.0" />
+      <point x="924.9584770114943" y="593.0" />
+      <point x="743.1334770114943" y="593.0" />
+      <point x="83.25" y="160.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industryjobs" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industries">
+      <point x="-48.25" y="-76.5" />
+      <point x="886.2084770114943" y="1600.0" />
+      <point x="588.1500000000001" y="1600.0" />
+      <point x="85.20000000000005" y="88.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.skillsjobs" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.levels">
+      <point x="53.25" y="-88.5" />
+      <point x="1651.5625" y="1610.0" />
+      <point x="1617.5209770114943" y="1610.0" />
+      <point x="0.0" y="76.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.jobs" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.companies">
+      <point x="-157.66666666666652" y="-244.5" />
+      <point x="1106.8543103448278" y="1061.0" />
+      <point x="1196.2918103448276" y="1061.0" />
+      <point x="104.33333333333326" y="148.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industries" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.industries">
+      <point x="-85.20000000000005" y="88.5" />
+      <point x="417.75" y="1434.0" />
+      <point x="376.45000000000005" y="1434.0" />
+      <point x="376.45000000000005" y="1325.5" />
+      <point x="-106.5" y="-0.0" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.locations" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.locations">
+      <point x="-85.19999999999999" y="88.5" />
+      <point x="589.0" y="197.0" />
+      <point x="547.7" y="197.0" />
+      <point x="547.7" y="88.5" />
+      <point x="-106.5" y="-0.0" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.skillsjobs" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.jobs">
+      <point x="-53.25" y="-88.5" />
+      <point x="1545.0625" y="1600.0" />
+      <point x="1382.7709770114943" y="1600.0" />
+      <point x="118.25" y="244.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.skillsresumes" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.resumes">
+      <point x="-53.25" y="-88.5" />
+      <point x="1133.0625" y="1590.0" />
+      <point x="700.0834770114943" y="1590.0" />
+      <point x="700.0834770114943" y="1061.0" />
+      <point x="605.5084770114943" y="1061.0" />
+      <point x="49.125" y="196.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.languageresumes" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.levels">
+      <point x="-71.0" y="-88.5" />
+      <point x="1788.0625" y="1610.0" />
+      <point x="1681.8543103448276" y="1610.0" />
+      <point x="64.33333333333326" y="76.5" />
+    </edge>
+    <edge source="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.experiences" target="91e1c278-6269-4e63-9f71-67dbe903abe7.TABLE:mongo_development.public.locations">
+      <point x="-78.25" y="-148.5" />
+      <point x="78.25" y="227.0" />
+      <point x="631.5999999999999" y="227.0" />
+      <point x="-42.60000000000002" y="88.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.24938994631527575" x="1015.6105675146771" y="874.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+  </Categories>
+</Diagram>
+

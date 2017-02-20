@@ -1,0 +1,25 @@
+h1 Listing languageresumes
+
+table
+  thead
+    tr
+      th Resume
+      th Language
+      th Level
+      th
+      th
+      th
+
+  tbody
+    - @languageresumes.each do |languageresume|
+      tr
+        td = languageresume.resume
+        td = languageresume.language
+        td = languageresume.level
+        td = link_to 'Show', languageresume
+        td = link_to 'Edit', edit_languageresume_path(languageresume)
+        td = link_to 'Destroy', languageresume, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Languageresume', new_languageresume_path

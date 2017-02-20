@@ -1,0 +1,54 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @job.title
+p
+  strong Locations:
+  = @job.locations
+p
+  strong Salarymin:
+  = @job.salarymin
+p
+  strong Salarymax:
+  = @job.salarymax
+p
+  strong Permanent:
+  = @job.permanent
+p
+  strong Casual:
+  = @job.casual
+p
+  strong Temp:
+  = @job.temp
+p
+  strong Contract:
+  = @job.contract
+p
+  strong Fulltime:
+  = @job.fulltime
+p
+  strong Parttime:
+  = @job.parttime
+p
+  strong Flextime:
+  = @job.flextime
+p
+  strong Remote:
+  = @job.remote
+p
+  strong Description:
+  = @job.description
+p
+  strong Companies:
+  = @job.companies
+p
+  strong Education:
+  = @job.education
+p
+  strong Career:
+  = @job.career
+
+= link_to 'Edit', edit_job_path(@job)
+'|
+= link_to 'Back', jobs_path

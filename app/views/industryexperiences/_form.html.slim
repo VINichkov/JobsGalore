@@ -1,0 +1,15 @@
+= form_for @industryexperience do |f|
+  - if @industryexperience.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@industryexperience.errors.count, "error")} prohibited this industryexperience from being saved:"
+      ul
+        - @industryexperience.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :industry
+    = f.text_field :industry
+  .field
+    = f.label :experience
+    = f.text_field :experience
+  .actions = f.submit

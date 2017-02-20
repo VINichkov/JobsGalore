@@ -1,0 +1,2 @@
+json.extract! resume, :id, :desiredjobtitle, :salary, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :abouteme, :client_id, :created_at, :updated_at
+json.url resume_url(resume, format: :json)

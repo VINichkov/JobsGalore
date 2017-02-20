@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Industry:
+  = @industryexperience.industry
+p
+  strong Experience:
+  = @industryexperience.experience
+
+= link_to 'Edit', edit_industryexperience_path(@industryexperience)
+'|
+= link_to 'Back', industryexperiences_path

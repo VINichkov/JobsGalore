@@ -1,0 +1,23 @@
+h1 Listing industryjobs
+
+table
+  thead
+    tr
+      th Industry
+      th Job
+      th
+      th
+      th
+
+  tbody
+    - @industryjobs.each do |industryjob|
+      tr
+        td = industryjob.industry
+        td = industryjob.job
+        td = link_to 'Show', industryjob
+        td = link_to 'Edit', edit_industryjob_path(industryjob)
+        td = link_to 'Destroy', industryjob, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Industryjob', new_industryjob_path

@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @level.name
+p
+  strong Language:
+  = @level.language
+
+= link_to 'Edit', edit_level_path(@level)
+'|
+= link_to 'Back', levels_path

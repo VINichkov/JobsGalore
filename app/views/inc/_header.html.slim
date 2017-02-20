@@ -1,0 +1,34 @@
+.container-fluid.header
+  .container
+    h1
+      .circle
+        span.black_text
+          | HeadHanter.
+        span.white_text
+          | .com.au
+
+nav.navbar.navbar-static-top.navbar-inverse[data-spy="affix" data-offset-top="75"]
+  .container
+    a.navbar-brand.active
+      |Проект
+    ul.nav.navbar-nav
+      li.nav-item
+        a.nav-link
+          |One
+      li.nav-item
+        a.nav-link
+          |Two
+      li.nav-item.dropdown
+        a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
+          |Companies
+          b.caret
+        ul.dropdown-menu
+          li
+            a[href= '/by_category/1']
+              |Companies by category
+    .navbar-form[role = ''search]
+      .input-group
+        input.form-control[placeholder="Search" name="search" type="text" ]
+        .input-group-btn
+          button.btn.btn-default[type="submit"]
+            i.glyphicon.glyphicon-search

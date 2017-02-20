@@ -1,0 +1,23 @@
+h1 Listing industryexperiences
+
+table
+  thead
+    tr
+      th Industry
+      th Experience
+      th
+      th
+      th
+
+  tbody
+    - @industryexperiences.each do |industryexperience|
+      tr
+        td = industryexperience.industry
+        td = industryexperience.experience
+        td = link_to 'Show', industryexperience
+        td = link_to 'Edit', edit_industryexperience_path(industryexperience)
+        td = link_to 'Destroy', industryexperience, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Industryexperience', new_industryexperience_path

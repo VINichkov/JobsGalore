@@ -1,0 +1,18 @@
+= form_for @skillsjob do |f|
+  - if @skillsjob.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@skillsjob.errors.count, "error")} prohibited this skillsjob from being saved:"
+      ul
+        - @skillsjob.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :level
+    = f.text_field :level
+  .field
+    = f.label :job
+    = f.text_field :job
+  .actions = f.submit

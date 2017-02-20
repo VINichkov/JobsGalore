@@ -1,0 +1,30 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @company.name
+p
+  strong Size:
+  = @company.size
+p
+  strong Location:
+  = @company.location
+p
+  strong Site:
+  = @company.site
+p
+  strong Logo:
+  = @company.logo
+p
+  strong Recrutmentagency:
+  = @company.recrutmentagency
+p
+  strong Description:
+  = @company.description
+p
+  strong Realy:
+  = @company.realy
+
+= link_to 'Edit', edit_company_path(@company)
+'|
+= link_to 'Back', companies_path

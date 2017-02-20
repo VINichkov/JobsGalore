@@ -1,0 +1,2 @@
+json.extract! job, :id, :title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :career, :created_at, :updated_at
+json.url job_url(job, format: :json)

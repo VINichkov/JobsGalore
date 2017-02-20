@@ -1,0 +1,15 @@
+= form_for @industryresume do |f|
+  - if @industryresume.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@industryresume.errors.count, "error")} prohibited this industryresume from being saved:"
+      ul
+        - @industryresume.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :industry
+    = f.text_field :industry
+  .field
+    = f.label :resume
+    = f.text_field :resume
+  .actions = f.submit

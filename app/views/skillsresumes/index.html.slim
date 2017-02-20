@@ -1,0 +1,25 @@
+h1 Listing skillsresumes
+
+table
+  thead
+    tr
+      th Name
+      th Level
+      th Resume
+      th
+      th
+      th
+
+  tbody
+    - @skillsresumes.each do |skillsresume|
+      tr
+        td = skillsresume.name
+        td = skillsresume.level
+        td = skillsresume.resume
+        td = link_to 'Show', skillsresume
+        td = link_to 'Edit', edit_skillsresume_path(skillsresume)
+        td = link_to 'Destroy', skillsresume, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Skillsresume', new_skillsresume_path

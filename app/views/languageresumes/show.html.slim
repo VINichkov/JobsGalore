@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Resume:
+  = @languageresume.resume
+p
+  strong Language:
+  = @languageresume.language
+p
+  strong Level:
+  = @languageresume.level
+
+= link_to 'Edit', edit_languageresume_path(@languageresume)
+'|
+= link_to 'Back', languageresumes_path

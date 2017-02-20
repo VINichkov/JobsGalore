@@ -1,0 +1,2 @@
+module LanguageresumesHelper
+end
