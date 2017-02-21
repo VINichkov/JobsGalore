@@ -26,7 +26,7 @@ Then initialize the database and start the server:
 At this point you should have a working site with some basic seed data that you can start to customize.
 
 ## ER Diagram
- ![Image alt](https://github.com/vnichkov/mongo/raw/master/diagram.png)
+ ![Image alt](https://github.com/vnichkov/mongo/diagram.png)
 
 ## License
 
