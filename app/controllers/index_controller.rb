@@ -4,29 +4,88 @@ class IndexController < ApplicationController
 
   end
 
-  def search
+  def advertising_terms_of_use
 
   end
 
-  def category_view
-    param = params.permit(:category, :object)
+  def search
+    param = params.permit(:category, :object, :page)
     case param[:object]
       when '1'
-        @objs = Industry.find_by_id(param[:category]).company
+        @objs = Industry.find_by_id(param[:category]).company.order(:name).paginate(page: param[:page], per_page:21)
+        @name = {name:'Companies by', industry: Industry.find_by_id(param[:category]).name}
       when '2'
-        @objs = Industry.find_by_id(param[:category]).job
+        @objs = Industry.find_by_id(param[:category]).job.order(updated_at: :desc).paginate(page: param[:page], per_page:25)
+        @name = {name:'Jobs by', industry: Industry.find_by_id(param[:category]).name}
       when '3'
-        @objs = Industry.find_by_id(param[:category]).resumes
+        @objs = Industry.find_by_id(param[:category]).resumes.order(updated_at: :desc).paginate(page: param[:page], per_page:25)
+        @name = {name:'Resumes by', industry: Industry.find_by_id(param[:category]).name}
+    end
+  end
+
+  def category_view
+    param = params.permit(:category, :object, :page)
+    case param[:object]
+      when '1'
+        @objs = Industry.find_by_id(param[:category]).company.order(:name).paginate(page: param[:page], per_page:21)
+        @name = {name:'Companies by', industry: Industry.find_by_id(param[:category]).name}
+      when '2'
+        @objs = Industry.find_by_id(param[:category]).job.order(updated_at: :desc).paginate(page: param[:page], per_page:25)
+        @name = {name:'Jobs by', industry: Industry.find_by_id(param[:category]).name}
+      when '3'
+        @objs = Industry.find_by_id(param[:category]).resumes.order(updated_at: :desc).paginate(page: param[:page], per_page:25)
+        @name = {name:'Resumes by', industry: Industry.find_by_id(param[:category]).name}
+    end
+
+  end
+
+  def main_search
+    param = main_search_params
+    session[:param] = Marshal.load(Marshal.dump(param))
+    param[:value] = (param[:value].split(" ").map {|t| t=t+":*"}).join("&")
+    case param[:type]
+      when '1'
+        @objs = Company.search(param).order(:name).paginate(page: param[:page], per_page:21)
+        @name = {name:'Companies'}
+      when '2'
+        @objs = Job.search(param).order(:updated_at).paginate(page: param[:page], per_page:25)
+        @name = {name:'Jobs'}
+      when '3'
+        @objs = Resume.search(param).order(:updated_at).paginate(page: param[:page], per_page:25)
+        @name = {name:'Resumes'}
     end
   end
 
   def by_category
   end
 
+  def about
+  end
+
+  def contact
+  end
+
+  def send_mail
+    ContactUsMailer.send_mail(params.require(:contact).permit(:firstname, :lastname, :email, :subject, :message, :phone).to_h).deliver_later
+    redirect_to(contact_path, notice: 'Email sent')
+  end
+
+  def terms_and_conditions
+
+  end
+
+  def privacy
+
+  end
+
   private
 
   def search_params
     params.require(:search).permit(:industry, :object)
+  end
+
+  def main_search_params
+    params.require(:main_search).permit(:type, :value, :page, :salary, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :options, :category, :location_id, :location_name).to_h
   end
 
   def category
@@ -41,7 +100,7 @@ class IndexController < ApplicationController
       when '2'
         @objs = {code:2, name:"Jobs"}
       when '3'
-        @objs = {code:2, name:"Resumes"}
+        @objs = {code:3, name:"Resumes"}
     end
   end
 
@@ -59,5 +118,16 @@ class IndexController < ApplicationController
       newHash = {count:count, one_colum_last:one_colum_last,two_colum_last:two_colum_last }
       $memory.hashValue[:industry] = newHash
     end
+
   end
+
+    def query_text(params)
+      text = ""
+      text = "fts @@ to_tsquery(:query)" unless params[:value].nil?
+      text = "and location_id = :location" unless params[:location].nil?
+      text = "and location_id = :" unless params[:location].nil?
+
+    end
+
+
 end

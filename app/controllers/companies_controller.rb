@@ -1,5 +1,14 @@
 class CompaniesController < ApplicationController
+
   before_action :set_company, only: [:show, :edit, :update, :destroy]
+
+  def settings_company
+    @company = current_client.company.first
+  end
+
+  def edit_logo
+    @company = current_client.company.first
+  end
 
   # GET /companies
   # GET /companies.json
@@ -37,12 +46,17 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def company_jobs
+
+    @objs = Company.find_by_id(params[:id]).job.order(updated_at: :desc).paginate(page: params[:page], per_page:25)
+  end
+
   # PATCH/PUT /companies/1
   # PATCH/PUT /companies/1.json
   def update
     respond_to do |format|
       if @company.update(company_params)
-        format.html { redirect_to @company, notice: 'Company was successfully updated.' }
+        format.html { redirect_to settings_company_path, notice: 'Company was successfully updated.' }
         format.json { render :show, status: :ok, location: @company }
       else
         format.html { render :edit }

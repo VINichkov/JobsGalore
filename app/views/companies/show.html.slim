@@ -1,30 +1,54 @@
-p#notice = notice
+.container
+  .col-lg-8.col-md-8
+    .row.well
+      h1.text-center
+        = @company.name
+        -if @company.realy
+          span.glyphicon.glyphicon-ok.glyphicon-small
+      p
+        = @company.description
+      .col-lg-6.col-md-6.col-md-offset-6.col-lg-offset-6
+        =link_to "Back", :back, class: "btn btn-success btn-lg btn-block"
+    -if @company.job.count>0
+      .row
+        h3
+          = link_to "Company jobs #{@company.job.count}", "/company_jobs/#{@company.id}"
 
-p
-  strong Name:
-  = @company.name
-p
-  strong Size:
-  = @company.size
-p
-  strong Location:
-  = @company.location
-p
-  strong Site:
-  = @company.site
-p
-  strong Logo:
-  = @company.logo
-p
-  strong Recrutmentagency:
-  = @company.recrutmentagency
-p
-  strong Description:
-  = @company.description
-p
-  strong Realy:
-  = @company.realy
 
-= link_to 'Edit', edit_company_path(@company)
-'|
-= link_to 'Back', companies_path
+
+  .col-lg-4.col-md-4
+
+    .panel.panel-default
+      .panel-body
+        h3.text-center
+          .row
+            -if @company.logo_uid.nil?
+              = image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block')
+            -else
+              =image_tag(@company.logo.thumb('300x').url, class: 'img-thumbnail center-block ')
+          .row
+            h3.text-center
+              |Job summary
+        .well
+          -if not @company.site.nil?
+            p
+              =link_to @company.site, @company.site
+          p Location: #{@company.location.suburb}, #{@company.location.state}
+          -if not @company.size.nil?
+            p Size: #{@company.size.size}
+          - if @company.recrutmentagency
+            p Recruitment agency
+          p Contact:
+          - @company.client.each do |client|
+            col-lg-3.col-md-3
+              -if client.photo.nil?
+                = image_tag("/assets/avatar.png",size: "60x60", class: 'img-circle center-block')
+              -else
+                =image_tag(client.photo.thumb('300x').url,size: "60x60", class: 'img-circle center-block ')
+            col-lg-9.col-md-9
+              |#{client.firstname} #{client.lastname}
+              address
+                a[href ="mailto:#{client.email}" ] =client.email
+                a[href ="tel:#{client.phone}" ] #{client.phone}
+          br
+          = social_share_button_tag @company.name

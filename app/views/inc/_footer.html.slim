@@ -1,2 +1,22 @@
-.jumbotron
+footer
   .container
+    .row
+      .col-lg-6.col-md-6
+        ul.nav.nav-pills
+          li
+            =link_to "About us", about_path
+          li
+            = link_to "Contact us", contact_path
+          li
+            = link_to "Terms and Conditions", terms_and_conditions_path
+          li
+            = link_to "Privacy policy", privacy_path
+      .col-lg-6.col-md-6
+        ul.nav.nav-pills
+          li.navbar-brand
+             |Share:
+          li.navbar-brand
+            =social_share_button_tag PropertsHelper::TITLE
+    .row
+      .text-center
+        ="© #{PropertsHelper::COMPANY} All rights reserved."

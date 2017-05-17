@@ -1,54 +1,86 @@
-p#notice = notice
+.container
+  .col-lg-8.col-md-8
+    .row.well
+        h1
+          = @job.title.capitalize
+        p
+          = @job.description
 
-p
-  strong Title:
-  = @job.title
-p
-  strong Locations:
-  = @job.locations
-p
-  strong Salarymin:
-  = @job.salarymin
-p
-  strong Salarymax:
-  = @job.salarymax
-p
-  strong Permanent:
-  = @job.permanent
-p
-  strong Casual:
-  = @job.casual
-p
-  strong Temp:
-  = @job.temp
-p
-  strong Contract:
-  = @job.contract
-p
-  strong Fulltime:
-  = @job.fulltime
-p
-  strong Parttime:
-  = @job.parttime
-p
-  strong Flextime:
-  = @job.flextime
-p
-  strong Remote:
-  = @job.remote
-p
-  strong Description:
-  = @job.description
-p
-  strong Companies:
-  = @job.companies
-p
-  strong Education:
-  = @job.education
-p
-  strong Career:
-  = @job.career
+        .col-lg-6.col-md-6
+          button.btn.btn-primary.btn-lg.btn-block[onclick="history.back()"]
+            |Apply for this job
+        .col-lg-6.col-md-6
+          button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
+            |Back
+  .col-lg-4.col-md-4
 
-= link_to 'Edit', edit_job_path(@job)
-'|
-= link_to 'Back', jobs_path
+    .panel.panel-default
+      .panel-body
+        h3.text-center
+          = link_to(@job.company.name,@job.company)
+          p
+          - if @job.company.logo_uid.nil?
+            = link_to(image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block'),@job.company)
+          - else
+            = link_to(image_tag(@job.company.logo.thumb('300x').url, class: 'img-thumbnail center-block '),@job.company)
+        p
+        h3.text-center
+          |Job summary
+
+      .well
+        p
+          = "Location: #{@job.location.suburb}, #{@job.location.state}"
+        - if @job.salarymax.nil? and not @job.salarymin.nil? then
+          p
+            = "Salary: "
+            = @job.salarymin.to_i.to_s
+        - elsif not (@job.salarymax.nil? and @job.salarymin.nil?)
+          p
+            = "Salary: "
+            = @job.salarymin.to_i.to_s+" - "+ @job.salarymax.to_i.to_s
+        - if (@job.permanent or @job.casual or @job.temp or @job.contract or @job.fulltime or @job.parttime or @job.flextime or @job.remote)
+          p Job Type:
+          -if @job.permanent
+            span
+              i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+              | Permanent
+              br
+          - if @job.casual
+            span
+              i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+              | Casual
+              br
+          - if @job.temp
+            span
+              i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+              | Temp
+              br
+          - if @job.contract
+            span
+              i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+              | Contract
+              br
+          - if @job.fulltime
+            span
+              i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+              | Full time
+              br
+          - if @job.parttime
+            span
+              i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+              | Part time
+              br
+          - if @job.flextime
+            span
+              i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+              | Flex time
+              br
+          - if @job.remote
+            span
+              i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+              | Remote
+              br
+        br
+        =social_share_button_tag @job.title
+
+/TODO доделать контактную информацию

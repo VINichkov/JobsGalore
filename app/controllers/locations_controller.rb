@@ -4,7 +4,12 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.all
+    @locations = Location.paginate(page: params[:page], per_page:50)
+  end
+
+  def search
+    query=params[:query].split(" ").map {|t| t=t+":*"}
+    @search = Location.search(query.join("&")).limit(10)
   end
 
   # GET /locations/1

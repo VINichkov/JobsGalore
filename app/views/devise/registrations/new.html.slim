@@ -1,0 +1,77 @@
+.container
+  .row
+    .col-xs-12.col-sm-8.col-md-6.col-lg-6.col-sm-offset-2.col-md-offset-3.col-lg-offset-3
+      = devise_error_messages!
+      h2 Please Sign Up
+      = form_for(resource, as: resource_name, html:{enctype: "multipart/form-data"}, url: registration_path(resource_name), method: :post, ) do |f|
+        ul.nav.nav-pills.nav-justified
+          li.active
+            =link_to "Applicant"
+          li
+            =link_to "Employer", sign_up_employer_path
+        hr.colorgraph
+        .row
+          .col-xs-6.col-sm-6.col-md-6
+            .form-group
+              = f.label "Your first name"
+              br
+              = f.text_field :firstname, autofocus: true, class:"form-control input-lg",placeholder:"First Name"
+          .col-xs-6.col-sm-6.col-md-6
+            .form-group
+              = f.label "Your surname"
+              br
+              = f.text_field :lastname, class:"form-control input-lg",placeholder:"Surname"
+        .form-group
+          = f.label "Gender"
+          br
+          select.selectpicker.form-control[data-style="btn-lg btn-default" name="client[gender]" ]
+            option[value="false"] Male
+            option[value="true"] Female
+        br
+        .form-group
+          = f.label "Your birthday"
+          br
+          .input-group.date.datepicker_reg
+              input.form-control.input-lg[type="text"]
+              span.input-group-addon
+                i.glyphicon.glyphicon-calendar
+        .form-group
+          = f.label "Photo"
+          br
+          =react_component('Fileinput',id:"client_photo", name:"client[photo]",  place_holder:"empty")
+        .form-group
+          = f.label "Your location"
+          br
+          =react_component('Autocomplete',className:"form-control input-lg dropdown-toggle",name:"client[location",id:"client_location_id")
+        .form-group
+          = f.label "Your phone number"
+          br
+          =react_component('InputPhoneNumber',id:"phone",name:"client[phone]", class_name:"form-control input-lg", dataformat: "+61 d dddd dddd", placeholder:"+61 9 9999 9999")
+        .form-group
+          = f.label "Your email"
+          br
+          = f.email_field :email, autofocus: true, class:"form-control input-lg",placeholder:"surname@hotmail.com"
+        .form-group
+          = f.label :password
+          -if @minimum_password_length
+            em
+              =" (#{@minimum_password_length} characters minimum)"
+          br
+          = f.password_field :password, autocomplete: "off", class:"form-control input-lg",placeholder:"**************"
+
+        .form-group
+          = f.label :password_confirmation
+          br
+          = f.password_field :password_confirmation, autocomplete: "off", class:"form-control input-lg",placeholder:"**************"
+        .checkbox
+            label
+              input[type="checkbox"] Remember me
+        .form-group
+          |By registering you agree to the #{PropertsHelper::COMPANY}
+          |  &nbsp;
+          =link_to "privacy policy", privacy_path
+        hr.colorgraph
+        .row
+          .col-xs-6.col-md-6
+            = f.submit "Register", class: "btn btn-primary btn-block btn-lg"
+          = render "devise/shared/links"

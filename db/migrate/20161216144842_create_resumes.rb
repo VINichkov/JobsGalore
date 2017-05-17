@@ -19,6 +19,5 @@ class CreateResumes < ActiveRecord::Migration[5.0]
     add_index :resumes, :salary
     add_index :resumes, :updated_at
     add_index :resumes, :created_at
-    execute "CREATE INDEX resumes_idx ON resumes USING gin(to_tsvector('english', desiredjobtitle || ' ' || abouteme));"
   end
 end

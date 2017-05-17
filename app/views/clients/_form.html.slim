@@ -5,32 +5,59 @@
       ul
         - @client.errors.full_messages.each do |message|
           li = message
-
-  .field
-    = f.label :firstname
-    = f.text_field :firstname
-  .field
-    = f.label :lastname
-    = f.text_field :lastname
-  .field
-    = f.label :email
-    = f.text_field :email
-  .field
-    = f.label :phone
-    = f.text_field :phone
-  .field
-    = f.label :password
-    = f.text_field :password
-  .field
-    = f.label :responsible
-    = f.check_box :responsible
-  .field
-    = f.label :photo
-    = f.text_field :photo
-  .field
-    = f.label :gender
-    = f.check_box :gender
-  .field
-    = f.label :location
-    = f.text_field :location
-  .actions = f.submit
+  hr.colorgraph
+    .row
+      .col-xs-6.col-sm-6.col-md-6
+        .form-group
+          = f.label "Your first name"
+          br
+          = f.text_field :firstname, autofocus: true, class:"form-control input-lg",placeholder:"First Name"
+      .col-xs-6.col-sm-6.col-md-6
+        .form-group
+          = f.label "Your surname"
+          br
+          = f.text_field :lastname, class:"form-control input-lg",placeholder:"Surname"
+    .form-group
+      = f.label "Gender"
+      br
+      select.selectpicker.form-control[data-style="btn-lg btn-default" name="client[gender]" ]
+        -if @client.gender.nil?
+          option[value="nil" selected] Unidentified
+          option[value="false"] Male
+          option[value="true"] Female
+        -elsif @client.gender
+          option[value="nil"] Unidentified
+          option[value="false"] Male
+          option[value="true" selected] Female
+        -else
+          option[value="nil"] Unidentified
+          option[value="false" selected] Male
+          option[value="true"] Female
+    br
+    .form-group
+      = f.label "Your birthday"
+      br
+      .input-group.date#datepicker_reg
+        input.form-control.input-lg[type="text" value =(@client.birth ? @client.birth.strftime("%d %B %Y").to_s : "Empty")]
+        span.input-group-addon
+            i.glyphicon.glyphicon-calendar
+    .form-group
+      = f.label "Your location"
+      br
+      = react_component('Autocomplete',
+                        className: "form-control input-lg dropdown-toggle",
+                        name: "client[location",
+                        id: "client_location_id",
+                        defaultName:"#{@client.location.suburb}, #{@client.location.state}",
+                        defaultId:@client.location.id)
+    .form-group
+      = f.label "Your phone number"
+      br
+      = react_component('InputPhoneNumber', id: "phone", name: "client[phone]", class_name: "form-control input-lg", dataformat: "+61 d dddd dddd", placeholder: "+61 9 9999 9999",defaultValue:@client.phone)
+    hr.colorgraph
+      .row
+        .col-xs-6.col-md-6
+          = f.submit class: "btn btn-primary btn-block btn-lg"
+        .col-xs-6.col-md-6
+          = link_to 'Back', :back, class:"btn btn-success btn-block btn-lg"
+    br

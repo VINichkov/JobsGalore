@@ -5,7 +5,7 @@ class CreateCompanies < ActiveRecord::Migration[5.0]
       t.references :size, foreign_key: true
       t.references :location, foreign_key: true
       t.string :site
-      t.string :logo
+      t.string :logo_uid
       t.boolean :recrutmentagency
       t.string :description
       t.boolean :realy
@@ -14,6 +14,6 @@ class CreateCompanies < ActiveRecord::Migration[5.0]
 
     end
     add_index :companies, :name
-    execute "CREATE INDEX companies_idx ON companies USING gin(to_tsvector('english', name || ' ' || site || ' '|| description));"
+
   end
 end

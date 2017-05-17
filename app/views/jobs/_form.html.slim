@@ -1,57 +1,86 @@
 = form_for @job do |f|
+  hr.colorgraph
   - if @job.errors.any?
     #error_explanation
-      h2 = "#{pluralize(@job.errors.count, "error")} prohibited this job from being saved:"
+      h2 #{pluralize(@job.errors.count, "error")} prohibited this job from being saved:
       ul
         - @job.errors.full_messages.each do |message|
           li = message
 
-  .field
+  .form-group
     = f.label :title
-    = f.text_field :title
-  .field
-    = f.label :locations
-    = f.text_field :locations
-  .field
-    = f.label :salarymin
-    = f.text_field :salarymin
-  .field
-    = f.label :salarymax
-    = f.text_field :salarymax
-  .field
-    = f.label :permanent
-    = f.check_box :permanent
-  .field
-    = f.label :casual
-    = f.check_box :casual
-  .field
-    = f.label :temp
-    = f.check_box :temp
-  .field
-    = f.label :contract
-    = f.check_box :contract
-  .field
-    = f.label :fulltime
-    = f.check_box :fulltime
-  .field
-    = f.label :parttime
-    = f.check_box :parttime
-  .field
-    = f.label :flextime
-    = f.check_box :flextime
-  .field
-    = f.label :remote
-    = f.check_box :remote
-  .field
+    br
+    = f.text_field :title, class:"form-control input-lg"
+  .form-group
+    = f.label :location
+    br
+    =react_component('Autocomplete',
+                      className:"form-control input-lg dropdown-toggle",
+                      name:"job[location",
+                      id:"job_location_id",
+                      defaultName: @job.location ? "#{@job.location.suburb}, #{@job.location.state}" : "#{current_client.location.suburb}, #{current_client.location.state}",
+                      defaultId: @job.location ? @job.location.id : current_client.location.id)
+  .row
+    br
+    .col-xs-6.col-sm-6.col-md-6
+      .form-group
+        = f.label :min, "Salary min"
+        br
+        = f.text_field :salarymin, class:"form-control input-lg"
+    .col-xs-6.col-sm-6.col-md-6
+      .form-group
+        = f.label :max, "Salary max"
+        br
+        = f.text_field :salarymax, class:"form-control input-lg"
+  .row
+    .col-xs-3.col-sm-3.col-md-3
+      .form-group
+        = f.check_box :permanent
+        |  &nbsp;
+        = f.label :permanent
+    .col-xs-3.col-sm-3.col-md-3
+      .form-group
+        = f.check_box :casual
+        |  &nbsp;
+        = f.label :casual
+    .col-xs-3.col-sm-3.col-md-3
+      .form-group
+        = f.check_box :temp
+        |  &nbsp;
+        = f.label :temp, "Temporary"
+    .col-xs-3.col-sm-3.col-md-3
+      .form-group
+        = f.check_box :contract
+        |  &nbsp;
+        = f.label :contract
+    .col-xs-3.col-sm-3.col-md-3
+      .form-group
+        = f.check_box :fulltime
+        |  &nbsp;
+        = f.label :fulltime, "Full time"
+    .col-xs-3.col-sm-3.col-md-3
+      .form-group
+        = f.check_box :parttime
+        |  &nbsp;
+        = f.label :parttime, "Patr time"
+    .col-xs-3.col-sm-3.col-md-3
+      .form-group
+        = f.check_box :flextime
+        |  &nbsp;
+        = f.label :flextime, "Flex time"
+    .col-xs-3.col-sm-3.col-md-3
+      .form-group
+        = f.check_box :remote
+        |  &nbsp;
+        = f.label :remote
+  .form-group
     = f.label :description
-    = f.check_box :description
-  .field
-    = f.label :companies
-    = f.text_field :companies
-  .field
-    = f.label :education
-    = f.text_field :education
-  .field
-    = f.label :career
-    = f.text_field :career
-  .actions = f.submit
+    br
+    = f.text_area :description, class:"form-control input-lg", rows:25
+  hr.colorgraph
+  .row
+    .col-xs-6.col-md-6
+      = f.submit class: "btn btn-primary btn-block btn-lg"
+    .col-lg-6.col-md-6
+      = link_to 'Back', :back, class:"btn btn-success btn-block btn-lg"
+  br

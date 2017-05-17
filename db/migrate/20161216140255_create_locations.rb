@@ -7,7 +7,5 @@ class CreateLocations < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-
-    execute "CREATE INDEX locations_idx ON locations USING gin(to_tsvector('english', suburb || ' ' || state|| ' '|| postcode));"
   end
 end

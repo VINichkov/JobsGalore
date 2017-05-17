@@ -1,0 +1,22 @@
+.container
+  .row
+    h1 Your profile
+    .well
+      .row
+        .col-md-4.col-lg-4
+          - if current_client.photo.nil?
+            = image_tag("/assets/avatar.png", size: "300x300", class: 'img-circle')
+          - else
+            = image_tag(current_client.photo.thumb('300x300#').url, class: 'img-circle')
+        .col-md-4.col-lg-4
+          h3 #{current_client.firstname} #{current_client.lastname}
+          h3 Email: #{current_client.email}
+          h3 Phone: #{current_client.phone}
+          h3 #{current_client.location.suburb}, #{current_client.location.state}
+          h3 Gender: #{current_client.gender ? " Female" : " Male"}
+          h3 Birthday: #{current_client.birth ? current_client.birth.strftime("%d %B %Y").to_s : "Empty"}
+        .col-md-4.col-lg-4
+          = link_to "Update photo", edit_photo_path, class:"btn btn-success btn-block btn-lg"
+          = link_to "Edit information", edit_client_path(current_client), class:"btn btn-primary btn-block btn-lg"
+          = link_to "Change your password", edit_client_registration_path, class:"btn btn-info btn-block btn-lg"
+          = link_to "Cancel my account", registration_path(current_client), data: { confirm: "Are you sure?" }, method: :delete, class:"btn btn-danger btn-block btn-lg"

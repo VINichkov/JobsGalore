@@ -1,0 +1,7 @@
+{"Propert":[
+  {"code":"title", "name":"Name this site", "value": "Mango"},
+  {"code": "company", "name": "Company", "value": "Mango"},
+  {"code": "host_name", "name": "host", "value": "localhost"},
+  {"code": "port", "name": "port", "value": 3000},
+  {"code": "email", "name": "Email", "value": "v.nichkov@hotmail.com"}]
+}

@@ -1,0 +1,38 @@
+.col-lg-8.col-md-8
+  - @objs.each do |resume|
+    .panel.panel-default
+      .panel-body
+        .col-lg-10.col-md-10
+          h3
+            = link_to resume.desiredjobtitle.capitalize, resume, class: 'text-warning'
+          -if not resume.salary.nil?
+            p = resume.salary.to_i.to_s
+          = resume.abouteme[0..300]
+          = link_to ' more...', resume
+          p = resume.location.state.to_s+" "+resume.location.suburb.capitalize.to_s
+        .col-lg-2.col-md-2
+          .row
+            - if client_signed_in?
+              - if current_client.resp
+                .row.text-center
+                  = link_to("#{resume.client.firstname} #{resume.client.lastname}", resume.client)
+                .row
+                - if not resume.client.photo_uid.nil?
+                  = link_to(image_tag(resume.client.photo.thumb('300x').url, class: 'img-thumbnail center-block '),resume.client)
+                - else
+                  = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block')
+              - else
+                .row.text-center
+                  |Anonymous
+                .row
+                = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block ')
+            - else
+              row.text-center
+                |Anonymous
+              p
+              = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block ')
+            .row.text-center
+              = "Posted: "+resume.updated_at.strftime("%d %B %Y")
+
+  .col-lg-4.col-md-4
+

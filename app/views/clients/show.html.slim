@@ -20,7 +20,7 @@ p
   = @client.responsible
 p
   strong Photo:
-  = @client.photo
+  =image_tag @client.photo.thumb('300x200#').url
 p
   strong Gender:
   = @client.gender

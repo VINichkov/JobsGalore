@@ -1,4 +1,5 @@
 = form_for @resume do |f|
+  hr.colorgraph
   - if @resume.errors.any?
     #error_explanation
       h2 = "#{pluralize(@resume.errors.count, "error")} prohibited this resume from being saved:"
@@ -6,40 +7,93 @@
         - @resume.errors.full_messages.each do |message|
           li = message
 
-  .field
-    = f.label :desiredjobtitle
-    = f.text_field :desiredjobtitle
-  .field
-    = f.label :salary
-    = f.text_field :salary
-  .field
-    = f.label :permanent
-    = f.check_box :permanent
-  .field
-    = f.label :casual
-    = f.check_box :casual
-  .field
-    = f.label :temp
-    = f.check_box :temp
-  .field
-    = f.label :contract
-    = f.check_box :contract
-  .field
-    = f.label :fulltime
-    = f.check_box :fulltime
-  .field
-    = f.label :parttime
-    = f.check_box :parttime
-  .field
-    = f.label :flextime
-    = f.check_box :flextime
-  .field
-    = f.label :remote
-    = f.check_box :remote
-  .field
-    = f.label :abouteme
-    = f.text_field :abouteme
-  .field
-    = f.label :client
-    = f.text_field :client
-  .actions = f.submit
+  .form-group
+    = f.label :desiredjobtitle, "Desired position"
+    br
+    = f.text_field :desiredjobtitle, class:"form-control input-lg"
+  .row
+    .col-md-6.col-lx-6
+      .form-group
+        = f.label :salary
+        br
+        = f.text_field :salary, class:"form-control input-lg"
+    .col-md-6.col-lx-6
+      .form-group
+        = f.label :industry, "Location"
+        br
+        = react_component('Autocomplete',
+                className: "form-control input-lg dropdown-toggle",
+                name: "resume[location",
+                id: "resume_location_id",
+                defaultName: @resume.location ? "#{@resume.location.suburb}, #{@resume.location.state}" : "#{current_client.location.suburb}, #{current_client.location.state}",
+                defaultId: @resume.location ? @resume.location.id : current_client.location.id)
+  .form-group
+    =f.label :industry, "Professional area"
+    br
+    =react_component("CategoryInsert",
+                      className:"selectpicker form-control",
+                      name:"resume[industry]",
+                      multiple:false,
+                      dataStyle:"btn-lg btn-default",
+                      values: Industry.all.to_json,
+                      defaultValues:@resume.industry.to_json)
+
+  .col-xs-3.col-sm-3.col-md-3
+    .form-group
+      = f.check_box :permanent
+      |  &nbsp;
+      = f.label :permanent
+  .col-xs-3.col-sm-3.col-md-3
+    .form-group
+      = f.check_box :casual
+      |  &nbsp;
+      = f.label :casual
+  .col-xs-3.col-sm-3.col-md-3
+    .form-group
+      = f.check_box :temp
+      |  &nbsp;
+      = f.label :temp, "Temporary"
+  .col-xs-3.col-sm-3.col-md-3
+    .form-group
+      = f.check_box :contract
+      |  &nbsp;
+      = f.label :contract
+  .col-xs-3.col-sm-3.col-md-3
+    .form-group
+      = f.check_box :fulltime
+      |  &nbsp;
+      = f.label :fulltime, "Full time"
+  .col-xs-3.col-sm-3.col-md-3
+    .form-group
+      = f.check_box :parttime
+      |  &nbsp;
+      = f.label :parttime, "Patr time"
+  .col-xs-3.col-sm-3.col-md-3
+    .form-group
+      = f.check_box :flextime
+      |  &nbsp;
+      = f.label :flextime, "Flex time"
+  .col-xs-3.col-sm-3.col-md-3
+    .form-group
+      = f.check_box :remote
+      |  &nbsp;
+      = f.label :remote
+  .form-group
+    = f.label :experiences, "Experience"
+    br
+    = react_component('Experience',
+            name: "resume[experience]",
+            id: "resume_experience",
+            default: @experience,
+            defaultEmptyLocations:{name:"#{current_client.location.suburb}, #{current_client.location.state}", id:current_client.location.id})
+  .form-group
+    = f.label :abouteme, "Aboute me"
+    br
+    = f.text_area :abouteme, class:"form-control input-lg", rows:8
+  hr.colorgraph
+    .row
+      .col-xs-6.col-md-6
+        = f.submit class: "btn btn-primary btn-block btn-lg"
+      .col-lg-6.col-md-6
+        = link_to 'Back', :back, class: "btn btn-success btn-block btn-lg"
+    br

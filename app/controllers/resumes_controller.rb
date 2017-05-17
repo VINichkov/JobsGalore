@@ -1,4 +1,5 @@
 class ResumesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_resume, only: [:show, :edit, :update, :destroy]
 
   # GET /resumes
@@ -15,6 +16,7 @@ class ResumesController < ApplicationController
   # GET /resumes/new
   def new
     @resume = Resume.new
+
   end
 
   # GET /resumes/1/edit
@@ -24,11 +26,20 @@ class ResumesController < ApplicationController
   # POST /resumes
   # POST /resumes.json
   def create
-    @resume = Resume.new(resume_params)
-
+    param = resume_params
+    industry = param[:industry]
+    experience=param[:experience]
+    param.delete(:industry)
+    param.delete(:experience)
+    param[:client] = current_client
+    @resume = Resume.new(param)
+    experience.each do |exp, exp1|
+      @resume.experience.new(employer:exp1[:employer], location_id:exp1[:location_id], site:exp1[:site], titlejob:exp1[:position], datestart:exp1[:datestart], dateend:exp1[:dateend], description:exp1[:description] )
+    end
+    @resume.industryresume.new(industry:Industry.find_by_id(industry))
     respond_to do |format|
       if @resume.save
-        format.html { redirect_to @resume, notice: 'Resume was successfully created.' }
+        format.html { redirect_to client_root_path, notice: 'Resume was successfully created.' }
         format.json { render :show, status: :created, location: @resume }
       else
         format.html { render :new }
@@ -40,9 +51,36 @@ class ResumesController < ApplicationController
   # PATCH/PUT /resumes/1
   # PATCH/PUT /resumes/1.json
   def update
+    param = resume_params
+    puts "___ передали параметры"
+    if param[:location_id].nil? or param[:location_id].empty?
+      puts "___ Поищем локации"
+      param[:location_id]=find_location(param[:location_name])
+      puts "___ нашли #{param[:location_id]}"
+    end
+    puts "___ сохраним индустрию"
+    industry = param[:industry]
+    experience=param[:experience]
+    param.delete(:industry)
+    param.delete(:experience)
+    param.delete(:location_name)
+    param[:client] = current_client
+    puts "___ удалим опыт"
+    @resume.experience.destroy_all
+    experience.each do |exp, exp1|
+      if exp1[:location_id].nil? or exp1[:location_id].empty?
+        exp1[:location_id]=find_location(exp1[:location_name])
+        puts "____нашли локацию для опыта #{exp1[:location_id]}"
+      end
+      puts "добавляем новый опыт"
+      @resume.experience.new(employer:exp1[:employer], location_id:exp1[:location_id], site:exp1[:site], titlejob:exp1[:position], datestart:exp1[:datestart], dateend:exp1[:dateend], description:exp1[:description] )
+    end
+    @resume.industryresume.destroy_all
+    @resume.industryresume.new(industry:Industry.find_by_id(industry))
+    puts "___ переделали все и начинаем сохранять"
     respond_to do |format|
-      if @resume.update(resume_params)
-        format.html { redirect_to @resume, notice: 'Resume was successfully updated.' }
+      if @resume.update(param)
+        format.html { redirect_to client_root_path, notice: 'Resume was successfully updated.' }
         format.json { render :show, status: :ok, location: @resume }
       else
         format.html { render :edit }
@@ -65,10 +103,59 @@ class ResumesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_resume
       @resume = Resume.find(params[:id])
+      @experience = @resume.experience.order(datestart: :desc).map do | res|
+        {id:res.id,
+         titlejob:res.titlejob,
+         employer:res.employer,
+         location_id:res.location ? res.location.id : "",
+         location_name:res.location ? "#{res.location.suburb}, #{res.location.state}" : "",
+         site:res.site,
+         datestart:res.datestart ? res.datestart.strftime("%d %B %Y") : "",
+         dateend: res.dateend ? res.dateend.strftime("%d %B %Y") : "",
+         description:res.description}
+      end
+    end
+
+    def find_location(name)
+      loc = Location.search(name).limit(1)
+      if loc.nil? or loc.empty?
+        ""
+      else
+        loc.first.id
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def resume_params
-      params.require(:resume).permit(:desiredjobtitle, :salary, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :abouteme, :client_id)
+      params.require(:resume).permit(:desiredjobtitle,
+                                     :salary,
+                                     :permanent,
+                                     :casual,
+                                     :temp,
+                                     :contract,
+                                     :fulltime,
+                                     :parttime,
+                                     :flextime,
+                                     :remote,
+                                     :abouteme,
+                                     :client_id,
+                                     :industry,
+                                     :location_id,
+                                     :location_name,
+                                     :experience=>{:bloc_0=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_1=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_2=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_3=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_4=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_5=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_6=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_7=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_8=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_9=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_10=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_11=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_12=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_13=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
+                                                 :bloc_14=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description]})
     end
 end

@@ -24,6 +24,5 @@ class CreateJobs < ActiveRecord::Migration[5.0]
     add_index :jobs,:salarymax
     add_index :jobs, :updated_at
     add_index :jobs, :created_at
-    execute "CREATE INDEX jobs_idx ON jobs USING gin(to_tsvector('english', title || ' ' || description || ' '|| career));"
   end
 end

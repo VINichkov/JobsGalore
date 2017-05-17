@@ -6,29 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
-
-##
-#puts "== #{Time.now} Delete all======================="
-#begin
-#  Client.delete_all
-#  Company.delete_all
-#  Experience.delete_all
-#  Industrycompany.delete_all
-#  Industryexperience.delete_all
-#  Industryjob.delete_all
-#  Industryresume.delete_all
-#  Job.delete_all
-#  Languageresume.delete_all
-#  Skillsjob.delete_all
-#  Skillsresume.delete_all
-#rescue
-#  puts "Error: #{$!}"
-#end
-##
-
 ##Загрузка json файлов
 require 'mechanize'
+require 'bcrypt'
 
 if 1==1
 # Блок загрузки файлов
@@ -80,7 +60,6 @@ Dir["./db/import/*"].sort.each do |path|
           else
             arg[arg.length-1]=')'
           end
-          puts arg
           eval arg
           i+=1
           if i%100==0
@@ -96,35 +75,19 @@ Dir["./db/import/*"].sort.each do |path|
 end # Конец блока  загрузки файлов
 
 begin
-    #Обработка клиентов
-    timestart =Time.now
-    i=0
-    puts "== #{timestart} start normalization Client 1"
-    Client.where("email='' or email='почты@нет'").each do |client|
-        client.update(email:"email#{client.id}@mail.com")
-        i+=1
-        puts "== #{Time.now-timestart} complete #{i} row" if (i%1000==0)
-    end
-    puts "== #{Time.now-timestart} end"
 
-    timestart =Time.now
-    i=0
-    puts "== #{timestart} start normalization Client 2"
-    sql = "select cl.* from clients cl,(select email from clients GROUP BY email HAVING count(email)>1) cl2 WHERE cl.email=cl2.email"
-    Client.find_by_sql(sql).each do |client|
-      client.update(email:"email#{client.id}@mail.com")
-      i+=1
-      if (i%1000==0)
-        puts "== #{Time.now-timestart} complete #{i} row"
-        timestart =Time.now
-      end
+    arr_word=[]
+    File.open('./db/tools/words.txt') do |file|
+      arr_word=file.readlines
     end
-    puts "== #{Time.now-timestart} end"
-    #Конец обработки клиентов
 
-    #Нахначение отверственных по конманиям
+    #Подготовка переменных
+    index= {location: {min: Location.ids.min, count: Location.count}}
+    index[:industry] = {min: Industry.ids.min, count: Industry.count, max:Industry.ids.max}
+    index[:company] = {min: Company.ids.min, count:Company.count}
+
+    #Назначение отверственных по команиям
     if Responsible.count==0
-
       i=0
       puts "== #{timestart} Linking customers to the company"
       count_client = Client.count
@@ -132,17 +95,16 @@ begin
       Company.all.each do |company|
         client=Client.find_by_id(min_id_client+Random.rand(count_client))
         Responsible.create(company: company, client:client)
-        #####client.update(responsible: true)
-        #i+=1
-        #puts "== #{Time.now-timestart} complete #{i} row" if (i%1000==0)
+        client.resp = true
       end
       puts "== #{Time.now-timestart} end"
     end
     #Конец
 
+
     #Присвоение индустрий компаниям
     if Industrycompany.count==0
-      mestart =Time.now
+      timestart =Time.now
       i=0
       puts "== #{timestart} Linking industry to the company"
       index = {count: Industry.count, min: Industry.ids.min}
@@ -170,24 +132,16 @@ begin
     if Job.count== 0
       timestart =Time.now
       puts "== #{timestart} create job"
-      #Создание массива со словами
-      file = File.open('./db/tools/words.txt') do |file|
-        file.read
-      end
-      arr_word = file.split
-      #Конец блока создания массива
-
-      #Подготовка переменных
-      index= {location: {min: Location.ids.min, count: Location.count}}
-      index[:industry] = {min: Industry.ids.min, count: Industry.count}
-      index[:arr] = {count:arr_word.count}
-      #Конец подготовки
-      company = Company.first
-        if 1==1 #Random.rand(2)==1
-          job_count = Random.rand(51)
-          while job_count>0
+      i=0
+      Company.all.each do |company|
+        if [false, true].sample
+          Random.rand(51).times do
 
             #Расчет параметров для каждой вакансии
+            title = ""
+            Random.rand(15).times do
+              title+=arr_word[Random.rand(arr_word.size)].delete("\n")+' '
+            end
             #З.П
             if  Random.rand(2)==1 #Есть з.п
               salarymin=Random.rand(110)*1000 if Random.rand(2)==1
@@ -203,14 +157,12 @@ begin
 
             #описание
             description = ''
-            i=Random.rand(100)
-            while i>0
-              description += arr_word[Random.rand(index[:arr][:count])]+' '
-              i-=1
+            Random.rand(100).times do
+              description += arr_word[Random.rand(arr_word.size)].delete("\n")+' '
             end
 
             #Создаем вакансию
-            job = company.job.create(title:'тест',
+            job = company.job.create(title:title,
                                        location: Location.find_by_id(index[:location][:min] + Random.rand(index[:location][:count])),
                                        salarymin: salarymin,
                                        salarymax: salarymax,
@@ -226,47 +178,235 @@ begin
             job.save
 
             #Добавляем к вакансии отрасли
-            if 1==1
-            industry_count = Random.rand(3)
-            puts "Будет #{industry_count+1} итераций"
-            i=0
-            arr_industry=[]
-            while industry_count>=i
-              puts "Итерация #{i}"
-              industry=Industry.find_by_id(index[:industry][:min] + Random.rand(index[:industry][:count]))
-              if arr_industry.count>=1
-                puts "Итерация #{i} проверяем #{industry.name}"
-                arr_industry.each do |elem|
-                  if elem==industry
-                    puts "Итерация #{i} нашли повтор #{industry.name}"
-                  else
-                    puts "Итерация #{i} Повтора нет #{industry.name}"
-                    arr_industry[i]=industry
-                    i+=1
-                  end
-                end
-              else
-                puts "Итерация #{i} все записываем в массив бес проверки"
-                arr_industry[i]=industry
-                i+=1
+            index_now  =index[:industry][:min]+Random.rand(index[:industry][:count])
+            Random.rand(4).times do
+              if index_now>index[:industry][:max]
+                index_now = index[:industry][:min]
               end
+              industry=job.industryjob.create(industry: Industry.find_by_id(index_now))
+              industry.save
+              index_now +=1
             end
-            arr_industry.each do  |elem|
-              puts elem.name
-            end
-            end
-              industry = Industry.f
-              job = Job.first.industryjob.create(industry: I)
 
-
-            job_count-=1
           end
         end
-      #end
+        i+=1
+        puts "== #{Time.now-timestart} complete #{i} row" if (i%1000==0)
+      end
       puts "== #{Time.now-timestart} end"
     end
 
-    #
+    #Создаем резюме
+    if Resume.count == 0
+      #Конец подготовки
+      #Оптимизируем деля по блокам
+      # 1 Создаем резюме для клиентов
+      # 2 Добавляем индустрию в резюме
+      # 3 Для каждого резюме создаем опыт работы
+      #Создание резюме
+      i=0
+      timestart =Time.now
+      puts "== #{timestart} create resume"
+      Client.where("responsible = false").find_in_batches.each do |clients|
+        resumes=[]
+        clients.each do |client|
+          if [true, false].sample
+            Random.rand(3).times
+              #Расчет параметров для каждой вакансии
+              desiredjobtitle = ""
+              (Random.rand(5)+1).times do
+                desiredjobtitle+=arr_word[Random.rand(arr_word.size)].delete("\n")+' '
+              end
+              salary = (Random.rand(180)+1)*1000
+              permanent = [false,true].sample
+              casual = [false,true].sample
+              temp = [false,true].sample
+              contract = [false,true].sample
+              fulltime = [false,true].sample
+              parttime = [false,true].sample
+              flextime = [false,true].sample
+              remote = [false,true].sample
+              abouteme=""
+              (Random.rand(50)+1).times do
+                abouteme+=arr_word[Random.rand(arr_word.size)].delete("\n")+' '
+              end
+
+              resumes << Resume.new(client:client,
+                                  desiredjobtitle:desiredjobtitle,
+                                  salary:salary,
+                                  permanent:permanent,
+                                  casual: casual,
+                                  temp:temp,
+                                  contract:contract,
+                                  fulltime:fulltime,
+                                  parttime:parttime,
+                                  flextime:flextime,
+                                  remote:remote,
+                                  abouteme:abouteme)
+            end
+        end
+        Resume.import resumes
+        i+=1
+        puts "== #{Time.now-timestart} complete #{i*1000} row"
+      end
+      puts "== #{Time.now-timestart} end"
+
+      #Добавляем индустрии к резюме
+      i=0
+      timestart =Time.now
+      puts "== #{timestart} match the resumes and industries"
+      Resume.find_in_batches.each do |resumes|
+        industries=[]
+        resumes.each do |resume|
+            index_now  =index[:industry][:min]+Random.rand(index[:industry][:count])
+            Random.rand(2).times do
+              if index_now>index[:industry][:max]
+                index_now = index[:industry][:min]
+              end
+              industries << Industryresume.new(resume:resume,industry: Industry.find_by_id(index_now))
+              index_now +=1
+            end
+        end
+        i+=1
+        Industryresume.import industries
+        puts "== #{Time.now-timestart} complete #{i*1000} row"
+      end
+      puts "== #{Time.now-timestart} end"
+
+      #Добавление опыта работы
+      i=0
+      timestart =Time.now
+      puts "== #{timestart} add experiences"
+      Resume.find_in_batches.each do |resumes|
+        experiences = []
+        resumes.each do |resume|
+          count_job= Random.rand(20)+1
+          count_job.times do |i|
+            #рассчитываем параметры для опыта
+            employer = Company.find_by_id(index[:company][:min]+Random.rand(index[:company][:count])).name
+            location = Location.find_by_id(index[:location][:min] + Random.rand(index[:location][:count]))
+            site = "#{["https://","http://"].sample+employer.delete(" ",".","\\","/")+[".ru",".com.au",".com"].sample}#"
+            titlejob = ""
+            (Random.rand(5)+1).times do
+              titlejob+=arr_word[Random.rand(arr_word.size)].delete("\n")+' '
+            end
+            datestart =Time.new.to_date - 365*(count_job-i)
+            if count_job != i+1
+              dateend = Time.new.to_date - 365*(count_job-(i+1))
+            else
+              dateend = nil
+            end
+            description =""
+            (Random.rand(25)+1).times do
+              description+=arr_word[Random.rand(arr_word.size)].delete("\n")+' '
+            end
+            experiences<<Experience.new(resume:resume,
+                                           employer:employer,
+                                           location:location,
+                                           site:site,
+                                           titlejob:titlejob,
+                                           datestart:datestart,
+                                           dateend:dateend,
+                                           description:description)
+          end
+        end
+        i+=1
+        Experience.import experiences
+        puts "== #{Time.now-timestart} complete #{i*1000} row"
+      end
+      puts "== #{Time.now-timestart} end"
+
+      #Связка индустрии и опыта
+      i=0
+      timestart =Time.now
+      puts "== #{timestart} match industries and experiences"
+      Experience.find_in_batches.each do |experiences|
+        industryexperiences=[]
+        experiences.each do |experience|
+          industryexperiences<< Industryexperience.new(experience:experience, industry: Industry.find_by_id(index[:industry][:min]+Random.rand(index[:industry][:count])))
+        end
+        Industryexperience.import industryexperiences
+        i+=1
+        puts "== #{Time.now-timestart} complete #{i*1000} row"
+      end
+      puts "== #{Time.now-timestart} end"
+
+    end
+
+    #Задаем пароль тестовым пользователям. У всех 11111111
+    i=0
+    timestart =Time.now
+    puts "== #{timestart} update password on \"11111111\""
+    Client.where('encrypted_password ISNULL').find_in_batches.each do |clients|
+      clients.each do |client|
+        client.encrypted_password= BCrypt::Password.create('11111111')
+        client.save
+      end
+      i+=1
+      puts "== #{Time.now-timestart} complete #{i*1000} row"
+    end
+    puts "== #{Time.now-timestart} end"
+
+    #Предбразуем справочник локаций в целевой вид
+    i=0
+    timestart =Time.now
+    puts "== #{timestart} Linking Locations"
+    Location.where('parent_id ISNULL').find_in_batches.each do |locations|
+      locations.each do |client|
+
+      end
+      i+=1
+      puts "== #{Time.now-timestart} complete #{i*1000} row"
+    end
+    puts "== #{Time.now-timestart} end"
+
+    if 1==0
+      i=0
+      timestart =Time.now
+      puts "== #{timestart} update logo_uid in Company"
+      imgs = ['2017/03/06/5yxev2hslr_avstraliya_gory_priroda_krasivo_69324_1920x1080.jpg',
+              '2017/03/06/79ja1asu2o_Image_114.jpg',
+              '2017/03/06/88ttv082n8_Image_101.jpg',
+              '2017/03/20/7n0di6qe7l_1920x1080_kartinka_armageddon_7924_7924.jpg',
+              '2017/03/20/8plkw3pmhz_Image_102.jpg']
+      Company.where('logo_uid ISNULL').find_in_batches.each do |companies|
+        companies.each do |company|
+          company.logo_uid = imgs[Random.rand(5)]
+          company.save
+        end
+        i+=1
+        puts "== #{Time.now-timestart} complete #{i*1000} row"
+      end
+      puts "== #{Time.now-timestart} end"
+    end
+
+
+    i=0
+    timestart =Time.now
+    puts "== #{timestart} update birth day"
+    Client.where('birth ISNULL').find_in_batches.each do |clients|
+      clients.each do |client|
+        client.birth = Date.today - Random.rand(365*10)
+        client.save
+      end
+      i+=1
+      puts "== #{Time.now-timestart} complete #{i*1000} row"
+    end
+    puts "== #{Time.now-timestart} end"
+
+
+    i=0
+    timestart =Time.now
+    puts "== #{timestart} update location in Resume"
+    Resume.where('location_id ISNULL').find_in_batches.each do |resumes|
+      resumes.each do |resume|
+        resume.location_id = resume.client.location_id
+        resume.save
+      end
+      i+=1
+      puts "== #{Time.now-timestart} complete #{i*1000} row"
+    end
+    puts "== #{Time.now-timestart} end"
 
 rescue
   puts "Error: #{$!}"
@@ -276,16 +416,5 @@ puts "== #{Time.now - ttime } end seed"
 end
 
 
-=begin
-#В дальнейшем будет парсер. Пока не делаем.
-#забираем данные с carearone.com.au
-a = Mechanize.new do |agent|
-  agent.user_agent_alias = 'Windows Firefox'
-end
-b=''
-a.get('http://www.careerone.com.au/search?search_company=&search_keywords=&search_category=&search_location=&search_job_type=&search_salary_min=&search_salary_max=&search_job_type=&search_salary_min=&search_salary_max=') do |p|
-  b += p.search("div|class").to_s
-end
 
-puts b
-=end
+

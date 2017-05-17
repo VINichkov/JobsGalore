@@ -5,29 +5,42 @@
       ul
         - @company.errors.full_messages.each do |message|
           li = message
+  hr.colorgraph
+    .row
+      .form-group
+        = f.label :name
+        br
+        = f.text_field :name, class:"form-control input-lg"
+      .form-group
+        = f.label :site
+        br
+        = f.text_field :site, class:"form-control input-lg"
+      .form-group
+        = f.label :size
+        br
+        = f.collection_select :size_id, Size.all, :id, :size, {:prompt=>true}, {class:"selectpicker form-control", "data-style"=>"btn-lg btn-default"}
+      .form-group
+        = f.label :location
+        br
+        = react_component('Autocomplete',
+                className: "form-control input-lg dropdown-toggle",
+                name: "company[location",
+                id: "company_location_id",
+                defaultName: "#{@company.location.suburb}, #{@company.location.state}",
+                defaultId:@company.location.id)
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :size
-    = f.text_field :size
-  .field
-    = f.label :location
-    = f.text_field :location
-  .field
-    = f.label :site
-    = f.text_field :site
-  .field
-    = f.label :logo
-    = f.text_field :logo
-  .field
-    = f.label :recrutmentagency
-    = f.check_box :recrutmentagency
-  .field
-    = f.label :description
-    = f.text_field :description
-  .field
-    = f.label :realy
-    = f.text_field :realy
-  .actions = f.submit
+      .form-group
+        = f.check_box :recrutmentagency
+        |  &nbsp;
+        = f.label :recrutmentagency, "Recruitment agency"
+      .form-group
+        = f.label :description
+        br
+        = f.text_area :description, class:"form-control input-lg", rows:15
+      hr.colorgraph
+        .row
+          .col-xs-6.col-md-6
+            = f.submit class: "btn btn-primary btn-block btn-lg"
+          .col-lg-6.col-md-6
+            = link_to 'Back', :back, class:"btn btn-success btn-block btn-lg"
+      br

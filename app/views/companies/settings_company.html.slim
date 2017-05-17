@@ -1,0 +1,35 @@
+.container
+  .row
+    h1 Your company
+    .well
+      .row
+        .col-md-4.col-lg-4
+          - if @company.logo.nil?
+            = image_tag("/assets/company_profile.jpg", size: "300x300", class: 'img-circle')
+          - else
+            = image_tag(@company.logo.thumb('300x300#').url, class: 'img-circle')
+        .col-md-8.col-lg-8
+          h3 Name: #{@company.name}
+          h3 Size: #{@company.size ? @company.size.size : "empty"}
+          -if @company.site
+            h3
+              =link_to @company.site, @company.site
+          -else
+            h3 Site: empty
+          h3 #{@company.location.suburb}, #{@company.location.state}
+          - if @company.recrutmentagency
+            h3 Recruitment agency
+      .row
+        .col-md-12.col-lg-12
+          h3.text-center
+            |Description
+          -if @company.description
+            p =@company.description
+          -else
+            p Empty
+      br
+      .row
+        .col-md-6.col-lg-6
+          = link_to "Update logo", edit_logo_path, class:"btn btn-success btn-block btn-lg"
+        .col-md-6.col-lg-6
+          = link_to "Edit information", edit_company_path(@company), class:"btn btn-primary btn-block btn-lg"

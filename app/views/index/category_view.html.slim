@@ -1,3 +1,9 @@
-h1
-  =@objs.class
-  =@objs.count
+.container
+  h1 ="#{@name[:name]} #{@name[:industry]}"
+  - unless @objs.class.to_s.scan("Job").empty? then
+    = render 'inc/list_jobs'
+  - unless @objs.class.to_s.scan("Company").empty? then
+    = render 'inc/list_companies'
+  - unless @objs.class.to_s.scan("Resume").empty? then
+    = render 'inc/list_resumes'
+= will_paginate @objs, class:'text-center'
