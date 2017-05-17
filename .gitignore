@@ -16,5 +16,3 @@
 /public/system/*
 /db/importold/*
 /db/tools/*
-/app/assets/javascripts/components/*
-/vendor/assets/*
