@@ -13,6 +13,7 @@
 !/log/.keep
 !/tmp/.keep
 /.idea/*
+/public/system/*
 /db/importold/*
 /db/tools/*
 /app/assets/javascripts/components/*
