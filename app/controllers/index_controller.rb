@@ -24,6 +24,7 @@ class IndexController < ApplicationController
   end
 
   def category_view
+
     param = params.permit(:category, :object, :page)
     case param[:object]
       when '1'

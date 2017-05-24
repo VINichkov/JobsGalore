@@ -1,12 +1,13 @@
 class JobsController < ApplicationController
+  load_and_authorize_resource :job, only:[:new, :edit, :create, :update, :destroy]
   before_action :set_job, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_client!, only:[:new]
+  before_action :authenticate_client!, only:[:new, :edit, :create, :update, :destroy]
 
   # GET /jobs
   # GET /jobs.json
-  def index
-    @jobs = Job.all
-  end
+  #def index
+  #  @jobs = Job.all
+  #end
 
   # GET /jobs/1
   # GET /jobs/1.json

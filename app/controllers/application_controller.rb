@@ -9,25 +9,15 @@ class ApplicationController < ActionController::Base
 
   # In ApplicationController
   def current_ability
-  @current_ability ||=Ability.new(current_client)
+  @current_ability ||=Ability.new(current_client, params)
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-    puts "____________________"
-    puts exception
-    puts "____________________"
     respond_to do |format|
       format.json { head :forbidden , content_type: ' text/html ' }
-      format.html { redirect_to sign_in, notice: exception.message }
+      format.html { redirect_to "/404", notice: exception.message }
       format.js { head :forbidden , content_type: ' text/html ' }
       end
   end
 
-  #app/controllers/application_controller.rb
-  def page_not_found
-    respond_to do |format|
-      format.html { render template: 'errors/not_found_error', layout: 'layouts/application', status: 404 }
-      format.all  { render nothing: true, status: 404 }
-    end
-  end
 end

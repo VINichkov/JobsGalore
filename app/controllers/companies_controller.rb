@@ -1,6 +1,12 @@
 class CompaniesController < ApplicationController
-
+  load_and_authorize_resource :company, only:[:edit, :update, :destroy]
+  authorize_resource only:[ :settings_company, :edit_logo]
   before_action :set_company, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_client!, only:[:settings_company,
+                                             :edit_logo,
+                                             :edit,
+                                             :update,
+                                             :destroy]
 
   def settings_company
     @company = current_client.company.first
@@ -12,19 +18,19 @@ class CompaniesController < ApplicationController
 
   # GET /companies
   # GET /companies.json
-  def index
-    @companies = Company.all
-  end
+  #def index
+  #  @companies = Company.all
+  #end
 
   # GET /companies/1
   # GET /companies/1.json
-  def show
-  end
+  #def show
+  #end
 
   # GET /companies/new
-  def new
-    @company = Company.new
-  end
+  #def new
+   # @company = Company.new
+  #end
 
   # GET /companies/1/edit
   def edit
@@ -32,19 +38,19 @@ class CompaniesController < ApplicationController
 
   # POST /companies
   # POST /companies.json
-  def create
-    @company = Company.new(company_params)
+  #def create
+  #  @company = Company.new(company_params)
 
-    respond_to do |format|
-      if @company.save
-        format.html { redirect_to @company, notice: 'Company was successfully created.' }
-        format.json { render :show, status: :created, location: @company }
-      else
-        format.html { render :new }
-        format.json { render json: @company.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #  respond_to do |format|
+  #    if @company.save
+  #      format.html { redirect_to @company, notice: 'Company was successfully created.' }
+  #      format.json { render :show, status: :created, location: @company }
+  #    else
+   #     format.html { render :new }
+  #      format.json { render json: @company.errors, status: :unprocessable_entity }
+  #    end
+  #  end
+  #end
 
   def company_jobs
 

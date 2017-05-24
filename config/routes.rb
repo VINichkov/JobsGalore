@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+
   devise_for :clients, controllers:{ registrations: "clients/registrations",
                                      omniauthcallbacks: "clients/omniauthcallbacks",
                                      passwords: "clients/passwords",
@@ -10,14 +12,37 @@ Rails.application.routes.draw do
     post '/create_employer'=> "clients/registrations#create_employer"
   end
   #devise_for :clients
-  resources :companies
+  resources :companies, only: [:show, :edit, :update, :destroy]
+  get "/edit_logo", to: 'companies#edit_logo'
+  get "/settings_company", to: 'companies#settings_company'
+  get '/company_jobs/:id', to:'companies#company_jobs'
+
+  resources :clients, only: [:create, :edit, :update, :destroy]
+  get "/edit_photo", to: 'clients#edit_photo'
   get '/profile', to: 'clients#profile', as:  'client_root'
+  get "/settings", to: 'clients#settings'
+
+  #resources :locations
+  get '/search_locations/:query', to: 'locations#search'
+
+
+
+  resources :jobs, only:[:new, :create, :show, :edit, :update, :destroy]
+  resources :resumes, only:[:new, :create, :show, :edit, :update, :destroy]
   root  to: 'index#main'
-  resources :locations
-  resources :jobs
+  get "/terms_and_conditions", to: 'index#terms_and_conditions'
+  get "/privacy", to: 'index#privacy'
+  get "/about", to: 'index#about'
+  get "/contact", to: 'index#contact'
+  get "/advertising_terms_of_use", to: 'index#advertising_terms_of_use'
+  post "/send", to: 'index#send_mail'
+  post '/search', to: 'index#main_search'
+  get '/by_category/:obj', to: 'index#by_category'
+  get '/:category/:object', to: 'index#category_view'
+  get '404', :to => 'application#page_not_found'
+
   #resources :educations
-  #resources :languageresumes
-  resources :resumes
+  #resources :languageresume
   #resources :experiences
   #resources :industryexperiences
   #resources :skillsjobs
@@ -29,24 +54,11 @@ Rails.application.routes.draw do
   #resources :industrycompanies
   #resources :industryjobs
   #resources :industryresumes
-  resources :clients
   #resources :industries
   #resources :properts
-  get "/edit_photo", to: 'clients#edit_photo'
-  get "/edit_logo", to: 'companies#edit_logo'
-  get "/terms_and_conditions", to: 'index#terms_and_conditions'
-  get "/privacy", to: 'index#privacy'
-  get "/settings", to: 'clients#settings'
-  get "/about", to: 'index#about'
-  get "/contact", to: 'index#contact'
-  get "/advertising_terms_of_use", to: 'index#advertising_terms_of_use'
-  get "/settings_company", to: 'companies#settings_company'
-  post "/send", to: 'index#send_mail'
-  post '/search', to: 'index#main_search'
-  get '/search_locations/:query', to: 'locations#search'
-  get '/by_category/:obj', to: 'index#by_category'
-  get '/company_jobs/:id', to:'companies#company_jobs'
-  get '/:category/:object', to: 'index#category_view'
-  get '404', :to => 'application#page_not_found'
+
+
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
 end

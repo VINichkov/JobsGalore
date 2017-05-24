@@ -27,13 +27,15 @@ gem 'jquery-rails'
 gem 'will_paginate', '~> 3.1.0'
 gem 'social-share-button'
 gem 'cancancan'
-
 gem 'devise'
 #gem 'bcrypt', '~>3.1.11'
 
+group :production do
+  gem 'puma'
+end
 gem 'slim-rails'
 gem 'slim'
-gem 'webrick'
+
 gem 'dragonfly', '~> 1.1.1'
 gem 'mechanize'
 
@@ -51,6 +53,7 @@ gem "pg_search"
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'webrick'
 end
 
 group :development do

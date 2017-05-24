@@ -1,15 +1,23 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize(user,param )
     user ||= Client.new
-    puts "_______________________________3"
     if user.resp
-      puts "_______________________________1"
-      can :employer, :all
+      can [:new, :edit, :create, :update, :destroy], Job, Job do |job |
+        not(job.company.client.find_by_id(user.id).nil?)
+      end
+      can [:edit, :update, :destroy] , Company, Company do |company|
+        not(company.client.find_by_id(user.id).nil?)
+      end
+      can [:settings_company, :edit_logo], :all
     else
-      puts "_______________________________2"
-      can :talent, :all
+      can [:new, :edit, :create, :update, :destroy], Resume, Resume do |resume|
+        resume.client_id == user.id
+      end
+    end
+    can [:edit, :update, :destroy] , Client, Client do |client|
+      client.id==user.id
     end
     # Define abilities for the passed in user here. For example:
     #

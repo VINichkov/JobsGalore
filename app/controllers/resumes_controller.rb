@@ -1,6 +1,7 @@
 class ResumesController < ApplicationController
-  load_and_authorize_resource
   before_action :set_resume, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource :resume, only:[:new, :edit, :create, :update, :destroy]
+  before_action :authenticate_client!, only:[:new, :edit, :create, :update, :destroy]
 
   # GET /resumes
   # GET /resumes.json
@@ -34,7 +35,9 @@ class ResumesController < ApplicationController
     param[:client] = current_client
     @resume = Resume.new(param)
     experience.each do |exp, exp1|
-      @resume.experience.new(employer:exp1[:employer], location_id:exp1[:location_id], site:exp1[:site], titlejob:exp1[:position], datestart:exp1[:datestart], dateend:exp1[:dateend], description:exp1[:description] )
+      if not(exp1[:position].empty?)
+        @resume.experience.new(employer:exp1[:employer], location_id:exp1[:location_id], site:exp1[:site], titlejob:exp1[:position], datestart:exp1[:datestart], dateend:exp1[:dateend], description:exp1[:description] )
+      end
     end
     @resume.industryresume.new(industry:Industry.find_by_id(industry))
     respond_to do |format|
@@ -68,12 +71,14 @@ class ResumesController < ApplicationController
     puts "___ удалим опыт"
     @resume.experience.destroy_all
     experience.each do |exp, exp1|
-      if exp1[:location_id].nil? or exp1[:location_id].empty?
-        exp1[:location_id]=find_location(exp1[:location_name])
-        puts "____нашли локацию для опыта #{exp1[:location_id]}"
-      end
-      puts "добавляем новый опыт"
-      @resume.experience.new(employer:exp1[:employer], location_id:exp1[:location_id], site:exp1[:site], titlejob:exp1[:position], datestart:exp1[:datestart], dateend:exp1[:dateend], description:exp1[:description] )
+      if not(exp1[:position].empty?)
+          if exp1[:location_id].nil? or exp1[:location_id].empty?
+            exp1[:location_id]=find_location(exp1[:location_name])
+            puts "____нашли локацию для опыта #{exp1[:location_id]}"
+          end
+          puts "добавляем новый опыт"
+          @resume.experience.new(employer:exp1[:employer], location_id:exp1[:location_id], site:exp1[:site], titlejob:exp1[:position], datestart:exp1[:datestart], dateend:exp1[:dateend], description:exp1[:description] )
+        end
     end
     @resume.industryresume.destroy_all
     @resume.industryresume.new(industry:Industry.find_by_id(industry))

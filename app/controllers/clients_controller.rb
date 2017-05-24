@@ -1,18 +1,18 @@
 class ClientsController < ApplicationController
+  load_and_authorize_resource :client, only:[:edit, :update, :destroy]
   before_action :set_client, only: [:show, :edit,:update, :destroy]
-  before_action :authenticate_client!, only: [:profile, :settings]
-
+  before_action :authenticate_client!
 
   # GET /clients
   # GET /clients.json
-  def index
-    @clients = Client.all
-  end
+  #def index
+  #  @clients = Client.all
+  #end
 
   # GET /clients/1
   # GET /clients/1.json
-  def show
-  end
+  #def show
+  #end
 
   def edit_photo
     @client=current_client
@@ -27,9 +27,9 @@ class ClientsController < ApplicationController
   end
 
   # GET /clients/new
-  def new
-    @client = Client.new
-  end
+  #def new
+  #  @client = Client.new
+  #end
 
   # GET /clients/1/edit
   def edit
