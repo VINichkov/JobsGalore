@@ -129,7 +129,6 @@ GEM
       activesupport (>= 4.2)
       arel (>= 6)
     public_suffix (2.0.5)
-    puma (3.8.2)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -240,7 +239,6 @@ DEPENDENCIES
   mechanize
   pg (~> 0.18)
   pg_search
-  puma
   rails (~> 5.0.0, >= 5.0.0.1)
   react-rails
   sass-rails (~> 5.0)
@@ -254,6 +252,9 @@ DEPENDENCIES
   web-console
   webrick
   will_paginate (~> 3.1.0)
+
+RUBY VERSION
+   ruby 2.3.3p222
 
 BUNDLED WITH
    1.13.7
