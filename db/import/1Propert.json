@@ -1,7 +1,7 @@
 {"Propert":[
-  {"code":"title", "name":"Name this site", "value": "Mango"},
-  {"code": "company", "name": "Company", "value": "Mango"},
-  {"code": "host_name", "name": "host", "value": "localhost"},
+  {"code":"title", "name":"Name this site", "value": "Talents"},
+  {"code": "company", "name": "Company", "value": "Talents"},
+  {"code": "host_name", "name": "host", "value": "https://safe-brushlands-27744.herokuapp.com/"},
   {"code": "port", "name": "port", "value": 3000},
   {"code": "email", "name": "Email", "value": "v.nichkov@hotmail.com"}]
 }
