@@ -1,5 +1,5 @@
 {"Propert":[
-  {"code":"title", "name":"Name this site", "value": "Talents"},
+  {"code":"title", "name":"Name this site", "value": "FreeTalents"},
   {"code": "company", "name": "Company", "value": "FreeTalents"},
   {"code": "host_name", "name": "host", "value": " https://free-talents.herokuapp.com/"},
   {"code": "port", "name": "port", "value": 3000},
