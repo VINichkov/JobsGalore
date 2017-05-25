@@ -60,10 +60,10 @@ CREATE TABLE carearones (
 
 
 --
--- Name: carearone_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: carearones_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE carearone_id_seq
+CREATE SEQUENCE carearones_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -72,10 +72,10 @@ CREATE SEQUENCE carearone_id_seq
 
 
 --
--- Name: carearone_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: carearones_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE carearone_id_seq OWNED BY carearones.id;
+ALTER SEQUENCE carearones_id_seq OWNED BY carearones.id;
 
 
 --
@@ -84,12 +84,12 @@ ALTER SEQUENCE carearone_id_seq OWNED BY carearones.id;
 
 CREATE TABLE clients (
     id integer NOT NULL,
-    firstname character varying,
-    lastname character varying,
-    email character varying,
+    firstname character varying NOT NULL,
+    lastname character varying NOT NULL,
+    email character varying DEFAULT ''::character varying NOT NULL,
     phone character varying,
     password character varying,
-    resp boolean DEFAULT FALSE NOT NULL,
+    resp boolean DEFAULT false NOT NULL,
     photo_uid character varying,
     gender boolean,
     location_id integer,
@@ -793,7 +793,7 @@ ALTER SEQUENCE skillsresumes_id_seq OWNED BY skillsresumes.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY carearones ALTER COLUMN id SET DEFAULT nextval('carearone_id_seq'::regclass);
+ALTER TABLE ONLY carearones ALTER COLUMN id SET DEFAULT nextval('carearones_id_seq'::regclass);
 
 
 --
@@ -945,11 +945,11 @@ ALTER TABLE ONLY ar_internal_metadata
 
 
 --
--- Name: carearone_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: carearones_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY carearones
-    ADD CONSTRAINT carearone_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT carearones_pkey PRIMARY KEY (id);
 
 
 --
@@ -1124,7 +1124,7 @@ ALTER TABLE ONLY skillsresumes
 -- Name: index_clients_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_clients_on_email ON clients USING btree (email);
+CREATE UNIQUE INDEX index_clients_on_email ON clients USING btree (email);
 
 
 --
