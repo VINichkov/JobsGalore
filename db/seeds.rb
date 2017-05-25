@@ -56,10 +56,12 @@ Dir["./db/import/*"].sort.each do |path|
           end
 
           if name=="Client"
-            arg+="location:Location.find_by_id(#{index[:location][:min]+Random.rand(index[:location][:count])}))"
+            arg+="location:Location.find_by_id(#{index[:location][:min]+Random.rand(index[:location][:count])}),"
+            arg+="password:BCrypt::Password.create('11111111'))"
           else
             arg[arg.length-1]=')'
           end
+
           eval arg
           i+=1
           if i%100==0
