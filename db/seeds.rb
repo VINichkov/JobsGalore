@@ -25,10 +25,11 @@ Dir["./db/import/*"].sort.each do |path|
         puts "== #{timestart} cleaning table #{name}"
         case name
           when "Company"
-            index[:location] = {min: Location.ids.min, count: Location.count}
-            index[:size] = {min:Size.ids.min, count:Size.count}
+            index[:location] = Location.all.ids
+            index[:size] = Size.all.ids
           when "Client"
-            index[:location] = {min: Location.ids.min, count: Location.count}
+            index[:location] = Location.all.ids
+            index[:pass] = BCrypt::Password.create('11111111')
           when "Industry"
             index[:level]={min:Level.ids.min, count:Level.count}
         end
@@ -37,34 +38,24 @@ Dir["./db/import/*"].sort.each do |path|
         timestart =Time.now
         puts "== #{timestart} data recording"
         i=0
+        import_record = []
         time_start = Time.now
         array.each do |elem|
-          arg = "#{name}.create("
-          elem.each do |key, value|
-            if  name =="Company"
-                case key
-                  when "location"
-                    arg+="#{key}:Location.find_by_id(#{index[:location][:min]+Random.rand(index[:location][:count])}),"
-                  when "size"
-                    arg+="#{key}:Size.find_by_id(#{index[:size][:min]+Random.rand(index[:size][:count])}),"
-                  else
-                    arg+="#{key}:\"#{value}\","
-                end
-            else
-            arg+="#{key}:\"#{value}\","
-            end
+          if  name =="Company"
+            elem[:location_id]=index[:location].sample
+            elem[:size_id]=index[:size].sample
+          elsif name=="Client"
+            elem[:location_id]=index[:location].sample
+            elem[:password] = index[:pass]
+            elem[:encrypted_password]= index[:pass]
           end
-
-          if name=="Client"
-            arg+="location:Location.find_by_id(#{index[:location][:min]+Random.rand(index[:location][:count])}),"
-            arg+="password:BCrypt::Password.create('11111111'))"
-          else
-            arg[arg.length-1]=')'
-          end
-
+          arg = "import_record << #{name}.new(#{elem.to_s})"
           eval arg
           i+=1
-          if i%100==0
+          if i%1000==0
+            eval"#{name}.import import_record"
+            import_record=[]
+            puts "== #{Time.now-timestart} complete #{i} row"
             time_start = Time.now
           end
         end
@@ -72,7 +63,7 @@ Dir["./db/import/*"].sort.each do |path|
       end
     end
   rescue
-    puts "Error: #{$!}"
+    puts "____________________Error: #{$!}"
   end
 end # Конец блока  загрузки файлов
 
@@ -90,6 +81,7 @@ begin
 
     #Назначение отверственных по команиям
     if Responsible.count==0
+      timestart =Time.now
       i=0
       puts "== #{timestart} Linking customers to the company"
       count_client = Client.count
