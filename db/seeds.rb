@@ -33,7 +33,9 @@ Dir["./db/import/*"].sort.each do |path|
           when "Industry"
             index[:level]={min:Level.ids.min, count:Level.count}
         end
-        eval "#{name}.destroy_all"
+        unless name=="Client"
+          eval "#{name}.destroy_all"
+        end
         puts "== #{Time.now-timestart} end"
         timestart =Time.now
         t=Time.now
@@ -41,7 +43,12 @@ Dir["./db/import/*"].sort.each do |path|
         i=0
         import_record = []
         time_start = Time.now
-        array.each do |elem|
+        if name=="Client" and Client.count >0
+          r = Client.count
+        else
+          r = 0
+        end
+        array[r-1..array.length-1].each do |elem|
           if  name =="Company"
             elem[:location_id]=index[:location].sample
             elem[:size_id]=index[:size].sample
