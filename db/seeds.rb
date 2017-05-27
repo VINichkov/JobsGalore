@@ -29,12 +29,14 @@ Dir["./db/import/*"].sort.each do |path|
             index[:size] = Size.all.ids
           when "Client"
             index[:location] = Location.all.ids
+            index[:password] = BCrypt::Password.create('11111111')
           when "Industry"
             index[:level]={min:Level.ids.min, count:Level.count}
         end
         eval "#{name}.destroy_all"
         puts "== #{Time.now-timestart} end"
         timestart =Time.now
+        t=Time.now
         puts "== #{timestart} data recording"
         i=0
         import_record = []
@@ -45,14 +47,16 @@ Dir["./db/import/*"].sort.each do |path|
             elem[:size_id]=index[:size].sample
           elsif name=="Client"
             elem[:location_id]=index[:location].sample
-            elem[:password] = BCrypt::Password.create('11111111')
-            elem[:encrypted_password]= BCrypt::Password.create('11111111')
+            elem[:password] = index[:password]
+            elem[:encrypted_password]= index[:password]
           end
           arg = "import_record << #{name}.new(#{elem.to_s})"
           eval arg
           i+=1
+          puts "Сформироано #{i} записей за #{Time.now - t}" if i%100==0
           if i%1000==0
             eval"#{name}.import import_record"
+            index[:password] = BCrypt::Password.create('11111111')
             import_record=[]
             puts "== #{Time.now-timestart} complete #{i} row"
             time_start = Time.now
