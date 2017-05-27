@@ -29,7 +29,6 @@ Dir["./db/import/*"].sort.each do |path|
             index[:size] = Size.all.ids
           when "Client"
             index[:location] = Location.all.ids
-            index[:pass] = BCrypt::Password.create('11111111')
           when "Industry"
             index[:level]={min:Level.ids.min, count:Level.count}
         end
@@ -46,8 +45,8 @@ Dir["./db/import/*"].sort.each do |path|
             elem[:size_id]=index[:size].sample
           elsif name=="Client"
             elem[:location_id]=index[:location].sample
-            elem[:password] = index[:pass]
-            elem[:encrypted_password]= index[:pass]
+            elem[:password] = BCrypt::Password.create('11111111')
+            elem[:encrypted_password]= BCrypt::Password.create('11111111')
           end
           arg = "import_record << #{name}.new(#{elem.to_s})"
           eval arg
@@ -75,11 +74,12 @@ begin
     end
 
     #Подготовка переменных
-    index= {location: {min: Location.ids.min, count: Location.count}}
+    index= {location: Location.ids}
     index[:industry] = {min: Industry.ids.min, count: Industry.count, max:Industry.ids.max}
     index[:company] = {min: Company.ids.min, count:Company.count}
 
     #Назначение отверственных по команиям
+    puts "++ Responsible #{Responsible.count}"
     if Responsible.count==0
       timestart =Time.now
       i=0
@@ -95,7 +95,7 @@ begin
     end
     #Конец
 
-
+    puts "++ Industrycompany #{Industrycompany.count}"
     #Присвоение индустрий компаниям
     if Industrycompany.count==0
       timestart =Time.now
@@ -122,8 +122,10 @@ begin
     end
     #Конец
 
+    puts "++ Job #{Job.count}"
     #Создаем вакансии
     if Job.count== 0
+
       timestart =Time.now
       puts "== #{timestart} create job"
       i=0
@@ -132,17 +134,16 @@ begin
           Random.rand(51).times do
 
             #Расчет параметров для каждой вакансии
-            title = ""
-            Random.rand(15).times do
-              title+=arr_word[Random.rand(arr_word.size)].delete("\n")+' '
+            title =rand(15).times.map do
+              arr_word.sample.delete("\n")+' '
             end
             #З.П
-            if  Random.rand(2)==1 #Есть з.п
-              salarymin=Random.rand(110)*1000 if Random.rand(2)==1
-              if Random.rand(2)==1 #есть максимальная з.п. но нет минимальной
-                salarymax = Random.rand(180)*1000
-              elsif Random.rand(2)==1 and not(salarymin.nil?)
-                salarymax = salarymin+Random.rand(70)*1000
+            if  [false, true].sample #Есть з.п
+              salarymin=rand(110)*1000 if [false, true].sample
+              if [false, true].sample #есть максимальная з.п. но нет минимальной
+                salarymax = rand(180)*1000
+              elsif [false, true].sample and not(salarymin.nil?)
+                salarymax = salarymin+rand(70)*1000
               end
             else
               salarymin=nil
@@ -150,14 +151,14 @@ begin
             end
 
             #описание
-            description = ''
-            Random.rand(100).times do
-              description += arr_word[Random.rand(arr_word.size)].delete("\n")+' '
+            description = rand(100).times.map do
+              arr_word.sample.delete("\n")+' '
             end
 
             #Создаем вакансию
-            job = company.job.create(title:title,
-                                       location: Location.find_by_id(index[:location][:min] + Random.rand(index[:location][:count])),
+            job = Job.create(title:title.join,
+                       company:company,
+                                       location_id: index[:location].sample,
                                        salarymin: salarymin,
                                        salarymax: salarymax,
                                        permanent: [true, false].sample,
@@ -168,10 +169,10 @@ begin
                                        parttime: [true, false].sample,
                                        flextime: [true, false].sample,
                                        remote: [true, false].sample,
-                                       description: description)
-            job.save
+                                       description: description.join)
 
             #Добавляем к вакансии отрасли
+            if job.save
             index_now  =index[:industry][:min]+Random.rand(index[:industry][:count])
             Random.rand(4).times do
               if index_now>index[:industry][:max]
@@ -181,6 +182,7 @@ begin
               industry.save
               index_now +=1
             end
+              end
 
           end
         end
