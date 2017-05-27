@@ -44,11 +44,11 @@ Dir["./db/import/*"].sort.each do |path|
         import_record = []
         time_start = Time.now
         if name=="Client" and Client.count >0
-          r = Client.count
+          r = Client.count-1
         else
           r = 0
         end
-        array[r-1..array.length-1].each do |elem|
+        array[r..array.length-1].each do |elem|
           if  name =="Company"
             elem[:location_id]=index[:location].sample
             elem[:size_id]=index[:size].sample
