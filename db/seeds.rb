@@ -33,38 +33,37 @@ Dir["./db/import/*"].sort.each do |path|
           when "Industry"
             index[:level]={min:Level.ids.min, count:Level.count}
         end
-        unless name=="Client"
-          eval "#{name}.destroy_all"
-        end
+        eval "#{name}.destroy_all"
         puts "== #{Time.now-timestart} end"
         timestart =Time.now
         t=Time.now
         puts "== #{timestart} data recording"
         i=0
-        import_record = []
         time_start = Time.now
-        if name=="Client" and Client.count >0
-          r = Client.count-1
+        if name=="Client"
+          r = 700
+        elsif name=="Company"
+          r = 300
         else
-          r = 0
+          r = array.length-1
         end
-        array[r..array.length-1].each do |elem|
+        array[0..r].each do |elem|
           if  name =="Company"
             elem[:location_id]=index[:location].sample
             elem[:size_id]=index[:size].sample
+            elem.delete("size")
+            elem.delete("location")
           elsif name=="Client"
             elem[:location_id]=index[:location].sample
             elem[:password] = index[:password]
             elem[:encrypted_password]= index[:password]
           end
-          arg = "import_record << #{name}.new(#{elem.to_s})"
+          arg = "#{name}.create(#{elem.to_s})"
           eval arg
           i+=1
           puts "Сформироано #{i} записей за #{Time.now - t}" if i%100==0
           if i%1000==0
-            eval"#{name}.import import_record"
             index[:password] = BCrypt::Password.create('11111111')
-            import_record=[]
             puts "== #{Time.now-timestart} complete #{i} row"
             time_start = Time.now
           end
@@ -85,9 +84,9 @@ begin
     end
 
     #Подготовка переменных
-    index= {location: Location.ids}
-    index[:industry] = {min: Industry.ids.min, count: Industry.count, max:Industry.ids.max}
-    index[:company] = {min: Company.ids.min, count:Company.count}
+    index= {location: Location.all.ids}
+    index[:industry] = Industry.all.ids
+    index[:company] = Company.all.ids
 
     #Назначение отверственных по команиям
     puts "++ Responsible #{Responsible.count}"
@@ -112,18 +111,17 @@ begin
       timestart =Time.now
       i=0
       puts "== #{timestart} Linking industry to the company"
-      index = {count: Industry.count, min: Industry.ids.min}
       Company.all.each do |company|
-        j=1+Random.rand(3)
+        j=1+Random.rand(2)
         while j>0 do
           flag=true
           while flag  do
-            industry=Industry.find_by_id(index[:min]+Random.rand(index[:count]))
-            if Industrycompany.where("industry_id=:industry and company_id=:company", industry: industry.id,company:company.id).count==0
+            industry=index[:industry].sample
+            if Industrycompany.where("industry_id=:industry and company_id=:company", industry: industry,company:company.id).count==0
               flag=false
             end
           end
-          Industrycompany.create(company: company, industry:industry)
+          Industrycompany.create(company: company, industry_id:industry)
           j-=1
         end
         i+=1
@@ -142,7 +140,7 @@ begin
       i=0
       Company.all.each do |company|
         if [false, true].sample
-          Random.rand(51).times do
+          Random.rand(15).times do
 
             #Расчет параметров для каждой вакансии
             title =rand(15).times.map do
@@ -184,12 +182,12 @@ begin
 
             #Добавляем к вакансии отрасли
             if job.save
-            index_now  =index[:industry][:min]+Random.rand(index[:industry][:count])
-            Random.rand(4).times do
-              if index_now>index[:industry][:max]
-                index_now = index[:industry][:min]
+            index_now  =index[:industry].sample
+            rand(4).times do
+              if index_now>Industry.all.ids.max
+                index_now = Industry.all.ids.min
               end
-              industry=job.industryjob.create(industry: Industry.find_by_id(index_now))
+              industry=job.industryjob.create(industry_id:index_now)
               industry.save
               index_now +=1
             end
@@ -203,6 +201,7 @@ begin
       puts "== #{Time.now-timestart} end"
     end
 
+    puts "++ Resumes #{Resume.count}"
     #Создаем резюме
     if Resume.count == 0
       #Конец подготовки
@@ -214,17 +213,15 @@ begin
       i=0
       timestart =Time.now
       puts "== #{timestart} create resume"
-      Client.where("responsible = false").find_in_batches.each do |clients|
-        resumes=[]
+      Client.where("resp = false").find_in_batches.each do |clients|
         clients.each do |client|
           if [true, false].sample
-            Random.rand(3).times
+            rand(3).times
               #Расчет параметров для каждой вакансии
-              desiredjobtitle = ""
-              (Random.rand(5)+1).times do
-                desiredjobtitle+=arr_word[Random.rand(arr_word.size)].delete("\n")+' '
+              desiredjobtitle = (rand(5)+1).times.map do
+                arr_word.sample.delete("\n")+' '
               end
-              salary = (Random.rand(180)+1)*1000
+              salary = (rand(180)+1)*1000
               permanent = [false,true].sample
               casual = [false,true].sample
               temp = [false,true].sample
@@ -233,13 +230,13 @@ begin
               parttime = [false,true].sample
               flextime = [false,true].sample
               remote = [false,true].sample
-              abouteme=""
-              (Random.rand(50)+1).times do
-                abouteme+=arr_word[Random.rand(arr_word.size)].delete("\n")+' '
+              abouteme=(rand(50)+1).times.map do
+                arr_word.sample.delete("\n")+' '
               end
 
-              resumes << Resume.new(client:client,
-                                  desiredjobtitle:desiredjobtitle,
+              Resume.create(client:client,
+                            location:client.location,
+                                  desiredjobtitle:desiredjobtitle.join,
                                   salary:salary,
                                   permanent:permanent,
                                   casual: casual,
@@ -249,49 +246,45 @@ begin
                                   parttime:parttime,
                                   flextime:flextime,
                                   remote:remote,
-                                  abouteme:abouteme)
+                                  abouteme:abouteme.join)
             end
         end
-        Resume.import resumes
         i+=1
         puts "== #{Time.now-timestart} complete #{i*1000} row"
       end
       puts "== #{Time.now-timestart} end"
-
+    end
       #Добавляем индустрии к резюме
+    if 1==1
       i=0
+      #index = {industry:Industry.all.ids}
       timestart =Time.now
       puts "== #{timestart} match the resumes and industries"
-      Resume.find_in_batches.each do |resumes|
-        industries=[]
-        resumes.each do |resume|
-            index_now  =index[:industry][:min]+Random.rand(index[:industry][:count])
-            Random.rand(2).times do
-              if index_now>index[:industry][:max]
-                index_now = index[:industry][:min]
-              end
-              industries << Industryresume.new(resume:resume,industry: Industry.find_by_id(index_now))
-              index_now +=1
-            end
+      if Industryresume.count == 0
+        Resume.find_in_batches.each do |resumes|
+          resumes.each do |resume|
+            Industryresume.create(industry_id: index[:industry].sample, resume:resume)
+          end
+          i+=1
+          puts "== #{Time.now-timestart} complete #{i*1000} row"
         end
-        i+=1
-        Industryresume.import industries
-        puts "== #{Time.now-timestart} complete #{i*1000} row"
+        puts "== #{Time.now-timestart} end"
       end
-      puts "== #{Time.now-timestart} end"
+    end
 
       #Добавление опыта работы
-      i=0
-      timestart =Time.now
-      puts "== #{timestart} add experiences"
+    i=0
+    timestart =Time.now
+    puts "== #{timestart} add experiences"
+    if Experience.count == 0
       Resume.find_in_batches.each do |resumes|
         experiences = []
         resumes.each do |resume|
-          count_job= Random.rand(20)+1
+          count_job= Random.rand(6)+1
           count_job.times do |i|
             #рассчитываем параметры для опыта
-            employer = Company.find_by_id(index[:company][:min]+Random.rand(index[:company][:count])).name
-            location = Location.find_by_id(index[:location][:min] + Random.rand(index[:location][:count]))
+            employer = Company.find_by_id(index[:company].sample).name
+            location = Location.find_by_id(index[:location].sample)
             site = "#{["https://","http://"].sample+employer.delete(" ",".","\\","/")+[".ru",".com.au",".com"].sample}#"
             titlejob = ""
             (Random.rand(5)+1).times do
@@ -308,13 +301,13 @@ begin
               description+=arr_word[Random.rand(arr_word.size)].delete("\n")+' '
             end
             experiences<<Experience.new(resume:resume,
-                                           employer:employer,
-                                           location:location,
-                                           site:site,
-                                           titlejob:titlejob,
-                                           datestart:datestart,
-                                           dateend:dateend,
-                                           description:description)
+                                        employer:employer,
+                                        location:location,
+                                        site:site,
+                                        titlejob:titlejob,
+                                        datestart:datestart,
+                                        dateend:dateend,
+                                        description:description)
           end
         end
         i+=1
@@ -322,50 +315,22 @@ begin
         puts "== #{Time.now-timestart} complete #{i*1000} row"
       end
       puts "== #{Time.now-timestart} end"
+    end
 
-      #Связка индустрии и опыта
+    #Связка индустрии и опыта
+    if Industryexperience.count == 0
       i=0
       timestart =Time.now
       puts "== #{timestart} match industries and experiences"
       Experience.find_in_batches.each do |experiences|
-        industryexperiences=[]
         experiences.each do |experience|
-          industryexperiences<< Industryexperience.new(experience:experience, industry: Industry.find_by_id(index[:industry][:min]+Random.rand(index[:industry][:count])))
+         Industryexperience.create(experience:experience, industry_id: index[:industry].sample)
         end
-        Industryexperience.import industryexperiences
         i+=1
         puts "== #{Time.now-timestart} complete #{i*1000} row"
       end
       puts "== #{Time.now-timestart} end"
-
     end
-
-    #Задаем пароль тестовым пользователям. У всех 11111111
-    i=0
-    timestart =Time.now
-    puts "== #{timestart} update password on \"11111111\""
-    Client.where('encrypted_password ISNULL').find_in_batches.each do |clients|
-      clients.each do |client|
-        client.encrypted_password= BCrypt::Password.create('11111111')
-        client.save
-      end
-      i+=1
-      puts "== #{Time.now-timestart} complete #{i*1000} row"
-    end
-    puts "== #{Time.now-timestart} end"
-
-    #Предбразуем справочник локаций в целевой вид
-    i=0
-    timestart =Time.now
-    puts "== #{timestart} Linking Locations"
-    Location.where('parent_id ISNULL').find_in_batches.each do |locations|
-      locations.each do |client|
-
-      end
-      i+=1
-      puts "== #{Time.now-timestart} complete #{i*1000} row"
-    end
-    puts "== #{Time.now-timestart} end"
 
     if 1==0
       i=0
@@ -418,7 +383,31 @@ begin
 rescue
   puts "Error: #{$!}"
 end
+puts "--==Clients #{Client.count}==--"
+puts "--==Companies #{Company.count}==--"
+puts "--==Educations #{Education.count}==--"
+puts "--==Experiences #{Experience.count}==--"
+puts "--==Industries #{Industry.count}==--"
+puts "--==IndustryCompanies #{Industrycompany.count}==--"
+puts "--==IndustryExperiences #{Industryexperience.count}==--"
+puts "--==IndustryJobs #{Industryjob.count}==--"
+puts "--==IndustryResumes #{Industryresume.count}==--"
+puts "--==Jobs #{Job.count}==--"
+puts "--==Languageresumes #{Languageresume.count}==--"
+puts "--==Languages #{Language.count}==--"
+puts "--==Levels #{Level.count}==--"
+puts "--==Locations #{Location.count}==--"
+puts "--==Properts #{Propert.count}==--"
+puts "--==Responsibles #{Responsible.count}==--"
+puts "--==Resumes #{Resume.count}==--"
+puts "--==Sizes #{Size.count}==--"
+puts "--==Skillsjobs #{Skillsjob.count}==--"
+puts "--==SkillsResumes #{Skillsresume.count}==--"
 
+all = Client.count+Company.count+Education.count+Experience.count+Industry.count+Industrycompany.count+Size.count
+all +=Industryexperience.count+Industryjob.count+Industryresume.count+Job.count+Languageresume.count+Skillsjob.count
+all +=Language.count+Level.count+Location.count+Propert.count+Responsible.count+Resume.count+Skillsresume.count
+puts "--==All objects #{all}==--"
 puts "== #{Time.now - ttime } end seed"
 end
 
