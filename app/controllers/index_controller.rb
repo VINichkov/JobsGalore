@@ -1,7 +1,7 @@
 class IndexController < ApplicationController
   before_action :category, only: [:main, :by_category]
   def main
-
+    @jobs_last = Job.last(10)
   end
 
   def advertising_terms_of_use
@@ -90,7 +90,9 @@ class IndexController < ApplicationController
   end
 
   def category
-    initHashMemory
+    @count = Industry.count
+    @count_colum = @count/3-1
+    @count_colum +=1 if  @count%3>0
     @category=Industry.where('level=?',1)
     if params[:obj].nil?
       params[:obj]='2'
@@ -105,30 +107,13 @@ class IndexController < ApplicationController
     end
   end
 
-  def initHashMemory
-    if $memory.hashValue[:industry].nil?
-      count = Industry.count
-      one_colum_last = count/3-1
-      two_colum_last = count/3*2-1
-      if count%3==1
-        one_colum_last +=1
-      elsif count%3==2
-        one_colum_last +=1
-        two_colum_last +=1
-      end
-      newHash = {count:count, one_colum_last:one_colum_last,two_colum_last:two_colum_last }
-      $memory.hashValue[:industry] = newHash
-    end
 
-  end
-
-    def query_text(params)
+  def query_text(params)
       text = ""
       text = "fts @@ to_tsquery(:query)" unless params[:value].nil?
       text = "and location_id = :location" unless params[:location].nil?
       text = "and location_id = :" unless params[:location].nil?
 
-    end
-
+  end
 
 end

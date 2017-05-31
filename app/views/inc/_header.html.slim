@@ -1,17 +1,14 @@
-.container-fluid.header
+.container-fluid
   .container
     h1
-      .circle
-        span.black_text
-          | #{PropertsHelper::TITLE}.
-        span.white_text
-          | com.au
-
-nav.navbar.navbar-static-top.navbar-inverse[data-spy="affix" data-offset-top="75"]
+      span
+        = image_tag("/assets/method-draw-image.svg", size:"100x100")
+      span.black_text
+        |.COM.AU
+nav.navbar.navbar-static-top.navbar-default[data-spy="affix" data-offset-top="130"]
   .container-fluid
     .col-lg-1.col-md-1
-      a.navbar-brand.active
-        |#{PropertsHelper::TITLE}
+      =link_to PropertsHelper::TITLE, root_path, class: "navbar-brand active"
     .col-lg-3.col-md-3
       ul.nav.navbar-nav
         li.nav-item

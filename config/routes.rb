@@ -54,7 +54,7 @@ Rails.application.routes.draw do
   #resources :industrycompanies
   #resources :industryjobs
   #resources :industryresumes
-  #resources :industries
+  resources :industries, only:[:index]
   #resources :properts
 
 

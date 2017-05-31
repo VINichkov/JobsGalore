@@ -109,15 +109,18 @@ class Search extends React.Component{
         };
 
         return(<div>
-                    <div className="form-group" style={{display:'inline'}}>
+                    <div className="form-group  " style={{display:'inline'}}>
+                        <div className="form-group col-lg-10 col-md-10">
                             <div className="input-group" style={{display:'table'}}>
                                 <span className="input-group-btn" style={{width:'1%'}}>
                                     <button className={"btn input-lg "+button_option} onClick={this.handleOnClickOptions} data-toggle = "popover-options" type="button">
                                         <i className="glyphicon glyphicon-cog glyphicon-big"></i>
                                     </button>
                                 </span>
+                                <input id="input_search" name={this.props.name+'[type]'}  value={this.state.type_search_code} style={ilStyle}></input>
+                                <input id="input_search_value" className="form-control input-lg" placeholder="Search"  defaultValue={this.props.params ? this.props.params.value : ''} name={this.props.name+'[value]'}  type="text"></input>
                                 <div className="input-group-btn" style={{width:'1%'}}>
-                                    <button className="btn btn-success dropdown-toggle input-lg" type="button" data-toggle="dropdown" aria-haspopup="true">
+                                    <button className="btn btn-default dropdown-toggle input-lg" type="button" data-toggle="dropdown" aria-haspopup="true">
                                         {this.state.type_search_name}
                                         <span className="caret"></span>
                                     </button>
@@ -127,14 +130,13 @@ class Search extends React.Component{
                                         <li><a id="Search_3" data-id = '1'  onClick={this.handleClickItem}>Companies</a></li>
                                     </ul>
                                 </div>
-
-                                <input id="input_search" name={this.props.name+'[type]'}  value={this.state.type_search_code} style={ilStyle}></input>
-                                <input id="input_search_value" className="form-control input-lg" placeholder="Search"  defaultValue={this.props.params ? this.props.params.value : ''} name={this.props.name+'[value]'}  type="text"></input>
-                                <span className="input-group-btn" style={{width:'1%'}}>
+                            </div>
+                        </div>
+                        <div className="form-group col-lg-2 col-md-2">
                                      <button className="btn btn-success input-lg" type="submit">
-                                         <i className="glyphicon glyphicon-search glyphicon-big"></i>
+                                         Search
                                      </button>
-                                </span>
+
                             </div>
                     </div>
                     {options}

@@ -46,9 +46,15 @@
               -else
                 =image_tag(client.photo.thumb('300x').url,size: "60x60", class: 'img-circle center-block ')
             col-lg-9.col-md-9
-              |#{client.firstname} #{client.lastname}
-              address
-                a[href ="mailto:#{client.email}" ] =client.email
-                a[href ="tel:#{client.phone}" ] #{client.phone}
+              = "#{client.firstname} #{client.lastname}"
+              br
+              |Email:
+              | &nbsp;
+              a[href ="mailto:#{client.email}" ] = client.email
+              br
+              |Phone:
+              | &nbsp;
+              a[href ="tel:#{client.phone}" ] #{client.phone}
+              p
           br
           = social_share_button_tag @company.name

@@ -25,15 +25,23 @@ $icon-font-path: "/assets/bootstrap/";
   width: 100%;
 }
 
-.affix + .container-fluid {
-  padding-top: 70px;
+.affix + .row{
+  padding-top: 63px;
 }
 
-.header {
-  background-color: #eeeeee;
-  color: #fff;
-  height: 75px;
+.affix + .container{
+  padding-top: 63px;
 }
+
+.bloc_white {
+  height: 0px;
+  display: inline;
+}
+.affix_white {
+  height: 130px;
+  display: inline;
+}
+
 
 .black_text {
   font-weight:700;
@@ -50,7 +58,9 @@ $icon-font-path: "/assets/bootstrap/";
                 0 5px 10px rgba(0,0,0,.25),
                 0 10px 10px rgba(0,0,0,.2),
                 0 20px 20px rgba(0,0,0,.15);
+
 }
+
 .white_text {
   padding-left: 3px;
   padding-right: 3px;
@@ -58,7 +68,7 @@ $icon-font-path: "/assets/bootstrap/";
   font-weight:700;
   font-size: 24px;
   color: white;
-  background-color: red;
+  background-color: #d80000;
   border-radius: 40px;
   box-shadow:  0 1px 0 #fcc,
                 0 2px 0 #f9c9c9,

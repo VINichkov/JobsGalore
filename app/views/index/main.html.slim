@@ -1,23 +1,58 @@
-.container
-  =render 'inc/job_by_category'
+.row
+  = image_tag("/assets/jobsA.jpg", class: 'center-block')
 
+.container
   .row
-    .col-lg-6.col-md-6.well
-      ul.nav.nav-list
-        li.nav-header
-          h4
-            |sdfsdfsdfsdfsdfsd
-    .col-lg-6.col-md-6.well
-      ul.nav.nav-list
-        li.nav-header
-          h4
-            |sdfsdfsdfsdfsdfsd
-  .row
-    .col-lg-6.col-md-6.well.well-small
-      ul.nav.nav-list
-        li.nav-header
-          h4
-            |Jobs by Location
-        li
-          a
-            | Два
+    .col-lg-3.col-md-3
+      .well
+        ul.nav.nav-list
+          li.nav-header
+            h4
+              |Major cities
+          li
+            =link_to "Sydney", search_path(main_search:{type:"2", value:"", location_name:"Sydney, NSW", location_id:"9522"}), method: :post
+          li
+            = link_to "Melbourne", search_path(main_search:{type:"2", value:"", location_name:"Melbourne, VIC", location_id:"9561"}), method: :post
+          li
+            = link_to "Brisbane", search_path(main_search:{type:"2", value:"", location_name:"Brisbane, QLD", location_id:"9525"}), method: :post
+          li
+            = link_to "Gold Coast", search_path(main_search:{type:"2", value:"", location_name:"Gold Coast, QLD", location_id:"9531"}), method: :post
+          li
+            = link_to "Perth", search_path(main_search:{type:"2", value:"", location_name:"Perth, WA", location_id:"9580"}), method: :post
+          li
+            = link_to "Adelaide", search_path(main_search:{type:"2", value:"", location_name:"Adelaide, QLD", location_id:"9547"}), method: :post
+          li
+            = link_to "Hobart", search_path(main_search:{type:"2", value:"", location_name:"Hobart, TAS", location_id:"9557"}), method: :post
+          li
+            = link_to "Darwin", search_path(main_search:{type:"2", value:"", location_name:"Darwin, NT", location_id:"9523"}), method: :post
+          li
+            = link_to "Canberra", search_path(main_search:{type:"2", value:"", location_name:"Canberra, ACT", location_id:"9501"}), method: :post
+    .col-lg-9.col-md-9
+      .well
+        ul.nav.nav-list
+          li.nav-header
+            h4
+              |Last Jobs
+          .col-lg-6.col-md-6
+            ul.nav.nav-list
+              -@jobs_last[0..4].each do |job|
+                li
+                  hr
+                  p
+                    =link_to(job.title, job)
+                  p.small
+                    = link_to job.company.name, job.company, class: 'text-success'
+                  p.small = job.location.state.to_s+" "+job.location.suburb.capitalize.to_s
+          .col-lg-6.col-md-6
+            ul.nav.nav-list
+              - @jobs_last[5..9].each do |job|
+                li
+                  hr
+                  p
+                    = link_to(job.title, job)
+                  p.small
+                    = link_to job.company.name, job.company, class: 'text-success'
+                  p.small = job.location.state.to_s+" "+job.location.suburb.capitalize.to_s
+
+
+  =render 'inc/job_by_category'

@@ -7,8 +7,8 @@
           = @job.description
 
         .col-lg-6.col-md-6
-          button.btn.btn-primary.btn-lg.btn-block[onclick="history.back()"]
-            |Apply for this job
+          button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
+            |Contact
         .col-lg-6.col-md-6
           button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
             |Back
@@ -43,44 +43,74 @@
           -if @job.permanent
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-              | Permanent
+              | &nbsp; Permanent
               br
           - if @job.casual
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-              | Casual
+              | &nbsp; Casual
               br
           - if @job.temp
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-              | Temp
+              | &nbsp; Temp
               br
           - if @job.contract
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-              | Contract
+              | &nbsp; Contract
               br
           - if @job.fulltime
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-              | Full time
+              | &nbsp; Full time
               br
           - if @job.parttime
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-              | Part time
+              | &nbsp; Part time
               br
           - if @job.flextime
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-              | Flex time
+              | &nbsp; Flex time
               br
           - if @job.remote
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-              | Remote
+              | &nbsp; Remote
               br
         br
         =social_share_button_tag @job.title
+.modal.fade#contact[tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"]
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button[type="button" class="close" data-dismiss="modal" aria-label="Close"]
+          span[aria-hidden="true"]
+            |&times;
+        h4.modal-title Contact:
+      .modal-body
+        .container-fluid
+          .row
+            - @job.company.client.each do |client|
+              col-lg-3.col-md-3
+                - if client.photo.nil?
+                  = image_tag("/assets/avatar.png", size: "60x60", class: 'img-circle center-block')
+                - else
+                  = image_tag(client.photo.thumb('300x').url, size: "60x60", class: 'img-circle center-block ')
+              col-lg-9.col-md-9
+                ="#{client.firstname} #{client.lastname}"
+                br
+                |Email:
+                | &nbsp;
+                a[href ="mailto:#{client.email}" ] = client.email
+                br
+                |Phone:
+                | &nbsp;
+                a[href ="tel:#{client.phone}" ] #{client.phone}
+      .modal-footer
+        button[type="button" class="btn btn-default" data-dismiss="modal"]
+          |Close
 
 /TODO доделать контактную информацию
