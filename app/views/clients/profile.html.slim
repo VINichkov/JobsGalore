@@ -1,41 +1,60 @@
 .container
-  .row.well
+  .row.well.hidden-xs.hidden-sm
     .col-md-6.col-lg-6
       -if current_client.photo.nil?
-        = image_tag("/assets/avatar.png", class: 'img-circle')
+        = image_tag("/assets/avatar.png", class: 'img-circle', size:"300x300")
       -else
-        =image_tag(current_client.photo.thumb('300x300#').url, class: 'img-circle')
+        =image_tag(current_client.photo.thumb('300x300#').url, class: 'img-circle', size:"300x300")
     .col-md-6.col-lg-6
       h2 #{current_client.firstname} #{current_client.lastname}
       h2 Email: #{current_client.email}
       h2 Phone: #{current_client.phone}
       h2 #{current_client.location.suburb}, #{current_client.location.state}
+  .row.well.hidden-md.hidden-lg
+    .col-sm-6
+      - if current_client.photo.nil?
+        = image_tag("/assets/avatar.png", class: 'img-circle', size: "200x200")
+      - else
+        = image_tag(current_client.photo.thumb('300x300#').url, class: 'img-circle', size: "200x200")
+    .col-sm-6
+      h3 #{current_client.firstname} #{current_client.lastname}
+      h4 Email: #{current_client.email}
+      h4 Phone: #{current_client.phone}
+      h4 #{current_client.location.suburb}, #{current_client.location.state}
   -if current_client.resp then
     .row
       .col-md-6.col-lg-6
         h2 Your jobs
       .col-md-6.col-lg-6
-        = link_to "post a job", new_job_path, class: "btn btn-primary btn-block btn-lg"
+        = link_to "Post a job", new_job_path, class: "btn btn-primary btn-block btn-lg"
     .row.well
-      - current_client.company.all.each do |company|
-        - company.job.each do |job|
-          .panel.panel-default
+        - current_client.company.all.each do |company|
+          - company.job.each do |job|
             .panel-body
               .col-lg-10.col-md-10
                 h3
                   = link_to job.title.capitalize, job, class: 'text-warning'
                 - if job.salarymax.nil? and not job.salarymin.nil? then
-                  p = job.salarymin.to_i.to_s
+                  p
+                    strong
+                      |Solary: &nbsp;
+                    = job.salarymin.to_i.to_s
                 - elsif not (job.salarymax.nil? and job.salarymin.nil?)
-                  p = job.salarymin.to_i.to_s+" - "+ job.salarymax.to_i.to_s
-                = job.description[0..300]
-                = link_to ' more...', job
-                p = job.location.state.to_s+" "+job.location.suburb.capitalize.to_s
-                = "Posted: "+job.updated_at.strftime("%d %B %Y").to_s
+                  p
+                    strong
+                      |Solary: &nbsp;
+                    = job.salarymin.to_i.to_s+" - "+ job.salarymax.to_i.to_s
+                p.small
+                  strong
+                    |Location: &nbsp;
+                  |#{job.location.state.to_s+" "+job.location.suburb.capitalize.to_s}, &nbsp;
+                  strong
+                    |Posted: &nbsp;
+                  |#{job.updated_at.strftime("%d %B %Y").to_s}
               .col-lg-2.col-md-2
                 .row
-                  =link_to "Edit", edit_job_path(job), class:"btn btn-success btn-block btn-lg"
-                  =link_to "Delete", job, data: { confirm: 'Are you sure?' }, method: :delete, class:"btn btn-danger btn-block btn-lg"
+                  = link_to "Edit", edit_job_path(job), class: "btn btn-success btn-block btn-lg"
+                  = link_to "Delete", job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block btn-lg"
 
   -else
     .row
@@ -51,11 +70,17 @@
               h3
                 = link_to resume.desiredjobtitle.capitalize, resume, class: 'text-warning'
               - if not resume.salary.nil?
-                p = resume.salary.to_i.to_s
-              = resume.abouteme[0..300]
-              = link_to ' more...', resume
-              |p = resume.location.state.to_s+" "+resume.location.suburb.capitalize.to_s
-              = "Posted: "+resume.updated_at.strftime("%d %B %Y")
+                p
+                  strong
+                    |Solary: &nbsp;
+                  = resume.salary.to_i.to_s
+              p.small
+                strong
+                  |Location: &nbsp;
+                |#{resume.location.state.to_s+" "+resume.location.suburb.capitalize.to_s},  &nbsp;
+                strong
+                  |Posted: &nbsp;
+                |#{resume.updated_at.strftime("%d %B %Y")}
             .col-lg-2.col-md-2
               .row
                 = link_to "Edit", edit_resume_path(resume), class: "btn btn-success btn-block btn-lg"

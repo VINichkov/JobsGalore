@@ -31,7 +31,7 @@ class Job < ApplicationRecord
     text_query << 'remote  = true'     if (query[:remote] == "on")
     text_query<< "fts @@ to_tsquery(:value)" if query[:value] != ""
     if (not query[:salary].nil?) and (not query[:salary]=="")
-      text_query << '(salarymin is not NULL and ((salarymax >= :salary) or (salarymax is NULL)))'
+      text_query << '((salarymin is NULL and (salarymax >= :salary or salarymax is NULL)) or (salarymin>=:salary) or (salarymin <=:salary and salarymax >= :salary))'
     end
     text_query = text_query.join(" and ")
     where(text_query,query)

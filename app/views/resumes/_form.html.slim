@@ -89,7 +89,7 @@
   .form-group
     = f.label :abouteme, "Aboute me"
     br
-    = f.text_area :abouteme, class:"form-control input-lg", rows:8
+    = f.text_area :abouteme, class:"form-control input-lg", :"data-provide"=>"markdown-editable", rows:"10"
   hr.colorgraph
     .row
       .col-xs-6.col-md-6

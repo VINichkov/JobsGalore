@@ -7,7 +7,7 @@
           - if @company.logo.nil?
             = image_tag("/assets/company_profile.jpg", size: "300x300", class: 'img-circle')
           - else
-            = image_tag(@company.logo.thumb('300x300#').url, class: 'img-circle')
+            = image_tag(@company.logo.thumb('300x300#').url, class: 'img-circle', size:"300x300")
         .col-md-8.col-lg-8
           h3 Name: #{@company.name}
           h3 Size: #{@company.size ? @company.size.size : "empty"}
@@ -24,7 +24,8 @@
           h3.text-center
             |Description
           -if @company.description
-            p =@company.description
+            p
+              =  render :inline =>  RDiscount.new(@company.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ")
           -else
             p Empty
       br

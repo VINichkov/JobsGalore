@@ -1,5 +1,16 @@
-.row
-  = image_tag("/assets/jobsA.jpg", class: 'center-block')
+.row.hidden-xs
+  .container
+    .header
+      - if not (client_signed_in?) or (current_client.resp)
+        .row
+          .col-lg-3.col-md-3.col-md-offset-9.col-lg-offset-9
+            = link_to "Post а job", new_job_path, class: "btn btn-primary btn-block btn-lg"
+            p
+      - if not (client_signed_in?) or not (current_client.resp)
+        .row
+          .col-lg-3.col-md-3.col-md-offset-9.col-lg-offset-9
+            = link_to "Post а resume", new_resume_path, class: "btn btn-primary btn-block btn-lg"
+            p
 
 .container
   .row
@@ -9,25 +20,25 @@
           li.nav-header
             h4
               |Major cities
-          li
+          li.col-sm-4.col-md-12.col-lg-12
             =link_to "Sydney", search_path(main_search:{type:"2", value:"", location_name:"Sydney, NSW", location_id:"9522"}), method: :post
-          li
+          li.col-sm-4.col-md-12.col-lg-12
             = link_to "Melbourne", search_path(main_search:{type:"2", value:"", location_name:"Melbourne, VIC", location_id:"9561"}), method: :post
-          li
+          li.col-sm-4.col-md-12.col-lg-12
             = link_to "Brisbane", search_path(main_search:{type:"2", value:"", location_name:"Brisbane, QLD", location_id:"9525"}), method: :post
-          li
+          li.col-sm-4.col-md-12.col-lg-12
             = link_to "Gold Coast", search_path(main_search:{type:"2", value:"", location_name:"Gold Coast, QLD", location_id:"9531"}), method: :post
-          li
+          li.col-sm-4.col-md-12.col-lg-12
             = link_to "Perth", search_path(main_search:{type:"2", value:"", location_name:"Perth, WA", location_id:"9580"}), method: :post
-          li
+          li.col-sm-4.col-md-12.col-lg-12
             = link_to "Adelaide", search_path(main_search:{type:"2", value:"", location_name:"Adelaide, QLD", location_id:"9547"}), method: :post
-          li
+          li.col-sm-4.col-md-12.col-lg-12
             = link_to "Hobart", search_path(main_search:{type:"2", value:"", location_name:"Hobart, TAS", location_id:"9557"}), method: :post
-          li
+          li.col-sm-4.col-md-12.col-lg-12
             = link_to "Darwin", search_path(main_search:{type:"2", value:"", location_name:"Darwin, NT", location_id:"9523"}), method: :post
-          li
+          li.col-sm-4.col-md-12.col-lg-12
             = link_to "Canberra", search_path(main_search:{type:"2", value:"", location_name:"Canberra, ACT", location_id:"9501"}), method: :post
-    .col-lg-9.col-md-9
+    .col-lg-9.col-md-9.hidden-sm.hidden-xs
       .well
         ul.nav.nav-list
           li.nav-header

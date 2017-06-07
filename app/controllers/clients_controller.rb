@@ -67,6 +67,7 @@ class ClientsController < ApplicationController
   # DELETE /clients/1
   # DELETE /clients/1.json
   def destroy
+    @client.company.destroy_all
     @client.destroy
     respond_to do |format|
       format.html { redirect_to clients_url, notice: 'Client was successfully destroyed.' }
@@ -82,6 +83,10 @@ class ClientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
-      params.require(:client).permit(:firstname, :lastname, :email, :phone, :password, :resp, :photo, :gender, :location_id)
+      if params[:client].nil?
+        params[:client]={}
+      else
+        params.require(:client).permit(:firstname, :lastname, :email, :phone, :password, :resp, :photo, :gender, :location_id)
+      end
     end
 end

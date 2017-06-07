@@ -1,17 +1,12 @@
 .container
   .col-lg-8.col-md-8
     .row.well
-        h1
+        h1.text-center
           = @job.title.capitalize
         p
-          = @job.description
+          =  render :inline =>  RDiscount.new(@job.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ")
 
-        .col-lg-6.col-md-6
-          button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
-            |Contact
-        .col-lg-6.col-md-6
-          button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
-            |Back
+
   .col-lg-4.col-md-4
 
     .panel.panel-default
@@ -20,26 +15,42 @@
           = link_to(@job.company.name,@job.company)
           p
           - if @job.company.logo_uid.nil?
-            = link_to(image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block'),@job.company)
+            = link_to(image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size: "300x250"),@job.company)
           - else
-            = link_to(image_tag(@job.company.logo.thumb('300x').url, class: 'img-thumbnail center-block '),@job.company)
+            = link_to(image_tag(@job.company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250"),@job.company)
         p
         h3.text-center
           |Job summary
 
       .well
         p
-          = "Location: #{@job.location.suburb}, #{@job.location.state}"
+          strong
+            | Posted:&nbsp;
+          |#{@job.updated_at.strftime("%d %B %Y")}
+        p
+          strong
+            |Location: &nbsp;
+          |#{@job.location.suburb}, #{@job.location.state}
         - if @job.salarymax.nil? and not @job.salarymin.nil? then
           p
-            = "Salary: "
-            = @job.salarymin.to_i.to_s
+            strong
+              |Salary: &nbsp;
+            | #{@job.salarymin.to_i.to_s}
         - elsif not (@job.salarymax.nil? and @job.salarymin.nil?)
           p
-            = "Salary: "
-            = @job.salarymin.to_i.to_s+" - "+ @job.salarymax.to_i.to_s
+            strong
+             |Salary: &nbsp;
+            | #{@job.salarymin.to_i.to_s+" - "+ @job.salarymax.to_i.to_s}
+        p
+          strong
+            |Professional area:
+          - @job.industry.each do |industry|
+            ul
+              li #{industry.name}
         - if (@job.permanent or @job.casual or @job.temp or @job.contract or @job.fulltime or @job.parttime or @job.flextime or @job.remote)
-          p Job Type:
+          p
+            strong
+              |Job Type: &nbsp;
           -if @job.permanent
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
@@ -79,7 +90,15 @@
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
               | &nbsp; Remote
-              br
+          p
+        .row
+          .col-lg-12.col-md-12
+            button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
+              |Contact
+            p
+          .col-lg-12.col-md-12
+            button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
+              |Back
         br
         =social_share_button_tag @job.title
 .modal.fade#contact[tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"]
@@ -96,7 +115,7 @@
             - @job.company.client.each do |client|
               col-lg-3.col-md-3
                 - if client.photo.nil?
-                  = image_tag("/assets/avatar.png", size: "60x60", class: 'img-circle center-block')
+                  = image_tag("/assets/avatar.png", size: "60x60", class: 'img-circle center-block', )
                 - else
                   = image_tag(client.photo.thumb('300x').url, size: "60x60", class: 'img-circle center-block ')
               col-lg-9.col-md-9
@@ -112,5 +131,3 @@
       .modal-footer
         button[type="button" class="btn btn-default" data-dismiss="modal"]
           |Close
-
-/TODO доделать контактную информацию

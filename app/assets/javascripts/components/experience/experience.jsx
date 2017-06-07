@@ -116,7 +116,7 @@ class Experience extends React.Component{
                         <label> Responsibilities, tasks, achievements </label>
                         <br />
                         <textarea
-                            className="form-control" rows="4" type="text"
+                            className="form-control" data-provide="markdown-editable" rows="10" type="text"
                             name={this.props.name + "[bloc_" + index + "]" + "description"}
                             defaultValue={currentValue ? currentValue.description : ""} key={index}/>
                     </div>

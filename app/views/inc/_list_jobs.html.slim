@@ -20,9 +20,9 @@
               = link_to(job.company.name[0..50], job.company)
             .row
               - if job.company.logo_uid.nil?
-                = link_to(image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block'), job.company)
+                = link_to(image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size:"130x100"), job.company)
               - else
-                = link_to(image_tag(job.company.logo.thumb('75x').url, class: 'img-thumbnail center-block '), job.company)
+                = link_to(image_tag(job.company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size:"130x100"), job.company)
             .row.text-center
               = "Posted: "+job.updated_at.strftime("%d %B %Y").to_s
 

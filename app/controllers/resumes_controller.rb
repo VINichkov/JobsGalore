@@ -1,7 +1,8 @@
 class ResumesController < ApplicationController
-  before_action :set_resume, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource :resume, only:[:new, :edit, :create, :update, :destroy]
-  before_action :authenticate_client!, only:[:new, :edit, :create, :update, :destroy]
+  before_action :set_resume, only: [ :show, :edit, :update, :destroy]
+  before_action :authenticate_client!, only:[:log_in,:new, :edit, :create, :update, :destroy]
+  load_and_authorize_resource :resume, only:[:edit, :update, :destroy]
+  authorize_resource only:[:new, :create]
 
   # GET /resumes
   # GET /resumes.json
@@ -9,6 +10,11 @@ class ResumesController < ApplicationController
     @resumes = Resume.all
   end
 
+  def log_in
+    respond_to do |format|
+        format.html { redirect_to resume_path(params[:id])}
+    end
+  end
   # GET /resumes/1
   # GET /resumes/1.json
   def show
@@ -17,7 +23,6 @@ class ResumesController < ApplicationController
   # GET /resumes/new
   def new
     @resume = Resume.new
-
   end
 
   # GET /resumes/1/edit
@@ -32,6 +37,7 @@ class ResumesController < ApplicationController
     experience=param[:experience]
     param.delete(:industry)
     param.delete(:experience)
+    param.delete(:location_name)
     param[:client] = current_client
     @resume = Resume.new(param)
     experience.each do |exp, exp1|
@@ -39,7 +45,7 @@ class ResumesController < ApplicationController
         @resume.experience.new(employer:exp1[:employer], location_id:exp1[:location_id], site:exp1[:site], titlejob:exp1[:position], datestart:exp1[:datestart], dateend:exp1[:dateend], description:exp1[:description] )
       end
     end
-    @resume.industryresume.new(industry:Industry.find_by_id(industry))
+    @resume.industryresume.new(industry:Industry.find_by_id(industry.to_i))
     respond_to do |format|
       if @resume.save
         format.html { redirect_to client_root_path, notice: 'Resume was successfully created.' }
@@ -55,34 +61,26 @@ class ResumesController < ApplicationController
   # PATCH/PUT /resumes/1.json
   def update
     param = resume_params
-    puts "___ передали параметры"
     if param[:location_id].nil? or param[:location_id].empty?
-      puts "___ Поищем локации"
       param[:location_id]=find_location(param[:location_name])
-      puts "___ нашли #{param[:location_id]}"
     end
-    puts "___ сохраним индустрию"
     industry = param[:industry]
     experience=param[:experience]
     param.delete(:industry)
     param.delete(:experience)
     param.delete(:location_name)
     param[:client] = current_client
-    puts "___ удалим опыт"
     @resume.experience.destroy_all
     experience.each do |exp, exp1|
       if not(exp1[:position].empty?)
           if exp1[:location_id].nil? or exp1[:location_id].empty?
             exp1[:location_id]=find_location(exp1[:location_name])
-            puts "____нашли локацию для опыта #{exp1[:location_id]}"
           end
-          puts "добавляем новый опыт"
           @resume.experience.new(employer:exp1[:employer], location_id:exp1[:location_id], site:exp1[:site], titlejob:exp1[:position], datestart:exp1[:datestart], dateend:exp1[:dateend], description:exp1[:description] )
         end
     end
     @resume.industryresume.destroy_all
     @resume.industryresume.new(industry:Industry.find_by_id(industry))
-    puts "___ переделали все и начинаем сохранять"
     respond_to do |format|
       if @resume.update(param)
         format.html { redirect_to client_root_path, notice: 'Resume was successfully updated.' }
@@ -99,8 +97,7 @@ class ResumesController < ApplicationController
   def destroy
     @resume.destroy
     respond_to do |format|
-      format.html { redirect_to resumes_url, notice: 'Resume was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to client_root_path, notice: 'Resume was successfully destroyed.' }
     end
   end
 
@@ -162,5 +159,5 @@ class ResumesController < ApplicationController
                                                  :bloc_12=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
                                                  :bloc_13=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
                                                  :bloc_14=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description]})
-    end
+         end
 end

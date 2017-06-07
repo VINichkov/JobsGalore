@@ -3,10 +3,10 @@ class Search extends React.Component{
     super(props);
         this.state = {  type_search_code:null,
                         type_search_name:null,
-                        list_type:{ 1:{code:1, name:'Companies'},
-                                    2:{code:2, name:'Jobs'},
-                                    3:{code:3, name:'Resumes'}},
-                        active_options: this.props.params ? this.props.params.options == 'on' : false};
+                        list_type:{ 1:{code:1, name:"Companies "},
+                                    2:{code:2, name:"Jobs "},
+                                    3:{code:3, name:"Resumes"}},
+                        active_options:false};
         this.handleClickItem =  this.handleClickItem.bind(this);
         this.handleOnClickOptions = this.handleOnClickOptions.bind(this);
     }
@@ -77,7 +77,7 @@ class Search extends React.Component{
                                         <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.casual:false} name={this.props.name+'[casual]'}/> Casualt</label>
                                     </div>
                                     <div className="checkbox col-md-3 col-lg-3">
-                                        <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.temp:false} name={this.props.name+'[temp]'}/> Temp</label>
+                                        <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.temp:false} name={this.props.name+'[temp]'}/> Temporary</label>
                                     </div>
                                     <div className="checkbox col-md-3 col-lg-3">
                                         <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.contract:false} name={this.props.name+'[contract]'}/> Contract</label>
@@ -110,33 +110,29 @@ class Search extends React.Component{
 
         return(<div>
                     <div className="form-group  " style={{display:'inline'}}>
-                        <div className="form-group col-lg-10 col-md-10">
                             <div className="input-group" style={{display:'table'}}>
-                                <span className="input-group-btn" style={{width:'1%'}}>
+                                <div className="input-group-btn" style={{width:'1%'}}>
                                     <button className={"btn input-lg "+button_option} onClick={this.handleOnClickOptions} data-toggle = "popover-options" type="button">
                                         <i className="glyphicon glyphicon-cog glyphicon-big"></i>
                                     </button>
-                                </span>
-                                <input id="input_search" name={this.props.name+'[type]'}  value={this.state.type_search_code} style={ilStyle}></input>
-                                <input id="input_search_value" className="form-control input-lg" placeholder="Search"  defaultValue={this.props.params ? this.props.params.value : ''} name={this.props.name+'[value]'}  type="text"></input>
-                                <div className="input-group-btn" style={{width:'1%'}}>
                                     <button className="btn btn-default dropdown-toggle input-lg" type="button" data-toggle="dropdown" aria-haspopup="true">
                                         {this.state.type_search_name}
                                         <span className="caret"></span>
                                     </button>
                                     <ul className="dropdown-menu">
-                                        <li><a id="Search_1" data-id = '2'  onClick={this.handleClickItem}>Jobs</a></li>
-                                        <li><a id="Search_2" data-id = '3'  onClick={this.handleClickItem}>Resumes</a></li>
-                                        <li><a id="Search_3" data-id = '1'  onClick={this.handleClickItem}>Companies</a></li>
+                                        <li><a id="Search_1" data-id = '2'  onClick={this.handleClickItem}>Jobs &nbsp;</a></li>
+                                        <li><a id="Search_2" data-id = '3'  onClick={this.handleClickItem}>Resumes &nbsp;</a></li>
+                                        <li><a id="Search_3" data-id = '1'  onClick={this.handleClickItem}>Companies &nbsp;</a></li>
                                     </ul>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="form-group col-lg-2 col-md-2">
-                                     <button className="btn btn-success input-lg" type="submit">
-                                         Search
-                                     </button>
 
+                                <input id="input_search" name={this.props.name+'[type]'}  value={this.state.type_search_code} style={ilStyle}></input>
+                                <input id="input_search_value" className="form-control input-lg" placeholder="Search"  defaultValue={this.props.params ? this.props.params.value : ''} name={this.props.name+'[value]'}  type="text"></input>
+                                <div className="input-group-btn" style={{width:'1%'}}>
+                                             <button className="btn btn-success input-lg" type="submit">
+                                                 <i className="glyphicon glyphicon-search glyphicon-big"></i>
+                                             </button>
+                                </div>
                             </div>
                     </div>
                     {options}

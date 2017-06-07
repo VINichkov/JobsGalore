@@ -1,7 +1,9 @@
 class JobsController < ApplicationController
   before_action :authenticate_client!, only:[:new, :edit, :create, :update, :destroy]
-  load_and_authorize_resource :job, only:[:new, :edit, :create, :update, :destroy]
+  load_and_authorize_resource :job, only:[:edit, :update, :destroy]
+  authorize_resource only:[:new, :create]
   before_action :set_job, only: [:show, :edit, :update, :destroy]
+
 
 
   # GET /jobs
@@ -27,7 +29,11 @@ class JobsController < ApplicationController
   # POST /jobs
   # POST /jobs.json
   def create
-    @job = Job.new(job_params)
+    param = job_params
+    industry = param[:industry]
+    param.delete(:industry)
+    @job = Job.new(param)
+    @job.industryjob.new(industry:Industry.find_by_id(industry.to_i))
     @job.company = current_client.company.first
     respond_to do |format|
       if @job.save
@@ -43,8 +49,13 @@ class JobsController < ApplicationController
   # PATCH/PUT /jobs/1
   # PATCH/PUT /jobs/1.json
   def update
+    param = job_params
+    industry = param[:industry]
+    param.delete(:industry)
+    @job.industryjob.destroy_all
+    @job.industryjob.new(industry:Industry.find_by_id(industry))
     respond_to do |format|
-      if @job.update(job_params)
+      if @job.update(param)
         format.html { redirect_to client_root_path, notice: 'Job was successfully updated.' }
         format.json { render :show, status: :ok, location: @job }
       else
@@ -60,7 +71,6 @@ class JobsController < ApplicationController
     @job.destroy
     respond_to do |format|
       format.html { redirect_to client_root_path, notice: 'Job was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
@@ -72,7 +82,7 @@ class JobsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
-      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :career)
+      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :career, :industry)
     end
 
 end

@@ -28,6 +28,16 @@
                 id: "company_location_id",
                 defaultName: "#{@company.location.suburb}, #{@company.location.state}",
                 defaultId:@company.location.id)
+      .form-group
+        = f.label :industry, "Industry"
+        br
+        = react_component("CategoryInsert",
+                className: "selectpicker form-control",
+                name: "company[industry]",
+                multiple: false,
+                dataStyle: "btn-lg btn-default",
+                values: Industry.all.to_json,
+                defaultValues:@company.industry.to_json)
 
       .form-group
         = f.check_box :recrutmentagency
@@ -36,7 +46,7 @@
       .form-group
         = f.label :description
         br
-        = f.text_area :description, class:"form-control input-lg", rows:15
+        = f.text_area :description, class:"form-control input-lg", class:"form-control input-lg", :"data-provide"=>"markdown-editable", rows:"10"
       hr.colorgraph
         .row
           .col-xs-6.col-md-6

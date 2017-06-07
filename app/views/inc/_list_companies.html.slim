@@ -1,11 +1,11 @@
 - @objs.each do |company|
   .col-lg-4.col-md-4
     .panel.panel-default
-      .panel-body[style="min-height:460px"]
+      .panel-body
         - if company.logo_uid.nil?
-          = link_to(image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block'), company)
+          = link_to(image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size:"300x250"), company)
         - else
-          = link_to(image_tag(company.logo.thumb('300x').url, class: 'img-thumbnail center-block '), company)
+          = link_to(image_tag(company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size:"300x250"  ), company)
 
         h3.text-center
           = link_to company.name, company, class: 'text-warning'
@@ -13,19 +13,20 @@
         -unless  company.site.nil? then
           p
             = link_to company.site, company.site
-        = company.description ? company.description[0..250] : "Empty"
-        = link_to ' more...', company
         p
-        p.text-center = company.location.state.to_s+" "+company.location.suburb.capitalize.to_s+" "+company.location.postcode.to_s
+          strong
+            |Industry:
+        ul
+          -company.industry.each do |industry|
+            li = industry.name
 
+        p
+        p
+          strong
+            |Location:  &nbsp;
+          =  company.location.suburb.capitalize.to_s+", "+company.location.state.to_s
 
-
-
-// TODO Добавить вакансии и признак агенства
-    td = company.name
-    td = company.size.size
-    td = company.location.suburb
-    td = company.site
-    td = company.logo
-    td = company.recrutmentagency
-    td = company.description
+        - if company.recrutmentagency
+          p
+            strong
+              |Recruitment agency &nbsp;

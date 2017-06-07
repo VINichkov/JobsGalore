@@ -90,9 +90,6 @@ class IndexController < ApplicationController
   end
 
   def category
-    @count = Industry.count
-    @count_colum = @count/3-1
-    @count_colum +=1 if  @count%3>0
     @category=Industry.where('level=?',1)
     if params[:obj].nil?
       params[:obj]='2'

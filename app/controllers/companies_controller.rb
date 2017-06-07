@@ -60,8 +60,16 @@ class CompaniesController < ApplicationController
   # PATCH/PUT /companies/1
   # PATCH/PUT /companies/1.json
   def update
+    param = company_params
+    industry = param[:industry]
+    puts industry
+    param.delete(:industry)
+    if (@company.industry.first.nil? and not industry.empty?) or (not industry.empty? and not (@company.industry.first.id == industry))
+      @company.industrycompany.destroy_all
+      @company.industrycompany.create(industry_id: industry)
+    end
     respond_to do |format|
-      if @company.update(company_params)
+      if @company.update(param)
         format.html { redirect_to settings_company_path, notice: 'Company was successfully updated.' }
         format.json { render :show, status: :ok, location: @company }
       else
@@ -89,6 +97,6 @@ class CompaniesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_params
-      params.require(:company).permit(:name, :size_id, :location_id, :site, :logo, :recrutmentagency, :description, :realy)
+      params.require(:company).permit(:name, :size_id, :location_id, :site, :logo, :recrutmentagency, :description, :realy, :industry)
     end
 end

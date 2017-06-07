@@ -9,7 +9,9 @@
 //= require social-share-button/wechat
 //= require bootstrap-datepicker
 //=require bootstrap-select
-
+//=require bootstrap-markdown.js
+//=require markdown
+//=require jasny-bootstrap
 
 $(function() {
     $('.datepicker_reg').datepicker({

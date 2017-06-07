@@ -1,11 +1,11 @@
-.container-fluid
+.container-fluid.hidden-xs.hidden-sm
   .container
     h1
       span
         = image_tag("/assets/method-draw-image.svg", size:"100x100")
       span.black_text
         |.COM.AU
-nav.navbar.navbar-static-top.navbar-default[data-spy="affix" data-offset-top="130"]
+nav.navbar.navbar-static-top.navbar-default.hidden-xs.hidden-sm[data-spy="affix" data-offset-top="130"]
   .container-fluid
     .col-lg-1.col-md-1
       =link_to PropertsHelper::TITLE, root_path, class: "navbar-brand active"
@@ -16,8 +16,9 @@ nav.navbar.navbar-static-top.navbar-default[data-spy="affix" data-offset-top="13
             |Jobs
             b.caret
           ul.dropdown-menu
-            li
-              =link_to "Post а resume", new_resume_path
+            - if not (client_signed_in?) or (current_client.resp)
+              li
+                = link_to "Post а job", new_job_path
             li
               a[href= '/by_category/2']
                 |Jobs by category
@@ -26,8 +27,9 @@ nav.navbar.navbar-static-top.navbar-default[data-spy="affix" data-offset-top="13
             |Resumes
             b.caret
           ul.dropdown-menu
-            li
-              =link_to "Post а job", new_job_path
+            - if not (client_signed_in?) or not (current_client.resp)
+              li
+                = link_to "Post а resume", new_resume_path
             li
               =link_to"Resumes by category",'/by_category/3'
         li.nav-item.dropdown
@@ -80,6 +82,176 @@ nav.navbar.navbar-static-top.navbar-default[data-spy="affix" data-offset-top="13
                 = link_to 'Log in', new_client_session_path
               li.nav-item
                 = link_to 'Sign up', new_client_registration_path
+nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
+  .container-fluid
+    .row
+      .col-sm-8
+        ul.nav.navbar-nav
+          li
+            = link_to root_path do
+              span
+                = image_tag("/assets/method-draw-image.svg", size: "50x50")
+              span.black_text
+                |.COM.AU
+          li.elem_header
+            a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
+              |Jobs
+              b.caret
+            ul.dropdown-menu
+              - if not (client_signed_in?) or (current_client.resp)
+                li
+                  = link_to "Post а job", new_job_path
+              li
+                a[href= '/by_category/2']
+                  |Jobs by category
+          li.elem_header
+            a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
+              |Resumes
+              b.caret
+            ul.dropdown-menu
+              - if not (client_signed_in?) or not (current_client.resp)
+                li
+                  = link_to "Post а resume", new_resume_path
+              li
+                =link_to"Resumes by category",'/by_category/3'
+          li.elem_header.dropdown
+            a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
+              |Companies
+              b.caret
+            ul.dropdown-menu
+              li
+                a[href= '/by_category/1']
+                  |Companies by category
+      .col-sm-4
+        a.navbar-brand.active
+          - if client_signed_in?
+            ul.nav.navbar-nav
+              li.elem_header
+                a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
+                  = "#{current_client.firstname} #{current_client.lastname}"
+                  b.caret
+                ul.dropdown-menu
+                  li
+                    = link_to client_root_path do
+                      span.glyphicon.glyphicon-user
+                      | &nbsp; Your profile
+                  li
+                    = link_to settings_path do
+                      span.glyphicon.glyphicon-cog
+                      | &nbsp; Settings
+                  - if current_client.resp
+                    li
+                      = link_to settings_company_path do
+                        span.glyphicon.glyphicon-cd
+                        | &nbsp; Company
+
+                  li
+                    = link_to destroy_client_session_path, :method => :delete do
+                      span.glyphicon.glyphicon-log-out
+                      | &nbsp; Log out
+
+
+          - else
+          ul.nav.navbar-nav
+            li.elem_header
+              = link_to 'Log in', new_client_session_path
+            li.elem_header
+              = link_to 'Sign up', new_client_registration_path
+    .row
+      .col-lg-6.col-md-6
+        = form_tag('/search', method: :post, class:'navbar-form form-inline')  do
+          -if session[:param].nil?
+            = react_component("Search", name:'main_search')
+          -else
+            = react_component("Search", name:'main_search',params: session[:param])
+    .row
+      p
+.clear_menu-sm.hidden-xs.hidden-md.hidden-lg
+nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="navigation"]
+      ul.nav.navbar-nav
+        - if client_signed_in?
+            li
+              =link_to client_root_path do
+                - if current_client.photo.nil?
+                  = image_tag("/assets/avatar.png", class: 'img-circle', size: "50x50")
+                - else
+                  = image_tag(current_client.photo.thumb('300x300#').url, class: 'img-circle', size: "50x50")
+                | &nbsp; #{current_client.firstname} #{current_client.lastname} &nbsp;
+                span.glyphicon.glyphicon-chevron-right
+            li
+
+              = link_to settings_path do
+                | &nbsp;
+                span.glyphicon.glyphicon-cog
+                | &nbsp; Settings
+            - if current_client.resp
+              li
+                = link_to settings_company_path do
+                  | &nbsp;
+                  span.glyphicon.glyphicon-cd
+                  | &nbsp; Company
+        - if not (client_signed_in?) or (current_client.resp)
+          li
+            = link_to new_job_path do
+              |&nbsp;
+              span.glyphicon.glyphicon-briefcase
+              |&nbsp;Post а job
+        - if not (client_signed_in?) or not (current_client.resp)
+          li
+            = link_to new_resume_path do
+              |&nbsp;
+              span.glyphicon.glyphicon-paperclip
+              |&nbsp;Post а resume
+        li
+          = link_to '/by_category/2' do
+            |&nbsp;
+            span.glyphicon.glyphicon-gift
+            |&nbsp; Jobs by category
+        li
+          = link_to  '/by_category/3' do
+            |&nbsp;
+            span.glyphicon.glyphicon-bullhorn
+            |&nbsp; Resumes by category
+        li
+          =link_to '/by_category/1' do
+            |&nbsp;
+            span.glyphicon.glyphicon-leaf
+            |&nbsp; Companies by category
+        - unless client_signed_in?
+          li.nav-item
+            = link_to  new_client_session_path do
+              |&nbsp;
+              span.glyphicon.glyphicon-log-in
+              |&nbsp; Log in
+          li.nav-item
+            = link_to new_client_registration_path do
+              |&nbsp;
+              span.glyphicon.glyphicon-registration-mark
+              |&nbsp; Sign up
+        -else
+          li
+            = link_to destroy_client_session_path, :method => :delete do
+              | &nbsp;
+              span.glyphicon.glyphicon-log-out
+              | &nbsp; Log out
+.clear_menu.hidden-sm.hidden-md.hidden-lg
+.navbar.navbar-default.navbar-fixed-top.hidden-sm.hidden-md.hidden-lg
+  .row
+    .col-xs-12
+      button.navbar-toggle.navbar-left[type="button" data-toggle="offcanvas" data-target="#mainnav" data-canvas="body" aria-expanded="true" aria-controls="navbar"]
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      =link_to PropertsHelper::TITLE, root_path, class: "navbar-brand active"
+  .row
+    .container
+        .col-xs-12
+          = form_tag('/search', method: :post, class:'navbar-form form-inline')  do
+            -if session[:param].nil?
+              = react_component("Search", name:'main_search')
+            -else
+              = react_component("Search", name:'main_search',params: session[:param])
 -unless notice.nil? then
   .container
     p.alert-success = notice

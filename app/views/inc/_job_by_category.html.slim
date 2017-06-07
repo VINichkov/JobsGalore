@@ -1,18 +1,10 @@
 .row
   .col-lg-12.col-md-12
     .well
-      h4
-        ="#{@objs[:name]} by Category"
-      .row
-        ul.nav.nav-list.col-lg-4.col-md-4
-          -@category[0..@count_colum].each do |elem|
-            li
-              a[href= "/#{elem.id}/#{@objs[:code]}" ] =elem.name
-        ul.nav.nav-list.col-lg-4.col-md-4
-          - @category[@count_colum+1..@count_colum*2+1].each do |elem|
-            li
-              a[href= "/#{elem.id}/#{@objs[:code]}" ] = elem.name
-        ul.nav.nav-list.col-lg-4.col-md-4
-          - @category[@count_colum*2+2..@count-1].each do |elem|
-            li
-              a[href= "/#{elem.id}/#{@objs[:code]}" ] = elem.name
+      ul.nav.nav-list
+        li.nav-header
+          h4
+            ="#{@objs[:name]} by Category"
+        -@category.each do |elem|
+          li.col-sm-6.col-md-4.col-lg-4
+            a[href= "/#{elem.id}/#{@objs[:code]}" ] =elem.name
