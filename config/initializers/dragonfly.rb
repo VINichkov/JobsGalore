@@ -10,10 +10,10 @@ Dragonfly.app.configure do
 
 
   datastore :s3,
-            bucket_name: 'freetalents',
-            access_key_id: 'AKIAIAY3APM2TSBDAASQ',
-            secret_access_key: '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',
-            region: "ap-southeast-2"
+            bucket_name: ENV['bucket'],
+            access_key_id: ENV['access_key_id'],
+            secret_access_key: ENV['secret_access_key'],
+            region: ENV['region']
 end
 
 # Logger

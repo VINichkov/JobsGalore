@@ -1,10 +1,15 @@
+
 AssetSync.configure do |config|
+
   config.fog_provider = 'AWS'
-  config.aws_access_key_id = ENV['AWS_ACCESS_KEY_ID']
-  config.aws_secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
+  config.aws_access_key_id = ENV['access_key_id']
+  config.aws_secret_access_key = ENV['secret_access_key']
+
   # To use AWS reduced redundancy storage.
   # config.aws_reduced_redundancy = true
-  config.fog_directory = ENV['FOG_DIRECTORY']
+  config.fog_directory = ENV['bucket']
+  config.fog_region = ENV['region']
+  config.existing_remote_files = ENV['existing_remote_files']
 
   # Invalidate a file on a cdn after uploading files
   # config.cdn_distribution_id = "12345"
