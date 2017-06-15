@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 
 
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 # Use postgresql as the database for Active Record
@@ -18,9 +19,9 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 gem "activerecord-import"
 # Use react as the JavaScript library
-gem 'react-rails'
+gem 'react-rails', '~>1.10.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-#gem 'turbolinks', '~> 5' TODO востановить и обновить
+#gem 'turbolinks', '~> 2.5.3'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'bootstrap-sass', '~> 3.3.6'
@@ -71,6 +72,8 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #gem 'spreadsheet'
 gem 'markdown-rails'
-gem 'dragonfly-s3_data_store'
-gem "asset_sync"
-gem "fog-aws"
+group :production do
+  gem 'dragonfly-s3_data_store'
+  gem "asset_sync"
+  gem "fog-aws"
+end

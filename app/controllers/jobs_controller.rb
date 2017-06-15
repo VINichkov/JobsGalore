@@ -19,7 +19,11 @@ class JobsController < ApplicationController
 
   # GET /jobs/new
   def new
-    @job = Job.new
+    if current_client.resp
+      @job = Job.new
+    else
+      redirect_to root_path, alert: "Please register as an employer"
+    end
   end
 
   # GET /jobs/1/edit

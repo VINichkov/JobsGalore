@@ -1,10 +1,10 @@
-.container
+.container.hidden-xs.hidden-sm
   .col-lg-8.col-md-8
     .row.well
         h1.text-center
           = @job.title.capitalize
         p
-          =  render :inline =>  RDiscount.new(@job.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ")
+          =  render :inline =>  RDiscount.new(@job.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if @job.description
 
 
   .col-lg-4.col-md-4
@@ -64,7 +64,7 @@
           - if @job.temp
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-              | &nbsp; Temp
+              | &nbsp; Temporary
               br
           - if @job.contract
             span
@@ -74,17 +74,17 @@
           - if @job.fulltime
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-              | &nbsp; Full time
+              | &nbsp; Full-time
               br
           - if @job.parttime
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-              | &nbsp; Part time
+              | &nbsp; Part-time
               br
           - if @job.flextime
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-              | &nbsp; Flex time
+              | &nbsp; Flex-time
               br
           - if @job.remote
             span
@@ -101,6 +101,223 @@
               |Back
         br
         =social_share_button_tag @job.title
+.col-sm-12.hidden-md.hidden-lg.hidden-xs
+    .panel-body
+      h1.text-center
+        = @job.title.capitalize
+      .row
+        .col-sm-6
+          h3.text-center
+            = link_to(@job.company.name,@job.company)
+            p
+            - if @job.company.logo_uid.nil?
+              = link_to(image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size: "300x250"),@job.company)
+            - else
+              = link_to(image_tag(@job.company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250"),@job.company)
+          p
+          .text-center
+            =social_share_button_tag @job.title
+        .col-sm-6
+          h3.text-center
+            |Job summary
+          .row
+            .col-sm-12
+              p
+                strong
+                  | Posted:&nbsp;
+                |#{@job.updated_at.strftime("%d %B %Y")}
+              p
+                strong
+                  |Location: &nbsp;
+                |#{@job.location.suburb}, #{@job.location.state}
+              - if @job.salarymax.nil? and not @job.salarymin.nil? then
+                p
+                  strong
+                    |Salary: &nbsp;
+                  | #{@job.salarymin.to_i.to_s}
+              - elsif not (@job.salarymax.nil? and @job.salarymin.nil?)
+                p
+                  strong
+                    |Salary: &nbsp;
+                  | #{@job.salarymin.to_i.to_s+" - "+ @job.salarymax.to_i.to_s}
+              p
+                strong
+                  |Professional area:
+                - @job.industry.each do |industry|
+                  ul
+                    li #{industry.name}
+              - if (@job.permanent or @job.casual or @job.temp or @job.contract or @job.fulltime or @job.parttime or @job.flextime or @job.remote)
+                p
+                  strong
+                    |Job Type: &nbsp;
+              - if @job.permanent
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Permanent
+                  br
+              - if @job.casual
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Casual
+                  br
+              - if @job.temp
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Temporary
+                  br
+              - if @job.contract
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                    | &nbsp; Contract
+                  br
+              - if @job.fulltime
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Full-time
+                  br
+              - if @job.parttime
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Part-time
+                  br
+              - if @job.flextime
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Flex-time
+                  br
+              - if @job.remote
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Remote
+                  br
+          p
+          .row
+            .col-sm-6
+              button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
+                |Contact
+            .col-sm-6
+              button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
+                |Back
+      .row
+        .col-sm-12
+          p
+            = render :inline =>  RDiscount.new(@job.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if @job.description
+.col-xs-12.hidden-md.hidden-lg.hidden-sm
+  .panel-body
+    h1.text-center
+      = @job.title.capitalize
+    .row
+      .col-xs-12
+        h3.text-center
+          = link_to(@job.company.name,@job.company)
+          p
+          - if @job.company.logo_uid.nil?
+            = link_to(image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size: "300x250"),@job.company)
+          - else
+            = link_to(image_tag(@job.company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250"),@job.company)
+        p
+        .text-center
+          =social_share_button_tag @job.title
+      .col-xs-12
+        h3.text-center
+          |Job summary
+        .row
+          .col-xs-12
+            p
+              strong
+                | Posted:&nbsp;
+              |#{@job.updated_at.strftime("%d %B %Y")}
+            p
+              strong
+                |Location: &nbsp;
+              |#{@job.location.suburb}, #{@job.location.state}
+            - if @job.salarymax.nil? and not @job.salarymin.nil? then
+              p
+                strong
+                  |Salary: &nbsp;
+                | #{@job.salarymin.to_i.to_s}
+            - elsif not (@job.salarymax.nil? and @job.salarymin.nil?)
+              p
+                strong
+                  |Salary: &nbsp;
+                | #{@job.salarymin.to_i.to_s+" - "+ @job.salarymax.to_i.to_s}
+            p
+              strong
+                |Professional area:
+              - @job.industry.each do |industry|
+                ul
+                  li #{industry.name}
+            - if (@job.permanent or @job.casual or @job.temp or @job.contract or @job.fulltime or @job.parttime or @job.flextime or @job.remote)
+              p
+                strong
+                  |Job Type: &nbsp;
+            - if @job.permanent
+              .col-xs-6
+                span
+                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                | &nbsp; Permanent
+                br
+            - if @job.casual
+              .col-xs-6
+                span
+                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                | &nbsp; Casual
+                br
+            - if @job.temp
+              .col-xs-6
+                span
+                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                | &nbsp; Temporary
+                br
+            - if @job.contract
+              .col-xs-6
+                span
+                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Contract
+                br
+            - if @job.fulltime
+              .col-xs-6
+                span
+                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                | &nbsp; Full-time
+                br
+            - if @job.parttime
+              .col-xs-6
+                span
+                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                | &nbsp; Part-time
+                br
+            - if @job.flextime
+              .col-xs-6
+                span
+                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                | &nbsp; Flex-time
+                br
+            - if @job.remote
+              .col-xs-6
+                span
+                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                | &nbsp; Remote
+                br
+        .row
+          .col-xs-6
+            button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
+              |Contact
+          .col-xs-6
+            button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
+              |Back
+    .row
+      .col-xs-12
+        p
+          = render :inline =>  RDiscount.new(@job.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if @job.description
 .modal.fade#contact[tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"]
   .modal-dialog
     .modal-content

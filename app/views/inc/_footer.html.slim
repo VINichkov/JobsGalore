@@ -2,7 +2,7 @@ footer
   .well
     .container
       .row
-        .col-lg-6.col-md-6.col-sm-12
+        .col-lg-6.col-md-6.col-sm-12.col-xs-12
           ul.nav.nav-justified
             li
               =link_to "About us", about_path
@@ -12,7 +12,7 @@ footer
               = link_to "Terms and Conditions", terms_and_conditions_path
             li
               = link_to "Privacy policy", privacy_path
-        .col-lg-6.col-md-6.col-sm-12
+        .col-lg-6.col-md-6.col-sm-12.col-xs-12
           .text-center.hidden-xs
               .col-sm-3
               .col-sm-1
@@ -23,7 +23,8 @@ footer
             li.text-center
               |Share:
             li
-              =social_share_button_tag PropertsHelper::TITLE
+              .text-center
+                =social_share_button_tag PropertsHelper::TITLE
       .row
         .text-center
           ="© #{PropertsHelper::COMPANY} All rights reserved."

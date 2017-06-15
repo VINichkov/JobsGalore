@@ -1,10 +1,10 @@
-.container
+.container.hidden-xs.hidden-sm
   .col-lg-8.col-md-8
     .row.well
       h1.text-center
         = @resume.desiredjobtitle
       p
-        =  render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ")
+        =  render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if  @resume.abouteme
 
     h3
       |Experience
@@ -30,7 +30,7 @@
           |#{exp.employer}
         hr
         p
-          =  render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ")
+          =  render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if  exp.description
         
   .col-lg-4.col-md-4
     .panel.panel-default
@@ -104,17 +104,17 @@
             - if @resume.fulltime
               span
                 i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Full time
+                | &nbsp; Full-time
                 br
             - if @resume.parttime
               span
                 i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Part time
+                | &nbsp; Part-time
                 br
             - if @resume.flextime
               span
                 i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Flex time
+                | &nbsp; Flex-time
                 br
             - if @resume.remote
               span
@@ -141,12 +141,327 @@
                 =link_to "Contact", "/resumes/#{@resume.id}/log_in", class: "btn btn-primary btn-lg btn-block"
                 p
             .col-lg-12.col-md-12
-              = link_to "Back", :back, class: "btn btn-success btn-lg btn-block"
+              button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
+                |Back
               p
           p
           .row
             .col-lg-12.col-md-12
               =social_share_button_tag @resume.desiredjobtitle
+.col-sm-12.hidden-md.hidden-lg.hidden-xs
+  .panel-body
+    h1.text-center
+      = @resume.desiredjobtitle
+    .row
+      .col-sm-6
+        - if client_signed_in?
+          - if current_client.resp or @resume.client.id == current_client.id
+            h3.text-center
+              = "#{@resume.client.firstname} #{@resume.client.lastname}"
+            p
+            - if not @resume.client.photo_uid.nil?
+              = image_tag(@resume.client.photo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250")
+            - else
+              = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block', size: "300x250")
+          - else
+            h3.text-center
+              |Anonymous
+            p
+            = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block ', size: "300x250")
+        - else
+          h3.text-center
+            |Anonymous
+          p
+          = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block ', size: "300x250")
+        p
+        .text-center
+          =social_share_button_tag @resume.desiredjobtitle
+      .col-sm-6
+        .row
+          .col-sm-12
+            h3.text-center
+              |Description
+            p
+              strong
+                | Posted:&nbsp;
+              |#{@resume.updated_at.strftime("%d %B %Y")}
+            - if @resume.location
+              p
+                strong
+                  |Location: &nbsp;
+                |#{@resume.location.suburb}, #{@resume.location.state}
+            - if not @resume.salary.nil? then
+              p
+                strong
+                  |Salary: &nbsp;
+                |#{@resume.salary.to_i.to_s}
+            p
+              strong
+                |Professional area:
+              - @resume.industry.each do |industry|
+                ul
+                  li #{industry.name}
+            - if (@resume.permanent or @resume.casual or @resume.temp or @resume.contract or @resume.fulltime or @resume.parttime or @resume.flextime or @resume.remote) then
+              p
+                strong
+                  |Job Type:
+              - if @resume.permanent
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Permanent
+                  br
+              - if @resume.casual
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Casual
+                  br
+              - if @resume.temp
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Temporary
+                  br
+              - if @resume.contract
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Contract
+                  br
+              - if @resume.fulltime
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Full-time
+                  br
+              - if @resume.parttime
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Part-time
+                  br
+              - if @resume.flextime
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Flex-time
+                  br
+              - if @resume.remote
+                .col-sm-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Remote
+                  br
+
+        p
+        .row
+          - if client_signed_in?
+            - if @resume.client.id == current_client.id
+              .col-sm-6
+                = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block btn-lg"
+                p
+              .col-sm-6
+                = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block btn-lg"
+                p
+            - if current_client.resp
+              .col-sm-6
+                button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
+                  |Contact
+                p
+          - else
+            .col-sm-6
+              = link_to "Contact", "/resumes/#{@resume.id}/log_in", class: "btn btn-primary btn-lg btn-block"
+              p
+          .col-sm-6
+            button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
+              |Back
+            p
+    .row
+      .col-sm-12
+        p
+          = render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  @resume.abouteme
+        h3.text-center
+          |Experience
+        - @resume.experience.order(datestart: :desc).each  do |exp|
+          .row
+            .col-sm-12
+              hr
+              h4.text-center
+                = exp.titlejob
+              p
+                strong
+                  |Started: &nbsp;
+                |#{exp.datestart.strftime("%d %B %Y").to_s} &nbsp;
+                strong
+                  |Ended:
+                | &nbsp; #{exp.dateend ? exp.dateend.strftime("%d %B %Y").to_s : "..."}, &nbsp;
+                strong
+                  |Location: &nbsp;
+                |#{exp.location.suburb}, #{exp.location.state}
+              p
+                strong
+                  |Employer: &nbsp;
+                |#{exp.employer}
+              p
+                = render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  exp.description
+.col-xs-12.hidden-md.hidden-lg.hidden-sm
+  .panel-body
+    h1.text-center
+      = @resume.desiredjobtitle
+    .row
+      .col-xs-12
+        - if client_signed_in?
+          - if current_client.resp or @resume.client.id == current_client.id
+            h3.text-center
+              = "#{@resume.client.firstname} #{@resume.client.lastname}"
+            p
+            - if not @resume.client.photo_uid.nil?
+              = image_tag(@resume.client.photo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250")
+            - else
+              = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block', size: "300x250")
+          - else
+            h3.text-center
+              |Anonymous
+            p
+            = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block ', size: "300x250")
+        - else
+          h3.text-center
+            |Anonymous
+          p
+          = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block ', size: "300x250")
+        p
+        .text-center
+          =social_share_button_tag @resume.desiredjobtitle
+      .col-xs-12
+        .row
+          .col-xs-12
+            h3.text-center
+              |Description
+            p
+              strong
+                | Posted:&nbsp;
+              |#{@resume.updated_at.strftime("%d %B %Y")}
+            - if @resume.location
+              p
+                strong
+                  |Location: &nbsp;
+                |#{@resume.location.suburb}, #{@resume.location.state}
+            - if not @resume.salary.nil? then
+              p
+                strong
+                  |Salary: &nbsp;
+                |#{@resume.salary.to_i.to_s}
+            p
+              strong
+                |Professional area:
+              - @resume.industry.each do |industry|
+                ul
+                  li #{industry.name}
+            - if (@resume.permanent or @resume.casual or @resume.temp or @resume.contract or @resume.fulltime or @resume.parttime or @resume.flextime or @resume.remote) then
+              p
+                strong
+                  |Job Type:
+              - if @resume.permanent
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Permanent
+                  br
+              - if @resume.casual
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Casual
+                  br
+              - if @resume.temp
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Temporary
+                  br
+              - if @resume.contract
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Contract
+                  br
+              - if @resume.fulltime
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Full-time
+                  br
+              - if @resume.parttime
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Part-time
+                  br
+              - if @resume.flextime
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Flex-time
+                  br
+              - if @resume.remote
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Remote
+                  br
+
+        p
+        .row
+          - if client_signed_in?
+            - if @resume.client.id == current_client.id
+              .col-xs-6
+                = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block btn-lg"
+                p
+              .col-xs-6
+                = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block btn-lg"
+                p
+            - if current_client.resp
+              .col-xs-6
+                button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
+                  |Contact
+                p
+          - else
+            .col-xs-6
+              = link_to "Contact", "/resumes/#{@resume.id}/log_in", class: "btn btn-primary btn-lg btn-block"
+              p
+          .col-xs-6
+            button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
+              |Back
+            p
+    .row
+      .col-xs-12
+        p
+          = render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  @resume.abouteme
+        h3.text-center
+          |Experience
+        - @resume.experience.order(datestart: :desc).each  do |exp|
+          .row
+            .col-xs-12
+              hr
+              h4.text-center
+                = exp.titlejob
+              p
+                strong
+                  |Started: &nbsp;
+                |#{exp.datestart.strftime("%d %B %Y").to_s} &nbsp;
+                strong
+                  |Ended:
+                | &nbsp; #{exp.dateend ? exp.dateend.strftime("%d %B %Y").to_s : "..."}, &nbsp;
+                strong
+                  |Location: &nbsp;
+                |#{exp.location.suburb}, #{exp.location.state}
+              p
+                strong
+                  |Employer: &nbsp;
+                |#{exp.employer}
+              p
+                = render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  exp.description
 -if client_signed_in?
   -if current_client.resp
     .modal.fade#contact[tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"]

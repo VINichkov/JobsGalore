@@ -32,53 +32,53 @@
             defaultValues:@job.industry.to_json)
   .row
     br
-    .col-xs-6.col-sm-6.col-md-6
+    .col-xs-12.col-sm-6.col-md-6
       .form-group
         = f.label :min, "Salary min"
         br
         = f.text_field :salarymin, class:"form-control input-lg"
-    .col-xs-6.col-sm-6.col-md-6
+    .col-xs-12.col-sm-6.col-md-6
       .form-group
         = f.label :max, "Salary max"
         br
         = f.text_field :salarymax, class:"form-control input-lg"
   .row
-    .col-xs-3.col-sm-3.col-md-3
+    .col-xs-6.col-sm-4.col-md-3
       .form-group
         = f.check_box :permanent
         |  &nbsp;
         = f.label :permanent
-    .col-xs-3.col-sm-3.col-md-3
+    .col-xs-6.col-sm-4.col-md-3
       .form-group
         = f.check_box :casual
         |  &nbsp;
         = f.label :casual
-    .col-xs-3.col-sm-3.col-md-3
+    .col-xs-6.col-sm-4.col-md-3
       .form-group
         = f.check_box :temp
         |  &nbsp;
         = f.label :temp, "Temporary"
-    .col-xs-3.col-sm-3.col-md-3
+    .col-xs-6.col-sm-4.col-md-3
       .form-group
         = f.check_box :contract
         |  &nbsp;
         = f.label :contract
-    .col-xs-3.col-sm-3.col-md-3
+    .col-xs-6.col-sm-4.col-md-3
       .form-group
         = f.check_box :fulltime
         |  &nbsp;
         = f.label :fulltime, "Full time"
-    .col-xs-3.col-sm-3.col-md-3
+    .col-xs-6.col-sm-4.col-md-3
       .form-group
         = f.check_box :parttime
         |  &nbsp;
         = f.label :parttime, "Patr time"
-    .col-xs-3.col-sm-3.col-md-3
+    .col-xs-6.col-sm-4.col-md-3
       .form-group
         = f.check_box :flextime
         |  &nbsp;
         = f.label :flextime, "Flex time"
-    .col-xs-3.col-sm-3.col-md-3
+    .col-xs-6.col-sm-4.col-md-3
       .form-group
         = f.check_box :remote
         |  &nbsp;
@@ -89,8 +89,8 @@
     = f.text_area :description, class:"form-control input-lg", class:"form-control input-lg", :"data-provide"=>"markdown-editable", rows:"10"
   hr.colorgraph
   .row
-    .col-xs-6.col-md-6
+    .col-xs-6.col-md-6.col-sm-6.col-lg-6
       = f.submit class: "btn btn-primary btn-block btn-lg"
-    .col-lg-6.col-md-6
+    .col-xs-6.col-md-6.col-sm-6.col-lg-6
       = link_to 'Back', :back, class:"btn btn-success btn-block btn-lg"
   br

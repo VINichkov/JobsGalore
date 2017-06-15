@@ -64,7 +64,7 @@ class CompaniesController < ApplicationController
     industry = param[:industry]
     puts industry
     param.delete(:industry)
-    if (@company.industry.first.nil? and not industry.empty?) or (not industry.empty? and not (@company.industry.first.id == industry))
+    if (@company.industry.first.nil? and not industry.nil?) or (not industry.nil? and not (@company.industry.first.id == industry))
       @company.industrycompany.destroy_all
       @company.industrycompany.create(industry_id: industry)
     end

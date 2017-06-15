@@ -1,4 +1,4 @@
-.container
+.container.hidden-xs.hidden-sm
   .col-lg-8.col-md-8
     .row.well
       h1.text-center
@@ -6,19 +6,17 @@
         -if @company.realy
           span.glyphicon.glyphicon-ok.glyphicon-small
       p
-        =  render :inline =>  RDiscount.new(@company.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ")
+        =  render :inline =>  RDiscount.new(@company.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if @company.description
     -if @company.job.count>0
       .row
         h3
           = link_to "Company jobs #{@company.job.count}", "/company_jobs/#{@company.id}"
 
-
-
   .col-lg-4.col-md-4
 
     .panel.panel-default
       .panel-body
-        h3.text-center
+        p.text-center
           .row
             -if @company.logo_uid.nil?
               = image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size:"300x250")
@@ -26,7 +24,7 @@
               =image_tag(@company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size:"300x250")
           .row
             h3.text-center
-              |Job summary
+              |Company summary
         .well
           -if not @company.site.nil?
             p
@@ -58,11 +56,130 @@
               P
           .row
             .col-lg-12.col-md-12
-              = link_to "Back", :back, class: "btn btn-success btn-lg btn-block"
+              button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
+                |Back
               P
           .row
             .col-lg-12.col-md-12
               = social_share_button_tag @company.name
+.col-sm-12.hidden-md.hidden-lg.hidden-xs
+  .panel-body
+    h1.text-center
+      = @company.name
+      - if @company.realy
+        span.glyphicon.glyphicon-ok.glyphicon-small
+    .row
+      .col-sm-6
+        p.text-center
+          .row
+            - if @company.logo_uid.nil?
+              = image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size: "300x250")
+            - else
+              = image_tag(@company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250")
+          .row
+            .text-center
+              p
+              = social_share_button_tag @company.name, class:"center-block"
+      .col-sm-6
+        h3.text-center
+          |Company summary
+        - if not @company.site.nil?
+          p
+            = link_to @company.site, @company.site
+        p
+          strong
+            |Location: &nbsp;
+          |#{@company.location.suburb}, #{@company.location.state}
+        - if not @company.size.nil?
+          p
+            strong
+              |Size: &nbsp;
+            |#{@company.size.size}
+        - if @company.recrutmentagency
+          p
+            strong
+              |Recruitment agency &nbsp;
+        - if @company.industry.count>0
+          p
+            strong
+              |Indusrty:
+          ul
+            - @company.industry.each do |industry|
+              li &nbsp; #{industry.name}
+        .row
+          .col-sm-6
+            button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
+              |Contact
+          .col-sm-6
+            button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
+              |Back
+        P
+    .row
+      .col-sm-12
+        p
+          = render :inline =>  RDiscount.new(@company.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if @company.description
+          - if @company.job.count>0
+        h3
+          = link_to "Company jobs #{@company.job.count}", "/company_jobs/#{@company.id}"
+.col-xs-12.hidden-md.hidden-lg.hidden-sm
+  .panel-body
+    h1.text-center
+      = @company.name
+      - if @company.realy
+        span.glyphicon.glyphicon-ok.glyphicon-small
+    .row
+      .col-xs-12
+        p.text-center
+          .row
+            - if @company.logo_uid.nil?
+              = image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size: "300x250")
+            - else
+              = image_tag(@company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250")
+          .row
+            .text-center
+              p
+              = social_share_button_tag @company.name, class:"center-block"
+      .col-xs-12
+        h3.text-center
+          |Company summary
+        - if not @company.site.nil?
+          p
+            = link_to @company.site, @company.site
+        p
+          strong
+            |Location: &nbsp;
+          |#{@company.location.suburb}, #{@company.location.state}
+        - if not @company.size.nil?
+          p
+            strong
+              |Size: &nbsp;
+            |#{@company.size.size}
+        - if @company.recrutmentagency
+          p
+            strong
+              |Recruitment agency &nbsp;
+        - if @company.industry.count>0
+          p
+            strong
+              |Indusrty:
+          ul
+            - @company.industry.each do |industry|
+              li &nbsp; #{industry.name}
+        .row
+          .col-xs-6
+            button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
+              |Contact
+          .col-xs-6
+            button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
+              |Back
+        P
+    .row
+      .col-xs-12
+        p
+          = render :inline =>  RDiscount.new(@company.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if @company.description
+          - if @company.job.count>0
+        h3
+          = link_to "Company jobs #{@company.job.count}", "/company_jobs/#{@company.id}"
 .modal.fade#contact[tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"]
   .modal-dialog
     .modal-content

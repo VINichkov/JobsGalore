@@ -106,7 +106,7 @@ class Fileinput extends React.Component{
                     <button className="btn btn-default fileinput-remove fileinput-remove-button"
                             onClick={method} type="button" tabIndex={500}
                             title="Очистить выбранные файлы">
-                        <i className="glyphicon glyphicon-tras"/>
+                        <i className="glyphicon glyphicon-trash"/>
                         <span className="hidden-xs">Clear</span>
                     </button>);
             }

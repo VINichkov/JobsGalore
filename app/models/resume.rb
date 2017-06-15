@@ -15,7 +15,7 @@ class Resume < ApplicationRecord
   scope :search, ->(query) do
     text_query = []
     if  not(query[:category].nil?) and not (query[:category]=="999") then
-      text_query << "id in "+Industryjob.where(industry:query[:category]).pluck(:job_id).to_s.sub("[","(").sub("]",")")
+      text_query << "id in "+Industryresume.where(industry:query[:category]).pluck(:resume_id).to_s.sub("[","(").sub("]",")")
     end
     if  (not query[:location_id].nil?) and (not query[:location_id] == "")
       text_query << "location_id = :location_id"

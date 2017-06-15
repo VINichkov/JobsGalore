@@ -1,4 +1,5 @@
 class IndexController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :category, only: [:main, :by_category]
   def main
     @jobs_last = Job.last(10)
@@ -49,10 +50,10 @@ class IndexController < ApplicationController
         @objs = Company.search(param).order(:name).paginate(page: param[:page], per_page:21)
         @name = {name:'Companies'}
       when '2'
-        @objs = Job.search(param).order(:updated_at).paginate(page: param[:page], per_page:25)
+        @objs = Job.search(param).order(updated_at:  :desc).paginate(page: param[:page], per_page:25)
         @name = {name:'Jobs'}
       when '3'
-        @objs = Resume.search(param).order(:updated_at).paginate(page: param[:page], per_page:25)
+        @objs = Resume.search(param).order(updated_at: :desc).paginate(page: param[:page], per_page:25)
         @name = {name:'Resumes'}
     end
   end

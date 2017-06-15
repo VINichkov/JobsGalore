@@ -4,6 +4,7 @@ class Ability
   def initialize(user,param )
     user ||= Client.new
     if user.resp
+      can [:new], Resume
       can [:new, :create], Job
       can [ :edit, :update, :destroy], Job, Job do |job |
         not(job.company.client.find_by_id(user.id).nil?)
@@ -13,6 +14,7 @@ class Ability
       end
       can [:settings_company, :edit_logo], :all
     else
+      can [:new], Job
       can [:new, :create], Resume
       can [ :edit, :update, :destroy], Resume, Resume do |resume|
         resume.client_id == user.id

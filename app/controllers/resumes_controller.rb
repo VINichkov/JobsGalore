@@ -22,7 +22,12 @@ class ResumesController < ApplicationController
 
   # GET /resumes/new
   def new
-    @resume = Resume.new
+    unless current_client.resp
+      @resume = Resume.new
+    else
+      redirect_to root_path, alert: "Please register as an applicant"
+    end
+
   end
 
   # GET /resumes/1/edit

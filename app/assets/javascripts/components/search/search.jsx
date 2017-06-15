@@ -83,7 +83,7 @@ class Search extends React.Component{
                                         <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.contract:false} name={this.props.name+'[contract]'}/> Contract</label>
                                     </div>
                                     <div className="checkbox col-md-3 col-lg-3">
-                                        <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.fulltime:false} name={this.props.name+'[fulltime]'}/> Fulltime</label>
+                                        <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.fulltime:false} name={this.props.name+'[fulltime]'}/> Full-time</label>
                                     </div>
                                     <div className="checkbox col-md-3 col-lg-3">
                                         <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.parttime:false} name={this.props.name+'[parttime]'}/> Part-time</label>

@@ -6,7 +6,6 @@
         - @company.errors.full_messages.each do |message|
           li = message
   hr.colorgraph
-    .row
       .form-group
         = f.label :name
         br
@@ -49,8 +48,10 @@
         = f.text_area :description, class:"form-control input-lg", class:"form-control input-lg", :"data-provide"=>"markdown-editable", rows:"10"
       hr.colorgraph
         .row
-          .col-xs-6.col-md-6
+          .col-xs-12.col-md-6.col-sm-6.col-lg-6
             = f.submit class: "btn btn-primary btn-block btn-lg"
-          .col-lg-6.col-md-6
+            p
+          .col-xs-12.col-md-6.col-sm-6.col-lg-6
             = link_to 'Back', :back, class:"btn btn-success btn-block btn-lg"
-      br
+            p
+

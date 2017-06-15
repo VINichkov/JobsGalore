@@ -1,6 +1,6 @@
 .container
   .row
-    .col-xs-12.col-sm-8.col-md-6.col-lg-6.col-sm-offset-2.col-md-offset-3.col-lg-offset-3
+    .col-xs-12.col-sm-12.col-md-6.col-lg-6.col-md-offset-3.col-lg-offset-3
       = devise_error_messages!
       h2 Please Sign Up
       = form_for(resource, as: resource_name, html:{enctype: "multipart/form-data"}, url: {action: 'create_employer'}, method: :post, ) do |f|
@@ -11,12 +11,12 @@
             =link_to "Employer"
         hr.colorgraph
         .row
-          .col-xs-6.col-sm-6.col-md-6
+          .col-xs-12.col-sm-6.col-md-6
             .form-group
               = f.label "Your first name"
               br
               = f.text_field :firstname, autofocus: true, class:"form-control input-lg",placeholder:"First Name"
-          .col-xs-6.col-sm-6.col-md-6
+          .col-xs-12.col-sm-6.col-md-6
             .form-group
               = f.label "Your surname"
               br

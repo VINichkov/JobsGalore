@@ -1,6 +1,6 @@
 .container
   .row
-    .col-xs-12.col-sm-8.col-md-6.col-lg-6.col-sm-offset-2.col-md-offset-3.col-lg-offset-3
+    .col-xs-12.col-sm-12.col-md-6.col-lg-6.col-md-offset-3.col-lg-offset-3
       h2 Update photo
       =form_for @client, html:{enctype: "multipart/form-data"} do |f|
         - if @client.errors.any?
@@ -10,7 +10,7 @@
               - @client.errors.full_messages.each do |message|
                 li = message
         hr.colorgraph
-        .form-group
+        .form-group.text-center
           - if current_client.photo.nil?
             = image_tag("/assets/avatar.png", size: "300x300", class: 'img-circle')
           - else

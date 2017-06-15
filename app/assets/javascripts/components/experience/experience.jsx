@@ -33,9 +33,15 @@ class Experience extends React.Component{
         var elem = null;
         if (this.state.stat) {
             elem = this.state.index.map(function (currentValue, index) {
-                return (<div className="well" id={index}>
+                return (<div id={index}>
+                    <hr />
                     <div className="row" key={index}>
-                        <div className="col-md-10 col-lg-10" key={index}>
+                        <div className="col-md-offset-10 col-lg-offset-10 col-sm-offset-10 col-xs-offset-8 col-md-2 col-lg-2 col-sm-2 col-xs-4">
+                            <a id={index} className="btn btn-danger btn-block" data-confirm="Are you sure?"
+                                   onClick={this.handleOnDel}><i className="glyphicon glyphicon-trash"/>
+                            </a>
+                        </div>
+                        <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12" key={index}>
                             <div className="form-group" key={index}>
                                 <label> Position </label>
                                 <br />
@@ -44,13 +50,10 @@ class Experience extends React.Component{
                                        defaultValue={currentValue ? currentValue.titlejob : ""}/>
                             </div>
                         </div>
-                        <div className="col-md-2 col-lg-2">
-                            <a id={index} className="btn btn-danger btn-block  btn-lg" data-confirm="Are you sure?"
-                               onClick={this.handleOnDel}>Delete</a>
-                        </div>
+
                     </div>
                     <div className="row">
-                        <div className="col-md-4 col-lg-4">
+                        <div className="col-md-4 col-lg-4 col-sm-4 col-xs-12">
                             <div className="form-group">
                                 <label> Start of work </label>
                                 <br />
@@ -64,7 +67,7 @@ class Experience extends React.Component{
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-4 col-lg-4">
+                        <div className="col-md-4 col-lg-4 col-sm-4 col-xs-12">
                             <div className="form-group">
                                 <label> End </label>
                                 <br />
@@ -78,11 +81,11 @@ class Experience extends React.Component{
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-2 col-lg-2">
+                        <div className="col-md-4 col-lg-4 col-sm-4 col-xs-12">
                             <div className="form-group">
                                 <label> Location </label>
                                 <br />
-                                <Autocomplete className="form-controldropdown-toggle"
+                                <Autocomplete className="form-control dropdown-toggle"
                                               defaultName={currentValue ? currentValue.location_name : this.props.defaultEmptyLocations.name}
                                               defaultId={currentValue ? currentValue.location_id : this.props.defaultEmptyLocations.id}
                                               name={this.props.name + "[bloc_" + index + "]" + "[location"}
@@ -93,7 +96,7 @@ class Experience extends React.Component{
                     </div>
 
                     <div className="row">
-                        <div className="col-md-6 col-lg-6">
+                        <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                             <div className="form-group">
                                 <label> Organization </label>
                                 <br />
@@ -102,7 +105,7 @@ class Experience extends React.Component{
                                            defaultValue={currentValue ? currentValue.employer : ""}/>
                             </div>
                         </div>
-                        <div className="col-md-6 col-lg-6">
+                        <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                             <div className="form-group">
                                 <label> Site </label>
                                 <br />
@@ -134,6 +137,7 @@ class Experience extends React.Component{
                             <a className="btn btn-success btn-block" onClick={this.handleOnClick}>Add experience</a>
                         </div>
                     </div>
+                    <hr />
                 </div>);
     }
 }

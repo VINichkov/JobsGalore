@@ -23,15 +23,15 @@
       h4 #{current_client.location.suburb}, #{current_client.location.state}
   -if current_client.resp then
     .row
-      .col-md-6.col-lg-6
+      .col-sm-6.col-xs-12
         h2 Your jobs
-      .col-md-6.col-lg-6
+      .col-sm-6.col-xs-12
         = link_to "Post a job", new_job_path, class: "btn btn-primary btn-block btn-lg"
+        p
     .row.well
         - current_client.company.all.each do |company|
           - company.job.each do |job|
             .panel-body
-              .col-lg-10.col-md-10
                 h3
                   = link_to job.title.capitalize, job, class: 'text-warning'
                 - if job.salarymax.nil? and not job.salarymin.nil? then
@@ -51,22 +51,22 @@
                   strong
                     |Posted: &nbsp;
                   |#{job.updated_at.strftime("%d %B %Y").to_s}
-              .col-lg-2.col-md-2
                 .row
-                  = link_to "Edit", edit_job_path(job), class: "btn btn-success btn-block btn-lg"
-                  = link_to "Delete", job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block btn-lg"
-
+                  .col-sm-6.col-xs-6
+                    = link_to "Edit", edit_job_path(job), class: "btn btn-success btn-block btn-lg"
+                  .col-sm-6.col-xs-6
+                    = link_to "Delete", job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block btn-lg"
   -else
     .row
-      .col-md-6.col-lg-6
-        h2 Your resumes
-      .col-md-6.col-lg-6
-        = link_to "post a resume", new_resume_path, class: "btn btn-primary btn-block btn-lg"
+      .col-sm-6.col-xs-6
+        h3 Your resumes
+      .col-sm-6.col-xs-6
+        = link_to "Post a resume", new_resume_path, class: "btn btn-primary btn-block btn-lg"
+        p
     .row.well
       - if current_client.resume.count>0
         -current_client.resume.all.each do |resume|
           .panel-body
-            .col-lg-10.col-md-10
               h3
                 = link_to resume.desiredjobtitle.capitalize, resume, class: 'text-warning'
               - if not resume.salary.nil?
@@ -81,9 +81,10 @@
                 strong
                   |Posted: &nbsp;
                 |#{resume.updated_at.strftime("%d %B %Y")}
-            .col-lg-2.col-md-2
               .row
-                = link_to "Edit", edit_resume_path(resume), class: "btn btn-success btn-block btn-lg"
-                = link_to "Delete", resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block btn-lg"
+                .col-sm-6.col-xs-6
+                  = link_to "Edit", edit_resume_path(resume), class: "btn btn-success btn-block btn-lg"
+                .col-sm-6.col-xs-6
+                  = link_to "Delete", resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block btn-lg"
       - else
         h3 You don't have resumes
