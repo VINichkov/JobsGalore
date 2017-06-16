@@ -42,6 +42,7 @@ class IndexController < ApplicationController
   end
 
   def main_search
+    @category = Industry.all
     param = main_search_params
     session[:param] = Marshal.load(Marshal.dump(param))
     param[:param][:value] = (param[:param][:value].split(" ").map {|t| t=t+":*"}).join("&")

@@ -37,7 +37,7 @@
     .form-group
       = f.label "Your birthday"
       br
-      .input-group.date#datepicker_reg
+      .input-group.date.datepicker_reg
         input.form-control.input-lg[type="text" value =(@client.birth ? @client.birth.strftime("%d %B %Y").to_s : "Empty")]
         span.input-group-addon
             i.glyphicon.glyphicon-calendar

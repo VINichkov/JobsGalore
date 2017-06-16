@@ -44,7 +44,7 @@ class Search extends React.Component{
                                         <label style={{width:'100%'}} className="navbar-text ">Select category</label>
                                     </div>
                                     <div className="col-md-10 col-lg-10">
-                                        <Category style={{width:'100%'}} defaultValue={this.props.params ? this.props.params.category: ''} name={this.props.name+'[category]'} id="category_search" className="form-control navbar-btn"/>
+                                        <Category style={{width:'100%'}} defaultValue={this.props.params ? this.props.params.category: ''} name={this.props.name+'[category]'} categories = {this.props.categories} id="category_search" className="form-control navbar-btn"/>
                                     </div>
                                 </div>
                             </div>,
