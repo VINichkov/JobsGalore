@@ -13,7 +13,7 @@
  */
 
 // Custom bootstrap variables must be set or imported before bootstrap itself.
-$icon-font-path: asset_url("../assets/");
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "fileinput";
