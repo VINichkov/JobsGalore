@@ -3,7 +3,7 @@
     .panel.panel-default
       .panel-body
         - if company.logo_uid.nil?
-          = link_to(image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size:"300x250"), company)
+          = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size:"300x250"), company)
         - else
           = link_to(image_tag(company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size:"300x250"  ), company)
 

@@ -13,7 +13,7 @@
  */
 
 // Custom bootstrap variables must be set or imported before bootstrap itself.
-$icon-font-path: "/assets/bootstrap/";
+//$icon-font-path: "../assets/bootstrap/";
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "fileinput";
@@ -109,7 +109,7 @@ $size: 32px;
 }
 
 .header{
-  background-image: url(/assets/jobsA.jpg);
+  background-image: url('../assets/jobsA.jpg');
   display: inline-block;
   width: 100%;
   background-position: center;

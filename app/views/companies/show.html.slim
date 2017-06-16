@@ -19,7 +19,7 @@
         p.text-center
           .row
             -if @company.logo_uid.nil?
-              = image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size:"300x250")
+              = image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size:"300x250")
             -else
               =image_tag(@company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size:"300x250")
           .row
@@ -73,7 +73,7 @@
         p.text-center
           .row
             - if @company.logo_uid.nil?
-              = image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size: "300x250")
+              = image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250")
             - else
               = image_tag(@company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250")
           .row
@@ -132,7 +132,7 @@
         p.text-center
           .row
             - if @company.logo_uid.nil?
-              = image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size: "300x250")
+              = image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250")
             - else
               = image_tag(@company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250")
           .row
@@ -194,7 +194,7 @@
             .row
               col-lg-3.col-md-3
                 - if client.photo.nil?
-                  = image_tag("/assets/avatar.png", size: "60x60", class: 'img-circle center-block')
+                  = image_tag(image_path("avatar.png"), size: "60x60", class: 'img-circle center-block')
                 - else
                   = image_tag(client.photo.thumb('300x').url, size: "60x60", class: 'img-circle center-block ')
               col-lg-9.col-md-9

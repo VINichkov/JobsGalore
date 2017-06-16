@@ -15,7 +15,7 @@
           = link_to(@job.company.name,@job.company)
           p
           - if @job.company.logo_uid.nil?
-            = link_to(image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size: "300x250"),@job.company)
+            = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250"),@job.company)
           - else
             = link_to(image_tag(@job.company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250"),@job.company)
         p
@@ -111,7 +111,7 @@
             = link_to(@job.company.name,@job.company)
             p
             - if @job.company.logo_uid.nil?
-              = link_to(image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size: "300x250"),@job.company)
+              = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250"),@job.company)
             - else
               = link_to(image_tag(@job.company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250"),@job.company)
           p
@@ -220,7 +220,7 @@
           = link_to(@job.company.name,@job.company)
           p
           - if @job.company.logo_uid.nil?
-            = link_to(image_tag("/assets/company_profile.jpg", class: 'img-thumbnail center-block', size: "300x250"),@job.company)
+            = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250"),@job.company)
           - else
             = link_to(image_tag(@job.company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250"),@job.company)
         p
@@ -332,7 +332,7 @@
             - @job.company.client.each do |client|
               col-lg-3.col-md-3
                 - if client.photo.nil?
-                  = image_tag("/assets/avatar.png", size: "60x60", class: 'img-circle center-block', )
+                  = image_tag(image_path("avatar.png"), size: "60x60", class: 'img-circle center-block', )
                 - else
                   = image_tag(client.photo.thumb('300x').url, size: "60x60", class: 'img-circle center-block ')
               col-lg-9.col-md-9

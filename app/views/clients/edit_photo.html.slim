@@ -12,7 +12,7 @@
         hr.colorgraph
         .form-group.text-center
           - if current_client.photo.nil?
-            = image_tag("/assets/avatar.png", size: "300x300", class: 'img-circle')
+            = image_tag(image_path("avatar.png"), size: "300x300", class: 'img-circle')
           - else
             = image_tag(current_client.photo.thumb('300x300#').url, class: 'img-circle')
         .form-group

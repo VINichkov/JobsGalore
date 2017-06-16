@@ -2,7 +2,7 @@
   .container
     h1
       span
-        = image_tag("/assets/method-draw-image.svg", size:"100x100")
+        = image_tag(image_path("method-draw-image.svg"), size:"100x100")
       span.black_text
         |.COM.AU
 nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
@@ -13,7 +13,7 @@ nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
           li
             = link_to root_path do
               span
-                = image_tag("/assets/method-draw-image.svg", size: "50x50")
+                = image_tag(image_path("method-draw-image.svg"), size: "50x50")
               span.black_text
                 |.COM.AU
           li.elem_header
@@ -96,7 +96,7 @@ nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="n
             li
               =link_to client_root_path do
                 - if current_client.photo.nil?
-                  = image_tag("/assets/avatar.png", class: 'img-circle', size: "50x50")
+                  = image_tag(image_path("avatar.png"), class: 'img-circle', size: "50x50")
                 - else
                   = image_tag(current_client.photo.thumb('300x300#').url, class: 'img-circle', size: "50x50")
                 | &nbsp; #{current_client.firstname} #{current_client.lastname} &nbsp;

@@ -43,17 +43,17 @@
             - if not @resume.client.photo_uid.nil?
               = image_tag(@resume.client.photo.thumb('300x').url, class: 'img-thumbnail center-block ', size:"300x250" )
             - else
-              = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block', size:"300x250")
+              = image_tag(image_path("avatar.png"), class: 'img-thumbnail center-block', size:"300x250")
           -else
             h3.text-center
               |Anonymous
             p
-            = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block ', size:"300x250")
+            = image_tag(image_path("avatar.png"), class: 'img-thumbnail center-block ', size:"300x250")
         -else
           h3.text-center
             |Anonymous
           p
-          = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block ', size:"300x250")
+          = image_tag(image_path("avatar.png"), class: 'img-thumbnail center-block ', size:"300x250")
         h3.text-center
           |Description
         .well
@@ -162,17 +162,17 @@
             - if not @resume.client.photo_uid.nil?
               = image_tag(@resume.client.photo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250")
             - else
-              = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block', size: "300x250")
+              = image_tag(image_path("avatar.png"), class: 'img-thumbnail center-block', size: "300x250")
           - else
             h3.text-center
               |Anonymous
             p
-            = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block ', size: "300x250")
+            = image_tag(image_path("avatar.png"), class: 'img-thumbnail center-block ', size: "300x250")
         - else
           h3.text-center
             |Anonymous
           p
-          = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block ', size: "300x250")
+          = image_tag(image_path("avatar.png"), class: 'img-thumbnail center-block ', size: "300x250")
         p
         .text-center
           =social_share_button_tag @resume.desiredjobtitle
@@ -319,17 +319,17 @@
             - if not @resume.client.photo_uid.nil?
               = image_tag(@resume.client.photo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250")
             - else
-              = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block', size: "300x250")
+              = image_tag(image_path("avatar.png"), class: 'img-thumbnail center-block', size: "300x250")
           - else
             h3.text-center
               |Anonymous
             p
-            = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block ', size: "300x250")
+            = image_tag(image_path("avatar.png"), class: 'img-thumbnail center-block ', size: "300x250")
         - else
           h3.text-center
             |Anonymous
           p
-          = image_tag("/assets/avatar.png", class: 'img-thumbnail center-block ', size: "300x250")
+          = image_tag(image_path("avatar.png"), class: 'img-thumbnail center-block ', size: "300x250")
         p
         .text-center
           =social_share_button_tag @resume.desiredjobtitle
@@ -477,7 +477,7 @@
               .row
                   col-lg-3.col-md-3
                     - if @resume.client.photo.nil?
-                      = image_tag("/assets/avatar.png", size: "60x60", class: 'img-circle center-block')
+                      = image_tag(image_path("avatar.png"), size: "60x60", class: 'img-circle center-block')
                     - else
                       = image_tag(@resume.client.photo.thumb('300x').url, size: "60x60", class: 'img-circle center-block ')
                   col-lg-9.col-md-9
