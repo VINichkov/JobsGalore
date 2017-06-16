@@ -21,23 +21,23 @@
             h4
               |Major cities
           li.col-sm-4.col-md-12.col-lg-12
-            =link_to "Sydney", search_path(main_search:{type:"2", value:"", location_name:"Sydney, NSW", location_id:"9522"})
+            =link_to "Sydney", search_path(main_search:{type:"2", value:"", location_id: Location.find_by_suburb('Sydney').id.to_s})
           li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Melbourne", search_path(main_search:{type:"2", value:"", location_name:"Melbourne, VIC", location_id:"9561"})
+            = link_to "Melbourne", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Melbourne').id.to_s})
           li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Brisbane", search_path(main_search:{type:"2", value:"", location_name:"Brisbane, QLD", location_id:"9525"})
+            = link_to "Brisbane", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Brisbane').id.to_s})
           li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Gold Coast", search_path(main_search:{type:"2", value:"", location_name:"Gold Coast, QLD", location_id:"9531"})
+            = link_to "Gold Coast", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Gold Coast').id.to_s})
           li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Perth", search_path(main_search:{type:"2", value:"", location_name:"Perth, WA", location_id:"9580"})
+            = link_to "Perth", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Perth').id.to_s})
           li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Adelaide", search_path(main_search:{type:"2", value:"", location_name:"Adelaide, QLD", location_id:"9547"})
+            = link_to "Adelaide", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Adelaide').id.to_s})
           li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Hobart", search_path(main_search:{type:"2", value:"", location_name:"Hobart, TAS", location_id:"9557"})
+            = link_to "Hobart", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Hobart').id.to_s})
           li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Darwin", search_path(main_search:{type:"2", value:"", location_name:"Darwin, NT", location_id:"9523"})
+            = link_to "Darwin", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Darwin').id.to_s})
           li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Canberra", search_path(main_search:{type:"2", value:"", location_name:"Canberra, ACT", location_id:"9501"})
+            = link_to "Canberra", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Canberra').id.to_s})
     .col-lg-9.col-md-9.hidden-sm.hidden-xs
       .well
         ul.nav.nav-list
