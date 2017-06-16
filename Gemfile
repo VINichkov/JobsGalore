@@ -30,6 +30,7 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'social-share-button'
 gem 'cancancan'
 gem 'devise'
+gem 'will_paginate-bootstrap'
 #gem 'bcrypt', '~>3.1.11'
 
 group :production do

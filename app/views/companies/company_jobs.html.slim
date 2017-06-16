@@ -1,4 +1,5 @@
 .container
   =render 'inc/list_jobs'
-= will_paginate @objs, class:'text-center'
+.text-center
+  = will_paginate @objs, {renderer: BootstrapPagination::Rails}
 

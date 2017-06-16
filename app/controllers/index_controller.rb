@@ -44,16 +44,16 @@ class IndexController < ApplicationController
   def main_search
     param = main_search_params
     session[:param] = Marshal.load(Marshal.dump(param))
-    param[:value] = (param[:value].split(" ").map {|t| t=t+":*"}).join("&")
-    case param[:type]
+    param[:param][:value] = (param[:param][:value].split(" ").map {|t| t=t+":*"}).join("&")
+    case param[:param][:type]
       when '1'
-        @objs = Company.search(param).order(:name).paginate(page: param[:page], per_page:21)
+        @objs = Company.search(param[:param]).order(:name).paginate(page: param[:page], per_page:21)
         @name = {name:'Companies'}
       when '2'
-        @objs = Job.search(param).order(updated_at:  :desc).paginate(page: param[:page], per_page:25)
+        @objs = Job.search(param[:param]).order(updated_at:  :desc).paginate(page: param[:page], per_page:25)
         @name = {name:'Jobs'}
       when '3'
-        @objs = Resume.search(param).order(updated_at: :desc).paginate(page: param[:page], per_page:25)
+        @objs = Resume.search(param[:param]).order(updated_at: :desc).paginate(page: param[:page], per_page:25)
         @name = {name:'Resumes'}
     end
   end
@@ -87,7 +87,7 @@ class IndexController < ApplicationController
   end
 
   def main_search_params
-    params.require(:main_search).permit(:type, :value, :page, :salary, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :options, :category, :location_id, :location_name).to_h
+    {param:params.require(:main_search).permit(:type, :value, :page, :salary, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :options, :category, :location_id, :location_name).to_h, page:params.permit(:page).to_h[:page]}
   end
 
   def category
