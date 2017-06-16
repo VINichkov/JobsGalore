@@ -3,7 +3,7 @@ html
   head
     title
       = PropertsHelper::TITLE
-    link[href="/assets/icon.svg" rel="shortcut icon" type="image/svg"]
+    link[href=image_path("icon.svg") rel="shortcut icon" type="image/svg"]
     meta[name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"]
     = csrf_meta_tags
     = stylesheet_link_tag('application', media: 'all', 'data-turbolinks-track'=> 'reload')
