@@ -9,11 +9,12 @@ Dragonfly.app.configure do
   url_format "/media/:job/:name"
 
   if ENV["RAILS_ENV"]=="production"
-  datastore :s3,
+  datastore :AWS,
             bucket_name: ENV['bucket'],
             access_key_id: ENV['access_key_id'],
             secret_access_key: ENV['secret_access_key'],
-            region: ENV['region']
+            region: ENV['region'],
+            url_scheme: 'https'
   else
     datastore :file,
               root_path: Rails.root.join('public/system/dragonfly', Rails.env),
