@@ -6,7 +6,6 @@ Dragonfly.app.configure do
 
   secret "c0ae201052ba1f5fa75c839423975b8adf2401c6fbbf5ae540251fb8d97354d4"
 
-  Dragonfly.app.remote_url_for
 
   if ENV["RAILS_ENV"]=="production"
   datastore :s3,
