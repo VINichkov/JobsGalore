@@ -7,7 +7,7 @@
           - if current_client.photo.nil?
             = image_tag(image_path("avatar.png"), size: "300x300", class: 'img-circle')
           - else
-            = image_tag(current_client.photo.thumb('300x300#').url, class: 'img-circle', size:"300x300")
+            = image_tag(current_client.photo.thumb('300x300#').remote_url, class: 'img-circle', size:"300x300")
         .col-xs-12.hidden-sm.hidden-md.hidden-lg.text-center
           - if current_client.photo.nil?
             = image_tag(image_path("avatar.png"), size: "250x250", class: 'img-circle')
