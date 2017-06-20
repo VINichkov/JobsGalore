@@ -3,7 +3,7 @@ class Autocomplete extends React.Component{
     constructor(props) {
         super(props);
         let text = "";
-        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let possible = "abcdefghijklmnopqrstuvwxyz";
 
         for( var i=0; i < 5; i++ )
             text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -64,7 +64,7 @@ class Autocomplete extends React.Component{
         }
         return(
             <div className="dropdown" onMouseDown={this.handleClickItem}>
-                <input name={this.props.name + "_name]"} className={this.props.className} onInput={this.handleInput} onBlur={this.handleBlur} defaultValue = {this.props.defaultName} placeholder={this.props.place_holder} type="text"  id={this.state.id} style={this.props.style}></input>
+                <input name={this.props.name + "_name]"} autocomplete="off" className={this.props.className} onInput={this.handleInput} onBlur={this.handleBlur} defaultValue = {this.props.defaultName} placeholder={this.props.place_holder} type="text"  id={this.state.id} style={this.props.style}></input>
                 <input id={"input_get"+this.state.id} name={this.props.name + "_id]"} defaultValue = {this.props.defaultId} style={ilStyle}/>
                 <ul className="dropdown-menu" style={ulStyle}>
                     {locations}

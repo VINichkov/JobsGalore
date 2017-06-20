@@ -45,7 +45,7 @@ class Experience extends React.Component{
                             <div className="form-group" key={index}>
                                 <label> Position </label>
                                 <br />
-                                <input className="form-control" type="text"
+                                <input className="form-control" type="text" autocomplete="off"
                                        name={this.props.name + "[bloc_" + index + "]" + "position"}
                                        defaultValue={currentValue ? currentValue.titlejob : ""}/>
                             </div>
@@ -100,7 +100,7 @@ class Experience extends React.Component{
                             <div className="form-group">
                                 <label> Organization </label>
                                 <br />
-                                <input className="form-control" type="text"
+                                <input className="form-control" type="text" autocomplete="off"
                                        name={this.props.name + "[bloc_" + index + "]" + "employer"}
                                            defaultValue={currentValue ? currentValue.employer : ""}/>
                             </div>
@@ -109,7 +109,7 @@ class Experience extends React.Component{
                             <div className="form-group">
                                 <label> Site </label>
                                 <br />
-                                <input className="form-control" type="text"
+                                <input className="form-control" type="text" autocomplete="off"
                                        name={this.props.name + "[bloc_" + index + "]" + "site" }
                                        defaultValue={currentValue ? currentValue.site : ""}/>
                             </div>

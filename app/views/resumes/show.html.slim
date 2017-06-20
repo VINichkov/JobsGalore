@@ -28,6 +28,11 @@
           strong
             |Employer: &nbsp;
           |#{exp.employer}
+        -if exp.site and not exp.site.empty?
+          p
+            strong
+              |Site: &nbsp;
+            |#{exp.site}
         hr
         p
           =  render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if  exp.description
@@ -303,6 +308,11 @@
                 strong
                   |Employer: &nbsp;
                 |#{exp.employer}
+              - if exp.site and not exp.site.empty?
+                p
+                  strong
+                    |Site: &nbsp;
+                  |#{exp.site}
               p
                 = render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  exp.description
 .col-xs-12.hidden-md.hidden-lg.hidden-sm
@@ -460,6 +470,11 @@
                 strong
                   |Employer: &nbsp;
                 |#{exp.employer}
+              - if exp.site and not exp.site.empty?
+                p
+                  strong
+                    |Site: &nbsp;
+                  |#{exp.site}
               p
                 = render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  exp.description
 -if client_signed_in?

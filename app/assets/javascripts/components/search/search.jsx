@@ -64,7 +64,7 @@ class Search extends React.Component{
                                         <label style={{width:'100%'}} className="navbar-text">Salary</label>
                                     </div>
                                     <div className="col-md-10 col-lg-10">
-                                        <input style={{width:'100%'}} id="salary" className="form-control" defaultValue={this.props.params ? this.props.params.salary: ''} name={this.props.name+'[salary]'} pattern="^[ 0-9]+$" type="text"/>
+                                        <input style={{width:'100%'}} autocomplete="off" id="salary" className="form-control" defaultValue={this.props.params ? this.props.params.salary: ''} name={this.props.name+'[salary]'} pattern="^[ 0-9]+$" type="text"/>
                                     </div>
                                 </div>
                             </div>,
