@@ -12,7 +12,8 @@ Dragonfly.app.configure do
             bucket_name: ENV['bucket'],
             access_key_id: ENV['access_key_id'],
             secret_access_key: ENV['secret_access_key'],
-            region: ENV['region']
+            region: ENV['region'],
+            use_iam_profile: true
   else
 
     datastore :file,
