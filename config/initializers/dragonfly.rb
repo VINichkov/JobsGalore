@@ -12,9 +12,9 @@ Dragonfly.app.configure do
             bucket_name: ENV['bucket'],
             access_key_id: ENV['access_key_id'],
             secret_access_key: ENV['secret_access_key'],
-            region: ENV['region'],
+            region: ENV['region']
   else
-
+    secret "c0ae201052ba1f5fa75c839423975b8adf2401c6fbbf5ae540251fb8d97354d4"
     datastore :file,
               root_path: Rails.root.join('public/system/dragonfly', Rails.env),
               server_root: Rails.root.join('public')
