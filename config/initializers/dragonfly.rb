@@ -1,4 +1,5 @@
 require 'dragonfly'
+require 'dragonfly/s3_data_store'
 
 # Configure
 Dragonfly.app.configure do
@@ -8,12 +9,14 @@ Dragonfly.app.configure do
   url_format "/media/:job/:name"
 
   if ENV["RAILS_ENV"]=="production"
-  datastore :s3,
+    puts "________________________________Поехали"
+    datastore :s3,
             bucket_name: ENV['bucket'],
             access_key_id: ENV['access_key_id'],
             secret_access_key: ENV['secret_access_key'],
             region: ENV['region'],
-            use_iam_profile: true
+            url_scheme: 'https'
+
   else
 
     datastore :file,
