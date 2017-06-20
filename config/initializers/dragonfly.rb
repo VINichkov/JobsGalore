@@ -14,7 +14,7 @@ Dragonfly.app.configure do
             secret_access_key: ENV['secret_access_key'],
             region: ENV['region'],
   else
-    secret "c0ae201052ba1f5fa75c839423975b8adf2401c6fbbf5ae540251fb8d97354d4"
+
     datastore :file,
               root_path: Rails.root.join('public/system/dragonfly', Rails.env),
               server_root: Rails.root.join('public')
