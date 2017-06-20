@@ -6,9 +6,9 @@ Dragonfly.app.configure do
   plugin :imagemagick
   secret "c0ae201052ba1f5fa75c839423975b8adf2401c6fbbf5ae540251fb8d97354d4"
 
-  url_format "/media/:job/:name"
+  url_format "/#{ENV['bucket']}/:uid"
 
-  if ENV["RAILS_ENV"]=="production"
+  if ENV["RAILS_ENV"]=="development"
     puts "________________________________Поехали"
     datastore :s3,
             bucket_name: ENV['bucket'],
@@ -16,9 +16,7 @@ Dragonfly.app.configure do
             secret_access_key: ENV['secret_access_key'],
             region: ENV['region'],
             url_scheme: 'https'
-
   else
-
     datastore :file,
               root_path: Rails.root.join('public/system/dragonfly', Rails.env),
               server_root: Rails.root.join('public')
