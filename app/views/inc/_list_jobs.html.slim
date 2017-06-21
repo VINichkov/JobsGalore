@@ -10,7 +10,7 @@
               - if job.company.logo_uid.nil?
                 = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block' , size:"270x270"), job.company)
               - else
-                = link_to(image_tag(job.company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size:"270x270"), job.company)
+                = link_to(image_tag(Dragonfly.app.remote_url_for(job.company.logo_uid), class: 'img-thumbnail center-block ', size:"270x270"), job.company)
             .row.text-center
               = "Posted: "+job.updated_at.strftime("%d %B %Y").to_s
         .col-lg-10.col-md-10.col-sm-10.col-xs-12
@@ -33,7 +33,7 @@
               - if job.company.logo_uid.nil?
                 = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size:"130x100"), job.company)
               - else
-                = link_to(image_tag(job.company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size:"130x100"), job.company)
+                = link_to(image_tag(Dragonfly.app.remote_url_for(job.company.logo_uid), class: 'img-thumbnail center-block ', size:"130x100"), job.company)
             .row.text-center
               = "Posted: "+job.updated_at.strftime("%d %B %Y").to_s
 

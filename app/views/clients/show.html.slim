@@ -20,7 +20,7 @@ p
   = @client.responsible
 p
   strong Photo:
-  =image_tag @client.photo.thumb('300x200#').url
+  =image_tag Dragonfly.app.remote_url_for(@client.photo_uid)
 p
   strong Gender:
   = @client.gender

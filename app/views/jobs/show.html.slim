@@ -17,7 +17,7 @@
           - if @job.company.logo_uid.nil?
             = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250"),@job.company)
           - else
-            = link_to(image_tag(@job.company.logo.thumb('300x').url, class: 'img-thumbnail center-block ', size: "300x250"),@job.company)
+            = link_to(image_tag(Dragonfly.app.remote_url_for(@job.company.logo_uid), class: 'img-thumbnail center-block ', size: "300x250"),@job.company)
         p
         h3.text-center
           |Job summary

@@ -98,7 +98,7 @@ nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="n
                 - if current_client.photo.nil?
                   = image_tag(image_path("avatar.png"), class: 'img-circle', size: "50x50")
                 - else
-                  = image_tag(current_client.photo.thumb('300x300#').url, class: 'img-circle', size: "50x50")
+                  = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-circle', size: "50x50")
                 | &nbsp; #{current_client.firstname} #{current_client.lastname} &nbsp;
                 span.glyphicon.glyphicon-chevron-right
             li
