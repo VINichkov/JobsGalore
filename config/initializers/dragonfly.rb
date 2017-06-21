@@ -8,7 +8,7 @@ Dragonfly.app.configure do
 
   url_format "/media/:job/:name"
 
-  if ENV["RAILS_ENV"]=="development"
+  if ENV["RAILS_ENV"]=="production"
     puts "________________________________Поехали"
     datastore :s3,
             bucket_name: ENV['bucket'],
