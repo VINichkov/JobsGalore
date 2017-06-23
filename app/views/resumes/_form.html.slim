@@ -10,19 +10,19 @@
   .form-group
     = f.label :desiredjobtitle, "Desired position"
     br
-    = f.text_field :desiredjobtitle, class:"form-control input-lg"
+    = f.text_field :desiredjobtitle, class:"form-control"
   .row
     .col-md-6.col-lx-6.col-sm-12.col-xs-12
       .form-group
         = f.label :salary
         br
-        = f.text_field :salary, class:"form-control input-lg"
+        = f.text_field :salary, class:"form-control"
     .col-md-6.col-lx-6.col-sm-12.col-xs-12
       .form-group
         = f.label :industry, "Location"
         br
         = react_component('Autocomplete',
-                className: "form-control input-lg dropdown-toggle",
+                className: "form-control dropdown-toggle",
                 name: "resume[location",
                 id: "resume_location_id",
                 defaultName: @resume.location ? "#{@resume.location.suburb}, #{@resume.location.state}" : "#{current_client.location.suburb}, #{current_client.location.state}",
@@ -34,7 +34,7 @@
                       className:"selectpicker form-control",
                       name:"resume[industry]",
                       multiple:false,
-                      dataStyle:"btn-lg btn-default",
+                      dataStyle:"bbtn-default",
                       values: Industry.all.to_json,
                       defaultValues:@resume.industry.to_json)
 
@@ -91,11 +91,11 @@
     .form-group
       = f.label :abouteme, "Aboute me"
       br
-      = f.text_area :abouteme, class:"form-control input-lg", :"data-provide"=>"markdown-editable", rows:"10"
+      = f.text_area :abouteme, class:"form-control", :"data-provide"=>"markdown-editable", rows:"10"
   hr.colorgraph
     .row
       .col-xs-6.col-md-6.col-sm-6.col-lg-6
-        = f.submit class: "btn btn-primary btn-block btn-lg"
+        = f.submit class: "btn btn-primary btn-block "
       .col-lg-6.col-md-6.col-xs-6.col-sm-6
-        = link_to 'Back', :back, class: "btn btn-success btn-block btn-lg"
+        = link_to 'Back', :back, class: "btn btn-success btn-block"
     br

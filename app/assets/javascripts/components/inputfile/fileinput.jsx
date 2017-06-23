@@ -114,7 +114,7 @@ class Fileinput extends React.Component{
         return (
             <div className="file-input">
                 {photos}
-                <div className={'input-group file-caption-main input-group-lg'}>
+                <div className={'input-group file-caption-main'}>
                     <div className='form-control file-caption  kv-fileinput-caption '  tabIndex={500}>
                         {fileCaptionName(this.state.files)}
                     </div>

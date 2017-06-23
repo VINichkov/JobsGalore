@@ -10,12 +10,12 @@
   .form-group
     = f.label :title
     br
-    = f.text_field :title, class:"form-control input-lg"
+    = f.text_field :title, class:"form-control"
   .form-group
     = f.label :location
     br
     =react_component('Autocomplete',
-                      className:"form-control input-lg dropdown-toggle",
+                      className:"form-control dropdown-toggle",
                       name:"job[location",
                       id:"job_location_id",
                       defaultName: @job.location ? "#{@job.location.suburb}, #{@job.location.state}" : "#{current_client.location.suburb}, #{current_client.location.state}",
@@ -27,7 +27,7 @@
             className: "selectpicker form-control",
             name: "job[industry]",
             multiple: false,
-            dataStyle: "btn-lg btn-default",
+            dataStyle: "btn-default",
             values: Industry.all.to_json,
             defaultValues:@job.industry.to_json)
   .row
@@ -36,12 +36,12 @@
       .form-group
         = f.label :min, "Salary min"
         br
-        = f.text_field :salarymin, class:"form-control input-lg"
+        = f.text_field :salarymin, class:"form-control"
     .col-xs-12.col-sm-6.col-md-6
       .form-group
         = f.label :max, "Salary max"
         br
-        = f.text_field :salarymax, class:"form-control input-lg"
+        = f.text_field :salarymax, class:"form-control"
   .row
     .col-xs-6.col-sm-4.col-md-3
       .form-group
@@ -86,11 +86,11 @@
   .form-group
     = f.label :description
     br
-    = f.text_area :description, class:"form-control input-lg", class:"form-control input-lg", :"data-provide"=>"markdown-editable", rows:"10"
+    = f.text_area :description, class:"form-control", class:"form-control", :"data-provide"=>"markdown-editable", rows:"10"
   hr.colorgraph
   .row
     .col-xs-6.col-md-6.col-sm-6.col-lg-6
-      = f.submit class: "btn btn-primary btn-block btn-lg"
+      = f.submit class: "btn btn-primary btn-block "
     .col-xs-6.col-md-6.col-sm-6.col-lg-6
-      = link_to 'Back', :back, class:"btn btn-success btn-block btn-lg"
+      = link_to 'Back', :back, class:"btn btn-success btn-block "
   br

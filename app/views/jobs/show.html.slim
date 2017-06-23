@@ -93,14 +93,37 @@
           p
         .row
           .col-lg-12.col-md-12
-            button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
-              |Contact
+            span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+              |Extras
+              span.caret
+            ul.dropdown-menu
+              li
+                = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 1})
+              li
+                = link_to "Top $20 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 2})
+              li
+                = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 3})
+            p
+          - if client_signed_in?
+            - if not @job.company.client.find_by_id(current_client.id).nil?
+              .col-lg-12.col-md-12
+                = link_to "Edit", edit_job_path(@job), class: "btn btn-primary btn-block"
+                p
+              .col-lg-12.col-md-12
+                = link_to "Delete", @job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
+                p
+          - else
+            .col-lg-12.col-md-12
+              button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
+                |Contact
+              p
             p
           .col-lg-12.col-md-12
-            button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
+            button.btn.btn-success.btn-block[onclick="history.back()"]
               |Back
-        br
-        =social_share_button_tag @job.title
+            p
+        .text-center
+          =social_share_button_tag @job.title
 .col-sm-12.hidden-md.hidden-lg.hidden-xs
     .panel-body
       h1.text-center
@@ -200,12 +223,31 @@
                   br
           p
           .row
-            .col-sm-6
-              button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
-                |Contact
-            .col-sm-6
-              button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
-                |Back
+            .btn-group.btn-group-justified
+              .btn-group
+                span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+                  |Extras
+                  span.caret
+                ul.dropdown-menu
+                  li
+                    = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 1})
+                  li
+                    = link_to "Top $20 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 2})
+                  li
+                    = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 3})
+              - if client_signed_in?
+                - if not @job.company.client.find_by_id(current_client.id).nil?
+                  .btn-group
+                    = link_to "Edit", edit_job_path(@job), class: "btn btn-primary btn-block"
+                  .btn-group
+                    = link_to "Delete", @job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
+              - else
+                .btn-group
+                  button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
+                    |Contact
+              .btn-group
+                button.btn.btn-success.btn-block[onclick="history.back()"]
+                  |Back
       .row
         .col-sm-12
           p
@@ -308,12 +350,31 @@
                 | &nbsp; Remote
                 br
         .row
-          .col-xs-6
-            button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
-              |Contact
-          .col-xs-6
-            button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
-              |Back
+          .btn-group.btn-group-justified
+            .btn-group
+              span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+                |Extras
+                span.caret
+              ul.dropdown-menu
+                li
+                  = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 1})
+                li
+                  = link_to "Top $20 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 2})
+                li
+                  = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 3})
+            - if client_signed_in?
+              - if not @job.company.client.find_by_id(current_client.id).nil?
+                .btn-group
+                  = link_to "Edit", edit_job_path(@job), class: "btn btn-primary btn-block"
+                .btn-group
+                  = link_to "Delete", @job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
+            - else
+              .btn-group
+                button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
+                  |Contact
+            .btn-group
+              button.btn.btn-success.btn-block[onclick="history.back()"]
+                |Back
     .row
       .col-xs-12
         p

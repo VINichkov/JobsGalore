@@ -4,7 +4,7 @@
       -if current_client.photo.nil?
         = image_tag(image_path("avatar.png"), class: 'img-circle', size:"300x300")
       -else
-        =image_tag(current_client.photo.thumb('300x300#').url, class: 'img-circle', size:"300x300")
+        =image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-circle', size:"300x300")
     .col-md-6.col-lg-6
       h2 #{current_client.firstname} #{current_client.lastname}
       h2 Email: #{current_client.email}
@@ -26,12 +26,33 @@
       .col-sm-6.col-xs-12
         h2 Your jobs
       .col-sm-6.col-xs-12
-        = link_to "Post a job", new_job_path, class: "btn btn-primary btn-block btn-lg"
+        = link_to "Post a job", new_job_path, class: "btn btn-primary btn-block"
         p
     .row.well
         - current_client.company.all.each do |company|
           - company.job.each do |job|
             .panel-body
+              .col-xs-7.col-xs-offset-5.hidden-lg.hidden-md.hidden-sm
+                .btn-group.btn-group-justified
+                  .btn-group
+                    span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+                      span.glyphicon.glyphicon-cog
+                      span.caret
+                    ul.dropdown-menu
+                      li
+                        = link_to "Urgent $10 (7 day)", bill_path(bill: {id: job, kind: 2, option: 1})
+                      li
+                        = link_to "Top $20 (7 day)", bill_path(bill: {id: job, kind: 2, option: 2})
+                      li
+                        = link_to "Highlight $5 (7 day)", bill_path(bill: {id: job, kind: 2, option: 3})
+                  .btn-group
+                    = link_to edit_job_path(job), class: "btn btn-success btn-block" do
+                      span.glyphicon.glyphicon-pencil
+                  .btn-group
+                    = link_to job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block " do
+                      span.glyphicon.glyphicon-trash
+                p
+              .col-lg-9.col-md-9.col-sm-8
                 h3
                   = link_to job.title.capitalize, job, class: 'text-warning'
                 - if job.salarymax.nil? and not job.salarymin.nil? then
@@ -51,22 +72,57 @@
                   strong
                     |Posted: &nbsp;
                   |#{job.updated_at.strftime("%d %B %Y").to_s}
+              .col-lg-3.col-md-3.col-sm-4.hidden-xs
                 .row
-                  .col-sm-6.col-xs-6
-                    = link_to "Edit", edit_job_path(job), class: "btn btn-success btn-block btn-lg"
-                  .col-sm-6.col-xs-6
-                    = link_to "Delete", job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block btn-lg"
+                  .col-sm-12.col-lg-12.col-md-12
+                    button.btn.btn-warning.btn-block[data-toggle="dropdown"]
+                      |Extras &nbsp;
+                      span.caret
+                    ul.dropdown-menu
+                      li
+                        = link_to "Urgent $10 (7 day)", bill_path(bill: {id: job, kind: 2, option: 1})
+                      li
+                        = link_to "Top $20 (7 day)", bill_path(bill: {id: job, kind: 2, option: 2})
+                      li
+                        = link_to "Highlight $5 (7 day)", bill_path(bill: {id: job, kind: 2, option: 3})
+                    p
+                  .col-sm-12.col-lg-12.col-md-12
+                    = link_to "Edit", edit_job_path(job), class: "btn btn-success btn-block"
+                    p
+                  .col-sm-12.col-lg-12.col-md-12
+                    = link_to "Delete", job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
+                    p
   -else
     .row
-      .col-sm-6.col-xs-6
+      .col-sm-6.col-xs-12
         h3 Your resumes
-      .col-sm-6.col-xs-6
-        = link_to "Post a resume", new_resume_path, class: "btn btn-primary btn-block btn-lg"
+      .col-sm-6.col-xs-12
+        = link_to "Post a resume", new_resume_path, class: "btn btn-primary btn-block"
         p
     .row.well
       - if current_client.resume.count>0
         -current_client.resume.all.each do |resume|
-          .panel-body
+          .col-xs-7.col-xs-offset-5.hidden-lg.hidden-md.hidden-sm
+            .btn-group.btn-group-justified
+              .btn-group
+                span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+                  span.glyphicon.glyphicon-cog
+                  span.caret
+                ul.dropdown-menu
+                  li
+                    = link_to "Urgent $10 (7 day)", bill_path(bill: {id: resume, kind: 3, option: 1})
+                  li
+                    = link_to "Top $20 (7 day)", bill_path(bill: {id: resume, kind: 3, option: 2})
+                  li
+                    = link_to "Highlight $5 (7 day)", bill_path(bill: {id: resume, kind: 3, option: 3})
+              .btn-group
+                = link_to edit_resume_path(resume), class: "btn btn-success btn-block" do
+                  span.glyphicon.glyphicon-pencil
+              .btn-group
+                = link_to resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block " do
+                    span.glyphicon.glyphicon-trash
+            p
+          .col-lg-9.col-md-9.col-sm-8
               h3
                 = link_to resume.desiredjobtitle.capitalize, resume, class: 'text-warning'
               - if not resume.salary.nil?
@@ -81,10 +137,25 @@
                 strong
                   |Posted: &nbsp;
                 |#{resume.updated_at.strftime("%d %B %Y")}
-              .row
-                .col-sm-6.col-xs-6
-                  = link_to "Edit", edit_resume_path(resume), class: "btn btn-success btn-block btn-lg"
-                .col-sm-6.col-xs-6
-                  = link_to "Delete", resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block btn-lg"
+          .col-lg-3.col-md-3.col-sm-4.hidden-xs
+            .row
+                .col-sm-12.col-lg-12.col-md-12
+                  button.btn.btn-warning.btn-block[data-toggle="dropdown"]
+                    |Extras &nbsp;
+                    span.caret
+                  ul.dropdown-menu
+                    li
+                      =link_to "Urgent $10 (7 day)", bill_path(bill:{id:resume, kind:3, option: 1})
+                    li
+                      =link_to "Top $20 (7 day)", bill_path(bill:{id:resume, kind:3, option: 2})
+                    li
+                      =link_to "Highlight $5 (7 day)", bill_path(bill:{id:resume, kind:3, option: 3})
+                  p
+                .col-sm-12.col-lg-12.col-md-12
+                  = link_to "Edit", edit_resume_path(resume), class: "btn btn-success btn-block"
+                  p
+                .col-sm-12.col-lg-12.col-md-12
+                  = link_to "Delete", resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block "
+                  p
       - else
         h3 You don't have resumes

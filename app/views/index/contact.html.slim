@@ -7,28 +7,28 @@
         .form-group
           = f.label "Your first name"
           br
-          = f.text_field :firstname, autofocus: true, class: "form-control input-lg", placeholder: "First Name"
+          = f.text_field :firstname, autofocus: true, class: "form-control", placeholder: "First Name"
         .form-group
           = f.label "Your surname"
           br
-          = f.text_field :lastname, class: "form-control input-lg", placeholder: "Surname"
+          = f.text_field :lastname, class: "form-control", placeholder: "Surname"
         .form-group
           = f.label "Your email"
           br
-          = f.text_field :email, class: "form-control input-lg", placeholder: "email@mail.com"
+          = f.text_field :email, class: "form-control", placeholder: "email@mail.com"
         .form-group
           = f.label "Your phone number"
           br
-          = react_component('InputPhoneNumber', id: "phone", name: "contact[phone]", class_name: "form-control input-lg", dataformat: "+61 d dddd dddd", placeholder: "+61 9 9999 9999")
+          = react_component('InputPhoneNumber', id: "phone", name: "contact[phone]", class_name: "form-control", dataformat: "+61 d dddd dddd", placeholder: "+61 9 9999 9999")
         .form-group
           = f.label "Subject"
           br
-          = f.text_field :subject, class: "form-control input-lg"
+          = f.text_field :subject, class: "form-control"
         .form-group
           = f.label "Your message"
           br
-          = f.text_area :message, class: "form-control input-lg", rows: "6"
+          = f.text_area :message, class: "form-control", rows: "6"
         hr.colorgraph
         .row
           .col-xs-6.col-md-6
-            = f.submit "Send", class: "btn btn-primary btn-block btn-lg"
+            = f.submit "Send", class: "btn btn-primary btn-block"

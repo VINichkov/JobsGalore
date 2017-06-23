@@ -15,49 +15,49 @@
             .form-group
               = f.label "Your first name"
               br
-              = f.text_field :firstname, autofocus: true, class:"form-control input-lg",placeholder:"First Name"
+              = f.text_field :firstname, autofocus: true, class:"form-control",placeholder:"First Name"
           .col-xs-12.col-sm-6.col-md-6
             .form-group
               = f.label "Your surname"
               br
-              = f.text_field :lastname, class:"form-control input-lg",placeholder:"Surname"
+              = f.text_field :lastname, class:"form-control",placeholder:"Surname"
         .form-group
           = f.label "Gender"
           br
-          select.selectpicker.form-control[data-style="btn-lg btn-default" name="client[gender]" ]
+          select.selectpicker.form-control[data-style="btn-default" name="client[gender]" ]
             option[value="false"] Male
             option[value="true"] Female
         br
         .form-group
           = f.label "Company name"
           br
-          input.form-control.input-lg#company_name[type="text" placeholder="Company inc" name="client[company_name]" autocomplete="off"]
+          input.form-control#company_name[type="text" placeholder="Company inc" name="client[company_name]" autocomplete="off"]
         .form-group
           label
             input[type="checkbox" name="client[company_recrutment]"] Recruitment agency
         .form-group
           = f.label "Location"
           br
-          =react_component('Autocomplete',className:"form-control input-lg dropdown-toggle",name:"client[location",id:"client_location_id")
+          =react_component('Autocomplete',className:"form-control dropdown-toggle",name:"client[location",id:"client_location_id")
         .form-group
           = f.label "Phone number"
           br
-          =react_component('InputPhoneNumber',id:"phone",name:"client[phone]", class_name:"form-control input-lg", dataformat: "+61 d dddd dddd", placeholder:"+61 9 9999 9999")
+          =react_component('InputPhoneNumber',id:"phone",name:"client[phone]", class_name:"form-control", dataformat: "+61 d dddd dddd", placeholder:"+61 9 9999 9999")
         .form-group
           = f.label "Email"
           br
-          = f.email_field :email, autofocus: true, class:"form-control input-lg",placeholder:"surname@hotmail.com"
+          = f.email_field :email, autofocus: true, class:"form-control",placeholder:"surname@hotmail.com"
         .form-group
           = f.label :password
           -if @minimum_password_length
             em
               =" (#{@minimum_password_length} characters minimum)"
           br
-          = f.password_field :password, autocomplete: "off", class:"form-control input-lg",placeholder:"**************"
+          = f.password_field :password, autocomplete: "off", class:"form-control",placeholder:"**************"
         .form-group
           = f.label :password_confirmation
           br
-          = f.password_field :password_confirmation, autocomplete: "off", class:"form-control input-lg",placeholder:"**************"
+          = f.password_field :password_confirmation, autocomplete: "off", class:"form-control",placeholder:"**************"
         .checkbox
           label
             input[type="checkbox"] Remember me
@@ -70,5 +70,5 @@
         hr.colorgraph
         .row
           .col-xs-6.col-md-6
-            = f.submit "Register", class: "btn btn-primary btn-block btn-lg"
+            = f.submit "Register", class: "btn btn-primary btn-block"
           = render "devise/shared/links"

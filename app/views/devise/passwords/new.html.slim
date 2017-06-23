@@ -11,11 +11,11 @@
               .form-group
                 =f.label :email
                 br
-                = f.email_field :email, autofocus: true, class:"form-control input-lg",placeholder:"surname@hotmail.com"
+                = f.email_field :email, autofocus: true, class:"form-control",placeholder:"surname@hotmail.com"
         hr.colorgraph
           .row
             .col-xs-12.col-md-12.col-sm-12.col-lg-12
-              = f.submit "Send me reset password instructions", class: "btn btn-primary btn-block btn-lg"
+              = f.submit "Send me reset password instructions", class: "btn btn-primary btn-block"
               br
           .row
             = render "devise/shared/links"

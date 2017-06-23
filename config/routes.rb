@@ -42,6 +42,10 @@ Rails.application.routes.draw do
   get '/:category/:object', to: 'index#category_view'
   get '404', :to => 'application#page_not_found'
 
+  #payment
+  get '/bill', to: 'payments#bill'
+
+
   #resources :educations
   #resources :languageresume
   #resources :experiences

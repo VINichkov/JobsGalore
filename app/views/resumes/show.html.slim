@@ -128,25 +128,37 @@
                 br
           br
           .row
+            .col-lg-12.col-md-12
+              span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+                |Extras
+                span.caret
+              ul.dropdown-menu
+                li
+                  = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1})
+                li
+                  = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2})
+                li
+                  = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3})
+              p
             -if client_signed_in?
               - if @resume.client.id == current_client.id
                 .col-lg-12.col-md-12
-                  = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block btn-lg"
+                  = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block"
                   p
                 .col-lg-12.col-md-12
-                  = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block btn-lg"
+                  = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
                   p
               -if current_client.resp
                 .col-lg-12.col-md-12
-                  button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
+                  button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
                     |Contact
                   p
             -else
               .col-lg-12.col-md-12
-                =link_to "Contact", "/resumes/#{@resume.id}/log_in", class: "btn btn-primary btn-lg btn-block"
+                =link_to "Contact", "/resumes/#{@resume.id}/log_in", class: "btn btn-primary btn-block"
                 p
             .col-lg-12.col-md-12
-              button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
+              button.btn.btn-success.btn-block[onclick="history.back()"]
                 |Back
               p
           p
@@ -261,27 +273,34 @@
 
         p
         .row
-          - if client_signed_in?
-            - if @resume.client.id == current_client.id
-              .col-sm-6
-                = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block btn-lg"
-                p
-              .col-sm-6
-                = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block btn-lg"
-                p
-            - if current_client.resp
-              .col-sm-6
-                button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
-                  |Contact
-                p
-          - else
-            .col-sm-6
-              = link_to "Contact", "/resumes/#{@resume.id}/log_in", class: "btn btn-primary btn-lg btn-block"
-              p
-          .col-sm-6
-            button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
-              |Back
-            p
+          .btn-group.btn-group-justified
+            .btn-group
+              span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+                |Extras
+                span.caret
+              ul.dropdown-menu
+                li
+                  = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1})
+                li
+                  = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2})
+                li
+                  = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3})
+            - if client_signed_in?
+              - if @resume.client.id == current_client.id
+                .btn-group
+                  = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block"
+                .btn-group
+                  = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
+              - if current_client.resp
+                .btn-group
+                  button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
+                    |Contact
+            - else
+              .btn-group
+                = link_to "Contact", "/resumes/#{@resume.id}/log_in", class: "btn btn-primary btn-block"
+            .btn-group
+              button.btn.btn-success.btn-block[onclick="history.back()"]
+                |Back
     .row
       .col-sm-12
         p
@@ -423,27 +442,34 @@
 
         p
         .row
-          - if client_signed_in?
-            - if @resume.client.id == current_client.id
-              .col-xs-6
-                = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block btn-lg"
-                p
-              .col-xs-6
-                = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block btn-lg"
-                p
-            - if current_client.resp
-              .col-xs-6
-                button.btn.btn-primary.btn-lg.btn-block[data-toggle="modal" data-target="#contact"]
-                  |Contact
-                p
-          - else
-            .col-xs-6
-              = link_to "Contact", "/resumes/#{@resume.id}/log_in", class: "btn btn-primary btn-lg btn-block"
-              p
-          .col-xs-6
-            button.btn.btn-success.btn-lg.btn-block[onclick="history.back()"]
-              |Back
-            p
+          .btn-group.btn-group-justified
+            .btn-group
+              span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+                |Extras
+                span.caret
+              ul.dropdown-menu
+                li
+                  = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1})
+                li
+                  = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2})
+                li
+                  = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3})
+            - if client_signed_in?
+              - if @resume.client.id == current_client.id
+                .btn-group
+                  = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block"
+                .btn-group
+                  = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
+              - if current_client.resp
+                .btn-group
+                  button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
+                    |Contact
+            - else
+              .btn-group
+                = link_to "Contact", "/resumes/#{@resume.id}/log_in", class: "btn btn-primary btn-block"
+            .btn-group
+              button.btn.btn-success.btn-block[onclick="history.back()"]
+                |Back
     .row
       .col-xs-12
         p
