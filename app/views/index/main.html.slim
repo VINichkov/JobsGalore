@@ -56,14 +56,15 @@
                   p.small = job.location.state.to_s+" "+job.location.suburb.capitalize.to_s
           .col-lg-6.col-md-6
             ul.nav.nav-list
-              - @jobs_last[5..9].each do |job|
-                li
-                  hr
-                  p
-                    = link_to(job.title, job)
-                  p.small
-                    = link_to job.company.name, job.company, class: 'text-success'
-                  p.small = job.location.state.to_s+" "+job.location.suburb.capitalize.to_s
+              -if @jobs_last
+                - @jobs_last[5..9].each do |job|
+                  li
+                    hr
+                    p
+                      = link_to(job.title, job)
+                    p.small
+                      = link_to job.company.name, job.company, class: 'text-success'
+                    p.small = job.location.state.to_s+" "+job.location.suburb.capitalize.to_s
 
 
   =render 'inc/job_by_category'
