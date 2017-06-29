@@ -2,6 +2,7 @@ class IndexController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :category, only: [:main, :by_category]
   def main
+    @jobs_last = nil
     @jobs_last = Job.last(10)
   end
 
