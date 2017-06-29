@@ -39,32 +39,32 @@
           li.col-sm-4.col-md-12.col-lg-12
             = link_to "Canberra", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Canberra').id.to_s})
     .col-lg-9.col-md-9.hidden-sm.hidden-xs
-      .well
-        ul.nav.nav-list
-          li.nav-header
-            h4
-              |Last Jobs
-          .col-lg-6.col-md-6
-            ul.nav.nav-list
-              -@jobs_last[0..4].each do |job|
-                li
-                  hr
-                  p
-                    =link_to(job.title, job)
-                  p.small
-                    = link_to job.company.name, job.company, class: 'text-success'
-                  p.small = job.location.state.to_s+" "+job.location.suburb.capitalize.to_s
-          .col-lg-6.col-md-6
-            ul.nav.nav-list
-              -if @jobs_last
-                - @jobs_last[5..9].each do |job|
+      -if @jobs_last
+        .well
+          ul.nav.nav-list
+            li.nav-header
+              h4
+                |Last Jobs
+            .col-lg-6.col-md-6
+              ul.nav.nav-list
+                -@jobs_last[0..4].each do |job|
                   li
                     hr
                     p
-                      = link_to(job.title, job)
+                      =link_to(job.title, job)
                     p.small
                       = link_to job.company.name, job.company, class: 'text-success'
                     p.small = job.location.state.to_s+" "+job.location.suburb.capitalize.to_s
+            .col-lg-6.col-md-6
+              ul.nav.nav-list
+                  - @jobs_last[5..9].each do |job|
+                    li
+                      hr
+                      p
+                        = link_to(job.title, job)
+                      p.small
+                        = link_to job.company.name, job.company, class: 'text-success'
+                      p.small = job.location.state.to_s+" "+job.location.suburb.capitalize.to_s
 
 
   =render 'inc/job_by_category'
