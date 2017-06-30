@@ -5,7 +5,7 @@ class PaymentsController < ApplicationController
   protect_from_forgery except: [:create]
 
   def bill
-    @url = paypal_url(root_path, cancel_url_path)
+    @url = paypal_url(root_url, cancel_url_url, payments_url)
   end
 
   def cancel_url
@@ -30,15 +30,19 @@ class PaymentsController < ApplicationController
 
   private
 
-  def paypal_url(return_url, cancel_return_url)
+  def paypal_url(return_url, cancel_return_url, notify_url)
+    puts return_url
+    puts cancel_return_url
+    puts notify_url
     values = {
         cmd: '_xclick',
         charset: 'utf-8',
         business: 'v.nichkov@hotmail.com',
         return: return_url,
         cancel_return: cancel_return_url,
+        notify_url: notify_url,
         item_number: 1,
-        item_name: "Что то",
+        item_name: "Pthyz",
         currency_code: 'AUD',
         amount: "Pthyz"    }
     "https://www.sandbox.paypal.com/cgi-bin/webscr?#{values.to_query}"
