@@ -33,22 +33,18 @@ class PaymentsController < ApplicationController
   private
 
   def paypal_url(return_url, cancel_return_url, notify_url)
-    puts return_url
-    puts cancel_return_url
-    puts notify_url
-    puts ActionController::Base.helpers.asset_url("method-draw-image.svg")
+
     values = {
         cmd: '_xclick',
         charset: 'utf-8',
-        business: 'FreeTalents',
+        business: 'v.nichkov@hotmail.com',
         return: return_url,
         cancel_return: cancel_return_url,
         notify_url: notify_url,
         item_name: "Urgent",
         currency_code: 'AUD',
-        image_url: ActionController::Base.helpers.asset_url("method-draw-image.svg"),
         amount: "10.00"    }
-    "https://www.sandbox.paypal.com/cgi-bin/webscr?#{values.to_query}"
+    "https://www.paypal.com/cgi-bin/webscr?#{values.to_query}"
   end
 
 
