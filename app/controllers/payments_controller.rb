@@ -41,10 +41,9 @@ class PaymentsController < ApplicationController
         return: return_url,
         cancel_return: cancel_return_url,
         notify_url: notify_url,
-        item_number: 1,
         item_name: "Pthyz",
         currency_code: 'AUD',
-        amount: "Pthyz"    }
+        amount: "10.00"    }
     "https://www.sandbox.paypal.com/cgi-bin/webscr?#{values.to_query}"
   end
 
