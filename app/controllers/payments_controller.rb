@@ -1,8 +1,10 @@
+
 class PaymentsController < ApplicationController
   #load_and_authorize_resource :client, only:[:edit, :update, :destroy]
   #before_action :set_client, only: [:show, :edit,:update, :destroy]
   #before_action :authenticate_client!
   protect_from_forgery except: [:create]
+
 
   def bill
     @url = paypal_url(root_url, cancel_url_url, payments_url)
@@ -34,6 +36,7 @@ class PaymentsController < ApplicationController
     puts return_url
     puts cancel_return_url
     puts notify_url
+    puts ActionController::Base.helpers.asset_url("method-draw-image.svg")
     values = {
         cmd: '_xclick',
         charset: 'utf-8',
@@ -43,7 +46,7 @@ class PaymentsController < ApplicationController
         notify_url: notify_url,
         item_name: "Urgent",
         currency_code: 'AUD',
-        image_url: image_path("method-draw-image.svg"),
+        image_url: ActionController::Base.helpers.asset_url("method-draw-image.svg"),
         amount: "10.00"    }
     "https://www.sandbox.paypal.com/cgi-bin/webscr?#{values.to_query}"
   end
