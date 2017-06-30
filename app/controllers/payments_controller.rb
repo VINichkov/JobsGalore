@@ -37,12 +37,13 @@ class PaymentsController < ApplicationController
     values = {
         cmd: '_xclick',
         charset: 'utf-8',
-        business: 'v.nichkov@hotmail.com',
+        business: 'FreeTalents',
         return: return_url,
         cancel_return: cancel_return_url,
         notify_url: notify_url,
-        item_name: "Pthyz",
+        item_name: "Urgent",
         currency_code: 'AUD',
+        image_url: image_path("method-draw-image.svg"),
         amount: "10.00"    }
     "https://www.sandbox.paypal.com/cgi-bin/webscr?#{values.to_query}"
   end
