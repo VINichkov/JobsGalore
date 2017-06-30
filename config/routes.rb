@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   #payment
   get '/bill', to: 'payments#bill'
+  get '/cancel_url', to: 'payments#cancel_url'
   resources :payments, only: [:create, :index]
 
 
