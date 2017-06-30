@@ -112,7 +112,6 @@ class IndexController < ApplicationController
       text = "fts @@ to_tsquery(:query)" unless params[:value].nil?
       text = "and location_id = :location" unless params[:location].nil?
       text = "and location_id = :" unless params[:location].nil?
-
   end
 
 end
