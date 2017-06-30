@@ -575,6 +575,42 @@ ALTER SEQUENCE locations_id_seq OWNED BY locations.id;
 
 
 --
+-- Name: payments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE payments (
+    id integer NOT NULL,
+    params text,
+    product_id integer,
+    kind integer,
+    kindpay integer,
+    status character varying,
+    transaction_id character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: payments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE payments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: payments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE payments_id_seq OWNED BY payments.id;
+
+
+--
 -- Name: properts; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -898,6 +934,13 @@ ALTER TABLE ONLY locations ALTER COLUMN id SET DEFAULT nextval('locations_id_seq
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY payments ALTER COLUMN id SET DEFAULT nextval('payments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY properts ALTER COLUMN id SET DEFAULT nextval('properts_id_seq'::regclass);
 
 
@@ -1062,6 +1105,14 @@ ALTER TABLE ONLY levels
 
 ALTER TABLE ONLY locations
     ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: payments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY payments
+    ADD CONSTRAINT payments_pkey PRIMARY KEY (id);
 
 
 --
@@ -1700,6 +1751,6 @@ ALTER TABLE ONLY skillsresumes
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20161216140254'), ('20161216140255'), ('20161216144123'), ('20161216144836'), ('20161216144837'), ('20161216144838'), ('20161216144839'), ('20161216144840'), ('20161216144842'), ('20161216144843'), ('20161216152826'), ('20161216152951'), ('20161216152952'), ('20161216152953'), ('20161216153048'), ('20161220113257'), ('20161220114325'), ('20161220114429'), ('20161220114751'), ('20161221095015'), ('20170125130039'), ('20170228101552'), ('20170310100000'), ('20170330000001'), ('20170430102817'), ('20170430103528'), ('20170621104707');
+INSERT INTO schema_migrations (version) VALUES ('20161216140254'), ('20161216140255'), ('20161216144123'), ('20161216144836'), ('20161216144837'), ('20161216144838'), ('20161216144839'), ('20161216144840'), ('20161216144842'), ('20161216144843'), ('20161216152826'), ('20161216152951'), ('20161216152952'), ('20161216152953'), ('20161216153048'), ('20161220113257'), ('20161220114325'), ('20161220114429'), ('20161220114751'), ('20161221095015'), ('20170125130039'), ('20170228101552'), ('20170310100000'), ('20170330000001'), ('20170430102817'), ('20170430103528'), ('20170621104707'), ('20170630083503');
 
 
