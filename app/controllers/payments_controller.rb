@@ -17,7 +17,7 @@ class PaymentsController < ApplicationController
   def create
     product_id = params[:item_number]
     Payment.create!(
-        params: params.to_s,
+        params: params.to_h.to_s,
         product_id: product_id,
         status: params[:payment_status],
         transaction_id: params[:txn_id]
