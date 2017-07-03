@@ -13,7 +13,18 @@ class PaymentsController < ApplicationController
     else
       @ad = Resume.find_by_id(@param[:id])
     end
-    @url = paypal_url(root_url, cancel_url_url, payments_url,"#{@param[:option]}#{@param[:kind]}#{@param[:id]}")
+    case @param[:option]
+      when '1'
+        amount='10.00'
+        item_name = "Urgent"
+      when '2'
+        amount='20.00'
+        item_name = "Ad Top"
+      when '3'
+        amount='5.00'
+        item_name="Highlight"
+    end
+    @url = paypal_url(return_url:root_url, cancel_return_url:cancel_url_url, notify_url:payments_url,item_number:"#{@param[:option]}#{@param[:kind]}#{@param[:id]}",amount:amount,item_name:item_name)
   end
 
   def cancel_url
@@ -38,19 +49,19 @@ class PaymentsController < ApplicationController
 
   private
 
-  def paypal_url(return_url, cancel_return_url, notify_url,item_number)
+  def paypal_url(params = {})
 
     values = {
         cmd: '_xclick',
         charset: 'utf-8',
         business: 'v.nichkov@hotmail.com',
-        return: return_url,
-        cancel_return: cancel_return_url,
-        notify_url: notify_url,
-        item_number:item_number,
-        item_name: "Urgent",
+        return: params[:return_url],
+        cancel_return: params[:cancel_return_url],
+        notify_url: params[:notify_url],
+        item_number:params[:item_number],
+        item_name: params[:item_name],
         currency_code: 'AUD',
-        amount: "10.00"    }
+        amount: params[:amount]}
     "https://www.sandbox.paypal.com/cgi-bin/webscr?#{values.to_query}"
   end
 
