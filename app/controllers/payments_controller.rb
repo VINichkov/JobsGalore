@@ -37,13 +37,38 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    product_id = params[:item_number]
+    option = params[:item_number][0]
+    kind=params[:item_number][1]
+    product_id = params[:item_number][2..params[:item_number].length-1]
     Payment.create!(
         params: params.to_s,
         product_id: product_id,
+        kind:kind,
+        kindpay:option,
         status: params[:payment_status],
         transaction_id: params[:txn_id]
     )
+    if kind=='2'
+      job = Job.find_by_id(product_id)
+      case option
+        when '1'
+          job.urgent_on
+        when '2'
+          job.top_on
+        when '3'
+          job.highlight_on
+      end
+    else
+      resume = Resume.find_by_id(product_id)
+      case option
+        when '1'
+          resume.urgent_on
+        when '2'
+          resume.top_on
+        when '3'
+          resume.highlight_on
+      end
+    end
     render nothing: true
   end
 

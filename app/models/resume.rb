@@ -10,6 +10,30 @@ class Resume < ApplicationRecord
 
   validates :desiredjobtitle, presence: true
   validates :location, presence: true
+  def highlight_on
+    self.highlight = Date.today
+    self.save
+  end
+  def urgent_on
+    self.urgent = Date.today
+    self.save
+  end
+  def top_on
+    self.top = Date.today
+    self.save
+  end
+  def highlight_off
+    self.highlight = nil
+    self.save
+  end
+  def urgent_off
+    self.urgent = nil
+    self.save
+  end
+  def top_off
+    self.top = nil
+    self.save
+  end
   protected
 
   scope :search, ->(query) do
