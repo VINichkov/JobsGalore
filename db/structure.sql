@@ -421,9 +421,9 @@ CREATE TABLE jobs (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     fts tsvector,
-    urgent date,
     highlight date,
-    top date
+    top date,
+    urgent date
 );
 
 
@@ -700,9 +700,9 @@ CREATE TABLE resumes (
     updated_at timestamp without time zone NOT NULL,
     fts tsvector,
     location_id integer,
-    urgent date,
     highlight date,
-    top date
+    top date,
+    urgent date
 );
 
 
