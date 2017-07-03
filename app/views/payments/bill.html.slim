@@ -1,3 +1,46 @@
+.container
+    -if @param
+      -if @param[:option] == '1'
+        .text-center
+          h1 You are buying - Urgent
+        - if @param[:kind]=='2'
+          .col-lg-8.col-md-8
+            .panel.panel-warning
+              .panel-body.urgent
+                = render "inc/job", job: @ad
+        - elsif @param[:kind]=='3'
+          .col-lg-8.col-md-8
+            .panel.panel-warning
+              .panel-body.urgent
+                = render "inc/resume", resume: @ad
+      -elsif @param[:option] == '2'
+        .text-center
+          h1 You are buying - Ad Top
+        - if @param[:kind]=='2'
+          .col-lg-8.col-md-8
+            .panel.panel-warning
+              .panel-body
+                = render "inc/job", job: @ad
+        - elsif @param[:kind]=='3'
+          .col-lg-8.col-md-8
+            .panel.panel-warning
+              .panel-body
+                = render "inc/resume", resume: @ad
+      -elsif @param[:option] == '3'
+        .text-center
+          h1 You are buying - Highlight
+        - if @param[:kind]=='2'
+          .col-lg-8.col-md-8
+            .panel.panel-warning
+              .panel-body.highlight
+                = render "inc/job", job: @ad
+        - elsif @param[:kind]=='3'
+          .col-lg-8.col-md-8
+            .panel.panel-warning
+              .panel-body.highlight
+                = render "inc/resume", resume: @ad
+
+
 = @url
 
 

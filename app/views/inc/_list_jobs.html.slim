@@ -1,40 +1,17 @@
 .col-lg-8.col-md-8
   - @objs.each do |job|
     .panel.panel-default
-      .panel-body
-        .col-xs-12.hidden-lg.hidden-md.hidden-sm
-          .row
-            .row.text-center
-              = link_to(job.company.name[0..50], job.company)
-            .row
-              - if job.company.logo_uid.nil?
-                = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block' , size:"270x270"), job.company)
-              - else
-                = link_to(image_tag(Dragonfly.app.remote_url_for(job.company.logo_uid), class: 'img-thumbnail center-block ', size:"270x270"), job.company)
-            .row.text-center
-              = "Posted: "+job.updated_at.strftime("%d %B %Y").to_s
-        .col-lg-10.col-md-10.col-sm-10.col-xs-12
-          h3
-            = link_to job.title.capitalize, job, class: 'text-warning'
-          - if job.salarymax.nil? and not job.salarymin.nil? then
-            p = job.salarymin.to_i.to_s
-          - elsif not (job.salarymax.nil? and job.salarymin.nil?)
-            p = job.salarymin.to_i.to_s+" - "+ job.salarymax.to_i.to_s
-          = job.description[0..300]
-          = link_to ' more...', job
-          p
-          = link_to job.company.name, job.company, class: 'text-success'
-          p = job.location.state.to_s+" "+job.location.suburb.capitalize.to_s
-        .col-lg-2.col-md-2.col-sm-2.hidden-xs
-          .row
-            .row.text-center
-              = link_to(job.company.name[0..50], job.company)
-            .row
-              - if job.company.logo_uid.nil?
-                = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size:"130x100"), job.company)
-              - else
-                = link_to(image_tag(Dragonfly.app.remote_url_for(job.company.logo_uid), class: 'img-thumbnail center-block ', size:"130x100"), job.company)
-            .row.text-center
-              = "Posted: "+job.updated_at.strftime("%d %B %Y").to_s
+      - if job.highlight.nil? and job.urgent.nil?
+        .panel-body
+          = render "inc/job", job: job
+      - elsif not (job.highlight.nil?) and job.urgent.nil?
+        .panel-body.highlight
+          = render "inc/job", job: job
+      - elsif job.highlight.nil? and not (job.urgent.nil?)
+        .panel-body.urgent
+          = render "inc/job", job: job
+      - elsif not (job.highlight.nil?) and not (job.urgent.nil?)
+        .panel-body.highlight.urgent
+          = render "inc/job", job: job
 
   .col-lg-4.col-md-4

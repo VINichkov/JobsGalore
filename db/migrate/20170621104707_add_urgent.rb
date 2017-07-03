@@ -1,6 +1,5 @@
 class AddUrgent < ActiveRecord::Migration[5.0]
-  def change
-    def change
+    def up
       change_table :resumes do |elem|
         elem.date :urgent
       end
@@ -14,5 +13,4 @@ class AddUrgent < ActiveRecord::Migration[5.0]
       remove_column :resumes, :urgent
       remove_column :jobs, :urgent
     end
-  end
 end

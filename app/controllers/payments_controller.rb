@@ -7,7 +7,13 @@ class PaymentsController < ApplicationController
 
 
   def bill
-    @url = paypal_url(root_url, cancel_url_url, payments_url)
+    @param = payment_params
+    if @param[:kind] == '2'
+      @ad = Job.find_by_id(@param[:id])
+    else
+      @ad = Resume.find_by_id(@param[:id])
+    end
+    @url = paypal_url(root_url, cancel_url_url, payments_url,"#{@param[:option]}#{@param[:kind]}#{@param[:id]}")
   end
 
   def cancel_url
@@ -32,7 +38,7 @@ class PaymentsController < ApplicationController
 
   private
 
-  def paypal_url(return_url, cancel_return_url, notify_url)
+  def paypal_url(return_url, cancel_return_url, notify_url,item_number)
 
     values = {
         cmd: '_xclick',
@@ -41,16 +47,17 @@ class PaymentsController < ApplicationController
         return: return_url,
         cancel_return: cancel_return_url,
         notify_url: notify_url,
+        item_number:item_number,
         item_name: "Urgent",
         currency_code: 'AUD',
         amount: "10.00"    }
-    "https://www.paypal.com/cgi-bin/webscr?#{values.to_query}"
+    "https://www.sandbox.paypal.com/cgi-bin/webscr?#{values.to_query}"
   end
 
 
   # Never trust parameters from the scary internet, only allow the white list through.
-  def client_params
-    params.require(:bill).permit(:id, :kind, :option)
+  def payment_params
+    params.require(:bill).permit(:id, :kind, :option).to_h
   end
 
 

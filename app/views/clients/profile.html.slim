@@ -109,12 +109,15 @@
                   span.glyphicon.glyphicon-cog
                   span.caret
                 ul.dropdown-menu
-                  li
-                    = link_to "Urgent $10 (7 day)", bill_path(bill: {id: resume, kind: 3, option: 1})
-                  li
-                    = link_to "Top $20 (7 day)", bill_path(bill: {id: resume, kind: 3, option: 2})
-                  li
-                    = link_to "Highlight $5 (7 day)", bill_path(bill: {id: resume, kind: 3, option: 3})
+                  - if PropertsHelper::URGENT=="true"
+                    li
+                      = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1})
+                  - if PropertsHelper::TOP == "true"
+                    li
+                      = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2})
+                  - if PropertsHelper::HIGHLIGHT == "true"
+                    li
+                      = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3})
               .btn-group
                 = link_to edit_resume_path(resume), class: "btn btn-success btn-block" do
                   span.glyphicon.glyphicon-pencil
@@ -144,12 +147,15 @@
                     |Extras &nbsp;
                     span.caret
                   ul.dropdown-menu
-                    li
-                      =link_to "Urgent $10 (7 day)", bill_path(bill:{id:resume, kind:3, option: 1})
-                    li
-                      =link_to "Top $20 (7 day)", bill_path(bill:{id:resume, kind:3, option: 2})
-                    li
-                      =link_to "Highlight $5 (7 day)", bill_path(bill:{id:resume, kind:3, option: 3})
+                    - if PropertsHelper::URGENT=="true"
+                      li
+                        = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 1})
+                    - if PropertsHelper::TOP == "true"
+                      li
+                        = link_to "Top $20 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 2})
+                    - if PropertsHelper::HIGHLIGHT == "true"
+                      li
+                        = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 3})
                   p
                 .col-sm-12.col-lg-12.col-md-12
                   = link_to "Edit", edit_resume_path(resume), class: "btn btn-success btn-block"

@@ -134,3 +134,14 @@ $size: 32px;
 li.elem_header{
   margin-top: 14px;
 }
+
+.panel-body.highlight{
+  background-color: #ffffcc;
+  border-left: 6px solid #ffeb3b;
+}
+.panel-body.urgent{
+  background-image: url("urgent.svg");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
+}

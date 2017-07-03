@@ -3,5 +3,8 @@
   {"code": "company", "name": "Company", "value": "FreeTalents"},
   {"code": "host_name", "name": "host", "value": " https://free-talents.herokuapp.com/"},
   {"code": "port", "name": "port", "value": 3000},
-  {"code": "email", "name": "Email", "value": "v.nichkov@hotmail.com"}]
+  {"code": "email", "name": "Email", "value": "v.nichkov@hotmail.com"},
+  {"code": "urgent", "name": "Urgent", "value": "true"},
+  {"code": "highlight", "name": "Highlight", "value": "true"},
+  {"code": "top", "name": "Ad Top", "value": "false"}]
 }
