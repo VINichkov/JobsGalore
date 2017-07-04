@@ -34,8 +34,8 @@ gem 'will_paginate-bootstrap'
 #gem 'bcrypt', '~>3.1.11'
 
 group :production do
-  #gem 'puma'
-  gem 'webrick'
+  gem 'puma'
+
 end
 gem 'slim-rails'
 gem 'slim'

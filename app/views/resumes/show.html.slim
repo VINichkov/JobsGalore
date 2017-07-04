@@ -126,6 +126,18 @@
                 i.glyphicon.glyphicon-tags.text-info.glyphicon-small
                 | &nbsp; Remote
                 br
+          - if not @resume.highlight.nil?
+            p
+              strong
+                | Highlight
+          - if not @resume.urgent.nil?
+            p
+              strong
+                | Urgent
+          - if not @resume.top.nil?
+            p
+              strong
+                | Ad Top
           br
           .row
             .col-lg-12.col-md-12
@@ -273,6 +285,18 @@
                     i.glyphicon.glyphicon-tags.text-info.glyphicon-small
                   | &nbsp; Remote
                   br
+            - if not @resume.highlight.nil?
+              p
+                strong
+                  | Highlight
+            - if not @resume.urgent.nil?
+              p
+                strong
+                  | Urgent
+            - if not @resume.top.nil?
+              p
+                strong
+                  | Ad Top
 
         p
         .row
@@ -445,6 +469,18 @@
                     i.glyphicon.glyphicon-tags.text-info.glyphicon-small
                   | &nbsp; Remote
                   br
+            - if not @resume.highlight.nil?
+              p
+                strong
+                  | Highlight
+            - if not @resume.urgent.nil?
+              p
+                strong
+                  | Urgent
+            - if not @resume.top.nil?
+              p
+                strong
+                  | Ad Top
 
         p
         .row

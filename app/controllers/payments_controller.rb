@@ -10,8 +10,10 @@ class PaymentsController < ApplicationController
     @param = payment_params
     if @param[:kind] == '2'
       @ad = Job.find_by_id(@param[:id])
+      return_url = job_url(@param[:id])
     else
       @ad = Resume.find_by_id(@param[:id])
+      return_url = resume_url(@param[:id])
     end
     case @param[:option]
       when '1'
@@ -24,7 +26,7 @@ class PaymentsController < ApplicationController
         amount='5.00'
         item_name="Highlight"
     end
-    @url = paypal_url(return_url:root_url, cancel_return_url:cancel_url_url, notify_url:payments_url,item_number:"#{@param[:option]}#{@param[:kind]}#{@param[:id]}",amount:amount,item_name:item_name)
+    @url = paypal_url(return_url:return_url, cancel_return_url:cancel_url_url, notify_url:payments_url,item_number:"#{@param[:option]}#{@param[:kind]}#{@param[:id]}",amount:amount,item_name:item_name)
   end
 
   def cancel_url
@@ -75,7 +77,6 @@ class PaymentsController < ApplicationController
   private
 
   def paypal_url(params = {})
-
     values = {
         cmd: '_xclick',
         charset: 'utf-8',

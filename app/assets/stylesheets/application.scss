@@ -145,3 +145,13 @@ li.elem_header{
   background-position: bottom;
   background-size: contain;
 }
+.well.highlight{
+  background-color: #ffffcc;
+  border-left: 6px solid #ffeb3b;
+}
+.well.urgent{
+  background-image: image-url("urgent.svg");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
+}

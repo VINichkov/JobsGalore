@@ -90,6 +90,18 @@
             span
               i.glyphicon.glyphicon-tags.text-info.glyphicon-small
               | &nbsp; Remote
+          - if not @job.highlight.nil?
+            p
+              strong
+                | Highlight
+          - if not @job.urgent.nil?
+            p
+              strong
+                | Urgent
+          - if not @job.top.nil?
+            p
+              strong
+                | Ad Top
           p
         .row
           .col-lg-12.col-md-12
@@ -224,6 +236,18 @@
                     i.glyphicon.glyphicon-tags.text-info.glyphicon-small
                   | &nbsp; Remote
                   br
+              - if not @job.highlight.nil?
+                p
+                  strong
+                    | Highlight
+              - if not @job.urgent.nil?
+                p
+                  strong
+                    | Urgent
+              - if not @job.top.nil?
+                p
+                  strong
+                    | Ad Top
           p
           .row
             .btn-group.btn-group-justified
@@ -307,54 +331,67 @@
               p
                 strong
                   |Job Type: &nbsp;
-            - if @job.permanent
-              .col-xs-6
-                span
-                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Permanent
-                br
-            - if @job.casual
-              .col-xs-6
-                span
-                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Casual
-                br
-            - if @job.temp
-              .col-xs-6
-                span
-                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Temporary
-                br
-            - if @job.contract
-              .col-xs-6
-                span
-                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Contract
-                br
-            - if @job.fulltime
-              .col-xs-6
-                span
-                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Full-time
-                br
-            - if @job.parttime
-              .col-xs-6
-                span
-                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Part-time
-                br
-            - if @job.flextime
-              .col-xs-6
-                span
-                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Flex-time
-                br
-            - if @job.remote
-              .col-xs-6
-                span
-                  i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Remote
-                br
+              - if @job.permanent
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Permanent
+                  br
+              - if @job.casual
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Casual
+                  br
+              - if @job.temp
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Temporary
+                  br
+              - if @job.contract
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                    | &nbsp; Contract
+                  br
+              - if @job.fulltime
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Full-time
+                  br
+              - if @job.parttime
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Part-time
+                  br
+              - if @job.flextime
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Flex-time
+                  br
+              - if @job.remote
+                .col-xs-6
+                  span
+                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
+                  | &nbsp; Remote
+                  br
+            - if not @job.highlight.nil?
+              p
+                strong
+                  | Highlight
+            - if not @job.urgent.nil?
+              p
+                strong
+                  | Urgent
+            - if not @job.top.nil?
+              p
+                strong
+                  | Ad Top
+
         .row
           .btn-group.btn-group-justified
             .btn-group
