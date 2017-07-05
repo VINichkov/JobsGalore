@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/puma/puma-heroku
+  revision: a21a7cb6c72f84661191be5b371cf5ca20cb511b
+  specs:
+    puma-heroku (1.0.0)
+      puma (~> 3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -277,6 +284,7 @@ DEPENDENCIES
   pg (~> 0.18)
   pg_search
   puma
+  puma-heroku!
   rails (~> 5.0.0, >= 5.0.0.1)
   react-rails (~> 1.10.0)
   sass-rails (~> 5.0)
