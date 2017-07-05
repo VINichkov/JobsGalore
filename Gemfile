@@ -35,6 +35,7 @@ gem 'will_paginate-bootstrap'
 
 group :production do
   gem 'puma'
+  gem  'puma-heroku'
 
 end
 gem 'slim-rails'
