@@ -63,7 +63,6 @@ class IndexController < ApplicationController
   end
 
   def about
-    extras_on
   end
 
   def contact
@@ -75,7 +74,6 @@ class IndexController < ApplicationController
   end
 
   def terms_and_conditions
-    $date.mem = Date.today-1
   end
 
   def privacy

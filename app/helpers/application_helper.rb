@@ -14,19 +14,4 @@ module ApplicationHelper
       puts "____________________Error: #{$!}"
     end
   end
-  def extras_on
-    begin
-      db = ActiveRecord::Base.connection
-      t = Date.today-8
-      db.execute("update jobs set highlight=to_date(\'#{t.to_s}\',\'YYYY-MM-DD\') where highlight is null")
-      db.execute("update jobs set urgent=to_date(\'#{t.to_s}\',\'YYYY-MM-DD\') where urgent is null")
-      db.execute("update jobs set top=to_date(\'#{t.to_s}\',\'YYYY-MM-DD\') where top is null")
-      db.execute("update resumes set highlight=to_date(\'#{t.to_s}\',\'YYYY-MM-DD\') where highlight is null")
-      db.execute("update resumes set urgent=to_date(\'#{t.to_s}\',\'YYYY-MM-DD\') where urgent is null")
-      db.execute("update resumes set top=to_date(\'#{t.to_s}\',\'YYYY-MM-DD\') where top is null")
-      db.close
-    rescue
-      puts "____________________Error: #{$!}"
-    end
-  end
 end

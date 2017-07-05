@@ -27,10 +27,7 @@ class ApplicationController < ActionController::Base
     if $date.mem < Date.today
       Thread.new do
         begin
-          t=Time.now
-          puts "_________________Поехали "
           extras_off
-          puts "_________________Закончили #{Time.now-t}"
         rescue
           puts "____________________Error: #{$!}"
         end
