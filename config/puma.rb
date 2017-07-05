@@ -45,5 +45,5 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # end
 
 # Allow puma to be restarted by `rails restart` command.
-plugin :heroku
+#plugin :heroku
 plugin :tmp_restart
