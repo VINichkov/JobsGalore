@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :extras_check
   protected
 
   def configure_permitted_parameters
@@ -18,6 +20,23 @@ class ApplicationController < ActionController::Base
       format.html { redirect_to "/404", notice: exception.message }
       format.js { head :forbidden , content_type: ' text/html ' }
       end
+  end
+
+  def extras_check
+    puts $date.mem
+    if $date.mem < Date.today
+      Thread.new do
+        begin
+          t=Time.now
+          puts "_________________Поехали "
+          extras_off
+          puts "_________________Закончили #{Time.now-t}"
+        rescue
+          puts "____________________Error: #{$!}"
+        end
+      end
+      $date.mem = Date.today
+    end
   end
 
 end

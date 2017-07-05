@@ -1,5 +1,5 @@
 require_relative 'boot'
-
+require_relative 'single.rb'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -21,5 +21,10 @@ module Mongo
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.exceptions_app = self.routes
+    $date = Single.instance
+    if $date.mem.nil?
+      $date.mem = Date.today
+    end
   end
+
 end
