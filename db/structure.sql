@@ -104,7 +104,14 @@ CREATE TABLE clients (
     last_sign_in_at timestamp without time zone,
     current_sign_in_ip inet,
     last_sign_in_ip inet,
-    birth date
+    birth date,
+    confirmation_token character varying,
+    confirmed_at timestamp without time zone,
+    confirmation_sent_at timestamp without time zone,
+    unconfirmed_email character varying,
+    failed_attempts integer DEFAULT 0 NOT NULL,
+    unlock_token character varying,
+    locked_at timestamp without time zone
 );
 
 
@@ -1178,6 +1185,13 @@ ALTER TABLE ONLY skillsresumes
 
 
 --
+-- Name: index_clients_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_clients_on_confirmation_token ON clients USING btree (confirmation_token);
+
+
+--
 -- Name: index_clients_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1196,6 +1210,13 @@ CREATE INDEX index_clients_on_location_id ON clients USING btree (location_id);
 --
 
 CREATE UNIQUE INDEX index_clients_on_reset_password_token ON clients USING btree (reset_password_token);
+
+
+--
+-- Name: index_clients_on_unlock_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_clients_on_unlock_token ON clients USING btree (unlock_token);
 
 
 --
@@ -1757,6 +1778,6 @@ ALTER TABLE ONLY skillsresumes
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20161216140254'), ('20161216140255'), ('20161216144123'), ('20161216144836'), ('20161216144837'), ('20161216144838'), ('20161216144839'), ('20161216144840'), ('20161216144842'), ('20161216144843'), ('20161216152826'), ('20161216152951'), ('20161216152952'), ('20161216152953'), ('20161216153048'), ('20161220113257'), ('20161220114325'), ('20161220114429'), ('20161220114751'), ('20161221095015'), ('20170125130039'), ('20170228101552'), ('20170310100000'), ('20170330000001'), ('20170430102817'), ('20170430103528'), ('20170621104707'), ('20170630083503'), ('20170703065606');
+INSERT INTO schema_migrations (version) VALUES ('20161216140254'), ('20161216140255'), ('20161216144123'), ('20161216144836'), ('20161216144837'), ('20161216144838'), ('20161216144839'), ('20161216144840'), ('20161216144842'), ('20161216144843'), ('20161216152826'), ('20161216152951'), ('20161216152952'), ('20161216152953'), ('20161216153048'), ('20161220113257'), ('20161220114325'), ('20161220114429'), ('20161220114751'), ('20161221095015'), ('20170125130039'), ('20170228101552'), ('20170310100000'), ('20170330000001'), ('20170430102817'), ('20170430103528'), ('20170621104707'), ('20170630083503'), ('20170703065606'), ('20170706115005');
 
 
