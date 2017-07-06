@@ -1,10 +1,10 @@
 class Client < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+   #:omniauthable
   before_save :default_values
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable
   belongs_to :location
   has_many :resume, dependent: :destroy
   has_many :respons, class_name:"Responsible", dependent: :destroy

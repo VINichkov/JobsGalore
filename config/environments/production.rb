@@ -85,4 +85,17 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   config.action_controller.asset_host = "https://freetalents.s3.amazonaws.com"
   config.assets.prefix = "/#{ENV['RAILS_ENV']}/assets"
+
+  config.action_mailer.default_url_options = { host: PropertsHelper::HOST_NAME}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address:              'smtp.gmail.com',
+      port:                 587,
+      domain:               'gmail.com',
+      user_name:            'slava.nichkov@gmail.com',
+      password:             'Vyacheslav2406',
+      authentication:       'plain',
+      enable_starttls_auto: true  }
+
 end
+
