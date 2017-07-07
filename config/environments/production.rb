@@ -86,7 +86,7 @@ Rails.application.configure do
   config.action_controller.asset_host = "https://freetalents.s3.amazonaws.com"
   config.assets.prefix = "/#{ENV['RAILS_ENV']}/assets"
 
-  config.action_mailer.default_url_options = { host: "https://free-talents.herokuapp.com/"}
+  config.action_mailer.default_url_options = { host: "https://safe-brushlands-27744.herokuapp.com"}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_options = { from: 'slava.nichkov@gmail.com' }
   config.action_mailer.smtp_settings = {

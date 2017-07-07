@@ -1,7 +1,7 @@
 class ClientsController < ApplicationController
   load_and_authorize_resource :client, only:[:edit, :update, :destroy]
   before_action :set_client, only: [:show, :edit,:update, :destroy]
-  before_action :authenticate_client!
+  before_action :authenticate_client!, except: :info
 
   # GET /clients
   # GET /clients.json
@@ -74,6 +74,7 @@ class ClientsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

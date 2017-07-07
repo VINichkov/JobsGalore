@@ -10,12 +10,16 @@ Rails.application.routes.draw do
   devise_scope :client do
     get "/sign_up_employer" => "clients/registrations#sign_up_employer"
     post '/create_employer'=> "clients/registrations#create_employer"
+
   end
+
+
   #devise_for :clients
   resources :companies, only: [:show, :edit, :update, :destroy]
   get "/edit_logo", to: 'companies#edit_logo'
   get "/settings_company", to: 'companies#settings_company'
   get '/company_jobs/:id', to:'companies#company_jobs'
+
 
   resources :clients, only: [:create, :edit, :update, :destroy]
   get "/edit_photo", to: 'clients#edit_photo'
