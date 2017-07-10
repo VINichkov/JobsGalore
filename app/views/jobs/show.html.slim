@@ -439,7 +439,7 @@
             - @job.company.client.each do |client|
               col-lg-3.col-md-3
                 - if client.photo.nil?
-                  = image_tag(image_path("avatar.png"), size: "60x60", class: 'img-circle center-block', )
+                  = image_tag(image_path("avatar.svg"), size: "60x60", class: 'img-circle center-block', )
                 - else
                   = image_tag(client.photo.thumb('300x').url, size: "60x60", class: 'img-circle center-block ')
               col-lg-9.col-md-9

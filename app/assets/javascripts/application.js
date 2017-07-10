@@ -10,7 +10,7 @@
 //= require social-share-button/wechat
 //= require bootstrap-datepicker
 //=require bootstrap-select
-//=require bootstrap-markdown.js
+//=require bootstrap-markdown
 //=require markdown
 //=require jasny-bootstrap
 
