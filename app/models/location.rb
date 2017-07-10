@@ -10,4 +10,5 @@ class Location < ApplicationRecord
 
   scope :search, ->(query) {where("locations.fts @@ to_tsquery(:query)",{query:query})}
 
+
 end

@@ -23,7 +23,6 @@ class ApplicationController < ActionController::Base
   end
 
   def extras_check
-    puts $date.mem
     if $date.mem < Date.today
       Thread.new do
         begin

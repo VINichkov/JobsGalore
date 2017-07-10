@@ -22,6 +22,9 @@ module Mongo
     # -- all .rb files in that directory are automatically loaded.
     config.exceptions_app = self.routes
     $date = Single.instance
+    if $date.cash.nil?
+      $date.cash = {}
+    end
     if $date.mem.nil?
       $date.mem = Date.today
     end

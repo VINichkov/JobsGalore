@@ -84,9 +84,9 @@ nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
       .col-lg-6.col-md-6
         = form_tag('/search', method: :get, class:'navbar-form form-inline')  do
           -if session[:param].nil?
-            = react_component("Search", name:'main_search', categories: Industry.all)
+            = react_component("Search", name:'main_search', categories: industries)
           -else
-            = react_component("Search", name:'main_search',params: session[:param], categories: Industry.all)
+            = react_component("Search", name:'main_search',params: session[:param], categories: industries)
     .row
       p
 .clear_menu-sm.hidden-xs.hidden-md.hidden-lg
@@ -180,7 +180,7 @@ nav.navmenu.navmenu-default.navmenu-fixed-right.offcanvas#search_menu[role="navi
         .form-group
           label
             |Select category
-          = react_component("Category", defaultValue:"#{session[:param] ? session[:param][:category] : ''}", name:"main_search[category]", id:"category_search", className:"form-control navbar-btn", categories: Industry.all)
+          = react_component("Category", defaultValue:"#{session[:param] ? session[:param][:category] : ''}", name:"main_search[category]", id:"category_search", className:"form-control navbar-btn", categories: industries)
         .form-group
           label
             |Location
@@ -275,9 +275,9 @@ nav.navbar.navbar-static-top.navbar-default.hidden-xs.hidden-sm[data-spy="affix"
     .col-lg-6.col-md-6
       = form_tag('/search', method: :get, class: 'navbar-form form-inline')  do
         - if session[:param].nil?
-          = react_component("Search", name: 'main_search', categories: Industry.all)
+          = react_component("Search", name: 'main_search', categories: industries)
         - else
-          = react_component("Search", name: 'main_search', params: session[:param] , categories: Industry.all)
+          = react_component("Search", name: 'main_search', params: session[:param] , categories: industries)
     .col-lg-2.col-md-2
       a.navbar-brand.active
         - if client_signed_in?

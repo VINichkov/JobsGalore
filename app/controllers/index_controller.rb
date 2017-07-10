@@ -1,4 +1,5 @@
 class IndexController < ApplicationController
+  #caches_page :about
   skip_before_action :verify_authenticity_token
   before_action :category, only: [:main, :by_category]
   def main
@@ -29,32 +30,32 @@ class IndexController < ApplicationController
     param = params.permit(:category, :object, :page)
     case param[:object]
       when '1'
-        @objs = Industry.find_by_id(param[:category]).company.order(:name).paginate(page: param[:page], per_page:21)
+        @objs = Industry.includes(:company).find_by_id(param[:category]).company.order(:name).paginate(page: param[:page], per_page:21).includes(:industry,:location)
         @name = {name:'Companies by', industry: Industry.find_by_id(param[:category]).name}
       when '2'
-        @objs = Industry.find_by_id(param[:category]).job.order(updated_at: :desc).paginate(page: param[:page], per_page:25)
+        @objs = Industry.includes(:job).find_by_id(param[:category]).job.order(updated_at: :desc).paginate(page: param[:page], per_page:25).includes(:company,:location)
         @name = {name:'Jobs by', industry: Industry.find_by_id(param[:category]).name}
       when '3'
-        @objs = Industry.find_by_id(param[:category]).resumes.order(updated_at: :desc).paginate(page: param[:page], per_page:25)
+        @objs = Industry.includes(:resumes).find_by_id(param[:category]).resumes.order(updated_at: :desc).paginate(page: param[:page], per_page:25).includes(:location)
         @name = {name:'Resumes by', industry: Industry.find_by_id(param[:category]).name}
     end
 
   end
 
   def main_search
-    @category = Industry.all
+    @category = Industry.industries_cashe
     param = main_search_params
     session[:param] = Marshal.load(Marshal.dump(param))
     param[:param][:value] = (param[:param][:value].split(" ").map {|t| t=t+":*"}).join("&")
     case param[:param][:type]
       when '1'
-        @objs = Company.search(param[:param]).order(:name).paginate(page: param[:page], per_page:21)
+        @objs = Company.includes(:location,:industry).search(param[:param]).order(:name).paginate(page: param[:page], per_page:21)
         @name = {name:'Companies'}
       when '2'
-        @objs = Job.search(param[:param]).order(updated_at:  :desc).paginate(page: param[:page], per_page:25)
+        @objs = Job.includes(:company,:location).search(param[:param]).order(updated_at:  :desc).paginate(page: param[:page], per_page:25)
         @name = {name:'Jobs'}
       when '3'
-        @objs = Resume.search(param[:param]).order(updated_at: :desc).paginate(page: param[:page], per_page:25)
+        @objs = Resume.includes(:location).search(param[:param]).order(updated_at: :desc).paginate(page: param[:page], per_page:25)
         @name = {name:'Resumes'}
     end
   end
@@ -91,7 +92,8 @@ class IndexController < ApplicationController
   end
 
   def category
-    @category=Industry.where('level=?',1)
+    #@category=Industry.where('level=?',1)
+    @category=Industry.all
     if params[:obj].nil?
       params[:obj]='2'
     end
