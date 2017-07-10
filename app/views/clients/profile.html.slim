@@ -15,7 +15,7 @@
       - if current_client.photo.nil?
         = image_tag(image_path("avatar.svg"), class: 'img-circle', size: "200x200")
       - else
-        = image_tag(current_client.photo.thumb('300x300#').url, class: 'img-circle', size: "200x200")
+        = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-circle', size: "200x200")
     .col-sm-6
       h3 #{current_client.firstname} #{current_client.lastname}
       h4 Email: #{current_client.email}
