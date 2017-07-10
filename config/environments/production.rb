@@ -82,6 +82,8 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.assets.gzip =true
+
   # Do not dump schema after migrations.educations_id_seq
   config.active_record.dump_schema_after_migration = false
   config.action_controller.asset_host = "https://freetalents.s3.amazonaws.com"
