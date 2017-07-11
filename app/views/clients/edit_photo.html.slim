@@ -14,7 +14,7 @@
           - if current_client.photo.nil?
             = image_tag(image_path("avatar.svg"), size: "300x300", class: 'img-circle')
           - else
-            = image_tag(current_client.photo.thumb('300x300#').url, class: 'img-circle')
+            = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-circle')
         .form-group
           = f.label "Photo"
           br

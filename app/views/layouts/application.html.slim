@@ -6,8 +6,8 @@ html
     link[href=image_path("icon.svg") rel="shortcut icon" type="image/svg"]
     meta[name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"]
     = csrf_meta_tags
-    = stylesheet_link_tag('application', media: 'all', 'data-turbolinks-track'=> 'reload')
-    = javascript_include_tag('application')
+    = gzip_stylesheet_link_tag('application', media: 'all', 'data-turbolinks-track'=> 'reload', cache: true)
+    = gzip_javascript_include_tag('application', cache: true)
   body
     =render 'inc/header', industries: Industry.all ,cache: true
     = yield
