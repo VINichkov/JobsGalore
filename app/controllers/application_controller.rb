@@ -22,6 +22,23 @@ class ApplicationController < ActionController::Base
       end
   end
 
+  def render_optional_error_file(status_code)
+    if status_code == :not_found
+      render_404
+    else
+      super
+    end
+  end
+
+  def render_404
+    respond_to do |format|
+      format.json { head :forbidden , content_type: ' text/html ' }
+      format.html { redirect_to "/404", notice: exception.message }
+      format.js { head :forbidden , content_type: ' text/html ' }
+    end
+  end
+
+
   def extras_check
     if $date.mem < Date.today
       Thread.new do
