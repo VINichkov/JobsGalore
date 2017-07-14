@@ -1,0 +1,13 @@
+{"Level":[
+  {"name":"Beginner", "language":"true"},
+  {"name":"Elementary", "language":"true"},
+  {"name":"Pre intermediate", "language":"true"},
+  {"name":"Intermediate", "language":"true"},
+  {"name":"Upper intermediate", "language":"true"},
+  {"name":"Advanced", "language":"true"},
+  {"name":"Proficiency", "language":"true"},
+  {"name":"Elementary", "language":"false"},
+  {"name":"Medium", "language":"false"},
+  {"name":"Strong", "language":"false"},
+  {"name":"Excellent", "language":"false"}
+]}
