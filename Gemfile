@@ -78,11 +78,11 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #gem 'spreadsheet'
 gem 'markdown-rails'
-
+gem 'rack-cors', :require => 'rack/cors'
 
 group :production do
   gem 'dragonfly-s3_data_store'
   #gem "asset_sync"
   gem "fog-aws"
-  gem 'rack-cors', :require => 'rack/cors'
+
 end
