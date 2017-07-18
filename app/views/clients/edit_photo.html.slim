@@ -12,9 +12,9 @@
         hr.colorgraph
         .form-group.text-center
           - if current_client.photo.nil?
-            = image_tag(image_path("avatar.svg"), size: "300x300", class: 'img-circle')
+            = image_tag(image_path("avatar.svg"), size: "300x300", class: 'img-thumbnail')
           - else
-            = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-circle')
+            = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), size: "300x300", class: 'img-thumbnail')
         .form-group
           = f.label "Photo"
           br

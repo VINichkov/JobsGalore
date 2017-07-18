@@ -4,7 +4,7 @@
       span
         = image_tag(image_path("method-draw-image.svg"), size:"100x100")
       span.black_text
-        |.COM.AU
+        |.EU
 nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
   .container-fluid
     .row
@@ -15,7 +15,7 @@ nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
               span
                 = image_tag(image_path("method-draw-image.svg"), size: "50x50")
               span.black_text
-                |.COM.AU
+                |.EU
           li.elem_header
             a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
               |Jobs
@@ -96,9 +96,9 @@ nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="n
             li
               =link_to client_root_path do
                 - if current_client.photo.nil?
-                  = image_tag(image_path("avatar.svg"), class: 'img-circle', size: "50x50")
+                  = image_tag(image_path("avatar.svg"), class: 'img-thumbnail', size: "50x50")
                 - else
-                  = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-circle', size: "50x50")
+                  = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size: "50x50")
                 | &nbsp; #{current_client.firstname} #{current_client.lastname} &nbsp;
                 span.glyphicon.glyphicon-chevron-right
             li

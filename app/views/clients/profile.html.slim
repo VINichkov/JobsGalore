@@ -2,9 +2,9 @@
   .row.well.hidden-xs.hidden-sm
     .col-md-6.col-lg-6
       -if current_client.photo.nil?
-        = image_tag(image_path("avatar.svg"), class: 'img-circle', size:"300x300")
+        = image_tag(image_path("avatar.svg"), class: 'img-thumbnail', size:"300x300")
       -else
-        =image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-circle', size:"300x300")
+        =image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size:"300x300")
     .col-md-6.col-lg-6
       h2 #{current_client.firstname} #{current_client.lastname}
       h2 Email: #{current_client.email}
@@ -13,9 +13,9 @@
   .row.well.hidden-md.hidden-lg
     .col-sm-6
       - if current_client.photo.nil?
-        = image_tag(image_path("avatar.svg"), class: 'img-circle', size: "200x200")
+        = image_tag(image_path("avatar.svg"), class: 'img-thumbnail', size: "200x200")
       - else
-        = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-circle', size: "200x200")
+        = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size: "200x200")
     .col-sm-6
       h3 #{current_client.firstname} #{current_client.lastname}
       h4 Email: #{current_client.email}

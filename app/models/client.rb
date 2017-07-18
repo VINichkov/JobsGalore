@@ -10,11 +10,17 @@ class Client < ApplicationRecord
   has_many :respons, class_name:"Responsible", dependent: :destroy
   has_many :responsible
   has_many :company, through: :responsible, dependent: :destroy
-  dragonfly_accessor :photo
+  dragonfly_accessor :photo do
+    after_assign do |attachment|
+      # Auto orient all the images - so they will look as they should
+      attachment.convert! '-resize 400x -quality 60 -gravity center', 'jpg'
+    end
+  end
   validates :firstname, presence: true
   validates :lastname, presence: true
   validates :location, presence: true
   validates :phone, presence: true
+
 
   def default_values
     self.responsible ||= false

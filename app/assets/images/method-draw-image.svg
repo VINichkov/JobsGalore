@@ -1,1 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" height="400" width="480"><title>background</title><g transform="matrix(1.4714 0 0 1.2988 -210.25 -54.324)"><title>Layer 1</title><g stroke-width="0"><ellipse rx="160" ry="156" cy="196" cx="304" fill="#c60f0f"/><text font-size="24" stroke-opacity="null" transform="matrix(9.2657 0 0 8.122 -3243.8 -1031.6)" y="155.754" x="368.5" font-family="'Times New Roman', Times, serif" fill="#fff">FT</text><text font-size="24" stroke-opacity="null" transform="matrix(2.2324 0 0 2.4853 -226.5 -318.16)" y="242" x="180.5" font-family="'Times New Roman', Times, serif" fill="#fff">FreeTalents</text></g></g></svg>
+<svg width="480" height="400" xmlns="http://www.w3.org/2000/svg">
+ <title>background</title>
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g transform="matrix(1.4714 0 0 1.2988 -210.25 -54.324)">
+  <title>Layer 1</title>
+  <g id="svg_1" stroke-width="0">
+   <ellipse id="svg_2" fill="#c60f0f" cx="304" cy="196" ry="156" rx="160"/>
+   <text transform="matrix(8.51645, 0, 0, 7.40544, -3184.49, -1466.17)" font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Times New Roman', Times, serif" font-size="24" id="svg_5" y="226.785799" x="394.383443" fill-opacity="null" stroke-opacity="null" stroke-width="null" stroke="null" fill="#fff">JG</text>
+   <text transform="matrix(2.18515, 0, 0, 2.9379, -170.527, -518.004)" font-weight="normal" xml:space="preserve" text-anchor="start" font-family="'Times New Roman', Times, serif" font-size="24" id="svg_6" y="273.532483" x="164.496353" fill-opacity="null" stroke-opacity="null" stroke-width="null" stroke="null" fill="#fff">JobsGalore</text>
+  </g>
+ </g>
+</svg>

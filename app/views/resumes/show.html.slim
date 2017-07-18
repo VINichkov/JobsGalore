@@ -563,9 +563,9 @@
               .row
                   col-lg-3.col-md-3
                     - if @resume.client.photo.nil?
-                      = image_tag(image_path("avatar.svg"), size: "60x60", class: 'img-circle center-block')
+                      = image_tag(image_path("avatar.svg"), size: "60x60", class: 'img-thumbnail center-block')
                     - else
-                      = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), size: "60x60", class: 'img-circle center-block ')
+                      = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), size: "60x60", class: 'img-thumbnail center-block ')
                   col-lg-9.col-md-9
                     ="#{@resume.client.firstname} #{@resume.client.lastname}"
                     br
