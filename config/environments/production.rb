@@ -82,6 +82,8 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.action_controller.asset_host = "dq8evdp2c339z.cloudfront.net"
+
   config.assets.gzip =true
 
   # Do not dump schema after migrations.educations_id_seq
