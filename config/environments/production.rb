@@ -82,7 +82,7 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  config.action_controller.asset_host = "dq8evdp2c339z.cloudfront.net"
+  config.action_controller.asset_host = "https://d2a5jvhcj7z8rz.cloudfront.net"
 
   config.assets.gzip =true
 
