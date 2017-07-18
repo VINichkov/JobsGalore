@@ -10,7 +10,7 @@ html
     meta[name="keywords" content="work, vacancies, job, vacancy search, resume, jobs, vacancies, employment, looking for a job, search, seek, galore, money, solary, indeed"]
     = csrf_meta_tags
     = stylesheet_link_tag('application', media: 'all', 'data-turbolinks-track'=> 'reload', cache: true)
-    = _javascript_include_tag('application', cache: true)
+    = javascript_include_tag('application', cache: true)
   body
     =render 'inc/header', industries: Industry.all ,cache: true
     = yield
