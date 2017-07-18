@@ -18,7 +18,7 @@ module Mongo
     end
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*'
+        origins 'https://www.jobsgalore.eu http://www.jobsgalore.eu https://jobsgalore.eu http://jobsgalore.eu https://d2a5jvhcj7z8rz.cloudfront.net'
         resource '*', :headers => :any, :methods => [:get, :post, :options]
       end
     end
