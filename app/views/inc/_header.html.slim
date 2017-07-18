@@ -178,6 +178,11 @@ nav.navmenu.navmenu-default.navmenu-fixed-right.offcanvas#search_menu[role="navi
             option[value='1']
               |Companies
         .form-group
+            label
+              | Urgent
+            input[type="checkbox" name='main_search[urgent]']
+
+        .form-group
           label
             |Select category
           = react_component("Category", defaultValue:"#{session[:param] ? session[:param][:category] : ''}", name:"main_search[category]", id:"category_search", className:"form-control navbar-btn", categories: industries)
