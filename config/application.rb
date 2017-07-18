@@ -16,10 +16,12 @@ module Mongo
         end
       end
     end
-    config.action_dispatch.default_headers = {
-        'Access-Control-Allow-Origin' => 'https://www.jobsgalore.eu http://www.jobsgalore.eu https://jobsgalore.eu http://jobsgalore.eu https://d2a5jvhcj7z8rz.cloudfront.net',
-        'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")
-    }
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
     config.active_record.schema_format = :sql
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
