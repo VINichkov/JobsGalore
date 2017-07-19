@@ -43,6 +43,11 @@ GEM
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
     arel (7.1.4)
+    asset_sync (2.1.0)
+      activemodel (>= 4.1.0)
+      fog-core
+      mime-types (>= 2.99)
+      unf
     autoprefixer-rails (7.1.2.1)
       execjs
     babel-source (5.8.35)
@@ -256,6 +261,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-import
+  asset_sync
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.3.6)
   byebug
