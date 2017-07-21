@@ -88,7 +88,7 @@ class IndexController < ApplicationController
   end
 
   def main_search_params
-    {param:params.require(:main_search).permit(:type, :value, :page, :salary, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :options, :category, :location_id, :location_name).to_h, page:params.permit(:page).to_h[:page]}
+    {param:params.require(:main_search).permit(:type, :value, :page, :salary, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :options, :category, :location_id, :location_name, :urgent).to_h, page:params.permit(:page).to_h[:page]}
   end
 
   def category

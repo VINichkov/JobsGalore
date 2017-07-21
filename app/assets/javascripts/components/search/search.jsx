@@ -50,7 +50,7 @@ class Search extends React.Component{
                             </div>,
                             <div className="row">
                                 <div className="form-group" style={{display:'inline'}}>
-                                    <div className="checkbox col-md-2 col-lg-2">
+                                    <div className=" col-md-2 col-lg-2">
                                         <label className="navbar-text"> Urgent </label>
                                     </div>
                                     <div className="checkbox col-md-10 col-lg-10">

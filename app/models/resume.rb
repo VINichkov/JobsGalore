@@ -46,6 +46,7 @@ class Resume < ApplicationRecord
     elsif ((not (query[:location_name].nil?) and not(query[:location_name]== "")) and (query[:location_id].nil? or query[:location_id] == ""))
       text_query << "location_id in "+Location.search((query[:location_name].split(" ").map {|t| t=t+":*"}).join("&")).ids.to_s.sub("[","(").sub("]",")")
     end
+    text_query << 'urgent  is not null'  if (query[:urgent] == "on")
     text_query << 'permanent  = true'  if (query[:permanent] == "on")
     text_query << 'casual  = true'     if (query[:casual] == "on")
     text_query << 'temp  = true'       if (query[:temp] == "on")
