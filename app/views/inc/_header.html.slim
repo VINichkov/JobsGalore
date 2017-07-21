@@ -1,4 +1,11 @@
-.container-fluid.hidden-xs.hidden-sm
+.print_header
+  .container
+    h1
+      span
+        = image_tag(image_path("method-draw-image.svg"), size: "100x100")
+      span.black_text
+        |.EU
+.container-fluid.hidden-xs.hidden-sm.not_print
   .container
     h1
       span

@@ -2,7 +2,10 @@
 
   @page {
     size: A4;
-    margin: 0mm;
+    margin-top: 15mm;
+    margin-left: 0mm;
+    margin-right: 0mm;
+    margin-bottom: 15mm;
   }
 
   html, body {
@@ -58,9 +61,15 @@
     color:#000;
   }
 
-  #header {
-    height:75px;
-    font-size: 24pt;
-    color:black
+  .clear_menu-sm, .not_print, .btn, footer{
+    display: none;
   }
+
+  .panel{
+    page-break-inside: avoid;
+  }
+  .print_header{
+    display: block;
+  }
+
 }
