@@ -38,6 +38,8 @@ class IndexController < ApplicationController
       when '3'
         @objs = Industry.includes(:resumes).find_by_id(param[:category]).resumes.order(updated_at: :desc).paginate(page: param[:page], per_page:25).includes(:location)
         @name = {name:'Resumes by', industry: Industry.find_by_id(param[:category]).name}
+      else
+
     end
 
   end
