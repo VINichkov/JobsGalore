@@ -20,10 +20,10 @@ module Mongo
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-    config.exceptions_app = self.routes
-    config.action_dispatch.rescue_responses.merge!(
-        'MyClass::FileNotFound' => :not_found
-    )
+    #config.exceptions_app = self.routes
+    #config.action_dispatch.rescue_responses.merge!(
+    #    'MyClass::FileNotFound' => :not_found
+    #)
 
     $date = Single.instance
     if $date.cash.nil?
