@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
 
 
   def render_404
-    render :status => 404
+    render :text => 'Not Found', :status => 404
   end
 
 
