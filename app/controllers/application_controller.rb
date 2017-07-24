@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
 
 
   def render_404
+    puts "___________________Зашли_________________"
     respond_to do |format|
       format.json { head :forbidden , content_type: ' text/html ' }
       format.html { redirect_to "/404", notice: exception.message }
