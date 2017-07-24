@@ -78,7 +78,8 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #gem 'spreadsheet'
 gem 'markdown-rails'
-gem 'rack-cors', :require => 'rack/cors'
+
+gem 'sitemap_generator'
 
 group :production do
   gem 'dragonfly-s3_data_store'
