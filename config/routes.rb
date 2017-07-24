@@ -52,6 +52,7 @@ Rails.application.routes.draw do
 
 
 
+
   #resources :educations
   #resources :languageresume
   #resources :experiences
@@ -69,7 +70,7 @@ Rails.application.routes.draw do
   #resources :properts
 
 
-
+  get '/:all', to: '/404'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
 end
