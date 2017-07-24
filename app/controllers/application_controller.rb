@@ -1,10 +1,6 @@
 class ApplicationController < ActionController::Base
-  rescue_from ActiveRecord::RecordNotFound, :with => :render_404
-  rescue_from ActionController::RoutingError do |exception|
-    logger.error 'Routing error occurred'
-    render plain: '404 Not found', status: 404
-  end
-
+  rescue_from ActiveRecord::RecordNotFound, with:  :render_404
+  rescue_from ActionController::RoutingError, with:  :render_404
   include ApplicationHelper
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
