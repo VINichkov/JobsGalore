@@ -80,7 +80,7 @@ class PaymentsController < ApplicationController
     values = {
         cmd: '_xclick',
         charset: 'utf-8',
-        business: 'v.nichkov@hotmail.com',
+        business: 'accounting@jobsgalore.eu',
         return: params[:return_url],
         cancel_return: params[:cancel_return_url],
         notify_url: params[:notify_url],

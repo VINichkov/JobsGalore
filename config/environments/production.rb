@@ -90,15 +90,15 @@ Rails.application.configure do
 
   config.assets.prefix = "/#{ENV['RAILS_ENV']}/assets"
 
-  config.action_mailer.default_url_options = { host: "https://safe-brushlands-27744.herokuapp.com"}
+  config.action_mailer.default_url_options = { host: "http://www.jobsgalore.eu"}
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_options = { from: 'slava.nichkov@gmail.com' }
+  config.action_mailer.default_options = { from: 'email@jobsgalore.eu' }
   config.action_mailer.smtp_settings = {
-      address:              'smtp.gmail.com',
+      address:              'smtp.yandex.ru',
       port:                 587,
-      domain:               'gmail.com',
-      user_name:            'slava.nichkov@gmail.com',
-      password:             'Vyacheslav2406',
+      domain:               'yandex.ru',
+      user_name:            'email@jobsgalore.eu',
+      password:             'NichkovaAygul1984',
       authentication:       'plain',
       enable_starttls_auto: true  }
   config.action_mailer.raise_delivery_errors = true
