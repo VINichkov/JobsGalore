@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  rescue_from ActiveRecord::RecordNotFound, :with => {render_404}
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   rescue_from ActionController::RoutingError do |exception|
     logger.error 'Routing error occurred'
     render plain: '404 Not found', status: 404
