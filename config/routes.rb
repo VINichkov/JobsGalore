@@ -48,7 +48,6 @@ Rails.application.routes.draw do
   get '/search', to: 'index#main_search'
   get '/by_category/:obj', to: 'index#by_category'
   get '/:category/:object', to: 'index#category_view'
-  get '404', :to => 'application#page_not_found'
 
 
 
