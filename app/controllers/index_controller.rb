@@ -11,6 +11,7 @@ class IndexController < ApplicationController
   end
 
   def search
+    @name={}
     param = params.permit(:category, :object, :page)
     case param[:object]
       when '1'
@@ -23,12 +24,12 @@ class IndexController < ApplicationController
         @objs = Industry.find_by_id(param[:category]).resumes.order(updated_at: :desc).paginate(page: param[:page], per_page:25)
         @name = {name:'Resumes by', industry: Industry.find_by_id(param[:category]).name}
       else
-        render_404
+        redirect_to '/404'
     end
   end
 
   def category_view
-
+    @name={}
     param = params.permit(:category, :object, :page)
     case param[:object]
       when '1'
@@ -41,12 +42,13 @@ class IndexController < ApplicationController
         @objs = Industry.includes(:resumes).find_by_id(param[:category]).resumes.order(updated_at: :desc).paginate(page: param[:page], per_page:25).includes(:location)
         @name = {name:'Resumes by', industry: Industry.find_by_id(param[:category]).name}
       else
-        render_404
+        redirect_to '/404'
     end
 
   end
 
   def main_search
+    @name={}
     @category = Industry.industries_cashe
     param = main_search_params
     session[:param] = Marshal.load(Marshal.dump(param))
@@ -61,6 +63,8 @@ class IndexController < ApplicationController
       when '3'
         @objs = Resume.includes(:location).search(param[:param]).order(updated_at: :desc).paginate(page: param[:page], per_page:25)
         @name = {name:'Resumes'}
+      else
+        redirect_to '/404'
     end
   end
 
