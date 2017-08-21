@@ -1,5 +1,5 @@
 class ContactUsMailer < ApplicationMailer
-  default from: "slava.nichkov@gmail.com"
+  default from: "email@jobsgalore.eu"
 
   def send_mail(email)
     @email = email

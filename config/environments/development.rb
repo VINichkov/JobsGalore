@@ -57,11 +57,11 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      address:              'smtp.gmail.com',
+      address:              'smtp.yandex.ru',
       port:                 587,
-      domain:               'gmail.com',
-      user_name:            'slava.nichkov@gmail.com',
-      password:             'Vyacheslav2406',
+      domain:               'yandex.ru',
+      user_name:            'email@jobsgalore.eu',
+      password:             'NichkovaAygul1984',
       authentication:       'plain',
       enable_starttls_auto: true  }
 end
