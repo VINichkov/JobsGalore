@@ -87,7 +87,7 @@ class ClientsController < ApplicationController
       if params[:client].nil?
         params[:client]={}
       else
-        params.require(:client).permit(:firstname, :lastname, :email, :phone, :password, :resp, :photo, :gender, :location_id)
+        params.require(:client).permit(:firstname, :lastname, :email, :phone, :password, :resp, :photo, :gender, :location_id, :birth)
       end
     end
 end
