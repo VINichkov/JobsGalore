@@ -83,6 +83,7 @@ Rails.application.configure do
   end
   config.gem 'sitemap_generator'
   config.action_controller.asset_host = "https://d2a5jvhcj7z8rz.cloudfront.net"
+  config.action_mailer.asset_host ="https://d2a5jvhcj7z8rz.cloudfront.net"
 
 
   # Do not dump schema after migrations.educations_id_seq
