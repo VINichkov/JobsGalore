@@ -1,8 +1,8 @@
 class ContactUsMailer < ApplicationMailer
-  default from: "email@jobsgalore.eu"
+  default from: "#{PropertsHelper::COMPANY} <#{PropertsHelper::EMAIL}>"
 
   def send_mail(email)
     @email = email
-    mail(to:PropertsHelper::EMAIL, subject: "Contact")
+    mail(to:'v.nichkov@hotmail.com', subject: "Contact")
   end
 end
