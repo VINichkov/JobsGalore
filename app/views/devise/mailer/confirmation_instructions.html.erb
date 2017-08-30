@@ -4,3 +4,13 @@
 
 <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
 
+Please do not hesitate to contact us with any questions.
+<br>
+Kind Regards,
+<br>
+The Team at <%= PropertsHelper::COMPANY %>.
+<div>
+  <span>
+    <%=image_tag(image_path("method-draw-image.svg"), size: "100x100")%>
+  </span>
+</div>
