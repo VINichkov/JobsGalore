@@ -58,6 +58,7 @@
                       = job.location.state.to_s+" "+job.location.suburb.capitalize.to_s
             .col-lg-6.col-md-6
               ul.nav.nav-list
+                -if @jobs_last[5..9]
                   - @jobs_last[5..9].each do |job|
                     li
                       hr
