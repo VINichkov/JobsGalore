@@ -196,7 +196,7 @@
                 - if client.photo.nil?
                   = image_tag(image_path("avatar.jpg"), size: "60x60", class: 'img-thumbnail center-block')
                 - else
-                  = image_tag(client.photo.thumb('300x').url, size: "60x60", class: 'img-thumbnail center-block ')
+                  = image_tag(Dragonfly.app.remote_url_for(client.photo_uid), size: "60x60", class: 'img-thumbnail center-block ')
               col-lg-9.col-md-9
                 ="#{client.firstname} #{client.lastname}"
                 br
