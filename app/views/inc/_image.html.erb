@@ -1,1 +1,4 @@
-<![if IE]><%= image_tag(image_path("method-draw-image.svg"), size:"100x100") %><![endif]>
+<![if !IE]><%= image_tag(image_path("method-draw-image.svg"), size:"100x100") %><![endif]>
+<--[if IE]>
+<%= "Получилось. Тут будет другой тег" %>
+<![endif]-->
