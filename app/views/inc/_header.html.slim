@@ -7,7 +7,7 @@
   .container
     h1
       span
-        .logo
+        = image_tag(image_path("method-draw-image.jpg"), size: "200x100")
 nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
   .container-fluid
     .row
@@ -16,7 +16,7 @@ nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
           li
             = link_to root_path do
               span
-                .logo_min
+                = image_tag(image_path("method-draw-image.jpg"), size: "100x50")
           li.elem_header
             a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
               |Jobs

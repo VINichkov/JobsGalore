@@ -159,22 +159,6 @@ li.elem_header{
   background-size: contain;
 }
 
-.logo {
-  background-image: image-url("method-draw-image.svg");
-  background-repeat: no-repeat;
-  background-position: bottom;
-  background-size: contain;
-  width:200px;
-  height:100px;
-}
-.logo_min {
-  background-image: image-url("method-draw-image.svg");
-  background-repeat: no-repeat;
-  background-position: bottom;
-  background-size: contain;
-  width:100px;
-  height:50px;
-}
 @media screen {
   .print_header {
     display: none;
