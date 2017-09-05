@@ -37,7 +37,7 @@
           = link_to("#{resume.client.firstname} #{resume.client.lastname}", resume.client)
         .row
         - if not resume.client.photo_uid.nil?
-          = link_to(image_tag(resume.client.photo.thumb('300x').url, class: 'img-thumbnail center-block ',size:"130x100"),resume.client)
+          = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ',size:"130x100"),resume.client)
         - else
           = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block',size:"130x100")
       - else
