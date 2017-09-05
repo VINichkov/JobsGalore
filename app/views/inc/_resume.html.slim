@@ -8,17 +8,17 @@
         - if not resume.client.photo_uid.nil?
           = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ', size:"270x270"),resume.client)
         - else
-          = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block', size:"270x270")
+          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size:"270x270")
       - else
         .row.text-center
           |Anonymous
         .row
-        = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block ', size:"270x270")
+        = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"270x270")
     - else
       .row.text-center
         |Anonymous
       p
-      = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block ', size:"270x270")
+      = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"270x270")
     .row.text-center
       = "Posted: "+resume.updated_at.strftime("%d %B %Y")
 .col-lg-10.col-md-10.col-sm-10.col-xs-12
@@ -39,16 +39,16 @@
         - if not resume.client.photo_uid.nil?
           = link_to(image_tag(resume.client.photo.thumb('300x').url, class: 'img-thumbnail center-block ',size:"130x100"),resume.client)
         - else
-          = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block',size:"130x100")
+          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block',size:"130x100")
       - else
         .row.text-center
           |Anonymous
         .row
-        = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block ',size:"130x100")
+        = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ',size:"130x100")
     - else
       .row.text-center
         |Anonymous
       p
-      = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block ', size:"130x100")
+      = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"130x100")
     .row.text-center
       = "Posted: "+resume.updated_at.strftime("%d %B %Y")

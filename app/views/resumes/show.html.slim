@@ -48,17 +48,17 @@
             - if not @resume.client.photo_uid.nil?
               = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), class: 'img-thumbnail center-block ', size:"300x250" )
             - else
-              = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block', size:"300x250")
+              = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size:"300x250")
           -else
             h3.text-center
               |Anonymous
             p
-            = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block ', size:"300x250")
+            = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"300x250")
         -else
           h3.text-center
             |Anonymous
           p
-          = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block ', size:"300x250")
+          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"300x250")
         h3.text-center
           |Description
         .well
@@ -194,17 +194,17 @@
             - if not @resume.client.photo_uid.nil?
               = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), class: 'img-thumbnail center-block ', size: "300x250")
             - else
-              = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block', size: "300x250")
+              = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "300x250")
           - else
             h3.text-center
               |Anonymous
             p
-            = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block ', size: "300x250")
+            = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size: "300x250")
         - else
           h3.text-center
             |Anonymous
           p
-          = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block ', size: "300x250")
+          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size: "300x250")
         p
         .text-center
           =social_share_button_tag @resume.desiredjobtitle
@@ -378,17 +378,17 @@
             - if not @resume.client.photo_uid.nil?
               = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), class: 'img-thumbnail center-block ', size: "300x250")
             - else
-              = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block', size: "300x250")
+              = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "300x250")
           - else
             h3.text-center
               |Anonymous
             p
-            = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block ', size: "300x250")
+            = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size: "300x250")
         - else
           h3.text-center
             |Anonymous
           p
-          = image_tag(image_path("avatar.svg"), class: 'img-thumbnail center-block ', size: "300x250")
+          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size: "300x250")
         p
         .text-center
           =social_share_button_tag @resume.desiredjobtitle
@@ -563,7 +563,7 @@
               .row
                   col-lg-3.col-md-3
                     - if @resume.client.photo.nil?
-                      = image_tag(image_path("avatar.svg"), size: "60x60", class: 'img-thumbnail center-block')
+                      = image_tag(image_path("avatar.jpg"), size: "60x60", class: 'img-thumbnail center-block')
                     - else
                       = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), size: "60x60", class: 'img-thumbnail center-block ')
                   col-lg-9.col-md-9

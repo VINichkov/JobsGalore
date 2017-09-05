@@ -97,7 +97,7 @@ nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="n
             li
               =link_to client_root_path do
                 - if current_client.photo.nil?
-                  = image_tag(image_path("avatar.svg"), class: 'img-thumbnail', size: "50x50")
+                  = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail', size: "50x50")
                 - else
                   = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size: "50x50")
                 | &nbsp; #{current_client.firstname} #{current_client.lastname} &nbsp;
