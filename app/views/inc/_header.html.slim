@@ -2,9 +2,7 @@
   .container
     div
       span
-        = image_tag(image_path("method-draw-image.svg"), size: "100x100")
-      span.black_text
-        |.EU
+        .logo
 .container-fluid.hidden-xs.hidden-sm.not_print
   .container
     h1
@@ -18,9 +16,7 @@ nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
           li
             = link_to root_path do
               span
-                = image_tag(image_path("method-draw-image.svg"), size: "50x50")
-              span.black_text
-                |.EU
+                .logo_min
           li.elem_header
             a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
               |Jobs
