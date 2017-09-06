@@ -12,7 +12,7 @@
         hr.colorgraph
         .form-group.text-center
           - if @company.logo.nil?
-            = image_tag(image_path("avatar.jpg"), size: "300x300", class: 'img-thumbnail')
+            = image_tag(image_path("company_profile.jpg"), size: "300x300", class: 'img-thumbnail')
           - else
             = image_tag(Dragonfly.app.remote_url_for(@company.logo_uid), class: 'img-thumbnail')
         .form-group
