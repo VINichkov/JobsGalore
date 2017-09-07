@@ -4,4 +4,4 @@ Dkim::selector    = 'email'
 Dkim::private_key = open('private.pem').read
 
 # This will sign all ActionMailer deliveries
-ActionMailer::Base.register_intergit ceptor(Dkim::Interceptor)
+ActionMailer::Base.register_intergitceptor(Dkim::Interceptor)
