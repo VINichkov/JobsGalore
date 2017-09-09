@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   get "/contact", to: 'index#contact'
   get "/advertising_terms_of_use", to: 'index#advertising_terms_of_use'
   post "/send", to: 'index#send_mail'
+  post "/send_customers", to: 'index#send_to_customers'
+  get "/send_offer", to:'index#send_offer'
   get '/search', to: 'index#main_search'
   get '/by_category/:obj', to: 'index#by_category'
   get '/:category/:object', to: 'index#category_view'

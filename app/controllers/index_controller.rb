@@ -82,6 +82,15 @@ class IndexController < ApplicationController
     redirect_to(contact_path, notice: 'Email sent')
   end
 
+  def send_to_customers
+    ContactUsMailer.send_to_customers
+    redirect_to(root_path, notice: "Show must go on!!!")
+  end
+
+  def send_offer
+
+  end
+
   def terms_and_conditions
   end
 

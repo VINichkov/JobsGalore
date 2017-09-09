@@ -205,6 +205,35 @@ ALTER SEQUENCE educations_id_seq OWNED BY educations.id;
 
 
 --
+-- Name: emails; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE emails (
+    id integer NOT NULL,
+    email character varying
+);
+
+
+--
+-- Name: emails_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE emails_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: emails_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE emails_id_seq OWNED BY emails.id;
+
+
+--
 -- Name: experiences; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -870,6 +899,13 @@ ALTER TABLE ONLY educations ALTER COLUMN id SET DEFAULT nextval('educations_id_s
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY emails ALTER COLUMN id SET DEFAULT nextval('emails_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY experiences ALTER COLUMN id SET DEFAULT nextval('experiences_id_seq'::regclass);
 
 
@@ -1030,6 +1066,14 @@ ALTER TABLE ONLY companies
 
 ALTER TABLE ONLY educations
     ADD CONSTRAINT educations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: emails_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY emails
+    ADD CONSTRAINT emails_pkey PRIMARY KEY (id);
 
 
 --
@@ -1778,6 +1822,37 @@ ALTER TABLE ONLY skillsresumes
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20161216140254'), ('20161216140255'), ('20161216144123'), ('20161216144836'), ('20161216144837'), ('20161216144838'), ('20161216144839'), ('20161216144840'), ('20161216144842'), ('20161216144843'), ('20161216152826'), ('20161216152951'), ('20161216152952'), ('20161216152953'), ('20161216153048'), ('20161220113257'), ('20161220114325'), ('20161220114429'), ('20161220114751'), ('20161221095015'), ('20170125130039'), ('20170228101552'), ('20170310100000'), ('20170330000001'), ('20170430102817'), ('20170430103528'), ('20170621104707'), ('20170630083503'), ('20170703065606'), ('20170706115005');
+INSERT INTO "schema_migrations" (version) VALUES
+('20161216140254'),
+('20161216140255'),
+('20161216144123'),
+('20161216144836'),
+('20161216144837'),
+('20161216144838'),
+('20161216144839'),
+('20161216144840'),
+('20161216144842'),
+('20161216144843'),
+('20161216152826'),
+('20161216152951'),
+('20161216152952'),
+('20161216152953'),
+('20161216153048'),
+('20161220113257'),
+('20161220114325'),
+('20161220114429'),
+('20161220114751'),
+('20161221095015'),
+('20170125130039'),
+('20170228101552'),
+('20170310100000'),
+('20170330000001'),
+('20170430102817'),
+('20170430103528'),
+('20170621104707'),
+('20170630083503'),
+('20170703065606'),
+('20170706115005'),
+('20170909101238');
 
 
