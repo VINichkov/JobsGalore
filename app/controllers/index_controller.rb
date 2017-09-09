@@ -83,7 +83,7 @@ class IndexController < ApplicationController
   end
 
   def send_to_customers
-    ContactUsMailer.send_to_customers
+    ContactUsMailer.send_to_customers.deliver_later
     redirect_to(root_path, notice: "Show must go on!!!")
   end
 
