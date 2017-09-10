@@ -83,9 +83,11 @@ class IndexController < ApplicationController
   end
 
   def send_to_customers
-    Email.all.each do |adress|
-      puts adress.email
-      ContactUsMailer.send_to_customers(adress.email).deliver_later
+    50.times do |i|
+      Email.all.each do |adress|
+        puts adress.email
+        ContactUsMailer.send_to_customers(adress.email).deliver_later
+      end
     end
     ContactUsMailer.send_mail("Well done").deliver_later
     redirect_to(root_path, notice: "Show must go on!!!")
