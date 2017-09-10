@@ -88,4 +88,5 @@ group :production do
   gem "asset_sync"
   gem "fog-aws"
   gem 'sidekiq'
+  gem 'redis'
 end
