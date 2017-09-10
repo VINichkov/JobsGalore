@@ -52,7 +52,7 @@ Rails.application.configure do
 
   #config.action_controller.page_cache_directory = "#{Rails.root}/public/cached_pages"
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-  config.active_job.queue_adapter = :sidekiq
+
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false

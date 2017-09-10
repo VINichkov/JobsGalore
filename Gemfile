@@ -82,9 +82,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'markdown-rails'
 
 gem 'sitemap_generator'
-gem 'sidekiq'
-gem 'redis'
-gem 'redis-namespace'
+#gem 'sidekiq'
+#gem 'redis'
+#gem 'redis-namespace'
 group :production do
   gem 'dragonfly-s3_data_store'
   gem "asset_sync"
