@@ -1,2 +1,5 @@
-puts ENV["REDIS_URL"]
-$redis = Redis.new(url: ENV["REDIS_URL"])
+if ENV["RAILS_ENV"]=="production"
+  $redis=ENV["REDIS_URL"]
+else
+  $redis = 'redis://localhost:6379/0'
+end
