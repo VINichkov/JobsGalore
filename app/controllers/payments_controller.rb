@@ -88,7 +88,7 @@ class PaymentsController < ApplicationController
         item_name: params[:item_name],
         currency_code: 'AUD',
         amount: params[:amount]}
-    "https://www.sandbox.paypal.com/cgi-bin/webscr?#{values.to_query}"
+    "https://www.paypal.com/cgi-bin/webscr?#{values.to_query}"
   end
 
 
