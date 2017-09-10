@@ -87,5 +87,5 @@ group :production do
   gem 'dragonfly-s3_data_store'
   gem "asset_sync"
   gem "fog-aws"
-
+  gem 'sidekiq'
 end
