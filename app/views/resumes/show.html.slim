@@ -6,9 +6,9 @@
       p
         =  render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if  @resume.abouteme
 
-    -if @resume.experience.empty?
+    -if not @resume.experience.empty?
       h3
-        |Experience1
+        |Experience
       -@resume.experience.order(datestart: :desc).each  do |exp|
         .row.well
           h3.text-center
@@ -336,7 +336,7 @@
       .col-sm-12
         p
           = render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  @resume.abouteme
-        -if @resume.experience
+        -if not @resume.experience.empty?
           h3.text-center
             |Experience
           - @resume.experience.order(datestart: :desc).each  do |exp|
@@ -521,7 +521,7 @@
       .col-xs-12
         p
           = render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  @resume.abouteme
-        -if @resume.experience
+        -if not @resume.experience.empty?
           h3.text-center
             |Experience
           - @resume.experience.order(datestart: :desc).each  do |exp|
