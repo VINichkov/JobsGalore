@@ -17,13 +17,13 @@ class PaymentsController < ApplicationController
     end
     case @param[:option]
       when '1'
-        amount='10.00'
+        amount='30.00'
         item_name = "Urgent"
       when '2'
         amount='20.00'
         item_name = "Ad Top"
       when '3'
-        amount='1.00'
+        amount='5.00'
         item_name="Highlight"
     end
     @url = paypal_url(return_url:return_url, cancel_return_url:cancel_url_url, notify_url:payments_url,item_number:"#{@param[:option]}#{@param[:kind]}#{@param[:id]}",amount:amount,item_name:item_name)
@@ -86,7 +86,7 @@ class PaymentsController < ApplicationController
         notify_url: params[:notify_url],
         item_number:params[:item_number],
         item_name: params[:item_name],
-        currency_code: 'AUD',
+        currency_code: 'RUR',
         amount: params[:amount]}
     "https://www.paypal.com/cgi-bin/webscr?#{values.to_query}"
   end
