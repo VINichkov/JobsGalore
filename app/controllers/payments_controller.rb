@@ -86,7 +86,7 @@ class PaymentsController < ApplicationController
         notify_url: params[:notify_url],
         item_number:params[:item_number],
         item_name: params[:item_name],
-        currency_code: 'RUR',
+        currency_code: 'RUB',
         amount: params[:amount]}
     "https://www.paypal.com/cgi-bin/webscr?#{values.to_query}"
   end
