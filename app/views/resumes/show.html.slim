@@ -6,7 +6,7 @@
       p
         =  render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if  @resume.abouteme
 
-    -if @resume.experience
+    -if @resume.experience.empty?
       h3
         |Experience1
       -@resume.experience.order(datestart: :desc).each  do |exp|
