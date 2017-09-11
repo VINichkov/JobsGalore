@@ -45,9 +45,11 @@ class ResumesController < ApplicationController
     param.delete(:location_name)
     param[:client] = current_client
     @resume = Resume.new(param)
-    experience.each do |exp, exp1|
-      if not(exp1[:position].empty?)
-        @resume.experience.new(employer:exp1[:employer], location_id:exp1[:location_id], site:exp1[:site], titlejob:exp1[:position], datestart:exp1[:datestart], dateend:exp1[:dateend], description:exp1[:description] )
+    if experience
+      experience.each do |exp, exp1|
+        if not(exp1[:position].empty?)
+          @resume.experience.new(employer:exp1[:employer], location_id:exp1[:location_id], site:exp1[:site], titlejob:exp1[:position], datestart:exp1[:datestart], dateend:exp1[:dateend], description:exp1[:description] )
+        end
       end
     end
     @resume.industryresume.new(industry:Industry.find_by_id(industry.to_i))
