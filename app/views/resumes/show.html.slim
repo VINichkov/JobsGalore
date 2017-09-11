@@ -6,36 +6,37 @@
       p
         =  render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if  @resume.abouteme
 
-    h3
-      |Experience
-    -@resume.experience.order(datestart: :desc).each  do |exp|
-      .row.well
-        h3.text-center
-          strong
-            =exp.titlejob
-        hr
-        p
-          strong
-            |Started: &nbsp;
-          |#{exp.datestart.strftime("%d %B %Y").to_s} &nbsp;
-          strong
-            |Ended:
-          | &nbsp; #{exp.dateend ? exp.dateend.strftime("%d %B %Y").to_s : "..."}, &nbsp;
-          strong
-            |Location: &nbsp;
-          |#{exp.location.suburb}, #{exp.location.state}
-        p
-          strong
-            |Employer: &nbsp;
-          |#{exp.employer}
-        -if exp.site and not exp.site.empty?
+    -if @resume.experience
+      h3
+        |Experience
+      -@resume.experience.order(datestart: :desc).each  do |exp|
+        .row.well
+          h3.text-center
+            strong
+              =exp.titlejob
+          hr
           p
             strong
-              |Site: &nbsp;
-            |#{exp.site}
-        hr
-        p
-          =  render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if  exp.description
+              |Started: &nbsp;
+            |#{exp.datestart.strftime("%d %B %Y").to_s} &nbsp;
+            strong
+              |Ended:
+            | &nbsp; #{exp.dateend ? exp.dateend.strftime("%d %B %Y").to_s : "..."}, &nbsp;
+            strong
+              |Location: &nbsp;
+            |#{exp.location.suburb}, #{exp.location.state}
+          p
+            strong
+              |Employer: &nbsp;
+            |#{exp.employer}
+          -if exp.site and not exp.site.empty?
+            p
+              strong
+                |Site: &nbsp;
+              |#{exp.site}
+          hr
+          p
+            =  render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if  exp.description
         
   .col-lg-4.col-md-4
     .panel.panel-default
@@ -335,35 +336,36 @@
       .col-sm-12
         p
           = render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  @resume.abouteme
-        h3.text-center
-          |Experience
-        - @resume.experience.order(datestart: :desc).each  do |exp|
-          .row
-            .col-sm-12
-              hr
-              h4.text-center
-                = exp.titlejob
-              p
-                strong
-                  |Started: &nbsp;
-                |#{exp.datestart.strftime("%d %B %Y").to_s} &nbsp;
-                strong
-                  |Ended:
-                | &nbsp; #{exp.dateend ? exp.dateend.strftime("%d %B %Y").to_s : "..."}, &nbsp;
-                strong
-                  |Location: &nbsp;
-                |#{exp.location.suburb}, #{exp.location.state}
-              p
-                strong
-                  |Employer: &nbsp;
-                |#{exp.employer}
-              - if exp.site and not exp.site.empty?
+        -if @resume.experience
+          h3.text-center
+            |Experience
+          - @resume.experience.order(datestart: :desc).each  do |exp|
+            .row
+              .col-sm-12
+                hr
+                h4.text-center
+                  = exp.titlejob
                 p
                   strong
-                    |Site: &nbsp;
-                  |#{exp.site}
-              p
-                = render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  exp.description
+                    |Started: &nbsp;
+                  |#{exp.datestart.strftime("%d %B %Y").to_s} &nbsp;
+                  strong
+                    |Ended:
+                  | &nbsp; #{exp.dateend ? exp.dateend.strftime("%d %B %Y").to_s : "..."}, &nbsp;
+                  strong
+                    |Location: &nbsp;
+                  |#{exp.location.suburb}, #{exp.location.state}
+                p
+                  strong
+                    |Employer: &nbsp;
+                  |#{exp.employer}
+                - if exp.site and not exp.site.empty?
+                  p
+                    strong
+                      |Site: &nbsp;
+                    |#{exp.site}
+                p
+                  = render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  exp.description
 .col-xs-12.hidden-md.hidden-lg.hidden-sm
   .panel-body
     h1.text-center
@@ -519,35 +521,36 @@
       .col-xs-12
         p
           = render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  @resume.abouteme
-        h3.text-center
-          |Experience
-        - @resume.experience.order(datestart: :desc).each  do |exp|
-          .row
-            .col-xs-12
-              hr
-              h4.text-center
-                = exp.titlejob
-              p
-                strong
-                  |Started: &nbsp;
-                |#{exp.datestart.strftime("%d %B %Y").to_s} &nbsp;
-                strong
-                  |Ended:
-                | &nbsp; #{exp.dateend ? exp.dateend.strftime("%d %B %Y").to_s : "..."}, &nbsp;
-                strong
-                  |Location: &nbsp;
-                |#{exp.location.suburb}, #{exp.location.state}
-              p
-                strong
-                  |Employer: &nbsp;
-                |#{exp.employer}
-              - if exp.site and not exp.site.empty?
+        -if @resume.experience
+          h3.text-center
+            |Experience
+          - @resume.experience.order(datestart: :desc).each  do |exp|
+            .row
+              .col-xs-12
+                hr
+                h4.text-center
+                  = exp.titlejob
                 p
                   strong
-                    |Site: &nbsp;
-                  |#{exp.site}
-              p
-                = render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  exp.description
+                    |Started: &nbsp;
+                  |#{exp.datestart.strftime("%d %B %Y").to_s} &nbsp;
+                  strong
+                    |Ended:
+                  | &nbsp; #{exp.dateend ? exp.dateend.strftime("%d %B %Y").to_s : "..."}, &nbsp;
+                  strong
+                    |Location: &nbsp;
+                  |#{exp.location.suburb}, #{exp.location.state}
+                p
+                  strong
+                    |Employer: &nbsp;
+                  |#{exp.employer}
+                - if exp.site and not exp.site.empty?
+                  p
+                    strong
+                      |Site: &nbsp;
+                    |#{exp.site}
+                p
+                  = render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  exp.description
 -if client_signed_in?
   -if current_client.resp
     .modal.fade#contact[tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"]
