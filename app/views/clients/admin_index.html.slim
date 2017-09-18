@@ -1,5 +1,9 @@
 .container
-  h1 Listing clients
+  .col-md-6.col-lg-6
+    h1 Listing clients
+  .col-md-6.col-lg-6
+    = link_to 'New Client', admin_client_new_path, class:"btn btn-primary btn-block "
+  p
   table.table.table-striped.table-bordered.table-hover
     thead
       tr
@@ -27,6 +31,6 @@
           td = link_to 'Destroy', admin_client_destroy_path(client), data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-danger btn-block "
 
   br
-  = link_to 'New Client', new_client_path
+
   = will_paginate @clients, {renderer: BootstrapPagination::Rails, inner_window:1, outer_window:1 }
 

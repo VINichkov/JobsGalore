@@ -98,7 +98,7 @@ class ClientsController < ApplicationController
         format.html { redirect_to admin_client_show_path(@client), notice: 'Client was successfully created.' }
         format.json { render :show, status: :created, location: @client }
       else
-        format.html { render :new }
+        format.html { render :admin_new }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end
@@ -109,7 +109,7 @@ class ClientsController < ApplicationController
         format.html { redirect_to admin_client_show_path(@client), notice: 'Client was successfully updated.' }
         format.json { render :settings, status: :ok, location: @client }
       else
-        format.html { render :edit }
+        format.html { render :admin_edit }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end
@@ -130,10 +130,6 @@ class ClientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
-      if params[:client].nil?
-        params[:client]={}
-      else
         params.require(:client).permit(:firstname, :lastname, :email, :phone, :password, :resp, :photo, :gender, :location_id, :birth, :page)
-      end
     end
 end
