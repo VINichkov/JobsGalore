@@ -79,7 +79,7 @@ class ClientsController < ApplicationController
 
   #admin routs
   def admin_index
-    @clients = Client.all.includes(:location).order(:email).paginate(page: params.require(:page), per_page:21)
+    @clients = Client.all.includes(:location).order(:email).paginate(page: client_page, per_page:21)
   end
   def admin_edit_photo
   end
@@ -127,7 +127,11 @@ class ClientsController < ApplicationController
     def set_client
       @client = Client.find(params[:id])
     end
-
+    def client_page
+      if params.require(:page)
+        params.require(:page)
+      end
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
       if params[:client].nil?
