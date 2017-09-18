@@ -11,10 +11,10 @@
                 li = message
         hr.colorgraph
         .form-group.text-center
-          - if current_client.photo.nil?
+          - if @client.photo.nil?
             = image_tag(image_path("avatar.jpg"), size: "300x300", class: 'img-thumbnail')
           - else
-            = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), size: "300x300", class: 'img-thumbnail')
+            = image_tag(Dragonfly.app.remote_url_for(@client.photo_uid), size: "300x300", class: 'img-thumbnail')
         .form-group
           = f.label "Photo"
           br
