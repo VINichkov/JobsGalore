@@ -1,6 +1,6 @@
 class ResponsiblesController < ApplicationController
   before_action :set_responsible, only: [:show, :edit, :update, :destroy]
-
+  authorize_resource
   # GET /responsibles
   # GET /responsibles.json
   def index

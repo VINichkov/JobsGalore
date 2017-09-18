@@ -1,6 +1,6 @@
 class IndustrycompaniesController < ApplicationController
   before_action :set_industrycompany, only: [:show, :edit, :update, :destroy]
-
+  authorize_resource
   # GET /industrycompanies
   # GET /industrycompanies.json
   def index

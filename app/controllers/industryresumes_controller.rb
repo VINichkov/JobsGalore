@@ -1,6 +1,6 @@
 class IndustryresumesController < ApplicationController
   before_action :set_industryresume, only: [:show, :edit, :update, :destroy]
-
+  authorize_resource
   # GET /industryresumes
   # GET /industryresumes.json
   def index

@@ -1,6 +1,6 @@
 class SizesController < ApplicationController
   before_action :set_size, only: [:show, :edit, :update, :destroy]
-
+  authorize_resource
   # GET /sizes
   # GET /sizes.json
   def index

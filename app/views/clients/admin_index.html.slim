@@ -1,0 +1,32 @@
+.container
+  h1 Listing clients
+  table.table.table-striped.table-bordered.table-hover
+    thead
+      tr
+        th ID
+        th Firstname
+        th Lastname
+        th Email
+        th Resp
+        th Location
+        th
+        th
+        th
+
+    tbody
+      - @clients.each do |client|
+        tr
+          td = client.id
+          td = client.firstname
+          td = client.lastname
+          td = client.email
+          td = client.resp
+          td = "#{client.location.suburb}, #{client.location.state}"
+          td = link_to 'Show', admin_client_show_path(client), class: "btn btn-primary btn-block "
+          td = link_to 'Edit', admin_client_edit_path(client), class: "btn btn-success btn-block "
+          td = link_to 'Destroy', admin_client_destroy_path(client), data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-danger btn-block "
+
+  br
+  = link_to 'New Client', new_client_path
+  = will_paginate @clients, {renderer: BootstrapPagination::Rails, inner_window:1, outer_window:1 }
+

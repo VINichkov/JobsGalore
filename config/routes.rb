@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get '/company_jobs/:id', to:'companies#company_jobs'
 
 
-  resources :clients, only: [:create, :edit, :update, :destroy]
+  resources :clients, only: [:create, :edit, :update]#, :destroy
   get "/edit_photo", to: 'clients#edit_photo'
   get '/profile', to: 'clients#profile', as:  'client_root'
   get "/settings", to: 'clients#settings'
@@ -32,8 +32,29 @@ Rails.application.routes.draw do
   #payment
   get '/bill', to: 'payments#bill'
   get '/cancel_url', to: 'payments#cancel_url'
-  resources :payments, only: [:create, :index]
+  resources :payments, only: [:create]
 
+  #ADMINISTRATION CLIENTS
+  get '/admin/customers/', to: 'clients#admin_index', as: 'admin_client'
+  get '/admin/customers/edit_photo', to: 'clients#admin_edit_photo', as: 'admin_client_edit_photo'
+  get '/admin/customers/new', to: 'clients#admin_new', as: 'admin_client_new'
+  get '/admin/customers/:id', to: 'clients#admin_show', as: 'admin_client_show'
+  get '/admin/customers/:id/edit', to: 'clients#admin_edit', as: 'admin_client_edit'
+  post '/admin/customers/', to: 'clients#admin_create', as: 'admin_client_create'
+  patch '/admin/customers/:id', to: 'clients#admin_update', as: 'admin_client_update'
+  delete '/admin/customers/:id', to: 'clients#admin_destroy', as: 'admin_client_destroy'
+
+
+  scope path:'/admin' do
+    resources :industrycompanies
+    resources :industryjobs
+    resources :industryresumes
+    resources :responsibles
+    resources :sizes
+    resources :industries
+    resources :properts
+    resources :payments, only:[:show,:index]
+  end
 
   resources :jobs, only:[:new, :create, :show, :edit, :update, :destroy]
   resources :resumes, only:[:new, :create, :show, :edit, :update, :destroy]
@@ -54,22 +75,28 @@ Rails.application.routes.draw do
 
 
 
-
+  scope '/admin' do
+    resources :industrycompanies
+    resources :industryjobs
+    resources :industryresumes
+    resources :responsibles
+    resources :sizes
+    resources :industries
+    resources :properts
+    resources :clients
+    resources :payments, only:[:show,:index]
+  end
   #resources :educations
   #resources :languageresume
   #resources :experiences
   #resources :industryexperiences
   #resources :skillsjobs
   #resources :skillsresumes
-  #resources :levels
+
   #resources :languages
-  #resources :responsibles
-  #resources :sizes
-  #resources :industrycompanies
-  #resources :industryjobs
-  #resources :industryresumes
-  resources :industries, only:[:index]
-  #resources :properts
+  #resources :level
+
+
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

@@ -1,13 +1,15 @@
 class ClientsController < ApplicationController
   load_and_authorize_resource :client, only:[:edit, :update, :destroy]
-  before_action :set_client, only: [:show, :edit,:update, :destroy]
+  load_and_authorize_resource only:[:admin_index, :admin_edit_photo,:admin_new,:admin_show,:admin_edit,:admin_create,:admin_update,:admin_destroy]
+  before_action :set_client, only: [:show, :edit,:update, :destroy, :admin_edit_photo,:admin_show,:admin_edit,:admin_update,:admin_destroy ]
+
   before_action :authenticate_client!, except: :info
 
   # GET /clients
   # GET /clients.json
-  #def index
-  #  @clients = Client.all
-  #end
+  def index
+    @clients = Client.all.order(:email).paginate(page: client_params[:page], per_page:21)
+  end
 
   # GET /clients/1
   # GET /clients/1.json
@@ -63,7 +65,6 @@ class ClientsController < ApplicationController
       end
     end
   end
-
   # DELETE /clients/1
   # DELETE /clients/1.json
   def destroy
@@ -76,6 +77,51 @@ class ClientsController < ApplicationController
   end
 
 
+  #admin routs
+  def admin_index
+    @clients = Client.all.includes(:location).order(:email).paginate(page: client_params[:page], per_page:21)
+  end
+  def admin_edit_photo
+  end
+  def admin_new
+    @client = Client.new
+  end
+  def admin_edit
+  end
+  def admin_show
+
+  end
+  def admin_create
+    @client = Client.new(client_params)
+    respond_to do |format|
+      if @client.save
+        format.html { redirect_to admin_client_show_path(@client), notice: 'Client was successfully created.' }
+        format.json { render :show, status: :created, location: @client }
+      else
+        format.html { render :new }
+        format.json { render json: @client.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  def admin_update
+    respond_to do |format|
+      if @client.update(client_params)
+        format.html { redirect_to admin_client_show_path(@client), notice: 'Client was successfully updated.' }
+        format.json { render :settings, status: :ok, location: @client }
+      else
+        format.html { render :edit }
+        format.json { render json: @client.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  def admin_destroy
+    @client.company.destroy_all
+    @client.destroy
+    respond_to do |format|
+      format.html { redirect_to admin_client_url, notice: 'Client was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_client
@@ -87,7 +133,7 @@ class ClientsController < ApplicationController
       if params[:client].nil?
         params[:client]={}
       else
-        params.require(:client).permit(:firstname, :lastname, :email, :phone, :password, :resp, :photo, :gender, :location_id, :birth)
+        params.require(:client).permit(:firstname, :lastname, :email, :phone, :password, :resp, :photo, :gender, :location_id, :birth, :page)
       end
     end
 end

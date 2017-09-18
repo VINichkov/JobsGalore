@@ -1,6 +1,6 @@
 class PropertsController < ApplicationController
   before_action :set_propert, only: [:show, :edit, :update, :destroy]
-
+  authorize_resource
   # GET /properts
   # GET /properts.json
   def index

@@ -4,7 +4,7 @@ class PaymentsController < ApplicationController
   #before_action :set_client, only: [:show, :edit,:update, :destroy]
   #before_action :authenticate_client!
   protect_from_forgery except: [:create]
-
+  authorize_resource only:[:index, :show]
 
   def bill
     @param = payment_params

@@ -68,7 +68,11 @@ nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
                       = link_to settings_company_path do
                         span.glyphicon.glyphicon-cd
                         | &nbsp; Company
-
+                  - if current_client.email == PropertsHelper::ADMIN
+                    li
+                      = link_to settings_company_path do
+                        span.glyphicon.glyphicon-eye-open
+                        | &nbsp; Administration of site
                   li
                     = link_to destroy_client_session_path, :method => :delete do
                       span.glyphicon.glyphicon-log-out
@@ -114,6 +118,11 @@ nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="n
                   | &nbsp;
                   span.glyphicon.glyphicon-cd
                   | &nbsp; Company
+            - if current_client.email == PropertsHelper::ADMIN
+              li
+                = link_to settings_company_path do
+                  span.glyphicon.glyphicon-eye-open
+                  | &nbsp; Administration of site
         - if not (client_signed_in?) or (current_client.resp)
           li
             = link_to new_job_path do
@@ -305,7 +314,11 @@ nav.navbar.navbar-static-top.navbar-default.hidden-xs.hidden-sm[data-spy="affix"
                     =link_to settings_company_path do
                       span.glyphicon.glyphicon-cd
                       | &nbsp; Company
-
+                - if current_client.email == PropertsHelper::ADMIN
+                  li
+                    = link_to settings_company_path do
+                      span.glyphicon.glyphicon-eye-open
+                      | &nbsp; Administration of site
                 li
                   = link_to  destroy_client_session_path, :method => :delete do
                     span.glyphicon.glyphicon-log-out

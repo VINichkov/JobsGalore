@@ -23,6 +23,20 @@ class Ability
     can [:edit, :update, :destroy] , Client, Client do |client|
       client.id==user.id
     end
+
+    if user.email == PropertsHelper::ADMIN
+      can :manage, Industrycompany
+      can :manage, Industryjob
+      can :manage, Industryresume
+      can :manage, Responsible
+      can :manage, Size
+      can :manage, Industry
+      can :manage, Propert
+      can :manage, Client
+      can :reed, Payment
+    else
+
+    end
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
