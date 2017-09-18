@@ -79,7 +79,7 @@ class ClientsController < ApplicationController
 
   #admin routs
   def admin_index
-    @clients = Client.all.includes(:location).order(:email).paginate(page: client_params[:page], per_page:21)
+    @clients = Client.all.includes(:location).order(:email).paginate(page: params.require(:page), per_page:21)
   end
   def admin_edit_photo
   end

@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 
   #ADMINISTRATION CLIENTS
   get '/admin/customers/', to: 'clients#admin_index', as: 'admin_client'
-  get '/admin/customers/edit_photo', to: 'clients#admin_edit_photo', as: 'admin_client_edit_photo'
+  get '/admin/customers/edit_photo/:id', to: 'clients#admin_edit_photo', as: 'admin_client_edit_photo'
   get '/admin/customers/new', to: 'clients#admin_new', as: 'admin_client_new'
   get '/admin/customers/:id', to: 'clients#admin_show', as: 'admin_client_show'
   get '/admin/customers/:id/edit', to: 'clients#admin_edit', as: 'admin_client_edit'
