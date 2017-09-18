@@ -130,6 +130,8 @@ class ClientsController < ApplicationController
     def client_page
       if params.require(:page)
         params.require(:page)
+      else
+        nil
       end
     end
     # Never trust parameters from the scary internet, only allow the white list through.
