@@ -101,6 +101,9 @@ class IndexController < ApplicationController
 
   end
 
+  def admin
+
+  end
   private
 
   def search_params

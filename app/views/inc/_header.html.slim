@@ -70,7 +70,7 @@ nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
                         | &nbsp; Company
                   - if current_client.email == PropertsHelper::ADMIN
                     li
-                      = link_to settings_company_path do
+                      = link_to admin_path do
                         span.glyphicon.glyphicon-eye-open
                         | &nbsp; Administration of site
                   li
@@ -120,7 +120,7 @@ nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="n
                   | &nbsp; Company
             - if current_client.email == PropertsHelper::ADMIN
               li
-                = link_to settings_company_path do
+                = link_to admin_path do
                   span.glyphicon.glyphicon-eye-open
                   | &nbsp; Administration of site
         - if not (client_signed_in?) or (current_client.resp)
@@ -316,7 +316,7 @@ nav.navbar.navbar-static-top.navbar-default.hidden-xs.hidden-sm[data-spy="affix"
                       | &nbsp; Company
                 - if current_client.email == PropertsHelper::ADMIN
                   li
-                    = link_to settings_company_path do
+                    = link_to admin_path do
                       span.glyphicon.glyphicon-eye-open
                       | &nbsp; Administration of site
                 li

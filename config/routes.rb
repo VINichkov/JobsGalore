@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   post '/admin/customers/', to: 'clients#admin_create', as: 'admin_client_create'
   patch '/admin/customers/:id', to: 'clients#admin_update', as: 'admin_client_update'
   delete '/admin/customers/:id', to: 'clients#admin_destroy', as: 'admin_client_destroy'
-
+  get '/admin/', to: 'index#admin', as: "admin"
 
   scope path:'/admin' do
     resources :industrycompanies

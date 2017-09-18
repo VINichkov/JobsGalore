@@ -25,6 +25,8 @@ class Ability
     end
 
     if user.email == PropertsHelper::ADMIN
+      can :manage, Resume
+      can :manage, Job
       can :manage, Industrycompany
       can :manage, Industryjob
       can :manage, Industryresume
@@ -33,7 +35,7 @@ class Ability
       can :manage, Industry
       can :manage, Propert
       can :manage, Client
-      can :reed, Payment
+      can :read, Payment
     else
 
     end
