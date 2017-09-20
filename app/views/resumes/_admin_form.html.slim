@@ -1,0 +1,94 @@
+hr.colorgraph
+- if @resume.errors.any?
+  #error_explanation
+    h2 = "#{pluralize(@resume.errors.count, "error")} prohibited this resume from being saved:"
+    ul
+      - @resume.errors.full_messages.each do |message|
+        li = message
+.form-group
+  = f.label :desiredjobtitle, "Desired position"
+  br
+  = f.text_field :desiredjobtitle, class:"form-control"
+.form-group
+  = f.label :client
+  br
+  = f.text_field :client_id, class: "form-control"
+.row
+  .col-md-6.col-lx-6.col-sm-12.col-xs-12
+    .form-group
+      = f.label :salary
+      br
+      = f.text_field :salary, class:"form-control"
+  .col-md-6.col-lx-6.col-sm-12.col-xs-12
+    .form-group
+      = f.label :industry, "Location"
+      br
+      = react_component('Autocomplete',
+                className: "form-control dropdown-toggle",
+                name: "resume[location",
+                id: "resume_location_id",
+                defaultName: @resume.location ? "#{@resume.location.suburb}, #{@resume.location.state}" : "#{current_client.location.suburb}, #{current_client.location.state}",
+                defaultId: @resume.location ? @resume.location.id : current_client.location.id)
+.form-group
+  =f.label :industry, "Professional area"
+  br
+  =react_component("CategoryInsert",
+                      className:"selectpicker form-control",
+                      name:"resume[industry]",
+                      multiple:false,
+                      dataStyle:"bbtn-default",
+                      values: Industry.all.to_json,
+                      defaultValues:@resume.industry.to_json)
+
+.col-xs-6.col-sm-4.col-md-3
+  .form-group
+    = f.check_box :permanent
+    |  &nbsp;
+    = f.label :permanent
+.col-xs-6.col-sm-4.col-md-3
+  .form-group
+    = f.check_box :casual
+    |  &nbsp;
+    = f.label :casual
+.col-xs-6.col-sm-4.col-md-3
+  .form-group
+    = f.check_box :temp
+    |  &nbsp;
+    = f.label :temp, "Temporary"
+.col-xs-6.col-sm-4.col-md-3
+  .form-group
+    = f.check_box :contract
+    |  &nbsp;
+    = f.label :contract
+.col-xs-6.col-sm-4.col-md-3
+  .form-group
+    = f.check_box :fulltime
+    |  &nbsp;
+    = f.label :fulltime, "Full time"
+.col-xs-6.col-sm-4.col-md-3
+  .form-group
+    = f.check_box :parttime
+    |  &nbsp;
+    = f.label :parttime, "Patr time"
+.col-xs-6.col-sm-4.col-md-3
+  .form-group
+    = f.check_box :flextime
+    |  &nbsp;
+    = f.label :flextime, "Flex time"
+.col-xs-6.col-sm-4.col-md-3
+  .form-group
+    = f.check_box :remote
+    |  &nbsp;
+    = f.label :remote
+.col-xs-12.col-sm-12.col-md-12
+  .form-group
+    = f.label :abouteme, "Aboute me"
+    br
+    = f.text_area :abouteme, class:"form-control", :"data-provide"=>"markdown-editable", rows:"10"
+hr.colorgraph
+  .row
+    .col-xs-6.col-md-6.col-sm-6.col-lg-6
+      = f.submit class: "btn btn-primary btn-block "
+    .col-lg-6.col-md-6.col-xs-6.col-sm-6
+      = link_to 'Back', :back, class: "btn btn-success btn-block"
+  br

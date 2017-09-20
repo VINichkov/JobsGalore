@@ -1,8 +1,8 @@
 class JobsController < ApplicationController
   before_action :authenticate_client!, only:[:new, :edit, :create, :update, :destroy]
-  load_and_authorize_resource :job, only:[:edit, :update, :destroy]
+  load_and_authorize_resource :job, only:[:edit, :update, :destroy, :admin_index, :admin_new,:admin_show,:admin_edit,:admin_create,:admin_update,:admin_destroy, :admin_extras]
   authorize_resource only:[:new, :create]
-  before_action :set_job, only: [:show, :edit, :update, :destroy]
+  before_action :set_job, only: [:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
 
 
 
@@ -78,6 +78,100 @@ class JobsController < ApplicationController
     end
   end
 
+  def admin_index
+    @jobs = Job.all.includes(:location,:company).order(:title).paginate(page: params[:page], per_page:21)
+  end
+
+  # GET /jobs/1
+  # GET /jobs/1.json
+  def admin_show
+  end
+
+  # GET /jobs/new
+  def admin_new
+      @job = Job.new
+      @job.location_id = 9509
+  end
+
+  # GET /jobs/1/edit
+  def admin_edit
+  end
+
+  # POST /jobs
+  # POST /jobs.json
+  def admin_create
+    param = job_params
+    industry = param[:industry]
+    param.delete(:industry)
+    @job = Job.new(param)
+    @job.industryjob.new(industry:Industry.find_by_id(industry.to_i))
+    @job = Job.new(param)
+    respond_to do |format|
+      if @job.save
+        format.html { redirect_to admin_jobs_show_path(@job), notice: 'Job was successfully created.' }
+        format.json { render :admin_show, status: :created, location: @job }
+      else
+        format.html { render :admin_new }
+        format.json { render json: @job.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /jobs/1
+  # PATCH/PUT /jobs/1.json
+  def admin_update
+    param = job_params
+    industry = param[:industry]
+    param.delete(:industry)
+    @job.industryjob.destroy_all
+    @job.industryjob.new(industry:Industry.find_by_id(industry))
+    respond_to do |format|
+      if @job.update(param)
+        format.html { redirect_to admin_jobs_show_path(@job), notice: 'Job was successfully updated.' }
+        format.json { render :admin_show, status: :ok, location: @job }
+      else
+        format.html { render :admin_edit }
+        format.json { render json: @job.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /jobs/1
+  # DELETE /jobs/1.json
+  def admin_destroy
+    @job.destroy
+    respond_to do |format|
+      format.html { redirect_to admin_jobs_url,  notice: 'Job was successfully destroyed.' }
+    end
+  end
+
+  def admin_extras
+    param = params.require(:jobs).permit(:id, :option)
+    job = Job.find_by_id(param[:id])
+    case param[:option]
+      when '1'
+        if not job.urgent.nil?
+          job.urgent_off
+        else
+          job.urgent_on
+        end
+      when '2'
+        if not job.top.nil?
+          job.top_off
+        else
+          job.top_on
+        end
+      when '3'
+        if not job.highlight.nil?
+          job.highlight_off
+        else
+          job.highlight_on
+        end
+    end
+    respond_to do |format|
+      format.html { redirect_to admin_jobs_show_path(job),  notice: 'Job was successfully destroyed.' }
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_job
@@ -86,7 +180,7 @@ class JobsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
-      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :career, :industry)
+      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :career, :industry, :page)
     end
 
 end

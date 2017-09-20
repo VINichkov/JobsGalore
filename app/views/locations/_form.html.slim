@@ -6,13 +6,19 @@
         - @location.errors.full_messages.each do |message|
           li = message
 
-  .field
-    = f.label :postcode
-    = f.text_field :postcode
-  .field
+  .form-group
     = f.label :suburb
-    = f.text_field :suburb
-  .field
+    br
+    = f.text_field :suburb, class:"form-control"
+  .form-group
     = f.label :state
-    = f.text_field :state
-  .actions = f.submit
+    br
+    = f.text_field :state, class:"form-control"
+  hr.colorgraph
+    .row
+      .col-xs-12.col-md-6.col-sm-6.col-lg-6
+        = f.submit class: "btn btn-primary btn-block"
+        p
+      .col-xs-12.col-md-6.col-sm-6.col-lg-6
+        = link_to 'Back', :back, class: "btn btn-success btn-block"
+        p

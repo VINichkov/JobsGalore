@@ -1,23 +1,24 @@
-h1 Listing industrycompanies
-
-table
-  thead
-    tr
-      th Industry
-      th Company
-      th
-      th
-      th
-
-  tbody
-    - @industrycompanies.each do |industrycompany|
+.container
+  .col-md-6.col-lg-6
+    h1 Listing industrycompanies
+  .col-md-6.col-lg-6
+    = link_to 'New Industrycompany', new_industrycompany_path, class:"btn btn-primary btn-block "
+  p
+  table.table.table-striped.table-bordered.table-hover
+    thead
       tr
-        td = industrycompany.industry
-        td = industrycompany.company
-        td = link_to 'Show', industrycompany
-        td = link_to 'Edit', edit_industrycompany_path(industrycompany)
-        td = link_to 'Destroy', industrycompany, data: { confirm: 'Are you sure?' }, method: :delete
+        th Industry
+        th Company
+        th
+        th
 
-br
+    tbody
+      - @industrycompanies.each do |industrycompany|
+        tr
+          td = industrycompany.industry.name
+          td = industrycompany.company.name
+          td = link_to 'Edit', edit_industrycompany_path(industrycompany), class: "btn btn-success btn-block "
+          td = link_to 'Destroy', industrycompany, data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-danger btn-block "
 
-= link_to 'New Industrycompany', new_industrycompany_path
+  br
+  = will_paginate @industrycompanies, {renderer: BootstrapPagination::Rails, inner_window:1, outer_window:1}

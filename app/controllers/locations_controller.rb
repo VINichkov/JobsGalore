@@ -1,10 +1,11 @@
 class LocationsController < ApplicationController
+  load_and_authorize_resource :location , only:[:index, :new,:show,:edit,:create,:update,:destroy ]
   before_action :set_location, only: [:show, :edit, :update, :destroy]
 
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.paginate(page: params[:page], per_page:50)
+    @locations = Location.order(:suburb).paginate(page: params[:page], per_page:50)
   end
 
   def search

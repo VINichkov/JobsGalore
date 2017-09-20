@@ -1,0 +1,100 @@
+
+  hr.colorgraph
+  - if @job.errors.any?
+    #error_explanation
+      h2 #{pluralize(@job.errors.count, "error")} prohibited this job from being saved:
+      ul
+        - @job.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    = f.label :title
+    br
+    = f.text_field :title, class:"form-control"
+  .form-group
+    = f.label :company
+    br
+    = f.text_field :company_id, class: "form-control"
+  .form-group
+    = f.label :location
+    br
+    =react_component('Autocomplete',
+                      className:"form-control dropdown-toggle",
+                      name:"job[location",
+                      id:"job_location_id",
+                      defaultName: @job.location ? "#{@job.location.suburb}, #{@job.location.state}" : "#{current_client.location.suburb}, #{current_client.location.state}",
+                      defaultId: @job.location ? @job.location.id : current_client.location.id)
+  .form-group
+    = f.label :industry, "Industry"
+    br
+    = react_component("CategoryInsert",
+            className: "selectpicker form-control",
+            name: "job[industry]",
+            multiple: false,
+            dataStyle: "btn-default",
+            values: Industry.all.to_json,
+            defaultValues:@job.industry.to_json)
+  .row
+    br
+    .col-xs-12.col-sm-6.col-md-6
+      .form-group
+        = f.label :min, "Salary min"
+        br
+        = f.text_field :salarymin, class:"form-control"
+    .col-xs-12.col-sm-6.col-md-6
+      .form-group
+        = f.label :max, "Salary max"
+        br
+        = f.text_field :salarymax, class:"form-control"
+  .row
+    .col-xs-6.col-sm-4.col-md-3
+      .form-group
+        = f.check_box :permanent
+        |  &nbsp;
+        = f.label :permanent
+    .col-xs-6.col-sm-4.col-md-3
+      .form-group
+        = f.check_box :casual
+        |  &nbsp;
+        = f.label :casual
+    .col-xs-6.col-sm-4.col-md-3
+      .form-group
+        = f.check_box :temp
+        |  &nbsp;
+        = f.label :temp, "Temporary"
+    .col-xs-6.col-sm-4.col-md-3
+      .form-group
+        = f.check_box :contract
+        |  &nbsp;
+        = f.label :contract
+    .col-xs-6.col-sm-4.col-md-3
+      .form-group
+        = f.check_box :fulltime
+        |  &nbsp;
+        = f.label :fulltime, "Full time"
+    .col-xs-6.col-sm-4.col-md-3
+      .form-group
+        = f.check_box :parttime
+        |  &nbsp;
+        = f.label :parttime, "Patr time"
+    .col-xs-6.col-sm-4.col-md-3
+      .form-group
+        = f.check_box :flextime
+        |  &nbsp;
+        = f.label :flextime, "Flex time"
+    .col-xs-6.col-sm-4.col-md-3
+      .form-group
+        = f.check_box :remote
+        |  &nbsp;
+        = f.label :remote
+  .form-group
+    = f.label :description
+    br
+    = f.text_area :description, class:"form-control", class:"form-control", :"data-provide"=>"markdown-editable", rows:"10"
+  hr.colorgraph
+  .row
+    .col-xs-6.col-md-6.col-sm-6.col-lg-6
+      = f.submit class: "btn btn-primary btn-block "
+    .col-xs-6.col-md-6.col-sm-6.col-lg-6
+      = link_to 'Back', :back, class:"btn btn-success btn-block "
+  br

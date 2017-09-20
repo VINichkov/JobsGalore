@@ -105,7 +105,11 @@ class ClientsController < ApplicationController
   end
   def admin_update
     respond_to do |format|
-      if @client.update(client_params)
+      par = client_params
+      if par[:password]
+        par.delete(:password)
+      end
+      if @client.update(par)
         format.html { redirect_to admin_client_show_path(@client), notice: 'Client was successfully updated.' }
         format.json { render :settings, status: :ok, location: @client }
       else

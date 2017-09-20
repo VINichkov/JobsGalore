@@ -1,10 +1,11 @@
 class IndustrycompaniesController < ApplicationController
+  load_and_authorize_resource :industrycompany , only:[:index, :new, :show,:edit,:create,:update,:destroy ]
   before_action :set_industrycompany, only: [:show, :edit, :update, :destroy]
   authorize_resource
   # GET /industrycompanies
   # GET /industrycompanies.json
   def index
-    @industrycompanies = Industrycompany.all
+    @industrycompanies = Industrycompany.all.includes(:company,:industry).paginate(page: params[:page], per_page:21)
   end
 
   # GET /industrycompanies/1
@@ -28,7 +29,7 @@ class IndustrycompaniesController < ApplicationController
 
     respond_to do |format|
       if @industrycompany.save
-        format.html { redirect_to @industrycompany, notice: 'Industrycompany was successfully created.' }
+        format.html { redirect_to industrycompanies_url, notice: 'Industrycompany was successfully created.' }
         format.json { render :show, status: :created, location: @industrycompany }
       else
         format.html { render :new }
@@ -42,7 +43,7 @@ class IndustrycompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @industrycompany.update(industrycompany_params)
-        format.html { redirect_to @industrycompany, notice: 'Industrycompany was successfully updated.' }
+        format.html { redirect_to industrycompanies_url, notice: 'Industrycompany was successfully updated.' }
         format.json { render :show, status: :ok, location: @industrycompany }
       else
         format.html { render :edit }

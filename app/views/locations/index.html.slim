@@ -1,25 +1,28 @@
-h1 Listing locations
-
-table
-  thead
-    tr
-      th Postcode
-      th Suburb
-      th State
-      th
-      th
-      th
-
-  tbody
-    - @locations.each do |location|
+.container
+  .col-md-6.col-lg-6
+    h1 Listing locations
+  .col-md-6.col-lg-6
+    = link_to 'New Location', new_location_path, class:"btn btn-primary btn-block "
+  p
+  table.table.table-striped.table-bordered.table-hover
+    thead
       tr
-        td = location.postcode
-        td = location.suburb
-        td = location.state
-        td = link_to 'Show', location
-        td = link_to 'Edit', edit_location_path(location)
-        td = link_to 'Destroy', location, data: { confirm: 'Are you sure?' }, method: :delete
+        th ID
+        th Suburb
+        th State
+        th
+        th
+        th
 
-br
-= will_paginate @locations
-= link_to 'New Location', new_location_path
+    tbody
+      - @locations.each do |location|
+        tr
+          td = location.id
+          td = location.suburb
+          td = location.state
+          td = link_to 'Edit', edit_location_path(location), class: "btn btn-success btn-block"
+          td = link_to 'Destroy', location, data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-danger btn-block "
+
+  br
+  = will_paginate @locations, {renderer: BootstrapPagination::Rails, inner_window:1, outer_window:1}
+

@@ -6,10 +6,19 @@
         - @industrycompany.errors.full_messages.each do |message|
           li = message
 
-  .field
+  .form-group
     = f.label :industry
-    = f.text_field :industry
-  .field
+    br
+    = f.text_field :industry_id, class:"form-control"
+  .form-group
     = f.label :company
-    = f.text_field :company
-  .actions = f.submit
+    br
+    = f.text_field :company_id, class:"form-control"
+  hr.colorgraph
+    .row
+      .col-xs-12.col-md-6.col-sm-6.col-lg-6
+        = f.submit class: "btn btn-primary btn-block"
+        p
+      .col-xs-12.col-md-6.col-sm-6.col-lg-6
+        = link_to 'Back', :back, class: "btn btn-success btn-block"
+        p

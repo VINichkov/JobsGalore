@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   get '/profile', to: 'clients#profile', as:  'client_root'
   get "/settings", to: 'clients#settings'
 
-  #resources :locations
+  resources :locations
   get '/search_locations/:query', to: 'locations#search'
 
   #payment
@@ -45,16 +45,45 @@ Rails.application.routes.draw do
   delete '/admin/customers/:id', to: 'clients#admin_destroy', as: 'admin_client_destroy'
   get '/admin/', to: 'index#admin', as: "admin"
 
-  scope path:'/admin' do
-    resources :industrycompanies
-    resources :industryjobs
-    resources :industryresumes
-    resources :responsibles
-    resources :sizes
-    resources :industries
-    resources :properts
-    resources :payments, only:[:show,:index]
-  end
+  #ADMINISTRATION COMPANIES
+  get '/admin/companies/', to: 'companies#admin_index', as: 'admin_company'
+  get '/admin/companies/edit_logo/:id', to: 'companies#admin_edit_logo', as: 'admin_company_edit_logo'
+  get '/admin/companies/new', to: 'companies#admin_new', as: 'admin_company_new'
+  get '/admin/companies/:id', to: 'companies#admin_show', as: 'admin_company_show'
+  get '/admin/companies/:id/edit', to: 'companies#admin_edit', as: 'admin_company_edit'
+  post '/admin/companies/', to: 'companies#admin_create', as: 'admin_company_create'
+  patch '/admin/companies/:id', to: 'companies#admin_update', as: 'admin_company_update'
+  delete '/admin/companies/:id', to: 'companies#admin_destroy', as: 'admin_company_destroy'
+
+  #ADMINISTRATION JOBS
+  post 'admin/jobs/extras/', to: 'jobs#admin_extras', as: 'admin_jobs_extras'
+  get '/admin/jobs/', to: 'jobs#admin_index', as: 'admin_jobs'
+  get '/admin/jobs/new', to: 'jobs#admin_new', as: 'admin_jobs_new'
+  get '/admin/jobs/:id', to: 'jobs#admin_show', as: 'admin_jobs_show'
+  get '/admin/jobs/:id/edit', to: 'jobs#admin_edit', as: 'admin_jobs_edit'
+  post '/admin/jobs/', to: 'jobs#admin_create', as: 'admin_jobs_create'
+  patch '/admin/jobs/:id', to: 'jobs#admin_update', as: 'admin_jobs_update'
+  delete '/admin/jobs/:id', to: 'jobs#admin_destroy', as: 'admin_jobs_destroy'
+
+  #ADMINISTRATION RESUMES
+  post 'admin/resumes/extras/', to: 'resumes#admin_extras', as: 'admin_resumes_extras'
+  get '/admin/resumes/', to: 'resumes#admin_index', as: 'admin_resumes'
+  get '/admin/resumes/new', to: 'resumes#admin_new', as: 'admin_resumes_new'
+  get '/admin/resumes/:id', to: 'resumes#admin_show', as: 'admin_resumes_show'
+  get '/admin/resumes/:id/edit', to: 'resumes#admin_edit', as: 'admin_resumes_edit'
+  post '/admin/resumes/', to: 'resumes#admin_create', as: 'admin_resumes_create'
+  patch '/admin/resumes/:id', to: 'resumes#admin_update', as: 'admin_resumes_update'
+  delete '/admin/resumes/:id', to: 'resumes#admin_destroy', as: 'admin_resumes_destroy'
+
+  resources :industrycompanies
+  resources :industryjobs
+  resources :industryresumes
+  resources :responsibles
+  resources :sizes
+  resources :industries
+  resources :properts
+  resources :payments, only:[:show,:index]
+
 
   resources :jobs, only:[:new, :create, :show, :edit, :update, :destroy]
   resources :resumes, only:[:new, :create, :show, :edit, :update, :destroy]
@@ -75,24 +104,12 @@ Rails.application.routes.draw do
 
 
 
-  scope '/admin' do
-    resources :industrycompanies
-    resources :industryjobs
-    resources :industryresumes
-    resources :responsibles
-    resources :sizes
-    resources :industries
-    resources :properts
-    resources :clients
-    resources :payments, only:[:show,:index]
-  end
   #resources :educations
   #resources :languageresume
   #resources :experiences
   #resources :industryexperiences
   #resources :skillsjobs
   #resources :skillsresumes
-
   #resources :languages
   #resources :level
 

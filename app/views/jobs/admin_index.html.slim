@@ -1,0 +1,57 @@
+.container-fluid
+  .col-md-6.col-lg-6
+    h1 Listing jobs
+  .col-md-6.col-lg-6
+    = link_to 'New Job', admin_jobs_new_path, class:"btn btn-primary btn-block "
+  table.table.table-striped.table-bordered.table-hover
+    thead
+      tr
+        th Id
+        th Title
+        th Locations
+        th Salarymin
+        th Salarymax
+        th Permanent
+        th Casual
+        th Temp
+        th Contract
+        th Fulltime
+        th Parttime
+        th Flextime
+        th Remote
+        th Description
+        th Companies
+        th Highlight
+        th Top
+        th Urgent
+        th
+        th
+        th
+
+    tbody
+      - @jobs.each do |job|
+        tr
+          td = job.id
+          td = job.title
+          td = "#{job.location.suburb}, #{job.location.state}" if job.location
+          td = job.salarymin
+          td = job.salarymax
+          td = job.permanent
+          td = job.casual
+          td = job.temp
+          td = job.contract
+          td = job.fulltime
+          td = job.parttime
+          td = job.flextime
+          td = job.remote
+          td = job.description
+          td = job.company.name
+          td = job.highlight
+          td = job.top
+          td = job.urgent
+          td = link_to 'Show', admin_jobs_show_path(job), class: "btn btn-primary btn-block "
+          td = link_to 'Edit', admin_jobs_edit_path(job), class: "btn btn-success btn-block "
+          td = link_to 'Destroy', admin_jobs_destroy_path(job), data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-danger btn-block "
+
+  br
+  = will_paginate @jobs, {renderer: BootstrapPagination::Rails, inner_window:1, outer_window:1}
