@@ -94,6 +94,7 @@ class ResumesController < ApplicationController
       if @resume.update(param)
         format.html { redirect_to client_root_path, notice: 'Resume was successfully updated.' }
         format.json { render :show, status: :ok, location: @resume }
+        ResumesMailer.add_resume(current_client.email).deliver_later
       else
         format.html { render :edit }
         format.json { render json: @resume.errors, status: :unprocessable_entity }
