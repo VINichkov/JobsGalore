@@ -92,9 +92,9 @@ class ResumesController < ApplicationController
     @resume.industryresume.new(industry:Industry.find_by_id(industry))
     respond_to do |format|
       if @resume.update(param)
+        ResumesMailer.add_resume(current_client.email).deliver_later
         format.html { redirect_to client_root_path, notice: 'Resume was successfully updated.' }
         format.json { render :show, status: :ok, location: @resume }
-        ResumesMailer.add_resume(current_client.email).deliver_later
       else
         format.html { render :edit }
         format.json { render json: @resume.errors, status: :unprocessable_entity }
