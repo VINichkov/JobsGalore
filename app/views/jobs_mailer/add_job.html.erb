@@ -1,12 +1,13 @@
 <h1>Your vacancy was published on JobsGalore!</h1>
 
 <p>Dear <%=current_client.firstname%>, </p>
-<p>You've successfully posted your resume\vacancy on JobsGalore.</p>
-<p>Link to resume <%=link_to @resume.desiredjobtitle, resume_path(@resume)%></p>
+<p>You've successfully posted your vacancy on JobsGalore.</p>
+<p>Link to vacancy <%=link_to @job.title, jobs_path(@job)%></p>
 
 <strong>You can take extras:</strong>
 <strong>Highlight</strong>
-<p>Highlighted vacancies stand out from the other ads on the search and browse results due to the orange background colour. Highlighted resumes\vacancies have greater visibility and therefore receive more visits and replies than other Ads.</p>
+<p>Highlighted vacancies stand out from the other ads on the search and browse results due to the orange background colour.
+  Highlighted vacancies have greater visibility and therefore receive more visits and replies than other Ads.</p>
 
 <strong>Urgent</strong>
 <p>In a hurry? Add an Urgent tag to your vacancies. It's a great way to attract serious offers quickly.</p>
