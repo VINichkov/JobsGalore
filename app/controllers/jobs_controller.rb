@@ -61,7 +61,6 @@ class JobsController < ApplicationController
     @job.industryjob.new(industry:Industry.find_by_id(industry))
     respond_to do |format|
       if @job.update(param)
-        JobsMailer.add_job({mail:current_client.email, firstname:current_client.firstname, id:@job.id, title:@job.title}).deliver_later
         format.html { redirect_to client_root_path, notice: 'Job was successfully updated.' }
         format.json { render :show, status: :ok, location: @job }
       else
