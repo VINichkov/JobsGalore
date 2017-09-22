@@ -2,13 +2,15 @@
 
 <h3>Dear <%=@resume[:firstname]%>, </h3>
 <p>You've successfully posted your resume on JobsGalore.</p>
-<p>Link to resume %=link_to @resume[:desiredjobtitle], resume_path(@resume[:id])%</p>
+<p>Link to resume %=link_to @resume[:desiredjobtitle], <%=resume_path(@resume[:id])%></p>
 
-<strong>You can take extras:</strong>
+<h3>You can take extras:</h3>
 <br>
-<strong>Highlight</strong>
-<p>Highlighted resumes stand out from the other ads on the search and browse results due to the orange background colour.
+<p></p><strong>Highlight</strong>
+<br>
+Highlighted resumes stand out from the other ads on the search and browse results due to the orange background colour.
   Highlighted resumes have greater visibility and therefore receive more visits and replies than other Ads.</p>
 
-<strong>Urgent</strong>
-<p>In a hurry? Add an Urgent tag to your resumes. It's a great way to attract serious offers quickly.</p>
+<p></p><strong>Urgent</strong>
+<br>
+In a hurry? Add an Urgent tag to your resumes. It's a great way to attract serious offers quickly.</p>
