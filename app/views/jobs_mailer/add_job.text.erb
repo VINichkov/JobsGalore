@@ -1,9 +1,9 @@
 Your vacancy was published on JobsGalore!
 
-Dear <%=@user.firstname%>,
+Dear <%=@job[:firstname]%>,
 
 You've successfully posted your vacancy on JobsGalore.
-Link to vacancy <%=jobs_url(@job)%>
+Link to vacancy <%=jobs_url(@job[:id])%>
 
 You can take extras:
 
