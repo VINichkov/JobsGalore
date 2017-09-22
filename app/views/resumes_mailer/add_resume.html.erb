@@ -1,10 +1,11 @@
 <h1>Your resume was published on JobsGalore!</h1>
 
-<p>Dear =current_client.firstname%, </p>
+<h3>Dear <%=@resume.client.firstname%>, </h3>
 <p>You've successfully posted your resume on JobsGalore.</p>
-<p>Link to resume %=link_to @resume.desiredjobtitle, resume_path(@resume)%</p>
+<p>Link to resume <%=link_to @resume.desiredjobtitle, resume_path(@resume)%></p>
 
 <strong>You can take extras:</strong>
+<br>
 <strong>Highlight</strong>
 <p>Highlighted resumes stand out from the other ads on the search and browse results due to the orange background colour.
   Highlighted resumes have greater visibility and therefore receive more visits and replies than other Ads.</p>

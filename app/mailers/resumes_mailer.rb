@@ -1,7 +1,8 @@
 class ResumesMailer < ApplicationMailer
 
 
-  def add_resume(mail)
-    mail(to:mail, subject: "Your resume was published on JobsGalore!")
+  def add_resume(resume)
+    @resume = resume
+    mail(to:@resume.client.email, subject: "Your resume was published on JobsGalore!")
   end
 end
