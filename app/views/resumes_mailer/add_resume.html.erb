@@ -1,8 +1,8 @@
 <h1>Your resume was published on JobsGalore!</h1>
 
-<p>Dear <%=current_client.firstname%>, </p>
+<p>Dear =current_client.firstname%, </p>
 <p>You've successfully posted your resume on JobsGalore.</p>
-<p>Link to resume <%=link_to @resume.desiredjobtitle, resume_path(@resume)%></p>
+<p>Link to resume %=link_to @resume.desiredjobtitle, resume_path(@resume)%</p>
 
 <strong>You can take extras:</strong>
 <strong>Highlight</strong>
