@@ -30,7 +30,7 @@
         p
     .row
         - current_client.company.all.each do |company|
-          - company.job.each do |job|
+          - company.job.order(updated_at:  :desc).each do |job|
             -if not(job.highlight.nil?) and job.urgent.nil?
               .panel-body.well.highlight
                 =render 'clients/job', job:job
@@ -52,7 +52,7 @@
         p
     .row
       - if current_client.resume.count>0
-        -current_client.resume.all.each do |resume|
+        -current_client.resume.all.order(updated_at:  :desc).each do |resume|
           - if not (resume.highlight.nil?) and resume.urgent.nil?
             .panel-body.well.highlight
               = render 'clients/resume', resume: resume
