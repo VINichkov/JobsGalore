@@ -2,7 +2,7 @@
 
 <h3>Dear <%=@resume[:firstname]%>, </h3>
 <p>You've successfully posted your resume on JobsGalore.</p>
-<p>Link to resume %=link_to @resume[:desiredjobtitle], <%=resume_path(@resume[:id])%></p>
+<p>Link to resume %=link_to @resume[:desiredjobtitle], <%=resume_url(@resume[:id])%></p>
 
 <h3>You can take extras:</h3>
 <br>
