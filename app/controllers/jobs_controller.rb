@@ -41,7 +41,7 @@ class JobsController < ApplicationController
     @job.company = current_client.company.first
     respond_to do |format|
       if @job.save
-        JobsMailer.add_job(current_client.email).deliver_later
+        JobsMailer.add_job(current_client, @job ).deliver_later
         format.html { redirect_to client_root_path, notice: 'Job was successfully created.' }
         format.json { render :show, status: :created, location: @job }
       else

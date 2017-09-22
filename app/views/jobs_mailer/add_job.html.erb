@@ -1,8 +1,8 @@
 <h1>Your vacancy was published on JobsGalore!</h1>
 
-<p>Dear <%=current_client.firstname%>, </p>
+<p>Dear <%=@user.firstname%>, </p>
 <p>You've successfully posted your vacancy on JobsGalore.</p>
-<p>Link to vacancy <%=link_to @job.title, jobs_path(@job)%></p>
+<p>Link to vacancy <%=link_to @job.title, jobs_url(@job)%></p>
 
 <strong>You can take extras:</strong>
 <strong>Highlight</strong>
