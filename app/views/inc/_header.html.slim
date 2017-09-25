@@ -63,7 +63,7 @@ nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
                     = link_to settings_path do
                       span.glyphicon.glyphicon-cog
                       | &nbsp; Settings
-                  - if current_client.resp
+                  - if current_client.character=='employer'
                     li
                       = link_to settings_company_path do
                         span.glyphicon.glyphicon-cd
@@ -112,7 +112,7 @@ nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="n
                 | &nbsp;
                 span.glyphicon.glyphicon-cog
                 | &nbsp; Settings
-            - if current_client.resp
+            - if current_client.character=='employer'
               li
                 = link_to settings_company_path do
                   | &nbsp;
@@ -309,7 +309,7 @@ nav.navbar.navbar-static-top.navbar-default.hidden-xs.hidden-sm[data-spy="affix"
                   =link_to settings_path do
                     span.glyphicon.glyphicon-cog
                     | &nbsp; Settings
-                -if current_client.resp
+                -if current_client.character=='employer'
                   li
                     =link_to settings_company_path do
                       span.glyphicon.glyphicon-cd
