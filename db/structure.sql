@@ -89,7 +89,6 @@ CREATE TABLE clients (
     email character varying DEFAULT ''::character varying NOT NULL,
     phone character varying,
     password character varying,
-    resp boolean DEFAULT false NOT NULL,
     photo_uid character varying,
     gender boolean,
     location_id integer,
@@ -112,7 +111,7 @@ CREATE TABLE clients (
     failed_attempts integer DEFAULT 0 NOT NULL,
     unlock_token character varying,
     locked_at timestamp without time zone,
-    type character varying
+    "character" character varying
 );
 
 
@@ -1855,6 +1854,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170703065606'),
 ('20170706115005'),
 ('20170909101238'),
-('20170925080815');
+('20170925080815'),
+('20170925084348'),
+('20170925090306');
 
 
