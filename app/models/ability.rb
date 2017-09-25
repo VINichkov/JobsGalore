@@ -7,7 +7,7 @@ class Ability
       can [:new], Resume
       can [:new, :create], Job
       can [ :edit, :update, :destroy], Job, Job do |job |
-        not(job.company.client.find_by_id(user.id).nil?)
+        not(job.client.find_by_id(user.id).nil?)
       end
       can [:edit, :update, :destroy] , Company, Company do |company|
         not(company.client.find_by_id(user.id).nil?)
