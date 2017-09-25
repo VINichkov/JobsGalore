@@ -1,7 +1,7 @@
 class Client < ApplicationRecord
   # Include default devise modules. Others available are:
    #:omniauthable
-  before_save :default_values
+
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable
