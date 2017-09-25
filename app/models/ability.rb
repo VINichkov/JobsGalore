@@ -3,7 +3,7 @@ class Ability
 
   def initialize(user,param )
     user ||= Client.new
-    if user.resp
+    if user.character == 'employer'
       can [:new], Resume
       can [:new, :create], Job
       can [ :edit, :update, :destroy], Job, Job do |job |
