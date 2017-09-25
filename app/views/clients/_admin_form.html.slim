@@ -35,8 +35,9 @@
           option[value="true"] Female
     br
     .form-group
-      =f.check_box :resp
-      =f.label "Employer"
+      =f.label :type
+      br
+      =f.check_box :type
     .form-group
       = f.label "Your birthday"
       br

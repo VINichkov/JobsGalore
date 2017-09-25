@@ -22,7 +22,7 @@ class Clients::RegistrationsController < Devise::RegistrationsController
                      phone: param[:phone],
                      email: param[:email],
                      password: param[:password],
-                     resp:true,
+                     type: 'employer',
                      gender:param[:gender]})
      resource.company.new(name: param[:company_name],
                           location_id:param[:location_id],

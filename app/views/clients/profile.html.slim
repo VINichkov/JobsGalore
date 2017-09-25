@@ -21,7 +21,7 @@
       h4 Email: #{current_client.email}
       h4 Phone: #{current_client.phone}
       h4 #{current_client.location.suburb}, #{current_client.location.state}
-  -if current_client.resp then
+  -if current_client..type =='employer' then
     .row
       .col-sm-6.col-xs-12
         h2 Your jobs

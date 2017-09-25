@@ -42,7 +42,7 @@
     .panel.panel-default
       .panel-body
         -if client_signed_in?
-          -if current_client.resp or @resume.client.id == current_client.id
+          -if current_client.type =='employer' or @resume.client.id == current_client.id
             h3.text-center
               ="#{@resume.client.firstname} #{@resume.client.lastname}"
             p
@@ -188,7 +188,7 @@
     .row
       .col-sm-6
         - if client_signed_in?
-          - if current_client.resp or @resume.client.id == current_client.id
+          - if current_client.type =='employer' or @resume.client.id == current_client.id
             h3.text-center
               = "#{@resume.client.firstname} #{@resume.client.lastname}"
             p
@@ -373,7 +373,7 @@
     .row
       .col-xs-12
         - if client_signed_in?
-          - if current_client.resp or @resume.client.id == current_client.id
+          - if current_client.type =='employer' or @resume.client.id == current_client.id
             h3.text-center
               = "#{@resume.client.firstname} #{@resume.client.lastname}"
             p
