@@ -11,7 +11,7 @@
         th Firstname
         th Lastname
         th Email
-        th Resp
+        th Type
         th Location
         th
         th
@@ -24,7 +24,7 @@
           td = client.firstname
           td = client.lastname
           td = client.email
-          td = client.resp
+          td = client.character
           td = "#{client.location.suburb}, #{client.location.state}"
           td = link_to 'Show', admin_client_show_path(client), class: "btn btn-primary btn-block "
           td = link_to 'Edit', admin_client_edit_path(client), class: "btn btn-success btn-block "

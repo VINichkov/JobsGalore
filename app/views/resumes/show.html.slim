@@ -164,7 +164,7 @@
                 .col-lg-12.col-md-12
                   = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
                   p
-              -if current_client.resp
+              -if current_client.character=='employer'
                 .col-lg-12.col-md-12
                   button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
                     |Contact
