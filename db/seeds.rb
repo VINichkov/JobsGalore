@@ -380,6 +380,21 @@ begin
     end
     puts "== #{Time.now-timestart} end"
 
+    if 1==1
+      i=0
+      timestart =Time.now
+      puts "== #{timestart} Updates clients"
+      Client.all.each do |t|
+        if t.resp
+          t.type ="employer"
+        else
+          t.type ="applicant"
+        end
+        t.save
+        i+=1
+        puts "== #{Time.now-timestart} complete #{i*1000} row"
+      end
+    end
 rescue
   puts "Error: #{$!}"
 end
