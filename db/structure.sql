@@ -111,7 +111,8 @@ CREATE TABLE clients (
     unconfirmed_email character varying,
     failed_attempts integer DEFAULT 0 NOT NULL,
     unlock_token character varying,
-    locked_at timestamp without time zone
+    locked_at timestamp without time zone,
+    type character varying
 );
 
 
@@ -1853,6 +1854,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170630083503'),
 ('20170703065606'),
 ('20170706115005'),
-('20170909101238');
+('20170909101238'),
+('20170925080815');
 
 
