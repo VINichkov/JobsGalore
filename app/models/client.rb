@@ -7,6 +7,7 @@ class Client < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable
   belongs_to :location
   has_many :resume, dependent: :destroy
+  has_many :job, dependent: :destroy
   has_many :respons, class_name:"Responsible", dependent: :destroy
   has_many :responsible
   has_many :company, through: :responsible, dependent: :destroy
@@ -22,9 +23,7 @@ class Client < ApplicationRecord
   validates :phone, presence: true
 
 
-  def default_values
-    self.responsible ||= false
-  end
+
 
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later

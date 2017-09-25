@@ -459,7 +459,8 @@ CREATE TABLE jobs (
     fts tsvector,
     highlight date,
     top date,
-    urgent date
+    urgent date,
+    client_id integer
 );
 
 
@@ -1376,6 +1377,13 @@ CREATE INDEX index_industryresumes_on_resume_id ON industryresumes USING btree (
 
 
 --
+-- Name: index_jobs_on_client_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_jobs_on_client_id ON jobs USING btree (client_id);
+
+
+--
 -- Name: index_jobs_on_company_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1817,6 +1825,14 @@ ALTER TABLE ONLY skillsresumes
 
 
 --
+-- Name: fk_rails_f3577d7dd3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY jobs
+    ADD CONSTRAINT fk_rails_f3577d7dd3 FOREIGN KEY (client_id) REFERENCES clients(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -1856,6 +1872,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170909101238'),
 ('20170925080815'),
 ('20170925084348'),
-('20170925090306');
+('20170925090306'),
+('20170925094404');
 
 

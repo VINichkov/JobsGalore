@@ -1,4 +1,5 @@
 class Job < ApplicationRecord
+  belongs_to :client
   belongs_to :location
   belongs_to :company
   #belongs_to :education

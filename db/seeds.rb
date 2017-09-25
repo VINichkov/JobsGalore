@@ -383,14 +383,11 @@ begin
     if 1==1
       i=0
       timestart =Time.now
-      puts "== #{timestart} Updates clients"
-      Client.all.each do |t|
-        if t.resp
-          t.character ="employer"
-        else
-          t.character ="applicant"
+      puts "== #{timestart} Updates jobs"
+      Responsible.all.each do |t|
+        t.company.job.all.each do |b|
+          b.client = t.client
         end
-        t.save
         i+=1
         puts "== #{Time.now-timestart} complete #{i*1000} row"
       end
