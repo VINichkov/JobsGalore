@@ -7,6 +7,7 @@
     thead
       tr
         th Id
+        th Owner
         th Title
         th Locations
         th Salarymin
@@ -32,6 +33,7 @@
       - @jobs.each do |job|
         tr
           td = job.id
+          td = "#{job.client.id} #{job.client.email} #{job.client.firstname} #{job.client.lastname}"
           td = job.title
           td = "#{job.location.suburb}, #{job.location.state}" if job.location
           td = job.salarymin

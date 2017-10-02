@@ -22,7 +22,6 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError.new('Not Found')
   end
 
-
   def extras_check
     if $date.mem < Date.today
       Thread.new do

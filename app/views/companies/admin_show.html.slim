@@ -190,7 +190,7 @@
         h4.modal-title Contact:
       .modal-body
         .container-fluid
-          -@company.client.each do |client|
+          - @company.client.each do |client|
             .row
               col-lg-3.col-md-3
                 - if client.photo.nil?
@@ -198,7 +198,7 @@
                 - else
                   = image_tag(Dragonfly.app.remote_url_for(client.photo_uid), size: "60x60", class: 'img-thumbnail center-block ')
               col-lg-9.col-md-9
-                ="#{client.firstname} #{client.lastname}"
+                = "#{client.firstname} #{client.lastname}"
                 br
                 |Email:
                 | &nbsp;
@@ -208,5 +208,5 @@
                 | &nbsp;
                 a[href ="tel:#{client.phone}" ] #{client.phone}
         .modal-footer
-        button[type="button" class="btn btn-default" data-dismiss="modal"]
-          |Close
+          button[type="button" class="btn btn-default" data-dismiss="modal"]
+            |Close

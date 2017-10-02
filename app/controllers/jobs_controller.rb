@@ -39,6 +39,7 @@ class JobsController < ApplicationController
     @job = Job.new(param)
     @job.industryjob.new(industry:Industry.find_by_id(industry.to_i))
     @job.company = current_client.company.first
+    @job.client = current_client
     respond_to do |format|
       if @job.save
         JobsMailer.add_job({mail:current_client.email, firstname:current_client.firstname, id:@job.id, title:@job.title}).deliver_later
@@ -80,7 +81,7 @@ class JobsController < ApplicationController
   end
 
   def admin_index
-    @jobs = Job.all.includes(:location,:company).order(:title).paginate(page: params[:page], per_page:21)
+    @jobs = Job.all.includes(:location,:company, :client).order(:title).paginate(page: params[:page], per_page:21)
   end
 
   # GET /jobs/1
@@ -181,7 +182,7 @@ class JobsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
-      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :career, :industry, :page)
+      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :client_id, :career, :industry, :page)
     end
 
 end

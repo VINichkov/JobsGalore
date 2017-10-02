@@ -28,6 +28,10 @@ class ClientsController < ApplicationController
 
   end
 
+  def team
+    @clients = current_client.company.first.client.all
+  end
+
   # GET /clients/new
   #def new
   #  @client = Client.new

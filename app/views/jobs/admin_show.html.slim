@@ -153,22 +153,21 @@
       .modal-body
         .container-fluid
           .row
-            - @job.company.client.each do |client|
               col-lg-3.col-md-3
-                - if client.photo.nil?
+                - if @job.client.photo.nil?
                   = image_tag(image_path("avatar.jpg"), size: "60x60", class: 'img-thumbnail center-block', )
                 - else
-                  = image_tag(Dragonfly.app.remote_url_for(client.photo_uid), size: "60x60", class: 'img-thumbnail center-block ')
+                  = image_tag(Dragonfly.app.remote_url_for(@job.client.photo_uid), size: "60x60", class: 'img-thumbnail center-block ')
               col-lg-9.col-md-9
-                ="#{client.firstname} #{client.lastname}"
+                ="#{@job.client.firstname} #{@job.client.lastname}"
                 br
                 |Email:
                 | &nbsp;
-                a[href ="mailto:#{client.email}" ] = client.email
+                a[href ="mailto:#{@job.client.email}" ] = @job.client.email
                 br
                 |Phone:
                 | &nbsp;
-                a[href ="tel:#{client.phone}" ] #{client.phone}
+                a[href ="tel:#{@job.client.phone}" ] #{@job.client.phone}
       .modal-footer
         button[type="button" class="btn btn-default" data-dismiss="modal"]
           |Close

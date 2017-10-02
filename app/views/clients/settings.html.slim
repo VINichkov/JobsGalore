@@ -20,6 +20,9 @@
           h3 #{current_client.location.suburb}, #{current_client.location.state}
           h3 Gender: #{current_client.gender ? " Female" : " Male"}
           h3 Birthday: #{current_client.birth ? current_client.birth.strftime("%d %B %Y").to_s : "Empty"}
+          - if current_client.character == 'employer'
+            h3 You've administration functions
+
         .col-md-4.col-lg-4.col-sm-12.col-xs-12
           .col-md-12.col-lg-12.col-sm-6.col-xs-12
             = link_to "Update photo", edit_photo_path, class:"btn btn-success btn-block"

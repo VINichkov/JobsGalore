@@ -68,6 +68,10 @@ nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
                       = link_to settings_company_path do
                         span.glyphicon.glyphicon-cd
                         | &nbsp; Company
+                    li
+                      = link_to clietns_team_path do
+                        span.glyphicon.glyphicon-heart
+                        | &nbsp; Team
                   - if current_client.email == PropertsHelper::ADMIN
                     li
                       = link_to admin_path do
@@ -118,6 +122,10 @@ nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="n
                   | &nbsp;
                   span.glyphicon.glyphicon-cd
                   | &nbsp; Company
+              li
+                = link_to clietns_team_path do
+                  span.glyphicon.glyphicon-heart
+                  | &nbsp; Team
             - if current_client.email == PropertsHelper::ADMIN
               li
                 = link_to admin_path do
@@ -314,6 +322,10 @@ nav.navbar.navbar-static-top.navbar-default.hidden-xs.hidden-sm[data-spy="affix"
                     =link_to settings_company_path do
                       span.glyphicon.glyphicon-cd
                       | &nbsp; Company
+                  li
+                    = link_to clietns_team_path do
+                      span.glyphicon.glyphicon-heart
+                      | &nbsp; Team
                 - if current_client.email == PropertsHelper::ADMIN
                   li
                     = link_to admin_path do

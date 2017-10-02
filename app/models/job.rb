@@ -9,6 +9,7 @@ class Job < ApplicationRecord
   validates :title, presence: true
   validates :company, presence: true
   validates :location, presence: true
+  validates :client, presence: true
 
   def highlight_on
     self.highlight = Date.today

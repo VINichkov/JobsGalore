@@ -20,6 +20,7 @@
         th
         th
         th
+        th
 
     tbody
       - @companies.each do |company|
@@ -33,6 +34,7 @@
           td = company.recrutmentagency
           td = company.description
           td = company.industry.pluck(:name)
+          th = link_to "Show team", admin_company_team_path(company), class: "btn btn-success btn-block "
           td = link_to 'Edit photo', admin_company_edit_logo_path(company), class: "btn btn-info btn-block "
           td = link_to 'Show', admin_company_show_path(company), class: "btn btn-primary btn-block "
           td = link_to 'Edit', admin_company_edit_path(company), class: "btn btn-success btn-block "

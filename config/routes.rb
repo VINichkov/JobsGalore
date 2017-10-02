@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   devise_scope :client do
     get "/sign_up_employer" => "clients/registrations#sign_up_employer"
     post '/create_employer'=> "clients/registrations#create_employer"
-
+  get "/clients/team", to: 'clients#team', as: 'clietns_team'
   end
 
 
@@ -54,6 +54,14 @@ Rails.application.routes.draw do
   post '/admin/companies/', to: 'companies#admin_create', as: 'admin_company_create'
   patch '/admin/companies/:id', to: 'companies#admin_update', as: 'admin_company_update'
   delete '/admin/companies/:id', to: 'companies#admin_destroy', as: 'admin_company_destroy'
+  #ADMINISTRATION WIZARD of COMPANIES
+  get '/admin/team/new/:id', to: 'companies#admin_new_member', as: 'admin_team_new'
+  get '/admin/team/edit/:id', to: 'companies#admin_edit_member', as: 'admin_team_edit'
+  patch '/admin/team/update/:id', to: 'companies#admin_update_member', as: 'admin_team_update'
+  post '/admin/team/', to: 'companies#admin_create_member', as: 'admin_team_create'
+  delete '/admin/team/:id', to: 'companies#admin_destroy_member', as: 'admin_team_destroy'
+  get '/admin/team/:id', to: 'companies#client_in_company_index', as: 'admin_company_team'
+  get '/admin/member_of_team/:id', to: 'companies#admin_show_member_of_team', as: 'admin_member_show'
 
   #ADMINISTRATION JOBS
   post 'admin/jobs/extras/', to: 'jobs#admin_extras', as: 'admin_jobs_extras'
