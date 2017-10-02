@@ -78,6 +78,8 @@ GEM
       responders
       warden (~> 1.2.3)
     dkim (1.0.0)
+    domain_name (0.5.20170404)
+      unf (>= 0.0.5, < 1.0.0)
     dragonfly (1.1.3)
       addressable (~> 2.3)
       multi_json (~> 1.0)
@@ -108,6 +110,8 @@ GEM
     formatador (0.2.5)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     i18n (0.8.6)
     ipaddress (0.8.3)
     jbuilder (2.7.0)
@@ -127,6 +131,15 @@ GEM
     markdown-rails (0.2.1)
       rails
       rdiscount (>= 1.6.8, < 2.0)
+    mechanize (2.7.5)
+      domain_name (~> 0.5, >= 0.5.1)
+      http-cookie (~> 1.0)
+      mime-types (>= 1.17.2)
+      net-http-digest_auth (~> 1.1, >= 1.1.1)
+      net-http-persistent (~> 2.5, >= 2.5.2)
+      nokogiri (~> 1.6)
+      ntlm-http (~> 0.1, >= 0.1.1)
+      webrobots (>= 0.0.9, < 0.2)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -134,9 +147,12 @@ GEM
     mini_portile2 (2.2.0)
     minitest (5.10.2)
     multi_json (1.12.1)
+    net-http-digest_auth (1.4.1)
+    net-http-persistent (2.9.4)
     nio4r (2.1.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
+    ntlm-http (0.1.1)
     orm_adapter (0.5.0)
     pg (0.21.0)
     pg_search (2.0.1)
@@ -238,6 +254,7 @@ GEM
       bindex (>= 0.4.0)
       railties (>= 5.0)
     webrick (1.3.1)
+    webrobots (0.1.2)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -266,6 +283,7 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.0.5)
   markdown-rails
+  mechanize
   pg (~> 0.18)
   pg_search (~> 2.0.1)
   puma
