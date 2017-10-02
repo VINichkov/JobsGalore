@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ClientsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @client = clients(:one)
+    @client = Client.first
   end
 
   test "should get index" do

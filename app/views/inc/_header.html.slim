@@ -100,81 +100,81 @@ nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-md.hidden-lg
       p
 .clear_menu-sm.hidden-xs.hidden-md.hidden-lg
 nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="navigation"]
-      ul.nav.navbar-nav
-        - if client_signed_in?
-            li
-              =link_to client_root_path do
-                - if current_client.photo.nil?
-                  = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail', size: "50x50")
-                - else
-                  = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size: "50x50")
-                | &nbsp; #{current_client.firstname} #{current_client.lastname} &nbsp;
-                span.glyphicon.glyphicon-chevron-right
-            li
+  ul.nav.navbar-nav
+    - if client_signed_in?
+      li
+        =link_to client_root_path do
+          - if current_client.photo.nil?
+            = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail', size: "50x50")
+          - else
+            = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size: "50x50")
+          | &nbsp; #{current_client.firstname} #{current_client.lastname} &nbsp;
+          span.glyphicon.glyphicon-chevron-right
+      li
 
-              = link_to settings_path do
-                | &nbsp;
-                span.glyphicon.glyphicon-cog
-                | &nbsp; Settings
-            - if current_client.character=='employer'
-              li
-                = link_to settings_company_path do
-                  | &nbsp;
-                  span.glyphicon.glyphicon-cd
-                  | &nbsp; Company
-              li
-                = link_to clietns_team_path do
-                  span.glyphicon.glyphicon-heart
-                  | &nbsp; Team
-            - if current_client.email == PropertsHelper::ADMIN
-              li
-                = link_to admin_path do
-                  span.glyphicon.glyphicon-eye-open
-                  | &nbsp; Administration of site
-        - if not (client_signed_in?) or (current_client.character=='employer')
-          li
-            = link_to new_job_path do
-              |&nbsp;
-              span.glyphicon.glyphicon-briefcase
-              |&nbsp;Post а job
-        - if not (client_signed_in?) or not (current_client.character=='employer')
-          li
-            = link_to new_resume_path do
-              |&nbsp;
-              span.glyphicon.glyphicon-paperclip
-              |&nbsp;Post а resume
+        = link_to settings_path do
+          | &nbsp;
+          span.glyphicon.glyphicon-cog
+          | &nbsp; Settings
+      - if current_client.character=='employer'
         li
-          = link_to '/by_category/2' do
-            |&nbsp;
-            span.glyphicon.glyphicon-gift
-            |&nbsp; Jobs by category
+          = link_to settings_company_path do
+            | &nbsp;
+            span.glyphicon.glyphicon-cd
+            | &nbsp; Company
         li
-          = link_to  '/by_category/3' do
-            |&nbsp;
-            span.glyphicon.glyphicon-bullhorn
-            |&nbsp; Resumes by category
+          = link_to clietns_team_path do
+            span.glyphicon.glyphicon-heart
+            | &nbsp; Team
+      - if current_client.email == PropertsHelper::ADMIN
         li
-          =link_to '/by_category/1' do
-            |&nbsp;
-            span.glyphicon.glyphicon-leaf
-            |&nbsp; Companies by category
-        - unless client_signed_in?
-          li.nav-item
-            = link_to  new_client_session_path do
-              |&nbsp;
-              span.glyphicon.glyphicon-log-in
-              |&nbsp; Log in
-          li.nav-item
-            = link_to new_client_registration_path do
-              |&nbsp;
-              span.glyphicon.glyphicon-registration-mark
-              |&nbsp; Sign up
-        -else
-          li
-            = link_to destroy_client_session_path, :method => :delete do
-              | &nbsp;
-              span.glyphicon.glyphicon-log-out
-              | &nbsp; Log out
+          = link_to admin_path do
+            span.glyphicon.glyphicon-eye-open
+            | &nbsp; Administration of site
+    - if not (client_signed_in?) or (current_client.character=='employer')
+      li
+        = link_to new_job_path do
+          |&nbsp;
+          span.glyphicon.glyphicon-briefcase
+          |&nbsp;Post а job
+    - if not (client_signed_in?) or not (current_client.character=='employer')
+      li
+        = link_to new_resume_path do
+          |&nbsp;
+          span.glyphicon.glyphicon-paperclip
+          |&nbsp;Post а resume
+    li
+      = link_to '/by_category/2' do
+        |&nbsp;
+        span.glyphicon.glyphicon-gift
+        |&nbsp; Jobs by category
+    li
+      = link_to  '/by_category/3' do
+        |&nbsp;
+        span.glyphicon.glyphicon-bullhorn
+        |&nbsp; Resumes by category
+    li
+      =link_to '/by_category/1' do
+        |&nbsp;
+        span.glyphicon.glyphicon-leaf
+        |&nbsp; Companies by category
+    - unless client_signed_in?
+      li.nav-item
+        = link_to  new_client_session_path do
+          |&nbsp;
+          span.glyphicon.glyphicon-log-in
+          |&nbsp; Log in
+      li.nav-item
+        = link_to new_client_registration_path do
+          |&nbsp;
+          span.glyphicon.glyphicon-registration-mark
+          |&nbsp; Sign up
+    -else
+      li
+        = link_to destroy_client_session_path, :method => :delete do
+          | &nbsp;
+          span.glyphicon.glyphicon-log-out
+          | &nbsp; Log out
 nav.navmenu.navmenu-default.navmenu-fixed-right.offcanvas#search_menu[role="navigation"]
   .container
     .col-xs-12
@@ -196,9 +196,9 @@ nav.navmenu.navmenu-default.navmenu-fixed-right.offcanvas#search_menu[role="navi
             option[value='1']
               |Companies
         .form-group
-            label
-              input[type="checkbox" name='main_search[urgent]']
-              | Urgent
+          label
+            input[type="checkbox" name='main_search[urgent]']
+            | Urgent
         .form-group
           label
             |Select category
@@ -258,7 +258,7 @@ nav.navmenu.navmenu-default.navmenu-fixed-right.offcanvas#search_menu[role="navi
         span.glyphicon.glyphicon-search
   .row
     .container
-        .col-xs-12
+      .col-xs-12
 nav.navbar.navbar-static-top.navbar-default.hidden-xs.hidden-sm[data-spy="affix" data-offset-top="130"]
   .container-fluid
     .col-lg-1.col-md-1

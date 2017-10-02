@@ -2,7 +2,7 @@ require 'test_helper'
 
 class IndustriesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @industry = industries(:one)
+    @industry = Industry.first
   end
 
   test "should get index" do

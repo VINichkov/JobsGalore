@@ -12,4 +12,12 @@ development:
     region: "ap-southeast-2"
     existing_remote_files: "delete"
 
+test:
+    access_key_id: 'AKIAIAY3APM2TSBDAASQ'
+    secret_access_key: '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'
+    bucket: "jobsgalore"
+    region: "ap-southeast-2"
+    existing_remote_files: "delete"
+
+
 

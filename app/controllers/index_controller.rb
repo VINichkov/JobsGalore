@@ -4,6 +4,7 @@ class IndexController < ApplicationController
   before_action :category, only: [:main, :by_category]
   def main
     @jobs_last = Job.includes(:location,:company).last(10)
+    @major_cities = Location.select(:id,:suburb).where(suburb:["Sydney", "Melbourne", "Brisbane", "Gold Coast", "Perth", "Adelaide", "Hobart", "Darwin", "Canberra"])
   end
 
   def advertising_terms_of_use

@@ -13,7 +13,8 @@ html
     = stylesheet_link_tag('application', media: 'all', 'data-turbolinks-track'=> 'reload')
     = javascript_include_tag('application')
   body
-    =render 'inc/header', industries: Industry.all ,cache: true
+    =
+    =render 'inc/header', industries: Industry.all
     = yield
     =render 'inc/footer'
     script

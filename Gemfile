@@ -1,8 +1,6 @@
 source 'https://rubygems.org'
 
 
-
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 # Use postgresql as the database for Active Record
@@ -38,15 +36,14 @@ gem 'will_paginate-bootstrap'
 group :production do
   gem 'puma'
 
-
 end
 gem 'slim-rails'
 gem 'slim'
 
 gem 'dragonfly', '~> 1.1.1'
-gem 'mechanize'
 
-gem "pg_search"
+
+gem "pg_search", '~> 2.0.1'
 #gem "actionpack-page_caching"
 
 
@@ -73,6 +70,9 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'rack-mini-profiler', require: false
+  gem 'flamegraph'
+  gem 'stackprof'
 
 end
 
