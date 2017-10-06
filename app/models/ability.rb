@@ -7,12 +7,24 @@ class Ability
       can [:new], Resume
       can [:new, :create], Job
       can [ :edit, :update, :destroy], Job, Job do |job |
-        not(job.client.find_by_id(user.id).nil?)
+        job.company.client.find_by_id(user.id)
       end
       can [:edit, :update, :destroy] , Company, Company do |company|
-        not(company.client.find_by_id(user.id).nil?)
+        company.client.find_by_id(user.id)
       end
       can [:settings_company, :edit_logo], :all
+      can [:manage] , Client, Client do |client|
+        (client.id==user.id) or (client.company.client.find_by_id(user.id))
+      end
+    elsif user.character == 'employee'
+      can [:new], Resume
+      can [:new, :create], Job
+      can [ :edit, :update, :destroy], Job, Job do |job |
+        job.client==user
+      end
+      can [:manage] , Client, Client do |client|
+        client==user
+      end
     else
       can [:new], Job
       can [:new, :create], Resume

@@ -10,16 +10,20 @@ Rails.application.routes.draw do
   devise_scope :client do
     get "/sign_up_employer" => "clients/registrations#sign_up_employer"
     post '/create_employer'=> "clients/registrations#create_employer"
-  get "/clients/team", to: 'clients#team', as: 'clietns_team'
   end
 
 
   #devise_for :clients
+
   resources :companies, only: [:show, :edit, :update, :destroy]
   get "/edit_logo", to: 'companies#edit_logo'
   get "/settings_company", to: 'companies#settings_company'
   get '/company_jobs/:id', to:'companies#company_jobs'
-
+  get "/team/", to: 'companies#team', as: 'team'
+  get '/team/new/', to: 'companies#new_member', as: 'team_new'
+  post '/team/', to: 'companies#create_member', as: 'team_create'
+  get  '/team_change/:id', to: 'companies#change_type', as: 'change_type'
+  delete '/team/:id', to: 'companies#destroy_member', as: 'team_destroy'
 
   resources :clients, only: [:create, :edit, :update]#, :destroy
   get "/edit_photo", to: 'clients#edit_photo'
@@ -54,14 +58,21 @@ Rails.application.routes.draw do
   post '/admin/companies/', to: 'companies#admin_create', as: 'admin_company_create'
   patch '/admin/companies/:id', to: 'companies#admin_update', as: 'admin_company_update'
   delete '/admin/companies/:id', to: 'companies#admin_destroy', as: 'admin_company_destroy'
-  #ADMINISTRATION WIZARD of COMPANIES
-  get '/admin/team/new/:id', to: 'companies#admin_new_member', as: 'admin_team_new'
-  get '/admin/team/edit/:id', to: 'companies#admin_edit_member', as: 'admin_team_edit'
-  patch '/admin/team/update/:id', to: 'companies#admin_update_member', as: 'admin_team_update'
-  post '/admin/team/', to: 'companies#admin_create_member', as: 'admin_team_create'
-  delete '/admin/team/:id', to: 'companies#admin_destroy_member', as: 'admin_team_destroy'
-  get '/admin/team/:id', to: 'companies#client_in_company_index', as: 'admin_company_team'
-  get '/admin/member_of_team/:id', to: 'companies#admin_show_member_of_team', as: 'admin_member_show'
+
+  #ADMINISTRATION  Team
+  get '/admin/team/new/:id', to: 'companies#admin_new_member', as: 'admin_team_new'#+
+  get '/admin/team/edit/:id', to: 'companies#admin_edit_member', as: 'admin_team_edit'#+
+  patch '/admin/team/update/:id', to: 'companies#admin_update_member', as: 'admin_team_update'#+
+  post '/admin/team/', to: 'companies#admin_create_member', as: 'admin_team_create'#+
+  delete '/admin/team/:id', to: 'companies#admin_destroy_member', as: 'admin_team_destroy'#+
+  get '/admin/team/:id', to: 'companies#client_in_company_index', as: 'admin_company_team'#+
+  get '/admin/member_of_team/:id', to: 'companies#admin_show_member_of_team', as: 'admin_member_show'#+
+  #ADMINISTRATION Jobs
+  get '/admin/member/:id', to: 'companies#admin_index_job', as: 'admin_index_job'#+
+  get '/admin/members/jobs/new/:id', to: 'companies#admin_new_job', as: 'admin_new_job'#+
+  post '/admin/members/jobs/', to: 'companies#admin_create_job', as: 'admin_create_job'#+
+  get '/admin/members/jobs/:id', to: 'companies#admin_show_job', as: 'admin_show_job'#+
+  delete '/admin/members/jobs/:id', to: 'companies#admin_destroy_job', as: 'admin_destroy_job'#+
 
   #ADMINISTRATION JOBS
   post 'admin/jobs/extras/', to: 'jobs#admin_extras', as: 'admin_jobs_extras'

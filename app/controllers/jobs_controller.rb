@@ -106,8 +106,8 @@ class JobsController < ApplicationController
     industry = param[:industry]
     param.delete(:industry)
     @job = Job.new(param)
+    @job.client = current_client
     @job.industryjob.new(industry:Industry.find_by_id(industry.to_i))
-    @job = Job.new(param)
     respond_to do |format|
       if @job.save
         format.html { redirect_to admin_jobs_show_path(@job), notice: 'Job was successfully created.' }

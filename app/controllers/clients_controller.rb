@@ -21,16 +21,14 @@ class ClientsController < ApplicationController
   end
 
   def profile
-
+    @client=current_client
   end
 
   def settings
 
   end
 
-  def team
-    @clients = current_client.company.first.client.all
-  end
+
 
   # GET /clients/new
   #def new

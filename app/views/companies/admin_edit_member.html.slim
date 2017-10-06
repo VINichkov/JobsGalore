@@ -3,4 +3,4 @@
   = form_for @client, url: { action: "admin_update_member" } do |f|
     .form-group.invisible
       = text_field :id, :id, value:@company
-    == render '/clients/admin_form',f:f
+    == render 'companies/client_edit_form',f:f

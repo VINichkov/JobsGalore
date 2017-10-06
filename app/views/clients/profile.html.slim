@@ -1,35 +1,39 @@
 .container
   .row.well.hidden-xs.hidden-sm
     .col-md-6.col-lg-6
-      -if current_client.photo.nil?
+      -if @client.photo.nil?
         = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail', size:"300x300")
       -else
-        =image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size:"300x300")
+        =image_tag(Dragonfly.app.remote_url_for(@client.photo_uid), class: 'img-thumbnail', size:"300x300")
     .col-md-6.col-lg-6
-      h2 #{current_client.firstname} #{current_client.lastname}
-      h2 Email: #{current_client.email}
-      h2 Phone: #{current_client.phone}
-      h2 #{current_client.location.suburb}, #{current_client.location.state}
+      h2 #{@client.firstname} #{@client.lastname}
+      h2 Email: #{@client.email}
+      h2 Phone: #{@client.phone}
+      h2 #{@client.location.suburb}, #{@client.location.state}
   .row.well.hidden-md.hidden-lg
     .col-sm-6
-      - if current_client.photo.nil?
+      - if @client.photo.nil?
         = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail', size: "200x200")
       - else
-        = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size: "200x200")
+        = image_tag(Dragonfly.app.remote_url_for(@client.photo_uid), class: 'img-thumbnail', size: "200x200")
     .col-sm-6
-      h3 #{current_client.firstname} #{current_client.lastname}
-      h4 Email: #{current_client.email}
-      h4 Phone: #{current_client.phone}
-      h4 #{current_client.location.suburb}, #{current_client.location.state}
-  -if current_client.character =='employer' then
+      h3 #{@client.firstname} #{@client.lastname}
+      h4 Email: #{@client.email}
+      h4 Phone: #{@client.phone}
+      h4 #{@client.location.suburb}, #{@client.location.state}
+  -if @client.character =='employer' then
     .row
       .col-sm-6.col-xs-12
-        h2 Your jobs
       .col-sm-6.col-xs-12
         = link_to "Post a job", new_job_path, class: "btn btn-primary btn-block"
         p
     .row
-        - current_client.job.all.order(updated_at:  :desc).each do |job|
+      -@client.company&.all&.each do |company|
+        h3
+        - Client.joins('LEFT JOIN responsibles On responsibles.client_id = clients.id').where("responsibles.company_id = ?",company.id).all.each do |client|
+          - if client.job.count > 0
+            h3 #{company.name}  ---  #{client.firstname} #{client.lastname}
+          - client.job.all.includes(:location).order(updated_at:  :desc).each do |job|
             -if not(job.highlight.nil?) and job.urgent.nil?
               .panel-body.well.highlight
                 =render 'clients/job', job:job
@@ -42,7 +46,28 @@
             - elsif job.highlight.nil? and job.urgent.nil?
               .panel-body.well
                 = render 'clients/job', job: job
-  -else
+  - if @client.character =='employee' then
+    .row
+      .col-sm-6.col-xs-12
+        h2 Your jobs
+      .col-sm-6.col-xs-12
+        = link_to "Post a job", new_job_path, class: "btn btn-primary btn-block"
+        p
+    .row
+      - @client.job.all.includes(:location).order(updated_at: :desc).each do |job|
+          - if not (job.highlight.nil?) and job.urgent.nil?
+            .panel-body.well.highlight
+              = render 'clients/job', job: job
+          - elsif job.highlight.nil? and not (job.urgent.nil?)
+            .panel-body.well.urgent
+              = render 'clients/job', job: job
+          - elsif not (job.highlight.nil?) and not (job.urgent.nil?)
+            .panel-body.well.highlight.urgent
+              = render 'clients/job', job: job
+          - elsif job.highlight.nil? and job.urgent.nil?
+            .panel-body.well
+              = render 'clients/job', job: job
+  -elsif @client.character =='aplicant'
     .row
       .col-sm-6.col-xs-12
         h3 Your resumes
@@ -50,8 +75,8 @@
         = link_to "Post a resume", new_resume_path, class: "btn btn-primary btn-block"
         p
     .row
-      - if current_client.resume.count>0
-        -current_client.resume.all.order(updated_at:  :desc).each do |resume|
+      - if @client.resume.count>0
+        -@client.resume.all.order(updated_at:  :desc).each do |resume|
           - if not (resume.highlight.nil?) and resume.urgent.nil?
             .panel-body.well.highlight
               = render 'clients/resume', resume: resume

@@ -268,42 +268,42 @@ PLATFORMS
 DEPENDENCIES
   activerecord-import
   asset_sync
-  bcrypt (~> 3.1.7)
-  bootstrap-sass (~> 3.3.6)
+  bcrypt
+  bootstrap-sass
   byebug
   cancancan
-  coffee-rails (~> 4.2)
+  coffee-rails
   devise
   dkim
-  dragonfly (~> 1.1.1)
+  dragonfly
   dragonfly-s3_data_store
   flamegraph
   fog-aws
-  jbuilder (~> 2.5)
+  jbuilder
   jquery-rails
-  listen (~> 3.0.5)
+  listen
   markdown-rails
   mechanize
-  pg (~> 0.18)
-  pg_search (~> 2.0.1)
+  pg
+  pg_search
   puma
   rack-mini-profiler
-  rails (~> 5.0.0, >= 5.0.0.1)
-  react-rails (~> 1.10.0)
-  sass-rails (~> 5.0)
+  rails
+  react-rails
+  sass-rails
   sitemap_generator
   slim
   slim-rails
   social-share-button
   spring
-  spring-watcher-listen (~> 2.0.0)
+  spring-watcher-listen
   stackprof
   tzinfo-data
-  uglifier (>= 1.3.0)
+  uglifier
   web-console
   webrick
-  will_paginate (~> 3.1.0)
+  will_paginate
   will_paginate-bootstrap
 
 BUNDLED WITH
-   1.15.1
+   1.15.4

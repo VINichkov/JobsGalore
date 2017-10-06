@@ -30,7 +30,7 @@
           td = "#{client.location.suburb}, #{client.location.state}"
           td = link_to 'Show', admin_member_show_path("#{client.id}x#{@id}"), class: "btn btn-primary btn-block "
           td = link_to 'Edit', admin_team_edit_path("#{client.id}x#{@id}"), class: "btn btn-warning btn-block "
-          td = link_to 'Show list of jobs', admin_client_edit_path(client), class: "btn btn-success btn-block "
+          td = link_to 'Show list of jobs', admin_index_job_path("#{client.id}x#{@id}"), class: "btn btn-success btn-block "
           td = link_to 'Destroy', admin_team_destroy_path("#{client.id}x#{@id}"), data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-danger btn-block "
 
   br

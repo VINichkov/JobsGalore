@@ -46,7 +46,7 @@
             h3.text-center
               ="#{@resume.client.firstname} #{@resume.client.lastname}"
             p
-            - if not @resume.client.photo_uid.nil?
+            - if @resume.client.photo_uid
               = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), class: 'img-thumbnail center-block ', size:"300x250" )
             - else
               = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size:"300x250")
