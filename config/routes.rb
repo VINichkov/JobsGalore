@@ -100,7 +100,7 @@ Rails.application.routes.draw do
   resources :responsibles
   resources :sizes
   resources :industries
-  resources :properts
+  resources :properts, only:[:index, :new, :create, :edit, :update, :destroy]
   resources :payments, only:[:show,:index]
 
 
