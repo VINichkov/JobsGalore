@@ -106,7 +106,7 @@ Rails.application.routes.draw do
 
   resources :jobs, only:[:new, :create, :show, :edit, :update, :destroy]
   resources :resumes, only:[:new, :create, :show, :edit, :update, :destroy]
-  get "/resumes/:id/log_in", to: "resumes#log_in"
+  get "/log_in/:id", to: "resumes#log_in", as: 'log_in'
   root  to: 'index#main'
   get "/terms_and_conditions", to: 'index#terms_and_conditions'
   get "/privacy", to: 'index#privacy'

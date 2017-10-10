@@ -1,9 +1,8 @@
 class JobsController < ApplicationController
   before_action :authenticate_client!, only:[:new, :edit, :create, :update, :destroy]
-  load_and_authorize_resource :job, only:[:edit, :update, :destroy, :admin_index, :admin_new,:admin_show,:admin_edit,:admin_create,:admin_update,:admin_destroy, :admin_extras]
-  authorize_resource only:[:new, :create]
+  load_and_authorize_resource
   before_action :set_job, only: [:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
-
+  before_action :employer!, only: :new
 
 
   # GET /jobs
@@ -19,11 +18,7 @@ class JobsController < ApplicationController
 
   # GET /jobs/new
   def new
-    if current_client.resp
       @job = Job.new
-    else
-      redirect_to root_path, alert: "Please register as an employer"
-    end
   end
 
   # GET /jobs/1/edit
@@ -175,6 +170,11 @@ class JobsController < ApplicationController
     end
   end
   private
+    def employer!
+      if current_client.character != "employer" and current_client.character != "employee"
+        redirect_to root_path, alert: "Please register as an employer"
+      end
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_job
       @job = Job.find(params[:id])

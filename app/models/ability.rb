@@ -3,56 +3,71 @@ class Ability
 
   def initialize(user,param )
     user ||= Client.new
-    if user.character == 'employer'
-      can [:new], Resume
-      can [:new, :create], Job
-      can [ :edit, :update, :destroy], Job, Job do |job |
-        job.company.client.find_by_id(user.id)
-      end
-      can [:edit, :update, :destroy] , Company, Company do |company|
-        company.client.find_by_id(user.id)
-      end
-      can [:settings_company, :edit_logo], :all
-      can [:manage] , Client, Client do |client|
+    if user.email == PropertsHelper::ADMIN
+      puts "______________________________boss"
+      can :manage, :all
+    elsif user.character == 'employer'
+      #############################################
+      puts "______________________________employer"
+      can [:new, :create, :profile, :settings, :edit, :update, :destroy, :edit_photo] , Client do |client|
         (client.id==user.id) or (client.company.client.find_by_id(user.id))
       end
-    elsif user.character == 'employee'
-      can [:new], Resume
-      can [:new, :create], Job
-      can [ :edit, :update, :destroy], Job, Job do |job |
-        job.client==user
+      can [:settings_company, :edit_logo, :team, :new_member, :create_member, :destroy_member, :change_type, :edit, :update, :destroy, :edit_photo] , Company do |company|
+        company.client.find_by_id(user.id)
       end
-      can [:manage] , Client, Client do |client|
+      can [:show, :company_jobs], Company
+      can [:new, :create,:show], Job
+      can [ :edit, :update, :destroy], Job do |job |
+        job.company.client.find_by_id(user.id)
+      end
+      can [:search], Location
+      can [:bill, :cancel_url, :create], Payment
+      can [:new, :show, :log_in], Resume
+
+
+      can [:settings_company, :edit_logo], :all
+    elsif user.character == 'employee'
+      #############################################
+      puts "______________________________employee"
+
+      can [:edit, :update, :profile, :settings, :destroy, :edit_photo] , Client do |client|
         client==user
       end
-    else
-      can [:new], Job
-      can [:new, :create], Resume
-      can [ :edit, :update, :destroy], Resume, Resume do |resume|
+      can [:show, :company_jobs], Company
+      can [:new, :create,:show], Job
+      can [ :edit, :update, :destroy], Job do |job |
+        job.client==user
+      end
+      can [:search], Location
+      can [:bill, :cancel_url, :create], Payment
+      can [:new, :show, :log_in], Resume
+
+
+    elsif user.character == 'aplicant'
+      #############################################
+      puts "______________________________aplicant"
+      can [:edit, :update, :destroy, :profile, :settings, :edit_photo] , Client do |client|
+        client==user
+      end
+      can [:show, :company_jobs], Company
+      can [:new,:show], Job
+      can [:search], Location
+      can [:bill, :cancel_url, :create], Payment
+      can [:new, :create, :show, :log_in], Resume
+      can [ :edit, :update, :destroy], Resume do |resume|
         resume.client_id == user.id
       end
-    end
-    can [:edit, :update, :destroy] , Client, Client do |client|
-      client.id==user.id
-    end
-
-    if user.email == PropertsHelper::ADMIN
-      can :manage, Location
-      can :manage, Resume
-      can :manage, Job
-      can :manage, Company
-      can :manage, Industrycompany
-      can :manage, Industryjob
-      can :manage, Industryresume
-      can :manage, Responsible
-      can :manage, Size
-      can :manage, Industry
-      can :manage, Propert
-      can :manage, Client
-      can :read, Payment
     else
-
+      ##############################################
+      puts "______________________________other user"
+      can [:show], Job
+      can [:show, :company_jobs], Company
+      can [:search], Location
+      can [:bill, :cancel_url, :create], Payment
+      can [:show, :log_in], Resume
     end
+
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

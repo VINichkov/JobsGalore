@@ -171,7 +171,7 @@
                   p
             -else
               .col-lg-12.col-md-12
-                =link_to "Contact", "/resumes/#{@resume.id}/log_in", class: "btn btn-primary btn-block"
+                =link_to "Contact", log_in_path(@resume.id), class: "btn btn-primary btn-block"
                 p
             .col-lg-12.col-md-12
               button.btn.btn-success.btn-block[onclick="history.back()"]
@@ -322,13 +322,13 @@
                   = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block"
                 .btn-group
                   = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
-              - if current_client.resp
+              - if current_client.resp?
                 .btn-group
                   button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
                     |Contact
             - else
               .btn-group
-                = link_to "Contact", "/resumes/#{@resume.id}/log_in", class: "btn btn-primary btn-block"
+                = link_to "Contact", log_in_path(@resume.id), class: "btn btn-primary btn-block"
             .btn-group
               button.btn.btn-success.btn-block[onclick="history.back()"]
                 |Back
@@ -507,13 +507,13 @@
                   = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block"
                 .btn-group
                   = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
-              - if current_client.resp
+              - if current_client.resp?
                 .btn-group
                   button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
                     |Contact
             - else
               .btn-group
-                = link_to "Contact", "/resumes/#{@resume.id}/log_in", class: "btn btn-primary btn-block"
+                = link_to "Contact", log_in_path(@resume.id), class: "btn btn-primary btn-block"
             .btn-group
               button.btn.btn-success.btn-block[onclick="history.back()"]
                 |Back
@@ -552,7 +552,7 @@
                 p
                   = render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  exp.description
 -if client_signed_in?
-  -if current_client.resp
+  -if current_client.resp?
     .modal.fade#contact[tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"]
       .modal-dialog
         .modal-content
@@ -574,7 +574,7 @@
                     br
                     |Email:
                     | &nbsp;
-                    a[href ="mailto:#{@resume.client.email}" ] = @resume.client.email
+                    a[href ="mailto:#{@resume.client.email}?subject=#{@resume.desiredjobtitle} by #{PropertsHelper::COMPANY}.eu" ] = @resume.client.email
                     br
                     |Phone:
                     | &nbsp;

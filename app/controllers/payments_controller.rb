@@ -1,6 +1,6 @@
 
 class PaymentsController < ApplicationController
-  #load_and_authorize_resource :client, only:[:edit, :update, :destroy]
+  load_and_authorize_resource
   #before_action :set_client, only: [:show, :edit,:update, :destroy]
   #before_action :authenticate_client!
   protect_from_forgery except: [:create]

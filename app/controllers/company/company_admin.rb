@@ -1,6 +1,5 @@
 module Admin
 
-
   def admin_edit_logo
   end
 

@@ -1,9 +1,7 @@
 class ClientsController < ApplicationController
-  load_and_authorize_resource :client, only:[:edit, :update, :destroy]
-  load_and_authorize_resource only:[:admin_index, :admin_edit_photo,:admin_new,:admin_show,:admin_edit,:admin_create,:admin_update,:admin_destroy]
+  load_and_authorize_resource :client
   before_action :set_client, only: [:show, :edit,:update, :destroy, :admin_edit_photo,:admin_show,:admin_edit,:admin_update,:admin_destroy ]
-
-  before_action :authenticate_client!, except: :info
+  before_action :authenticate_client!
 
   # GET /clients
   # GET /clients.json

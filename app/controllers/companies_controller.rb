@@ -1,18 +1,32 @@
 require 'company/company_wizard'
 require 'company/company_admin'
 class CompaniesController < ApplicationController
-  included 'Wizard'
-  included 'Admin'
+  include Wizard
+  include Admin
+  load_and_authorize_resource :company
+  before_action :admin!, only:[:admin_index,
+                               :admin_edit_logo,
+                               :admin_new,
+                               :admin_show,
+                               :admin_edit,
+                               :admin_create,
+                               :admin_update,
+                               :admin_destroy,
+                               :admin_company_jobs,
+                               :client_in_company_index,
+                               :admin_index_job,
+                               :admin_new_job,
+                               :admin_create_job,
+                               :admin_show_job,
+                               :admin_destroy_job,
+                               :admin_new_member,
+                               :admin_create_member,
+                               :admin_edit_member,
+                               :admin_update_member,
+                               :admin_destroy_member,
+                               :admin_show_member_of_team]
   before_action :set_member, only: [:admin_destroy_member, :admin_show_member_of_team, :show_member_of_team, :admin_update_member, :admin_edit_member]
   before_action :set_jobs, only: [:admin_index_job, :admin_new_job]
-  load_and_authorize_resource :company, only:[ :admin_index,
-                                               :admin_edit_logo,
-                                               :admin_new,
-                                               :admin_show,
-                                               :admin_edit,
-                                               :admin_create,
-                                               :admin_update,
-                                               :admin_destroy ]
   before_action :set_company, only: [:admin_show, :admin_edit, :admin_update, :admin_destroy, :admin_edit_logo]
   load_and_authorize_resource :company, only:[:edit, :update, :destroy ]
   authorize_resource only:[ :settings_company, :edit_logo]
@@ -25,6 +39,8 @@ class CompaniesController < ApplicationController
                                              :destroy]
   before_action :set_client, only:[:change_type, :destroy_member]
   #company
+
+
   def settings_company
   end
 
@@ -158,5 +174,9 @@ class CompaniesController < ApplicationController
 
     def current_company
       @company = current_client.company.first
+    end
+
+    def job_params
+      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :client_id, :career, :industry, :page)
     end
 end

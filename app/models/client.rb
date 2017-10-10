@@ -29,4 +29,8 @@ class Client < ApplicationRecord
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
+  def resp?
+    character=='aplicant' ? true : false
+  end
+
 end

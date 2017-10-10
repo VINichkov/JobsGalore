@@ -444,7 +444,7 @@
                 br
                 |Email:
                 | &nbsp;
-                a[href ="mailto:#{ @job.client.email}" ] =  @job.client.email
+                a[href ="mailto:#{ @job.client.email}?subject=#{@job.title} by #{PropertsHelper::COMPANY}.eu" ] =  @job.client.email
                 br
                 |Phone:
                 | &nbsp;

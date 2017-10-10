@@ -1,5 +1,6 @@
 class IndexController < ApplicationController
-  #caches_page :about
+  before_action :admin!, only: [:admin]
+  #authorize_resource only:[:admin]
   skip_before_action :verify_authenticity_token
   before_action :category, only: [:main, :by_category]
   def main

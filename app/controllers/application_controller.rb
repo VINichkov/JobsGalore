@@ -18,6 +18,17 @@ class ApplicationController < ActionController::Base
   @current_ability ||=Ability.new(current_client, params)
   end
 
+  def admin!
+    authenticate_client!
+    if current_client.email == PropertsHelper::ADMIN
+      puts "______________________Прошли"
+      true
+    else
+      puts "______________________Не прошли"
+      render_404
+    end
+  end
+
   def render_404
     raise ActionController::RoutingError.new('Not Found')
   end

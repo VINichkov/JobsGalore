@@ -1,9 +1,9 @@
 class ResumesController < ApplicationController
+  before_action :authenticate_client!, only:[:log_in,:edit, :update, :destroy, :new, :create]
+  load_and_authorize_resource
   before_action :set_resume, only: [ :show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
-  before_action :authenticate_client!, only:[:log_in,:new, :edit, :create, :update, :destroy]
-  load_and_authorize_resource :resume, only:[:edit, :update, :destroy, :admin_index, :admin_new,:admin_show,:admin_edit,:admin_create,:admin_update,:admin_destroy, :admin_extras]
-  authorize_resource only:[:new, :create]
 
+  before_action :aplicant!, only: :new
   # GET /resumes
   # GET /resumes.json
   def index
@@ -11,10 +11,9 @@ class ResumesController < ApplicationController
   end
 
   def log_in
-    respond_to do |format|
-        format.html { redirect_to resume_path(params[:id])}
-    end
+     redirect_to resume_path(params[:id])
   end
+
   # GET /resumes/1
   # GET /resumes/1.json
   def show
@@ -22,12 +21,7 @@ class ResumesController < ApplicationController
 
   # GET /resumes/new
   def new
-    unless current_client.resp
       @resume = Resume.new
-    else
-      redirect_to root_path, alert: "Please register as an applicant"
-    end
-
   end
 
   # GET /resumes/1/edit
@@ -232,6 +226,12 @@ class ResumesController < ApplicationController
     end
   end
   private
+
+  def aplicant!
+    if current_client.character != 'aplicant'
+      redirect_to root_path, alert: "Please register as an applicant"
+    end
+  end
     # Use callbacks to share common setup or constraints between actions.
     def set_resume
       @resume = Resume.find(params[:id])
