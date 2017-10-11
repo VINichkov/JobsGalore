@@ -8,8 +8,9 @@ class CompaniesController < ApplicationController
                                     :admin_show_member_of_team,
                                     :show_member_of_team,
                                     :admin_update_member,
-                                    :admin_edit_member]
-  before_action :set_jobs, only: [:admin_index_job, :admin_new_job]
+                                    :admin_edit_member,
+                                    :admin_index_job]
+  before_action :set_jobs, only: [ :admin_new_job]
   before_action :set_company, only: [:show,
                                      :edit,
                                      :update,

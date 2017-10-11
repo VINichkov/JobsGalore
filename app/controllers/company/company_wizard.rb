@@ -7,7 +7,7 @@ module Wizard
   end
 
   def admin_index_job
-    @jobs = Client.find_by_id(@client).job.all.paginate(page: params[:page], per_page:21)
+    @jobs = @client.job.all.paginate(page: params[:page], per_page:21)
   end
 
   def admin_new_job
@@ -92,7 +92,6 @@ module Wizard
 
   def set_jobs
     @client,  @company = params[:id].split('x')
-    puts "#{@client}__________________________#{@company}"
   end
 
   def set_member
