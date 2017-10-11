@@ -1,0 +1,50 @@
+<footer>
+  <div class="well">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <ul class="nav nav-justified">
+            <li>
+              <%=link_to "About us", about_path %>
+            </li>
+            <li>
+              <%= link_to "Contact us", contact_path%>
+            </li>
+            <li>
+              <%= link_to "Terms and Conditions", terms_and_conditions_path%>
+            </li>
+            <li>
+              <%= link_to "Privacy policy", privacy_path%>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <div class="text-center hidden-xs">
+              <div class="col-sm-3"></div>
+              <div class="col-sm-1">
+                Share:
+              </div>
+              <div class="col-sm-8 text-left">
+                <%= social_share_button_tag PropertsHelper::TITLE%>
+              </div>
+          </div>
+          <ul class="nav nav-justified hidden-sm hidden-md hidden-lg">
+            <li class="text-center">
+              Share:
+            </li>
+            <li>
+              <div class="text-center">
+                <%=social_share_button_tag PropertsHelper::TITLE%>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="text-center">
+          © <%="#{PropertsHelper::COMPANY}"  %> All rights reserved.
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

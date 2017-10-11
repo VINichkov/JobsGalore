@@ -35,8 +35,9 @@
           option[value="true"] Female
     br
     .form-group
-      =f.check_box :resp
-      =f.label "Employer"
+      =f.label :type
+      br
+      =f.select :character,  options_for_select(["employer", "aplicant", "employee"], @client.character), {:'data-style'=>"btn-default"},{:class=>"selectpicker form-control"}
     .form-group
       = f.label "Your birthday"
       br

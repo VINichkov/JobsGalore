@@ -99,7 +99,7 @@ begin
       Company.all.each do |company|
         client=Client.find_by_id(min_id_client+Random.rand(count_client))
         Responsible.create(company: company, client:client)
-        client.resp = true
+        client.character ='employer'
       end
       puts "== #{Time.now-timestart} end"
     end
@@ -213,7 +213,7 @@ begin
       i=0
       timestart =Time.now
       puts "== #{timestart} create resume"
-      Client.where("resp = false").find_in_batches.each do |clients|
+      Client.where("character =\'employer\'").find_in_batches.each do |clients|
         clients.each do |client|
           if [true, false].sample
             rand(3).times
@@ -380,6 +380,35 @@ begin
     end
     puts "== #{Time.now-timestart} end"
 
+    if 1==1
+      i=0
+      timestart =Time.now
+      puts "== #{timestart} Updates jobs"
+      Responsible.all.each do |t|
+        t.client.character="employer"
+        t.client.save
+        t.company.job.all.each do |d|
+          d.client = t.client
+          d.save
+        end
+        puts t.client.character
+        i+=1
+        puts "== #{Time.now-timestart} complete #{i} row"
+      end
+    end
+    if 1==1
+      i=0
+      timestart =Time.now
+      puts "== #{timestart} Updates client"
+      Client.all.each do |t|
+        if t.character == 'applicant'
+          t.character = 'aplicant'
+          t.save
+        end
+        i+=1
+        puts "== #{Time.now-timestart} complete #{i} row"
+      end
+    end
 rescue
   puts "Error: #{$!}"
 end

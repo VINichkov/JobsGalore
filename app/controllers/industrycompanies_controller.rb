@@ -1,7 +1,8 @@
 class IndustrycompaniesController < ApplicationController
-  load_and_authorize_resource :industrycompany , only:[:index, :new, :show,:edit,:create,:update,:destroy ]
+  before_action :admin!
   before_action :set_industrycompany, only: [:show, :edit, :update, :destroy]
-  authorize_resource
+  load_and_authorize_resource
+
   # GET /industrycompanies
   # GET /industrycompanies.json
   def index

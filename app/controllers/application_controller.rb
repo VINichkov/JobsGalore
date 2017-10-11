@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys:[:location_id, :firstname, :lastname, :phone, :resp, :photo, :photo, :gender, :birth])
+    devise_parameter_sanitizer.permit(:sign_up, keys:[:location_id, :firstname, :lastname, :phone, :character, :photo, :photo, :gender, :birth])
   end
 
   # In ApplicationController
@@ -18,10 +18,20 @@ class ApplicationController < ActionController::Base
   @current_ability ||=Ability.new(current_client, params)
   end
 
+  def admin!
+    authenticate_client!
+    if current_client.email == PropertsHelper::ADMIN
+      puts "______________________Прошли"
+      true
+    else
+      puts "______________________Не прошли"
+      render_404
+    end
+  end
+
   def render_404
     raise ActionController::RoutingError.new('Not Found')
   end
-
 
   def extras_check
     if $date.mem < Date.today

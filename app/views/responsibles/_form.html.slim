@@ -5,11 +5,21 @@
       ul
         - @responsible.errors.full_messages.each do |message|
           li = message
+  hr.colorgraph
 
-  .field
+  .form-group
     = f.label :company
-    = f.text_field :company
-  .field
+    br
+    = f.text_field :company_id, class:"form-control"
+  .form-group
     = f.label :client
-    = f.text_field :client
-  .actions = f.submit
+    br
+    = f.text_field :client_id, class:"form-control"
+  hr.colorgraph
+    .row
+      .col-xs-12.col-sm-6.col-md-6
+        = f.submit class: "btn btn-primary btn-block"
+        p
+      .col-xs-12.col-sm-6.col-md-6
+        = link_to 'Back', :back, class: "btn btn-success btn-block "
+    br

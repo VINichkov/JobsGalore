@@ -28,11 +28,9 @@ class PropertsController < ApplicationController
 
     respond_to do |format|
       if @propert.save
-        format.html { redirect_to @propert, notice: 'Propert was successfully created.' }
-        format.json { render :show, status: :created, location: @propert }
+        format.html { redirect_to properts_path, notice: 'Propert was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @propert.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -42,11 +40,9 @@ class PropertsController < ApplicationController
   def update
     respond_to do |format|
       if @propert.update(propert_params)
-        format.html { redirect_to @propert, notice: 'Propert was successfully updated.' }
-        format.json { render :show, status: :ok, location: @propert }
+        format.html { redirect_to properts_path, notice: 'Propert was successfully updated.' }
       else
         format.html { render :edit }
-        format.json { render json: @propert.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -57,7 +53,6 @@ class PropertsController < ApplicationController
     @propert.destroy
     respond_to do |format|
       format.html { redirect_to properts_url, notice: 'Propert was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 

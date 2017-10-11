@@ -4,7 +4,7 @@ class ResponsiblesController < ApplicationController
   # GET /responsibles
   # GET /responsibles.json
   def index
-    @responsibles = Responsible.all
+    @responsibles = Responsible.all.includes(:company,:client).order(:company_id).paginate(page: params[:page], per_page:21)
   end
 
   # GET /responsibles/1
@@ -28,7 +28,7 @@ class ResponsiblesController < ApplicationController
 
     respond_to do |format|
       if @responsible.save
-        format.html { redirect_to @responsible, notice: 'Responsible was successfully created.' }
+        format.html { redirect_to responsibles_url, notice: 'Responsible was successfully created.' }
         format.json { render :show, status: :created, location: @responsible }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class ResponsiblesController < ApplicationController
   def update
     respond_to do |format|
       if @responsible.update(responsible_params)
-        format.html { redirect_to @responsible, notice: 'Responsible was successfully updated.' }
+        format.html { redirect_to responsibles_url, notice: 'Responsible was successfully updated.' }
         format.json { render :show, status: :ok, location: @responsible }
       else
         format.html { render :edit }

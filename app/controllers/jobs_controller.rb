@@ -1,9 +1,8 @@
 class JobsController < ApplicationController
   before_action :authenticate_client!, only:[:new, :edit, :create, :update, :destroy]
-  load_and_authorize_resource :job, only:[:edit, :update, :destroy, :admin_index, :admin_new,:admin_show,:admin_edit,:admin_create,:admin_update,:admin_destroy, :admin_extras]
-  authorize_resource only:[:new, :create]
+  load_and_authorize_resource
   before_action :set_job, only: [:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
-
+  before_action :employer!, only: :new
 
 
   # GET /jobs
@@ -19,11 +18,7 @@ class JobsController < ApplicationController
 
   # GET /jobs/new
   def new
-    if current_client.resp
       @job = Job.new
-    else
-      redirect_to root_path, alert: "Please register as an employer"
-    end
   end
 
   # GET /jobs/1/edit
@@ -39,6 +34,7 @@ class JobsController < ApplicationController
     @job = Job.new(param)
     @job.industryjob.new(industry:Industry.find_by_id(industry.to_i))
     @job.company = current_client.company.first
+    @job.client = current_client
     respond_to do |format|
       if @job.save
         JobsMailer.add_job({mail:current_client.email, firstname:current_client.firstname, id:@job.id, title:@job.title}).deliver_later
@@ -80,7 +76,7 @@ class JobsController < ApplicationController
   end
 
   def admin_index
-    @jobs = Job.all.includes(:location,:company).order(:title).paginate(page: params[:page], per_page:21)
+    @jobs = Job.all.includes(:location,:company, :client).order(:title).paginate(page: params[:page], per_page:21)
   end
 
   # GET /jobs/1
@@ -105,8 +101,8 @@ class JobsController < ApplicationController
     industry = param[:industry]
     param.delete(:industry)
     @job = Job.new(param)
+    @job.client = current_client
     @job.industryjob.new(industry:Industry.find_by_id(industry.to_i))
-    @job = Job.new(param)
     respond_to do |format|
       if @job.save
         format.html { redirect_to admin_jobs_show_path(@job), notice: 'Job was successfully created.' }
@@ -174,6 +170,11 @@ class JobsController < ApplicationController
     end
   end
   private
+    def employer!
+      if current_client.character != "employer" and current_client.character != "employee"
+        redirect_to root_path, alert: "Please register as an employer"
+      end
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_job
       @job = Job.find(params[:id])
@@ -181,7 +182,7 @@ class JobsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
-      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :career, :industry, :page)
+      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :client_id, :career, :industry, :page)
     end
 
 end

@@ -1,12 +1,12 @@
 .row.hidden-xs.not_print
   .container
     .header
-      - if not (client_signed_in?) or (current_client.resp)
+      - if not (client_signed_in?) or (current_client.character == 'employer')
         .row
           .col-lg-3.col-md-3.col-md-offset-9.col-lg-offset-9
             = link_to "Post а job", new_job_path, class: "btn btn-primary btn-block"
             p
-      - if not (client_signed_in?) or not (current_client.resp)
+      - if not (client_signed_in?) or not (current_client.character == 'employer')
         .row
           .col-lg-3.col-md-3.col-md-offset-9.col-lg-offset-9
             = link_to "Post а resume", new_resume_path, class: "btn btn-primary btn-block"
@@ -20,24 +20,9 @@
           li.nav-header
             h4
               |Major cities
-          li.col-sm-4.col-md-12.col-lg-12
-            =link_to "Sydney", search_path(main_search:{type:"2", value:"", location_id: Location.find_by_suburb('Sydney').id.to_s})
-          li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Melbourne", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Melbourne').id.to_s})
-          li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Brisbane", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Brisbane').id.to_s})
-          li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Gold Coast", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Gold Coast').id.to_s})
-          li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Perth", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Perth').id.to_s})
-          li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Adelaide", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Adelaide').id.to_s})
-          li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Hobart", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Hobart').id.to_s})
-          li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Darwin", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Darwin').id.to_s})
-          li.col-sm-4.col-md-12.col-lg-12
-            = link_to "Canberra", search_path(main_search:{type:"2", value:"", location_id:Location.find_by_suburb('Canberra').id.to_s})
+          -@major_cities.all.each do |t|
+            li.col-sm-4.col-md-12.col-lg-12
+              =link_to t.suburb, search_path(main_search:{type:"2", value:"", location_id: t.id})
     .col-lg-9.col-md-9.hidden-sm.hidden-xs
       -if not @jobs_last.nil? and @jobs_last.count != 0
         .well

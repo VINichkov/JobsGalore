@@ -6,7 +6,7 @@
         -if @company.realy
           span.glyphicon.glyphicon-ok.glyphicon-small
       p
-        =  render :inline =>  RDiscount.new(@company.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if @company.description
+        =  render :inline =>  RDiscount.new(@company.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ")if @company.description
     -if @company.job.count>0
       .row
         h3
@@ -26,14 +26,14 @@
             h3.text-center
               |Company summary
         .well
-          -if not @company.site.nil?
+          -if @company.site
             p
               =link_to @company.site, @company.site
           p
             strong
               |Location: &nbsp;
-            |#{@company.location.suburb}, #{@company.location.state}
-          -if not @company.size.nil?
+            |#{@company.location&.suburb}, #{@company.location&.state}
+          -if @company.size
             p
               strong
                 |Size: &nbsp;

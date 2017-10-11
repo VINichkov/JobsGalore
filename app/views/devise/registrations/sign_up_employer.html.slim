@@ -39,6 +39,8 @@
           = f.label "Location"
           br
           =react_component('Autocomplete',className:"form-control dropdown-toggle",name:"client[location",id:"client_location_id")
+        .form-group.invisible
+          = f.text_field :character, value: 'employer'
         .form-group
           = f.label "Phone number"
           br

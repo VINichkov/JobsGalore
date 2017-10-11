@@ -1,4 +1,5 @@
 class Job < ApplicationRecord
+  belongs_to :client
   belongs_to :location
   belongs_to :company
   #belongs_to :education
@@ -8,6 +9,7 @@ class Job < ApplicationRecord
   validates :title, presence: true
   validates :company, presence: true
   validates :location, presence: true
+  validates :client, presence: true
 
   def highlight_on
     self.highlight = Date.today
