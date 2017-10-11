@@ -41,7 +41,7 @@
 .col-lg-2.col-md-2.col-sm-2.hidden-xs
   .row
     - if client_signed_in?
-      - if current_client.resp
+      - if current_client.resp?
         .row.text-center
           = link_to("#{resume.client.firstname} #{resume.client.lastname}", resume.client)
         .row
