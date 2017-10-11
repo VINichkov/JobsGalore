@@ -7,8 +7,7 @@ module Wizard
   end
 
   def admin_index_job
-    @client = Client.find(params[:id])
-    @jobs = @client.job.all.paginate(page: params[:page], per_page:21)
+    @jobs = Client.find_by_id(@client).job.all.paginate(page: params[:page], per_page:21)
   end
 
   def admin_new_job

@@ -4,27 +4,6 @@ class CompaniesController < ApplicationController
   include Wizard
   include Admin
   load_and_authorize_resource :company
-  before_action :admin!, only:[:admin_index,
-                               :admin_edit_logo,
-                               :admin_new,
-                               :admin_show,
-                               :admin_edit,
-                               :admin_create,
-                               :admin_update,
-                               :admin_destroy,
-                               :admin_company_jobs,
-                               :client_in_company_index,
-                               :admin_index_job,
-                               :admin_new_job,
-                               :admin_create_job,
-                               :admin_show_job,
-                               :admin_destroy_job,
-                               :admin_new_member,
-                               :admin_create_member,
-                               :admin_edit_member,
-                               :admin_update_member,
-                               :admin_destroy_member,
-                               :admin_show_member_of_team]
   before_action :set_member, only: [:admin_destroy_member, :admin_show_member_of_team, :show_member_of_team, :admin_update_member, :admin_edit_member]
   before_action :set_jobs, only: [:admin_index_job, :admin_new_job]
   before_action :set_company, only: [:admin_show, :admin_edit, :admin_update, :admin_destroy, :admin_edit_logo]
