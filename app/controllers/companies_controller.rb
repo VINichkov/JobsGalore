@@ -3,13 +3,22 @@ require 'company/company_admin'
 class CompaniesController < ApplicationController
   include Wizard
   include Admin
-  load_and_authorize_resource :company
-  before_action :set_member, only: [:admin_destroy_member, :admin_show_member_of_team, :show_member_of_team, :admin_update_member, :admin_edit_member]
+  load_and_authorize_resource
+  before_action :set_member, only: [:admin_destroy_member,
+                                    :admin_show_member_of_team,
+                                    :show_member_of_team,
+                                    :admin_update_member,
+                                    :admin_edit_member]
   before_action :set_jobs, only: [:admin_index_job, :admin_new_job]
-  before_action :set_company, only: [:admin_show, :admin_edit, :admin_update, :admin_destroy, :admin_edit_logo]
-  load_and_authorize_resource :company, only:[:edit, :update, :destroy ]
-  authorize_resource only:[ :settings_company, :edit_logo]
-  before_action :set_company, only: [:show, :edit, :update, :destroy]
+  before_action :set_company, only: [:show,
+                                     :edit,
+                                     :update,
+                                     :destroy,
+                                     :admin_show,
+                                     :admin_edit,
+                                     :admin_update,
+                                     :admin_destroy,
+                                     :admin_edit_logo]
   before_action :current_company, only:[:settings_company, :edit_logo]
   before_action :authenticate_client!, only:[:settings_company,
                                              :edit_logo,
