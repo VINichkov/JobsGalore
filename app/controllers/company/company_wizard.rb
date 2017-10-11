@@ -91,7 +91,8 @@ module Wizard
   private
 
   def set_jobs
-    @client, @company = params[:id].split('x')
+    @client,  @company = params[:id].split('x')
+    puts "#{@client}__________________________#{@company}"
   end
 
   def set_member
