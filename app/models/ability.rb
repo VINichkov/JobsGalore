@@ -4,11 +4,11 @@ class Ability
   def initialize(user,param )
     user ||= Client.new
     if user.email == PropertsHelper::ADMIN
-      puts "______________________________boss"
+      logger.info "______________________________boss"
       can :manage, :all
     elsif user.character == 'employer'
       #############################################
-      puts "______________________________employer"
+      logger.info "______________________________employer"
       can [:new, :create, :profile, :settings, :edit, :update, :destroy, :edit_photo] , Client do |client|
         (client.id==user.id) or (client.company.client.find_by_id(user.id))
       end
@@ -28,7 +28,7 @@ class Ability
       can [:settings_company, :edit_logo], :all
     elsif user.character == 'employee'
       #############################################
-      puts "______________________________employee"
+      logger.info "______________________________employee"
 
       can [:edit, :update, :profile, :settings, :destroy, :edit_photo] , Client do |client|
         client==user
@@ -45,7 +45,7 @@ class Ability
 
     elsif user.character == 'aplicant'
       #############################################
-      puts "______________________________aplicant"
+      logger.info "______________________________aplicant"
       can [:edit, :update, :destroy, :profile, :settings, :edit_photo] , Client do |client|
         client==user
       end
@@ -59,7 +59,7 @@ class Ability
       end
     else
       ##############################################
-      puts "______________________________other user"
+      logger.info "______________________________other user"
       can [:show], Job
       can [:show, :company_jobs], Company
       can [:search], Location
