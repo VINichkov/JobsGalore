@@ -7,7 +7,7 @@ module Wizard
   end
 
   def admin_index_job
-    logger.info "______________________________controller"
+    logger.debug "______________________________controller"
     @jobs = @client.job.all.paginate(page: params[:page], per_page:21)
   end
 
@@ -96,7 +96,7 @@ module Wizard
   end
 
   def set_member
-    logger.info "______________________________set_member"
+    logger.debug "______________________________set_member"
     a = params[:id].split('x')
     @client = Client.find(a[0])
     @company =a[1]
