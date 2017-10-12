@@ -21,10 +21,8 @@ class ApplicationController < ActionController::Base
   def admin!
     authenticate_client!
     if current_client.email == PropertsHelper::ADMIN
-      puts "______________________Прошли"
       true
     else
-      puts "______________________Не прошли"
       render_404
     end
   end

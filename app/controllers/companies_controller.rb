@@ -3,7 +3,24 @@ require 'company/company_admin'
 class CompaniesController < ApplicationController
   include Wizard
   include Admin
-  load_and_authorize_resource
+  before_action :admin!, only: [:admin_show,
+                                :admin_edit,
+                                :admin_update,
+                                :admin_destroy,
+                                :admin_edit_logo,
+                                :admin_destroy_member,
+                                :admin_show_member_of_team,
+                                :show_member_of_team,
+                                :admin_update_member,
+                                :admin_edit_member,
+                                :admin_index_job,
+                                :admin_new_job]
+  load_and_authorize_resource :company, only:[:show,
+                                              :edit,
+                                              :update,
+                                              :destroy,
+                                              :change_type,
+                                              :destroy_member]
   before_action :set_member, only: [:admin_destroy_member,
                                     :admin_show_member_of_team,
                                     :show_member_of_team,
@@ -146,7 +163,8 @@ class CompaniesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_company
-      @company = Company.find(1)
+      puts "_________________________________4"
+      @company = Company.find_by(id:params[:id])
     end
 
     def set_client
@@ -167,5 +185,17 @@ class CompaniesController < ApplicationController
 
     def job_params
       params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :client_id, :career, :industry, :page)
+    end
+
+    def set_jobs
+      puts "_________________________________2"
+      @client,  @company = params[:id].split('x')
+    end
+
+    def set_member
+      puts "_________________________________3"
+      a = params[:id].split('x')
+      @client = Client.find(a[0])
+      @company =a[1]
     end
 end

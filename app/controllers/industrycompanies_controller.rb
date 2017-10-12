@@ -1,5 +1,4 @@
 class IndustrycompaniesController < ApplicationController
-  before_action :admin!
   before_action :set_industrycompany, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
 
