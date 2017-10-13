@@ -124,7 +124,7 @@ class CompaniesController < ApplicationController
   end
 
   def new_member
-    @client = Client.new
+    @clients = Client.new
   end
 
   def create_member
