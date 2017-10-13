@@ -121,6 +121,7 @@ class CompaniesController < ApplicationController
 
   def team
     @clients = current_client.company.first.client.all.order(firstname: :desc).paginate(page: params[:page], per_page:25)
+    puts @clients
   end
 
   def new_member
@@ -163,7 +164,6 @@ class CompaniesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_company
-      puts "_________________________________4"
       @company = Company.find_by(id:params[:id])
     end
 
@@ -188,12 +188,10 @@ class CompaniesController < ApplicationController
     end
 
     def set_jobs
-      puts "_________________________________2"
       @client,  @company = params[:id].split('x')
     end
 
     def set_member
-      puts "_________________________________3"
       a = params[:id].split('x')
       @client = Client.find(a[0])
       @company =a[1]

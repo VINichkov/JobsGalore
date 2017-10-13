@@ -4,7 +4,7 @@ class Client < ApplicationRecord
 
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable
+         :recoverable, :rememberable, :trackable, :validatable#, :confirmable, :lockable, :timeoutable
   belongs_to :location
   has_many :resume, dependent: :destroy
   has_many :job, dependent: :destroy

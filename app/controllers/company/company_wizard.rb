@@ -7,7 +7,6 @@ module Wizard
   end
 
   def admin_index_job
-    puts "_________________________________5"
     @jobs = @client.job.all.paginate(page: params[:page], per_page:21)
   end
 
