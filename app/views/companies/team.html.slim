@@ -19,7 +19,7 @@
         th
 
     tbody
-      - @clients.each do |client|
+      - @clients.all.each do |client|
         tr
           td = client.photo_uid ? image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), class: 'img-thumbnail center-block ', size: "150x125") : image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "150x125")
           td = client.firstname
