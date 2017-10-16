@@ -34,7 +34,7 @@ class JobsController < ApplicationController
     @job = Job.new(param)
     @job.industryjob.new(industry:Industry.find_by_id(industry.to_i))
     @job.company = current_client.company.first
-    @job.client = current_client
+    @job.client_id = current_client.id
     respond_to do |format|
       if @job.save
         JobsMailer.add_job({mail:current_client.email, firstname:current_client.firstname, id:@job.id, title:@job.title}).deliver_later
