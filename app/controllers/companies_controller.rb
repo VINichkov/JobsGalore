@@ -122,7 +122,7 @@ class CompaniesController < ApplicationController
 
   def team
     @clients = current_client.company.first.client.all.order(firstname: :desc).paginate(page: params[:page], per_page:25)
-    puts @clients
+    puts "Controller:: teem  #{@clients}"
   end
 
   def new_member

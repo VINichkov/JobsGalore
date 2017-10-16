@@ -2,10 +2,13 @@ class Ability
   include CanCan::Ability
 
   def initialize(user,param)
+    puts "#{user}__________________________#{param}"
     user ||= Client.new
     if user.email == PropertsHelper::ADMIN
+      puts "Cancan:: Admin"
       can :manage, :all
     elsif user.character == 'employer'
+      puts "Cancan:: Employer"
       #############################################
       can [:new, :create, :profile, :settings, :edit, :update, :destroy, :edit_photo] , Client do |client|
         (client.id==user.id) or (client.company.client.find_by_id(user.id))
@@ -25,6 +28,7 @@ class Ability
 
       can [:settings_company, :edit_logo], :all
     elsif user.character == 'employee'
+      puts "Cancan:: Employee"
       #############################################
       can [:edit, :update, :profile, :settings, :destroy, :edit_photo] , Client do |client|
         client==user
@@ -40,6 +44,7 @@ class Ability
 
 
     elsif user.character == 'aplicant'
+      puts "Cancan:: Aplicant"
       #############################################
       can [:edit, :update, :destroy, :profile, :settings, :edit_photo] , Client do |client|
         client==user
@@ -53,6 +58,7 @@ class Ability
         resume.client_id == user.id
       end
     else
+      puts "Cancan:: Other"
       ##############################################
       can [:show], Job
       can [:show, :company_jobs], Company
