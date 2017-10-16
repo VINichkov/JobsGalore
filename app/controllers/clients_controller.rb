@@ -126,6 +126,11 @@ class ClientsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def team
+    @clients = current_client.company.first.client.all.includes(:location).order(firstname: :desc).paginate(page: params[:page], per_page:25)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_client

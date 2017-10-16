@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   get "/edit_logo", to: 'companies#edit_logo'
   get "/settings_company", to: 'companies#settings_company'
   get '/company_jobs/:id', to:'companies#company_jobs'
-  get "/team/", to: 'companies#team', as: 'team'
   get '/team/new/', to: 'companies#new_member', as: 'team_new'
   post '/team/', to: 'companies#create_member', as: 'team_create'
   get  '/team_change/:id', to: 'companies#change_type', as: 'change_type'
@@ -29,6 +28,7 @@ Rails.application.routes.draw do
   get "/edit_photo", to: 'clients#edit_photo'
   get '/profile', to: 'clients#profile', as:  'client_root'
   get "/settings", to: 'clients#settings'
+  get "/team/", to: 'clients#team', as: 'team'
 
   resources :locations
   get '/search_locations/:query', to: 'locations#search'
