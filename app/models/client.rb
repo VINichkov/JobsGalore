@@ -30,7 +30,7 @@ class Client < ApplicationRecord
   end
 
   def resp?
-    character=='aplicant' ? true : false
+    (character=='employer')or(character=='employee') ? true : false
   end
 
 end
