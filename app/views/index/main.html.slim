@@ -1,12 +1,12 @@
 .row.hidden-xs.not_print
   .container
     .header
-      - if not (client_signed_in?) or (current_client.character == 'employer')
+      - if not (client_signed_in?) or (current_client.resp?)
         .row
           .col-lg-3.col-md-3.col-md-offset-9.col-lg-offset-9
             = link_to "Post а job", new_job_path, class: "btn btn-primary btn-block"
             p
-      - if not (client_signed_in?) or not (current_client.character == 'employer')
+      - if not (client_signed_in?) or not (current_client.resp?)
         .row
           .col-lg-3.col-md-3.col-md-offset-9.col-lg-offset-9
             = link_to "Post а resume", new_resume_path, class: "btn btn-primary btn-block"
