@@ -121,8 +121,7 @@ class CompaniesController < ApplicationController
   end
 
   def team
-    @clients = current_client.company.first.client.all.order(firstname: :desc).paginate(page: params[:page], per_page:25)
-    puts "Controller:: teem  #{@clients}"
+    @clients = current_client.company.first.client.all.includes(:location).order(firstname: :desc).paginate(page: params[:page], per_page:25)
   end
 
   def new_member

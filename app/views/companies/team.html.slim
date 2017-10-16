@@ -6,32 +6,47 @@
   .col-md-6.col-lg-6
     = link_to 'New member', team_new_path, class:"btn btn-primary btn-block "
     p
-  table.table.table-striped.table-bordered.table-hover
-    thead
-      tr
-        th Avatar
-        th Firstname
-        th Lastname
-        th Email
-        th Type
-        th Location
-        th
-        th
-
-    tbody
-      - puts @clients
-      - @clients.each do |client|
+  .hidden-sm.hidden-xs
+    table.table.table-striped.table-bordered.table-hover
+      thead
         tr
-          -puts client
-          td = client.photo_uid ? image_tag(Dragonfly.app.remote_url_for(client.photo_uid), class: 'img-thumbnail center-block ', size: "150x125") : image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "150x125")
-          td = client.firstname
-          td = client.lastname
-          td = client.email
-          td = client.character
-          td = "#{client.location.suburb}, #{client.location.state}"
-          td = link_to 'Change type', change_type_path(client), class: "btn btn-warning btn-block "
-          td = link_to 'Destroy', team_destroy_path(client), data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-danger btn-block "
+          th Avatar
+          th Firstname
+          th Lastname
+          th Email
+          th Type
+          th Location
+          th
+          th
 
+      tbody
+        - @clients.each do |client|
+          tr
+            td = client.photo_uid ? image_tag(Dragonfly.app.remote_url_for(client.photo_uid), class: 'img-thumbnail center-block ', size: "150x125") : image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "150x125")
+            td = client.firstname
+            td = client.lastname
+            td = client.email
+            td = client.character
+            td = "#{client.location.suburb}, #{client.location.state}"
+            td = link_to 'Change type', change_type_path(client), class: "btn btn-warning btn-block "
+            td = link_to 'Destroy', team_destroy_path(client), data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-danger btn-block "
+  .hidden-lg.hidden-md
+    - @clients.each do |client|
+      .panel.panel-default
+        .panel-body
+          .col-sm-4.col-xs-12
+            = client.photo_uid ? image_tag(Dragonfly.app.remote_url_for(client.photo_uid), class: 'img-thumbnail center-block ', size: "150x125") : image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "150x125")
+          .col-sm-8.col-xs-12
+            p #{client.firstname} #{client.lastname}
+            p #{client.email}
+            p #{client.character}
+            p #{client.location.suburb}, #{client.location.state}
+            .col-sm-6.col-xs-12
+              = link_to 'Change type', change_type_path(client), class: "btn btn-warning btn-block "
+              br
+            .col-sm-6.col-xs-12
+              = link_to 'Destroy', team_destroy_path(client), data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block "
+              br
   br
 
   = will_paginate @clients, {renderer: BootstrapPagination::Rails, inner_window:1, outer_window:1 }
