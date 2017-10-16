@@ -13,7 +13,7 @@ class Ability
       can [:new, :create, :profile, :settings, :edit, :update, :destroy, :edit_photo] , Client do |client|
         (client.id==user.id) or (client.company.client.find_by_id(user.id))
       end
-      can [:settings_company, :edit_logo, :team, :new_member, :create_member, :destroy_member, :change_type, :edit, :update, :destroy, :edit_photo] , Company do |company|
+      can [:settings_company, :edit_logo, :team, :new_member, :create_member,  :edit, :update, :destroy, :edit_photo] , Company do |company|
         company.client.find_by_id(user.id)
       end
       can [:show, :company_jobs], Company

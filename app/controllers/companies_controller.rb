@@ -19,9 +19,8 @@ class CompaniesController < ApplicationController
                                               :edit,
                                               :update,
                                               :destroy,
-                                              :team,
-                                              :change_type,
-                                              :destroy_member]
+                                              :team]
+
   before_action :set_member, only: [:admin_destroy_member,
                                     :admin_show_member_of_team,
                                     :show_member_of_team,
