@@ -10,6 +10,9 @@ class Resume < ApplicationRecord
 
   validates :desiredjobtitle, presence: true
   validates :location, presence: true
+
+  attr_accessor :ind
+
   def highlight_on
     self.highlight = Date.today
     self.save

@@ -1,5 +1,6 @@
 class IndustryjobsController < ApplicationController
   before_action :set_industryjob, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_client!
   # GET /industryjobs
   # GET /industryjobs.json
   def index

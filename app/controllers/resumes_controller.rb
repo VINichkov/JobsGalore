@@ -32,9 +32,9 @@ class ResumesController < ApplicationController
   # POST /resumes.json
   def create
     param = resume_params
-    industry = param[:industry]
+    industry = param[:ind]
     experience=param[:experience]
-    param.delete(:industry)
+    param.delete(:ind)
     param.delete(:experience)
     param.delete(:location_name)
     param[:client] = current_client
@@ -66,9 +66,9 @@ class ResumesController < ApplicationController
     if param[:location_id].nil? or param[:location_id].empty?
       param[:location_id]=find_location(param[:location_name])
     end
-    industry = param[:industry]
+    industry = param[:ind]
     experience=param[:experience]
-    param.delete(:industry)
+    param.delete(:ind)
     param.delete(:experience)
     param.delete(:location_name)
     param[:client] = current_client
@@ -128,9 +128,9 @@ class ResumesController < ApplicationController
   # POST /resumes.json
   def admin_create
     param = resume_params
-    industry = param[:industry]
+    industry = param[:ind]
     experience=param[:experience]
-    param.delete(:industry)
+    param.delete(:ind)
     param.delete(:experience)
     param.delete(:location_name)
     @resume = Resume.new(param)
@@ -160,9 +160,9 @@ class ResumesController < ApplicationController
     if param[:location_id].nil? or param[:location_id].empty?
       param[:location_id]=find_location(param[:location_name])
     end
-    industry = param[:industry]
+    industry = param[:ind]
     experience=param[:experience]
-    param.delete(:industry)
+    param.delete(:ind)
     param.delete(:experience)
     param.delete(:location_name)
     @resume.experience.destroy_all
@@ -272,7 +272,7 @@ class ResumesController < ApplicationController
                                      :remote,
                                      :abouteme,
                                      :client_id,
-                                     :industry,
+                                     :ind,
                                      :location_id,
                                      :location_name,
                                      :experience=>{:bloc_0=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],

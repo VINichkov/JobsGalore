@@ -29,8 +29,8 @@ class JobsController < ApplicationController
   # POST /jobs.json
   def create
     param = job_params
-    industry = param[:industry]
-    param.delete(:industry)
+    industry = param[:ind]
+    param.delete(:ind)
     @job = Job.new(param)
     @job.industryjob.new(industry:Industry.find_by_id(industry.to_i))
     @job.company_id = current_client.company.first.id
@@ -49,8 +49,8 @@ class JobsController < ApplicationController
   # PATCH/PUT /jobs/1.json
   def update
     param = job_params
-    industry = param[:industry]
-    param.delete(:industry)
+    industry = param[:ind]
+    param.delete(:ind)
     @job.industryjob.destroy_all
     @job.industryjob.new(industry:Industry.find_by_id(industry))
     respond_to do |format|
@@ -96,8 +96,8 @@ class JobsController < ApplicationController
   # POST /jobs.json
   def admin_create
     param = job_params
-    industry = param[:industry]
-    param.delete(:industry)
+    industry = param[:ind]
+    param.delete(:ind)
     @job = Job.new(param)
     @job.client = current_client
     @job.industryjob.new(industry:Industry.find_by_id(industry.to_i))
@@ -116,8 +116,8 @@ class JobsController < ApplicationController
   # PATCH/PUT /jobs/1.json
   def admin_update
     param = job_params
-    industry = param[:industry]
-    param.delete(:industry)
+    industry = param[:ind]
+    param.delete(:ind)
     @job.industryjob.destroy_all
     @job.industryjob.new(industry:Industry.find_by_id(industry))
     respond_to do |format|
@@ -180,8 +180,7 @@ class JobsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
-      puts "_________________Зашли job_params"
-      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :client_id, :career, :industry, :page)
+      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :client_id, :career, :ind, :page)
     end
 
 end

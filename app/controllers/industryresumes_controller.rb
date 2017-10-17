@@ -1,5 +1,6 @@
 class IndustryresumesController < ApplicationController
   before_action :set_industryresume, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_client!
   # GET /industryresumes
   # GET /industryresumes.json
   def index
