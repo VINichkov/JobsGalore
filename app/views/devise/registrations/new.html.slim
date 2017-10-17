@@ -10,6 +10,8 @@
           li
             =link_to "Employer", sign_up_employer_path
         hr.colorgraph
+        .form-group.invisible
+          = f.text_field :character, value: 'aplicant'
         .row
           .col-xs-12.col-sm-6.col-md-6
             .form-group
@@ -39,8 +41,6 @@
           = f.label "Photo"
           br
           =react_component('Fileinput',id:"client_photo", name:"client[photo]",  place_holder:"empty")
-        .form-group.invisible
-          =f.text_field :character, value:'aplicant'
         .form-group
           = f.label "Your location"
           br

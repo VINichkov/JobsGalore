@@ -10,6 +10,8 @@
           li.active
             =link_to "Employer"
         hr.colorgraph
+        .form-group.invisible
+          = f.text_field :character, value: 'employer'
         .row
           .col-xs-12.col-sm-6.col-md-6
             .form-group
@@ -39,8 +41,6 @@
           = f.label "Location"
           br
           =react_component('Autocomplete',className:"form-control dropdown-toggle",name:"client[location",id:"client_location_id")
-        .form-group.invisible
-          = f.text_field :character, value: 'employer'
         .form-group
           = f.label "Phone number"
           br
