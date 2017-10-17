@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :extras_check
+
   protected
 
   def configure_permitted_parameters
@@ -15,7 +16,7 @@ class ApplicationController < ActionController::Base
 
   # In ApplicationController
   def current_ability
-  @current_ability ||=Ability.new(current_client, params)
+    @current_ability ||=Ability.new(current_client, params)
   end
 
   def admin!

@@ -11,6 +11,7 @@ class Job < ApplicationRecord
   validates :location, presence: true
   validates :client, presence: true
 
+
   def highlight_on
     self.highlight = Date.today
     self.save

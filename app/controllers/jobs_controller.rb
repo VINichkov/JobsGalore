@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
   before_action :authenticate_client!, only:[:new, :edit, :create, :update, :destroy]
-  load_and_authorize_resource
+  load_and_authorize_resource :job
   before_action :set_job, only: [:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
   before_action :employer!, only: :new
 
@@ -33,16 +33,14 @@ class JobsController < ApplicationController
     param.delete(:industry)
     @job = Job.new(param)
     @job.industryjob.new(industry:Industry.find_by_id(industry.to_i))
-    @job.company = current_client.company.first
+    @job.company_id = current_client.company.first.id
     @job.client_id = current_client.id
     respond_to do |format|
       if @job.save
         JobsMailer.add_job({mail:current_client.email, firstname:current_client.firstname, id:@job.id, title:@job.title}).deliver_later
         format.html { redirect_to client_root_path, notice: 'Job was successfully created.' }
-        format.json { render :show, status: :created, location: @job }
       else
         format.html { render :new }
-        format.json { render json: @job.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -182,6 +180,7 @@ class JobsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
+      puts "_________________Зашли job_params"
       params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :client_id, :career, :industry, :page)
     end
 
