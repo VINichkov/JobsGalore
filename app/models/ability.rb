@@ -2,8 +2,8 @@ class Ability
   include CanCan::Ability
 
   def initialize(user,param)
-    puts "#{user.id} #{user.firstname} #{user.lastname} #{user.email}__________________________#{param.to_h.to_s}"
     user ||= Client.new
+    puts "#{user.id} #{user.firstname} #{user.lastname} #{user.email}__________________________#{param.to_h.to_s}"
     if user.email == PropertsHelper::ADMIN
       puts "Cancan:: Admin"
       can :manage, :all
