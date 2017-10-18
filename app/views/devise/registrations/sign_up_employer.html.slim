@@ -10,8 +10,6 @@
           li.active
             =link_to "Employer"
         hr.colorgraph
-        .form-group.invisible
-          = f.text_field :character, value: 'employer'
         .row
           .col-xs-12.col-sm-6.col-md-6
             .form-group
@@ -74,3 +72,5 @@
           .col-xs-6.col-md-6
             = f.submit "Register", class: "btn btn-primary btn-block"
           = render "devise/shared/links"
+        .form-group.invisible
+          = f.text_field :character, value: 'employer'

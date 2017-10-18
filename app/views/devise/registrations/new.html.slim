@@ -10,8 +10,6 @@
           li
             =link_to "Employer", sign_up_employer_path
         hr.colorgraph
-        .form-group.invisible
-          = f.text_field :character, value: 'aplicant'
         .row
           .col-xs-12.col-sm-6.col-md-6
             .form-group
@@ -77,3 +75,5 @@
           .col-xs-6.col-md-6
             = f.submit "Register", class: "btn btn-primary btn-block"
           = render "devise/shared/links"
+        .form-group.invisible
+          = f.text_field :character, value: 'aplicant'
