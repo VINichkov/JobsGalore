@@ -3,7 +3,7 @@
     - if client_signed_in?
       - if current_client.resp?
         .row.text-center
-          = link_to("#{resume.client.firstname} #{resume.client.lastname}", resume.client)
+          p #{resume.client.firstname} #{resume.client.lastname}
         .row
         - if not resume.client.photo_uid.nil?
           = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ', size:"270x270"),resume.client)
