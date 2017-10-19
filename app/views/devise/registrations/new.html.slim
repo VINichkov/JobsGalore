@@ -70,10 +70,10 @@
           |By registering you agree to the #{PropertsHelper::COMPANY}
           |  &nbsp;
           =link_to "privacy policy", privacy_path
+        .form-group.hidden-xs.hidden-sm.hidden-md.hidden-lg
+          = f.text_field :character, value: 'aplicant'
         hr.colorgraph
         .row
           .col-xs-6.col-md-6
             = f.submit "Register", class: "btn btn-primary btn-block"
           = render "devise/shared/links"
-        .form-group.invisible
-          = f.text_field :character, value: 'aplicant'
