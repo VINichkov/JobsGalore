@@ -21,6 +21,7 @@ class Clients::RegistrationsController < Devise::RegistrationsController
                      location_id: param[:location_id],
                      phone: param[:phone],
                      email: param[:email],
+                     character: param[:character],
                      password: param[:password],
                      gender:param[:gender]})
      resource.company.new(name: param[:company_name],
@@ -85,7 +86,7 @@ class Clients::RegistrationsController < Devise::RegistrationsController
    end
 
    def configure_sign_up_employer_params
-     devise_parameter_sanitizer.permit(:sign_up_employer, keys: [:attribute])
+     devise_parameter_sanitizer.permit(:sign_up_employer, keys: [:firstname, :lastname, :company_name, :gender, :company_recrutment, :location_name, :location_id, :phone, :email, :password, :password_confirmation, :character])
    end
 
   # If you have extra params to permit, append them to the sanitizer.
