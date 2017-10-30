@@ -131,13 +131,13 @@ nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="n
           = link_to admin_path do
             span.glyphicon.glyphicon-eye-open
             | &nbsp; Administration of site
-    - if not (client_signed_in?) or (current_client.character=='employer')
+    - if not (client_signed_in?) or (current_client.resp?)
       li
         = link_to new_job_path do
           |&nbsp;
           span.glyphicon.glyphicon-briefcase
           |&nbsp;Post а job
-    - if not (client_signed_in?) or not (current_client.character=='employer')
+    - if not (client_signed_in?) or not (current_client.resp?)
       li
         = link_to new_resume_path do
           |&nbsp;
