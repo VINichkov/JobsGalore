@@ -42,7 +42,7 @@
     .panel.panel-default
       .panel-body
         -if client_signed_in?
-          -if current_client.character =='employer' or @resume.client.id == current_client.id
+          -if current_client.resp? or @resume.client.id == current_client.id
             h3.text-center
               ="#{@resume.client.firstname} #{@resume.client.lastname}"
             p
@@ -164,7 +164,7 @@
                 .col-lg-12.col-md-12
                   = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
                   p
-              -if current_client.character=='employer'
+              -if current_client.resp?
                 .col-lg-12.col-md-12
                   button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
                     |Contact
@@ -188,7 +188,7 @@
     .row
       .col-sm-6
         - if client_signed_in?
-          - if current_client.character =='employer' or @resume.client.id == current_client.id
+          - if current_client.resp? or @resume.client.id == current_client.id
             h3.text-center
               = "#{@resume.client.firstname} #{@resume.client.lastname}"
             p
