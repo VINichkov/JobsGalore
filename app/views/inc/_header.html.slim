@@ -136,13 +136,13 @@ nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="n
         = link_to new_job_path do
           |&nbsp;
           span.glyphicon.glyphicon-briefcase
-          |&nbsp;Post а job
+          |&nbsp; Post а job
     - if not (client_signed_in?) or not (current_client.resp?)
       li
         = link_to new_resume_path do
           |&nbsp;
           span.glyphicon.glyphicon-paperclip
-          |&nbsp;Post а resume
+          |&nbsp; Post а resume
     li
       = link_to '/by_category/2' do
         |&nbsp;
