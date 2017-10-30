@@ -123,6 +123,7 @@ nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="n
             | &nbsp; Company
         li
           = link_to team_path do
+            | &nbsp;
             span.glyphicon.glyphicon-heart
             | &nbsp; Team
       - if current_client.email == PropertsHelper::ADMIN
