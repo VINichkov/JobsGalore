@@ -4,7 +4,7 @@ class Client < ApplicationRecord
 
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable
+         :recoverable, :rememberable, :trackable, :validatable#, :confirmable, :lockable, :timeoutable
   belongs_to :location
   has_many :resume, dependent: :destroy
   has_many :job, dependent: :destroy
@@ -17,6 +17,9 @@ class Client < ApplicationRecord
       attachment.convert! '-resize 400x -quality 60 -gravity center', 'jpg'
     end
   end
+
+
+
   validates :firstname, presence: true
   validates :lastname, presence: true
   validates :location, presence: true
