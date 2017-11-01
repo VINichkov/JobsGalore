@@ -22,7 +22,7 @@ class PaymentsController < ApplicationController
         amount='20.00'
         item_name = "Ad Top"
       when '3'
-        amount='12.00'
+        amount='5.00'
         item_name="Highlight"
     end
     puts payments_url
@@ -86,7 +86,7 @@ class PaymentsController < ApplicationController
         notify_url: params[:notify_url],
         item_number:params[:item_number],
         item_name: params[:item_name],
-        currency_code: 'RUB',
+        currency_code: 'AUD',
         amount: params[:amount]}
     "https://www.paypal.com/cgi-bin/webscr?#{values.to_query}"
   end
