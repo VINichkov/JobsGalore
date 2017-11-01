@@ -39,16 +39,17 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    option = params[:item_number][0]
-    kind=params[:item_number][1]
-    product_id = params[:item_number][2..params[:item_number].length-1]
+    param = params_for_create
+    option = param[:item_number][0]
+    kind=param[:item_number][1]
+    product_id = param[:item_number][2..params[:item_number].length-1]
     Payment.create!(
-        params: params.to_s,
+        params: param.to_s,
         product_id: product_id,
         kind:kind,
         kindpay:option,
-        status: params[:payment_status],
-        transaction_id: params[:txn_id]
+        status: param[:payment_status],
+        transaction_id: param[:txn_id]
     )
     if kind=='2'
       job = Job.find_by_id(product_id)
@@ -97,4 +98,7 @@ class PaymentsController < ApplicationController
     params.require(:bill).permit(:id, :kind, :option).to_h
   end
 
+  def params_for_create
+    params
+  end
 end
