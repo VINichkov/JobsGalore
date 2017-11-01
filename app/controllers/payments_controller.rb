@@ -26,7 +26,6 @@ class PaymentsController < ApplicationController
         amount='5.00'
         item_name="Highlight"
     end
-    puts payments_url
     @url = paypal_url(return_url:return_url, cancel_return_url:cancel_url_url, notify_url:payments_url,item_number:"#{@param[:option]}#{@param[:kind]}#{@param[:id]}",amount:amount,item_name:item_name)
   end
 
@@ -95,8 +94,7 @@ class PaymentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def payment_params
-    params.require(:bill).permit(:id, :kind, :option).to_h
+    params.require(:payment).permit(:id, :kind, :option).to_h
   end
-
 
 end
