@@ -26,6 +26,7 @@ class PaymentsController < ApplicationController
         amount='5.00'
         item_name="Highlight"
     end
+    puts payments_url
     @url = paypal_url(return_url:return_url, cancel_return_url:cancel_url_url, notify_url:payments_url,item_number:"#{@param[:option]}#{@param[:kind]}#{@param[:id]}",amount:amount,item_name:item_name)
   end
 
@@ -39,17 +40,16 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    param = params_for_create
-    option = param[:item_number][0]
-    kind=param[:item_number][1]
-    product_id = param[:item_number][2..params[:item_number].length-1]
+    option = params[:item_number][0]
+    kind=params[:item_number][1]
+    product_id = params[:item_number][2..params[:item_number].length-1]
     Payment.create!(
-        params: param.to_s,
+        params: params.to_s,
         product_id: product_id,
         kind:kind,
         kindpay:option,
-        status: param[:payment_status],
-        transaction_id: param[:txn_id]
+        status: params[:payment_status],
+        transaction_id: params[:txn_id]
     )
     if kind=='2'
       job = Job.find_by_id(product_id)
@@ -98,7 +98,5 @@ class PaymentsController < ApplicationController
     params.require(:bill).permit(:id, :kind, :option).to_h
   end
 
-  def params_for_create
-    params
-  end
+
 end
