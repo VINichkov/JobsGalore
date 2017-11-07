@@ -136,7 +136,7 @@
               |Back
             p
         .text-center
-          =social_share_button_tag @job.title
+          =social_share_button_tag @job.title, url: jobs_url(@job.id)
 .col-sm-12.hidden-md.hidden-lg.hidden-xs
     .panel-body
       h1.text-center
@@ -152,7 +152,7 @@
               = link_to(image_tag(Dragonfly.app.remote_url_for(@job.company.logo_uid), class: 'img-thumbnail center-block ', size: "300x250"),@job.company)
           p
           .text-center
-            =social_share_button_tag @job.title
+            =social_share_button_tag @job.title, url: jobs_url(@job.id)
         .col-sm-6
           h3.text-center
             |Job summary
@@ -295,7 +295,7 @@
             = link_to(image_tag(Dragonfly.app.remote_url_for(@job.company.logo_uid), class: 'img-thumbnail center-block ', size: "300x250"),@job.company)
         p
         .text-center
-          =social_share_button_tag @job.title
+          =social_share_button_tag @job.title, url: jobs_url(@job.id)
       .col-xs-12
         h3.text-center
           |Job summary
