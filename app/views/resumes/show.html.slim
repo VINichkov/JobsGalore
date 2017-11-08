@@ -3,7 +3,7 @@
 - meta_tag "keywords", @resume.desiredjobtitle
 - meta_tag "og:type", "article"
 - meta_tag "og:title", @resume.desiredjobtitle
-- meta_tag "og:description", strip_tags( markdown(@resume.abouteme)[0..50]
+- meta_tag "og:description", strip_tags( RDiscount.new(@resume.abouteme)[0..50]
 - meta_tag "og:url", resume_url(@resume)
 - meta_tag "og:image", @resume.client.photo_uid ? image_path(@resume.client.photo.name) : image_url("avatar.jpg")
 - meta_tag "article:published_time", @resume.updated_at
