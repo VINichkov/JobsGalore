@@ -1,9 +1,10 @@
 - title @company.name
 - meta_tag "description",  @company.name
 - meta_tag "keywords", @company.name
-- meta_tag "og:type", "article"
 - meta_tag "og:title", @company.name
 - meta_tag "og:description", @company.description
+- meta_tag "og:url", company_url(@company)
+- meta_tag "og:image", @company.logo_uid ? Dragonfly.app.remote_url_for(@company.logo_uid) : image_url("company_profile.jpg")
 .container.hidden-xs.hidden-sm
   .col-lg-8.col-md-8
     .row.well

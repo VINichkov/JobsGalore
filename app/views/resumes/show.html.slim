@@ -4,6 +4,9 @@
 - meta_tag "og:type", "article"
 - meta_tag "og:title", @resume.desiredjobtitle
 - meta_tag "og:description", @resume.abouteme
+- meta_tag "og:url", resume_url(@resume)
+- meta_tag "og:image", @resume.client.photo_uid ? Dragonfly.app.remote_url_for(@resume.client.photo_uid) : image_url("avatar.jpg")
+- meta_tag "article:published_time", resume_url(@resume.update_at)
 .container.hidden-xs.hidden-sm
   .col-lg-8.col-md-8
     .row.well
