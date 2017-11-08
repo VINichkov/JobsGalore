@@ -11,7 +11,7 @@ html
     meta[property="og:description" content=yield_meta_tag("og:description", "JobsGalore allows you to find work in Australian. JobsGalores is a quality database of CVs and vacancies, and the latest job and staff search services.")]
     meta[property="og:url" content=yield_meta_tag("og:url",root_url)]
     meta[property="og:image" content=yield_meta_tag("og:image",image_url("jg.png"))]
-    = if content_for?(:"meta_#{tag}")
+    - if content_for?(:"meta_#{tag}")
       meta[property="article:published_time" content=yield(:"meta_#{tag}")]
     meta[name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"]
     meta[http-equiv="Content-Type" content="text/html; charset=utf-8"]
