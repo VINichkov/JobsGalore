@@ -6,6 +6,7 @@
 - meta_tag "og:description", @job.description
 - meta_tag "og:url", job_url(@job)
 - meta_tag "og:image", @job.company.logo_uid ? image_url(@job.company.logo.name) : image_url("company_profile.jpg")
+- meta_tag "og:image", @job.company.logo_uid ? Dragonfly.app.remote_url_for(@job.company.logo_uid) : image_url("company_profile.jpg")
 - meta_tag "article:published_time", @job.updated_at
 .container.hidden-xs.hidden-sm
   .col-lg-8.col-md-8
