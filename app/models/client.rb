@@ -1,7 +1,7 @@
 class Client < ApplicationRecord
   # Include default devise modules. Others available are:
    #:omniauthable
-
+  before_save :rename
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable
@@ -36,4 +36,9 @@ class Client < ApplicationRecord
     (character=='employer')or(character=='employee') ? true : false
   end
 
+  def rename()
+    return unless self.photo.present?
+    path_obj = Pathname(self.photo.name)
+    self.photo.name = path_obj.sub_ext('').to_s.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') + path_obj.extname
+  end
 end

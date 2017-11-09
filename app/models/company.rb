@@ -1,4 +1,5 @@
 class Company < ApplicationRecord
+  before_save :rename
   belongs_to :size
   belongs_to :location
   has_many :job, dependent: :destroy
@@ -15,6 +16,12 @@ class Company < ApplicationRecord
   scope :search, ->(query) do
     text_query = "fts @@ to_tsquery(:value)" if query[:value] != ""
     where(text_query,query)
+  end
+
+  def rename()
+    return unless self.logo.present?
+    path_obj = Pathname(self.logo.name)
+    self.logo.name = path_obj.sub_ext('').to_s.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') + path_obj.extname
   end
 
 end
