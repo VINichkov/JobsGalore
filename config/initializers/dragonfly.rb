@@ -15,7 +15,7 @@ Dragonfly.app.configure do
             secret_access_key: ENV['secret_access_key'],
             region: ENV['region'],
             url_scheme: 'https',
-            url_host: "https://d2a5jvhcj7z8rz.cloudfront.net"
+            url_host: "d2a5jvhcj7z8rz.cloudfront.net"
 
 
   else
