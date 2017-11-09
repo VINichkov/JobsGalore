@@ -9,6 +9,7 @@ Dragonfly.app.configure do
   url_format "/media/:job/:name"
 
   if ENV["RAILS_ENV"]=="production"
+    url_host "https://d2a5jvhcj7z8rz.cloudfront.net"
     datastore :s3,
             bucket_name: ENV['bucket'],
             access_key_id: ENV['access_key_id'],
