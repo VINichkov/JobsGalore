@@ -119,6 +119,12 @@ class IndexController < ApplicationController
       end
   end
 
+  def robot
+    respond_to do |format|
+      format.txt{render file: 'public/robots.txt'}
+      format.html{redirect_to root_url}
+    end
+  end
   private
 
   def search_params

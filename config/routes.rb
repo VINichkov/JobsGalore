@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  get 'robot', to: 'index#robot'
   get 'sitemap', to: 'index#sitemap'
   get 'sitemaps/:id', to: 'index#sitemaps'
 

@@ -3,3 +3,5 @@
 # To ban all spiders from the entire site uncomment the next two lines:
 # User-agent: *
 # Disallow: /
+host: www.jobsgalore.eu
+Sitemap: https://www.JobsGalore.eu/sitemap.xml
