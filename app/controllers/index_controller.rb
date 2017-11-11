@@ -108,7 +108,7 @@ class IndexController < ApplicationController
 
   def sitemap
     respond_to do |format|
-      format.xml{render file: 'public/sitemap.xml'}
+      format.xml
       format.html{redirect_to root_url}
     end
   end
