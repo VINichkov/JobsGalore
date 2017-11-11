@@ -26,11 +26,11 @@ gem 'bootstrap-sass'#, '~> 3.3.6'
 gem 'jquery-rails'
 gem 'will_paginate'#, '~> 3.1.0'
 gem 'social-share-button'
-gem 'cancancan'
-gem 'devise'
+gem 'cancancan', '~> 2.0.0'
+gem 'devise','~> 4.3.0'
 gem 'dkim'
 
-gem 'will_paginate-bootstrap'
+gem 'will_paginate-bootstrap' ,'~> 1.0.1'
 #gem 'bcrypt', '~>3.1.11'
 
 group :production do
