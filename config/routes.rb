@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'robot', to: 'index#robot'
   get 'sitemap', to: 'index#sitemap'
-  get 'sitemaps/:id', to: 'index#sitemaps'
+  get 'sitemap:id', to: 'index#sitemaps'
 
   devise_for :clients, controllers:{ registrations: "clients/registrations",
                                      omniauthcallbacks: "clients/omniauthcallbacks",

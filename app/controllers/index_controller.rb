@@ -108,13 +108,30 @@ class IndexController < ApplicationController
 
   def sitemap
     respond_to do |format|
-      format.xml{render file: 'public/sitemaps/sitemap.xml'}
+      format.xml{render file: 'public/sitemap.xml'}
       format.html{redirect_to root_url}
     end
   end
   def sitemaps
+    @objs =[]
       respond_to do |format|
-        format.xml{render file: "public/sitemaps/#{params[:id]}.xml"}
+        case params[:id]
+          when '1'
+            @objs << {url: root_url, date:Time.now}
+          when '2'
+            Company.all.each do |company|
+              @objs <<{url: company_url(company), date:company.updated_at}
+            end
+          when '3'
+            Resume.all.each do |resume|
+              @objs <<{url: resume_url(resume), date:resume.updated_at}
+            end
+          else
+            Job.all.each do |job|
+              @objs <<{url: job_url(job), date:job.updated_at}
+            end
+        end
+        format.xml{ render :xml => @obj}
         format.html{redirect_to root_url}
       end
   end

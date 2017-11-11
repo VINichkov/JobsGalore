@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   end
 
   def extras_check
-    if $date.mem < Date.today
+    if $date.mem < Date.today or $date.mem.nil?
       Thread.new do
         begin
           extras_off
@@ -42,6 +42,9 @@ class ApplicationController < ActionController::Base
         end
       end
       $date.mem = Date.today
+      open("http://google.com/ping?sitemap=#{PropertsHelper::HOST}/sitemap.xml")
+      open("http://www.bing.comping?sitemap=#{PropertsHelper::HOST}/sitemap.xml")
+
     end
   end
 
