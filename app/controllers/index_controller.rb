@@ -105,6 +105,20 @@ class IndexController < ApplicationController
   def admin
 
   end
+
+  def sitemap
+    respond_to do |format|
+      format.xml{render file: 'public/sitemaps/sitemap.xml'}
+      format.html{redirect_to root_url}
+    end
+  end
+  def sitemaps
+      respond_to do |format|
+        format.xml{render file: "public/sitemaps/#{params[:id]}.xml"}
+        format.html{redirect_to root_url}
+      end
+  end
+
   private
 
   def search_params

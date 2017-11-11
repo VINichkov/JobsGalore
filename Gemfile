@@ -29,6 +29,7 @@ gem 'social-share-button'
 gem 'cancancan'
 gem 'devise'
 gem 'dkim'
+gem "dynamic_sitemaps"
 
 gem 'will_paginate-bootstrap'
 #gem 'bcrypt', '~>3.1.11'

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'sitemap', to: 'index#sitemap'
+  get 'sitemaps/:id', to: 'index#sitemaps'
 
   devise_for :clients, controllers:{ registrations: "clients/registrations",
                                      omniauthcallbacks: "clients/omniauthcallbacks",
