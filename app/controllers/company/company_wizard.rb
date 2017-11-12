@@ -11,7 +11,7 @@ module Wizard
   end
 
   def admin_new_job
-    @job = Job.new(client_id:@client, company_id:@company, location_id: @company.location.id)
+    @job = Job.new(client_id:@client, company_id:@company, location_id: @company.location_id)
   end
 
   def admin_create_job
