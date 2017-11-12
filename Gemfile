@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.4.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails'#, '~> 5.0.0', '>= 5.0.0.1'
+gem 'rails', '~> 5.0.4'#, '>= 5.0.0.1'
 # Use postgresql as the database for Active Record
 gem 'pg'#, '~> 0.18'
 # Use Puma as the app server
@@ -26,11 +26,11 @@ gem 'bootstrap-sass'#, '~> 3.3.6'
 gem 'jquery-rails'
 gem 'will_paginate'#, '~> 3.1.0'
 gem 'social-share-button'
-gem 'cancancan'
-gem 'devise'
+gem 'cancancan', '~> 2.0.0'
+gem 'devise','~> 4.3.0'
 gem 'dkim'
 
-gem 'will_paginate-bootstrap'
+gem 'will_paginate-bootstrap' ,'~> 1.0.1'
 #gem 'bcrypt', '~>3.1.11'
 
 group :production do
