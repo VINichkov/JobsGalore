@@ -4,6 +4,7 @@ xml.urlset xmlns:"http://www.sitemaps.org/schemas/sitemap/0.9" do
   xml.url do
     xml.loc obj[:url]
     xml.lastmod obj[:date]
+    xml.changefreq obj[:changefreq]
   end
   end
 end

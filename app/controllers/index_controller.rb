@@ -117,18 +117,18 @@ class IndexController < ApplicationController
       respond_to do |format|
         case params[:id]
           when '1'
-            @objs << {url: root_url, date:Time.now}
+            @objs << {url: root_url, date:Time.now.strftime("%Y-%m-%d"),changefreq:"hourly" }
           when '2'
             Company.all.each do |company|
-              @objs <<{url: company_url(company), date:company.updated_at}
+              @objs <<{url: company_url(company), date:company.updated_at.strftime("%Y-%m-%d"),changefreq:"weekly" }
             end
           when '3'
             Resume.all.each do |resume|
-              @objs <<{url: resume_url(resume), date:resume.updated_at}
+              @objs <<{url: resume_url(resume), date:resume.updated_at.strftime("%Y-%m-%d"),changefreq:"weekly" }
             end
           else
             Job.all.each do |job|
-              @objs <<{url: job_url(job), date:job.updated_at}
+              @objs <<{url: job_url(job), date:job.updated_at.strftime("%Y-%m-%d"),changefreq:"weekly" }
             end
         end
         format.xml{ render :xml => @obj}

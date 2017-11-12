@@ -41,7 +41,7 @@ gem 'slim-rails'
 gem 'slim'
 
 gem 'dragonfly'#, '~> 1.1.1'
-gem 'mechanize'
+#gem 'mechanize'
 
 gem "pg_search"#, '~> 2.0.1'
 #gem "actionpack-page_caching"
