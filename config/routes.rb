@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :gateways
+  get '/gatetway/execute/:id', to: "gateways#execute", as: "gateway_execute"
   get 'robot', to: 'index#robot'
   get 'sitemap', to: 'index#sitemap'
   get 'sitemap:id', to: 'index#sitemaps'

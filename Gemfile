@@ -30,6 +30,7 @@ gem 'cancancan', '~> 2.0.0'
 gem 'devise','~> 4.3.0'
 gem 'dkim'
 gem "font-awesome-rails"
+gem 'markitdown'
 
 gem 'will_paginate-bootstrap' ,'~> 1.0.1'
 #gem 'bcrypt', '~>3.1.11'

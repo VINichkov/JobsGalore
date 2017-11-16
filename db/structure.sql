@@ -111,7 +111,8 @@ CREATE TABLE clients (
     failed_attempts integer DEFAULT 0 NOT NULL,
     unlock_token character varying,
     locked_at timestamp without time zone,
-    "character" character varying
+    "character" character varying,
+    send_email boolean DEFAULT false NOT NULL
 );
 
 
@@ -269,6 +270,42 @@ CREATE SEQUENCE experiences_id_seq
 --
 
 ALTER SEQUENCE experiences_id_seq OWNED BY experiences.id;
+
+
+--
+-- Name: gateways; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE gateways (
+    id integer NOT NULL,
+    company_id integer,
+    client_id integer,
+    location_id integer,
+    industry_id integer,
+    script character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    log character varying
+);
+
+
+--
+-- Name: gateways_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE gateways_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: gateways_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE gateways_id_seq OWNED BY gateways.id;
 
 
 --
@@ -460,7 +497,8 @@ CREATE TABLE jobs (
     highlight date,
     top date,
     urgent date,
-    client_id integer
+    client_id integer,
+    close date
 );
 
 
@@ -914,6 +952,13 @@ ALTER TABLE ONLY experiences ALTER COLUMN id SET DEFAULT nextval('experiences_id
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY gateways ALTER COLUMN id SET DEFAULT nextval('gateways_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY industries ALTER COLUMN id SET DEFAULT nextval('industries_id_seq'::regclass);
 
 
@@ -1083,6 +1128,14 @@ ALTER TABLE ONLY emails
 
 ALTER TABLE ONLY experiences
     ADD CONSTRAINT experiences_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: gateways_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY gateways
+    ADD CONSTRAINT gateways_pkey PRIMARY KEY (id);
 
 
 --
@@ -1304,6 +1357,34 @@ CREATE INDEX index_experiences_on_location_id ON experiences USING btree (locati
 --
 
 CREATE INDEX index_experiences_on_resume_id ON experiences USING btree (resume_id);
+
+
+--
+-- Name: index_gateways_on_client_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_gateways_on_client_id ON gateways USING btree (client_id);
+
+
+--
+-- Name: index_gateways_on_company_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_gateways_on_company_id ON gateways USING btree (company_id);
+
+
+--
+-- Name: index_gateways_on_industry_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_gateways_on_industry_id ON gateways USING btree (industry_id);
+
+
+--
+-- Name: index_gateways_on_location_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_gateways_on_location_id ON gateways USING btree (location_id);
 
 
 --
@@ -1578,12 +1659,16 @@ CREATE INDEX index_skillsresumes_on_resume_id ON skillsresumes USING btree (resu
 
 CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON locations FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'suburb', 'postcode', 'state');
 
+ALTER TABLE locations DISABLE TRIGGER tsvectorupdate;
+
 
 --
 -- Name: tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON companies FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'name', 'description');
+
+ALTER TABLE companies DISABLE TRIGGER tsvectorupdate;
 
 
 --
@@ -1592,12 +1677,16 @@ CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON companies FOR EACH ROW 
 
 CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON jobs FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'title', 'description', 'career');
 
+ALTER TABLE jobs DISABLE TRIGGER tsvectorupdate;
+
 
 --
 -- Name: tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON resumes FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'desiredjobtitle', 'abouteme');
+
+ALTER TABLE resumes DISABLE TRIGGER tsvectorupdate;
 
 
 --
@@ -1630,6 +1719,14 @@ ALTER TABLE ONLY responsibles
 
 ALTER TABLE ONLY industrycompanies
     ADD CONSTRAINT fk_rails_2d8974d3a3 FOREIGN KEY (industry_id) REFERENCES industries(id);
+
+
+--
+-- Name: fk_rails_3476d36c73; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY gateways
+    ADD CONSTRAINT fk_rails_3476d36c73 FOREIGN KEY (client_id) REFERENCES clients(id);
 
 
 --
@@ -1721,6 +1818,14 @@ ALTER TABLE ONLY experiences
 
 
 --
+-- Name: fk_rails_9650b12e65; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY gateways
+    ADD CONSTRAINT fk_rails_9650b12e65 FOREIGN KEY (industry_id) REFERENCES industries(id);
+
+
+--
 -- Name: fk_rails_9a4dfd1104; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1761,6 +1866,14 @@ ALTER TABLE ONLY experiences
 
 
 --
+-- Name: fk_rails_b0cc6672a9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY gateways
+    ADD CONSTRAINT fk_rails_b0cc6672a9 FOREIGN KEY (company_id) REFERENCES companies(id);
+
+
+--
 -- Name: fk_rails_b1f3718ea8; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1790,6 +1903,14 @@ ALTER TABLE ONLY industryresumes
 
 ALTER TABLE ONLY industryexperiences
     ADD CONSTRAINT fk_rails_cf58b01b64 FOREIGN KEY (industry_id) REFERENCES industries(id);
+
+
+--
+-- Name: fk_rails_dec69062e5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY gateways
+    ADD CONSTRAINT fk_rails_dec69062e5 FOREIGN KEY (location_id) REFERENCES locations(id);
 
 
 --
@@ -1873,6 +1994,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170925080815'),
 ('20170925084348'),
 ('20170925090306'),
-('20170925094404');
+('20170925094404'),
+('20171115064516'),
+('20171115080406'),
+('20171115095734'),
+('20171116103057');
 
 

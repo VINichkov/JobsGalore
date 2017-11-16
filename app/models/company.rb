@@ -7,6 +7,7 @@ class Company < ApplicationRecord
   has_many :industrycompany, dependent: :destroy
   has_many :responsible, dependent: :destroy
   has_many :client, through: :responsible
+  has_many :gateway, dependent: :destroy
   dragonfly_accessor :logo
   validates :name, presence: true
   #validates :location_id, presence: true

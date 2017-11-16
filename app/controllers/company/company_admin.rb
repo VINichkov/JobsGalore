@@ -6,7 +6,7 @@ module Admin
   # GET /companies
   # GET /companies.json
   def admin_index
-    @companies = Company.all.includes(:location,:industry, :size, :client).order(:name).paginate(page: params[:page], per_page:21)
+    @companies = Company.all.includes(:location,:industry, :size, :client).order(:id).paginate(page: params[:page], per_page:21)
   end
 
   # GET /companies/1

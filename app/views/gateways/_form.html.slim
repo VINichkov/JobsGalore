@@ -1,0 +1,47 @@
+= form_for @gateway do |f|
+  - if @gateway.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@gateway.errors.count, "error")} prohibited this gateway from being saved:"
+      ul
+        - @gateway.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    = f.label :company
+    br
+    = f.text_field :company_id, class:"form-control"
+  .form-group
+    = f.label :client
+    br
+    = f.text_field :client_id, class:"form-control"
+  .form-group
+    = f.label :location
+    br
+    =react_component( 'Autocomplete',
+                      className:"form-control dropdown-toggle",
+                      name:"gateway[location",
+                      id:"client_location_id",
+                      defaultName: @gateway.location ? "#{@gateway.location.suburb}, #{@gateway.location.state}" : "#{current_client.location.suburb}, #{current_client.location.state}",
+                      defaultId: @gateway.location ? @gateway.location.id : current_client.location.id)
+  .form-group
+    = f.label :industry
+    br
+    = react_component("CategoryInsert",
+            className: "selectpicker form-control",
+            name: "gateway[industry_id]",
+            multiple: false,
+            dataStyle: "btn-default",
+            values: Industry.all.to_json,
+            defaultValues:[@gateway.industry].to_json)
+  .form-group
+    = f.label :script
+    br
+    = f.text_field :script, class:"form-control"
+  hr.colorgraph
+    .row
+      .col-xs-12.col-md-6.col-sm-6.col-lg-6
+        = f.submit class: "btn btn-primary btn-block"
+        p
+      .col-xs-12.col-md-6.col-sm-6.col-lg-6
+        = link_to 'Back', :back, class: "btn btn-success btn-block"
+        p

@@ -37,6 +37,7 @@ class ClientsController < ApplicationController
   def edit
   end
 
+
   # POST /clients
   # POST /clients.json
   def create

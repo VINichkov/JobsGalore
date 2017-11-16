@@ -6,6 +6,7 @@ class Industry < ApplicationRecord
   has_many :job, through: :industryjob
   has_many :industryresume, dependent: :destroy
   has_many :resumes, through: :industryresume
+  has_many :gateway, dependent: :destroy
 
   has_many :lower,  class_name: "Industry", dependent: :destroy
 
