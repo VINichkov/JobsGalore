@@ -46,6 +46,10 @@
         span.input-group-addon
             i.glyphicon.glyphicon-calendar
     .form-group
+      = f.check_box :send_email
+      |  &nbsp;
+      = f.label :send_email
+    .form-group
       = f.label "Your location"
       br
       = react_component('Autocomplete',

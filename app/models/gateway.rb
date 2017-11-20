@@ -12,11 +12,42 @@ class Gateway < ApplicationRecord
   validates :script, presence: true
 
   def execute
-    @qwer = Monash.new
+    logs = "Started: #{Time.now} \r\n"
+    begin
+      eval "@gate = #{self.script}.new"
+      index = Job.where(company: company, client: client).map do |job|
+        {title:job.title, date_end: job.close}
+      end
+      jobs=@gate.read(index)
+      logs += "Found #{jobs.count} jobs \r\n"
+      jobs.each do |new_job|
+        begin
+          logs += "Job is creating: title \"#{new_job[:title]}\" close #{new_job[:close]} \r\n"
+          puts "!!!___________Job is creating: title \"#{new_job.to_s}"
+          new_job[:client] = client
+          new_job[:company] = company
+          new_job[:location] = location
+          job=Job.new(new_job)
+          if job.save
+            job.industryjob.new(industry: industry)
+          end
+        rescue
+          logs += "Error: Job #{$!} \r\n"
+        end
+      end
+    rescue
+      logs += "Error: #{$!} \r\n"
+    end
+    logs += "Finished: #{Time.now}"
+    self.log=logs
+    save!
   end
 
-  def read
-    @qwer.read
+
+  private
+  def def_thread
+
+
   end
 
 end

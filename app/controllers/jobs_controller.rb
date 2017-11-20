@@ -38,7 +38,9 @@ class JobsController < ApplicationController
     respond_to do |format|
       if @job.save
         #TODO
-        JobsMailer.add_job({mail:current_client.email, firstname:current_client.firstname, id:@job.id, title:@job.title}).deliver_later
+        if @job.client.send_email
+          @JobsMailer.add_job({mail:current_client.email, firstname:current_client.firstname, id:@job.id, title:@job.title}).deliver_later
+        end
         format.html { redirect_to client_root_path, notice: 'Job was successfully created.' }
       else
         format.html { render :new }

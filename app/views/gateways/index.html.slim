@@ -12,7 +12,6 @@
         th Location
         th Industry
         th Script
-        th Log
         th
         th
         th
@@ -26,7 +25,6 @@
           td = gateway.location.suburb
           td = gateway.industry.name
           td = gateway.script
-          td = gateway.log
           td = link_to 'Show', gateway, class:"btn btn-primary btn-block"
           td = link_to 'Execute', gateway_execute_path(gateway), data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-block "
           td = link_to 'Edit', edit_gateway_path(gateway), class: "btn btn-success btn-block"
