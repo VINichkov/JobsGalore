@@ -53,7 +53,7 @@ class IndexController < ApplicationController
     @category = Industry.industries_cashe
     param = main_search_params
     session[:param] = Marshal.load(Marshal.dump(param))
-    param[:param][:value] = (param[:param][:value].split(" ").map {|t| t=t+":*"}).join("&")
+    param[:param][:value] = (param[:param][:value].html_safe.map {|t| t=t+":*"}).join("&")
     case param[:param][:type]
       when '1'
         @objs = Company.includes(:location,:industry).search(param[:param]).order(:name).paginate(page: param[:page], per_page:21)

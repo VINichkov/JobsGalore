@@ -55,7 +55,6 @@ class Monash < Adapter
         description += elem.to_s
     end
     job.css('table').remove
-    puts "________________________________________________________________________________"
     job.css('p').each do |e|
       if not (e.content.to_s.scan(/(Your application must address the selection criteria. Please refer to)/).empty?) or e.content =="#Li"
         e.remove
@@ -64,8 +63,6 @@ class Monash < Adapter
     job.css('img').remove
     description += "<hr>"
     description += job.children.to_s
-    puts description.gsub("<br>"," ").gsub("<h2>","<h4>").gsub("<h3>","<h4>").gsub("</h2>","</h4>").gsub("</h3>","</h4>").squish.gsub("> <","><")
-    puts "________________________________________________________________________________"
     description = Markitdown.from_nokogiri(Nokogiri::HTML(description.gsub("<br>"," ").gsub("<h2>","<h4>").gsub("<h3>","<h4>").gsub("</h2>","</h4>").gsub("</h3>","</h4>").squish.gsub("> <","><")))
     {fulltime: description.include?("Full-time"),
      description:description}
