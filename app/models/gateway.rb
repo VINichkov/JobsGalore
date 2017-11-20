@@ -23,7 +23,6 @@ class Gateway < ApplicationRecord
       jobs.each do |new_job|
         begin
           logs += "Job is creating: title \"#{new_job[:title]}\" close #{new_job[:close]} \r\n"
-          puts "!!!___________Job is creating: title \"#{new_job.to_s}"
           new_job[:client] = client
           new_job[:company] = company
           new_job[:location] = location
