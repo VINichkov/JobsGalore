@@ -112,7 +112,7 @@ CREATE TABLE clients (
     unlock_token character varying,
     locked_at timestamp without time zone,
     "character" character varying,
-    send_email boolean DEFAULT false NOT NULL
+    send_email boolean DEFAULT true NOT NULL
 );
 
 
@@ -1668,16 +1668,12 @@ ALTER TABLE locations DISABLE TRIGGER tsvectorupdate;
 
 CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON companies FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'name', 'description');
 
-ALTER TABLE companies DISABLE TRIGGER tsvectorupdate;
-
 
 --
 -- Name: tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON jobs FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'title', 'description', 'career');
-
-ALTER TABLE jobs DISABLE TRIGGER tsvectorupdate;
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON jobs FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'title', 'description');
 
 
 --
@@ -1685,8 +1681,6 @@ ALTER TABLE jobs DISABLE TRIGGER tsvectorupdate;
 --
 
 CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON resumes FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'desiredjobtitle', 'abouteme');
-
-ALTER TABLE resumes DISABLE TRIGGER tsvectorupdate;
 
 
 --
