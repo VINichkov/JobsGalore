@@ -75,7 +75,7 @@ class Monash < Adapter
       {fulltime: description.include?("Full-time"),
        description:description}
     rescue
-      Raise $!
+      Raise "#{$!}"
     end
   end
 
