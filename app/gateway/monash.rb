@@ -44,9 +44,9 @@ class Monash < Adapter
   def get_job(url)
     page = Nokogiri::HTML(open(url))
     job = page.at_css('[class="jobdets"]')
-    job.css('span').remove
-    job.css('div').remove
-    job.css('p').last&.remove
+    job.css('span')&.remove
+    job.css('div')&.remove
+    job.css('p')&.last&.remove
     table = job.css('table')
     table.css('tr').first&.remove
     table_arr = table.css('tr')

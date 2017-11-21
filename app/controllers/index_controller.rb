@@ -54,10 +54,6 @@ class IndexController < ApplicationController
     param = main_search_params
     session[:param] = Marshal.load(Marshal.dump(param))
     #param[:param][:value] = (PG::Connection.escape_string(param[:param][:value]).split(" ").map {|t| t=t+":*"}).join("&")
-    puts "!_______________________________________!"
-    puts param[:param][:value].delete('!',':','*','&','(',')',"\'").blank?
-    puts "!_______________________________________!"
-    puts param[:param][:value].delete('!',':','*','&','(',')',"\'")
     if param[:param][:value].delete("!:*&()'`\"’").blank?
       param[:param][:value] = ''
     else
