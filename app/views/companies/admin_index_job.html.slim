@@ -53,7 +53,7 @@
           td = job.flextime
           td = job.remote
           td = job.description[0..50]+"..."
-          td = job.close.strftime('%d.%m.%Y')
+          td = job.close&.strftime('%d.%m.%Y')
           - if PropertsHelper::URGENT=="true"
             td = job.urgent
           - if PropertsHelper::TOP == "true"
