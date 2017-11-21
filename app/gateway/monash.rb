@@ -45,31 +45,38 @@ class Monash < Adapter
   end
 
   def get_job(url)
-    puts "!!!__________________ Операция анализа работ!!!"
-    page = Nokogiri::HTML(open(url))
-    job = page.at_css('[class="jobdets"]')
-    job.css('span')&.remove
-    job.css('div')&.remove
-    job.css('p')&.last&.remove
-    table = job.css('table')
-    table.css('tr').first&.remove
-    table_arr = table.css('tr')
-    description = ''
-    table_arr.css('td').children.each do |elem|
-        description += elem.to_s
-    end
-    job.css('table').remove
-    job.css('p').each do |e|
-      if not (e.content.to_s.scan(/(Your application must address the selection criteria. Please refer to)/).empty?) or e.content =="#Li"
-        e.remove
+    begin
+      puts "!!!__________________ Операция анализа работ!!!"
+      page = Nokogiri::HTML(open(url))
+      job = page.at_css('[class="jobdets"]')
+      if job.nil?
+        job = page.at_css('[id="job-details"]')
       end
+      job.css('span')&.remove
+      job.css('div')&.remove
+      job.css('p')&.last&.remove
+      table = job.css('table')
+      table.css('tr').first&.remove
+      table_arr = table.css('tr')
+      description = ''
+      table_arr.css('td').children.each do |elem|
+          description += elem.to_s
+      end
+      job.css('table').remove
+      job.css('p').each do |e|
+        if not (e.content.to_s.scan(/(Your application must address the selection criteria. Please refer to)/).empty?) or e.content =="#Li"
+          e.remove
+        end
+      end
+      job.css('img').remove
+      description += "<hr>"
+      description += job.children.to_s
+      description = Markitdown.from_nokogiri(Nokogiri::HTML(description.gsub("<br>"," ").gsub("<h2>","<h4>").gsub("<h3>","<h4>").gsub("</h2>","</h4>").gsub("</h3>","</h4>").squish.gsub("> <","><")))
+      {fulltime: description.include?("Full-time"),
+       description:description}
+    rescue
+      Raise $!
     end
-    job.css('img').remove
-    description += "<hr>"
-    description += job.children.to_s
-    description = Markitdown.from_nokogiri(Nokogiri::HTML(description.gsub("<br>"," ").gsub("<h2>","<h4>").gsub("<h3>","<h4>").gsub("</h2>","</h4>").gsub("</h3>","</h4>").squish.gsub("> <","><")))
-    {fulltime: description.include?("Full-time"),
-     description:description}
   end
 
   def create_index(index = nil)

@@ -12,17 +12,26 @@ class Gateway < ApplicationRecord
   validates :script, presence: true
 
   def execute_getway
-    logs = "Started: #{Time.now} \r\n"
+    @tread = Thread.new do
+      def_thread
+    end
+
+  end
+
+
+  private
+  def def_thread
+    logs = "<p>Started: #{Time.now}</p>"
     begin
       eval "@gate = #{self.script}.new"
       index = Job.where(company: company, client: client).map do |job|
         {title:job.title, date_end: job.close}
       end
       jobs=@gate.read(index)
-      logs += "Found #{jobs.count} jobs \r\n"
+      logs += "<p>Found #{jobs.count} jobs</p>"
       jobs.each do |new_job|
         begin
-          logs += "Job is creating: title \"#{new_job[:title]}\" close #{new_job[:close]} \r\n"
+          logs += "<p>Job is creating: title \"#{new_job[:title]}\" close #{new_job[:close]}</p>"
           new_job[:client] = client
           new_job[:company] = company
           new_job[:location] = location
@@ -31,22 +40,15 @@ class Gateway < ApplicationRecord
             job.industryjob.new(industry: industry)
           end
         rescue
-          logs += "Error: Job #{$!} \r\n"
+          logs += "<p>Error: Job #{$!}</p>"
         end
       end
     rescue
-      logs += "Error: #{$!} \r\n"
+      logs += "<p>Error: #{$!}</p>"
     end
-    logs += "Finished: #{Time.now}"
+    logs += "<p>Finished: #{Time.now}</p>"
     self.log=logs
     save!
-  end
-
-
-  private
-  def def_thread
-
-
   end
 
 end
