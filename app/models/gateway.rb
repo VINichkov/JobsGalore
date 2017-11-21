@@ -36,7 +36,7 @@ class Gateway < ApplicationRecord
           new_job[:company] = company
           new_job[:location] = location
           job=Job.new(new_job)
-          job.industryjob.new(industry: industry)
+          #job.industryjob.new(industry: industry)
           job.save!
         rescue
           logs += "<p>Error: Job #{$!}</p>"
