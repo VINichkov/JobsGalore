@@ -53,7 +53,7 @@ module Admin
   end
 
   def admin_company_jobs
-    @objs = Company.find_by_id(params[:id]).job.order(updated_at: :desc).paginate(page: params[:page], per_page:25)
+    @objs = Company.find_by_id(params[:id]).job.order(close: :desc).paginate(page: params[:page], per_page:25)
   end
 
   # DELETE /companies/1
