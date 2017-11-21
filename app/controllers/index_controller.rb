@@ -53,12 +53,16 @@ class IndexController < ApplicationController
     @category = Industry.industries_cashe
     param = main_search_params
     session[:param] = Marshal.load(Marshal.dump(param))
-    param[:param][:value] = (param[:param][:value].split(" ").map {|t| t=t+":*"}).join("&")
-    #if param[:param][:value].delete!('!',':','*','&','(',')',"\'").blank?
-    #  param[:param][:value] = ''
-    #else
-    #  param[:param][:value] = (param[:param][:value].delete!('!',':','*','&','(',')',"\'")&.split(" ").map {|t| t=t+":*"}).join("&")
-    #end
+    #param[:param][:value] = (PG::Connection.escape_string(param[:param][:value]).split(" ").map {|t| t=t+":*"}).join("&")
+    puts "!_______________________________________!"
+    puts param[:param][:value].delete('!',':','*','&','(',')',"\'").blank?
+    puts "!_______________________________________!"
+    puts param[:param][:value].delete('!',':','*','&','(',')',"\'")
+    if param[:param][:value].delete("!:*&()'`\"’").blank?
+      param[:param][:value] = ''
+    else
+      param[:param][:value] = (param[:param][:value].delete("!:*&()'`\"’")&.split(" ").map {|t| t=t+":*"}).join("&")
+    end
     case param[:param][:type]
       when '1'
         @objs = Company.includes(:location,:industry).search(param[:param]).order(:name).paginate(page: param[:page], per_page:21)

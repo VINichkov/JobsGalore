@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
       end
       $date.mem = Date.today
       open("http://google.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
-      open("http://www.bing.comping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
+      open("http://www.bing.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
 
     end
   end
