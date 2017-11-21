@@ -14,7 +14,7 @@ class GatewaysController < ApplicationController
   end
 
   def execute
-    @gateway.execute
+    @gateway.execute_getway
     respond_to do |format|
       format.html { redirect_to gateways_url, notice: 'Started.' }
     end

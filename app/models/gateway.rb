@@ -11,7 +11,7 @@ class Gateway < ApplicationRecord
   validates :location, presence: true
   validates :script, presence: true
 
-  def execute
+  def execute_getway
     logs = "Started: #{Time.now} \r\n"
     begin
       eval "@gate = #{self.script}.new"
