@@ -1,12 +1,10 @@
 require 'markitdown'
 class Monash < Adapter
   def initialize
-    puts "!!!__________________ Инициализация !!!"
     @doc = Nokogiri::HTML(open('http://careers.pageuppeople.com/513/cw/en/listing'))
   end
 
   def read (index = nil)
-    puts "!!!__________________ Чтение!!!"
     rez = []
     index = create_index(index)
     loop do
@@ -22,7 +20,6 @@ class Monash < Adapter
   private
 
   def list_jobs (index = nil)
-    puts "!!!__________________ Операция плучения работ!!!"
     table = @doc.at_css('[id="recent-jobs-content"]')
     jobs = []
     table.css('tr').each do |row|
@@ -46,7 +43,6 @@ class Monash < Adapter
 
   def get_job(url)
     begin
-      puts "!!!__________________ Операция анализа работ!!!"
       page = Nokogiri::HTML(open(url))
       job = page.at_css('[class="jobdets"]')
       if job.nil?

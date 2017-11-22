@@ -22,6 +22,7 @@
         th Remote
         th Description
         th Companies
+        th Close
         th Highlight
         th Top
         th Urgent
@@ -48,6 +49,7 @@
           td = job.remote
           td = job.description
           td = job.company.name
+          td = job.close&.strftime('%d.%m.%Y')
           td = job.highlight
           td = job.top
           td = job.urgent

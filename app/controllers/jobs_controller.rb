@@ -37,7 +37,6 @@ class JobsController < ApplicationController
     @job.client_id = current_client.id
     respond_to do |format|
       if @job.save
-        #TODO
         if @job.client.send_email
           @JobsMailer.add_job({mail:current_client.email, firstname:current_client.firstname, id:@job.id, title:@job.title}).deliver_later
         end
@@ -77,7 +76,7 @@ class JobsController < ApplicationController
   end
 
   def admin_index
-    @jobs = Job.all.includes(:location,:company, :client).order(:title).paginate(page: params[:page], per_page:21)
+    @jobs = Job.all.includes(:location,:company, :client).order(:close).paginate(page: params[:page], per_page:21)
   end
 
   # GET /jobs/1
