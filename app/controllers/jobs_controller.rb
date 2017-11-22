@@ -128,7 +128,7 @@ class JobsController < ApplicationController
     @job.industryjob.new(industry:Industry.find_by_id(industry))
     respond_to do |format|
       if @job.update(param)
-        format.html { redirect_to admin_jobs_show_path(@job), notice: 'Job was successfully updated.' }
+        format.html { redirect_to admin_jobs_url, notice: 'Job was successfully updated.' }
         format.json { render :admin_show, status: :ok, location: @job }
       else
         format.html { render :admin_edit }
