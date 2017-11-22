@@ -47,7 +47,7 @@
           td = job.parttime
           td = job.flextime
           td = job.remote
-          td = job.description
+          td = job.description&.truncate(50)
           td = job.company.name
           td = job.close&.strftime('%d.%m.%Y')
           td = job.highlight
