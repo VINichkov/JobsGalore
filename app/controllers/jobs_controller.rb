@@ -76,8 +76,10 @@ class JobsController < ApplicationController
   end
 
   def admin_index
-    @not_id = Industryjob.all.map {|t| t.job_id}
-    @jobs = Job.industry.includes(:location,:company, :client).order(:close).paginate(page: params[:page], per_page:21)
+
+    @not_id = Industryjob.all.map {|t| t.job_id} if @not_id.nil?
+
+    @jobs = Job.where('id mot in (?)', @not_id).includes(:location,:company, :client).order(:close).paginate(page: params[:page], per_page:21)
   end
 
   # GET /jobs/1
