@@ -76,9 +76,9 @@ class JobsController < ApplicationController
   end
 
   def admin_index
-    @not_id = Industryjob.select(:job_id).all.to_a
+    @not_id = Industryjob.all.map {|t| t.job_id}
     puts @not_id
-    @jobs = Job.where("id not in ?",@not_id).includes(:location,:company, :client).order(:close).paginate(page: params[:page], per_page:21)
+    @jobs = Job.where("id not in (?)",@not_id).includes(:location,:company, :client).order(:close).paginate(page: params[:page], per_page:21)
   end
 
   # GET /jobs/1
