@@ -76,10 +76,7 @@ class JobsController < ApplicationController
   end
 
   def admin_index
-    if @not_id.nil?
-      @not_id = Industryjob.all.map {|t| t.job_id}
-    end
-    puts @not_id
+    @not_id = Industryjob.all.map {|t| t.job_id}
     @jobs = Job.industry.includes(:location,:company, :client).order(:close).paginate(page: params[:page], per_page:21)
   end
 
