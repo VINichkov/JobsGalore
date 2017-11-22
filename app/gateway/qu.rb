@@ -1,7 +1,7 @@
-require 'markitdown'
-class Monash < Adapter
+class Qu
   def initialize
-    @doc = Nokogiri::HTML(open('http://careers.pageuppeople.com/513/cw/en/listing'))
+    @doc = Nokogiri::HTML(open('http://jobs.uq.edu.au/caw/en/listing/'))
+    @host = 'http://jobs.uq.edu.au'
   end
 
   def read (index = nil)
@@ -12,7 +12,7 @@ class Monash < Adapter
       unless @doc.at_css('[class="more-link button"]')
         break
       end
-      @doc = Nokogiri::HTML(open( "http://careers.pageuppeople.com#{@doc.at_css('[class="more-link button"]')[:href]}"))
+      @doc = Nokogiri::HTML(open( "#{@host}#{@doc.at_css('[class="more-link button"]')[:href]}"))
     end
     rez
   end
@@ -29,8 +29,8 @@ class Monash < Adapter
         date_end = row.css('time').first&.content
         date_end ? date_end = Date.parse(row.css('time').first&.content) : nil
         unless index&.include?(date_end ? title + date_end.strftime('%d.%m.%Y') : title)
-          puts "http://careers.pageuppeople.com#{row.at_css('[class="job-link"]')[:href]}"
-          job = get_job "http://careers.pageuppeople.com#{row.at_css('[class="job-link"]')[:href]}"
+          puts "#{@host}#{row.at_css('[class="job-link"]')[:href]}"
+          job = get_job "#{@host}#{row.at_css('[class="job-link"]')[:href]}"
           jobs.push ({ title: title,
                           close: date_end,
                           fulltime:job[:fulltime],
@@ -42,7 +42,6 @@ class Monash < Adapter
   end
 
   def get_job(url)
-    begin
       page = Nokogiri::HTML(open(url))
       job = page.at_css('[class="jobdets"]')
       if job.nil?
@@ -60,19 +59,16 @@ class Monash < Adapter
       end
       job.css('table').remove
       job.css('p').each do |e|
-        if not (e.content.to_s.scan(/(Your application must address the selection criteria. Please refer to)/).empty?) or e.content =="#Li"
+        if not (e.content.to_s.scan(/(To submit an application for this)/).empty?) or e.content =="#Li"
           e.remove
         end
       end
       job.css('img').remove
       description += "<hr>"
       description += job.children.to_s
-      description = Markitdown.from_nokogiri(Nokogiri::HTML(description.gsub("<br>"," ").gsub("<h2>","<h4>").gsub("<h3>","<h4>").gsub("</h2>","</h4>").gsub("</h3>","</h4>").squish.gsub("> <","><")))
+      description = Markitdown.from_nokogiri(Nokogiri::HTML(description.gsub("<br>"," ").gsub("<h2>","<h4>").gsub("<h3>","<h4>").gsub("</h2>","</h4>").gsub("</h3>","</h4>").gsub("> <","><"))) #.squish
       {fulltime: description.include?("Full-time"),
        description:description}
-    rescue
-      puts "!__________________________Ошибка Monash get_jobs!!!"
-    end
   end
 
   def create_index(index = nil)
