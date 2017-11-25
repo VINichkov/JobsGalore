@@ -16,8 +16,8 @@ module Wizard
 
   def admin_create_job
     param = job_params
-    industry = param[:industry]
-    param.delete(:industry)
+    industry = param[:ind]
+    param.delete(:ind)
     @job = Job.new(param)
     @job.industryjob.new(industry:Industry.find_by_id(industry))
     respond_to do |format|
