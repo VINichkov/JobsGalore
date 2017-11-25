@@ -3,7 +3,7 @@
 - meta_tag "keywords", "#{@job.title} ,Job in #{@job.location.suburb} #{@job.location.state} , Company is #{@job.company.name}"
 - meta_tag "og:type", "article"
 - meta_tag "og:title", @job.title
-- meta_tag "og:description", @job.description[0..350]
+- meta_tag "og:description", (RDiscount.new(@job.description).text).truncate(50)
 - meta_tag "og:url", job_url(@job)
 - meta_tag "og:image", @job.company.logo_uid ? Dragonfly.app.remote_url_for(@job.company.logo_uid) : image_url("company_profile.jpg")
 - meta_tag "article:published_time", @job.updated_at
@@ -291,8 +291,6 @@
             = render :inline =>  RDiscount.new(@job.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if @job.description
 .col-xs-12.hidden-md.hidden-lg.hidden-sm
   .panel-body
-    h1.text-center
-      = @job.title.capitalize
     .row
       .col-xs-12
         h3.text-center
@@ -304,10 +302,10 @@
             = link_to(image_tag(Dragonfly.app.remote_url_for(@job.company.logo_uid), class: 'img-thumbnail center-block ', size: "300x250"),@job.company)
         p
         .text-center
-          =social_share_button_tag @job.title, url: job_url(@job), title:@job.title
+          = social_share_button_tag @job.title, url: job_url(@job), title:@job.title
       .col-xs-12
         h3.text-center
-          |Job summary
+          = @job.title.capitalize
         .row
           .col-xs-12
             p
