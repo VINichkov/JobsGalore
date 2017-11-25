@@ -19,7 +19,7 @@ module Wizard
     industry = param[:industry]
     param.delete(:industry)
     @job = Job.new(param)
-    @job.industryjob.new(industry:Industry.find_by_id(industry.to_i))
+    @job.industryjob.new(industry:Industry.find_by_id(industry))
     respond_to do |format|
       if @job.save
         format.html { redirect_to admin_index_job_path("#{@job.client.id}x#{@job.company.id}"), notice: 'Job was successfully created.' }

@@ -38,6 +38,13 @@
             dataStyle: "btn-default",
             values: Industry.all.to_json,
             defaultValues:@job.industry.to_json)
+  .form-group
+    = f.label :close,
+    br
+      .input-group.date.datepicker_reg
+        input.form-control[type="text" name="job[close]" autocomplete="off"]
+        span.input-group-addon
+          i.glyphicon.glyphicon-calendar
   .row
     br
     .col-xs-12.col-sm-6.col-md-6
