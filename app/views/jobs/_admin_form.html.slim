@@ -42,7 +42,7 @@
     = f.label :close
     br
       .input-group.date.datepicker_reg
-        input.form-control[type="text" name="job[close]" autocomplete="off"]
+        input.form-control[type="text" name="job[close]" value =(f.close ? f.close.strftime("%d %B %Y").to_s : "Empty") autocomplete="off"]
         span.input-group-addon
           i.glyphicon.glyphicon-calendar
   .row
