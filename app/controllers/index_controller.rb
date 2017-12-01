@@ -125,15 +125,15 @@ class IndexController < ApplicationController
             @objs << {url: root_url, date:Time.now.strftime("%Y-%m-%d"),changefreq:"hourly" }
           when '2'
             Company.all.each do |company|
-              @objs <<{url: company_url(company), date:company.updated_at.strftime("%Y-%m-%d"),changefreq:"weekly" }
+              @objs <<{url: company_url(company), date:company.updated_at.strftime("%Y-%m-%d"),changefreq:"hourly" }
             end
           when '3'
             Resume.all.each do |resume|
-              @objs <<{url: resume_url(resume), date:resume.updated_at.strftime("%Y-%m-%d"),changefreq:"weekly" }
+              @objs <<{url: resume_url(resume), date:resume.updated_at.strftime("%Y-%m-%d"),changefreq:"hourly" }
             end
           else
             Job.all.each do |job|
-              @objs <<{url: job_url(job), date:job.updated_at.strftime("%Y-%m-%d"),changefreq:"weekly" }
+              @objs <<{url: job_url(job), date:job.updated_at.strftime("%Y-%m-%d"),changefreq:"hourly" }
             end
         end
         format.xml{ render :xml => @obj}
