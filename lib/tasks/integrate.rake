@@ -9,4 +9,13 @@ namespace :integrate do
     end
     puts "! Task:add_jobs: End"
   end
+
+  desc "Deletes unnecessary jobs"
+  task :delete_jobs => :environment  do
+    puts "! Task:delete_jobs: start"
+    Job.delete_jobs.each do |t|
+      puts "#{t.id} #{t.close}"
+    end
+    puts "! Task:delete_jobs: End"
+  end
 end

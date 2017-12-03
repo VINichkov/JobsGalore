@@ -38,6 +38,10 @@ class Job < ApplicationRecord
     self.save
   end
 
+  def self.detete_jobs
+    self.where('close<date(?)',Time.now)
+  end
+
   protected
 
   scope :search, ->(query)  do
