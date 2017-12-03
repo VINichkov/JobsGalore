@@ -32,6 +32,7 @@ class Gateway < ApplicationRecord
       end
       jobs=@gate.read(index)
       logs += "<p>Found #{jobs.count} jobs</p>"
+      puts "<p>Found #{jobs.count} jobs</p>"
       jobs.each do |new_job|
         begin
           logs += "<p>Job is creating: title \"#{new_job[:title]}\" close #{new_job[:close]}</p>"
@@ -42,6 +43,7 @@ class Gateway < ApplicationRecord
           #job.industryjob.new(industry: industry)
           job.save!
         rescue
+          puts "<p>Error: Job #{$!}</p>"
           logs += "<p>Error: Job #{$!}</p>"
         end
       end
@@ -49,6 +51,7 @@ class Gateway < ApplicationRecord
       logs += "<p>Error: #{$!}</p>"
     end
     logs += "<p>Finished: #{Time.now}</p>"
+    puts logs
     self.log=logs
     save!
   end
