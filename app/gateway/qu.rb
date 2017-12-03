@@ -1,6 +1,5 @@
 class Qu
   def initialize
-    puts "!!! Qu"
     @doc = Nokogiri::HTML(open('http://jobs.uq.edu.au/caw/en/listing/'))
     @host = 'http://jobs.uq.edu.au'
   end

@@ -1,7 +1,6 @@
 require 'markitdown'
 class Monash < Adapter
   def initialize
-    puts "!!! Monash"
     @doc = Nokogiri::HTML(open('http://careers.pageuppeople.com/513/cw/en/listing'))
   end
 
