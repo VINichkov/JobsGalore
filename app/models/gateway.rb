@@ -13,6 +13,7 @@ class Gateway < ApplicationRecord
 
   def execute_getway
     @tread = Thread.new do
+      puts "!!_____Start!!!"
       def_thread
     end
 
@@ -21,8 +22,10 @@ class Gateway < ApplicationRecord
 
   private
   def def_thread
+    puts "!!_____Start2!!!"
     logs = "<p>Started: #{Time.now}</p>"
     begin
+      puts "!!_____Start3!!!"
       eval "@gate = #{self.script}.new"
       index = Job.where(company: company, client: client).map do |job|
         {title:job.title, date_end: job.close}
