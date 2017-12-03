@@ -50,7 +50,7 @@ class IndexController < ApplicationController
 
   def main_search
     @name={}
-    @category = Industry.industries_cashe
+    @category = Industry.all
     param = main_search_params
     session[:param] = Marshal.load(Marshal.dump(param))
     #param[:param][:value] = (PG::Connection.escape_string(param[:param][:value]).split(" ").map {|t| t=t+":*"}).join("&")
