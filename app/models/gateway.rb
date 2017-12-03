@@ -18,6 +18,9 @@ class Gateway < ApplicationRecord
 
   end
 
+  def execute
+    def_thread
+  end
 
   private
   def def_thread
