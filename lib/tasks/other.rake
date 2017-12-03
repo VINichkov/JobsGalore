@@ -18,9 +18,4 @@ namespace :other do
     puts "! Task:extras_check: End"
   end
 
-  desc "It pings searcher"
-  task :ping_searcher => :environment  do
-    open("http://google.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
-    open("http://www.bing.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
-  end
 end
