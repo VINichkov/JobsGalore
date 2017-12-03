@@ -12,11 +12,11 @@ class Industry < ApplicationRecord
 
   has_one :industry, class_name: "Industry"
 
-  def self.industries_cashe
-    if $date.cash[:industry].nil?
-      $date.cash[:industry] = Industry.all
-    end
-    return $date.cash[:industry]
-  end
+  #def self.industries_cashe
+  #  if $date.cash[:industry].nil?
+   #   $date.cash[:industry] = Industry.all
+  #  end
+   # return $date.cash[:industry]
+ # end
 
 end
