@@ -66,7 +66,7 @@ class Qu
       job.css('img').remove
       description += "<hr>"
       description += job.children.to_s
-      description = Markitdown.from_nokogiri(Nokogiri::HTML((description.gsub("<br>"," ").gsub("<h2>","<h4>").gsub("<h3>","<h4>").gsub("</h2>","</h4>").gsub("</h3>","</h4>").gsub("> <","><")).encode("UTF-16be", :invalid=>:replace, :replace=>"?").encode('UTF-8'))) #.squish
+      description = Markitdown.from_nokogiri(Nokogiri::HTML((description.gsub("<br>"," ").gsub("<h2>","<h4>").gsub("<h3>","<h4>").gsub("</h2>","</h4>").gsub("</h3>","</h4>").gsub("> <","><")).encode!(Encoding::ISO_8859_1))) #.squish
       {fulltime: description.include?("Full-time"),
        description:description}
   end

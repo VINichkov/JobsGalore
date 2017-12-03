@@ -1,2 +1,2 @@
-str = "Phd student project: computerised cognitive (training) in huntington’s disease"
-puts str.delete("!:*&()'`\"’")
+str = "Systems Developerâ\u0080\u0093 Database Applications"
+puts str.encode!(Encoding::ISO_8859_1)
