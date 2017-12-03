@@ -8,4 +8,6 @@ Disallow: /gatetway/
 Disallow: /clients/
 Disallow: /bill/
 Disallow: /admin/
+Disallow: /contact/
+Disallow: /privacy/
 Sitemap: https://www.JobsGalore.eu/sitemap.xml
