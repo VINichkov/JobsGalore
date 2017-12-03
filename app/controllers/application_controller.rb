@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :extras_check
 
   protected
 
@@ -32,20 +31,5 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError.new('Not Found')
   end
 
-  def extras_check
-    if $date.mem < Date.today or $date.mem.nil?
-      Thread.new do
-        begin
-          extras_off
-        rescue
-          puts "____________________Error: #{$!}"
-        end
-      end
-      $date.mem = Date.today
-      open("http://google.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
-      open("http://www.bing.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
-
-    end
-  end
 
 end

@@ -25,13 +25,6 @@ module Mongo
     #    'MyClass::FileNotFound' => :not_found
     #)
 
-    $date = Single.instance
-    if $date.cash.nil?
-      $date.cash = {}
-    end
-    if $date.mem.nil?
-      $date.mem = Date.today
-    end
   end
 
 end
