@@ -39,7 +39,7 @@ class Job < ApplicationRecord
   end
 
   def self.delete_jobs
-    self.destroy_all('close<date(?)',Time.now)
+    self.where('close<date(?)',Time.now).destroy_all
   end
 
   protected
