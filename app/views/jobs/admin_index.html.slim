@@ -10,18 +10,10 @@
         th Owner
         th Title
         th Locations
-        th Salarymin
-        th Salarymax
-        th Permanent
-        th Casual
-        th Temp
-        th Contract
-        th Fulltime
-        th Parttime
-        th Flextime
-        th Remote
         th Description
         th Companies
+        th Posted
+        th Updated
         th Close
         th Highlight
         th Top
@@ -37,18 +29,10 @@
           td = "#{job.client.id} #{job.client.email} #{job.client.firstname} #{job.client.lastname}"
           td = job.title
           td = "#{job.location.suburb}, #{job.location.state}" if job.location
-          td = job.salarymin
-          td = job.salarymax
-          td = job.permanent
-          td = job.casual
-          td = job.temp
-          td = job.contract
-          td = job.fulltime
-          td = job.parttime
-          td = job.flextime
-          td = job.remote
           td = job.description&.truncate(50)
           td = job.company.name
+          td = job.created_at&.strftime('%d.%m.%Y')
+          td = job.updated_at&.strftime('%d.%m.%Y')
           td = job.close&.strftime('%d.%m.%Y')
           td = job.highlight
           td = job.top
