@@ -31,10 +31,12 @@
         unless index&.include?(date_end ? title + date_end.strftime('%d.%m.%Y') : title)
           puts "#{@host}#{row.at_css('[class="job-link"]')[:href]}"
           job = get_job "#{@host}#{row.at_css('[class="job-link"]')[:href]}"
-          jobs.push ({ title: title.force_encoding(Encoding::UTF_8),
-                          close: date_end,
-                          fulltime:job[:fulltime],
-                          description:job[:description].force_encoding(Encoding::UTF_8)})
+          unless job[:description].empty?
+            jobs.push ({ title: title.force_encoding(Encoding::UTF_8),
+                            close: date_end,
+                            fulltime:job[:fulltime],
+                            description:job[:description].force_encoding(Encoding::UTF_8)})
+          end
         end
       end
     end
@@ -54,9 +56,7 @@
       table.css('tr').first&.remove
       table_arr = table.css('tr')
       description = ''
-      table_arr.css('td').children.each do |elem|
-          description += elem.to_s
-      end
+
       job.css('table').remove
       job.css('p').each do |e|
         if not (e.content.to_s.scan(/(To submit an application for this)/).empty?) or e.content =="#Li"
@@ -64,9 +64,14 @@
         end
       end
       job.css('img').remove
-      description += "<hr>"
-      description += job.children.to_s
-      description = Markitdown.from_nokogiri(Nokogiri::HTML((description.gsub("<br>"," ").gsub("<h1>","<h4>").gsub("<h2>","<h4>").gsub("<h3>","<h4>").gsub("</h2>","</h4>").gsub("</h3>","</h4>").squish.gsub("> <","><")))) #.squish
+      unless  job.text.scan(/\w/).empty?
+        table_arr.css('td').children.each do |elem|
+          description += elem.to_s
+        end
+        description += "<hr>"
+        description += job.children.to_s
+        description = Markitdown.from_nokogiri(Nokogiri::HTML((description.gsub("<br>"," ").gsub("<h1>","<h4>").gsub("<h2>","<h4>").gsub("<h3>","<h4>").gsub("</h2>","</h4>").gsub("</h3>","</h4>").squish.gsub("> <","><")))) #.squish
+      end
       {fulltime: description.include?("Full-time"),
        description:description.encode!(Encoding::ISO_8859_1)}
   end
