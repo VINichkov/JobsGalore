@@ -35,6 +35,8 @@ gem 'markitdown'
 gem 'will_paginate-bootstrap' ,'~> 1.0.1'
 #gem 'bcrypt', '~>3.1.11'
 
+gem "html_truncator", "~>0.4"
+
 group :production do
   gem 'puma'
 
