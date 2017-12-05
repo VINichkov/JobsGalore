@@ -35,7 +35,7 @@
   -if not resume.salary.nil?
     p = resume.salary.to_i.to_s
 
-  = render :inline =>  RDiscount.new(resume.abouteme[0..300]).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if resume.abouteme
+  = render :inline =>  HTML_Truncator.truncate(RDiscount.new(resume.abouteme).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" "),30) if resume.abouteme
   = link_to ' more...', resume
   p = resume.location.state.to_s+" "+resume.location.suburb.capitalize.to_s
 .col-lg-2.col-md-2.col-sm-2.hidden-xs
