@@ -1,4 +1,4 @@
-class Qu < Adapter
+﻿class Qu < Adapter
   def initialize
     @doc = Nokogiri::HTML(open('http://jobs.uq.edu.au/caw/en/listing/'))
     @host = 'http://jobs.uq.edu.au'
@@ -25,16 +25,16 @@ class Qu < Adapter
     table.css('tr').each do |row|
       if row['class'] != "summary"
         #ЗП #puts row.css('td')[2].content
-        title = row.at_css('[class="job-link"]').content
+        title = row.at_css('[class="job-link"]').content.encode!(Encoding::ISO_8859_1)
         date_end = row.css('time').first&.content
         date_end ? date_end = Date.parse(row.css('time').first&.content) : nil
         unless index&.include?(date_end ? title + date_end.strftime('%d.%m.%Y') : title)
           puts "#{@host}#{row.at_css('[class="job-link"]')[:href]}"
           job = get_job "#{@host}#{row.at_css('[class="job-link"]')[:href]}"
-          jobs.push ({ title: title,
+          jobs.push ({ title: title.force_encoding(Encoding::UTF_8),
                           close: date_end,
                           fulltime:job[:fulltime],
-                          description:job[:description]})
+                          description:job[:description].force_encoding(Encoding::UTF_8)})
         end
       end
     end
@@ -68,7 +68,7 @@ class Qu < Adapter
       description += job.children.to_s
       description = Markitdown.from_nokogiri(Nokogiri::HTML((description.gsub("<br>"," ").gsub("<h1>","<h4>").gsub("<h2>","<h4>").gsub("<h3>","<h4>").gsub("</h2>","</h4>").gsub("</h3>","</h4>").squish.gsub("> <","><")))) #.squish
       {fulltime: description.include?("Full-time"),
-       description:description}
+       description:description.encode!(Encoding::ISO_8859_1)}
   end
 
   def create_index(index = nil)

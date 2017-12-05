@@ -31,10 +31,12 @@ class Monash < Adapter
         unless index&.include?(date_end ? title + date_end.strftime('%d.%m.%Y') : title)
           puts "http://careers.pageuppeople.com#{row.at_css('[class="job-link"]')[:href]}"
           job = get_job "http://careers.pageuppeople.com#{row.at_css('[class="job-link"]')[:href]}"
-          jobs.push ({ title: title,
-                          close: date_end,
-                          fulltime:job[:fulltime],
-                          description:job[:description]})
+          unless job[:description].empty?
+            jobs.push ({ title: title,
+                         close: date_end,
+                         fulltime:job[:fulltime],
+                         description:job[:description]})
+          end
         end
       end
     end
@@ -55,9 +57,6 @@ class Monash < Adapter
       table.css('tr').first&.remove
       table_arr = table.css('tr')
       description = ''
-      table_arr.css('td').children.each do |elem|
-          description += elem.to_s
-      end
       job.css('table').remove
       job.css('p').each do |e|
         if not (e.content.to_s.scan(/(Your application must address the selection criteria. Please refer to)/).empty?) or e.content =="#Li"
@@ -65,9 +64,14 @@ class Monash < Adapter
         end
       end
       job.css('img').remove
-      description += "<hr>"
-      description += job.children.to_s
-      description = Markitdown.from_nokogiri(Nokogiri::HTML(description.gsub("<br>"," ").gsub("<h1>","<h4>").gsub("<h2>","<h4>").gsub("<h3>","<h4>").gsub("</h2>","</h4>").gsub("</h3>","</h4>").squish.gsub("> <","><")))
+      unless  job.text.scan(/\w/).empty?
+        table_arr.css('td').children.each do |elem|
+          description += elem.to_s
+        end
+        description += "<hr>"
+        description += job.children.to_s
+        description = Markitdown.from_nokogiri(Nokogiri::HTML(description.gsub("<br>"," ").gsub("<h1>","<h4>").gsub("<h2>","<h4>").gsub("<h3>","<h4>").gsub("</h2>","</h4>").gsub("</h3>","</h4>").squish.gsub("> <","><")))
+      end
       {fulltime: description.include?("Full-time"),
        description:description}
     rescue
