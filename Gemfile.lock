@@ -112,6 +112,8 @@ GEM
     formatador (0.2.5)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    html_truncator (0.4.2)
+      nokogiri (~> 1.5)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.8.6)
@@ -284,6 +286,7 @@ DEPENDENCIES
   flamegraph
   fog-aws
   font-awesome-rails
+  html_truncator (~> 0.4)
   jbuilder
   jquery-rails
   listen
