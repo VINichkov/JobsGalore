@@ -29,7 +29,7 @@
           td = "#{job.client.id} #{job.client.email} #{job.client.firstname} #{job.client.lastname}"
           td = job.title
           td = "#{job.location.suburb}, #{job.location.state}" if job.location
-          td = job.description&.truncate(50, separator: ' '))
+          td = job.description&.truncate(50, separator: ' ')
           td = job.company.name
           td = job.created_at&.strftime('%d.%m.%Y')
           td = job.updated_at&.strftime('%d.%m.%Y')
