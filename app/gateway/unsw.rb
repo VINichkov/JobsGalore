@@ -23,7 +23,6 @@ class Unsw < Adapter
             page = form.submit
             job =  page.css('div[class="PT_RTE_DISPLAYONLY"]')
             job.css('script')&.remove
-            job.css('div')&.remove
             job.css('p').each do |e|
               unless (e.content.to_s.scan(/(You should systemically address the selection criteria)/).empty? or e.content.to_s.scan(/(You should systematically address)/).empty? or e.content.to_s.scan(/(Please disable "Pop-up Blockers" )/).empty?)
                 e.remove
