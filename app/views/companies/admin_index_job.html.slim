@@ -15,15 +15,9 @@
         th Industry
         th Salarymin
         th Salarymax
-        th Permanent
-        th Casual
-        th Temp
-        th Contract
-        th Fulltime
-        th Parttime
-        th Flextime
-        th Remote
         th Description
+        th Posted
+        th Updated
         th Close
         - if PropertsHelper::URGENT=="true"
           th Urgent
@@ -44,15 +38,9 @@
           td = job.industry.all.first&.name
           td = job.salarymin
           td = job.salarymax
-          td = job.permanent
-          td = job.casual
-          td = job.temp
-          td = job.contract
-          td = job.fulltime
-          td = job.parttime
-          td = job.flextime
-          td = job.remote
-          td = job.description[0..50]+"..."
+          td = job.description.truncate(50, " ")
+          td = job.created_at&.strftime('%d.%m.%Y')
+          td = job.updated_at&.strftime('%d.%m.%Y')
           td = job.close&.strftime('%d.%m.%Y')
           - if PropertsHelper::URGENT=="true"
             td = job.urgent
