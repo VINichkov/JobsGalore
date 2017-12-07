@@ -50,7 +50,6 @@ class Monash < Adapter
       if job.nil?
         job = page.at_css('[id="job-details"]')
       end
-      job.css('span')&.remove
       job.css('div')&.remove
       job.css('p')&.last&.remove
       table = job.css('table')
@@ -70,7 +69,7 @@ class Monash < Adapter
         end
         description += "<hr>"
         description += job.children.to_s
-        description = Markitdown.from_nokogiri(Nokogiri::HTML(description.gsub("<br>"," ").gsub("h1","h4").gsub("h2","h4").gsub("h3","h4").squish.gsub("> <","><")))
+        description = Markitdown.from_nokogiri(Nokogiri::HTML(description.gsub("<span","<p").gsub("<br>"," ").gsub("h1","h4").gsub("h2","h4").gsub("h3","h4").squish.gsub("> <","><")))
       end
       {fulltime: description.include?("Full-time"),
        description:description}
