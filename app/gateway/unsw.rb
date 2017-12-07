@@ -17,7 +17,7 @@ class Unsw < Adapter
         if hash.class == Hash
           hash["Posted Date"] = Date.parse(hash["Posted Date"]) if hash["Posted Date"]
           hash["Close Date"] = Date.parse(hash["Close Date"]) if hash["Close Date"]
-          if hash["Posted Date"].strftime("%d/%m/%Y")== DateTime.now.strftime("%d/%m/%Y")
+          if hash["Posted Date"].strftime("%d/%m/%Y")== DateTime.now.strftime("%d/%m/%Y") or hash["Posted Date"].strftime("%d/%m/%Y")== (DateTime.now-(60*60*24)).strftime("%d/%m/%Y")
             hash[:title] = td.css('a')&.text
             form['ICAction']= td.css('a')&.first["href"]&.scan(/#ICSetFieldHRS_APP_SCHJOB.HRS_JOB_OPEN_ID_PB\.\d+/)&.first&.to_s
             page = form.submit
