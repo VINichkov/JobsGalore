@@ -38,7 +38,7 @@
           td = job.industry.all.first&.name
           td = job.salarymin
           td = job.salarymax
-          td = job.description.truncate(50, " ")
+          td = job.description.truncate(50, separator: " ")
           td = job.created_at&.strftime('%d.%m.%Y')
           td = job.updated_at&.strftime('%d.%m.%Y')
           td = job.close&.strftime('%d.%m.%Y')
