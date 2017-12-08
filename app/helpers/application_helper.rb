@@ -19,7 +19,6 @@ module ApplicationHelper
     end
     puts puts "!___#{keys}"
     puts puts "!___#{keys.compact!}"
-    puts puts "!___#{keys.compact!.join(', ')}"
     keys.compact!.join(', ')
   end
 
