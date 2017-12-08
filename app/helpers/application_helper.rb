@@ -11,7 +11,7 @@ module ApplicationHelper
   end
 
   def markdown_to_keywords (arg)
-    markdown_to_text (arg, 300).split(' ').join(', ')
+    markdown_to_text(arg, 300).split(' ').join(', ')
   end
 
   def markdown_to_text (arg, truncate=nil)
