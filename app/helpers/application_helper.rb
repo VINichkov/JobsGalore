@@ -11,7 +11,8 @@ module ApplicationHelper
   end
 
   def markdown_to_keywords (arg)
-    keys = markdown_to_text(arg, 300).split(' ').map do |key|
+    keys = markdown_to_text(arg, 400).split(' ').map do |key|
+      key.delete(',')
       key = nil unless key&.length>3
       key
     end
