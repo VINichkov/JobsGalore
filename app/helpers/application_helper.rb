@@ -12,7 +12,7 @@ module ApplicationHelper
 
   def markdown_to_keywords (arg)
     keys = markdown_to_text(arg, 400).split(' ').map do |key|
-      key.delete(',')
+      key.delete!(',')
       key = nil unless key&.length>3
       key
     end
