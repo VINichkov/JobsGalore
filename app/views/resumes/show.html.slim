@@ -1,6 +1,6 @@
 - title @resume.desiredjobtitle
 - meta_tag "description",   markdown_to_text(@resume.abouteme, 300)
-- meta_tag "keywords", "#{@resume.desiredjobtitle}, #{markdown_to_keywords(@resume.abouteme, 300)}"
+- meta_tag "keywords", "#{@resume.desiredjobtitle}, #{markdown_to_keywords(@resume.abouteme)}"
 - meta_tag "og:type", "article"
 - meta_tag "og:title", @resume.desiredjobtitle
 - meta_tag "og:description", markdown_to_text(@resume.abouteme, 300)

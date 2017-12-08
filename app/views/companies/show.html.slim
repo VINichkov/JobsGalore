@@ -1,6 +1,6 @@
 - title @company.name
 - meta_tag "description",  markdown_to_text(@company.description, 300)
-- meta_tag "keywords", "Australia, Job, Jobs, Galore, Jobsgalore,#{@company.name}, #{@company.description}"
+- meta_tag "keywords", "Australia, Job, Jobs, Galore, Jobsgalore,#{@company.name}, #{markdown_to_keywords(@company.description)}"
 - meta_tag "og:title", @company.name
 - meta_tag "og:description", markdown_to_text(@company.description, 300)
 - meta_tag "og:url", company_url(@company)
