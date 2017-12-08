@@ -11,14 +11,11 @@ module ApplicationHelper
   end
 
   def markdown_to_keywords (arg)
-    puts "!___#{markdown_to_text(arg, 300).split(' ').to_s}"
     keys = markdown_to_text(arg, 300).split(' ').map do |key|
-      key = nil unless key&.count>3
+      key = nil unless key&.length>3
       key
     end
-    puts puts "!___#{keys}"
-    puts puts "!___#{keys.compact}"
-    keys.compact.join(', ')
+    keys.compact.uniq.join(', ')
   end
 
   def markdown_to_text (arg, truncate=nil)
