@@ -26,7 +26,9 @@ class PaymentsController < ApplicationController
           amount='5.00'
           item_name="Highlight"
       end
+      puts "!!________________#{@ad}________"
       unless @ad or amount
+        puts "!!___________________Зашли"
         raise ArgumentError, "No parameters"
       end
       puts payments_url
