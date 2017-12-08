@@ -11,18 +11,25 @@ module ApplicationHelper
   end
 
   def markdown_to_keywords (arg)
+    t = Time.now
+    puts "!!__________Зашли в markdown_to_keywords"
     keys = markdown_to_text(arg, 400).split(' ').map do |key|
       key.delete!(',')
       key = nil unless key&.length>3
       key
     end
+    puts "!!__________Конец markdown_to_keywords #{Time.now - t}"
     keys.compact.uniq.join(', ')
   end
 
   def markdown_to_text (arg, truncate=nil)
+    t = Time.now
+    puts "!!__________Зашли в markdown_to_text"
     text = Nokogiri::HTML(RDiscount.new(arg).to_html).text.squish
     if truncate
-      text.truncate(truncate, separator: ' ',omission: '')
+      text= text.truncate(truncate, separator: ' ',omission: '')
     end
+    puts "!!__________Конец markdown_to_text #{Time.now - t}"
+    text
   end
 end
