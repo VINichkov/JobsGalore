@@ -1,5 +1,5 @@
 - title @resume.desiredjobtitle
-- meta_tag "description",  @resume.desiredjobtitle
+- meta_tag "description",  Nokogiri::HTML(HTML_Truncator.truncate(RDiscount.new(@resume.desiredjobtitle).to_html)).text
 - meta_tag "keywords", @resume.desiredjobtitle
 - meta_tag "og:type", "article"
 - meta_tag "og:title", @resume.desiredjobtitle

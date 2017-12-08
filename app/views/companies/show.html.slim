@@ -1,6 +1,6 @@
 - title @company.name
-- meta_tag "description",  @company.name
-- meta_tag "keywords", @company.name
+- meta_tag "description",  Nokogiri::HTML(HTML_Truncator.truncate(RDiscount.new(@company.description).to_html)).text
+- meta_tag "keywords", "Australia Job Jobs Galore Jobsgalore #{@company.description},
 - meta_tag "og:title", @company.name
 - meta_tag "og:description", @company.description[0..350]
 - meta_tag "og:url", company_url(@company)
