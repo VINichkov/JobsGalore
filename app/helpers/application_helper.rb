@@ -11,7 +11,10 @@ module ApplicationHelper
   end
 
   def markdown_to_keywords (arg)
-    markdown_to_text(arg, 300).split(' ').join(', ')
+    keys = markdown_to_text(arg, 300).split(' ').map do |key|
+      key.delete('\'\",/\\?!@#;|%^&*-_=+~1234567890.')
+    end
+    keys.join(', ')
   end
 
   def markdown_to_text (arg, truncate=nil)
