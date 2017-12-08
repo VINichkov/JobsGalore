@@ -14,7 +14,6 @@ module ApplicationHelper
     puts "!___#{markdown_to_text(arg, 300).split(' ').to_s}"
     keys = markdown_to_text(arg, 300).split(' ').map do |key|
       key.delete!('?!#;\'\",\\|%^&*-_=+~1234567890(){}[]')
-      puts "!___#{key}"
       #key = '' unless key&.count>3
     end
     puts puts "!___#{keys}"
