@@ -17,9 +17,9 @@ module ApplicationHelper
       puts "!___#{key}"
       #key = '' unless key&.count>3
     end
-    puts puts "!___#{key}"
-    puts puts "!___#{key.compact!}"
-    puts puts "!___#{key.compact!.join(', ')}"
+    puts puts "!___#{keys}"
+    puts puts "!___#{keys.compact!}"
+    puts puts "!___#{keys.compact!.join(', ')}"
     keys.compact!.join(', ')
   end
 
