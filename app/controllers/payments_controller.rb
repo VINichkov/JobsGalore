@@ -26,8 +26,8 @@ class PaymentsController < ApplicationController
           amount='5.00'
           item_name="Highlight"
       end
-      puts "!!________________#{@ad}________"
-      unless @ad or amount
+      puts "!!________________#{@ad}!!________"
+      if @ad.blank? or amount.blank?
         puts "!!___________________Зашли"
         raise ArgumentError, "No parameters"
       end
