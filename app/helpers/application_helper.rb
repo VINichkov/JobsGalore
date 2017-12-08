@@ -13,8 +13,8 @@ module ApplicationHelper
   def markdown_to_keywords (arg)
     puts "!___#{markdown_to_text(arg, 300).split(' ').to_s}"
     keys = markdown_to_text(arg, 300).split(' ').map do |key|
-      key.delete!('1234567890(){}[]')&.gsub('_','')
-      #key = '' unless key&.count>3
+      key = nil unless key&.count>3
+      key
     end
     puts puts "!___#{keys}"
     puts puts "!___#{keys.compact}"
