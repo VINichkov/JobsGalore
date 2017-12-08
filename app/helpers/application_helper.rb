@@ -17,7 +17,7 @@ module ApplicationHelper
   def markdown_to_text (arg, truncate=nil)
     text = Nokogiri::HTML(RDiscount.new(arg).to_html).text.squish
     if truncate
-      text.truncate(truncate)
+      text.truncate(truncate, separator: ' ',omission: '')
     end
   end
 end
