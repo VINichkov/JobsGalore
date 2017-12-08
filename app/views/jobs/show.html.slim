@@ -1,6 +1,5 @@
 - title @job.title
- - puts (Nokogiri::HTML(HTML_Truncator.truncate(RDiscount.new(@job.description).to_html)).text)
-- meta_tag "description",   (Nokogiri::HTML(HTML_Truncator.truncate(RDiscount.new(@job.description).to_html)).text)
+- meta_tag "description",   HTML_Truncator.truncate((RDiscount.new(@job.description).to_html),30 )
 - meta_tag "keywords", "Australia, Job, Jobs, Galore, Jobsgalore,#{@job.title} ,Job in #{@job.location.suburb} #{@job.location.state} , Company is #{@job.company.name}"
 - meta_tag "og:type", "article"
 - meta_tag "og:title", @job.title
