@@ -17,8 +17,8 @@ module ApplicationHelper
       #key = '' unless key&.count>3
     end
     puts puts "!___#{keys}"
-    puts puts "!___#{keys.compact!}"
-    keys.compact!.join(', ')
+    puts puts "!___#{keys.compact}"
+    keys.compact.join(', ')
   end
 
   def markdown_to_text (arg, truncate=nil)
