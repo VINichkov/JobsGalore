@@ -1,2 +1,1 @@
-str = "Systems Developerâ\u0080\u0093 Database Applications"
-puts str.encode!(Encoding::ISO_8859_1)
+puts "<meta content=Australia, Job, Jobs, Galore, Jobsgalore,Master of Philosophy (MPhil) Scholarships to Study Neuroscience ,Job in Brisbane QLD , Company is THE UNIVERSITY OF QUEENSLAND, ueensland, rain, nstitute, aster, hilosophy, hil, cholarships, stablished, , , , httpwwwqbiuqeduau, , t, ucia, , t, , students, , leaders name=\"keywords\">".split(' ').map{|key| key.delete!('?!#;\'\",\\|%^&*-_=+~1234567890(){}[]')}.join(', ')

@@ -11,10 +11,15 @@ module ApplicationHelper
   end
 
   def markdown_to_keywords (arg)
+    puts "!___#{markdown_to_text(arg, 300).split(' ').to_s}"
     keys = markdown_to_text(arg, 300).split(' ').map do |key|
       key.delete!('?!#;\'\",\\|%^&*-_=+~1234567890(){}[]')
+      puts "!___#{key}"
       #key = '' unless key&.count>3
     end
+    puts puts "!___#{key}"
+    puts puts "!___#{key.compact!}"
+    puts puts "!___#{key.compact!.join(', ')}"
     keys.compact!.join(', ')
   end
 
