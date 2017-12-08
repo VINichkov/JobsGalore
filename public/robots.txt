@@ -8,6 +8,8 @@ User-agent: *
 Disallow: /gatetway/
 Disallow: /clients/
 Disallow: /bill/
+Disallow: /payment/
+Disallow: /payments/
 Disallow: /admin/
 Disallow: /contact/
 Disallow: /privacy/

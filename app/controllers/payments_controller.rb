@@ -26,6 +26,9 @@ class PaymentsController < ApplicationController
           amount='5.00'
           item_name="Highlight"
       end
+      unless @ad or amount
+        raise ArgumentError, "No parameters"
+      end
       puts payments_url
       @url = paypal_url(return_url:return_url, cancel_return_url:cancel_url_url, notify_url:payments_url,item_number:"#{@param[:option]}#{@param[:kind]}#{@param[:id]}",amount:amount,item_name:item_name)
     rescue
