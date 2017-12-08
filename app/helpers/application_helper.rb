@@ -14,7 +14,7 @@ module ApplicationHelper
     keys = markdown_to_text(arg, 300).split(' ').map do |key|
       key.delete('\'\",/\\?!@#;|%^&*-_=+~1234567890.(){}[]')
     end
-    keys.join(', ')
+    keys.compact.join(', ')
   end
 
   def markdown_to_text (arg, truncate=nil)
