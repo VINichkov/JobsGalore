@@ -7,26 +7,35 @@ class PaymentsController < ApplicationController
 
   def bill
     @param = payment_params
-    if @param[:kind] == '2'
-      @ad = Job.find_by_id(@param[:id])
-      return_url = job_url(@param[:id])
-    else
-      @ad = Resume.find_by_id(@param[:id])
-      return_url = resume_url(@param[:id])
+    begin
+      if @param[:kind] == '2'
+        @ad = Job.find_by_id(@param[:id])
+        return_url = job_url(@param[:id])
+      else
+        @ad = Resume.find_by_id(@param[:id])
+        return_url = resume_url(@param[:id])
+      end
+      case @param[:option]
+        when '1'
+          amount='10.00'
+          item_name = "Urgent"
+        when '2'
+          amount='20.00'
+          item_name = "Ad Top"
+        when '3'
+          amount='5.00'
+          item_name="Highlight"
+      end
+      puts "!!________________#{@ad}!!________"
+      if @ad.blank? or amount.blank?
+        puts "!!___________________Зашли"
+        raise ArgumentError, "No parameters"
+      end
+      puts payments_url
+      @url = paypal_url(return_url:return_url, cancel_return_url:cancel_url_url, notify_url:payments_url,item_number:"#{@param[:option]}#{@param[:kind]}#{@param[:id]}",amount:amount,item_name:item_name)
+    rescue
+      redirect_to render_404
     end
-    case @param[:option]
-      when '1'
-        amount='10.00'
-        item_name = "Urgent"
-      when '2'
-        amount='20.00'
-        item_name = "Ad Top"
-      when '3'
-        amount='5.00'
-        item_name="Highlight"
-    end
-    puts payments_url
-    @url = paypal_url(return_url:return_url, cancel_return_url:cancel_url_url, notify_url:payments_url,item_number:"#{@param[:option]}#{@param[:kind]}#{@param[:id]}",amount:amount,item_name:item_name)
   end
 
   def cancel_url

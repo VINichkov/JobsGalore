@@ -1,8 +1,8 @@
 - title @company.name
-- meta_tag "description",  @company.name
-- meta_tag "keywords", @company.name
+- meta_tag "description",  markdown_to_text(@company.description, 300)
+- meta_tag "keywords", "Australia, Job, Jobs, Galore, Jobsgalore,#{@company.name}, #{markdown_to_keywords(@company.description)}"
 - meta_tag "og:title", @company.name
-- meta_tag "og:description", @company.description[0..350]
+- meta_tag "og:description", markdown_to_text(@company.description, 300)
 - meta_tag "og:url", company_url(@company)
 - meta_tag "og:image", @company.logo_url
 .container.hidden-xs.hidden-sm

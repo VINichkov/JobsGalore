@@ -4,10 +4,14 @@
 # User-agent: *
 # Disallow: /
 host: www.jobsgalore.eu
+User-agent: *
 Disallow: /gatetway/
 Disallow: /clients/
 Disallow: /bill/
+Disallow: /payment/
+Disallow: /payments/
 Disallow: /admin/
 Disallow: /contact/
 Disallow: /privacy/
+Disallow: /terms_and_conditions/
 Sitemap: https://www.JobsGalore.eu/sitemap.xml

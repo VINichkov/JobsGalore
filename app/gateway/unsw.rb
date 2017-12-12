@@ -17,13 +17,12 @@ class Unsw < Adapter
         if hash.class == Hash
           hash["Posted Date"] = Date.parse(hash["Posted Date"]) if hash["Posted Date"]
           hash["Close Date"] = Date.parse(hash["Close Date"]) if hash["Close Date"]
-          if hash["Posted Date"].strftime("%d/%m/%Y")== DateTime.now.strftime("%d/%m/%Y")
+          if hash["Posted Date"].strftime("%d/%m/%Y")== DateTime.now.strftime("%d/%m/%Y") or hash["Posted Date"].strftime("%d/%m/%Y")== (DateTime.now-(60*60*24)).strftime("%d/%m/%Y")
             hash[:title] = td.css('a')&.text
             form['ICAction']= td.css('a')&.first["href"]&.scan(/#ICSetFieldHRS_APP_SCHJOB.HRS_JOB_OPEN_ID_PB\.\d+/)&.first&.to_s
             page = form.submit
             job =  page.css('div[class="PT_RTE_DISPLAYONLY"]')
             job.css('script')&.remove
-            job.css('div')&.remove
             job.css('p').each do |e|
               unless (e.content.to_s.scan(/(You should systemically address the selection criteria)/).empty? or e.content.to_s.scan(/(You should systematically address)/).empty? or e.content.to_s.scan(/(Please disable "Pop-up Blockers" )/).empty?)
                 e.remove
@@ -39,7 +38,7 @@ class Unsw < Adapter
             description += "<p><strong>Job Family:</strong> #{hash["Job Family"]}</p>"
             description += "<hr>"
             description += job.to_s
-            hash[:description] = Markitdown.from_nokogiri(Nokogiri::HTML(description.gsub("<br>"," ").gsub("h1","h4").gsub("h2","h4").gsub("h3","h4").squish.gsub("> <","><")))
+            hash[:description] = Markitdown.from_nokogiri(Nokogiri::HTML(description.gsub("</div","</em").gsub("<div","<em").gsub("<br>"," ").gsub("h1","h4").gsub("h2","h4").gsub("h3","h4").squish.gsub("> <","><")))
             jobs.push ({  title: hash[:title],
                           close: hash["Close Date"],
                           fulltime: hash[:fulltime],
