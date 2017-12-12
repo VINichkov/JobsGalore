@@ -1,26 +1,16 @@
-- title @company.name
-- meta_tag "description",  markdown_to_text(@company.description, 300)
-- meta_tag "keywords", "Australia, Job, Jobs, Galore, Jobsgalore,#{@company.name}, #{markdown_to_keywords(@company.description)}"
-- meta_tag "og:title", @company.name
-- meta_tag "og:description", markdown_to_text(@company.description, 300)
-- meta_tag "og:url", company_url(@company)
-- meta_tag "og:image", @company.logo_url
+- meta_head(  title:@company.name,
+              description: @company.description_meta,
+              keywords: @company.keywords,
+              url: company_url(@company),
+              image: @company.logo_url)
 .container.hidden-xs.hidden-sm
   .col-lg-8.col-md-8
     .row.well
-      h1.text-center
-        = @company.name
-        -if @company.realy?
-          span.glyphicon.glyphicon-ok.glyphicon-small
+      = company_name(@company)
       p
-        =html_des.html_safe
-    -if @company.jobs_count>0
-      .row
-        h3
-          = link_to "Company jobs #{@company.jobs_count}", "/company_jobs/#{@company.id}"
-
+      = company_description
+    =jobs_of_company(@company)
   .col-lg-4.col-md-4
-
     .panel.panel-default
       .panel-body
         p.text-center
@@ -30,48 +20,14 @@
             h3.text-center
               |Company summary
         .well
-          -if @company.site
-            p
-              =link_to @company.site, @company.site
-          p
-            strong
-              |Location: &nbsp;
-            |#{@company.location&.suburb}, #{@company.location&.state}
-          -if @company.size
-            p
-              strong
-                |Size: &nbsp;
-              |#{@company.size.size}
-          - if @company.recrutmentagency
-            p
-              strong
-                |Recruitment agency &nbsp;
-          - if @company.industries_count>0
-            p
-              strong
-                |Indusrty:
-            ul
-              - @company.industry.each do |industry|
-                li &nbsp; #{industry.name}
-          .row
-            .col-lg-12.col-md-12
-              button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
-                |Contact
-              P
-          .row
-            .col-lg-12.col-md-12
-              button.btn.btn-success.btn-block[onclick="history.back()"]
-                |Back
-              P
+          =company_summary(@company)
+          = buttons("col-lg-12 col-md-12")
           .row
             .col-lg-12.col-md-12
               = social_share_button_tag @company.name
 .col-sm-12.hidden-md.hidden-lg.hidden-xs
   .panel-body
-    h1.text-center
-      = @company.name
-      - if @company.realy
-        span.glyphicon.glyphicon-ok.glyphicon-small
+    = company_name(@company)
     .row
       .col-sm-6
         p.text-center
@@ -84,50 +40,16 @@
       .col-sm-6
         h3.text-center
           |Company summary
-        - if not @company.site.nil?
-          p
-            = link_to @company.site, @company.site
-        p
-          strong
-            |Location: &nbsp;
-          |#{@company.location.suburb}, #{@company.location.state}
-        - if not @company.size.nil?
-          p
-            strong
-              |Size: &nbsp;
-            |#{@company.size.size}
-        - if @company.recrutmentagency
-          p
-            strong
-              |Recruitment agency &nbsp;
-        - if @company.industries_count>0
-          p
-            strong
-              |Indusrty:
-          ul
-            - @company.industry.each do |industry|
-              li &nbsp; #{industry.name}
-        .row
-          .col-sm-6
-            button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
-              |Contact
-          .col-sm-6
-            button.btn.btn-success.btn-block[onclick="history.back()"]
-              |Back
-        P
+        = company_summary(@company)
+        = buttons("col-sm-6")
     .row
       .col-sm-12
         p
-          =html_des.html_safe
-          - if @company.jobs_count>0
-        h3
-          = link_to "Company jobs #{@company.jobs_count}", "/company_jobs/#{@company.id}"
+          = company_description
+        =jobs_of_company(@company)
 .col-xs-12.hidden-md.hidden-lg.hidden-sm
   .panel-body
-    h1.text-center
-      = @company.name
-      - if @company.realy
-        span.glyphicon.glyphicon-ok.glyphicon-small
+    = company_name(@company)
     .row
       .col-xs-12
         p.text-center
@@ -140,44 +62,12 @@
       .col-xs-12
         h3.text-center
           |Company summary
-        - if not @company.site.nil?
-          p
-            = link_to @company.site, @company.site
-        p
-          strong
-            |Location: &nbsp;
-          |#{@company.location.suburb}, #{@company.location.state}
-        - if not @company.size.nil?
-          p
-            strong
-              |Size: &nbsp;
-            |#{@company.size.size}
-        - if @company.recrutmentagency
-          p
-            strong
-              |Recruitment agency &nbsp;
-        - if @company.industries_count>0
-          p
-            strong
-              |Indusrty:
-          ul
-            - @company.industry.each do |industry|
-              li &nbsp; #{industry.name}
-        .row
-          .col-xs-6
-            button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
-              |Contact
-          .col-xs-6
-            button.btn.btn-success.btn-block[onclick="history.back()"]
-              |Back
-        P
+        = buttons("col-xs-6")
     .row
       .col-xs-12
         p
-          =html_des.html_safe
-          - if @company.jobs_count>0
-        h3
-          = link_to "Company jobs #{@company.jobs_count}", "/company_jobs/#{@company.id}"
+          = company_description
+        =jobs_of_company(@company)
 .modal.fade#contact[tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"]
   .modal-dialog
     .modal-content

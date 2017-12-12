@@ -10,7 +10,7 @@ module ApplicationHelper
     content_for?(:"meta_#{tag}") ? content_for(:"meta_#{tag}") : default_text
   end
 
-
+  #TODO убрать markdown_to_keywords и markdown_to_text когда все будет переделано на презентеры
   def markdown_to_keywords (arg)
     keys = markdown_to_text(arg, 400).split(' ').map do |key|
       key.delete!(',')
@@ -27,4 +27,15 @@ module ApplicationHelper
     end
   end
 
+  def meta_head(arg={})
+    title arg[:title]
+    meta_tag "description",   arg[:description]
+    meta_tag "keywords", arg[:keywords]
+    meta_tag "og:type", arg[:type] ? arg[:type] : "article"
+    meta_tag "og:title", arg[:title]
+    meta_tag "og:description", arg[:description]
+    meta_tag "og:url", arg[:url]
+    meta_tag "og:image", arg[:image]
+    meta_tag "article:published_time", arg[:published]
+  end
 end
