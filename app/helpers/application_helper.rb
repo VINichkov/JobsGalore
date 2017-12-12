@@ -10,8 +10,7 @@ module ApplicationHelper
     content_for?(:"meta_#{tag}") ? content_for(:"meta_#{tag}") : default_text
   end
 
-<<<<<<< HEAD
-=======
+
   def markdown_to_keywords (arg)
     keys = markdown_to_text(arg, 400).split(' ').map do |key|
       key.delete!(',')
@@ -27,5 +26,5 @@ module ApplicationHelper
       text= text.truncate(truncate, separator: ' ',omission: '')
     end
   end
->>>>>>> 20887025d958e6bd065de5d62d135851c5cd7303
+
 end
