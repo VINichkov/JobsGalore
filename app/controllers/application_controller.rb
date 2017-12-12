@@ -31,5 +31,8 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError.new('Not Found')
   end
 
+  Draper.configure do |config|
+    config.default_controller = ApplicationController
+  end
 
 end

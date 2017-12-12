@@ -1,6 +1,7 @@
 require 'company/company_wizard'
 require 'company/company_admin'
 class CompaniesController < ApplicationController
+
   include Wizard
   include Admin
   before_action :admin!, only: [:admin_show,
@@ -160,7 +161,7 @@ class CompaniesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_company
-      @company = Company.find_by(id:params[:id])
+      @company = Company.find_by(id:params[:id]).decorate
     end
 
     def set_client
