@@ -1,5 +1,5 @@
 class Industry < ApplicationRecord
-
+  @@all_cache=nil
   has_many :industryexperience, dependent: :destroy
   has_many :industrycompany, dependent: :destroy
   has_many :company, through: :industrycompany
@@ -13,5 +13,7 @@ class Industry < ApplicationRecord
 
   has_one :industry, class_name: "Industry"
 
-
+  def self.all
+    @@all_cache ? @@all_cache : @@all_cache=super
+  end
 end
