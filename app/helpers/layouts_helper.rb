@@ -1,0 +1,3 @@
+module LayoutsHelper
+
+end

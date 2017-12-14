@@ -66,6 +66,7 @@ class Ability
       can [:search], Location
       can [:bill, :cancel_url, :create], Payment
       can [:show, :log_in], Resume
+      #can [:index], Industry
     end
 
 

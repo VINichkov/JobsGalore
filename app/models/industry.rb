@@ -1,4 +1,5 @@
 class Industry < ApplicationRecord
+
   has_many :industryexperience, dependent: :destroy
   has_many :industrycompany, dependent: :destroy
   has_many :company, through: :industrycompany
@@ -12,11 +13,5 @@ class Industry < ApplicationRecord
 
   has_one :industry, class_name: "Industry"
 
-  #def self.industries_cashe
-  #  if $date.cash[:industry].nil?
-   #   $date.cash[:industry] = Industry.all
-  #  end
-   # return $date.cash[:industry]
- # end
 
 end

@@ -16,8 +16,6 @@ class Autocomplete extends React.Component{
         this.handleBlur = this.handleBlur.bind(this);
         this.handleClickItem =  this.handleClickItem.bind(this);
     }
-
-
     handleInput(){
         if (this.state.autocomplete == null){
             this.setState({autocomplete: document.querySelector('#' + this.state.id)});

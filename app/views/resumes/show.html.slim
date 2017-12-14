@@ -157,13 +157,13 @@
               ul.dropdown-menu
                 - if PropertsHelper::URGENT=="true"
                   li
-                    = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1})
+                    = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1}), rel:"nofollow"
                 - if PropertsHelper::TOP == "true"
                   li
-                    = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2})
+                    = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2}), rel:"nofollow"
                 - if PropertsHelper::HIGHLIGHT == "true"
                   li
-                    = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3})
+                    = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3}), rel:"nofollow"
               p
             -if client_signed_in?
               - if @resume.client.id == current_client.id
@@ -318,13 +318,13 @@
               ul.dropdown-menu
                 - if PropertsHelper::URGENT=="true"
                   li
-                    = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1})
+                    = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1}), rel:"nofollow"
                 - if PropertsHelper::TOP == "true"
                   li
-                    = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2})
+                    = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2}), rel:"nofollow"
                 - if PropertsHelper::HIGHLIGHT == "true"
                   li
-                    = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3})
+                    = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3}), rel:"nofollow"
             - if client_signed_in?
               - if @resume.client.id == current_client.id
                 .btn-group
@@ -503,13 +503,13 @@
               ul.dropdown-menu
                 - if PropertsHelper::URGENT=="true"
                   li
-                    = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1})
+                    = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1}), rel:"nofollow"
                 - if PropertsHelper::TOP == "true"
                   li
-                    = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2})
+                    = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2}), rel:"nofollow"
                 - if PropertsHelper::HIGHLIGHT == "true"
                   li
-                    = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3})
+                    = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3}), rel:"nofollow"
             - if client_signed_in?
               - if @resume.client.id == current_client.id
                 .btn-group
