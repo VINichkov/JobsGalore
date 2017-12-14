@@ -20,11 +20,11 @@
           li.nav-header
             h4
               |Major cities
-          -@major_cities.all.each do |t|
+          -@main[:city].all.each do |t|
             li.col-sm-4.col-md-12.col-lg-12
               =link_to t.suburb, search_path(main_search:{type:"2", value:"", location_id: t.id}), rel:"nofollow"
     .col-lg-9.col-md-9.hidden-sm.hidden-xs
-      -if not @jobs_last.nil? and @jobs_last.count != 0
+      - unless @main[:jobs].empty?
         .well
           ul.nav.nav-list
             li.nav-header
@@ -32,26 +32,10 @@
                 |Last Jobs
             .col-lg-6.col-md-6
               ul.nav.nav-list
-                -@jobs_last[0..4].each do |job|
-                  li
-                    hr
-                    p
-                      =link_to(job.title, job)
-                    p.small
-                      = link_to job.company.name, job.company, class: 'text-success'
-                    p.small
-                      = job.location.state.to_s+" "+job.location.suburb.capitalize.to_s
+                - @main[:jobs][0..4]&.each do |job|
+                  = last_job(job)
             .col-lg-6.col-md-6
               ul.nav.nav-list
-                -if @jobs_last[5..9]
-                  - @jobs_last[5..9].each do |job|
-                    li
-                      hr
-                      p
-                        = link_to(job.title, job)
-                      p.small
-                        = link_to job.company.name, job.company, class: 'text-success'
-                      p.small = job.location.state.to_s+" "+job.location.suburb.capitalize.to_s
-
-
-  =render 'inc/job_by_category'
+                - @main[:jobs][5..9]&.each do |job|
+                  = last_job(job)
+  =by_category(category:@main[:category], name:@main[:obj][:name],code:@main[:obj][:code])

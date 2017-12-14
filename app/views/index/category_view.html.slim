@@ -1,3 +1,6 @@
+- meta_head(  title:"#{@name[:name]} #{@name[:industry]}",
+        description: "#{@name[:name]} #{@name[:industry]}",
+        keywords: "#{@name[:name]} #{@name[:industry]}")
 .container
   h1 ="#{@name[:name]} #{@name[:industry]}"
   - unless @objs.class.to_s.scan("Job").empty? then

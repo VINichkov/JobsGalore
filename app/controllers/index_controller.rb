@@ -3,8 +3,7 @@ class IndexController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :category, only: [:main, :by_category]
   def main
-    @jobs_last = Job.includes(:location,:company).last(10).reverse
-    @major_cities = Location.select(:id,:suburb).where(suburb:["Sydney", "Melbourne", "Brisbane", "Gold Coast", "Perth", "Adelaide", "Hobart", "Darwin", "Canberra"])
+    @main = IndexDecorator.new.main
   end
 
   def advertising_terms_of_use
@@ -158,8 +157,7 @@ class IndexController < ApplicationController
   end
 
   def category
-    #@category=Industry.where('level=?',1)
-    @category=Industry.all
+    @category=Industry.select(:id,:name).all
     if params[:obj].nil?
       params[:obj]='2'
     end
