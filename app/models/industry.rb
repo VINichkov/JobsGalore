@@ -14,6 +14,6 @@ class Industry < ApplicationRecord
   has_one :industry, class_name: "Industry"
 
   def self.all
-    @@all_cache ? @@all_cache : @@all_cache=super
+    @@all_cache ? @@all_cache : @@all_cache=self.select(:id,:name)
   end
 end
