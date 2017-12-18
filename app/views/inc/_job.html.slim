@@ -15,7 +15,7 @@
   - if job.salarymax.nil? and not job.salarymin.nil? then
     p = job.salarymin.to_i.to_s
   - elsif not (job.salarymax.nil? and job.salarymin.nil?)
-    p = job.salarymin.to_i.to_s+" - "+ job.salarymax.to_i.to_s
+  p = job.salarymin.to_i.to_s+" - "+ job.salarymax.to_i.to_s
   =  render :inline =>  HTML_Truncator.truncate(RDiscount.new(job.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" "),30 )  if job.description
   = link_to ' more...', job
   p
