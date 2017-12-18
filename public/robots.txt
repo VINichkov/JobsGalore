@@ -20,4 +20,5 @@ Disallow: /clients/sign_in
 Disallow: /clients/sign_up
 Disallow: /sign_up_employer
 Disallow: /clients/password/new
+Disallow: /search
 Sitemap: https://www.JobsGalore.eu/sitemap.xml
