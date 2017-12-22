@@ -1,23 +1,18 @@
 require 'markitdown'
 class Monash < Adapter
   def initialize
-    @doc = Nokogiri::HTML(open('http://careers.pageuppeople.com/513/cw/en/listing'))
-  end
-
-  def read (index = nil)
-    rez = []
-    index = create_index(index)
-    loop do
-      rez+=list_jobs(index)
-      unless @doc.at_css('[class="more-link button"]')
-        break
-      end
-      @doc = Nokogiri::HTML(open( "http://careers.pageuppeople.com#{@doc.at_css('[class="more-link button"]')[:href]}"))
-    end
-    rez
+    super(:start_page=> Nokogiri::HTML(open('http://careers.pageuppeople.com/513/cw/en/listing')),
+              host: "http://careers.pageuppeople.com")
   end
 
   private
+
+  def read_all_page
+    unless @doc.at_css('[class="more-link button"]')
+      break
+    end
+    @doc = Nokogiri::HTML(open( "http://careers.pageuppeople.com#{@doc.at_css('[class="more-link button"]')[:href]}"))
+  end
 
   def list_jobs (index = nil)
     table = @doc.at_css('[id="recent-jobs-content"]')
@@ -75,12 +70,6 @@ class Monash < Adapter
        description:description}
     rescue
       puts "!__________________________Ошибка Monash get_jobs!!!"
-    end
-  end
-
-  def create_index(index = nil)
-    index&.map do |elem|
-      elem[:date_end] ? elem[:title].to_s + elem[:date_end].strftime('%d.%m.%Y') : elem[:title].to_s
     end
   end
 

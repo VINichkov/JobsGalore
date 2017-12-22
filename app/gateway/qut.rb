@@ -2,22 +2,8 @@ class Qut < Adapter
   def initialize
     @host1 = 'https://qut.nga.net.au'
     point = (Nokogiri::HTML(open('https://qut.nga.net.au/cp/'))).css("div[class=\"cp_jobsListFilter cp_jobsListFilterAlt cp_jobsListFilter2\"] div[class=\"cp_jobsListFilterItem\"] div[class=\"cp_jobsListFilterTitle\"] h2 a")&.first['href']
-    @doc = Nokogiri::HTML(open("#{@host1}#{point}"))
-    @host='https://qut.nga.net.au/cp/'
-  end
-
-  def read (index = nil)
-    rez = []
-    index = create_index(index)
-    loop do
-      rez+=list_jobs(index)
-      unless 1==2
-        break
-      end
-      #TODO
-      #@doc = Nokogiri::HTML(open( "http://careers.pageuppeople.com#{@doc.at_css('[class="more-link button"]')[:href]}"))
-    end
-    rez
+    super(:start_page=> Nokogiri::HTML(open("#{@host1}#{point}")),
+          host: 'https://qut.nga.net.au/cp/')
   end
 
   private
@@ -69,12 +55,6 @@ class Qut < Adapter
     description = Markitdown.from_nokogiri(Nokogiri::HTML(description))
     {fulltime: description.include?("full-time"),
      description: description}
-  end
-
-  def create_index(index = nil)
-    index&.map do |elem|
-      elem[:date_end] ? elem[:title].to_s + elem[:date_end].strftime('%d.%m.%Y') : elem[:title].to_s
-    end
   end
 
 end
