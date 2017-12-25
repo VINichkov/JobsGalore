@@ -25,4 +25,6 @@ class Company < ApplicationRecord
     self.logo.name = path_obj.sub_ext('').to_s.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') + path_obj.extname
   end
 
+
+
 end

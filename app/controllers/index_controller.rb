@@ -1,9 +1,8 @@
 class IndexController < ApplicationController
   #authorize_resource only:[:admin]
   skip_before_action :verify_authenticity_token
-  before_action :category, only: [:main, :by_category]
   def main
-    @main = IndexDecorator.new.main
+    @main = IndexDecorator.main
   end
 
   def advertising_terms_of_use
@@ -74,6 +73,7 @@ class IndexController < ApplicationController
   end
 
   def by_category
+    @by_category = IndexDecorator.by_category(type:params[:obj])
   end
 
   def about
@@ -89,25 +89,21 @@ class IndexController < ApplicationController
 
   def send_to_customers
       Email.all.each do |adress|
-        puts adress.email
         ContactUsMailer.send_to_customers(adress.email).deliver_later
       end
     redirect_to(root_path, notice: "Show must go on!!!")
   end
 
   def send_offer
-
   end
 
   def terms_and_conditions
   end
 
   def privacy
-
   end
 
   def admin
-
   end
 
   def sitemap
@@ -154,23 +150,6 @@ class IndexController < ApplicationController
 
   def main_search_params
     {param:params.require(:main_search).permit(:type, :value, :page, :salary, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :options, :category, :location_id, :location_name, :urgent).to_h, page:params.permit(:page).to_h[:page]}
-  end
-
-  def category
-    @category=Industry.select(:id,:name).all
-    if params[:obj].nil?
-      params[:obj]='2'
-    end
-    case params[:obj]
-      when '1'
-        @objs = {code:1, name:"Companies"}
-      when '2'
-        @objs = {code:2, name:"Jobs"}
-      when '3'
-        @objs = {code:3, name:"Resumes"}
-      else
-        render_404
-    end
   end
 
 

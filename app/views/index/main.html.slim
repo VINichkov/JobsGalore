@@ -20,22 +20,24 @@
           li.nav-header
             h4
               |Major cities
-          -@main[:city].all.each do |t|
+          -@main[:city].each do |t|
             li.col-sm-4.col-md-12.col-lg-12
               =link_to t.suburb, search_path(main_search:{type:"2", value:"", location_id: t.id}), rel:"nofollow"
     .col-lg-9.col-md-9.hidden-sm.hidden-xs
-      - unless @main[:jobs].empty?
-        .well
-          ul.nav.nav-list
-            li.nav-header
-              h4
-                |Last Jobs
-            .col-lg-6.col-md-6
-              ul.nav.nav-list
-                - @main[:jobs][0..4]&.each do |job|
-                  = last_job(job)
-            .col-lg-6.col-md-6
-              ul.nav.nav-list
-                - @main[:jobs][5..9]&.each do |job|
-                  = last_job(job)
+      -cache(@main[:jobs]) do
+        - unless @main[:jobs].empty?
+          .well
+            ul.nav.nav-list
+              li.nav-header
+                h4
+                  |Last Jobs
+              .col-lg-6.col-md-6
+                ul.nav.nav-list
+                  - @main[:jobs][0..4].each do |job|
+                    = last_job(job)
+              .col-lg-6.col-md-6
+                ul.nav.nav-list
+                  - @main[:jobs][5..9].each do |job|
+                    = last_job(job)
+
   =by_category(category:@main[:category], name:@main[:obj][:name],code:@main[:obj][:code])

@@ -1,13 +1,5 @@
-.print_header
-  .container
-    div
-      span
-        = image_tag(image_path("method-draw-image.png"), size: "200x100")
-.container-fluid.hidden-xs.hidden-sm.hidden-md.not_print
-  .container
-    h1
-      span
-        = image_tag(image_path("method-draw-image.png"), size: "200x100")
+=print_header
+=not_print
 nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-lg
   .container-fluid
     .row
@@ -87,12 +79,10 @@ nav.navbar.navbar-fixed-top.navbar-default.hidden-xs.hidden-lg
                 = link_to 'Log in', new_client_session_path, rel:"nofollow"
               li.elem_header
                 = link_to 'Sign up', new_client_registration_path, rel:"nofollow"
-    .row
-        = form_tag('/search', method: :get, class:'navbar-form form-inline')  do
-          -if session[:param].nil?
-            = react_component("Search", name:'main_search', categories: industries)
-          -else
-            = react_component("Search", name:'main_search',params: session[:param], categories: industries)
+      .row
+          = form_tag('/search', method: :get, class:'navbar-form form-inline')  do
+              = react_component("Search", name:'main_search', categories: industries)
+
     .row
       p
 .clear_menu-sm.hidden-xs.hidden-lg
@@ -339,9 +329,5 @@ nav.navbar.navbar-static-top.navbar-default.hidden-xs.hidden-sm.hidden-md[data-s
               = link_to 'Log in', new_client_session_path, rel:"nofollow"
             li.nav-item
               = link_to 'Sign up', new_client_registration_path, rel:"nofollow"
--unless notice.nil? then
-  .container
-    p.alert-success = notice
--unless alert.nil? then
-  .container
-    p.alert-warning = alert
+-messege_in(message:'notice', class:"alert-success")
+-messege_in(message:alert, class:"alert-warning")
