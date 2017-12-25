@@ -43,7 +43,7 @@ class Job < ApplicationRecord
   end
 
   def self.delete_jobs_of_today
-    Job.where("date_trunc('day',created_at) = date_trunc('day',?)", Time.now)
+    Job.where("date_trunc('day',created_at) = date('day',?)", Time.now)
   end
 
   protected
