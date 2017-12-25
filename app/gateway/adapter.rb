@@ -24,7 +24,9 @@ class Adapter
   end
 
   def read_all_page
-    break
+    if 1==1
+      break
+    end
   end
 
   def delete_all_attr(attr)
