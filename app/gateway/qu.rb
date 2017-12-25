@@ -26,7 +26,6 @@
         put_in_jobs(index:index, title:title, close:close, link:"#{@host}#{row.at_css('[class="job-link"]')[:href]}")
       end
     end
-    @jobs
   end
 
   def get_job(url)
