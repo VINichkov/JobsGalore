@@ -28,7 +28,8 @@ class Adapter
   end
 
   def delete_all_attr(attr)
-    attr = Nokogiri::HTML(attr) if attr.class=="String"
+    puts attr.class
+    attr = Nokogiri::HTML(attr)
     attr.css('*').each do |elem|
       if elem.count>0 then
         elem.each do |attr, value|
@@ -36,6 +37,15 @@ class Adapter
         end
       end
     end
+    attr.to_s
+  end
+
+  def gsub_html(arg)
+    arg.gsub("<span>"," ").gsub("</span>"," ").gsub("<div>"," ").gsub("</div>"," ").gsub("<br>"," ").gsub("<h1>","<h4>").gsub("<h2>","<h4>").gsub("</h3>","<h4>").gsub("</h1>","<h4>").gsub("</h2>","<h4>").gsub("<h3>","<h4>").squish.gsub("> <","><")
+  end
+
+  def html_to_markdown(arg)
+    Markitdown.from_nokogiri(Nokogiri::HTML(gsub_html(delete_all_attr(arg))))
   end
 
 end
