@@ -34,7 +34,7 @@ class Gateway < ApplicationRecord
       logs += "<p>Found #{jobs.count} jobs</p>"
       jobs.each do |new_job|
         begin
-          logs += "<p>Job is creating: title \"#{new_job[:title]}\" close #{new_job[:close]}</p>"
+          logs += "<p>Job created: title \"#{new_job[:title]}\" close #{new_job[:close]}</p>"
           new_job[:client] = client
           new_job[:company] = company
           new_job[:location] = location

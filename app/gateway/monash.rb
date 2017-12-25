@@ -18,26 +18,15 @@ class Monash < Adapter
 
   def list_jobs (index = nil)
     table = @doc.at_css('[id="recent-jobs-content"]')
-    jobs = []
     table.css('tr').each do |row|
       if row['class'] != "summary"
         #ЗП #puts row.css('td')[2].content
         title = row.at_css('[class="job-link"]').content
-        date_end = row.css('time').first&.content
-        date_end ? date_end = Date.parse(row.css('time').first&.content) : nil
-        unless index&.include?(date_end ? title + date_end.strftime('%d.%m.%Y') : title)
-          puts "http://careers.pageuppeople.com#{row.at_css('[class="job-link"]')[:href]}"
-          job = get_job "http://careers.pageuppeople.com#{row.at_css('[class="job-link"]')[:href]}"
-          unless job[:description].empty?
-            jobs.push ({ title: title,
-                         close: date_end,
-                         fulltime:job[:fulltime],
-                         description:job[:description]})
-          end
-        end
+        close = row.css('time').first&.content
+        close ? close = Date.parse(row.css('time').first&.content) : nil
+        put_in_jobs(index:index, title:title, close:close, link:"#{@host}#{row.at_css('[class="job-link"]')[:href]}")
       end
     end
-    jobs
   end
 
   def get_job(url)
