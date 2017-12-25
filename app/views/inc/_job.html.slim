@@ -12,10 +12,8 @@
 .col-lg-10.col-md-10.col-sm-10.col-xs-12
   h3
     = link_to job.title.capitalize, job, class: 'text-warning'
-  - if job.salarymax.blank? and not job.salarymin.blank? then
-    p = job.salarymin.to_i.to_s
-  - elsif not (job.salarymax.blank? and job.salarymin.blank?)
-  p = job.salarymin.to_i.to_s+" - "+ job.salarymax.to_i.to_s
+  - if job.salary
+    p = job.salary
   =  render :inline =>  HTML_Truncator.truncate(RDiscount.new(job.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" "),30 )  if job.description
   = link_to ' more...', job
   p

@@ -13,6 +13,11 @@ class Job < ApplicationRecord
 
   attr_accessor :ind, :location_name
 
+  def initialize(object, options = {})
+    super
+    @salary = calc_salary(object)
+  end
+
   def highlight_on
     self.highlight = Date.today
     self.save
@@ -46,7 +51,23 @@ class Job < ApplicationRecord
     Job.where("date_trunc('day',created_at) = date(?)", Time.now)
   end
 
+  def salary
+    @salary ? @salary : @salary = calc_salary
+  end
+
   protected
+
+  def calc_salary
+    if self.salarymax.blank? and not self.salarymin.blank? then
+      self.salarymin.to_i.to_s
+    elsif not (self.salarymax.blank? and self.salarymin.blank? )
+      self.salarymin.to_i.to_s+" - "+ self.salarymax.to_i.to_s
+    elsif not self.salarymax.blank? and self.salarymin.blank?
+      self.salarymax.to_i.to_s
+    else
+      nil
+    end
+  end
 
   scope :search, ->(query)  do
     text_query = []
