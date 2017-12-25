@@ -30,7 +30,6 @@ class Monash < Adapter
   end
 
   def get_job(url)
-    begin
       page = Nokogiri::HTML(open(url))
       job = page.at_css('[class="jobdets"]')
       if job.nil?
@@ -55,13 +54,10 @@ class Monash < Adapter
         end
         description += "<hr>"
         description += job.children.to_s
-        description = Markitdown.from_nokogiri(Nokogiri::HTML(description.gsub("</span","</em").gsub("<span","<em").gsub("<br>"," ").gsub("h1","h4").gsub("h2","h4").gsub("h3","h4").squish.gsub("> <","><")))
+        description = description = html_to_markdown(description)
       end
       {fulltime: description.include?("Full-time"),
        description:description}
-    rescue
-      puts "!__________________________Ошибка Monash get_jobs!!!"
-    end
   end
 
 end
