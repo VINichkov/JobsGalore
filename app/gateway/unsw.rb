@@ -38,8 +38,8 @@ class Unsw < Adapter
             description += "<p><strong>Job Family:</strong> #{hash["Job Family"]}</p>"
             description += "<hr>"
             description += job.to_s
-            hash[:description] = Markitdown.from_nokogiri(Nokogiri::HTML(description.gsub("</div","</em").gsub("<div","<em").gsub("<br>"," ").gsub("h1","h4").gsub("h2","h4").gsub("h3","h4").squish.gsub("> <","><")))
-            jobs.push ({  title: hash[:title],
+            hash[:description] = html_to_markdown(description)
+            @jobs.push ({  title: hash[:title],
                           close: hash["Close Date"],
                           fulltime: hash[:fulltime],
                           description: hash[:description]})
@@ -47,7 +47,7 @@ class Unsw < Adapter
         end
       end
     end
-    return jobs
+    return @jobs
   end
 
 end
