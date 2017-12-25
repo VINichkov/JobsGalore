@@ -2,6 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 class Adapter
   def initialize(arg = {})
+    @jobs = []
     @doc = arg[:start_page]
     @host = arg[:host]
   end
@@ -25,6 +26,18 @@ class Adapter
 
   def read_all_page
     true
+  end
+
+  def put_in_jobs(arg={})
+    unless arg[:index]&.include?(arg[:close] ? arg[:title] + arg[:close].strftime('%d.%m.%Y') : arg[:title])
+      job = get_job arg[:link]
+      unless job[:description].empty?
+        @jobs.push ({ title: arg[:title],
+                     close: arg[:close],
+                     fulltime:job[:fulltime],
+                     description:job[:description].force_encoding(Encoding::UTF_8)})
+      end
+    end
   end
 
   def delete_all_attr(attr)
