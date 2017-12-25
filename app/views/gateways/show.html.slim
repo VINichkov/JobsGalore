@@ -35,7 +35,7 @@
         th
           strong Log:
         td
-          = @gateway.log
+          = @gateway.log.html_safe
   .col-md-6
     = link_to 'Edit', edit_gateway_path(@gateway), class: "btn btn-success btn-block"
     p

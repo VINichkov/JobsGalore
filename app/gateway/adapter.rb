@@ -2,7 +2,6 @@ require 'open-uri'
 require 'nokogiri'
 class Adapter
   def initialize(arg = {})
-    @jobs = []
     @doc = arg[:start_page]
     @host = arg[:host]
   end
@@ -29,6 +28,7 @@ class Adapter
   end
 
   def put_in_jobs(arg={})
+    @jobs = []
     unless arg[:index]&.include?(arg[:close] ? arg[:title] + arg[:close].strftime('%d.%m.%Y') : arg[:title])
       job = get_job arg[:link]
       unless job[:description].empty?
