@@ -19,7 +19,6 @@
     table = @doc.at_css('[id="recent-jobs-content"]')
     table.css('tr').each do |row|
       if row['class'] != "summary"
-        #ЗП #puts row.css('td')[2].content
         title = row.at_css('[class="job-link"]').content.encode!(Encoding::ISO_8859_1).force_encoding(Encoding::UTF_8)
         close = row.css('time').first&.content
         close ? close = Date.parse(row.css('time').first&.content) : nil

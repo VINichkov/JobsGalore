@@ -9,28 +9,18 @@ class Qut < Adapter
   private
 
   def list_jobs (index = nil)
-    jobs=[]
     @doc.css('table[class="cp_displayTable footable"] tr').each do |row|
       title = row.css('td a')&.first&.content
-      date_end=''
+      close=''
       if title and title&.scan(/Upload/)&.empty?
         begin
-          date_end ? date_end = Date.parse(row.css('td[class="cp_closingDate"]')&.first.text) : nil
+          close ? close = Date.parse(row.css('td[class="cp_closingDate"]')&.first.text) : nil
         rescue
-          date_end=nil
+          close=nil
         end
-        unless index&.include?(date_end ? title + date_end.strftime('%d.%m.%Y') : title)
-          job = get_job "#{@host}#{row.css('td[class="cp_jobDetails"] a')&.first["href"]}"
-          unless job[:description].empty?
-            jobs.push ({ title: title,
-                         close: date_end,
-                         fulltime:job[:fulltime],
-                         description:job[:description]})
-          end
-        end
+        put_in_jobs(index:index, title:title, close:close, link:"#{@host}#{row.css('td[class="cp_jobDetails"] a')&.first["href"]}")
       end
     end
-    jobs
   end
 
 
@@ -52,7 +42,7 @@ class Qut < Adapter
       end
     end
     description = description.join("\r\n") +"\r\n" + link.join("\r\n")
-    description = Markitdown.from_nokogiri(Nokogiri::HTML(description))
+    description = html_to_markdown(description)
     {fulltime: description.include?("full-time"),
      description: description}
   end
