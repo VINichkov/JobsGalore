@@ -8,9 +8,11 @@
 
   def read_all_page
     unless @doc.at_css('[class="more-link button"]')
-      break
+      return true
+    else
+      @doc = Nokogiri::HTML(open( "#{@host}#{@doc.at_css('[class="more-link button"]')[:href]}"))
+      return false
     end
-    @doc = Nokogiri::HTML(open( "#{@host}#{@doc.at_css('[class="more-link button"]')[:href]}"))
   end
 
   def list_jobs (index = nil)

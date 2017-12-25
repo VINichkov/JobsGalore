@@ -11,7 +11,7 @@ class Adapter
     index = create_index(index)
     loop do
       rez+=list_jobs(index)
-      read_all_page
+      break if read_all_page
     end
     rez
   end
@@ -24,9 +24,7 @@ class Adapter
   end
 
   def read_all_page
-    if 1==1
-      break
-    end
+    true
   end
 
   def delete_all_attr(attr)
