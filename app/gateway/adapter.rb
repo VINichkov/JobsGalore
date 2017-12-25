@@ -43,7 +43,7 @@ class Adapter
     puts attr.class
     attr = Nokogiri::HTML(attr)
     attr.css('*').each do |elem|
-      if elem.count>0 then
+      if elem&.count>0 then
         elem.each do |attr, value|
           elem.remove_attribute(attr)
         end
