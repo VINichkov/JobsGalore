@@ -42,6 +42,10 @@ class Job < ApplicationRecord
     self.where('close<date(?)',Time.now).destroy_all
   end
 
+  def self.delete_jobs_of_today
+    Job.where("date_trunc('day',created_at) = date_trunc('day',?)", Time.now)
+  end
+
   protected
 
   scope :search, ->(query)  do
