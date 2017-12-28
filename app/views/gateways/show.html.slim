@@ -23,6 +23,11 @@
           = "#{@gateway.location.suburb}, #{@gateway.location.state}"
       tr
         th
+          strong HashTags:
+        td
+          = @gateway.hashtags
+      tr
+        th
           strong Industry:
         td
           = @gateway.industry.name

@@ -33,7 +33,7 @@
         p
           strong
             | Posted:&nbsp;
-          |#{@job.updated_at.strftime("%d %B %Y")}
+          |#{@job.created_at.strftime("%d %B %Y")}
         p
           strong
             |Location: &nbsp;
@@ -168,7 +168,7 @@
               p
                 strong
                   | Posted:&nbsp;
-                |#{@job.updated_at.strftime("%d %B %Y")}
+                |#{@job.created_at.strftime("%d %B %Y")}
               p
                 strong
                   |Location: &nbsp;
@@ -309,7 +309,7 @@
             p
               strong
                 | Posted:&nbsp;
-              |#{@job.updated_at.strftime("%d %B %Y")}
+              |#{@job.created_at.strftime("%d %B %Y")}
             p
               strong
                 |Location: &nbsp;

@@ -89,7 +89,7 @@ class CompaniesController < ApplicationController
   end
 
   def company_jobs
-    @objs = Company.find_by_id(params[:id]).job.order(updated_at: :desc).paginate(page: params[:page], per_page:25)
+    @objs = Company.find_by_id(params[:id]).job.includes(:location).order(updated_at: :desc).paginate(page: params[:page], per_page:25)
   end
 
   # PATCH/PUT /companies/1

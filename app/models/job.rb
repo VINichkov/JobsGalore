@@ -1,4 +1,5 @@
 class Job < ApplicationRecord
+  include Rails.application.routes.url_helpers
   belongs_to :client
   belongs_to :location
   belongs_to :company
@@ -18,10 +19,16 @@ class Job < ApplicationRecord
     @salary = calc_salary(object)
   end
 
+  def post_at_twitter
+    twitt = TwitterClient.new
+    update(twitter:twitt.update(job_url(self, host:PropertsHelper::HOST_NAME)))
+  end
+
   def highlight_on
     self.highlight = Date.today
     self.save
   end
+
   def urgent_on
     self.urgent = Date.today
     self.save

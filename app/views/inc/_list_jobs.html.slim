@@ -3,15 +3,15 @@
     .panel.panel-default
       - if job.highlight.nil? and job.urgent.nil?
         .panel-body
-          = render "inc/job", job: job
+          = view_job job
       - elsif not (job.highlight.nil?) and job.urgent.nil?
         .panel-body.highlight
-          = render "inc/job", job: job
+          = view_job job
       - elsif job.highlight.nil? and not (job.urgent.nil?)
         .panel-body.urgent
-          = render "inc/job", job: job
+          = view_job job
       - elsif not (job.highlight.nil?) and not (job.urgent.nil?)
         .panel-body.highlight.urgent
-          = render "inc/job", job: job
+          = view_job job
 
   .col-lg-4.col-md-4

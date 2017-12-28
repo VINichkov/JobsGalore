@@ -1,10 +1,11 @@
 .container
   h1 =@name[:name]
-  - unless @objs.class.to_s.scan("Job").empty? then
-    = render 'inc/list_jobs'
-  - unless @objs.class.to_s.scan("Company").empty? then
-    = render 'inc/list_companies'
-  - unless @objs.class.to_s.scan("Resume").empty? then
-    = render 'inc/list_resumes'
+  -cache(@objs)
+    - unless @objs.class.to_s.scan("Job").empty? then
+      = render 'inc/list_jobs'
+    - unless @objs.class.to_s.scan("Company").empty? then
+      = render 'inc/list_companies'
+    - unless @objs.class.to_s.scan("Resume").empty? then
+      = render 'inc/list_resumes'
 .text-center
   = will_paginate @objs, {renderer: BootstrapPagination::Rails, inner_window:1, outer_window:1 }

@@ -32,6 +32,7 @@ gem 'dkim'
 gem "font-awesome-rails"
 gem 'markitdown'
 
+gem 'twitter'
 gem 'will_paginate-bootstrap' ,'~> 1.0.1'
 #gem 'bcrypt', '~>3.1.11'
 

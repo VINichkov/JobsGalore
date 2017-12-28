@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.5
--- Dumped by pg_dump version 9.5.5
+-- Dumped from database version 9.5.7
+-- Dumped by pg_dump version 9.5.7
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -285,7 +285,8 @@ CREATE TABLE gateways (
     script character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    log character varying
+    log character varying,
+    hashtags character varying
 );
 
 
@@ -498,7 +499,8 @@ CREATE TABLE jobs (
     top date,
     urgent date,
     client_id integer,
-    close date
+    close date,
+    twitter character varying
 );
 
 
@@ -1993,6 +1995,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171115080406'),
 ('20171115095734'),
 ('20171116103057'),
-('20171120104421');
+('20171120104421'),
+('20171227042835'),
+('20171227043153'),
+('20171228040745');
 
 

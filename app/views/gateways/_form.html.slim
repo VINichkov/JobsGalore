@@ -24,6 +24,10 @@
                       defaultName: @gateway.location ? "#{@gateway.location.suburb}, #{@gateway.location.state}" : "#{current_client.location.suburb}, #{current_client.location.state}",
                       defaultId: @gateway.location ? @gateway.location.id : current_client.location.id)
   .form-group
+    = f.label "HashTags"
+    br
+    = f.text_field :hashtags, class:"form-control"
+  .form-group
     = f.label :industry
     br
     = react_component("CategoryInsert",

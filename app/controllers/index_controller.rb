@@ -17,7 +17,7 @@ class IndexController < ApplicationController
         @objs = Industry.find_by_id(param[:category]).company.order(:name).paginate(page: param[:page], per_page:21)
         @name = {name:'Companies by', industry: Industry.find_by_id(param[:category]).name}
       when '2'
-        @objs = Industry.find_by_id(param[:category]).job.order(updated_at: :desc).paginate(page: param[:page], per_page:25)
+        @objs = Industry.find_by_id(param[:category]).job.order(created_at: :desc).paginate(page: param[:page], per_page:25)
         @name = {name:'Jobs by', industry: Industry.find_by_id(param[:category]).name}
       when '3'
         @objs = Industry.find_by_id(param[:category]).resumes.order(updated_at: :desc).paginate(page: param[:page], per_page:25)
@@ -35,7 +35,7 @@ class IndexController < ApplicationController
         @objs = Industry.includes(:company).find_by_id(param[:category]).company.order(:name).paginate(page: param[:page], per_page:21).includes(:industry,:location)
         @name = {name:'Companies by', industry: Industry.find_by_id(param[:category]).name}
       when '2'
-        @objs = Industry.includes(:job).find_by_id(param[:category]).job.order(updated_at: :desc).paginate(page: param[:page], per_page:25).includes(:company,:location)
+        @objs = Industry.includes(:job).find_by_id(param[:category]).job.order(created_at: :desc).paginate(page: param[:page], per_page:25).includes(:company,:location)
         @name = {name:'Jobs by', industry: Industry.find_by_id(param[:category]).name}
       when '3'
         @objs = Industry.includes(:resumes).find_by_id(param[:category]).resumes.order(updated_at: :desc).paginate(page: param[:page], per_page:25).includes(:location)
@@ -62,7 +62,7 @@ class IndexController < ApplicationController
         @objs = Company.includes(:location,:industry).search(param[:param]).order(:name).paginate(page: param[:page], per_page:21)
         @name = {name:'Companies'}
       when '2'
-        @objs = Job.includes(:company,:location).search(param[:param]).order(updated_at:  :desc).paginate(page: param[:page], per_page:25)
+        @objs = Job.includes(:company,:location).search(param[:param]).order(created_at:  :desc).paginate(page: param[:page], per_page:25)
         @name = {name:'Jobs'}
       when '3'
         @objs = Resume.includes(:location).search(param[:param]).order(updated_at: :desc).paginate(page: param[:page], per_page:25)
