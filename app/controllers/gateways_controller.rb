@@ -78,6 +78,6 @@ class GatewaysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def gateway_params
-      params.require(:gateway).permit(:company_id, :client_id, :location_id, :industry_id, :script, :page)
+      params.require(:gateway).permit(:company_id, :client_id, :location_id, :industry_id, :script, :hashtags, :page)
     end
 end
