@@ -20,7 +20,7 @@ namespace :post do
   end
 
   desc "Post at Twitter 22.12"
-  task :twitter => :environment  do
+  task :twitter1 => :environment  do
     puts "! Task:Post at Twitter: start"
     companies = Gateway.pluck(:company_id)
     t =Date.parse('2017-12-22')
@@ -32,7 +32,7 @@ namespace :post do
   end
 
   desc "Post at Twitter 25.12"
-  task :twitter => :environment  do
+  task :twitter4 => :environment  do
     puts "! Task:Post at Twitter: start"
     companies = Gateway.pluck(:company_id)
     t =Date.parse('2017-12-25')
@@ -44,7 +44,7 @@ namespace :post do
   end
 
   desc "Post at Twitter 23.12"
-  task :twitter => :environment  do
+  task :twitter2 => :environment  do
     puts "! Task:Post at Twitter: start"
     companies = Gateway.pluck(:company_id)
     t =Date.parse('2017-12-23')
@@ -56,7 +56,7 @@ namespace :post do
   end
 
   desc "Post at Twitter 24.12"
-  task :twitter => :environment  do
+  task :twitter3 => :environment  do
     puts "! Task:Post at Twitter: start"
     companies = Gateway.pluck(:company_id)
     t =Date.parse('2017-12-24')
