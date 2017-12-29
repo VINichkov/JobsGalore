@@ -19,9 +19,9 @@ class Job < ApplicationRecord
     @salary = calc_salary(object)
   end
 
-  def post_at_twitter
+  def post_at_twitter(arg)
     twitt = TwitterClient.new
-    update(twitter:twitt.update(job_url(self, host:PropertsHelper::HOST_NAME)))
+    update(twitter:twitt.update("#{arg} \r\n #{job_url(self, host:PropertsHelper::HOST_NAME)}"))
   end
 
   def highlight_on
