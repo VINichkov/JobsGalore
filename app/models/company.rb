@@ -12,6 +12,13 @@ class Company < ApplicationRecord
   validates :name, presence: true
   #validates :location_id, presence: true
 
+  def logo_url
+    if @logo_url
+      @logo_url
+    else
+      @logo_url = self.logo_uid ? Dragonfly.app.remote_url_for(object.logo_uid) : image_url("company_profile.jpg")
+    end
+  end
   protected
 
   scope :search, ->(query) do
