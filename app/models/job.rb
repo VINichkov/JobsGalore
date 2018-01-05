@@ -14,10 +14,10 @@ class Job < ApplicationRecord
 
   attr_accessor :ind, :location_name
 
-  def initialize(object, options = {})
-    super
-    @salary = calc_salary(object)
-  end
+  #def initialize(object, options = {})
+  #  super
+  #  @salary = calc_salary
+  #end
 
   def post_at_twitter(arg)
     twitt = TwitterClient.new
