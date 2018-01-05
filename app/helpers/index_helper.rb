@@ -5,7 +5,7 @@ RESUMES = {code:3, name:"Resumes"}
 
   def last_job(job)
     job_tag = content_tag(:div, class: "col-lg-2 col-md-2"){
-      image_tag(@company.logo_url, class: 'img-thumbnail center-block', size:"75x75")
+      image_tag(job.company.logo_url, class: 'img-thumbnail center-block', size:"75x75")
     }
     job_tag+=content_tag(:div, class: "col-lg-10 col-md-10"){
       content_tag(:li ){
