@@ -16,7 +16,7 @@ class Company < ApplicationRecord
     if @logo_url
       @logo_url
     else
-      @logo_url = self.logo_uid ? Dragonfly.app.remote_url_for(object.logo_uid) : image_url("company_profile.jpg")
+      @logo_url = self.logo_uid ? Dragonfly.app.remote_url_for(self.logo_uid) : image_url("company_profile.jpg")
     end
   end
   protected
