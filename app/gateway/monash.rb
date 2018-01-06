@@ -1,4 +1,3 @@
-require 'markitdown'
 class Monash < Adapter
   def initialize
     super(:start_page=> Nokogiri::HTML(open('http://careers.pageuppeople.com/513/cw/en/listing')),
@@ -11,7 +10,7 @@ class Monash < Adapter
     unless @doc.at_css('[class="more-link button"]')
       return true
     else
-      @doc = Nokogiri::HTML(open( "http://careers.pageuppeople.com#{@doc.at_css('[class="more-link button"]')[:href]}"))
+      @doc = Nokogiri::HTML(open( "#{@host}#{@doc.at_css('[class="more-link button"]')[:href]}"))
       return false
     end
   end
@@ -54,7 +53,7 @@ class Monash < Adapter
         end
         description += "<hr>"
         description += job.children.to_s
-        description = description = html_to_markdown(description)
+        description = html_to_markdown(description)
       end
       {fulltime: description.include?("Full-time"),
        description:description}

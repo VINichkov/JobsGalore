@@ -40,7 +40,6 @@
       table.css('tr').first&.remove
       table_arr = table.css('tr')
       description = ''
-
       job.css('table').remove
       job.css('p').each do |e|
         if not (e.content.to_s.scan(/(To submit an application for this)/).empty?) or e.content =="#Li"

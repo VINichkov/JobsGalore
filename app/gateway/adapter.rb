@@ -40,7 +40,6 @@ class Adapter
   end
 
   def delete_all_attr(attr)
-    puts attr.class
     attr = Nokogiri::HTML(attr)
     attr.css('*').each do |elem|
       if elem&.count>0 then
