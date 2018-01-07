@@ -5,7 +5,7 @@ class GatewaysController < ApplicationController
   # GET /gateways
   # GET /gateways.json
   def index
-    @gateways = Gateway.all.paginate(page: params[:page], per_page:50)
+    @gateways = Gateway.all.order(:script).paginate(page: params[:page], per_page:50)
   end
 
   # GET /gateways/1

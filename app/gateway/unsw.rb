@@ -6,6 +6,7 @@ class Unsw < Adapter
   end
 
   def read (index = nil)
+    index = create_index(index)
     form = @doc.forms.first
     @doc.css('table[id="HRS_AGNT_RSLT_I$scroll$0"] tr td[class="PSLEVEL1SSGRIDROW"]').each do |td|
       span = td.css('div [class="attributes PSTEXT align:left"] span')
@@ -32,17 +33,19 @@ class Unsw < Adapter
                 end
               end
             end
-            description = ''
-            description += "<p><strong>Location:</strong> #{hash["Location"]}</p>"
-            description += "<p><strong>Department:</strong> #{hash["Department"]}</p>"
-            description += "<p><strong>Job Family:</strong> #{hash["Job Family"]}</p>"
-            description += "<hr>"
-            description += job.to_s
-            hash[:description] = html_to_markdown(description)
-            @jobs.push ({  title: hash[:title],
-                          close: hash["Close Date"],
-                          fulltime: hash[:fulltime],
-                          description: hash[:description]})
+            unless index&.include?(hash["Close Date"] ? hash[:title] + hash["Close Date"].strftime('%d.%m.%Y') : hash[:title])
+              description = ''
+              description += "<p><strong>Location:</strong> #{hash["Location"]}</p>"
+              description += "<p><strong>Department:</strong> #{hash["Department"]}</p>"
+              description += "<p><strong>Job Family:</strong> #{hash["Job Family"]}</p>"
+              description += "<hr>"
+              description += job.to_s
+              hash[:description] = html_to_markdown(description)
+              @jobs.push ({  title: hash[:title],
+                            close: hash["Close Date"],
+                            fulltime: hash[:fulltime],
+                            description: hash[:description]})
+            end
           end
         end
       end
