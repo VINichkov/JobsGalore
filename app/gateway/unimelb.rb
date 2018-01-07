@@ -33,6 +33,7 @@ class Unimelb < Adapter
     job.css('img').remove
     job.css('div[id="jobDetailsContent"] h2').remove
     job.css('p[id="adv"]').remove
+    description =''
     unless  job.text.scan(/\w/).empty?
       description += job.children.to_s
       description = html_to_markdown(description)
