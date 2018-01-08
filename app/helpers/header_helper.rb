@@ -25,12 +25,4 @@ module HeaderHelper
     }
   end
 
-  def messege_in (arg = {})
-    if arg[:message] then
-      content_tag(:div, class: "container") {
-        content_tag(:p,  arg[:message], class: arg[:class])
-      }
-    end
-  end
-
 end

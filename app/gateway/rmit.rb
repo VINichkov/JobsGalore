@@ -37,24 +37,13 @@ class Rmit < Adapter
     job.css('a[class="apply-link button"]').remove
     job.css('p').each do |p|
       if p.content == " " or p.content == "" or p.content == "  " or p.content == "#Li" or p.content == "#LI"
-        puts "!__________________ !!!!! ____________________!"
         p.remove
-      else
-        p.css('strong').each do |strong|
-          if strong.content == "#Li" or strong.content == "#LI"
-            puts "!__________________ 1 _______________________!"
-            strong.remove
-          end
-        end
       end
     end
     description =''
     unless  job.text.scan(/\w/).empty?
       description += job.children.to_s
-      puts description
       description = html_to_markdown(description)
-      puts "___________________________________________________________________"
-      puts description
     end
     {fulltime: description.include?("Full-time"),
      description:description.encode!(Encoding::ISO_8859_1)}
