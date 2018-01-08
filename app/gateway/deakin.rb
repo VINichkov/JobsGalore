@@ -3,6 +3,7 @@ class Deakin < Adapter
     @jobs=[]
     agent = Mechanize.new
     @doc = agent.get('https://jobs.deakin.edu.au/psc/HCMP/EMPLOYEE/HRMS/c/HRS_HRAM_FL.HRS_CG_SEARCH_FL.GBL?FOCUS=Applicant&SiteId=1')
+    @host = 'https://jobs.deakin.edu.au'
   end
 
   def read (index = nil)
@@ -21,6 +22,9 @@ class Deakin < Adapter
         full_time = page.at_css('span[id="HRS_SCH_WRK_HRS_FULL_PART_TIME"]').content.include?('Full-Time')
         html = page.at_css('div[id="win0divHRS_SCH_PSTDSC$0"]')
         html.css('div[id="win0divHRS_SCH_WRK_DESCR100$0"]').remove
+        html.css('div[id="win0divHRS_SCH_WRK_DESCR100$1"]').remove
+        html.css('div[id="win0divHRS_SCH_WRK_DESCR100$2"]').remove
+        html.css('img').remove
         close=nil
         html.css('p').each do |p|
           if p.content.scan(/CLOSING DATE:/)&.first
@@ -34,7 +38,6 @@ class Deakin < Adapter
           description = ''
           description +=  html.to_s
           description += "<p><a href=\"http://www.deakin.edu.au/about-deakin/work-at-deakin\">Apply for Job</a></p>"
-          puts html_to_markdown(description)
           @jobs.push ({  title: title,
                          close: close,
                          fulltime: full_time,
@@ -45,5 +48,7 @@ class Deakin < Adapter
     end
     return @jobs
   end
+
+
 
 end

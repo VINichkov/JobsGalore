@@ -39,16 +39,26 @@ class Adapter
     end
   end
 
-  def delete_all_attr(attr)
+  def update_attr(attr)
     attr = Nokogiri::HTML(attr)
     attr.css('*').each do |elem|
       if elem&.count>0 then
         elem.each do |attr, value|
-          elem.remove_attribute(attr)
+          if attr != 'href'
+            elem.remove_attribute(attr)
+          else
+            href_edit(elem, attr, value)
+          end
         end
       end
     end
     attr.to_s
+  end
+
+  def href_edit(elem, attr, value)
+    if value[0] == '/'
+      elem[:href] = @host+value
+    end
   end
 
   def gsub_html(arg)
@@ -56,7 +66,7 @@ class Adapter
   end
 
   def html_to_markdown(arg)
-    Markitdown.from_nokogiri(Nokogiri::HTML(gsub_html(delete_all_attr(arg))))
+    Markitdown.from_nokogiri(Nokogiri::HTML(gsub_html(update_attr(arg))))
   end
 
 end
