@@ -34,7 +34,7 @@ class Rmit < Adapter
     job.css('div div h1').remove
     job.css('div[id="social-media"]').remove
     job.css('a[class="back-link button"]').remove
-    job.css('a[class="apply-link button"]').remove
+    #job.css('a[class="apply-link button"]').remove
     job.css('p').each do |p|
       if p.content == " " or p.content == "" or p.content == "  " or p.content == "#Li" or p.content == "#LI"
         p.remove
