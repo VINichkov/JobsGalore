@@ -22,7 +22,7 @@
       tbody
         - @clients.each do |client|
           tr
-            td = client.photo_uid ? image_tag(Dragonfly.app.remote_url_for(client.photo_uid), class: 'img-thumbnail center-block ', size: "150x125") : image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "150x125")
+            td = client.photo_uid ? image_tag(Dragonfly.app.remote_url_for(client.photo_uid), class: 'img-thumbnail center-block ', size: "150x125", alt:client.full_name) : image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "150x125", alt:client.full_name)
             td = client.firstname
             td = client.lastname
             td = client.email
@@ -35,7 +35,7 @@
       .panel.panel-default
         .panel-body
           .col-sm-4.col-xs-12
-            = client.photo_uid ? image_tag(Dragonfly.app.remote_url_for(client.photo_uid), class: 'img-thumbnail center-block ', size: "150x125") : image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "150x125")
+            = client.photo_uid ? image_tag(Dragonfly.app.remote_url_for(client.photo_uid), class: 'img-thumbnail center-block ', size: "150x125", alt:client.full_name) : image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "150x125", alt:client.full_name)
           .col-sm-8.col-xs-12
             p #{client.firstname} #{client.lastname}
             p #{client.email}

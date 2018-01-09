@@ -4,7 +4,10 @@ class Client < ApplicationRecord
   before_save :rename
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable
+         :recoverable, :rememberable, :trackable, :validatable
+  if Rails.env.production?
+    devise  :confirmable, :lockable, :timeoutable
+  end
   belongs_to :location
   has_many :gateway, dependent: :destroy
   has_many :resume, dependent: :destroy
@@ -41,5 +44,9 @@ class Client < ApplicationRecord
     return unless self.photo.present?
     path_obj = Pathname(self.photo.name)
     self.photo.name = path_obj.sub_ext('').to_s.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') + path_obj.extname
+  end
+
+  def full_name
+    @full_name ? @full_name : @full_name = "#{self.firstname} #{self.lastname}"
   end
 end

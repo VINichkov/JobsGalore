@@ -5,14 +5,14 @@
       .row
         .col-md-4.col-lg-4.col-sm-6.hidden-xs
           - if current_client.photo.nil?
-            = image_tag(image_path("avatar.jpg"), size: "300x300", class: 'img-thumbnail')
+            = image_tag(image_path("avatar.jpg"), size: "300x300", class: 'img-thumbnail', alt: current_client.full_name)
           - else
-            = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size:"300x300")
+            = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size:"300x300", alt: current_client.full_name)
         .col-xs-12.hidden-sm.hidden-md.hidden-lg.text-center
           - if current_client.photo.nil?
-            = image_tag(image_path("avatar.jpg"), size: "250x250", class: 'img-thumbnail')
+            = image_tag(image_path("avatar.jpg"), size: "250x250", class: 'img-thumbnail', alt: current_client.full_name)
           - else
-            = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size: "250x250")
+            = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size: "250x250", alt: current_client.full_name)
         .col-md-4.col-lg-4.col-sm-6.col-xs-12
           h3 #{current_client.firstname} #{current_client.lastname}
           h3 Email: #{current_client.email}

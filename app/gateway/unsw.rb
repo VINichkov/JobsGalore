@@ -12,7 +12,7 @@ class Unsw < Adapter
       span = td.css('div [class="attributes PSTEXT align:left"] span')
       unless span.text.empty?
         hash = span.text.split('|').map do |str|
-          str.strip.split(":").map {|word| "\"#{word.strip}\""}.join('=>')
+          str.strip.split(':',2).map {|word| "\"#{word.strip}\""}.join('=>')
         end
         eval  "hash = {#{hash.join(', ')}}"
         if hash.class == Hash

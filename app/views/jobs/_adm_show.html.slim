@@ -13,9 +13,9 @@
           = link_to(@job.company.name,admin_company_show_path(@job.company))
           p
           - if @job.company.logo_uid.nil?
-            = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250"),@job.company)
+            = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250", alt: @job.company.name),@job.company)
           - else
-            = link_to(image_tag(Dragonfly.app.remote_url_for(@job.company.logo_uid), class: 'img-thumbnail center-block ', size: "300x250"),@job.company)
+            = link_to(image_tag(Dragonfly.app.remote_url_for(@job.company.logo_uid), class: 'img-thumbnail center-block ', size: "300x250", alt: @job.company.name),@job.company)
         p
         h3.text-center
           |Job summary
@@ -155,9 +155,9 @@
           .row
             col-lg-3.col-md-3
               - if @job.client.photo.nil?
-                = image_tag(image_path("avatar.jpg"), size: "60x60", class: 'img-thumbnail center-block', )
+                = image_tag(image_path("avatar.jpg"), size: "60x60", class: 'img-thumbnail center-block', alt: @job.client.full_name)
               - else
-                = image_tag(Dragonfly.app.remote_url_for(@job.client.photo_uid), size: "60x60", class: 'img-thumbnail center-block ')
+                = image_tag(Dragonfly.app.remote_url_for(@job.client.photo_uid), size: "60x60", class: 'img-thumbnail center-block ', alt: @job.client.full_name)
             col-lg-9.col-md-9
               ="#{@job.client.firstname} #{@job.client.lastname}"
               br

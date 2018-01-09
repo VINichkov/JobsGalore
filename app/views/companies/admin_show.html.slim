@@ -19,9 +19,9 @@
         p.text-center
           .row
             -if @company.logo_uid.nil?
-              = image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size:"300x250")
+              = image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size:"300x250", alt: @company.name)
             -else
-              =image_tag(Dragonfly.app.remote_url_for(@company.logo_uid), class: 'img-thumbnail center-block ', size:"300x250")
+              =image_tag(Dragonfly.app.remote_url_for(@company.logo_uid), class: 'img-thumbnail center-block ', size:"300x250", alt: @company.name)
           .row
             h3.text-center
               |Company summary
@@ -73,9 +73,9 @@
         p.text-center
           .row
             - if @company.logo_uid.nil?
-              = image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250")
+              = image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250", alt: @company.name)
             - else
-              = image_tag(Dragonfly.app.remote_url_for(@company.logo_uid), class: 'img-thumbnail center-block ', size: "300x250")
+              = image_tag(Dragonfly.app.remote_url_for(@company.logo_uid), class: 'img-thumbnail center-block ', size: "300x250", alt: @company.name)
           .row
             .text-center
               p
@@ -132,9 +132,9 @@
         p.text-center
           .row
             - if @company.logo_uid.nil?
-              = image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250")
+              = image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250", alt: @company.name)
             - else
-              = image_tag(Dragonfly.app.remote_url_for(@company.logo_uid), class: 'img-thumbnail center-block ', size: "300x250")
+              = image_tag(Dragonfly.app.remote_url_for(@company.logo_uid), class: 'img-thumbnail center-block ', size: "300x250", alt: @company.name)
           .row
             .text-center
               p
@@ -194,9 +194,9 @@
             .row
               col-lg-3.col-md-3
                 - if client.photo.nil?
-                  = image_tag(image_path("avatar.jpg"), size: "60x60", class: 'img-thumbnail center-block')
+                  = image_tag(image_path("avatar.jpg"), size: "60x60", class: 'img-thumbnail center-block', alt: client.full_name)
                 - else
-                  = image_tag(Dragonfly.app.remote_url_for(client.photo_uid), size: "60x60", class: 'img-thumbnail center-block ')
+                  = image_tag(Dragonfly.app.remote_url_for(client.photo_uid), size: "60x60", class: 'img-thumbnail center-block ', alt: client.full_name)
               col-lg-9.col-md-9
                 = "#{client.firstname} #{client.lastname}"
                 br
