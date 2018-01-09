@@ -45,4 +45,8 @@ class Client < ApplicationRecord
     path_obj = Pathname(self.photo.name)
     self.photo.name = path_obj.sub_ext('').to_s.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') + path_obj.extname
   end
+
+  def full_name
+    @full_name ? @full_name : @full_name = "#{self.firstname} #{self.lastname}"
+  end
 end

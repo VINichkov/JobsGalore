@@ -1,9 +1,9 @@
 .row.well
   .col-md-4.col-lg-4
     -if @client.photo.nil?
-      = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail', size:"300x300")
+      = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail', size:"300x300", alt: @client.full_name)
     -else
-      =image_tag(Dragonfly.app.remote_url_for(@client.photo_uid), class: 'img-thumbnail', size:"300x300")
+      =image_tag(Dragonfly.app.remote_url_for(@client.photo_uid), class: 'img-thumbnail', size:"300x300", alt: @client.full_name)
   .col-md-8.col-lg-8
     h2 #{@client.firstname} #{@client.lastname}
     h2 Email: #{@client.email}

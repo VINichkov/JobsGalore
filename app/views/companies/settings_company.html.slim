@@ -5,14 +5,14 @@
       .row
         .col-md-4.col-lg-4.col-sm-6.hidden-xs
           - if @company.logo.nil?
-            = image_tag(image_path("company_profile.jpg"), size: "300x300", class: 'img-thumbnail')
+            = image_tag(image_path("company_profile.jpg"), size: "300x300", class: 'img-thumbnail', alt: @company.name)
           - else
-            = image_tag(Dragonfly.app.remote_url_for(@company.logo_uid), class: 'img-thumbnail', size:"300x300")
+            = image_tag(Dragonfly.app.remote_url_for(@company.logo_uid), class: 'img-thumbnail', size:"300x300", alt: @company.name)
         .col-xs-12.hidden-sm.hidden-md.hidden-lg.text-center
           - if @company.logo.nil?
-            = image_tag(image_path("company_profile.jpg"), size: "250x250", class: 'img-thumbnail')
+            = image_tag(image_path("company_profile.jpg"), size: "250x250", class: 'img-thumbnail', alt: @company.name)
           - else
-            = image_tag(Dragonfly.app.remote_url_for(@company.logo_uid), class: 'img-thumbnail', size: "250x250")
+            = image_tag(Dragonfly.app.remote_url_for(@company.logo_uid), class: 'img-thumbnail', size: "250x250", alt: @company.name)
         .col-md-8.col-lg-8
           h3 Name: #{@company.name}
           h3 Size: #{@company.size ? @company.size.size : "empty"}

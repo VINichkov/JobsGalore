@@ -6,27 +6,27 @@
           p #{resume.client.firstname} #{resume.client.lastname}
         .row
         - if not resume.client.photo_uid.nil?
-          = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ', size:"270x270"),resume.client)
+          = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ', size:"270x270", alt: resume.client.full_name),resume.client)
         - else
-          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size:"270x270")
+          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size:"270x270", alt: resume.client.full_name)
       - elsif resume.client.id == current_client.id
         .row.text-center
           = link_to("#{resume.client.firstname} #{resume.client.lastname}", resume.client)
         .row
         - if not resume.client.photo_uid.nil?
-          = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ', size: "270x270"),resume.client)
+          = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ', size: "270x270", alt: resume.client.full_name),resume.client)
         - else
-          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "270x270")
+          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "270x270", alt: resume.client.full_name)
       - else
         .row.text-center
           |Anonymous
         .row
-        = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"270x270")
+        = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"270x270", alt: resume.client.full_name)
     - else
       .row.text-center
         |Anonymous
       p
-      = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"270x270")
+      = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"270x270", alt: resume.client.full_name)
     .row.text-center
       = "Posted: "+resume.updated_at.strftime("%d %B %Y")
 .col-lg-10.col-md-10.col-sm-10.col-xs-12
@@ -48,24 +48,24 @@
         - if not resume.client.photo_uid.nil?
           = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ',size:"130x100"),resume.client)
         - else
-          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block',size:"130x100")
+          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block',size:"130x100", alt: resume.client.full_name)
       - elsif resume.client.id == current_client.id
         .row.text-center
           = link_to("#{resume.client.firstname} #{resume.client.lastname}", resume.client)
         .row
         - if not resume.client.photo_uid.nil?
-          = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ', size: "130x100"),resume.client)
+          = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ', size: "130x100", alt: resume.client.full_name),resume.client)
         - else
-           = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "130x100")
+           = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "130x100", alt: resume.client.full_name)
       - else
         .row.text-center
           |Anonymous
         .row
-        = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ',size:"130x100")
+        = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ',size:"130x100", alt: resume.client.full_name)
     - else
       .row.text-center
         |Anonymous
       p
-      = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"130x100")
+      = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"130x100", alt: resume.client.full_name)
     .row.text-center
       = "Posted: "+resume.updated_at.strftime("%d %B %Y")

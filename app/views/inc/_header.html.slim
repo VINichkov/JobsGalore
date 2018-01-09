@@ -9,7 +9,7 @@
             li
               = link_to root_path do
                 span
-                  = image_tag(image_path("method-draw-image.png"), size: "100x50")
+                  = image_tag(image_path("method-draw-image.png"), size: "100x50", alt:"Jobs Galore")
             li.elem_header
               a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
                 |Jobs
@@ -93,9 +93,9 @@
         li
           =link_to client_root_path do
             - if current_client.photo.nil?
-              = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail', size: "50x50")
+              = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail', size: "50x50", alt: current_client.full_name)
             - else
-              = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size: "50x50")
+              = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size: "50x50", alt: current_client.full_name)
             | &nbsp; #{current_client.firstname} #{current_client.lastname} &nbsp;
             span.glyphicon.glyphicon-chevron-right
         li
