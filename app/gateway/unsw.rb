@@ -14,8 +14,11 @@ class Unsw < Adapter
         hash = span.text.split('|').map do |str|
           str.strip.split(":").map {|word| "\"#{word.strip}\""}.join('=>')
         end
-        puts "hash = {#{hash.join(', ')}}"
-        eval  "hash = {#{hash.join(', ')}}"
+        begin
+          eval  "hash = {#{hash.join(', ')}}"
+        rescue
+          hash = nil
+        end
         if hash.class == Hash
           hash["Posted Date"] = Date.parse(hash["Posted Date"]) if hash["Posted Date"]
           hash["Close Date"] = Date.parse(hash["Close Date"]) if hash["Close Date"]
