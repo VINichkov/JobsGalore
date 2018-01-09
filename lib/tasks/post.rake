@@ -12,7 +12,7 @@ namespace :post do
       if jobs.count !=0
         count = (jobs.count % times_left)>0 ? (jobs.count/times_left +1) : jobs.count/times_left
         jobs[0..count-1].each do |job|
-          job.post_at_twitter(Gateway.find_by_company_id(job.company_id).hashtags)
+          job.post_at_twitter("#{Gateway.find_by_company_id(job.company_id).hashtags} #{job.title}" )
         end
       end
     end
