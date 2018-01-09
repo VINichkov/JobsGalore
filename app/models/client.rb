@@ -4,7 +4,10 @@ class Client < ApplicationRecord
   before_save :rename
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable
+         :recoverable, :rememberable, :trackable, :validatable
+  if Rails.env.production?
+    devise  :confirmable, :lockable, :timeoutable
+  end
   belongs_to :location
   has_many :gateway, dependent: :destroy
   has_many :resume, dependent: :destroy

@@ -11,14 +11,13 @@ class Unsw < Adapter
     @doc.css('table[id="HRS_AGNT_RSLT_I$scroll$0"] tr td[class="PSLEVEL1SSGRIDROW"]').each do |td|
       span = td.css('div [class="attributes PSTEXT align:left"] span')
       unless span.text.empty?
+        puts span
         hash = span.text.split('|').map do |str|
-          str.strip.split(":").map {|word| "\"#{word.strip}\""}.join('=>')
+          puts str
+          str.strip.split(':',2).map {|word| "\"#{word.strip}\""}.join('=>')
         end
-        begin
-          eval  "hash = {#{hash.join(', ')}}"
-        rescue
-          hash = nil
-        end
+        puts hash
+        eval  "hash = {#{hash.join(', ')}}"
         if hash.class == Hash
           hash["Posted Date"] = Date.parse(hash["Posted Date"]) if hash["Posted Date"]
           hash["Close Date"] = Date.parse(hash["Close Date"]) if hash["Close Date"]
