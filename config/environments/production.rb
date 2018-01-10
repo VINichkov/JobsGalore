@@ -9,6 +9,10 @@ Rails.application.configure do
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
+  config.public_file_server.headers = {
+      'Cache-Control' => 'public, max-age = 31536000',
+      'Expires' => "#{1.year.from_now.to_formatted_s(:rfc822)}"
+  }
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false

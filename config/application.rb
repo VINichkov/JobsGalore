@@ -17,6 +17,10 @@ module Mongo
       end
     end
     config.active_record.schema_format = :sql
+    #config.public_file_server.headers = {
+     #   'Cache-Control' => 'public, max-age = 604800',
+    #    'Expires' => "#{1.year.from_now.to_formatted_s(:rfc822)}"
+    #}
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
