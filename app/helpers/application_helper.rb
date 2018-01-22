@@ -38,4 +38,8 @@ module ApplicationHelper
     meta_tag "og:image", arg[:image]
     meta_tag "article:published_time", arg[:published]
   end
+
+  def render_markdown(text = nil)
+    render :inline =>  RDiscount.new(text).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\"") if text
+  end
 end

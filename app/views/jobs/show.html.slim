@@ -11,12 +11,11 @@
   .container.hidden-xs.hidden-sm
     .col-lg-8.col-md-8
       .row.well
-          h1.text-center
-            = @job.title.capitalize
-          p
-            =  render :inline =>  RDiscount.new(@job.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if @job.description
+        h1.text-center
+          = @job.title.capitalize
+        p
+          =  render :inline =>  RDiscount.new(@job.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if @job.description
     .col-lg-4.col-md-4
-
       .panel.panel-default
         .panel-body
           h3.text-center

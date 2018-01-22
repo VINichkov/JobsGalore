@@ -17,3 +17,5 @@
 /db/importold/*
 
 
+# Added by npm-rails
+/node_modules

@@ -24,6 +24,10 @@
 @import "jasny-bootstrap";
 @import "print";
 @import "font-awesome";
+@import "medium-editor.min";
+@import "bootstrap.min";
+//= require jquery-ui/THEME-NAME
+
 
 .affix {
   top: 0;
@@ -164,4 +168,14 @@ li.elem_header{
   .print_header {
     display: none;
   }
+}
+.none{
+  visibility: hidden;
+  height: 0px;
+  width: 0px;
+}
+.editable{
+  border-top: 1px groove black;
+  border-bottom: 1px groove black;
+  min-height:500px;
 }

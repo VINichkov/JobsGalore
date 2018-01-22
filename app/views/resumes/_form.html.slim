@@ -89,9 +89,11 @@
               defaultEmptyLocations:{name:"#{current_client.location.suburb}, #{current_client.location.state}", id:current_client.location.id})
   .col-xs-12.col-sm-12.col-md-12
     .form-group
-      = f.label :abouteme, "Aboute me"
+      = f.label :abouteme
       br
-      = f.text_area :abouteme, class:"form-control", :"data-provide"=>"markdown-editable", rows:"10"
+      = f.text_area :abouteme, class: "markdown none"
+      div.editable
+        = render_markdown(@resume.abouteme)
   hr.colorgraph
     .row
       .col-xs-6.col-md-6.col-sm-6.col-lg-6

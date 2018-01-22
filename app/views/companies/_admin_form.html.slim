@@ -34,7 +34,9 @@
       .form-group
         = f.label :description
         br
-        = f.text_area :description, class:"form-control", class:"form-control", :"data-provide"=>"markdown-editable", rows:"10"
+        = f.text_area :description, class: "markdown none"
+        div.editable
+          = render_markdown(@company.description)
       hr.colorgraph
         .row
           .col-xs-12.col-md-6.col-sm-6.col-lg-6
