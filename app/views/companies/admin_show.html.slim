@@ -6,7 +6,7 @@
         -if @company.realy
           span.glyphicon.glyphicon-ok.glyphicon-small
       p
-        =  render :inline =>  RDiscount.new(@company.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if @company.description
+        =  render_markdown(@company.description)
     -if @company.job.count>0
       .row
         h3
@@ -176,7 +176,7 @@
     .row
       .col-xs-12
         p
-          = render :inline =>  RDiscount.new(@company.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if @company.description
+          = render_markdown(@company.description)
           - if @company.job.count>0
         h3
           = link_to "Company jobs #{@company.job.count}", "/company_jobs/#{@company.id}"

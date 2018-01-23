@@ -40,6 +40,6 @@ module ApplicationHelper
   end
 
   def render_markdown(text = nil)
-    render :inline =>  RDiscount.new(text).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\"") if text
+    render :inline =>  RDiscount.new(text).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\"").gsub('<a',"<a rel=\"nofollow\"") if text
   end
 end

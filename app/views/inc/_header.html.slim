@@ -80,10 +80,9 @@
                   = link_to 'Log in', new_client_session_path, rel:"nofollow"
                 li.elem_header
                   = link_to 'Sign up', new_client_registration_path, rel:"nofollow"
-        .row
-            = form_tag('/search', method: :get, class:'navbar-form form-inline')  do
-                = react_component("Search", name:'main_search', categories: industries)
-
+      .row
+        = form_tag('/search', method: :get, class:'navbar-form form-inline')  do
+          = react_component("Search", name:'main_search', categories: industries)
       .row
         p
   .clear_menu-sm.hidden-xs.hidden-lg
@@ -200,39 +199,6 @@
             label
               |Salary
             input#salary.form-control[default="#{session[:param] ? session[:param][:salary]:''}" name='main_search[salary]' type="text"]
-          .form-group
-            .col-xs-6
-              label
-                input[type="checkbox" name='main_search[permanent]']
-                | Permanent
-            .col-xs-6
-              label
-                input[type="checkbox" name='main_search[casual]']
-                |Casualt
-            .col-xs-6
-              label
-                input[type="checkbox" name='main_search[temp]']
-                |Temporary
-            .col-xs-6
-              label
-                input[type="checkbox" name='main_search[contract]']
-                |Contract
-            .col-xs-6
-              label
-                input[type="checkbox" name='main_search[fulltime]']
-                |Full-time
-            .col-xs-6
-              label
-                input[type="checkbox" name='main_search[parttime]']
-                |Part-time
-            .col-xs-6
-              label
-                input[type="checkbox" name='main_search[flextime]']
-                |Flex-time
-            .col-xs-6
-              label
-                input[type="checkbox"  name='main_search[remote]']
-                |Remote
   .clear_menu.hidden-sm.hidden-md.hidden-lg
   .navbar.navbar-default.navbar-fixed-top.hidden-sm.hidden-md.hidden-lg
     .row

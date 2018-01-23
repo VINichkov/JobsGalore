@@ -29,7 +29,7 @@
           h3.text-center
             |Description
           p
-            =  render :inline =>  RDiscount.new(@company.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if @company.description
+            =  render_markdown(@company.description)
       br
       .row
         .col-md-6.col-lg-6.col-sm-6.col-xs-12

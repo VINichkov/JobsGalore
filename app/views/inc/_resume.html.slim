@@ -1,5 +1,6 @@
 .col-xs-12.hidden-lg.hidden-md.hidden-sm
   .row
+    -puts resume.id
     - if client_signed_in?
       - if current_client.resp?
         .row.text-center
@@ -35,7 +36,7 @@
   -if not resume.salary.nil?
     p = resume.salary.to_i.to_s
 
-  = render :inline =>  HTML_Truncator.truncate(RDiscount.new(resume.abouteme).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" "),30) if resume.abouteme
+  = render :inline =>  HTML_Truncator.truncate(render_markdown(resume.abouteme),30) if resume.abouteme
   = link_to ' more...', resume
   p = resume.location.state.to_s+" "+resume.location.suburb.capitalize.to_s
 .col-lg-2.col-md-2.col-sm-2.hidden-xs

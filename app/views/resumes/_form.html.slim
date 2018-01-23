@@ -37,56 +37,6 @@
                       dataStyle:"bbtn-default",
                       values: Industry.all.to_json,
                       defaultValues:@resume.industry.to_json)
-
-  .col-xs-6.col-sm-4.col-md-3
-    .form-group
-      = f.check_box :permanent
-      |  &nbsp;
-      = f.label :permanent
-  .col-xs-6.col-sm-4.col-md-3
-    .form-group
-      = f.check_box :casual
-      |  &nbsp;
-      = f.label :casual
-  .col-xs-6.col-sm-4.col-md-3
-    .form-group
-      = f.check_box :temp
-      |  &nbsp;
-      = f.label :temp, "Temporary"
-  .col-xs-6.col-sm-4.col-md-3
-    .form-group
-      = f.check_box :contract
-      |  &nbsp;
-      = f.label :contract
-  .col-xs-6.col-sm-4.col-md-3
-    .form-group
-      = f.check_box :fulltime
-      |  &nbsp;
-      = f.label :fulltime, "Full time"
-  .col-xs-6.col-sm-4.col-md-3
-    .form-group
-      = f.check_box :parttime
-      |  &nbsp;
-      = f.label :parttime, "Patr time"
-  .col-xs-6.col-sm-4.col-md-3
-    .form-group
-      = f.check_box :flextime
-      |  &nbsp;
-      = f.label :flextime, "Flex time"
-  .col-xs-6.col-sm-4.col-md-3
-    .form-group
-      = f.check_box :remote
-      |  &nbsp;
-      = f.label :remote
-  //.col-xs-12.col-sm-12.col-md-12
-    .form-group
-      = f.label :experiences, "Experience"
-      br
-      = react_component('Experience',
-              name: "resume[experience]",
-              id: "resume_experience",
-              default: @experience,
-              defaultEmptyLocations:{name:"#{current_client.location.suburb}, #{current_client.location.state}", id:current_client.location.id})
   .col-xs-12.col-sm-12.col-md-12
     .form-group
       = f.label :abouteme

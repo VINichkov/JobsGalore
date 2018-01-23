@@ -14,7 +14,7 @@
         h1.text-center
           = @job.title.capitalize
         p
-          =  render :inline =>  RDiscount.new(@job.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if @job.description
+          =  render_markdown(@job.description)
     .col-lg-4.col-md-4
       .panel.panel-default
         .panel-body
@@ -427,7 +427,7 @@
       .row
         .col-xs-12
           p
-            = render :inline =>  RDiscount.new(@job.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if @job.description
+            = render_markdown(@job.description)
   .modal.fade#contact[tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"]
     .modal-dialog
       .modal-content

@@ -13,7 +13,7 @@
       h1.text-center
         = @resume.desiredjobtitle
       p
-        =  render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if  @resume.abouteme
+        = render_markdown(@resume.abouteme)
 
     -if not @resume.experience.empty?
       h3
@@ -344,7 +344,7 @@
     .row
       .col-sm-12
         p
-          = render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  @resume.abouteme
+          = render_markdown(@resume.abouteme)
         -if not @resume.experience.empty?
           h3.text-center
             |Experience
@@ -529,7 +529,7 @@
     .row
       .col-xs-12
         p
-          = render :inline =>  RDiscount.new(@resume.abouteme).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  @resume.abouteme
+          = render_markdown(@resume.abouteme)
         -if not @resume.experience.empty?
           h3.text-center
             |Experience
