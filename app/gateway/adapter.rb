@@ -69,4 +69,8 @@ class Adapter
     Markitdown.from_nokogiri(Nokogiri::HTML(gsub_html(update_attr(arg))))
   end
 
+  def industry
+    nil
+  end
+
 end
