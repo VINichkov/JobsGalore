@@ -183,8 +183,6 @@ GEM
     nio4r (2.1.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
-    npm-rails (0.2.1)
-      rails (>= 3.2)
     ntlm-http (0.1.1)
     orm_adapter (0.5.0)
     pg (0.21.0)
@@ -335,7 +333,6 @@ DEPENDENCIES
   markdown-rails
   markitdown
   mechanize
-  npm-rails
   pg
   pg_search
   puma
