@@ -23,7 +23,7 @@ namespace :integrate do
   task :update_jobs => :environment do
     i=0
     Job.all.each do |job|
-      if job.industry.count == 0
+      if job.industryjobs.count == 0
         i+=1
         puts "#{i}| #{job.title}  ---  #{job.company.name}"
         if false
