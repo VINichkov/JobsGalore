@@ -50,62 +50,29 @@ class Search extends React.Component{
                             </div>,
                             <div className="row">
                                 <div className="form-group" style={{display:'inline'}}>
-                                    <div className=" col-md-2 col-lg-2">
-                                        <label className="navbar-text"> Urgent </label>
-                                    </div>
-                                    <div className="checkbox col-md-10 col-lg-10">
-                                        <input type="checkbox" defaultChecked={this.props.params ? this.props.params.urgent:false} name={this.props.name+'[urgent]'}/>
-                                    </div>
-                                </div>
-                            </div>,
-                            <div className="row">
-                                <div className="form-group" style={{display:'inline'}}>
                                     <div className="col-md-2 col-lg-2">
                                         <label style={{width:'100%'}} className="navbar-text">Location</label>
                                     </div>
-                                    <div className="col-md-10 col-lg-10">
+                                    <div className="col-md-4 col-lg-4">
                                         <Autocomplete style={{width:'100%'}} className="form-control dropdown-toggle" defaultId={this.props.params ? this.props.params.location_id:''} defaultName={this.props.params ? this.props.params.location_name:''} name={this.props.name+'[location'} id="location_search" />
                                     </div>
                                 </div>
-                            </div>,
-                            <div className="row">
                                 <div className="form-group" style={{display:'inline'}}>
                                     <div className="col-md-2 col-lg-2">
                                         <label style={{width:'100%'}} className="navbar-text">Salary</label>
                                     </div>
-                                    <div className="col-md-10 col-lg-10">
+                                    <div className="col-md-4 col-lg-4">
                                         <input style={{width:'100%'}} autocomplete="off" id="salary" className="form-control" defaultValue={this.props.params ? this.props.params.salary: ''} name={this.props.name+'[salary]'} pattern="^[ 0-9]+$" type="text"/>
                                     </div>
                                 </div>
                             </div>,
                             <div className="row">
-                                <div className="form-group">
-                                    <div className="checkbox col-md-3 col-lg-3">
-                                        <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.permanent:false} name={this.props.name+'[permanent]'}/> Permanent</label>
-                                    </div>
-                                    <div className="checkbox col-md-3 col-lg-3">
-                                        <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.casual:false} name={this.props.name+'[casual]'}/> Casualt</label>
-                                    </div>
-                                    <div className="checkbox col-md-3 col-lg-3">
-                                        <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.temp:false} name={this.props.name+'[temp]'}/> Temporary</label>
-                                    </div>
-                                    <div className="checkbox col-md-3 col-lg-3">
-                                        <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.contract:false} name={this.props.name+'[contract]'}/> Contract</label>
-                                    </div>
-                                    <div className="checkbox col-md-3 col-lg-3">
-                                        <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.fulltime:false} name={this.props.name+'[fulltime]'}/> Full-time</label>
-                                    </div>
-                                    <div className="checkbox col-md-3 col-lg-3">
-                                        <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.parttime:false} name={this.props.name+'[parttime]'}/> Part-time</label>
-                                    </div>
-                                    <div className="checkbox col-md-3 col-lg-3">
-                                        <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.flextime:false} name={this.props.name+'[flextime]'}/> Flex-time</label>
-                                    </div>
-                                    <div className="checkbox col-md-3 col-lg-3">
-                                        <label className="navbar-text"><input type="checkbox" defaultChecked={this.props.params ? this.props.params.remote:false} name={this.props.name+'[remote]'}/> Remote</label>
-                                    </div>
-                                    <div style={{display:'none'}}>
-                                        <input type="checkbox" checked="checked" name={this.props.name+'[options]'}/>
+                                <div className="form-group" style={{display:'inline'}}>
+                                    <div className=" col-md-12 col-lg-12">
+                                        <label className="navbar-text">
+                                            <input type="checkbox" defaultChecked={this.props.params ? this.props.params.urgent:false} name={this.props.name+'[urgent]'}/>
+                                            &nbsp; Only urgent
+                                        </label>
                                     </div>
                                 </div>
                             </div>];
