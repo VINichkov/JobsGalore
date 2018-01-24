@@ -26,23 +26,23 @@ namespace :integrate do
       if job.industryjob.count == 0
         job.title.downcase!
         i+=1
-        puts "#{i}| #{job.title}  ---  #{job.company.name}"
+        #puts "#{i}| #{job.title}  ---  #{job.company.name}"
         if false
           job.industryjob.create(industry: Industry.find_by_name('Accounting'))
         elsif administration(job.title)
           puts "#{i}| #{job.title}  ---  Administration & Secretarial"
-          #job.industryjob.create(industry: Industry.find_by_name('Administration & Secretarial'))
+          job.industryjob.create(industry: Industry.find_by_name('Administration & Secretarial'))
         elsif media(job.title)
           puts "#{i}| #{job.title}  ---  Advertising, Media, Arts & Entertainment"
-          #job.industryjob.create(industry: Industry.find_by_name('Advertising, Media, Arts & Entertainment'))
+          job.industryjob.create(industry: Industry.find_by_name('Advertising, Media, Arts & Entertainment'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Agriculture, Nature & Animal'))
         elsif finance(job.title)
           puts "#{i}| #{job.title}  ---  Banking & Finance"
-          #job.industryjob.create(industry: Industry.find_by_name('Banking & Finance'))
+          job.industryjob.create(industry: Industry.find_by_name('Banking & Finance'))
         elsif science(job.title)
           puts "#{i}| #{job.title}  ---  Biotech, R&D, Science"
-          #job.industryjob.create(industry: Industry.find_by_name('Biotech, R&D, Science'))
+          job.industryjob.create(industry: Industry.find_by_name('Biotech, R&D, Science'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Construction, Architecture & Interior Design'))
         elsif false
@@ -51,27 +51,27 @@ namespace :integrate do
           job.industryjob.create(industry: Industry.find_by_name('Editorial & Writing'))
         elsif education(job.title)
           puts "#{i}| #{job.title}  ---  Education, Childcare & Training"
-          #job.industryjob.create(industry: Industry.find_by_name('Education, Childcare & Training'))
+          job.industryjob.create(industry: Industry.find_by_name('Education, Childcare & Training'))
         elsif enginering(job.title)
           puts "#{i}| #{job.title}  ---  Engineering"
-          #job.industryjob.create(industry: Industry.find_by_name('Engineering'))
+          job.industryjob.create(industry: Industry.find_by_name('Engineering'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Franchise & Business Ownership'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Government, Defence & Emergency'))
         elsif medical(job.title)
           puts "#{i}| #{job.title}  ---  Health, Medical & Pharmaceutical"
-          #job.industryjob.create(industry: Industry.find_by_name('Health, Medical & Pharmaceutical'))
+          job.industryjob.create(industry: Industry.find_by_name('Health, Medical & Pharmaceutical'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Hospitality, Travel & Tourism'))
         elsif hr(job.title)
           puts "#{i}| #{job.title}  ---  HR & Recruitment"
-          #job.industryjob.create(industry: Industry.find_by_name('HR & Recruitment'))
+          job.industryjob.create(industry: Industry.find_by_name('HR & Recruitment'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Insurance & Superannuation'))
         elsif it(job.title)
           puts "#{i}| #{job.title}  ---  IT"
-          #job.industryjob.create(industry: Industry.find_by_name('IT'))
+          job.industryjob.create(industry: Industry.find_by_name('IT'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Legal'))
         elsif false
@@ -86,13 +86,13 @@ namespace :integrate do
           job.industryjob.create(industry: Industry.find_by_name('Other'))
         elsif manager(job.title)
           puts "#{i}| #{job.title}  ---  Program & Project Management"
-          #job.industryjob.create(industry: Industry.find_by_name('Program & Project Management'))
+          job.industryjob.create(industry: Industry.find_by_name('Program & Project Management'))
         elsif property(job.title)
           puts "#{i}| #{job.title}  ---  Property & Real Estate"
-          #job.industryjob.create(industry: Industry.find_by_name('Property & Real Estate'))
+          job.industryjob.create(industry: Industry.find_by_name('Property & Real Estate'))
         elsif security(job.title)
           puts "#{i}| #{job.title}  ---  Quality Assurance & Safety"
-          #job.industryjob.create(industry: Industry.find_by_name('Quality Assurance & Safety'))
+          job.industryjob.create(industry: Industry.find_by_name('Quality Assurance & Safety'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Retail'))
         elsif false
@@ -107,7 +107,7 @@ namespace :integrate do
           job.industryjob.create(industry: Industry.find_by_name('Work from Home'))
         elsif other(job.title)
           puts "#{i}| #{job.title}  ---  Otherl"
-          #job.industryjob.create(industry: Industry.find_by_name('Other'))
+          job.industryjob.create(industry: Industry.find_by_name('Other'))
         end
       end
     end
@@ -115,7 +115,7 @@ namespace :integrate do
 
  def finance(text = nil)
    if text
-     text.include?('expense') or text.include?('budget')
+     text.include?('expense') or text.include?('budget') or text.include?('finance')
    else
      false
    end
@@ -141,9 +141,9 @@ namespace :integrate do
     ((text.include?('fellow') or text.include?('associate')) and (text.include?('postdoctoral') or text.include?('research') or text.include?('professor'))) or
     text.include?('training') or
     (text.include?('head') and text.include?('asian')) or
-    (text.include?('officer') and (text.include?('admissions') or text.include?('credit') or text.include?('student') or text.include?('membership'))) or
+    (text.include?('officer') and (text.include?('programs') or text.include?('admissions') or text.include?('credit') or text.include?('student') or text.include?('membership'))) or
     text.include?('advisor') or text.include?('educational') or text.include?('dean') or text.include?('educator') or text.include?('psychology') or text.include?('scholarship') or
-    text.include?('culture') or text.include?('post-doctoral') or text.include?('scientific') or text.include?('education') or text.include?('course')
+    text.include?('culture') or text.include?('post-doctoral') or text.include?('scientific') or text.include?('education') or text.include?('course') or text.include?('curriculum')
   else
     false
   end
@@ -170,7 +170,7 @@ namespace :integrate do
       ((text.include?('assistant') or text.include?('officer')) and (text.include?'timetabling' or text.include?'activities' or text.include?'planning' or text.include?'administration' or text.include?'governance' or text.include?'development' or text.include?'relations' or text.include?'alumni' or text.include?'administrative' or text.include?'support' or text.include?'project' or text.include?'executive')) or
       ((text.include?'information' or text.include?'personal' or text.include?'administrative') and (text.include?'executive' or text.include?'assistant')) or
       ((text.include?'administration' or text.include?'senior' or text.include?'parking') and text.include?'manager') or
-      (text.include?'coordinator') or (text.include?'service desk') or
+      (text.include?'coordinator') or (text.include?'service desk') or (text.include?'administrator') or
       ((text.include?'development' or text.include?'group') and (text.include?'manager')) or
       ((text.include?'event') and (text.include?'administration' or text.include?'administrator') )
     else
