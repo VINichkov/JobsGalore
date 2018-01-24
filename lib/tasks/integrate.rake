@@ -26,7 +26,7 @@ namespace :integrate do
       if job.industryjob.count == 0
         job.title.downcase!
         i+=1
-        puts "#{i}| #{job.title}  ---  #{job.company.name}"
+        #puts "#{i}| #{job.title}  ---  #{job.company.name}"
         if false
           job.industryjob.create(industry: Industry.find_by_name('Accounting'))
         elsif administration(job.title)
@@ -132,7 +132,8 @@ namespace :integrate do
     ((text.include?('fellow') or text.include?('associate')) and (text.include?('postdoctoral') or text.include?('research'))) or
     text.include?('training') or
     (text.include?('head') and text.include?('asian')) or
-    (text.include?('officer') and (text.include?('admissions') or text.include?('credit') or text.include?('student')))
+    (text.include?('officer') and (text.include?('admissions') or text.include?('credit') or text.include?('student') or text.include?('membership'))) or
+    text.include?('advisor') or text.include?('educational') or text.include?('dean') or text.include?('educator')
   else
     false
   end
@@ -148,7 +149,7 @@ namespace :integrate do
 
   def science(text = nil)
     if text
-      (text.include?('research') and (text.include?'agein'))
+      (text.include?('research') and (text.include?'agein')) or text.include?('biomedical')
     else
       false
     end
@@ -156,9 +157,9 @@ namespace :integrate do
 
   def administration(text = nil)
     if text
-      (text.include?('officer') and (text.include?'relations' or text.include?'alumni' or text.include?'administrative' or text.include?'support' or text.include?'project' or text.include?'executive')) or
-      (text.include?'administrative' and text.include?'executive') or
-      (text.include?'administration' and text.include?'manager') or
+      (text.include?('officer') and (text.include?'governance' or text.include?'development' or text.include?'relations' or text.include?'alumni' or text.include?'administrative' or text.include?'support' or text.include?'project' or text.include?'executive')) or
+      (text.include?'administrative' and (text.include?'executive' or text.include?'assistant')) or
+      ((text.include?'administration' or text.include?'senior') and text.include?'manager') or
       (text.include?'coordinator')
     else
       false
@@ -175,7 +176,13 @@ namespace :integrate do
 
   def it(text = nil)
     if text
-      (text.include?('analyst') and (not text.include?('student')) and (text.include?('application') or text.include?('senior') or (text.include?('information') and not (text.include?('alumni')))or text.include?('business'))) or text.include?('peoplesoft hcm') or (text.include?('science') and text.include?('computer'))
+      (text.include?('analyst') and (not text.include?('student')) and (text.include?('application') or text.include?('senior') or (text.include?('information') and not (text.include?('alumni')))or text.include?('business'))) or
+      text.include?('peoplesoft hcm') or
+      (text.include?('science') and text.include?('computer')) or
+      (text.include?('user') and text.include?('design')) or
+      (text.include?('network')) or (text.include?('sql')) or (text.include?('database')) or
+      (text.include?('website') and (text.include?('design') or text.include?('development'))) or
+      (text.include?('solution') and text.include?('architect'))
     else
       false
     end
@@ -216,7 +223,6 @@ namespace :integrate do
   def other(text = nil)
     if text
       (text.include?('librarian'))
-    else
       false
     end
   end
