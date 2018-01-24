@@ -25,43 +25,50 @@ namespace :integrate do
     Job.all.each do |job|
       if job.industryjob.count == 0
         i+=1
-        puts "#{i}| #{job.title}  ---  #{job.company.name}"
+        #puts "#{i}| #{job.title}  ---  #{job.company.name}"
         if false
           job.industryjob.create(industry: Industry.find_by_name('Accounting'))
-        elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Administration & Secretarial'))
+        elsif administration(job.title)
+          puts "#{i}| #{job.title}  ---  Administration & Secretarial"
+          #job.industryjob.create(industry: Industry.find_by_name('Administration & Secretarial'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Advertising, Media, Arts & Entertainment'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Agriculture, Nature & Animal'))
-        elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Banking & Finance'))
-        elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Biotech, R&D, Science'))
+        elsif finance(job.title)
+          puts "#{i}| #{job.title}  ---  Banking & Finance"
+          #job.industryjob.create(industry: Industry.find_by_name('Banking & Finance'))
+        elsif science(job.title)
+          puts "#{i}| #{job.title}  ---  Biotech, R&D, Science"
+          #job.industryjob.create(industry: Industry.find_by_name('Biotech, R&D, Science'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Construction, Architecture & Interior Design'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Customer Service & Call Centre'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Editorial & Writing'))
-        elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Education, Childcare & Training'))
+        elsif education(job.title)
+          puts "#{i}| #{job.title}  ---  Education, Childcare & Training"
+          #job.industryjob.create(industry: Industry.find_by_name('Education, Childcare & Training'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Engineering'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Franchise & Business Ownership'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Government, Defence & Emergency'))
-        elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Health, Medical & Pharmaceutical'))
+        elsif medical(job.title)
+          puts "#{i}| #{job.title}  ---  Health, Medical & Pharmaceutical"
+          #job.industryjob.create(industry: Industry.find_by_name('Health, Medical & Pharmaceutical'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Hospitality, Travel & Tourism'))
-        elsif false
-          job.industryjob.create(industry: Industry.find_by_name('HR & Recruitment'))
+        elsif hr(job.title)
+          puts "#{i}| #{job.title}  ---  HR & Recruitment"
+          #job.industryjob.create(industry: Industry.find_by_name('HR & Recruitment'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Insurance & Superannuation'))
-        elsif false
-          job.industryjob.create(industry: Industry.find_by_name('IT'))
+        elsif it(job.title)
+          puts "#{i}| #{job.title}  ---  IT"
+          #job.industryjob.create(industry: Industry.find_by_name('IT'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Legal'))
         elsif false
@@ -74,8 +81,9 @@ namespace :integrate do
           job.industryjob.create(industry: Industry.find_by_name('Mining, Oil & Gas'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Other'))
-        elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Program & Project Management'))
+        elsif manager(job.title)
+          puts "#{i}| #{job.title}  ---  Program & Project Manageme"
+          #job.industryjob.create(industry: Industry.find_by_name('Program & Project Management'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Property & Real Estate'))
         elsif false
@@ -92,12 +100,83 @@ namespace :integrate do
           job.industryjob.create(industry: Industry.find_by_name('Voluntary, Charity & Social Work'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Work from Home'))
-        elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Other'))
+        elsif other(job.title)
+          puts "#{i}| #{job.title}  ---  Otherl"
+          #job.industryjob.create(industry: Industry.find_by_name('Other'))
         end
       end
     end
   end
 
+ def finance(text = nil)
+   if text
+     true
+   else
+     false
+   end
+ end
 
+ def education(text = nil)
+  if text
+    (text.include?('Student') and text.include?('Trainer'))
+  else
+    false
+  end
+ end
+
+  def manager(text = nil)
+    if text
+      (text.include?('Project') and text.include?'Coordinator') or text.include?('Manager') or text.include?('Director')
+    else
+      false
+    end
+  end
+
+  def science(text = nil)
+    if text
+      (text.include?('RESEARCH') and (text.include?'AGEING')) or text.include?('PhD')
+    else
+      false
+    end
+  end
+
+  def administration(text = nil)
+    if text
+      (text.include?('OFFICER') and (text.include?'RELATIONS' or text.include?'ALUMNI' or text.include?'ADMINISTRATIVE' or text.include?'SUPPORT' or text.include?'Project')) or (text.include?'ADMINISTRATIVE' and text.include?'Executive')
+    else
+      false
+    end
+  end
+
+  def medical(text = nil)
+    if text
+      (text.include?('Anatomy') or text.include?('Clinical'))
+    else
+      false
+    end
+  end
+
+  def it(text = nil)
+    if text
+      (text.include?('Analyst') and text.include?('Information')) or text.include?('PeopleSoft HCM')
+    else
+      false
+    end
+  end
+
+  def hr(text = nil)
+    if text
+      (text.include?('HR'))
+    else
+      false
+    end
+  end
+
+  def other(text = nil)
+    if text
+      (text.include?('Librarian'))
+    else
+      false
+    end
+  end
 end
