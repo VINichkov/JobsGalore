@@ -110,7 +110,7 @@ namespace :integrate do
 
  def finance(text = nil)
    if text
-     true
+     false
    else
      false
    end
