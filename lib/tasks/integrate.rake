@@ -26,7 +26,7 @@ namespace :integrate do
       if job.industryjob.count == 0
         job.title.downcase!
         i+=1
-        #puts "#{i}| #{job.title}  ---  #{job.company.name}"
+        puts "#{i}| #{job.title}  ---  #{job.company.name}"
         if false
           job.industryjob.create(industry: Industry.find_by_name('Accounting'))
         elsif administration(job.title)
