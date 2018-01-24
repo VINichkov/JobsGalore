@@ -82,10 +82,11 @@ namespace :integrate do
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Other'))
         elsif manager(job.title)
-          puts "#{i}| #{job.title}  ---  Program & Project Manageme"
+          puts "#{i}| #{job.title}  ---  Program & Project Management"
           #job.industryjob.create(industry: Industry.find_by_name('Program & Project Management'))
-        elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Property & Real Estate'))
+        elsif property(job.title)
+          puts "#{i}| #{job.title}  ---  Property & Real Estate"
+          #job.industryjob.create(industry: Industry.find_by_name('Property & Real Estate'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Quality Assurance & Safety'))
         elsif false
@@ -118,7 +119,7 @@ namespace :integrate do
 
  def education(text = nil)
   if text
-    (text.include?('Student') and text.include?('Trainer'))
+    (text.include?('Student') and (text.include?('Trainer') or text.include?('Administration'))) or (text.include?('Manager') and (text.include?('Research') or text.include?('Education') or text.include?('School'))) or text.include?('PhD')
   else
     false
   end
@@ -126,7 +127,7 @@ namespace :integrate do
 
   def manager(text = nil)
     if text
-      (text.include?('Project') and text.include?'Coordinator') or text.include?('Manager') or text.include?('Director')
+      (text.include?('Project') and text.include?'Coordinator') or text.include?('Director') or (text.include?('Centre') and text.include?'Manager') or (text.include?('Project') and text.include?'Manager')
     else
       false
     end
@@ -134,7 +135,7 @@ namespace :integrate do
 
   def science(text = nil)
     if text
-      (text.include?('RESEARCH') and (text.include?'AGEING')) or text.include?('PhD')
+      (text.include?('RESEARCH') and (text.include?'AGEING'))
     else
       false
     end
@@ -142,7 +143,7 @@ namespace :integrate do
 
   def administration(text = nil)
     if text
-      (text.include?('OFFICER') and (text.include?'RELATIONS' or text.include?'ALUMNI' or text.include?'ADMINISTRATIVE' or text.include?'SUPPORT' or text.include?'Project')) or (text.include?'ADMINISTRATIVE' and text.include?'Executive')
+      (text.include?('OFFICER') and (text.include?'RELATIONS' or text.include?'ALUMNI' or text.include?'ADMINISTRATIVE' or text.include?'SUPPORT' or text.include?'Project')) or (text.include?'ADMINISTRATIVE' and text.include?'Executive') or (text.include?'Administration' and text.include?'Manager')
     else
       false
     end
@@ -164,9 +165,17 @@ namespace :integrate do
     end
   end
 
+  def property(text = nil)
+    if text
+      (text.include?('Property'))
+    else
+      false
+    end
+  end
+
   def hr(text = nil)
     if text
-      (text.include?('HR'))
+      (text.include?('HR') or (text.include?('Talent')))
     else
       false
     end
