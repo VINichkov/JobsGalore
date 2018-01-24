@@ -129,11 +129,12 @@ namespace :integrate do
     (text.include?('research') and (text.include?('officer') or text.include?('assistant') or text.include?('accountant')))or
     text.include?('lecturer') or
     text.include?('academic') or
-    ((text.include?('fellow') or text.include?('associate')) and (text.include?('postdoctoral') or text.include?('research'))) or
+    ((text.include?('fellow') or text.include?('associate')) and (text.include?('postdoctoral') or text.include?('research') or text.include?('professor'))) or
     text.include?('training') or
     (text.include?('head') and text.include?('asian')) or
     (text.include?('officer') and (text.include?('admissions') or text.include?('credit') or text.include?('student') or text.include?('membership'))) or
-    text.include?('advisor') or text.include?('educational') or text.include?('dean') or text.include?('educator')
+    text.include?('advisor') or text.include?('educational') or text.include?('dean') or text.include?('educator') or text.include?('psychology') or text.include?('scholarship') or
+    text.include?('culture') or text.include?('post-doctoral') or text.include?('scientific') or text.include?('education')
   else
     false
   end
@@ -157,10 +158,12 @@ namespace :integrate do
 
   def administration(text = nil)
     if text
-      (text.include?('officer') and (text.include?'governance' or text.include?'development' or text.include?'relations' or text.include?'alumni' or text.include?'administrative' or text.include?'support' or text.include?'project' or text.include?'executive')) or
+      (text.include?('officer') and (text.include?'planning' or text.include?'administration' or text.include?'governance' or text.include?'development' or text.include?'relations' or text.include?'alumni' or text.include?'administrative' or text.include?'support' or text.include?'project' or text.include?'executive')) or
       (text.include?'administrative' and (text.include?'executive' or text.include?'assistant')) or
-      ((text.include?'administration' or text.include?'senior') and text.include?'manager') or
-      (text.include?'coordinator')
+      ((text.include?'administration' or text.include?'senior' or text.include?'parking') and text.include?'manager') or
+      (text.include?'coordinator') or (text.include?'service desk') or
+      ((text.include?'development') and (text.include?'manager')) or
+      ((text.include?'event') and (text.include?'administration' or text.include?'administrator') )
     else
       false
     end
@@ -168,7 +171,7 @@ namespace :integrate do
 
   def medical(text = nil)
     if text
-      (text.include?('anatomy') or text.include?('clinical') or text.include?('nurse'))
+      (text.include?('anatomy') or text.include?('clinical') or text.include?('nurse') or text.include?('nursing'))
     else
       false
     end
@@ -182,7 +185,8 @@ namespace :integrate do
       (text.include?('user') and text.include?('design')) or
       (text.include?('network')) or (text.include?('sql')) or (text.include?('database')) or
       (text.include?('website') and (text.include?('design') or text.include?('development'))) or
-      (text.include?('solution') and text.include?('architect'))
+      (text.include?('solution') and text.include?('architect')) or
+      text.include?('analytic')
     else
       false
     end
@@ -198,7 +202,7 @@ namespace :integrate do
 
   def hr(text = nil)
     if text
-      (text.include?('hr') or (text.include?('talent')))
+      (text.include?('hr') or (text.include?('talent')) or (text.include?'human' and text.include?'resources')) or (text.include?('recruitment'))
     else
       false
     end
@@ -214,7 +218,7 @@ namespace :integrate do
 
   def enginering(text = nil)
     if text
-      (text.include?('technical') and (text.include?('officer')))
+      (text.include?('technical') and (text.include?('officer')))  or text.include?('engineer')
     else
       false
     end
