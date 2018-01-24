@@ -160,7 +160,7 @@ namespace :integrate do
 
   def it(text = nil)
     if text
-      (text.include?('Analyst') and ((text.include?('Information') and not (text.include?('Alumni')))or text.include?('PeopleSoft HCM')) or text.include?('Business'))
+      (text.include?('Analyst') and ((text.include?('Information') and not (text.include?('Alumni')))or text.include?('PeopleSoft HCM')or text.include?('Business')))
     else
       false
     end
