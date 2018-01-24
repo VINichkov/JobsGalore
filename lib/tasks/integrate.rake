@@ -32,8 +32,9 @@ namespace :integrate do
         elsif administration(job.title)
           puts "#{i}| #{job.title}  ---  Administration & Secretarial"
           #job.industryjob.create(industry: Industry.find_by_name('Administration & Secretarial'))
-        elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Advertising, Media, Arts & Entertainment'))
+        elsif media(job.title)
+          puts "#{i}| #{job.title}  ---  Advertising, Media, Arts & Entertainment"
+          #job.industryjob.create(industry: Industry.find_by_name('Advertising, Media, Arts & Entertainment'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Agriculture, Nature & Animal'))
         elsif finance(job.title)
@@ -125,11 +126,13 @@ namespace :integrate do
     (text.include?('manager') and (text.include?('research') or text.include?('education') or text.include?('school'))) or
     text.include?('phd') or
     (text.include?('analyst') and text.include?('information') and text.include?('alumni')) or
-    (text.include?('research') and (text.include?('officer') or text.include?('assistant')))or
+    (text.include?('research') and (text.include?('officer') or text.include?('assistant') or text.include?('accountant')))or
     text.include?('lecturer') or
     text.include?('academic') or
     ((text.include?('fellow') or text.include?('associate')) and (text.include?('postdoctoral') or text.include?('research'))) or
-    text.include?('training')
+    text.include?('training') or
+    (text.include?('head') and text.include?('asian')) or
+    (text.include?('officer') and (text.include?('admissions') or text.include?('credit') or text.include?('student')))
   else
     false
   end
@@ -172,7 +175,7 @@ namespace :integrate do
 
   def it(text = nil)
     if text
-      (text.include?('analyst') and (not text.include?('student')) and (text.include?('senior') or (text.include?('information') and not (text.include?('alumni')))or text.include?('peoplesoft hcm')or text.include?('business')))
+      (text.include?('analyst') and (not text.include?('student')) and (text.include?('application') or text.include?('senior') or (text.include?('information') and not (text.include?('alumni')))or text.include?('business'))) or text.include?('peoplesoft hcm') or (text.include?('science') and text.include?('computer'))
     else
       false
     end
@@ -189,6 +192,14 @@ namespace :integrate do
   def hr(text = nil)
     if text
       (text.include?('hr') or (text.include?('talent')))
+    else
+      false
+    end
+  end
+
+  def media(text = nil)
+    if text
+      (text.include?('media') or (text.include?('communications')))
     else
       false
     end
