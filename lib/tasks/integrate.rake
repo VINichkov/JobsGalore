@@ -25,7 +25,7 @@ namespace :integrate do
     Job.all.each do |job|
       if job.industryjob.count == 0
         i+=1
-        puts "#{i}| #{job.title}  ---  #{job.company.name}"
+        #puts "#{i}| #{job.title}  ---  #{job.company.name}"
         if false
           job.industryjob.create(industry: Industry.find_by_name('Accounting'))
         elsif administration(job.title)
@@ -50,8 +50,9 @@ namespace :integrate do
         elsif education(job.title)
           puts "#{i}| #{job.title}  ---  Education, Childcare & Training"
           #job.industryjob.create(industry: Industry.find_by_name('Education, Childcare & Training'))
-        elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Engineering'))
+        elsif enginering(job.title)
+          puts "#{i}| #{job.title}  ---  Engineering"
+          #job.industryjob.create(industry: Industry.find_by_name('Engineering'))
         elsif false
           job.industryjob.create(industry: Industry.find_by_name('Franchise & Business Ownership'))
         elsif false
@@ -119,7 +120,7 @@ namespace :integrate do
 
  def education(text = nil)
   if text
-    (text.include?('Student') and (text.include?('Trainer') or text.include?('Administration'))) or (text.include?('Manager') and (text.include?('Research') or text.include?('Education') or text.include?('School'))) or text.include?('PhD') or (text.include?('Analyst') and text.include?('Information') and text.include?('Alumni'))
+    (text.include?('Student') and (text.include?('Trainer') or text.include?('Administration'))) or (text.include?('Manager') and (text.include?('Research') or text.include?('Education') or text.include?('School'))) or text.include?('PhD') or (text.include?('Analyst') and text.include?('Information') and text.include?('Alumni')) or (text.include?('Research') and (text.include?('Officer') or text.include?('Assistant')))or text.include?('Lecturer') or text.include?('Academic')
   else
     false
   end
@@ -143,7 +144,7 @@ namespace :integrate do
 
   def administration(text = nil)
     if text
-      (text.include?('OFFICER') and (text.include?'RELATIONS' or text.include?'ALUMNI' or text.include?'ADMINISTRATIVE' or text.include?'SUPPORT' or text.include?'Project')) or (text.include?'ADMINISTRATIVE' and text.include?'Executive') or (text.include?'Administration' and text.include?'Manager')
+      (text.include?('OFFICER') and (text.include?'RELATIONS' or text.include?'ALUMNI' or text.include?'ADMINISTRATIVE' or text.include?'SUPPORT' or text.include?'Project' or text.include?'Executive')) or (text.include?'ADMINISTRATIVE' and text.include?'Executive') or (text.include?'Administration' and text.include?'Manager') or (text.include?'Coordinator')
     else
       false
     end
@@ -159,7 +160,7 @@ namespace :integrate do
 
   def it(text = nil)
     if text
-      (text.include?('Analyst') and ((text.include?('Information') and not (text.include?('Alumni')))or text.include?('PeopleSoft HCM')))
+      (text.include?('Analyst') and ((text.include?('Information') and not (text.include?('Alumni')))or text.include?('PeopleSoft HCM')) or text.include?('Business'))
     else
       false
     end
@@ -176,6 +177,14 @@ namespace :integrate do
   def hr(text = nil)
     if text
       (text.include?('HR') or (text.include?('Talent')))
+    else
+      false
+    end
+  end
+
+  def enginering(text = nil)
+    if text
+      (text.include?('Technical') and (text.include?('Officer')))
     else
       false
     end
