@@ -115,7 +115,7 @@ namespace :integrate do
 
  def finance(text = nil)
    if text
-     text.include?('expense') or text.include?('budget') or text.include?('finance')
+     text.include?('expense') or text.include?('budget') or text.include?('finance') or text.include?('payroll')
    else
      false
    end
@@ -132,14 +132,14 @@ namespace :integrate do
  def education(text = nil)
   if text
     (text.include?('student') and (text.include?('trainer') or text.include?('administration') or text.include?('analyst'))) or
-    (text.include?('manager') and (text.include?('laboratory') or text.include?('research') or text.include?('education') or text.include?('school'))) or
-    text.include?('phd') or
+    (text.include?('manager') and (r text.include?('research') or text.include?('education') or text.include?('school'))) or
+    text.include?('phd') or text.include?('laboratory') or
     (text.include?('analyst') and text.include?('information') and text.include?('alumni')) or
-    (text.include?('research') and (text.include?('officer') or text.include?('assistant') or text.include?('accountant') or text.include?('scholar') or text.include?('senior')))or
-    text.include?('lecturer') or text.include?('course')
+    text.include?('research') or text.include?('co-ordinator') or
+    text.include?('lecturer') or text.include?('course') or
     text.include?('academic') or
-    ((text.include?('fellow') or text.include?('associate')) and (text.include?('postdoctoral') or text.include?('research') or text.include?('professor'))) or
-    text.include?('training') or
+    text.include?('fellow') or text.include?('associate') or
+    text.include?('training')  or text.include?('scholar') or
     (text.include?('head') and text.include?('asian')) or
     (text.include?('officer') and (text.include?('programs') or text.include?('admissions') or text.include?('credit') or text.include?('student') or text.include?('membership'))) or
     text.include?('advisor') or text.include?('educational') or text.include?('dean') or text.include?('educator') or text.include?('psychology') or text.include?('scholarship') or
@@ -159,7 +159,7 @@ namespace :integrate do
 
   def science(text = nil)
     if text
-      (text.include?('research') and (text.include?'agein')) or text.include?('biomedical') or text.include?('scientist')
+      (text.include?('research') and (text.include?'agein')) or text.include?('biomedical') or text.include?('scientist') or text.include?('bioinformatician')
     else
       false
     end
@@ -169,9 +169,8 @@ namespace :integrate do
     if text
       ((text.include?('assistant') or text.include?('officer')) and (text.include?'timetabling' or text.include?'activities' or text.include?'planning' or text.include?'administration' or text.include?'governance' or text.include?'development' or text.include?'relations' or text.include?'alumni' or text.include?'administrative' or text.include?'support' or text.include?'project' or text.include?'executive')) or
       ((text.include?'information' or text.include?'personal' or text.include?'administrative') and (text.include?'executive' or text.include?'assistant')) or
-      ((text.include?'administration' or text.include?'senior' or text.include?'parking') and text.include?'manager') or
+      text.include?'manager' or
       (text.include?'coordinator') or (text.include?'service desk') or (text.include?'administrator') or
-      ((text.include?'development' or text.include?'group') and (text.include?'manager')) or
       ((text.include?'event') and (text.include?'administration' or text.include?'administrator') )
     else
       false
@@ -188,12 +187,12 @@ namespace :integrate do
 
   def it(text = nil)
     if text
-      (text.include?('analyst') and (not text.include?('student')) and (text.include?('application') or text.include?('senior') or (text.include?('information') and not (text.include?('alumni')))or text.include?('business'))) or
-      text.include?('peoplesoft hcm') or
+      (text.include?('analyst') and (not text.include?('student')) and (text.include?('digital') or text.include?('application') or text.include?('senior') or (text.include?('information') and not (text.include?('alumni')))or text.include?('business'))) or
+      text.include?('peoplesoft hcm') or text.include?('ux analysis') or
       (text.include?('science') and text.include?('computer')) or
       (text.include?('user') and text.include?('design')) or
       (text.include?('network')) or (text.include?('sql')) or (text.include?('database')) or
-      ((text.include?('senior') or text.include?('website')) and (text.include?('design') or text.include?('development'))) or
+      ((text.include?('senior') or text.include?('website') or text.include?('software')) and (text.include?('design') or text.include?('development') or text.include?('developer'))) or
       (text.include?('solution') and text.include?('architect')) or
       text.include?('analytic') or (text.include?('information') and text.include?('technology'))
     else
