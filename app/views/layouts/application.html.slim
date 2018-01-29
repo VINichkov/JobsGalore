@@ -11,6 +11,7 @@ html
     meta[property="og:title" content=yield_meta_tag("og:title", PropertsHelper::TITLE)]
     meta[property="og:description" content=yield_meta_tag("og:description", "JobsGalore allows you to find work in Australia. JobsGalore is a quality database of CVs and vacancies, and the latest job and staff search services.")]
     meta[property="og:url" content=yield_meta_tag("og:url",root_url)]
+    link[rel="canonical" href=yield_meta_tag("og:url",root_url)]
     meta[property="og:image" content=yield_meta_tag("og:image",image_url("facebook.png"))]
     - if yield_meta_tag("article:published_time")!=''
       meta[property="article:published_time" content= yield_meta_tag("article:published_time")]
