@@ -3,8 +3,8 @@
         keywords: @objs.pluck(:title).join(', '),
         url: jobs_at_company_path(@company),
         image: @company.logo_url)
-h1 Jobs at #{@company.name}
 .container
+  h1 Jobs at #{@company.name}
   =render 'inc/list_jobs'
 .text-center
   = will_paginate @objs, {renderer: BootstrapPagination::Rails}
