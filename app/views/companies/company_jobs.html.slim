@@ -1,5 +1,10 @@
+- meta_head(  title:"Jobs at #{@company.name}",
+        description: "Jobs at #{@company.name}",
+        keywords: @job.pluck(:title).join(', '),
+        url: jobs_of_company(@company),
+        image: @company.logo_url)
+h1 Jobs at #{@company.name}
 .container
   =render 'inc/list_jobs'
 .text-center
   = will_paginate @objs, {renderer: BootstrapPagination::Rails}
-

@@ -13,7 +13,7 @@ module CompanyHelper
     if object.jobs_count>0
        content_tag :div, class:"row" do
          content_tag :h3 do
-          link_to "Company jobs #{object.jobs_count}", "/company_jobs/#{object.id}"
+          link_to "#{object.jobs_count} jobs at #{object.name}", "/company_jobs/#{object.id}"
          end
        end
     end
