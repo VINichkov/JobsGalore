@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :companies, only: [:show, :edit, :update, :destroy]
   get "/edit_logo", to: 'companies#edit_logo'
   get "/settings_company", to: 'companies#settings_company'
-  get '/company_jobs/:id', to:'companies#company_jobs'
+  get '/company_jobs/:id', to:'companies#company_jobs', as: 'jobs_at_company'
   get '/team/new/', to: 'companies#new_member', as: 'team_new'
   post '/team/', to: 'companies#create_member', as: 'team_create'
   get  '/team_change/:id', to: 'companies#change_type', as: 'change_type'
