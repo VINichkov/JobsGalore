@@ -1,7 +1,7 @@
 - meta_head(  title:"Jobs at #{@company.name}",
         description: "Jobs at #{@company.name}",
         keywords: @objs.pluck(:title).join(', '),
-        url: jobs_of_company(@company),
+        url: jobs_at_company_path(@company),
         image: @company.logo_url)
 h1 Jobs at #{@company.name}
 .container
