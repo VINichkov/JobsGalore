@@ -22,7 +22,7 @@ module CompanyHelper
   def company_summary (object)
     html = ActiveSupport::SafeBuffer.new
     html += if object.site
-              content_tag( :p, link_to(object.site, object.site))
+              content_tag( :p, link_to(object.site, object.site, rel:"nofollow"))
            end
     html +=content_tag(:p) do
       p = content_tag :strong, "Location: "
