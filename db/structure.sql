@@ -151,7 +151,8 @@ CREATE TABLE companies (
     realy boolean,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    fts tsvector
+    fts tsvector,
+    industry_id integer
 );
 
 
@@ -500,7 +501,8 @@ CREATE TABLE jobs (
     urgent date,
     client_id integer,
     close date,
-    twitter character varying
+    twitter character varying,
+    industry_id integer
 );
 
 
@@ -779,7 +781,8 @@ CREATE TABLE resumes (
     location_id integer,
     highlight date,
     top date,
-    urgent date
+    urgent date,
+    industry_id integer
 );
 
 
@@ -1327,6 +1330,13 @@ CREATE INDEX index_companies_on_fts ON companies USING gin (fts);
 
 
 --
+-- Name: index_companies_on_industry_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_companies_on_industry_id ON companies USING btree (industry_id);
+
+
+--
 -- Name: index_companies_on_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1495,6 +1505,13 @@ CREATE INDEX index_jobs_on_fts ON jobs USING gin (fts);
 
 
 --
+-- Name: index_jobs_on_industry_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_jobs_on_industry_id ON jobs USING btree (industry_id);
+
+
+--
 -- Name: index_jobs_on_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1593,6 +1610,13 @@ CREATE INDEX index_resumes_on_fts ON resumes USING gin (fts);
 
 
 --
+-- Name: index_resumes_on_industry_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resumes_on_industry_id ON resumes USING btree (industry_id);
+
+
+--
 -- Name: index_resumes_on_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1686,6 +1710,14 @@ CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON resumes FOR EACH ROW EX
 
 
 --
+-- Name: fk_rails_003565a9fb; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY resumes
+    ADD CONSTRAINT fk_rails_003565a9fb FOREIGN KEY (industry_id) REFERENCES industries(id);
+
+
+--
 -- Name: fk_rails_032ff5b3d0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1766,6 +1798,14 @@ ALTER TABLE ONLY skillsresumes
 
 
 --
+-- Name: fk_rails_5b8502059e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY jobs
+    ADD CONSTRAINT fk_rails_5b8502059e FOREIGN KEY (industry_id) REFERENCES industries(id);
+
+
+--
 -- Name: fk_rails_5bc7cd63b7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1795,6 +1835,14 @@ ALTER TABLE ONLY skillsjobs
 
 ALTER TABLE ONLY languageresumes
     ADD CONSTRAINT fk_rails_7985a15ffb FOREIGN KEY (resume_id) REFERENCES resumes(id);
+
+
+--
+-- Name: fk_rails_81ca530391; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY companies
+    ADD CONSTRAINT fk_rails_81ca530391 FOREIGN KEY (industry_id) REFERENCES industries(id);
 
 
 --
@@ -1998,6 +2046,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171120104421'),
 ('20171227042835'),
 ('20171227043153'),
-('20171228040745');
+('20171228040745'),
+('20180204105551');
 
 

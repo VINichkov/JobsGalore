@@ -1,6 +1,5 @@
 class IndexDecorator < ApplicationDecorator
 
-
   def self.main
     rezult = by_category
     {jobs: Job.select(:id, :title, :location_id, :company_id, :updated_at).includes(:location,:company).last(10).reverse,

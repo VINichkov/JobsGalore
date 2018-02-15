@@ -78,7 +78,6 @@ class CompaniesController < ApplicationController
   # POST /companies.json
   def create
     @company = Company.new(company_params)
-
     respond_to do |format|
       if @company.save
         format.html { redirect_to @company, notice: 'Company was successfully created.' }
@@ -96,15 +95,8 @@ class CompaniesController < ApplicationController
   # PATCH/PUT /companies/1
   # PATCH/PUT /companies/1.json
   def update
-    param = company_params
-    industry = param[:industry]
-    param.delete(:industry)
-    if (@company.industry.first.nil? and industry) or (industry and not (@company.industry.first.id == industry))
-      @company.industrycompany.destroy_all
-      @company.industrycompany.create(industry_id: industry)
-    end
     respond_to do |format|
-      if @company.update(param)
+      if @company.update(company_params)
         format.html { redirect_to settings_company_path, notice: 'Company was successfully updated.' }
       else
         format.html { render :edit }
@@ -170,7 +162,7 @@ class CompaniesController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_params
-      params.require(:company).permit(:name, :size_id, :location_id, :site, :logo, :recrutmentagency, :description, :realy, :industry)
+      params.require(:company).permit(:name, :size_id, :location_id, :site, :logo, :recrutmentagency, :description, :realy, :industry_id)
     end
 
     def client_params
@@ -182,7 +174,7 @@ class CompaniesController < ApplicationController
     end
 
     def job_params
-      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :client_id, :career, :ind, :close,:page)
+      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :client_id, :career, :industry_id, :close,:page)
     end
 
     def set_jobs

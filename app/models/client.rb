@@ -8,6 +8,7 @@ class Client < ApplicationRecord
   if Rails.env.production?
     devise  :confirmable, :lockable, :timeoutable
   end
+
   belongs_to :location
   has_many :gateway, dependent: :destroy
   has_many :resume, dependent: :destroy
@@ -15,6 +16,7 @@ class Client < ApplicationRecord
   has_many :respons, class_name:"Responsible", dependent: :destroy
   has_many :responsible
   has_many :company, through: :responsible, dependent: :destroy
+
   dragonfly_accessor :photo do
     after_assign do |attachment|
       # Auto orient all the images - so they will look as they should
@@ -23,14 +25,15 @@ class Client < ApplicationRecord
   end
 
 
-
   validates :firstname, presence: true
   validates :lastname, presence: true
   validates :location, presence: true
   validates :phone, presence: true
 
 
-
+  def admin?
+    self.email == PropertsHelper::ADMIN
+  end
 
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
@@ -47,6 +50,7 @@ class Client < ApplicationRecord
   end
 
   def full_name
-    @full_name ? @full_name : @full_name = "#{self.firstname} #{self.lastname}"
+    @full_name ? @full_name : @full_name = "#{self.firstname} #{self.lastname}".freeze
   end
+
 end

@@ -98,9 +98,6 @@ Rails.application.routes.draw do
   patch '/admin/resumes/:id', to: 'resumes#admin_update', as: 'admin_resumes_update'
   delete '/admin/resumes/:id', to: 'resumes#admin_destroy', as: 'admin_resumes_destroy'
 
-  resources :industrycompanies
-  resources :industryjobs
-  resources :industryresumes
   resources :responsibles
   resources :sizes
   resources :industries

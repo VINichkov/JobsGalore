@@ -4,11 +4,6 @@ class ResumesController < ApplicationController
   before_action :set_resume, only: [ :show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
 
   before_action :aplicant!, only: :new
-  # GET /resumes
-  # GET /resumes.json
-  def index
-    @resumes = Resume.all
-  end
 
   def log_in
      redirect_to resume_path(params[:id])
@@ -236,18 +231,7 @@ class ResumesController < ApplicationController
   end
     # Use callbacks to share common setup or constraints between actions.
     def set_resume
-      @resume = Resume.find(params[:id])
-      @experience = @resume.experience.order(datestart: :desc).map do | res|
-        {id:res.id,
-         titlejob:res.titlejob,
-         employer:res.employer,
-         location_id:res.location ? res.location.id : "",
-         location_name:res.location ? "#{res.location.suburb}, #{res.location.state}" : "",
-         site:res.site,
-         datestart:res.datestart ? res.datestart.strftime("%d %B %Y") : "",
-         dateend: res.dateend ? res.dateend.strftime("%d %B %Y") : "",
-         description:res.description}
-      end
+      @resume = Resume.find(params[:id]).decorate
     end
 
     def find_location(name)
@@ -276,21 +260,6 @@ class ResumesController < ApplicationController
                                      :client_id,
                                      :ind,
                                      :location_id,
-                                     :location_name,
-                                     :experience=>{:bloc_0=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_1=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_2=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_3=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_4=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_5=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_6=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_7=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_8=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_9=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_10=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_11=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_12=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_13=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description],
-                                                 :bloc_14=>[:datestart, :dateend, :employer, :location_name, :location_id, :site, :position, :description]})
+                                     :location_name)
          end
 end

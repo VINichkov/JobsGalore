@@ -1,593 +1,320 @@
-- title @resume.desiredjobtitle
-- meta_tag "description",   markdown_to_text(@resume.abouteme, 300)
-- meta_tag "keywords", "#{@resume.desiredjobtitle}, #{markdown_to_keywords(@resume.abouteme)}"
-- meta_tag "og:type", "article"
-- meta_tag "og:title", @resume.desiredjobtitle
-- meta_tag "og:description", markdown_to_text(@resume.abouteme, 300)
-- meta_tag "og:url", resume_url(@resume)
-- meta_tag "og:image", @resume.client.photo_uid ? Dragonfly.app.remote_url_for(@resume.client.photo_uid) : image_url("avatar.jpg")
-- meta_tag "article:published_time", @resume.updated_at
-.container.hidden-xs.hidden-sm
-  .col-lg-8.col-md-8
-    .row.well
-      h1.text-center
-        = @resume.desiredjobtitle
-      p
-        = render_markdown(@resume.abouteme)
-
-    -if not @resume.experience.empty?
-      h3
-        |Experience
-      -@resume.experience.order(datestart: :desc).each  do |exp|
-        .row.well
-          h3.text-center
-            strong
-              =exp.titlejob
-          hr
-          p
-            strong
-              |Started: &nbsp;
-            |#{exp.datestart.strftime("%d %B %Y").to_s} &nbsp;
-            strong
-              |Ended:
-            | &nbsp; #{exp.dateend ? exp.dateend.strftime("%d %B %Y").to_s : "..."}, &nbsp;
-            strong
-              |Location: &nbsp;
-            |#{exp.location.suburb}, #{exp.location.state}
-          p
-            strong
-              |Employer: &nbsp;
-            |#{exp.employer}
-          -if exp.site and not exp.site.empty?
-            p
-              strong
-                |Site: &nbsp;
-              |#{exp.site}
-          hr
-          p
-            =  render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\" ") if  exp.description
-        
-  .col-lg-4.col-md-4
-    .panel.panel-default
-      .panel-body
-        -if client_signed_in?
-          -if current_client.resp? or @resume.client.id == current_client.id
-            h3.text-center
-              =@resume.client.full_name
-            p
-            - if @resume.client.photo_uid
-              = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), class: 'img-thumbnail center-block ', size:"300x250", alt: @resume.client.full_name)
-            - else
-              = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size:"300x250", alt: @resume.client.full_name)
+-cache(@resume)
+  - meta_head({ description: @resume.description_meta,
+          title: @resume.desiredjobtitle,
+          keywords: @resume.keywords,
+          url: resume_url(@resume),
+          published: @resume.updated_at})
+  .container.hidden-xs.hidden-sm
+  .container.hidden-xs.hidden-sm
+    .col-lg-8.col-md-8
+      .row.well
+        h1.text-center
+          = @resume.desiredjobtitle
+        p
+          = render_markdown(@resume.abouteme)
+    .col-lg-4.col-md-4
+      .panel.panel-default
+        .panel-body
+          -if client_signed_in?
+            -if current_client.resp? or @resume.client.id == current_client.id
+              h3.text-center
+                =@resume.client.full_name
+              p
+              - if @resume.client.photo_uid
+                = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), class: 'img-thumbnail center-block ', size:"300x250", alt: @resume.client.full_name)
+              - else
+                = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size:"300x250", alt: @resume.client.full_name)
+            -else
+              h3.text-center
+                |Anonymous
+              p
+              = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"300x250", alt: @resume.client.full_name)
           -else
             h3.text-center
               |Anonymous
             p
             = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"300x250", alt: @resume.client.full_name)
-        -else
           h3.text-center
-            |Anonymous
-          p
-          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"300x250", alt: @resume.client.full_name)
-        h3.text-center
-          |Description
-        .well
-          p
-            strong
-              | Posted:&nbsp;
-            |#{@resume.updated_at.strftime("%d %B %Y")}
-          - if @resume.location
+            |Description
+          .well
             p
               strong
-                |Location: &nbsp;
-              |#{@resume.location.suburb}, #{@resume.location.state}
-          - if not @resume.salary.nil? then
-            p
-              strong
-                |Salary: &nbsp;
-              |#{@resume.salary.to_i.to_s}
-          p
-            strong
-              |Professional area:
-            - @resume.industry.each do |industry|
-              ul
-                li #{industry.name}
-          - if (@resume.permanent or @resume.casual or @resume.temp or @resume.contract or @resume.fulltime or @resume.parttime or @resume.flextime or @resume.remote) then
-            p
-              strong
-                |Job Type:
-            -if @resume.permanent
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Permanent
-                br
-            - if @resume.casual
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Casual
-                br
-            - if @resume.temp
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Temporary
-                br
-            - if @resume.contract
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Contract
-                br
-            - if @resume.fulltime
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Full-time
-                br
-            - if @resume.parttime
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Part-time
-                br
-            - if @resume.flextime
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Flex-time
-                br
-            - if @resume.remote
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Remote
-                br
-          - if not @resume.highlight.nil?
-            p
-              strong
-                | Highlight
-          - if not @resume.urgent.nil?
-            p
-              strong
-                | Urgent
-          - if not @resume.top.nil?
-            p
-              strong
-                | Ad Top
-          br
-          .row
-            .col-lg-12.col-md-12
-              span.btn.btn-warning.btn-block[data-toggle="dropdown"]
-                |Extras
-                span.caret
-              ul.dropdown-menu
-                - if PropertsHelper::URGENT=="true"
-                  li
-                    = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1}), rel:"nofollow"
-                - if PropertsHelper::TOP == "true"
-                  li
-                    = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2}), rel:"nofollow"
-                - if PropertsHelper::HIGHLIGHT == "true"
-                  li
-                    = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3}), rel:"nofollow"
+                | Posted:&nbsp;
+              |#{@resume.updated_at.strftime("%d %B %Y")}
+            - if @resume.location
               p
-            -if client_signed_in?
-              - if @resume.client.id == current_client.id
-                .col-lg-12.col-md-12
-                  = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block"
-                  p
-                .col-lg-12.col-md-12
-                  = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
-                  p
-              -if current_client.resp?
-                .col-lg-12.col-md-12
-                  button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
-                    |Contact
-                  p
-            -else
+                strong
+                  |Location: &nbsp;
+                |#{@resume.location.suburb}, #{@resume.location.state}
+            - if not @resume.salary.nil? then
+              p
+                strong
+                  |Salary: &nbsp;
+                |#{@resume.salary.to_i.to_s}
+            p
+              strong
+                |Professional area:
+            ul
+              li #{@resume.industry.name}
+
+            - if not @resume.highlight.nil?
+              p
+                strong
+                  | Highlight
+            - if not @resume.urgent.nil?
+              p
+                strong
+                  | Urgent
+            - if not @resume.top.nil?
+              p
+                strong
+                  | Ad Top
+            br
+            .row
               .col-lg-12.col-md-12
-                =link_to "Contact", log_in_path(@resume.id), class: "btn btn-primary btn-block"
+                span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+                  |Extras
+                  span.caret
+                ul.dropdown-menu
+                  - if PropertsHelper::URGENT=="true"
+                    li
+                      = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1}), rel:"nofollow"
+                  - if PropertsHelper::TOP == "true"
+                    li
+                      = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2}), rel:"nofollow"
+                  - if PropertsHelper::HIGHLIGHT == "true"
+                    li
+                      = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3}), rel:"nofollow"
                 p
-            .col-lg-12.col-md-12
-              button.btn.btn-success.btn-block[onclick="history.back()"]
-                |Back
+              -if client_signed_in?
+                - if @resume.client.id == current_client.id
+                  .col-lg-12.col-md-12
+                    = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block"
+                    p
+                  .col-lg-12.col-md-12
+                    = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
+                    p
+                -if current_client.resp?
+                  .col-lg-12.col-md-12
+                    button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
+                      |Contact
+                    p
+              -else
+                .col-lg-12.col-md-12
+                  =link_to "Contact", log_in_path(@resume.id), class: "btn btn-primary btn-block"
+                  p
+              .col-lg-12.col-md-12
+                button.btn.btn-success.btn-block[onclick="history.back()"]
+                  |Back
+                p
+            p
+            .row
+              .col-lg-12.col-md-12
+                =social_share_button_tag @resume.desiredjobtitle
+  .col-sm-12.hidden-md.hidden-lg.hidden-xs
+    .panel-body
+      h1.text-center
+        = @resume.desiredjobtitle
+      .row
+        .col-sm-6
+          - if client_signed_in?
+            - if current_client.resp? or @resume.client.id == current_client.id
+              h3.text-center
+                = "#{@resume.client.firstname} #{@resume.client.lastname}"
               p
+              - if not @resume.client.photo_uid.nil?
+                = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), class: 'img-thumbnail center-block ', size: "300x250", alt: @resume.client.full_name)
+              - else
+                = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "300x250", alt: @resume.client.full_name)
+            - else
+              h3.text-center
+                |Anonymous
+              p
+              = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size: "300x250", alt: @resume.client.full_name)
+          - else
+            h3.text-center
+              |Anonymous
+            p
+            = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size: "300x250", alt: @resume.client.full_name)
+          p
+          .text-center
+            =social_share_button_tag @resume.desiredjobtitle
+        .col-sm-6
+          .row
+            .col-sm-12
+              h3.text-center
+                |Description
+              p
+                strong
+                  | Posted:&nbsp;
+                |#{@resume.updated_at.strftime("%d %B %Y")}
+              - if @resume.location
+                p
+                  strong
+                    |Location: &nbsp;
+                  |#{@resume.location.suburb}, #{@resume.location.state}
+              - if not @resume.salary.nil? then
+                p
+                  strong
+                    |Salary: &nbsp;
+                  |#{@resume.salary.to_i.to_s}
+              p
+                strong
+                  |Professional area:
+              ul
+                li #{@resume.industry.name}
+              - if not @resume.highlight.nil?
+                p
+                  strong
+                    | Highlight
+              - if not @resume.urgent.nil?
+                p
+                  strong
+                    | Urgent
+              - if not @resume.top.nil?
+                p
+                  strong
+                    | Ad Top
+
           p
           .row
-            .col-lg-12.col-md-12
-              =social_share_button_tag @resume.desiredjobtitle
-.col-sm-12.hidden-md.hidden-lg.hidden-xs
-  .panel-body
-    h1.text-center
-      = @resume.desiredjobtitle
-    .row
-      .col-sm-6
-        - if client_signed_in?
-          - if current_client.resp? or @resume.client.id == current_client.id
-            h3.text-center
-              = "#{@resume.client.firstname} #{@resume.client.lastname}"
-            p
-            - if not @resume.client.photo_uid.nil?
-              = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), class: 'img-thumbnail center-block ', size: "300x250", alt: @resume.client.full_name)
+            .btn-group.btn-group-justified
+              .btn-group
+                span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+                  |Extras
+                  span.caret
+                ul.dropdown-menu
+                  - if PropertsHelper::URGENT=="true"
+                    li
+                      = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1}), rel:"nofollow"
+                  - if PropertsHelper::TOP == "true"
+                    li
+                      = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2}), rel:"nofollow"
+                  - if PropertsHelper::HIGHLIGHT == "true"
+                    li
+                      = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3}), rel:"nofollow"
+              - if client_signed_in?
+                - if @resume.client.id == current_client.id
+                  .btn-group
+                    = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block"
+                  .btn-group
+                    = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
+                - if current_client.resp?
+                  .btn-group
+                    button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
+                      |Contact
+              - else
+                .btn-group
+                  = link_to "Contact", log_in_path(@resume.id), class: "btn btn-primary btn-block"
+              .btn-group
+                button.btn.btn-success.btn-block[onclick="history.back()"]
+                  |Back
+      .row
+        .col-sm-12
+          p
+            = render_markdown(@resume.abouteme)
+  .col-xs-12.hidden-md.hidden-lg.hidden-sm
+    .panel-body
+      h1.text-center
+        = @resume.desiredjobtitle
+      .row
+        .col-xs-12
+          - if client_signed_in?
+            - if current_client.resp? or @resume.client.id == current_client.id
+              h3.text-center
+                = "#{@resume.client.firstname} #{@resume.client.lastname}"
+              p
+              - if not @resume.client.photo_uid.nil?
+                = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), class: 'img-thumbnail center-block ', size: "300x250", alt: @resume.client.full_name)
+              - else
+                = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "300x250", alt: @resume.client.full_name)
             - else
-              = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "300x250", alt: @resume.client.full_name)
+              h3.text-center
+                |Anonymous
+              p
+              = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size: "300x250", alt: @resume.client.full_name)
           - else
             h3.text-center
               |Anonymous
             p
             = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size: "300x250", alt: @resume.client.full_name)
-        - else
-          h3.text-center
-            |Anonymous
           p
-          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size: "300x250", alt: @resume.client.full_name)
-        p
-        .text-center
-          =social_share_button_tag @resume.desiredjobtitle
-      .col-sm-6
-        .row
-          .col-sm-12
-            h3.text-center
-              |Description
-            p
-              strong
-                | Posted:&nbsp;
-              |#{@resume.updated_at.strftime("%d %B %Y")}
-            - if @resume.location
+          .text-center
+            =social_share_button_tag @resume.desiredjobtitle
+        .col-xs-12
+          .row
+            .col-xs-12
+              h3.text-center
+                |Description
               p
                 strong
-                  |Location: &nbsp;
-                |#{@resume.location.suburb}, #{@resume.location.state}
-            - if not @resume.salary.nil? then
-              p
-                strong
-                  |Salary: &nbsp;
-                |#{@resume.salary.to_i.to_s}
-            p
-              strong
-                |Professional area:
-              - @resume.industry.each do |industry|
-                ul
-                  li #{industry.name}
-            - if (@resume.permanent or @resume.casual or @resume.temp or @resume.contract or @resume.fulltime or @resume.parttime or @resume.flextime or @resume.remote) then
-              p
-                strong
-                  |Job Type:
-              - if @resume.permanent
-                .col-sm-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Permanent
-                  br
-              - if @resume.casual
-                .col-sm-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Casual
-                  br
-              - if @resume.temp
-                .col-sm-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Temporary
-                  br
-              - if @resume.contract
-                .col-sm-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Contract
-                  br
-              - if @resume.fulltime
-                .col-sm-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Full-time
-                  br
-              - if @resume.parttime
-                .col-sm-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Part-time
-                  br
-              - if @resume.flextime
-                .col-sm-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Flex-time
-                  br
-              - if @resume.remote
-                .col-sm-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Remote
-                  br
-            - if not @resume.highlight.nil?
-              p
-                strong
-                  | Highlight
-            - if not @resume.urgent.nil?
-              p
-                strong
-                  | Urgent
-            - if not @resume.top.nil?
-              p
-                strong
-                  | Ad Top
-
-        p
-        .row
-          .btn-group.btn-group-justified
-            .btn-group
-              span.btn.btn-warning.btn-block[data-toggle="dropdown"]
-                |Extras
-                span.caret
-              ul.dropdown-menu
-                - if PropertsHelper::URGENT=="true"
-                  li
-                    = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1}), rel:"nofollow"
-                - if PropertsHelper::TOP == "true"
-                  li
-                    = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2}), rel:"nofollow"
-                - if PropertsHelper::HIGHLIGHT == "true"
-                  li
-                    = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3}), rel:"nofollow"
-            - if client_signed_in?
-              - if @resume.client.id == current_client.id
-                .btn-group
-                  = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block"
-                .btn-group
-                  = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
-              - if current_client.resp?
-                .btn-group
-                  button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
-                    |Contact
-            - else
-              .btn-group
-                = link_to "Contact", log_in_path(@resume.id), class: "btn btn-primary btn-block"
-            .btn-group
-              button.btn.btn-success.btn-block[onclick="history.back()"]
-                |Back
-    .row
-      .col-sm-12
-        p
-          = render_markdown(@resume.abouteme)
-        -if not @resume.experience.empty?
-          h3.text-center
-            |Experience
-          - @resume.experience.order(datestart: :desc).each  do |exp|
-            .row
-              .col-sm-12
-                hr
-                h4.text-center
-                  = exp.titlejob
+                  | Posted:&nbsp;
+                |#{@resume.updated_at.strftime("%d %B %Y")}
+              - if @resume.location
                 p
-                  strong
-                    |Started: &nbsp;
-                  |#{exp.datestart.strftime("%d %B %Y").to_s} &nbsp;
-                  strong
-                    |Ended:
-                  | &nbsp; #{exp.dateend ? exp.dateend.strftime("%d %B %Y").to_s : "..."}, &nbsp;
                   strong
                     |Location: &nbsp;
-                  |#{exp.location.suburb}, #{exp.location.state}
+                  |#{@resume.location.suburb}, #{@resume.location.state}
+              - if not @resume.salary.nil? then
                 p
                   strong
-                    |Employer: &nbsp;
-                  |#{exp.employer}
-                - if exp.site and not exp.site.empty?
-                  p
-                    strong
-                      |Site: &nbsp;
-                    |#{exp.site}
+                    |Salary: &nbsp;
+                  |#{@resume.salary.to_i.to_s}
+              p
+                strong
+                  |Professional area:
+              ul
+                li #{@resume.industry.name}
+              - if not @resume.highlight.nil?
                 p
-                  = render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  exp.description
-.col-xs-12.hidden-md.hidden-lg.hidden-sm
-  .panel-body
-    h1.text-center
-      = @resume.desiredjobtitle
-    .row
-      .col-xs-12
-        - if client_signed_in?
-          - if current_client.resp? or @resume.client.id == current_client.id
-            h3.text-center
-              = "#{@resume.client.firstname} #{@resume.client.lastname}"
-            p
-            - if not @resume.client.photo_uid.nil?
-              = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), class: 'img-thumbnail center-block ', size: "300x250", alt: @resume.client.full_name)
-            - else
-              = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "300x250", alt: @resume.client.full_name)
-          - else
-            h3.text-center
-              |Anonymous
-            p
-            = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size: "300x250", alt: @resume.client.full_name)
-        - else
-          h3.text-center
-            |Anonymous
-          p
-          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size: "300x250", alt: @resume.client.full_name)
-        p
-        .text-center
-          =social_share_button_tag @resume.desiredjobtitle
-      .col-xs-12
-        .row
-          .col-xs-12
-            h3.text-center
-              |Description
-            p
-              strong
-                | Posted:&nbsp;
-              |#{@resume.updated_at.strftime("%d %B %Y")}
-            - if @resume.location
-              p
-                strong
-                  |Location: &nbsp;
-                |#{@resume.location.suburb}, #{@resume.location.state}
-            - if not @resume.salary.nil? then
-              p
-                strong
-                  |Salary: &nbsp;
-                |#{@resume.salary.to_i.to_s}
-            p
-              strong
-                |Professional area:
-              - @resume.industry.each do |industry|
-                ul
-                  li #{industry.name}
-            - if (@resume.permanent or @resume.casual or @resume.temp or @resume.contract or @resume.fulltime or @resume.parttime or @resume.flextime or @resume.remote) then
-              p
-                strong
-                  |Job Type:
-              - if @resume.permanent
-                .col-xs-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Permanent
-                  br
-              - if @resume.casual
-                .col-xs-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Casual
-                  br
-              - if @resume.temp
-                .col-xs-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Temporary
-                  br
-              - if @resume.contract
-                .col-xs-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Contract
-                  br
-              - if @resume.fulltime
-                .col-xs-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Full-time
-                  br
-              - if @resume.parttime
-                .col-xs-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Part-time
-                  br
-              - if @resume.flextime
-                .col-xs-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Flex-time
-                  br
-              - if @resume.remote
-                .col-xs-6
-                  span
-                    i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                  | &nbsp; Remote
-                  br
-            - if not @resume.highlight.nil?
-              p
-                strong
-                  | Highlight
-            - if not @resume.urgent.nil?
-              p
-                strong
-                  | Urgent
-            - if not @resume.top.nil?
-              p
-                strong
-                  | Ad Top
+                  strong
+                    | Highlight
+              - if not @resume.urgent.nil?
+                p
+                  strong
+                    | Urgent
+              - if not @resume.top.nil?
+                p
+                  strong
+                    | Ad Top
 
-        p
-        .row
-          .btn-group.btn-group-justified
-            .btn-group
-              span.btn.btn-warning.btn-block[data-toggle="dropdown"]
-                |Extras
-                span.caret
-              ul.dropdown-menu
-                - if PropertsHelper::URGENT=="true"
-                  li
-                    = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1}), rel:"nofollow"
-                - if PropertsHelper::TOP == "true"
-                  li
-                    = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2}), rel:"nofollow"
-                - if PropertsHelper::HIGHLIGHT == "true"
-                  li
-                    = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3}), rel:"nofollow"
-            - if client_signed_in?
-              - if @resume.client.id == current_client.id
-                .btn-group
-                  = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block"
-                .btn-group
-                  = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
-              - if current_client.resp?
-                .btn-group
-                  button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
-                    |Contact
-            - else
+          p
+          .row
+            .btn-group.btn-group-justified
               .btn-group
-                = link_to "Contact", log_in_path(@resume.id), class: "btn btn-primary btn-block"
-            .btn-group
-              button.btn.btn-success.btn-block[onclick="history.back()"]
-                |Back
-    .row
-      .col-xs-12
-        p
-          = render_markdown(@resume.abouteme)
-        -if not @resume.experience.empty?
-          h3.text-center
-            |Experience
-          - @resume.experience.order(datestart: :desc).each  do |exp|
-            .row
-              .col-xs-12
-                hr
-                h4.text-center
-                  = exp.titlejob
-                p
-                  strong
-                    |Started: &nbsp;
-                  |#{exp.datestart.strftime("%d %B %Y").to_s} &nbsp;
-                  strong
-                    |Ended:
-                  | &nbsp; #{exp.dateend ? exp.dateend.strftime("%d %B %Y").to_s : "..."}, &nbsp;
-                  strong
-                    |Location: &nbsp;
-                  |#{exp.location.suburb}, #{exp.location.state}
-                p
-                  strong
-                    |Employer: &nbsp;
-                  |#{exp.employer}
-                - if exp.site and not exp.site.empty?
-                  p
-                    strong
-                      |Site: &nbsp;
-                    |#{exp.site}
-                p
-                  = render :inline =>  RDiscount.new(exp.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if  exp.description
--if client_signed_in?
-  -if current_client.resp?
-    .modal.fade#contact[tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"]
-      .modal-dialog
-        .modal-content
-          .modal-header
-            button[type="button" class="close" data-dismiss="modal" aria-label="Close"]
-              span[aria-hidden="true"]
-                |&times;
-            h4.modal-title Contact:
-          .modal-body
-            .container-fluid
-              .row
-                  col-lg-3.col-md-3
-                    - if @resume.client.photo.nil?
-                      = image_tag(image_path("avatar.jpg"), size: "60x60", class: 'img-thumbnail center-block', alt: @resume.client.full_name)
-                    - else
-                      = image_tag(Dragonfly.app.remote_url_for(@resume.client.photo_uid), size: "60x60", class: 'img-thumbnail center-block ', alt: @resume.client.full_name)
-                  col-lg-9.col-md-9
-                    ="#{@resume.client.firstname} #{@resume.client.lastname}"
-                    br
-                    |Email:
-                    | &nbsp;
-                    a[href ="mailto:#{@resume.client.email}?subject=#{@resume.desiredjobtitle} by #{PropertsHelper::COMPANY}.eu" ] = @resume.client.email
-                    br
-                    |Phone:
-                    | &nbsp;
-                    a[href ="tel:#{@resume.client.phone}" ] #{@resume.client.phone}
-          .modal-footer
-            button[type="button" class="btn btn-default" data-dismiss="modal"]
-              |Close
+                span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+                  |Extras
+                  span.caret
+                ul.dropdown-menu
+                  - if PropertsHelper::URGENT=="true"
+                    li
+                      = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 1}), rel:"nofollow"
+                  - if PropertsHelper::TOP == "true"
+                    li
+                      = link_to "Top $20 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 2}), rel:"nofollow"
+                  - if PropertsHelper::HIGHLIGHT == "true"
+                    li
+                      = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @resume, kind: 3, option: 3}), rel:"nofollow"
+              - if client_signed_in?
+                - if @resume.client.id == current_client.id
+                  .btn-group
+                    = link_to "Edit", edit_resume_path(@resume), class: "btn btn-primary btn-block"
+                  .btn-group
+                    = link_to "Delete", @resume, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
+                - if current_client.resp?
+                  .btn-group
+                    button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
+                      |Contact
+              - else
+                .btn-group
+                  = link_to "Contact", log_in_path(@resume.id), class: "btn btn-primary btn-block"
+              .btn-group
+                button.btn.btn-success.btn-block[onclick="history.back()"]
+                  |Back
+      .row
+        .col-xs-12
+          p
+            = render_markdown(@resume.abouteme)
+  -if client_signed_in?
+    -if current_client.resp?
+      =render 'inc/contact', object: @resume

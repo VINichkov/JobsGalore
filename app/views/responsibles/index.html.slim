@@ -30,4 +30,4 @@
           td = link_to 'Destroy', responsible, data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-danger btn-block "
 
   br
-  = will_paginate @responsible, {renderer: BootstrapPagination::Rails, inner_window:1, outer_window:1}
+  = will_paginate_mini @responsible

@@ -20,13 +20,11 @@
 @import "social-share-button";
 @import 'bootstrap-datepicker';
 @import "bootstrap-select";
-@import "bootstrap-markdown";
 @import "jasny-bootstrap";
 @import "print";
-@import "font-awesome";
 @import "medium-editor.min";
 @import "bootstrap.min";
-//= require jquery-ui/THEME-NAME
+
 
 
 .affix {
@@ -124,6 +122,14 @@ $size: 32px;
   background-size: auto;
   height: 350px;  /* Высота шапки */
 }
+
+.avatar{
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
 .navbar-toggle.navbar-left {
   float: left;
   margin-left: 10px;
@@ -175,7 +181,13 @@ li.elem_header{
   width: 0px;
 }
 .editable{
-  border-top: 1px groove black;
-  border-bottom: 1px groove black;
-  min-height:500px;
+  border: 1px groove silver;
+  border-radius: 5px;
+  min-height:300px;
+  color: #4c4c4c;
+}
+.editable:focus {
+  border-color: rgba(33, 71, 239, 0.6);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(40, 181, 239, 0.6);
+  outline: 0 none;
 }

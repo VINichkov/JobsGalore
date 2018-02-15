@@ -10,7 +10,8 @@
 require 'mechanize'
 require 'bcrypt'
 
-if 1==1
+#version 1
+if 1==0
 # Блок загрузки файлов
 ttime =Time.now
 puts "== #{ttime} start seed"
@@ -438,6 +439,38 @@ all +=Industryexperience.count+Industryjob.count+Industryresume.count+Job.count+
 all +=Language.count+Level.count+Location.count+Propert.count+Responsible.count+Resume.count+Skillsresume.count
 puts "--==All objects #{all}==--"
 puts "== #{Time.now - ttime } end seed"
+end
+
+#version 2
+if 1==1
+  #step 2
+  empty = Industry.find_by_id(999)
+  empty ||=  Industry.new(name: 'Empty', level:1, id:999)
+  empty.save!
+  Job.all.each do |job|
+    ind = Industryjob.find_by_job_id(job.id)&.industry
+    if ind
+      job.update(industry:ind)
+    else
+      job.update(industry:empty)
+    end
+  end
+  Company.all.each do |company|
+    ind = Industrycompany.find_by_company_id(company.id)&.industry
+    if ind
+      company.update(industry:ind)
+    else
+      company.update(industry:empty)
+    end
+  end
+  Resume.all.each do |resume|
+    ind = Industryresume.find_by_resume_id(resume.id)&.industry
+    if ind
+      resume.update(industry:ind)
+    else
+      resume.update(industry:empty)
+    end
+  end
 end
 
 

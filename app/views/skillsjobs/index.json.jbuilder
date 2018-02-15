@@ -1,1 +1,0 @@
-json.array! @skillsjobs, partial: 'skillsjobs/skillsjob', as: :skillsjob

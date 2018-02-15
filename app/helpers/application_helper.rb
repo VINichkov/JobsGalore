@@ -1,4 +1,7 @@
 module ApplicationHelper
+  ALL = "highlight urgent"
+  HIGHLIGHT = "highlight"
+  URGENT = "urgent"
 
   def title(text)
     content_for :title, text
@@ -10,21 +13,12 @@ module ApplicationHelper
     content_for?(:"meta_#{tag}") ? content_for(:"meta_#{tag}") : default_text
   end
 
-  #TODO убрать markdown_to_keywords и markdown_to_text когда все будет переделано на презентеры
-  def markdown_to_keywords (arg)
-    keys = markdown_to_text(arg, 400).split(' ').map do |key|
-      key.delete!(',')
-      key = nil unless key&.length>3
-      key
-    end
-    keys.compact.uniq.join(', ')
+  def noindex
+    content_for :noindex, true
   end
 
-  def markdown_to_text (arg, truncate=nil)
-    text = Nokogiri::HTML(RDiscount.new(arg).to_html).text.squish
-    if truncate
-      text= text.truncate(truncate, separator: ' ',omission: '')
-    end
+  def image_bg(url, bgsize,width, height )
+    content_tag(:div,'', class: "text-center img-thumbnail center-block avatar", style: "background-image: url('#{url}');background-size: #{bgsize}; width: #{width}; height: #{height};")
   end
 
   def meta_head(arg={})
@@ -39,7 +33,19 @@ module ApplicationHelper
     meta_tag "article:published_time", arg[:published]
   end
 
-  def render_markdown(text = nil)
-    render :inline =>  RDiscount.new(text).to_html.gsub('<img',"<img class=\"img-thumbnail center-block\"").gsub('<a',"<a rel=\"nofollow\"") if text
+  def class_extras(object)
+    if object.highlight and object.urgent
+      ALL
+    elsif not object.highlight and object.urgent
+      URGENT
+    elsif object.highlight and not object.urgent
+      HIGHLIGHT
+    else
+      ""
+    end
+  end
+
+  def will_paginate_mini(objects)
+    will_paginate objects, {renderer: BootstrapPagination::Rails, inner_window:0, outer_window:0, previous_label:'&#8592;', next_label: '&#8594;'}
   end
 end

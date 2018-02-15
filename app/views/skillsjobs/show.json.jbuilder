@@ -1,1 +1,0 @@
-json.partial! "skillsjobs/skillsjob", skillsjob: @skillsjob

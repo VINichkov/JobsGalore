@@ -12,4 +12,13 @@ class HomepageTest < ActionDispatch::PerformanceTest
   test "about us" do
     get '/about'
   end
+  test "search_job" do
+    get 'search?utf8=✓&main_search[type]=2&main_search[value]='
+  end
+  test "search_resume" do
+    get '/search?utf8=✓&main_search[type]=3&main_search[value]='
+  end
+  test "search_company" do
+    get '/search?utf8=✓&main_search[type]=1&main_search[value]='
+  end
 end

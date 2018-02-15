@@ -4,7 +4,7 @@ class Ability
   def initialize(user,param)
     user ||= Client.new
     puts "#{user.id} #{user.firstname} #{user.lastname} #{user.email}__________________________#{param.to_h.to_s}"
-    if user.email == PropertsHelper::ADMIN
+    if user.admin?
       puts "Cancan:: Admin"
       can :manage, :all
     elsif user.character == 'employer'

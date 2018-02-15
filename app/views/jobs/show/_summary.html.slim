@@ -1,0 +1,40 @@
+h4.text-center
+  |Job summary
+p
+  strong
+    | Posted:&nbsp;
+  =object.posted_date
+.hidden-md.hidden-lg.hidden-sm
+  p
+    strong
+      |Company: &nbsp;
+    =link_to(object.company.name,object.company)
+p
+  strong
+    |Location: &nbsp;
+  |#{object.location.name}
+- if not object.salary.blank?
+  p
+    strong
+      |Salary: &nbsp;
+    | #{object.salary}
+p
+  strong
+    |Professional area:
+ul
+  li #{- object.industry.name}
+- if object.highlight
+  p
+    span.glyphicon.glyphicon-paperclip
+    strong
+      | &nbsp; Highlight
+- if object.urgent
+  p
+    span.glyphicon.glyphicon-pushpin
+    strong
+      | &nbsp; Urgent
+- if object.top
+  p
+    span.glyphicon.glyphicon-hand-up
+    strong
+      | &nbsp; Ad Top

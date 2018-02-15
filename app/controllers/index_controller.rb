@@ -6,7 +6,6 @@ class IndexController < ApplicationController
   end
 
   def advertising_terms_of_use
-
   end
 
   def search
@@ -47,28 +46,11 @@ class IndexController < ApplicationController
   end
 
   def main_search
-    @name={}
-    @category = Industry.all
-    param = main_search_params
-    session[:param] = Marshal.load(Marshal.dump(param))
-    #param[:param][:value] = (PG::Connection.escape_string(param[:param][:value]).split(" ").map {|t| t=t+":*"}).join("&")
-    if param[:param][:value].delete("!:*&()'`\"’").blank?
-      param[:param][:value] = ''
+    @result = MainSearch.call(params:main_search_params)
+    if @result.success?
+      @objs, @name = @result.objs, @result.name
     else
-      param[:param][:value] = (param[:param][:value].delete("!:*&()'`\"’")&.split(" ").map {|t| t=t+":*"}).join("&")
-    end
-    case param[:param][:type]
-      when '1'
-        @objs = Company.includes(:location,:industry).search(param[:param]).order(:name).paginate(page: param[:page], per_page:21)
-        @name = {name:'Companies'}
-      when '2'
-        @objs = Job.includes(:company,:location).search(param[:param]).order(created_at:  :desc).paginate(page: param[:page], per_page:25)
-        @name = {name:'Jobs'}
-      when '3'
-        @objs = Resume.includes(:location).search(param[:param]).order(updated_at: :desc).paginate(page: param[:page], per_page:25)
-        @name = {name:'Resumes'}
-      else
-        redirect_to '/404'
+      render_404
     end
   end
 
@@ -149,7 +131,7 @@ class IndexController < ApplicationController
   end
 
   def main_search_params
-    {param:params.require(:main_search).permit(:type, :value, :page, :salary, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :options, :category, :location_id, :location_name, :urgent).to_h, page:params.permit(:page).to_h[:page]}
+    params.permit(:page, main_search: [:type, :value, :page, :salary,  :options, :category, :location_id, :location_name, :urgen])
   end
 
 

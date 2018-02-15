@@ -1,23 +1,18 @@
 class Job < ApplicationRecord
+  after_create :send_email
+  before_save :date_close
   include Rails.application.routes.url_helpers
   belongs_to :client
   belongs_to :location
   belongs_to :company
-  #belongs_to :education
-  has_many :industry, through: :industryjob
-  #has_many :skillsjob, dependent: :destroy
-  has_many :industryjob, dependent: :destroy
+  belongs_to :industry
+
   validates :title, presence: true
   validates :company, presence: true
   validates :location, presence: true
   validates :client, presence: true
 
-  attr_accessor :ind, :location_name
-
-  #def initialize(object, options = {})
-  #  super
-  #  @salary = calc_salary
-  #end
+  attr_accessor :location_name
 
   def post_at_twitter(arg)
     twitt = TwitterClient.new
@@ -62,46 +57,58 @@ class Job < ApplicationRecord
     @salary ? @salary : @salary = calc_salary
   end
 
+  def title_capitalize
+    @cap ? @cap : @cap = self.title.capitalize
+  end
+
   protected
 
-  def calc_salary
-    if self.salarymax.blank? and not self.salarymin.blank? then
-      self.salarymin.to_i.to_s
-    elsif not (self.salarymax.blank? and self.salarymin.blank? )
-      self.salarymin.to_i.to_s+" - "+ self.salarymax.to_i.to_s
-    elsif not self.salarymax.blank? and self.salarymin.blank?
-      self.salarymax.to_i.to_s
-    else
-      nil
+  def send_email
+    if self.client.send_email?
+      JobsMailer.add_job({mail:self.client.email, firstname: self.client.full_name, id:self.id, title:self.title}).deliver_later
+    end
+  end
+  def date_close
+    if self.close.nil?
+      self.close = Date.today+1.month
     end
   end
 
-  scope :search, ->(query)  do
-    text_query = []
-    if  not(query[:category].nil?) and not (query[:category]=="999") then
-      text_query << "id in "+Industryjob.where(industry:query[:category]).pluck(:job_id).to_s.sub("[","(").sub("]",")")
+  def calc_salary
+    if self.salarymax.blank? and not self.salarymin.blank? then
+      '$'+self.salarymin.to_i.to_s
+    elsif not (self.salarymax.blank? and self.salarymin.blank? )
+      '$'+self.salarymin.to_i.to_s+" - "+ '$'+ self.salarymax.to_i.to_s
+    elsif not self.salarymax.blank? and self.salarymin.blank?
+      '$'+self.salarymax.to_i.to_s
+    else
+      ''
     end
-    if  (not query[:location_id].nil?) and (not query[:location_id] == "")
+  end
+
+
+
+  scope :search, ->(query)  do
+    query = query.to_h if query.class != Hash
+    text_query=[]
+    if  not query[:category].blank?
+      text_query << "industry_id = :category"
+    end
+
+    if not query[:location_id].blank?
       text_query << "location_id = :location_id"
-    elsif ((not (query[:location_name].nil?) and not(query[:location_name]== "")) and (query[:location_id].nil? or query[:location_id] == ""))
+    elsif not query[:location_name].blank?
       text_query << "location_id in "+Location.search((query[:location_name].split(" ").map {|t| t=t+":*"}).join("&")).ids.to_s.sub("[","(").sub("]",")")
     end
-    text_query << 'urgent  is not null'  if (query[:urgent] == "on")
-    text_query << 'permanent  = true'  if (query[:permanent] == "on")
-    text_query << 'casual  = true'     if (query[:casual] == "on")
-    text_query << 'temp  = true'       if (query[:temp] == "on")
-    text_query << 'contract  = true'   if (query[:contract] == "on")
-    text_query << 'fulltime  = true'   if (query[:fulltime] == "on")
-    text_query << 'parttime  = true'   if (query[:parttime] == "on")
-    text_query << 'flextime = true'    if (query[:flextime] == "on")
-    text_query << 'remote  = true'     if (query[:remote] == "on")
+
     text_query<< "fts @@ to_tsquery(:value)" if query[:value] != ""
-    if (not query[:salary].nil?) and (not query[:salary]=="")
+    if not query[:salary].blank?
       text_query << '((salarymin is NULL and (salarymax >= :salary or salarymax is NULL)) or (salarymin>=:salary) or (salarymin <=:salary and salarymax >= :salary))'
     end
+
     text_query = text_query.join(" and ")
-    puts "________________________________"
-    puts text_query
+
+    logger.info("Job::search query = " + text_query + ", params= "+ query.to_s)
     where(text_query,query)
   end
 

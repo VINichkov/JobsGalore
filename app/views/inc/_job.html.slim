@@ -1,0 +1,36 @@
+.col-lg-8.col-md-8.hidden-xs
+  .panel.panel-default
+    div[class="panel-body #{class_extras(job)}"]
+      .col-lg-10.col-md-10.col-sm-10
+        h3
+          = link_to job.title_capitalize, job, class: 'text-warning'
+        - if job.salary.blank? then
+          p = job.salary
+        = job.description_text + "..."
+        p
+        = link_to job.company.name, job.company, class: 'text-success'
+        p = job.location.name
+      .col-lg-2.col-md-2.col-sm-2
+        .row
+          .row.text-center
+            = link_to(job.company.name.truncate(50, separator: " "), job.company)
+          .row
+            = link_to(image_bg(job.company.logo_url, "130px", "130px", "100px"), job.company)
+          .row.text-center
+            = "Posted: " +job.posted_date
+.col-lg-4.col-md-4.hidden-xs
+.row.hidden-lg.hidden-md.hidden-sm[class="panel-body #{class_extras(job)}"]
+  hr
+  h3
+    = link_to job.title_capitalize, job
+  span
+    = link_to job.company.name, job.company, class: 'text-success'
+  | &nbsp; - &nbsp;
+  span.text-warning
+    = job.location.name
+  - if job.salary.blank? then
+    p = job.salary
+  p
+    = job.description_text + "..."
+  p.text-muted
+    |#{job.posted_date}

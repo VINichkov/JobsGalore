@@ -3,7 +3,7 @@ class Company < ApplicationRecord
   belongs_to :size
   belongs_to :location
   has_many :job, dependent: :destroy
-  has_many :industry ,through: :industrycompany
+  belongs_to :industry
   has_many :industrycompany, dependent: :destroy
   has_many :responsible, dependent: :destroy
   has_many :client, through: :responsible
@@ -12,13 +12,7 @@ class Company < ApplicationRecord
   validates :name, presence: true
   #validates :location_id, presence: true
 
-  def logo_url
-    if @logo_url
-      @logo_url
-    else
-      @logo_url = self.logo_uid ? Dragonfly.app.remote_url_for(self.logo_uid) : image_url("company_profile.jpg")
-    end
-  end
+
   protected
 
   scope :search, ->(query) do
@@ -28,8 +22,12 @@ class Company < ApplicationRecord
 
   def rename()
     return unless self.logo.present?
-    path_obj = Pathname(self.logo.name)
-    self.logo.name = path_obj.sub_ext('').to_s.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') + path_obj.extname
+    begin
+      path_obj = Pathname(self.logo.name)
+      self.logo.name = path_obj.sub_ext('').to_s.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') + path_obj.extname
+    rescue
+      puts "Error: #{$!}"
+    end
   end
 
 

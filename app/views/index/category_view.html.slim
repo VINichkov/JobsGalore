@@ -10,4 +10,4 @@
   - unless @objs.class.to_s.scan("Resume").empty? then
     = render 'inc/list_resumes'
 .text-center
-  = will_paginate @objs, {renderer: BootstrapPagination::Rails}
+  = will_paginate_mini @objs

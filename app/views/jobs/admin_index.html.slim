@@ -37,9 +37,9 @@
           td = job.highlight
           td = job.top
           td = job.urgent
-          td = link_to 'Show', admin_jobs_show_path(job), class: "btn btn-primary btn-block "
+          td = link_to 'Show', job_path(job), class: "btn btn-primary btn-block "
           td = link_to 'Edit', admin_jobs_edit_path(job), class: "btn btn-success btn-block "
           td = link_to 'Destroy', admin_jobs_destroy_path(job), data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-danger btn-block "
 
   br
-  = will_paginate @jobs, {renderer: BootstrapPagination::Rails, inner_window:1, outer_window:1}
+  = will_paginate_mini @jobs

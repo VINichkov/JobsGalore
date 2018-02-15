@@ -1,422 +1,66 @@
 -cache(@job) do
-  - title @job.title
-  - meta_tag "description",   markdown_to_text(@job.description, 300)
-  - meta_tag "keywords", "Australia, Job, Jobs, Galore, Jobsgalore,#{@job.title} ,Job in #{@job.location.suburb} #{@job.location.state} , Company is #{@job.company.name}, #{markdown_to_keywords(@job.description)}"
-  - meta_tag "og:type", "article"
-  - meta_tag "og:title", @job.title
-  - meta_tag "og:description", markdown_to_text(@job.description, 300)
-  - meta_tag "og:url", job_url(@job)
-  - meta_tag "og:image", @job.company.logo_uid ? Dragonfly.app.remote_url_for(@job.company.logo_uid) : image_url("company_profile.jpg")
-  - meta_tag "article:published_time", @job.updated_at
+  - meta_head({ description: @job.description_meta,
+                title: @job.title,
+                keywords: @job.keywords,
+                url: job_url(@job),
+                image: @job.logo_url,
+                published: @job.updated_at})
   .container.hidden-xs.hidden-sm
     .col-lg-8.col-md-8
       .row.well
         h1.text-center
-          = @job.title.capitalize
+          = @job.title_capitalize
         p
-          =  render_markdown(@job.description)
+          = render_markdown(@job.description)
     .col-lg-4.col-md-4
       .panel.panel-default
         .panel-body
-          h3.text-center
-            = link_to(@job.company.name,@job.company)
-            p
-            - if @job.company.logo_uid.nil?
-              = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250", alt:@job.company.name),@job.company)
-            - else
-              = link_to(image_tag(Dragonfly.app.remote_url_for(@job.company.logo_uid), class: 'img-thumbnail center-block ', size: "300x250", alt:@job.company.name),@job.company)
+          =company(@job)
           p
-          h3.text-center
-            |Job summary
-
         .well
+          = render 'jobs/show/summary', object: @job
+          = render 'jobs/show/btn_extras', object: @job, cl:"dropdown"
           p
-            strong
-              | Posted:&nbsp;
-            |#{@job.created_at.strftime("%d %B %Y")}
+          - if can? :update, @job
+            = link_to "Edit", edit_job_path(@job), class: "btn btn-primary btn-block"
+            p
+          - if can? :delete, @job
+            = link_to "Delete", @job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
+            p
+          button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
+            |Contact
           p
-            strong
-              |Location: &nbsp;
-            |#{@job.location.suburb}, #{@job.location.state}
-          - if @job.salarymax.nil? and not @job.salarymin.nil? then
-            p
-              strong
-                |Salary: &nbsp;
-              | #{@job.salarymin.to_i.to_s}
-          - elsif not (@job.salarymax.nil? and @job.salarymin.nil?)
-            p
-              strong
-               |Salary: &nbsp;
-              | #{@job.salarymin.to_i.to_s+" - "+ @job.salarymax.to_i.to_s}
+          button.btn.btn-success.btn-block[onclick="history.back()"]
+            |Back
           p
-            strong
-              |Professional area:
-            - @job.industry.each do |industry|
-              ul
-                li #{industry.name}
-          - if (@job.permanent or @job.casual or @job.temp or @job.contract or @job.fulltime or @job.parttime or @job.flextime or @job.remote)
-            p
-              strong
-                |Job Type: &nbsp;
-            -if @job.permanent
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Permanent
-                br
-            - if @job.casual
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Casual
-                br
-            - if @job.temp
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Temporary
-                br
-            - if @job.contract
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Contract
-                br
-            - if @job.fulltime
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Full-time
-                br
-            - if @job.parttime
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Part-time
-                br
-            - if @job.flextime
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Flex-time
-                br
-            - if @job.remote
-              span
-                i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                | &nbsp; Remote
-            - if not @job.highlight.nil?
-              p
-                strong
-                  | Highlight
-            - if not @job.urgent.nil?
-              p
-                strong
-                  | Urgent
-            - if not @job.top.nil?
-              p
-                strong
-                  | Ad Top
-            p
-          .row
-            .col-lg-12.col-md-12
-              span.btn.btn-warning.btn-block[data-toggle="dropdown"]
-                |Extras
-                span.caret
-              ul.dropdown-menu
-                - if PropertsHelper::URGENT=="true"
-                  li
-                    = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 1}), rel:"nofollow"
-                -if PropertsHelper::TOP == "true"
-                  li
-                    = link_to "Top $20 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 2}), rel:"nofollow"
-                -if PropertsHelper::HIGHLIGHT == "true"
-                  li
-                    = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 3}), rel:"nofollow"
-              p
-            - if client_signed_in?
-              - if @job.client.id == current_client.id
-                .col-lg-12.col-md-12
-                  = link_to "Edit", edit_job_path(@job), class: "btn btn-primary btn-block"
-                  p
-                .col-lg-12.col-md-12
-                  = link_to "Delete", @job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
-                  p
-            .col-lg-12.col-md-12
-              button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
-                |Contact
-              p
-            .col-lg-12.col-md-12
-              button.btn.btn-success.btn-block[onclick="history.back()"]
-                |Back
-              p
           .text-center
             =social_share_button_tag  @job.title, url: job_url(@job), title:@job.title
-  .col-sm-12.hidden-md.hidden-lg.hidden-xs
-      .panel-body
-        h1.text-center
-          = @job.title.capitalize
-        .row
-          .col-sm-6
-            h3.text-center
-              = link_to(@job.company.name,@job.company)
-              p
-              - if @job.company.logo_uid.nil?
-                = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250", alt:@job.company.name),@job.company)
-              - else
-                = link_to(image_tag(Dragonfly.app.remote_url_for(@job.company.logo_uid), class: 'img-thumbnail center-block ', size: "300x250", alt:@job.company.name),@job.company)
-            p
-            .text-center
-              =social_share_button_tag @job.title, url: job_url(@job), title:@job.title
-          .col-sm-6
-            h3.text-center
-              |Job summary
-            .row
-              .col-sm-12
-                p
-                  strong
-                    | Posted:&nbsp;
-                  |#{@job.created_at.strftime("%d %B %Y")}
-                p
-                  strong
-                    |Location: &nbsp;
-                  |#{@job.location.suburb}, #{@job.location.state}
-                - if @job.salarymax.nil? and not @job.salarymin.nil? then
-                  p
-                    strong
-                      |Salary: &nbsp;
-                    | #{@job.salarymin.to_i.to_s}
-                - elsif not (@job.salarymax.nil? and @job.salarymin.nil?)
-                  p
-                    strong
-                      |Salary: &nbsp;
-                    | #{@job.salarymin.to_i.to_s+" - "+ @job.salarymax.to_i.to_s}
-                p
-                  strong
-                    |Professional area:
-                  - @job.industry.each do |industry|
-                    ul
-                      li #{industry.name}
-                - if (@job.permanent or @job.casual or @job.temp or @job.contract or @job.fulltime or @job.parttime or @job.flextime or @job.remote)
-                  p
-                    strong
-                      |Job Type: &nbsp;
-                - if @job.permanent
-                  .col-sm-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Permanent
-                    br
-                - if @job.casual
-                  .col-sm-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Casual
-                    br
-                - if @job.temp
-                  .col-sm-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Temporary
-                    br
-                - if @job.contract
-                  .col-sm-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                      | &nbsp; Contract
-                    br
-                - if @job.fulltime
-                  .col-sm-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Full-time
-                    br
-                - if @job.parttime
-                  .col-sm-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Part-time
-                    br
-                - if @job.flextime
-                  .col-sm-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Flex-time
-                    br
-                - if @job.remote
-                  .col-sm-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Remote
-                    br
-                - if not @job.highlight.nil?
-                  p
-                    strong
-                      | Highlight
-                - if not @job.urgent.nil?
-                  p
-                    strong
-                      | Urgent
-                - if not @job.top.nil?
-                  p
-                    strong
-                      | Ad Top
-            p
-            .row
-              .btn-group.btn-group-justified
-                .btn-group
-                  span.btn.btn-warning.btn-block[data-toggle="dropdown"]
-                    |Extras
-                    span.caret
-                  ul.dropdown-menu
-                    - if PropertsHelper::URGENT=="true"
-                      li
-                        = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 1}), rel:"nofollow"
-                    - if PropertsHelper::TOP == "true"
-                      li
-                         = link_to "Top $20 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 2}), rel:"nofollow"
-                    - if PropertsHelper::HIGHLIGHT == "true"
-                      li
-                        = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 3}), rel:"nofollow"
-                - if client_signed_in?
-                  - if not @job.company.client.find_by_id(current_client.id).nil?
-                    .btn-group
-                      = link_to "Edit", edit_job_path(@job), class: "btn btn-primary btn-block"
-                    .btn-group
-                      = link_to "Delete", @job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
-                - else
-                  .btn-group
-                    button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
-                      |Contact
-                .btn-group
-                  button.btn.btn-success.btn-block[onclick="history.back()"]
-                    |Back
-        .row
-          .col-sm-12
-            p
-              = render :inline =>  RDiscount.new(@job.description).to_html.gsub('<img', "<img class=\"img-thumbnail center-block\" ") if @job.description
-  .col-xs-12.hidden-md.hidden-lg.hidden-sm
+  .col-xs-12.hidden-md.hidden-lg
     .panel-body
+      .col-sm-12.hidden-md.hidden-lg.hidden-xs
+        h2.text-center
+          = @job.title_capitalize
       .row
-        .col-xs-12
-          h4.text-center
-            = link_to(@job.company.name,@job.company)
-            p
-            - if @job.company.logo_uid.nil?
-              = link_to(image_tag(image_path("company_profile.jpg"), class: 'img-thumbnail center-block', size: "300x250", alt:@job.company.name),@job.company)
-            - else
-              = link_to(image_tag(Dragonfly.app.remote_url_for(@job.company.logo_uid), class: 'img-thumbnail center-block ', size: "300x250", alt:@job.company.name),@job.company)
+        .col-sm-6.hidden-xs
+          =company(@job)
           p
           .text-center
             = social_share_button_tag @job.title, url: job_url(@job), title:@job.title
-        .col-xs-12
-          h3.text-center
-            = @job.title.capitalize
-          .row
-            .col-xs-12
-              p
-                strong
-                  | Posted:&nbsp;
-                |#{@job.created_at.strftime("%d %B %Y")}
-              p
-                strong
-                  |Location: &nbsp;
-                |#{@job.location.suburb}, #{@job.location.state}
-              - if @job.salarymax.nil? and not @job.salarymin.nil? then
-                p
-                  strong
-                    |Salary: &nbsp;
-                  | #{@job.salarymin.to_i.to_s}
-              - elsif not (@job.salarymax.nil? and @job.salarymin.nil?)
-                p
-                  strong
-                    |Salary: &nbsp;
-                  | #{@job.salarymin.to_i.to_s+" - "+ @job.salarymax.to_i.to_s}
-              p
-                strong
-                  |Professional area:
-                - @job.industry.each do |industry|
-                  ul
-                    li #{industry.name}
-              - if (@job.permanent or @job.casual or @job.temp or @job.contract or @job.fulltime or @job.parttime or @job.flextime or @job.remote)
-                p
-                  strong
-                    |Job Type: &nbsp;
-                - if @job.permanent
-                  .col-xs-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Permanent
-                    br
-                - if @job.casual
-                  .col-xs-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Casual
-                    br
-                - if @job.temp
-                  .col-xs-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Temporary
-                    br
-                - if @job.contract
-                  .col-xs-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                      | &nbsp; Contract
-                    br
-                - if @job.fulltime
-                  .col-xs-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Full-time
-                    br
-                - if @job.parttime
-                  .col-xs-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Part-time
-                    br
-                - if @job.flextime
-                  .col-xs-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Flex-time
-                    br
-                - if @job.remote
-                  .col-xs-6
-                    span
-                      i.glyphicon.glyphicon-tags.text-info.glyphicon-small
-                    | &nbsp; Remote
-                    br
-              - if not @job.highlight.nil?
-                p
-                  strong
-                    | Highlight
-              - if not @job.urgent.nil?
-                p
-                  strong
-                    | Urgent
-              - if not @job.top.nil?
-                p
-                  strong
-                    | Ad Top
-
+        .col-sm-6.col-xs-12
+          .hidden-md.hidden-lg.hidden-sm
+            h3.text-center
+              = @job.title_capitalize
+          = render 'jobs/show/summary', object: @job
+          p
           .row
             .btn-group.btn-group-justified
-              .btn-group
-                span.btn.btn-warning.btn-block[data-toggle="dropdown"]
-                  |Extras
-                  span.caret
-                ul.dropdown-menu
-                  - if PropertsHelper::URGENT=="true"
-                    li
-                      = link_to "Urgent $10 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 1}), rel:"nofollow"
-                  - if PropertsHelper::TOP == "true"
-                    li
-                      = link_to "Top $20 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 2}), rel:"nofollow"
-                  - if PropertsHelper::HIGHLIGHT == "true"
-                    li
-                      = link_to "Highlight $5 (7 day)", bill_path(bill: {id: @job, kind: 2, option: 3}), rel:"nofollow"
-              - if client_signed_in?
-                - if not @job.company.client.find_by_id(current_client.id).nil?
-                  .btn-group
-                    = link_to "Edit", edit_job_path(@job), class: "btn btn-primary btn-block"
-                  .btn-group
-                    = link_to "Delete", @job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
+              = render 'jobs/show/btn_extras', object: @job, cl:"btn-group"
+              - if can? :update, @job
+                .btn-group
+                  = link_to "Edit", edit_job_path(@job), class: "btn btn-primary btn-block"
+              - if can? :delete, @job
+                .btn-group
+                  = link_to "Delete", @job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
               - else
                 .btn-group
                   button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
@@ -425,35 +69,12 @@
                 button.btn.btn-success.btn-block[onclick="history.back()"]
                   |Back
       .row
-        .col-xs-12
+        .col-sm-12
           p
             = render_markdown(@job.description)
-  .modal.fade#contact[tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"]
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button[type="button" class="close" data-dismiss="modal" aria-label="Close"]
-            span[aria-hidden="true"]
-              |&times;
-          h4.modal-title Contact:
-        .modal-body
-          .container-fluid
-            .row
-                col-lg-3.col-md-3
-                  - if  @job.client.photo.nil?
-                    = image_tag(image_path("avatar.jpg"), size: "60x60", class: 'img-thumbnail center-block', alt:@job.client.full_name )
-                  - else
-                    = image_tag(Dragonfly.app.remote_url_for( @job.client.photo_uid), size: "60x60", class: 'img-thumbnail center-block ', alt:@job.client.full_name)
-                col-lg-9.col-md-9
-                  ="#{ @job.client.firstname} #{ @job.client.lastname}"
-                  br
-                  |Email:
-                  | &nbsp;
-                  a[href ="mailto:#{ @job.client.email}?subject=#{@job.title} by #{PropertsHelper::COMPANY}.eu" ] =  @job.client.email
-                  br
-                  |Phone:
-                  | &nbsp;
-                  a[href ="tel:#{ @job.client.phone}" ] #{ @job.client.phone}
-        .modal-footer
-          button[type="button" class="btn btn-default" data-dismiss="modal"]
-            |Close
+      .hidden-md.hidden-lg.hidden-sm
+        p
+          .text-center
+            = social_share_button_tag @job.title, url: job_url(@job), title:@job.title
+
+  =render 'inc/contact', object: @job

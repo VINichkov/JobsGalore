@@ -19,7 +19,7 @@ class ClientsController < ApplicationController
   end
 
   def profile
-    @client=current_client
+    @client=current_client.decorate
   end
 
   def settings

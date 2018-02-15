@@ -1,18 +1,15 @@
 class Resume < ApplicationRecord
   belongs_to :client
   belongs_to :location
-  has_many :experience, dependent: :destroy
-  #has_many :skillsresume, dependent: :destroy
-  has_many :industryresume, dependent: :destroy
-  has_many :languageresume, dependent: :destroy
-  has_many :industry, through: :industryresume
-  has_many :language, through: :languageresume
+  belongs_to :industry
 
   validates :desiredjobtitle, presence: true
   validates :location, presence: true
 
   attr_accessor :ind, :location_name
 
+  alias_attribute  :description,:abouteme
+  alias_attribute  :title,:desiredjobtitle
   def highlight_on
     self.highlight = Date.today
     self.save

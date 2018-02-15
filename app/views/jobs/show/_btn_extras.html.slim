@@ -1,0 +1,34 @@
+div[class = "#{cl}"]
+  span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+    |Extras
+    span.caret
+  ul.dropdown-menu
+    - if can? :admin_extras, object
+      - if PropertsHelper::URGENT== "true"
+        li
+          - if not object.urgent.nil?
+            = link_to "Urgent -", admin_jobs_extras_path(job: {id: object, option: 1}), method: :post
+          - else
+            = link_to "Urgent +", admin_jobs_extras_path(job: {id: object, option: 1}), method: :post
+      - if PropertsHelper::TOP == "true"
+        li
+          - if not object.top.nil?
+            = link_to "Top -", admin_jobs_extras_path(job: {id: object, option: 2}), method: :post
+          - else
+            = link_to "Top +", admin_jobs_extras_path(job: {id: object, option: 2}), method: :post
+      - if PropertsHelper::HIGHLIGHT == "true"
+        li
+          - if not object.highlight.nil?
+            = link_to "Highlight -", admin_jobs_extras_path(job: {id: object, option: 3}), method: :post
+          - else
+            = link_to "Highlight +", admin_jobs_extras_path(job: {id: object, option: 3}), method: :post
+    - else
+      - if PropertsHelper::URGENT== "true"
+        li
+          = link_to("Urgent $10 (7 day)", bill_path(bill: {id: object, kind: 2, option: 1}), rel: "nofollow")
+      - if PropertsHelper::TOP == "true"
+        li
+          = link_to("Top $20 (7 day)", bill_path(bill: {id: object, kind: 2, option: 2}), rel: "nofollow")
+      - if PropertsHelper::HIGHLIGHT == "true"
+        li
+          = link_to("Highlight $5 (7 day)", bill_path(bill: {id: object, kind: 2, option: 3}), rel: "nofollow")

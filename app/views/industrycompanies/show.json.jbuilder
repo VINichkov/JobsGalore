@@ -1,1 +1,0 @@
-json.partial! "industrycompanies/industrycompany", industrycompany: @industrycompany

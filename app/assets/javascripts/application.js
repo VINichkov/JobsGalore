@@ -1,18 +1,16 @@
-//= require react
-//= require components
+
 //= require jquery
 //= require jquery_ujs
-//= require react_ujs
-
 //= require bootstrap
-//= require social-share-button
 //= require bootstrap-datepicker
 //=require bootstrap-select
-//=require bootstrap-markdown
+//= require social-share-button
 //=require jasny-bootstrap
 //=require medium-editor.min
 //=require me-markdown.standalone.min
-
+//= require react
+//= require components
+//= require react_ujs
 
 //$(document).on('page:load', function () {
 //    ReactRailsUJS.mountComponents()

@@ -29,8 +29,8 @@ gem 'social-share-button'
 gem 'cancancan', '~> 2.0.0'
 gem 'devise','~> 4.3.0'
 gem 'dkim'
-gem "font-awesome-rails"
-gem 'markitdown'
+
+gem 'interactor'
 
 
 gem 'twitter'

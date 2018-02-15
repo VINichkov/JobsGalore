@@ -11,6 +11,15 @@
     = f.label :title
     br
     = f.text_field :title, class:"form-control"
+  - if current_client.admin?
+    .form-group
+      = f.label :client
+      br
+      = f.text_field :client_id, class: "form-control"
+    .form-group
+      = f.label :company
+      br
+      = f.text_field :company_id, class: "form-control"
   .form-group
     = f.label :location
     br
@@ -18,40 +27,46 @@
                       className:"form-control dropdown-toggle",
                       name:"job[location",
                       id:"job_location_id",
-                      defaultName: @job.location ? "#{@job.location.suburb}, #{@job.location.state}" : "#{current_client.location.suburb}, #{current_client.location.state}",
+                      defaultName: @job.location ? @job.location.name : current_client.location.name,
                       defaultId: @job.location ? @job.location.id : current_client.location.id)
   .form-group
     = f.label :industry, "Industry"
     br
     = react_component("CategoryInsert",
             className: "selectpicker form-control",
-            name: "job[ind]",
+            name: "job[industry_id]",
             multiple: false,
             dataStyle: "btn-default",
             values: Industry.all.to_json,
-            defaultValues:@job.industry.to_json)
+            defaultValues:@job.industry ? @job.industry.to_json : Industry.select(:id,:name).find_by_id(999).to_json)
   .row
-    br
     .col-xs-12.col-sm-6.col-md-6
       .form-group
         = f.label :min, "Salary min"
         br
-        = f.text_field :salarymin, class:"form-control"
+        = salary f, :salarymin, class:"form-control", placeholder: "10 000"
     .col-xs-12.col-sm-6.col-md-6
       .form-group
         = f.label :max, "Salary max"
         br
-        = f.text_field :salarymax, class:"form-control"
+        = salary f, :salarymax, class:"form-control", placeholder: "100 000"
+  - if current_client.admin?
+    .form-group
+      = f.label :close
+      br
+      .input-group.date.datepicker_reg
+        input.form-control[type="text" name="job[close]" value =(@job.close ? @job.close.strftime("%d %B %Y").to_s : (Date.today+1.month).strftime("%d %B %Y").to_s) autocomplete="off"]
+        span.input-group-addon
+          i.glyphicon.glyphicon-calendar
   .form-group
     = f.label :description
-    br
     = f.text_area :description,  class:"markdown none"
     div.editable
       = render_markdown(@job.description)
   hr.colorgraph
   .row
-    .col-xs-6.col-md-6.col-sm-6.col-lg-6
+    .col-xs-6.col-lg-6
       = f.submit class: "btn btn-primary btn-block "
-    .col-xs-6.col-md-6.col-sm-6.col-lg-6
+    .col-xs-6.col-lg-6
       = link_to 'Back', :back, class:"btn btn-success btn-block "
   br

@@ -1,24 +1,36 @@
 class JobDecorator < ApplicationDecorator
   delegate_all
+  decorates_association :client
+  decorates_association :company
 
-  attr_reader :salary
-
-  def initialize(object, options = {})
-    super
-    @salary = calc_salary(object)
+  def keywords
+    @keywords ? @keywords : @keywords = "Australia, Job, Jobs, Galore, Jobsgalore,#{object.title}, Job in #{object.location.name}, Company is #{object.company.name}, #{markdown_to_keywords(object.description)}"
   end
 
-  private
+  def logo_url
+    @logo_url? @logo_url : @logo_url = object.company.decorate.logo_url
+  end
 
-  def calc_salary(arg)
-    if arg.salarymax.blank? and not arg.salarymin.blank? then
-      arg.salarymin.to_i.to_s
-    elsif not (arg.salarymax.blank? and arg.salarymin.blank? )
-      arg.salarymin.to_i.to_s+" - "+ arg.salarymax.to_i.to_s
-    elsif not arg.salarymax.blank? and arg.salarymin.blank?
-      arg.salarymax.to_i.to_s
-    else
-      nil
+  def client_photo
+    @client_photo? @client_photo : @client_photo = object.client.decorate.photo_url
+  end
+
+  def extras(arg)
+    case arg
+      when '1'
+        self.turn :urgent
+      when '2'
+        self.turn :top
+      when '3'
+        self.turn :highlight
+      else
+       return nil
     end
+      true
   end
+
+  def turn(extra)
+    eval ("object.#{extra} ? object.#{extra}_off : object.#{extra}_on")
+  end
+
 end

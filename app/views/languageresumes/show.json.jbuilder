@@ -1,1 +1,0 @@
-json.partial! "languageresumes/languageresume", languageresume: @languageresume

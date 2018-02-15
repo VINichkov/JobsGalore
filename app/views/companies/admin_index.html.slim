@@ -41,4 +41,4 @@
           td = link_to 'Destroy', admin_company_destroy_path(company), data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-danger btn-block "
 
   br
-  = will_paginate @companies, {renderer: BootstrapPagination::Rails, inner_window:1, outer_window:1}
+  = will_paginate_mini @companies

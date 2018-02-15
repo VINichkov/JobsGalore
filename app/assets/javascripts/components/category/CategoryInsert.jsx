@@ -6,22 +6,12 @@ class CategoryInsert extends React.Component{
 
     render() {
         if (this.state.options == null) {
-            let def = true
+            let def = true;
             let options = JSON.parse(this.props.values).map(function (category) {
-                if ((JSON.parse(this.props.defaultValues)!="") && (JSON.parse(this.props.defaultValues)!=null)) {
-                    if (JSON.parse(this.props.defaultValues)[0].id ==category.id){
-                        return (<option key={category.id} selected value={category.id}>{category.name}</option>);
-                    }else {
-                        return (<option key={category.id} value={category.id}>{category.name}</option>);
-                    }
-                } else {
-                    if (def) {
-                        def = false;
-                        return (<option key={category.id} selected value={category.id}>{category.name}</option>);
-                    }else {
-                        return (<option key={category.id} value={category.id}>{category.name}</option>);
-                    }
-
+                if (JSON.parse(this.props.defaultValues).id ==category.id){
+                    return (<option key={category.id} selected value={category.id}>{category.name}</option>);
+                }else {
+                    return (<option key={category.id} value={category.id}>{category.name}</option>);
                 }
             }.bind(this));
             this.setState({options:options});

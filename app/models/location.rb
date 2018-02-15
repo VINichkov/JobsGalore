@@ -7,6 +7,12 @@ class Location < ApplicationRecord
   has_many :experience, dependent: :destroy
   has_many :resume, dependent: :destroy
   has_many :gateway, dependent: :destroy
+
+
+  def name
+    @name ? @name : @name = "#{self.suburb}, #{self.state}".freeze
+  end
+
   protected
 
   scope :search, ->(query) {where("locations.fts @@ to_tsquery(:query)",{query:query})}

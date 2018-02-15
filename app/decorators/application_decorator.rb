@@ -1,24 +1,44 @@
 class ApplicationDecorator < Draper::Decorator
-  # Define methods for all decorated objects.
-  # Helpers are accessed through `helpers` (aka `h`). For example:
-  #
-  #   def percent_amount
-  #     h.number_to_percentage object.amount, precision: 2
-  #   end
+
+  def self.collection_decorator_class
+    PaginatingDecorator
+  end
+
+  def description_meta
+    @description_meta ? @description_meta : @description_meta = markdown_to_text(object.description, 300)
+  end
+
+  def description_text
+    @description_text ? @description_text : @description_text = markdown_to_text(object.description, 300)
+  end
+
+  def description_html
+    @description_html ? @description_html : @description_html = RDiscount.new(object.description).to_html
+  end
+
+  def posted_date
+    @date ? @date : @date = object.created_at.strftime("%d %B %Y")
+  end
+
   private
   def markdown_to_keywords (arg)
-    keys = markdown_to_text(arg, 400).split(' ').map do |key|
-      key.delete!(',')
-      key = nil unless key&.length>3
-      key
+    if arg
+      keys = markdown_to_text(arg, 400).split(' ').map do |key|
+        key.delete!(',')
+        key = nil unless key&.length>3
+        key
+      end
+      keys.compact.uniq.join(', ')
     end
-    keys.compact.uniq.join(', ')
   end
 
   def markdown_to_text (arg, truncate=nil)
-    text = Nokogiri::HTML(RDiscount.new(arg).to_html).text.squish
-    if truncate
-      text= text.truncate(truncate, separator: ' ',omission: '')
+    if arg
+      text = Nokogiri::HTML(RDiscount.new(arg).to_html).text.squish
+      if truncate
+        text= text.truncate(truncate, separator: ' ',omission: '')
+      end
     end
   end
+
 end

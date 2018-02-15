@@ -26,7 +26,7 @@ module CompanyHelper
            end
     html +=content_tag(:p) do
       p = content_tag :strong, "Location: "
-      p += object.location_full.html_safe
+      p += object.location.name.html_safe
     end
     html +=if object.size
              content_tag(:p) do
@@ -39,15 +39,12 @@ module CompanyHelper
                content_tag :strong, "Recruitment agency "
              end
            end
-    html +=if object.industries_count>0
+    html +=if object.industry
              ind = content_tag(:p) do
                   content_tag :strong, "Indusrty: "
              end
              ind +=content_tag( :ul) do
-               object.industry.reduce(" "){ |li,industry|
-                  li += content_tag(:li ," #{industry.name}")
-               }.html_safe
-
+                  content_tag(:li ," #{object.industry.name}")
              end
            end
   end
