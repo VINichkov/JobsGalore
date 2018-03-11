@@ -8,9 +8,9 @@
           li = message
 
   .form-group
-    = f.label :desiredjobtitle, "Desired position"
+    = f.label :title, "Desired position"
     br
-    = f.text_field :desiredjobtitle, class:"form-control"
+    = f.text_field :title, class:"form-control"
   .row
     .col-md-6.col-lx-6.col-sm-12.col-xs-12
       .form-group
@@ -39,11 +39,11 @@
                       defaultValues:@resume.industry.to_json)
   .col-xs-12.col-sm-12.col-md-12
     .form-group
-      = f.label :abouteme
+      = f.label :description
       br
-      = f.text_area :abouteme, class: "markdown none"
+      = f.text_area :description, class: "markdown none"
       div.editable
-        = render_markdown(@resume.abouteme)
+        = render_markdown(@resume.description)
   hr.colorgraph
     .row
       .col-xs-6.col-md-6.col-sm-6.col-lg-6

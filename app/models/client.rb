@@ -10,12 +10,13 @@ class Client < ApplicationRecord
   end
 
   belongs_to :location
+  belongs_to :company
   has_many :gateway, dependent: :destroy
   has_many :resume, dependent: :destroy
   has_many :job, dependent: :destroy
   has_many :respons, class_name:"Responsible", dependent: :destroy
   has_many :responsible
-  has_many :company, through: :responsible, dependent: :destroy
+
 
   dragonfly_accessor :photo do
     after_assign do |attachment|
@@ -43,10 +44,23 @@ class Client < ApplicationRecord
     (character=='employer')or(character=='employee') ? true : false
   end
 
+  def employer?
+    character=='employer' ? true : false
+  end
+
+  def change_type
+    self.employer? ? self.character='employee' : self.character='employer'
+    self.save
+  end
+
   def rename()
     return unless self.photo.present?
-    path_obj = Pathname(self.photo.name)
-    self.photo.name = path_obj.sub_ext('').to_s.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') + path_obj.extname
+    begin
+      path_obj = Pathname(self.photo.name)
+      self.photo.name = path_obj.sub_ext('').to_s.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') + path_obj.extname
+    rescue
+      logger.fatal "Error: #{$!}"
+    end
   end
 
   def full_name

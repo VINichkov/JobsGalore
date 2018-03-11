@@ -1,1 +1,1 @@
-json.array! @search, partial: 'locations/search', as: :search
+json.array! @search, :id, :name

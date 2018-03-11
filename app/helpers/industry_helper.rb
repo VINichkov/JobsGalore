@@ -17,4 +17,5 @@ module IndustryHelper
       end
     end
   end
+
 end

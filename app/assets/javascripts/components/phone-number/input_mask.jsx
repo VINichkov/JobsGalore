@@ -1,4 +1,4 @@
-class InputPhoneNumber extends React.Component{
+class InputMask extends React.Component{
     constructor(props) {
         super(props);
         var a = function (dataformat, value) {
@@ -51,7 +51,7 @@ class InputPhoneNumber extends React.Component{
 
     render(){
        return(
-           <input id={this.state.id} onInput={this.handleInput} className={this.state.class_name} name={this.state.name} autofocus="autofocus" dataformat ={this.state.dataformat} value={this.state.value} placeholder={this.state.placeholder} defaultValue={this.props.defaultValue}></input>
+           <input style={this.state.style} autoComplete={this.state.autocomplete} id={this.state.id} onInput={this.handleInput} className={this.state.class_name} name={this.state.name} autoFocus="autofocus"  value={this.state.value} placeholder={this.state.placeholder} defaultValue={this.props.defaultValue}></input>
        );
     }
 }

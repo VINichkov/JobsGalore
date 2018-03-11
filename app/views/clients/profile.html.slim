@@ -1,70 +1,29 @@
 .container
-  .row.well
-    .col-sm-6
-      = image_tag(@client.photo_url, class: 'img-thumbnail', size: "200x200", alt: @client.full_name)
-    .col-sm-6
-      h3 #{@client.full_name}
-      h4 Email: #{@client.email}
-      h4 Phone: #{@client.phone}
-      h4 #{@client.location.name}
-  -if @client.character =='employer' then
-    .row
-      .col-sm-6.col-xs-12
-      .col-sm-6.col-xs-12
-        = link_to "Post a job", new_job_path, class: "btn btn-primary btn-block"
+  - if @client.resp? then
+    h1 My Jobs
+    .col-lg-3.col-md-3.hidden-sm.hidden-xs
+      .row.well.text-center
+        = image_bg(@client.photo_url,  "200px", "200px", "200px")
         p
-    .row
-      -@client.company&.all&.each do |company|
-        h3
-        - Client.joins('LEFT JOIN responsibles On responsibles.client_id = clients.id').where("responsibles.company_id = ?",company.id).all.each do |client|
-          - if client.job.count > 0
-            h3 #{company.name}  ---  #{client.firstname} #{client.lastname}
-          = list_job(client.job.all.includes(:location).order(updated_at:  :desc).each)
-            -if not(job.highlight.nil?) and job.urgent.nil?
-              .panel-body.well.highlight
-                =render 'clients/job', job:job
-            -elsif job.highlight.nil? and not(job.urgent.nil?)
-              .panel-body.well.urgent
-                = render 'clients/job', job: job
-            - elsif not(job.highlight.nil?) and not (job.urgent.nil?)
-              .panel-body.well.highlight.urgent
-                = render 'clients/job', job: job
-            - elsif job.highlight.nil? and job.urgent.nil?
-              .panel-body.well
-                = render 'clients/job', job: job
-  - if @client.character =='employee' then
-    .row
-      .col-sm-6.col-xs-12
-        h2 Your jobs
-      .col-sm-6.col-xs-12
-        = link_to "Post a job", new_job_path, class: "btn btn-primary btn-block"
+        = link_to "Post new job", new_job_path, class: "btn btn-primary btn-block btn_margin"
+    .col-sm-9.col-md-9.col-sm-12.col-xs-12
+      .row
+        .col-sm-4.col-xs-12.hidden-lg.hidden-md
+          = link_to "Post new job", new_job_path, class: "btn btn-primary btn-block btn_margin"
+      -if @client.employer?
+        = render partial: 'inc/job', collection: @client.company&.job
+      -else
+        = render partial: 'inc/job', collection: @client.job
+
+  - else
+    h1 My Resumes
+    .col-lg-3.col-md-3.hidden-sm.hidden-xs
+      .row.well.text-center
+        = image_bg(@client.photo_url, "200px", "200px", "200px")
         p
-    .row
-      =list_job(@client.job)
-  -elsif @client.character =='aplicant'
-    .row
-      .col-sm-6.col-xs-12
-        h3 Your resumes
-      .col-sm-6.col-xs-12
-        = link_to "Post a resume", new_resume_path, class: "btn btn-primary btn-block"
-        p
-    .row
-      - if @client.resume.count>0
-        -@client.resume.all.order(updated_at:  :desc).each do |resume|
-          - if not (resume.highlight.nil?) and resume.urgent.nil?
-            .panel-body.well.highlight
-              = render 'clients/resume', resume: resume
-          - elsif resume.highlight.nil? and not (resume.urgent.nil?)
-            .panel-body.well.urgent
-              = render 'clients/resume', resume: resume
-          - elsif not (resume.highlight.nil?) and not (resume.urgent.nil?)
-            .panel-body.well.highlight.urgent
-              = render 'clients/resume', resume: resume
-          - elsif resume.highlight.nil? and resume.urgent.nil?
-            .panel-body.well
-              = render 'clients/resume', resume: resume
-
-
-
-      - else
-        h3 You don't have resumes
+        = link_to "Post new resume", new_resume_path, class: "btn btn-primary btn-block btn_margin"
+    .col-sm-9.col-md-9.col-sm-12.col-xs-12
+      .row
+        .col-sm-4.col-xs-12.hidden-lg.hidden-md
+          = link_to "Post new resume", new_resume_path, class: "btn btn-primary btn-block btn_margin"
+      = render partial: 'inc/resume', collection: @client.resume

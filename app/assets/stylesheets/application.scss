@@ -19,73 +19,11 @@
 @import "fileinput";
 @import "social-share-button";
 @import 'bootstrap-datepicker';
-@import "bootstrap-select";
 @import "jasny-bootstrap";
 @import "print";
 @import "medium-editor.min";
 @import "bootstrap.min";
 
-
-
-.affix {
-  top: 0;
-  width: 100%;
-}
-
-.affix + .container{
-  padding-top: 75px;
-}
-
-.bloc_white {
-  height: 0px;
-  display: inline;
-}
-.affix_white {
-  height: 130px;
-  display: inline;
-}
-
-
-.black_text {
-  float: right;
-  text-align: right;
-  font-weight:700;
-  color: black;
-  text-shadow:  0 1px 0 #ccc,
-                0 2px 0 #c9c9c9,
-                0 3px 0 #bbb,
-                0 4px 0 #b9b9b9,
-                0 5px 0 #aaa,
-                0 6px 1px rgba(0,0,0,.1),
-                0 0 5px rgba(0,0,0,.1),
-                0 1px 3px rgba(0,0,0,.3),
-                0 3px 5px rgba(0,0,0,.2),
-                0 5px 10px rgba(0,0,0,.25),
-                0 10px 10px rgba(0,0,0,.2),
-                0 20px 20px rgba(0,0,0,.15);
-
-}
-
-.white_text {
-  padding-left: 3px;
-  padding-right: 3px;
-  vertical-align: middle;
-  font-weight:700;
-  font-size: 24px;
-  color: white;
-  background-color: #d80000;
-  border-radius: 40px;
-  box-shadow:  0 1px 0 #fcc,
-                0 2px 0 #f9c9c9,
-                0 3px 0 #bbb,
-                0 6px 1px rgba(0,0,0,.1),
-                0 0 5px rgba(0,0,0,.1),
-                0 1px 3px rgba(0,0,0,.3),
-                0 3px 5px rgba(0,0,0,.2),
-                0 5px 10px rgba(0,0,0,.25),
-                0 10px 10px rgba(0,0,0,.2),
-                0 20px 20px rgba(0,0,0,.15);
-}
 .colorgraph {
   height: 5px;
   border-top: 0;
@@ -135,35 +73,14 @@ $size: 32px;
   margin-left: 10px;
 }
 
-
-.clear_menu{
-  height: 51px;
-  margin-bottom: 20px
-}
-.clear_menu-sm{
-  height: 150px;
-  margin-bottom: 20px
+.border_top{
+  border-top: 1px solid #e3e3e9;
 }
 
-li.elem_header{
-  margin-top: 14px;
-}
-
-.panel-body.highlight{
+.highlight{
   background-color: #ffffcc;
-  border-left: 6px solid #ffeb3b;
 }
-.panel-body.urgent{
-  background-image: image-url("urgent.svg");
-  background-repeat: no-repeat;
-  background-position: bottom;
-  background-size: contain;
-}
-.well.highlight{
-  background-color: #ffffcc;
-  border-left: 6px solid #ffeb3b;
-}
-.well.urgent{
+.urgent{
   background-image: image-url("urgent.svg");
   background-repeat: no-repeat;
   background-position: bottom;
@@ -175,19 +92,53 @@ li.elem_header{
     display: none;
   }
 }
-.none{
+
+.none {
   visibility: hidden;
   height: 0px;
   width: 0px;
 }
-.editable{
+
+.editable {
   border: 1px groove silver;
   border-radius: 5px;
-  min-height:300px;
+  min-height: 300px;
   color: #4c4c4c;
 }
+
 .editable:focus {
   border-color: rgba(33, 71, 239, 0.6);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(40, 181, 239, 0.6);
   outline: 0 none;
+}
+
+.btn_margin {
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.badge {
+  padding: 1px 9px 2px;
+  font-size: 14.025px;
+  font-weight: bold;
+  white-space: nowrap;
+  color: #ffffff;
+  background-color: #999999;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.badge:hover {
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.badge-error {
+  background-color: #b94a48;
+}
+
+.badge-error:hover {
+  background-color: #953b39;
 }

@@ -8,11 +8,11 @@ class PaymentsController < ApplicationController
   def bill
     @param = payment_params
     begin
-      if @param[:kind] == '2'
-        @ad = Job.find_by_id(@param[:id])
+      if @param[:type] == '2'
+        @ad = Job.find_by_id(@param[:id]).decorate
         return_url = job_url(@param[:id])
       else
-        @ad = Resume.find_by_id(@param[:id])
+        @ad = Resume.find_by_id(@param[:id]).decorate
         return_url = resume_url(@param[:id])
       end
       case @param[:option]
@@ -103,7 +103,7 @@ class PaymentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def payment_params
-    params.require(:bill).permit(:id, :kind, :option).to_h
+    params.require(:bill).permit(:id, :type, :option).to_h
   end
 
 

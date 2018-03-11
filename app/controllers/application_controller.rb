@@ -15,12 +15,12 @@ class ApplicationController < ActionController::Base
 
   # In ApplicationController
   def current_ability
-    @current_ability ||=Ability.new(current_client, params)
+    @current_ability ||=Ability.new(current_client)
   end
 
   def admin!
     authenticate_client!
-    if current_client.email == PropertsHelper::ADMIN
+    if current_client.admin?
       true
     else
       render_404
@@ -31,8 +31,17 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError.new('Not Found')
   end
 
+
   Draper.configure do |config|
     config.default_controller = ApplicationController
   end
+
+  protected
+
+  def current_client
+    super&.decorate
+  end
+
+
 
 end

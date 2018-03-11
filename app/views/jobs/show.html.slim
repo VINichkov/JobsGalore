@@ -3,7 +3,7 @@
                 title: @job.title,
                 keywords: @job.keywords,
                 url: job_url(@job),
-                image: @job.logo_url,
+                image: @job.company.logo_url,
                 published: @job.updated_at})
   .container.hidden-xs.hidden-sm
     .col-lg-8.col-md-8
@@ -11,30 +11,18 @@
         h1.text-center
           = @job.title_capitalize
         p
-          = render_markdown(@job.description)
+          = @job.render_description
     .col-lg-4.col-md-4
       .panel.panel-default
         .panel-body
-          =company(@job)
+          =company(@job.company)
           p
         .well
-          = render 'jobs/show/summary', object: @job
-          = render 'jobs/show/btn_extras', object: @job, cl:"dropdown"
-          p
-          - if can? :update, @job
-            = link_to "Edit", edit_job_path(@job), class: "btn btn-primary btn-block"
-            p
-          - if can? :delete, @job
-            = link_to "Delete", @job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
-            p
-          button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
-            |Contact
-          p
-          button.btn.btn-success.btn-block[onclick="history.back()"]
-            |Back
-          p
-          .text-center
-            =social_share_button_tag  @job.title, url: job_url(@job), title:@job.title
+          = render 'inc/summary', object: @job
+          .btn_margin
+            = render 'inc/btn', object: @job, option:{cl:"dropdown", class:'job', type:2}
+            .text-center
+              =social_share_button_tag  @job.title, url: job_url(@job), title:@job.title
   .col-xs-12.hidden-md.hidden-lg
     .panel-body
       .col-sm-12.hidden-md.hidden-lg.hidden-xs
@@ -42,7 +30,7 @@
           = @job.title_capitalize
       .row
         .col-sm-6.hidden-xs
-          =company(@job)
+          =company(@job.company)
           p
           .text-center
             = social_share_button_tag @job.title, url: job_url(@job), title:@job.title
@@ -50,31 +38,17 @@
           .hidden-md.hidden-lg.hidden-sm
             h3.text-center
               = @job.title_capitalize
-          = render 'jobs/show/summary', object: @job
+          = render 'inc/summary', object: @job
           p
-          .row
-            .btn-group.btn-group-justified
-              = render 'jobs/show/btn_extras', object: @job, cl:"btn-group"
-              - if can? :update, @job
-                .btn-group
-                  = link_to "Edit", edit_job_path(@job), class: "btn btn-primary btn-block"
-              - if can? :delete, @job
-                .btn-group
-                  = link_to "Delete", @job, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"
-              - else
-                .btn-group
-                  button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
-                    |Contact
-              .btn-group
-                button.btn.btn-success.btn-block[onclick="history.back()"]
-                  |Back
+          .btn-group.btn-group-justified
+            = render 'inc/btn', object: @job, option:{cl:"dropdown", class:'job', type:2}
       .row
         .col-sm-12
           p
-            = render_markdown(@job.description)
+            = @job.render_description
       .hidden-md.hidden-lg.hidden-sm
         p
           .text-center
             = social_share_button_tag @job.title, url: job_url(@job), title:@job.title
 
-  =render 'inc/contact', object: @job
+  =render 'inc/contact', object: @job.client, title: "#{@job.title} at #{PropertsHelper::COMPANY}.eu"

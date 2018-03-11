@@ -2,71 +2,65 @@
 class Autocomplete extends React.Component{
     constructor(props) {
         super(props);
-        let text = "";
-        let possible = "abcdefghijklmnopqrstuvwxyz";
-
-        for( var i=0; i < 5; i++ )
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-
         this.state = {  display:'none',
                         autocomplete: null,
+                        input_id:null,
                         locations: null,
-                        id:text};
+                        input:this.props.not_id ? false : true };
         this.handleInput = this.handleInput.bind(this);
-        this.handleBlur = this.handleBlur.bind(this);
-        this.handleClickItem =  this.handleClickItem.bind(this);
+    }
+    componentDidMount(){
+        this.setState({autocomplete: document.querySelector('#' + this.props.id)});
+        if (this.state.input) {
+            this.setState({input_id: document.querySelector('#input_get' + this.props.id)});
+        }
     }
     handleInput(){
-        if (this.state.autocomplete == null){
-            this.setState({autocomplete: document.querySelector('#' + this.state.id)});
-            document.querySelector('#input_get'+this.state.id).value = '';
-        }
-        if (this.state.autocomplete.value.length>0) {
-            if (this.state.display == 'none') {
-                this.setState({display: "block"});
+        let not_found = true;
+        if (this.state.input && this.state.locations !==null){
+            for(var i=0; i< this.state.locations.length; i++){
+                if (this.state.locations[i].name ==this.state.autocomplete.value){
+                    this.state.input_id.value =(this.state.locations[i].id);
+                    not_found = false;
+                    break;
+                }
             }
-            this.handleSearchLocations("/search_locations/"+this.state.autocomplete.value+".json");
-            document.querySelector('#input_get'+this.state.id).value = '';
-        } else {
-            this.setState({display: "none"});
         }
-    }
-    handleBlur(e){
-        if (this.state.display == 'block') {
-            this.setState({display: "none"});
+        if (not_found && this.state.autocomplete.value.length>0) {
+            this.handleSearchLocations(this.props.route+this.state.autocomplete.value+".json");
         }
+
     }
+
     handleSearchLocations(url){
         $.ajax({url:url,
             success: function (data) {
+                console.log(data);
                 this.setState({locations:data});
             }.bind(this)});
     }
-    handleClickItem(e) {
-        if (e.target.id.indexOf('location_li'+this.state.id) !== -1) {
-            document.querySelector('#input_get'+this.state.id).value = e.target.dataset.id;
-            this.state.autocomplete.value = e.target.text;
-        }
-    }
+
     render(){
-        var ulStyle={display:this.state.display};
-        var ilStyle={display:'none'};
+        const ilStyle={display:'none'};
         if ( this.state.locations !== null ) {
             var locations = this.state.locations.map(function(location) {
-                return(<li key={location.id} >
-                            <a id={'location_li'+this.state.id+location.id} data-id = {location.id} href="#" onClick={this.handleClickItem}>
-                                {location.suburb}, {location.state}
-                            </a>
-                        </li>);
+                return(
+                            <option key={'location_li'+this.state.id+location.id} data-id = {location.id}>
+                                {location.name}
+                            </option>);
             }.bind(this));
         }
+        let input_id = null;
+        if (this.state.input) {
+            input_id = <input list={this.props.name} id={"input_get"+this.props.id} name={this.props.name + "_id]"} defaultValue = {this.props.defaultId} className={this.props.className} style = {ilStyle}/>;
+        }
         return(
-            <div className="dropdown" onMouseDown={this.handleClickItem}>
-                <input name={this.props.name + "_name]"} autoComplete = "off" className={this.props.className} onInput={this.handleInput} onBlur={this.handleBlur} defaultValue = {this.props.defaultName} placeholder={this.props.place_holder} type="text"  id={this.state.id} style={this.props.style}></input>
-                <input id={"input_get"+this.state.id} name={this.props.name + "_id]"} defaultValue = {this.props.defaultId} style={ilStyle}/>
-                <ul className="dropdown-menu" style={ulStyle}>
+            <div>
+                <input list={this.props.name} name={this.state.input ? this.props.name + "_name]" : this.props.name} autoComplete = "off" className={this.props.className} onInput={this.handleInput}  defaultValue = {this.props.defaultName} placeholder={this.props.place_holder} type="text"  id={this.props.id} style={this.props.style}></input>
+                {input_id}
+                <datalist id={this.props.name}>
                     {locations}
-                </ul>
+                </datalist>
             </div>
         );
     }

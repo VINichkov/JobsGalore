@@ -10,17 +10,17 @@
         .container-fluid
           .row
             .col-lg-3.col-md-3
-              = image_tag(object.client_photo, size: "60x60", class: 'img-thumbnail center-block', alt:object.client.full_name)
+              = image_bg(object.photo_url, "60px", "60px", "60px")
             .col-lg-9.col-md-9
-              = object.client.full_name
+              = object.full_name
               br
               |Email:
               | &nbsp;
-              a[href ="mailto:#{ object.client.email}?subject=#{object.title} at #{PropertsHelper::COMPANY}.eu" rel="nofollow" ] = object.client.email
+              a[href ="mailto:#{ object.email}?subject=#{title}" ] = object.email
               br
               |Phone:
               | &nbsp;
-              a[href ="tel:#{ object.client.phone}" rel="nofollow"] #{ object.client.phone}
+              a[href ="tel:#{ object.phone}" rel="nofollow"] #{ object.phone}
       .modal-footer
         button[type="button" class="btn btn-default" data-dismiss="modal"]
           |Close

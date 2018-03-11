@@ -13,7 +13,11 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   def description_html
-    @description_html ? @description_html : @description_html = RDiscount.new(object.description).to_html
+    (@description_html ? @description_html : @description_html = RDiscount.new(object.description).to_html) if object.description
+  end
+
+  def render_description
+    (@render_description ? @render_description : @render_description = self.description_html.gsub('<img',"<img class=\"img-thumbnail center-block\"").gsub('<a',"<a rel=\"nofollow\"").html_safe) if self.description_html
   end
 
   def posted_date

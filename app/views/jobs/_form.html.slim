@@ -27,18 +27,19 @@
                       className:"form-control dropdown-toggle",
                       name:"job[location",
                       id:"job_location_id",
+                      route:'/search_locations/',
                       defaultName: @job.location ? @job.location.name : current_client.location.name,
                       defaultId: @job.location ? @job.location.id : current_client.location.id)
   .form-group
     = f.label :industry, "Industry"
     br
-    = react_component("CategoryInsert",
-            className: "selectpicker form-control",
+    = react_component("Category",
+            className: "form-control",
             name: "job[industry_id]",
             multiple: false,
             dataStyle: "btn-default",
-            values: Industry.all.to_json,
-            defaultValues:@job.industry ? @job.industry.to_json : Industry.select(:id,:name).find_by_id(999).to_json)
+            categories: Industry.all,
+            defaultValue:@job.industry)
   .row
     .col-xs-12.col-sm-6.col-md-6
       .form-group
@@ -62,7 +63,7 @@
     = f.label :description
     = f.text_area :description,  class:"markdown none"
     div.editable
-      = render_markdown(@job.description)
+      = @job.render_description
   hr.colorgraph
   .row
     .col-xs-6.col-lg-6

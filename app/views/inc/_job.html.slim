@@ -1,26 +1,31 @@
-.col-lg-8.col-md-8.hidden-xs
-  .panel.panel-default
-    div[class="panel-body #{class_extras(job)}"]
-      .col-lg-10.col-md-10.col-sm-10
-        h3
-          = link_to job.title_capitalize, job, class: 'text-warning'
-        - if job.salary.blank? then
-          p = job.salary
-        = job.description_text + "..."
-        p
+.panel.panel-default.hidden-xs
+  div[class="panel-body #{class_extras(job)}"]
+    .col-lg-10.col-md-10.col-sm-10
+      h3
+        = link_to job.title_capitalize, job, class: 'text-warning'
+      - if job.salary.blank? then
+        p = job.salary
+      = job.description_text + "..."
+      p
+      span
         = link_to job.company.name, job.company, class: 'text-success'
-        p = job.location.name
-      .col-lg-2.col-md-2.col-sm-2
+        | &nbsp; - &nbsp;
+      span.text-warning
+        = job.location.name
+    .col-lg-2.col-md-2.col-sm-2
+      - if current_client && ((current_client.employer? && job.company ==  current_client.company) || job.client == current_client || current_client.admin?)
+        = render 'inc/btn', object: job, option: {cl:"dropdown", class:'job', type:2}
+      - else
         .row
           .row.text-center
             = link_to(job.company.name.truncate(50, separator: " "), job.company)
-          .row
+          .row.text-center
             = link_to(image_bg(job.company.logo_url, "130px", "130px", "100px"), job.company)
           .row.text-center
             = "Posted: " +job.posted_date
-.col-lg-4.col-md-4.hidden-xs
-.row.hidden-lg.hidden-md.hidden-sm[class="panel-body #{class_extras(job)}"]
-  hr
+.row.border_top.hidden-lg.hidden-md.hidden-sm[class=" #{class_extras(job)}"]
+  - if current_client && ((current_client.employer? && job.company ==  current_client.company) || job.client == current_client || current_client.admin?)
+    = render 'inc/btn', object: job, option: {cl:"btn-group", min:true, class:'job', type:2}
   h3
     = link_to job.title_capitalize, job
   span

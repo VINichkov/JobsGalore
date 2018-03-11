@@ -45,7 +45,7 @@ class ResumesController < ApplicationController
     respond_to do |format|
       if @resume.save
         if @resume.client.send_email
-          ResumesMailer.add_resume({mail:@resume.client.email, firstname:@resume.client.firstname, id:@resume.id, title:@resume.desiredjobtitle}).deliver_later
+          ResumesMailer.add_resume({mail:@resume.client.email, firstname:@resume.client.firstname, id:@resume.id, title:@resume.title}).deliver_later
         end
         format.html { redirect_to client_root_path, notice: 'Resume was successfully created.' }
         format.json { render :show, status: :created, location: @resume }
@@ -103,7 +103,7 @@ class ResumesController < ApplicationController
   end
 
   def admin_index
-    @resumes = Resume.all.includes(:location,:client).order(:desiredjobtitle).paginate(page: params[:page], per_page:21)
+    @resumes = Resume.all.includes(:location,:client).order(:title).paginate(page: params[:page], per_page:21)
   end
 
   # GET /resumes/1
@@ -196,39 +196,25 @@ class ResumesController < ApplicationController
   end
 
   def admin_extras
-    param = params.require(:resumes).permit(:id, :option)
-    resume = Resume.find_by_id(param[:id])
-    case param[:option]
-      when '1'
-        if not resume.urgent.nil?
-          resume.urgent_off
-        else
-          resume.urgent_on
-        end
-      when '2'
-        if not resume.top.nil?
-          resume.top_off
-        else
-          resume.top_on
-        end
-      when '3'
-        if not resume.highlight.nil?
-          resume.highlight_off
-        else
-          resume.highlight_on
-        end
-    end
+    param = job_params
+    @job = Job.find_by_id(param[:id]).decorate
     respond_to do |format|
-      format.html { redirect_to admin_resumes_show_path(resume),  notice: 'Resume was successfully destroyed.' }
+      if @job.extras(param[:option])
+        format.html { redirect_to job_path(@job),  notice: 'Done' }
+      else
+        format.html { redirect_to job_path(@job),  notice: 'Error!!!.' }
+      end
     end
   end
+
   private
 
   def aplicant!
-    if current_client.character != 'aplicant'
+    if current_client.resp?
       redirect_to root_path, alert: "Please register as an applicant"
     end
   end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_resume
       @resume = Resume.find(params[:id]).decorate
@@ -245,21 +231,7 @@ class ResumesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def resume_params
-      params.require(:resume).permit(:desiredjobtitle,
-                                     :salary,
-                                     :permanent,
-                                     :casual,
-                                     :temp,
-                                     :page,
-                                     :contract,
-                                     :fulltime,
-                                     :parttime,
-                                     :flextime,
-                                     :remote,
-                                     :abouteme,
-                                     :client_id,
-                                     :ind,
-                                     :location_id,
-                                     :location_name)
+      params.require(:resume).permit(:id, :title, :salary, :description , :client_id,:industry_id,
+                                     :location_id, :location_name, :page, :option)
          end
 end

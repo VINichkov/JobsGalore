@@ -3,38 +3,25 @@
     h1 Your company
     .well
       .row
-        .col-md-4.col-lg-4.col-sm-6.hidden-xs
-          - if @company.logo.nil?
-            = image_tag(image_path("company_profile.jpg"), size: "300x300", class: 'img-thumbnail', alt: @company.name)
-          - else
-            = image_tag(Dragonfly.app.remote_url_for(@company.logo_uid), class: 'img-thumbnail', size:"300x300", alt: @company.name)
-        .col-xs-12.hidden-sm.hidden-md.hidden-lg.text-center
-          - if @company.logo.nil?
-            = image_tag(image_path("company_profile.jpg"), size: "250x250", class: 'img-thumbnail', alt: @company.name)
-          - else
-            = image_tag(Dragonfly.app.remote_url_for(@company.logo_uid), class: 'img-thumbnail', size: "250x250", alt: @company.name)
+        .col-md-4.col-lg-4.col-sm-6.col-xs-12.text-center
+          = image_tag(@company.logo_url, size: "300x300", class: 'img-thumbnail', alt: @company.name)
+          = link_to "Update logo", edit_logo_path, class:"btn btn-success btn-block btn_margin"
+          = link_to "Edit information", edit_company_path(@company), class:"btn btn-primary btn-block btn_margin"
         .col-md-8.col-lg-8
-          h3 Name: #{@company.name}
-          h3 Size: #{@company.size ? @company.size.size : "empty"}
+          h4 Name: #{@company.name}
+          h4 Size: #{@company.size ? @company.size.size : "empty"}
           -if @company.site
-            h3
-              =link_to @company.site, @company.site
+            h4
+              |Website:
+              =link_to @company.site, @company.site, rel: "nofollow"
           -else
-            h3 Site: empty
-          h3 #{@company.location.suburb}, #{@company.location.state}
+            h4 Website: empty
+          h4 #{@company.location.name}
           - if @company.recrutmentagency
-            h3 Recruitment agency
+            h4 Recruitment agency
       .row
         .col-md-12.col-lg-12
           h3.text-center
             |Description
           p
-            =  render_markdown(@company.description)
-      br
-      .row
-        .col-md-6.col-lg-6.col-sm-6.col-xs-12
-          = link_to "Update logo", edit_logo_path, class:"btn btn-success btn-block"
-          p
-        .col-md-6.col-lg-6.col-sm-6.col-xs-12
-          = link_to "Edit information", edit_company_path(@company), class:"btn btn-primary btn-block"
-          p
+            =  @company.render_description

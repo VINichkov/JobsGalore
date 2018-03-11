@@ -8,93 +8,37 @@
     .row.well
       = company_name(@company)
       p
-      = company_description
+      = @company.render_description
     =jobs_of_company(@company)
   .col-lg-4.col-md-4
     .panel.panel-default
       .panel-body
-        p.text-center
-          .row
-            = image_tag(@company.logo_url, class: 'img-thumbnail center-block', size:"300x250", alt: @company.name)
-          .row
-            h3.text-center
-              |Company summary
+        .row.text-center
+          = image_bg(@company.logo_url, "300px", "300px", "250px")
+        .row
+          h3.text-center
+            |Company summary
         .well
           =company_summary(@company)
           = buttons("col-lg-12 col-md-12")
-          .row
-            .col-lg-12.col-md-12
-              = social_share_button_tag @company.name
-.col-sm-12.hidden-md.hidden-lg.hidden-xs
+          = social_share_button_tag @company.name
+.col-sm-12.col-xs-12.hidden-md.hidden-lg
   .panel-body
     = company_name(@company)
     .row
-      .col-sm-6
-        p.text-center
-          .row
-            = image_tag(@company.logo_url, class: 'img-thumbnail center-block', size: "300x250", alt: @company.name)
-          .row
-            .text-center
-              p
-              = social_share_button_tag @company.name, class:"center-block"
-      .col-sm-6
+      .col-xs-12.col-sm-6
+        .row.text-center
+          = image_bg(@company.logo_url, "300px", "300px", "250px")
+          = social_share_button_tag @company.name, class: "center-block"
+      .col-xs-12.col-sm-6
         h3.text-center
           |Company summary
         = company_summary(@company)
-        = buttons("col-sm-6")
-    .row
-      .col-sm-12
-        p
-          = company_description
-        =jobs_of_company(@company)
-.col-xs-12.hidden-md.hidden-lg.hidden-sm
-  .panel-body
-    = company_name(@company)
-    .row
-      .col-xs-12
-        p.text-center
-          .row
-            = image_tag(@company.logo_url, class: 'img-thumbnail center-block', size: "300x250", alt: @company.name)
-          .row
-            .text-center
-              p
-              = social_share_button_tag @company.name, class:"center-block"
-      .col-xs-12
-        h3.text-center
-          |Company summary
         = buttons("col-xs-6")
     .row
-      .col-xs-12
+      .col-xs-12.col-sm-12
         p
-          = company_description
+          = @company.render_description
         =jobs_of_company(@company)
-.modal.fade#contact[tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"]
-  .modal-dialog
-    .modal-content
-      .modal-header
-        button[type="button" class="close" data-dismiss="modal" aria-label="Close"]
-          span[aria-hidden="true"]
-            |&times;
-        h4.modal-title Contact:
-      .modal-body
-        .container-fluid
-          -@company.client.each do |client|
-            .row
-              col-lg-3.col-md-3
-                - if client.photo.nil?
-                  = image_tag(image_path("avatar.jpg"), size: "60x60", class: 'img-thumbnail center-block', alt: client.full_name)
-                - else
-                  = image_tag(Dragonfly.app.remote_url_for(client.photo_uid), size: "60x60", class: 'img-thumbnail center-block ', alt: client.full_name)
-              col-lg-9.col-md-9
-                ="#{client.firstname} #{client.lastname}"
-                br
-                |Email:
-                | &nbsp;
-                a[href ="mailto:#{client.email}" ] = client.email
-                br
-                |Phone:
-                | &nbsp;
-                a[href ="tel:#{client.phone}" ] #{client.phone}
-        .modal-footer
-        button[type="button" class="btn btn-default" data-dismiss="modal"]
-          |Close
+
+=render 'inc/contact', object: @company.object.client.find_by(character:'employer').decorate, title:""

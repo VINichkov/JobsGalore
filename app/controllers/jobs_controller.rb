@@ -9,7 +9,7 @@ class JobsController < ApplicationController
 
   # GET /jobs/new
   def new
-      @job = Job.new
+      @job = Job.new.decorate
   end
 
   # GET /jobs/1/edit
@@ -21,7 +21,7 @@ class JobsController < ApplicationController
   def create
     @job = Job.new(job_params)
     @job.client = current_client if @job.client.nil?
-    @job.company = current_client.company.first if @job.company.nil?
+    @job.company = current_client.company if @job.company.nil?
     respond_to do |format|
       if @job.save
         format.html { redirect_to client_root_path, notice: 'Job was successfully created.' }
@@ -117,7 +117,7 @@ class JobsController < ApplicationController
     @job = Job.find_by_id(param[:id]).decorate
     respond_to do |format|
       if @job.extras(param[:option])
-        format.html { redirect_to job_path(@job),  notice: 'Job was successfully destroyed.' }
+        format.html { redirect_to job_path(@job),  notice: 'Done' }
       else
         format.html { redirect_to job_path(@job),  notice: 'Error!!!.' }
       end
@@ -126,7 +126,7 @@ class JobsController < ApplicationController
 
   private
     def employer!
-      if current_client.character != "employer" and current_client.character != "employee"
+      if not current_client.resp?
         redirect_to root_path, alert: "Please register as an employer"
       end
     end

@@ -1,16 +1,16 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user,param)
+  def initialize(user)
     user ||= Client.new
-    puts "#{user.id} #{user.firstname} #{user.lastname} #{user.email}__________________________#{param.to_h.to_s}"
+    Rails.logger.debug "#{user.id} #{user.firstname} #{user.lastname} #{user.email}"
     if user.admin?
-      puts "Cancan:: Admin"
+      Rails.logger.debug "Cancan:: Admin"
       can :manage, :all
-    elsif user.character == 'employer'
-      puts "Cancan:: Employer"
+    elsif user.employer?
+      Rails.logger.debug "Cancan:: Employer"
       #############################################
-      can [:new, :create, :profile, :settings, :team, :edit, :update, :destroy, :edit_photo] , Client do |client|
+      can [:new, :create, :profile, :settings, :team, :edit, :update, :destroy, :edit_photo, :change_type] , Client do |client|
         (client.id==user.id) or (client.company.client.find_by_id(user.id))
       end
       can [:settings_company, :edit_logo, :new_member, :create_member,  :edit, :update, :destroy, :edit_photo] , Company do |company|
@@ -18,8 +18,8 @@ class Ability
       end
       can [:show, :company_jobs], Company
       can [:new, :create, :show], Job
-      can [ :edit, :update, :destroy], Job do |job |
-        job.company.client.find_by_id(user.id)
+      can [:edit, :update, :destroy], Job do |job |
+        job.company.client.include?(user)
       end
       can [:search], Location
       can [:bill, :cancel_url, :create], Payment
@@ -28,14 +28,13 @@ class Ability
 
       can [:settings_company, :edit_logo], :all
     elsif user.character == 'employee'
-      puts "Cancan:: Employee"
+      Rails.logger.debug "Cancan:: Employee"
       #############################################
       can [:edit, :update, :profile, :settings, :destroy, :edit_photo] , Client do |client|
         client==user
       end
-      can [:show, :company_jobs], Company
       can [:new, :create, :show], Job
-      can [ :edit, :update, :destroy], Job do |job |
+      can [ :edit, :update, :destroy], Job do |job|
         job.client==user
       end
       can [:search], Location
@@ -45,7 +44,7 @@ class Ability
 
 
     elsif user.character == 'aplicant'
-      puts "Cancan:: Aplicant"
+      Rails.logger.debug "Cancan:: Aplicant"
       #############################################
       can [:edit, :update, :destroy, :profile, :settings, :edit_photo] , Client do |client|
         client==user
@@ -59,7 +58,7 @@ class Ability
         resume.client_id == user.id
       end
     else
-      puts "Cancan:: Other"
+      Rails.logger.debug "Cancan:: Other"
       ##############################################
       can [:show], Job
       can [:show, :company_jobs], Company
@@ -69,6 +68,13 @@ class Ability
       #can [:index], Industry
     end
 
+    def can?(action, subject, *extra_args)
+      Rails.logger.debug "!Cancan:: action #{action}  | subject #{subject}  | extra_args #{extra_args}"
+      if subject.class < Draper::Decorator
+        subject = subject.model
+      end
+      super(action, subject, extra_args)
+    end
 
     # Define abilities for the passed in user here. For example:
     #

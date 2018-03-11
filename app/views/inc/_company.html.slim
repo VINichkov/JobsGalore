@@ -1,0 +1,22 @@
+.panel.panel-default
+  .panel-body
+    .col-lg-3.col-md-3.col-sm-3.col-xs-12.text-center
+      = link_to(image_bg(company.logo_url, "150px", "150px", "120px"), company)
+    .col-lg-9.col-md-9.col-sm-9.col-xs-12
+      h3.text-center
+        = link_to company.name, company, class: 'text-warning'
+      p
+      - if company.site
+        p
+          = link_to company.site, company.site, rel: "nofollow"
+      - if company.recrutmentagency
+        p
+          strong
+            |Recruitment agency &nbsp;
+      p
+        = company.description_text + "..."
+      p
+        | #{company.industry.name} - #{company.location.name}
+
+
+

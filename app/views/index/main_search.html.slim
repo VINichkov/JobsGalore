@@ -1,10 +1,11 @@
 .container
-  h1 =@name[:name]
-  - if @objs.class.to_s.scan(/^Job/) then
-    = render partial: 'inc/job', collection: @objs
-  - unless @objs.class.to_s.scan("Company").empty? then
-    = render 'inc/list_companies'
-  - unless @objs.class.to_s.scan("Resume").empty? then
-    = render 'inc/list_resumes'
+  h1 =@result.name
+  .col-lg-8.col-md-9.col-sm-12
+    - if @result.name == 'Jobs'
+      = render partial: 'inc/job', collection: @result.objs
+    - elsif @result.name=='Companies'
+      = render partial: 'inc/company', collection: @result.objs
+    - else @result.name=='Resumes'
+      = render partial: 'inc/resume', collection: @result.objs
 .text-center
   = will_paginate_mini @objs

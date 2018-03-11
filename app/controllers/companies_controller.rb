@@ -88,8 +88,7 @@ class CompaniesController < ApplicationController
   end
 
   def company_jobs
-    @company = Company.find_by_id(params[:id])
-    @objs = @company.job.includes(:location).order(updated_at: :desc).paginate(page: params[:page], per_page:25)
+    @objs = Job.where(company_id: params[:id]).includes(:location).order(updated_at: :desc).paginate(page: params[:page], per_page:25).decorate
   end
 
   # PATCH/PUT /companies/1
@@ -138,18 +137,6 @@ class CompaniesController < ApplicationController
     end
   end
 
-  def change_type
-     if @client.character=='employer'
-       @client.character='employee'
-     elsif  @client.character=='employee'
-       @client.character='employer'
-     end
-     respond_to do |format|
-       if @client.save
-         format.html { redirect_to team_path, notice: 'Done!' }
-       end
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -170,7 +157,7 @@ class CompaniesController < ApplicationController
     end
 
     def current_company
-      @company = current_client.company.first
+      @company = current_client.company
     end
 
     def job_params

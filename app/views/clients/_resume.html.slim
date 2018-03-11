@@ -23,7 +23,7 @@
   p
 .col-lg-9.col-md-9.col-sm-8
   h3
-    = link_to resume.desiredjobtitle.capitalize, resume, class: 'text-warning'
+    = link_to resume.title.capitalize, resume, class: 'text-warning'
   - if not resume.salary.nil?
     p
       strong

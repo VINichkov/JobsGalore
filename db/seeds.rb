@@ -219,7 +219,7 @@ begin
           if [true, false].sample
             rand(3).times
               #Расчет параметров для каждой вакансии
-              desiredjobtitle = (rand(5)+1).times.map do
+              title = (rand(5)+1).times.map do
                 arr_word.sample.delete("\n")+' '
               end
               salary = (rand(180)+1)*1000
@@ -231,13 +231,13 @@ begin
               parttime = [false,true].sample
               flextime = [false,true].sample
               remote = [false,true].sample
-              abouteme=(rand(50)+1).times.map do
+              description=(rand(50)+1).times.map do
                 arr_word.sample.delete("\n")+' '
               end
 
               Resume.create(client:client,
                             location:client.location,
-                                  desiredjobtitle:desiredjobtitle.join,
+                            title:title.join,
                                   salary:salary,
                                   permanent:permanent,
                                   casual: casual,
@@ -247,7 +247,7 @@ begin
                                   parttime:parttime,
                                   flextime:flextime,
                                   remote:remote,
-                                  abouteme:abouteme.join)
+                                  description:description.join)
             end
         end
         i+=1
@@ -442,10 +442,9 @@ puts "== #{Time.now - ttime } end seed"
 end
 
 #version 2
-if 1==1
-  #step 2
-  empty = Industry.find_by_id(999)
-  empty ||=  Industry.new(name: 'Empty', level:1, id:999)
+if 1==2
+  #step
+  empty = Industry.find_by_name('Other')
   empty.save!
   Job.all.each do |job|
     ind = Industryjob.find_by_job_id(job.id)&.industry
@@ -472,7 +471,15 @@ if 1==1
     end
   end
 end
-
+if 1==1
+  Client.all.each do |client|
+    company = Responsible.find_by_client_id(client.id)&.company
+    if company
+      client.company = company
+      client.save!
+    end
+  end
+end
 
 
 

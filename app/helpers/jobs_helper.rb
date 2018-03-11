@@ -10,7 +10,7 @@ module JobsHelper
 
   def company(object)
     html = content_tag(:h4, class: "text-center"){
-      link_to(object.company.name,object.company)
+      link_to(object.name,object)
     }
     html+= image_bg(object.logo_url, "300px", "300px", "250px" )
   end
@@ -65,7 +65,7 @@ module JobsHelper
         link_to(job.company.name.truncate(50, separator: " "), job.company)
       }
       row+= content_tag(:div, class: "row"){
-        link_to(image_tag(job.company.decorate.logo_url, class: 'img-thumbnail center-block ', size:"270x270", alt:job.company.name), job.company)
+        link_to(image_tag(job.company.logo_url, class: 'img-thumbnail center-block ', size:"270x270", alt:job.company.name), job.company)
       }
       row+= content_tag(:div, class: "row text-center"){
         content_tag(:p, "Posted: "+job.posted_date)

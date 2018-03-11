@@ -34,7 +34,6 @@ class GatewaysController < ApplicationController
   # POST /gateways.json
   def create
     @gateway = Gateway.new(gateway_params)
-
     respond_to do |format|
       if @gateway.save
         format.html { redirect_to gateways_url, notice: 'Gateway was successfully created.' }

@@ -17,7 +17,7 @@ class ResumesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create resume" do
     assert_difference('Resume.count') do
-      post resumes_url, params: { resume: { abouteme: @resume.abouteme, casual: @resume.casual, client_id: @resume.client_id, contract: @resume.contract, desiredjobtitle: @resume.desiredjobtitle, flextime: @resume.flextime, fulltime: @resume.fulltime, parttime: @resume.parttime, permanent: @resume.permanent, remote: @resume.remote, salary: @resume.salary, temp: @resume.temp } }
+      post resumes_url, params: { resume: { description: @resume.description, casual: @resume.casual, client_id: @resume.client_id, contract: @resume.contract, title: @resume.title, flextime: @resume.flextime, fulltime: @resume.fulltime, parttime: @resume.parttime, permanent: @resume.permanent, remote: @resume.remote, salary: @resume.salary, temp: @resume.temp } }
     end
 
     assert_redirected_to resume_url(Resume.last)
@@ -34,7 +34,7 @@ class ResumesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update resume" do
-    patch resume_url(@resume), params: { resume: { abouteme: @resume.abouteme, casual: @resume.casual, client_id: @resume.client_id, contract: @resume.contract, desiredjobtitle: @resume.desiredjobtitle, flextime: @resume.flextime, fulltime: @resume.fulltime, parttime: @resume.parttime, permanent: @resume.permanent, remote: @resume.remote, salary: @resume.salary, temp: @resume.temp } }
+    patch resume_url(@resume), params: { resume: { description: @resume.description, casual: @resume.casual, client_id: @resume.client_id, contract: @resume.contract, title: @resume.title, flextime: @resume.flextime, fulltime: @resume.fulltime, parttime: @resume.parttime, permanent: @resume.permanent, remote: @resume.remote, salary: @resume.salary, temp: @resume.temp } }
     assert_redirected_to resume_url(@resume)
   end
 

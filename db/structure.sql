@@ -112,7 +112,8 @@ CREATE TABLE clients (
     unlock_token character varying,
     locked_at timestamp without time zone,
     "character" character varying,
-    send_email boolean DEFAULT true NOT NULL
+    send_email boolean DEFAULT true NOT NULL,
+    company_id integer
 );
 
 
@@ -1288,6 +1289,13 @@ ALTER TABLE ONLY skillsresumes
 
 
 --
+-- Name: index_clients_on_company_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_clients_on_company_id ON clients USING btree (company_id);
+
+
+--
 -- Name: index_clients_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2047,6 +2055,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171227042835'),
 ('20171227043153'),
 ('20171228040745'),
-('20180204105551');
+('20180204105551'),
+('20180218093045');
 
 

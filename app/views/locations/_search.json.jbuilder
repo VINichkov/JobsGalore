@@ -1,1 +1,0 @@
-json.extract! search, :id, :postcode, :suburb, :state

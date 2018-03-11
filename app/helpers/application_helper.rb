@@ -17,8 +17,8 @@ module ApplicationHelper
     content_for :noindex, true
   end
 
-  def image_bg(url, bgsize,width, height )
-    content_tag(:div,'', class: "text-center img-thumbnail center-block avatar", style: "background-image: url('#{url}');background-size: #{bgsize}; width: #{width}; height: #{height};")
+  def image_bg(url, bgsize,width, height, option={} )
+    content_tag(:div,'', class: "#{option[:class] ? option[:class] : "text-center img-thumbnail center-block avatar"}", style: "background-image: url('#{url}');background-size: #{bgsize}; width: #{width}; height: #{height};")
   end
 
   def meta_head(arg={})
@@ -46,6 +46,6 @@ module ApplicationHelper
   end
 
   def will_paginate_mini(objects)
-    will_paginate objects, {renderer: BootstrapPagination::Rails, inner_window:0, outer_window:0, previous_label:'&#8592;', next_label: '&#8594;'}
+    will_paginate objects, {renderer: BootstrapPagination::Rails, inner_window:1, outer_window:0, previous_label:'&#8592;', next_label: '&#8594;'}
   end
 end

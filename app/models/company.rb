@@ -6,7 +6,7 @@ class Company < ApplicationRecord
   belongs_to :industry
   has_many :industrycompany, dependent: :destroy
   has_many :responsible, dependent: :destroy
-  has_many :client, through: :responsible
+  has_many :client
   has_many :gateway, dependent: :destroy
   dragonfly_accessor :logo
   validates :name, presence: true
@@ -26,7 +26,7 @@ class Company < ApplicationRecord
       path_obj = Pathname(self.logo.name)
       self.logo.name = path_obj.sub_ext('').to_s.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '') + path_obj.extname
     rescue
-      puts "Error: #{$!}"
+      logger.fatal "Error: #{$!}"
     end
   end
 

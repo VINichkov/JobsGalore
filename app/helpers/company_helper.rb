@@ -64,9 +64,5 @@ module CompanyHelper
 
 
 
-  def company_description
-    @company.description_html.html_safe
-  end
-
 
 end

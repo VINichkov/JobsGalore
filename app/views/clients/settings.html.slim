@@ -3,36 +3,18 @@
     h1 Your profile
     .well
       .row
-        .col-md-4.col-lg-4.col-sm-6.hidden-xs
-          - if current_client.photo.nil?
-            = image_tag(image_path("avatar.jpg"), size: "300x300", class: 'img-thumbnail', alt: current_client.full_name)
-          - else
-            = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size:"300x300", alt: current_client.full_name)
-        .col-xs-12.hidden-sm.hidden-md.hidden-lg.text-center
-          - if current_client.photo.nil?
-            = image_tag(image_path("avatar.jpg"), size: "250x250", class: 'img-thumbnail', alt: current_client.full_name)
-          - else
-            = image_tag(Dragonfly.app.remote_url_for(current_client.photo_uid), class: 'img-thumbnail', size: "250x250", alt: current_client.full_name)
         .col-md-4.col-lg-4.col-sm-6.col-xs-12
-          h3 #{current_client.firstname} #{current_client.lastname}
-          h3 Email: #{current_client.email}
-          h3 Phone: #{current_client.phone}
-          h3 #{current_client.location.suburb}, #{current_client.location.state}
-          h3 Gender: #{current_client.gender ? " Female" : " Male"}
-          h3 Birthday: #{current_client.birth ? current_client.birth.strftime("%d %B %Y").to_s : "Empty"}
-          - if current_client.character == 'employer'
-            h3 You've administration functions
-
-        .col-md-4.col-lg-4.col-sm-12.col-xs-12
-          .col-md-12.col-lg-12.col-sm-6.col-xs-12
-            = link_to "Update photo", edit_photo_path, class:"btn btn-success btn-block"
-            p
-          .col-md-12.col-lg-12.col-sm-6.col-xs-12
-            = link_to "Edit information", edit_client_path(current_client), class:"btn btn-primary btn-block"
-            p
-          .col-md-12.col-lg-12.col-sm-6.col-xs-12
-            = link_to "Change your password", edit_client_registration_path, class:"btn btn-info btn-block"
-            p
-          .col-md-12.col-lg-12.col-sm-6.col-xs-12
-            = link_to "Cancel my account", registration_path(current_client), data: { confirm: "Are you sure?" }, method: :delete, class:"btn btn-danger btn-block"
-            p
+          = image_tag(current_client.photo_url, size: "300x300", class: 'img-thumbnail', alt: current_client.full_name)
+        .col-md-4.col-lg-4.col-sm-6.col-xs-12
+          h4 #{current_client.full_name}
+          h4 Email: #{link_to  current_client.email, "mailto:#{current_client.email}"}
+          h4 Phone: #{current_client.phone}
+          h4 #{current_client.location.name}
+          h4 Birthday: #{current_client.birth ? current_client.birth.strftime("%d %B %Y").to_s : "Empty"}
+          - if current_client.resp?
+            h4 Your company is #{link_to current_client.company.name, current_client.company}
+        .col-md-4.col-lg-4.col-sm-6.col-xs-12
+          = link_to "Update photo", edit_photo_path, class: "btn btn-success btn-block btn_margin"
+          = link_to "Edit information", edit_client_path(current_client), class: "btn btn-primary btn-block btn_margin"
+          = link_to "Change your password", edit_client_registration_path, class: "btn btn-info btn-block btn_margin"
+          = link_to "Cancel my account", registration_path(current_client), data: {confirm: "Are you sure?"}, method: :delete, class: "btn btn-danger btn-block btn_margin"

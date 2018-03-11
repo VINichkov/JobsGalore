@@ -1,72 +1,46 @@
-.col-xs-12.hidden-lg.hidden-md.hidden-sm
-  .row
-    -puts resume.id
-    - if client_signed_in?
-      - if current_client.resp?
-        .row.text-center
-          p #{resume.client.firstname} #{resume.client.lastname}
-        .row
-        - if not resume.client.photo_uid.nil?
-          = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ', size:"270x270", alt: resume.client.full_name),resume.client)
-        - else
-          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size:"270x270", alt: resume.client.full_name)
-      - elsif resume.client.id == current_client.id
-        .row.text-center
-          = link_to("#{resume.client.firstname} #{resume.client.lastname}", resume.client)
-        .row
-        - if not resume.client.photo_uid.nil?
-          = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ', size: "270x270", alt: resume.client.full_name),resume.client)
-        - else
-          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "270x270", alt: resume.client.full_name)
-      - else
-        .row.text-center
-          |Anonymous
-        .row
-        = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"270x270", alt: resume.client.full_name)
-    - else
-      .row.text-center
-        |Anonymous
+.panel.panel-default.hidden-xs
+  div[class="panel-body #{class_extras(resume)}"]
+    .col-lg-10.col-md-10.col-sm-10
+      h3
+        = link_to resume.title, resume, class: 'text-warning'
+      - if resume.salary.blank?
+        p = resume.salary
       p
-      = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"270x270", alt: resume.client.full_name)
-    .row.text-center
-      = "Posted: "+resume.updated_at.strftime("%d %B %Y")
-.col-lg-10.col-md-10.col-sm-10.col-xs-12
+        = resume.description_text + "..."
+      span.text-warning
+        = resume.location.name
+    .col-lg-2.col-md-2.col-sm-2
+      - if current_client && (resume.client == current_client || current_client.admin?)
+        = render 'inc/btn', object: resume, option: {cl: "dropdown", class: 'resume', type: 3}
+      - elsif current_client&.resp?
+        .row
+          .row.text-center
+            = resume.client.full_name
+          .row.text-center
+            = image_bg(resume.client.photo_url, "130px", "130px", "100px")
+          .row.text-center
+            = "Posted: " +resume.posted_date
+      - else
+        .row
+          .row.text-center
+            = "Anonymous"
+          .row.text-center
+            = image_bg(image_url("avatar.jpg"), "130px", "130px", "100px")
+          .row.text-center
+            = "Posted: " +resume.posted_date
+.row.border_top.hidden-lg.hidden-md.hidden-sm[class=" #{class_extras(resume)}"]
+  - if current_client && (resume.client == current_client || current_client.admin?)
+    = render 'inc/btn', object: resume, option: {cl:"btn-group", min:true, class:'resume', type:3}
   h3
-    = link_to resume.desiredjobtitle.capitalize, resume, class: 'text-warning'
-  -if not resume.salary.nil?
-    p = resume.salary.to_i.to_s
-
-  = render :inline =>  HTML_Truncator.truncate(render_markdown(resume.abouteme),30) if resume.abouteme
-  = link_to ' more...', resume
-  p = resume.location.state.to_s+" "+resume.location.suburb.capitalize.to_s
-.col-lg-2.col-md-2.col-sm-2.hidden-xs
-  .row
-    - if client_signed_in?
-      - if current_client.resp?
-        .row.text-center
-          = link_to("#{resume.client.firstname} #{resume.client.lastname}", resume.client)
-        .row
-        - if not resume.client.photo_uid.nil?
-          = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ',size:"130x100"),resume.client)
-        - else
-          = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block',size:"130x100", alt: resume.client.full_name)
-      - elsif resume.client.id == current_client.id
-        .row.text-center
-          = link_to("#{resume.client.firstname} #{resume.client.lastname}", resume.client)
-        .row
-        - if not resume.client.photo_uid.nil?
-          = link_to(image_tag(Dragonfly.app.remote_url_for(resume.client.photo_uid), class: 'img-thumbnail center-block ', size: "130x100", alt: resume.client.full_name),resume.client)
-        - else
-           = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block', size: "130x100", alt: resume.client.full_name)
-      - else
-        .row.text-center
-          |Anonymous
-        .row
-        = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ',size:"130x100", alt: resume.client.full_name)
-    - else
-      .row.text-center
-        |Anonymous
-      p
-      = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail center-block ', size:"130x100", alt: resume.client.full_name)
-    .row.text-center
-      = "Posted: "+resume.updated_at.strftime("%d %B %Y")
+    = link_to resume.title, resume
+  span.text-success
+    = (current_client && (resume.client == current_client || current_client.admin? || current_client.resp?)) ? resume.client.full_name : "Anonymous"
+  | &nbsp; - &nbsp;
+  span.text-warning
+    = resume.location.name
+  - if resume.salary.blank?
+    p = resume.salary
+  p
+    = resume.description_text + "..."
+  p.text-muted
+    |#{resume.posted_date}

@@ -1,0 +1,61 @@
+div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' : "btn-group #{option[:min] ? 'pull-right' : 'btn-group-justified'}")}"]
+  div[class = "#{option[:cl]}"]
+    span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+      - if option[:min]
+        i.glyphicon.glyphicon-th-large
+      -else
+        |Promote
+      span.caret
+    ul.dropdown-menu
+      - if can? :admin_extras, object
+        - if PropertsHelper::URGENT== "true"
+          li
+            - if object.urgent
+              = link_to "Urgent -", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 1})"), method: :post
+            - else
+              = link_to "Urgent +", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 1})"), method: :post
+        - if PropertsHelper::TOP == "true"
+          li
+            - if object.top
+              = link_to "Top -", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 2})"), method: :post
+            - else
+              = link_to "Top +", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 2})"), method: :post
+        - if PropertsHelper::HIGHLIGHT == "true"
+          li
+            - if object.highlight
+              = link_to "Highlight -", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
+            - else
+              = link_to "Highlight +", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
+      - else
+        - if PropertsHelper::URGENT== "true"
+          li
+            = link_to("Urgent $10 (7 day)", bill_path(bill: {id: object, type:option[:type], option: 1}), rel: "nofollow")
+        - if PropertsHelper::TOP == "true"
+          li
+            = link_to("Top $20 (7 day)", bill_path(bill: {id: object, type:option[:type], option: 2}), rel: "nofollow")
+        - if PropertsHelper::HIGHLIGHT == "true"
+          li
+            = link_to("Highlight $5 (7 day)", bill_path(bill: {id: object, type:option[:type], option: 3}), rel: "nofollow")
+  - if can? :destroy, object
+    div[class = "#{(option[:cl]  =='dropdown' ? 'btn_margin' : 'btn-group')}"]
+      = link_to eval("edit_#{option[:class]}_path(object)"), class: "btn btn-primary btn-block" do
+        - if option[:min]
+          i.glyphicon.glyphicon-pencil
+        - else
+          |Edit
+    div[class = "#{(option[:cl]  =='dropdown' ? 'btn_margin' : 'btn-group')}"]
+      = link_to  object, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block" do
+        - if option[:min]
+          i.glyphicon.glyphicon-remove
+        - else
+          |Delete
+  - else
+    div[class = "#{(option[:cl]  =='dropdown' ? 'btn_margin' : 'btn-group')}"]
+      button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
+        |Contact
+  div[class = "#{(option[:cl]  =='dropdown' ? 'btn_margin' : 'btn-group')}"]
+    button.btn.btn-success.btn-block[onclick="history.back()"]
+      - if option[:min]
+        i.glyphicon.glyphicon-arrow-left
+      - else
+        |Back

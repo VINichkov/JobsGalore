@@ -19,14 +19,20 @@ class ClientsController < ApplicationController
   end
 
   def profile
-    @client=current_client.decorate
+    @client=current_client
   end
 
   def settings
 
   end
 
-
+  def change_type
+    respond_to do |format|
+      if @client.change_type
+        format.html { redirect_to team_path, notice: 'Done!' }
+      end
+    end
+  end
 
   # GET /clients/new
   #def new
@@ -69,7 +75,6 @@ class ClientsController < ApplicationController
   # DELETE /clients/1
   # DELETE /clients/1.json
   def destroy
-    @client.company.destroy_all
     @client.destroy
     respond_to do |format|
       format.html { redirect_to clients_url, notice: 'Client was successfully destroyed.' }
@@ -82,6 +87,7 @@ class ClientsController < ApplicationController
   def admin_index
     @clients = Client.all.includes(:location).order(:email).paginate(page: params[:page], per_page:21)
   end
+
   def admin_edit_photo
   end
   def admin_new
@@ -129,7 +135,7 @@ class ClientsController < ApplicationController
   end
 
   def team
-    @clients = current_client.company.first.client.all.includes(:location).order(firstname: :desc).paginate(page: params[:page], per_page:25)
+    @clients = current_client.object.company.client.all.includes(:location).order(firstname: :desc).paginate(page: params[:page], per_page:25).decorate
   end
 
   private

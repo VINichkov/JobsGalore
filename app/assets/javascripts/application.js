@@ -3,7 +3,6 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-datepicker
-//=require bootstrap-select
 //= require social-share-button
 //=require jasny-bootstrap
 //=require medium-editor.min

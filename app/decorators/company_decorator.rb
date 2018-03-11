@@ -1,6 +1,8 @@
 class CompanyDecorator < ApplicationDecorator
   delegate_all
-
+  decorates_finders
+  decorates_association :job
+  decorates_association :client
 
   def logo_url
     @logo_url ? @logo_url  : @logo_url = object.logo_uid ? Dragonfly.app.remote_url_for(object.logo_uid) : h.image_url("company_profile.jpg")

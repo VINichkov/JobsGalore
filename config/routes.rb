@@ -25,7 +25,6 @@ Rails.application.routes.draw do
   get '/company_jobs/:id', to:'companies#company_jobs', as: 'jobs_at_company'
   get '/team/new/', to: 'companies#new_member', as: 'team_new'
   post '/team/', to: 'companies#create_member', as: 'team_create'
-  get  '/team_change/:id', to: 'companies#change_type', as: 'change_type'
   delete '/team/:id', to: 'companies#destroy_member', as: 'team_destroy'
 
   resources :clients, only: [:create, :edit, :update]#, :destroy
@@ -33,9 +32,13 @@ Rails.application.routes.draw do
   get '/profile', to: 'clients#profile', as:  'client_root'
   get "/settings", to: 'clients#settings'
   get "/team/", to: 'clients#team', as: 'team'
+  get  '/team_change/:id', to: 'clients#change_type', as: 'change_type'
 
   resources :locations
   get '/search_locations/:query', to: 'locations#search'
+
+  #Dictionary
+  get '/dictionary/:query', to: 'dictionaries#search'
 
   #payment
   get '/bill', to: 'payments#bill'
@@ -79,7 +82,7 @@ Rails.application.routes.draw do
   delete '/admin/members/jobs/:id', to: 'companies#admin_destroy_job', as: 'admin_destroy_job'#+
 
   #ADMINISTRATION JOBS
-  post 'admin/jobs/extras/', to: 'jobs#admin_extras', as: 'admin_jobs_extras'
+  post 'admin/jobs/extras/', to: 'jobs#admin_extras', as: 'admin_job_extras'
   get '/admin/jobs/', to: 'jobs#admin_index', as: 'admin_jobs'
   get '/admin/jobs/new', to: 'jobs#admin_new', as: 'admin_jobs_new'
   get '/admin/jobs/:id', to: 'jobs#admin_show', as: 'admin_jobs_show'
@@ -89,7 +92,7 @@ Rails.application.routes.draw do
   delete '/admin/jobs/:id', to: 'jobs#admin_destroy', as: 'admin_jobs_destroy'
 
   #ADMINISTRATION RESUMES
-  post 'admin/resumes/extras/', to: 'resumes#admin_extras', as: 'admin_resumes_extras'
+  post 'admin/resumes/extras/', to: 'resumes#admin_extras', as: 'admin_resume_extras'
   get '/admin/resumes/', to: 'resumes#admin_index', as: 'admin_resumes'
   get '/admin/resumes/new', to: 'resumes#admin_new', as: 'admin_resumes_new'
   get '/admin/resumes/:id', to: 'resumes#admin_show', as: 'admin_resumes_show'

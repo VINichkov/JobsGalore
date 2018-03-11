@@ -1,14 +1,15 @@
 h4.text-center
-  |Job summary
+  = object.class==JobDecorator ? "Job summary" : "Resume summary"
 p
   strong
     | Posted:&nbsp;
   =object.posted_date
-.hidden-md.hidden-lg.hidden-sm
-  p
-    strong
-      |Company: &nbsp;
-    =link_to(object.company.name,object.company)
+-if   object.class==JobDecorator
+  .hidden-md.hidden-lg.hidden-sm
+    p
+      strong
+        |Company: &nbsp;
+      =link_to(object.company.name,object.company)
 p
   strong
     |Location: &nbsp;
