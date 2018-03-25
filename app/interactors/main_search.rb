@@ -2,22 +2,31 @@ class MainSearch
   include Interactor
 
   def call
-    page, param = context.params[:page], context.params[:main_search]
-    param[:value].delete!("!:*&()'`\"’")
-    param[:value].blank? ? param[:value] = '' : param[:value] = param[:value].split(" ").map{|t| t=t+":*"}.join("&")
-    case param[:type]
-      when '1'
-        context.objs = Company.includes(:location,:industry).search(param).order(:name).paginate(page: page, per_page:21).decorate
-        context.name = 'Companies'
-      when '2'
-        context.objs = Job.includes(:company,:location).search(param).paginate(page: page, per_page:25).order(created_at:  :desc).decorate
-        context.name = 'Jobs'
-      when '3'
-        context.objs = Resume.includes(:location, :client).search(param).order(updated_at: :desc).paginate(page: page, per_page:25).decorate
-        context.name = 'Resumes'
-      else
-        context.fail!
+    @page, @param = context.params[:page], context.params[:main_search]
+    @param[:value].delete!("!:*&()'`\"’")
+    @param[:value].blank? ? @param[:value] = '' : @param[:value] = @param[:value].split(" ").map{|t| t=t+":*"}.join("&")
+    switch = LazyHash.new('1'=>->{company}, '2'=>->{job}, '3'=>->{resume})
+    unless switch[@param[:type]]
+      context.fail!
     end
+  end
+
+  def company
+    context.objs = Company.includes(:location,:industry).search(@param).order(:name).paginate(page: @page, per_page:21).decorate
+    context.name = 'Companies'
+    true
+  end
+
+  def job
+    context.objs = Job.includes(:company,:location).search(@param).paginate(page: @page, per_page:25).order(created_at:  :desc).decorate
+    context.name = 'Jobs'
+    true
+  end
+
+  def resume
+    context.objs = Resume.includes(:location, :client).search(@param).order(updated_at: :desc).paginate(page: @page, per_page:25).decorate
+    context.name = 'Resumes'
+    true
   end
 
 end

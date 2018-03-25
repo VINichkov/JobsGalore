@@ -10,6 +10,14 @@ class Resume < ApplicationRecord
 
   alias_attribute  :description,:abouteme
   alias_attribute  :title,:desiredjobtitle
+
+  def save
+    if self.industry.nil?
+      self.industry=Industry.find_by_name('Other')
+    end
+    super
+  end
+
   def highlight_on
     self.highlight = Date.today
     self.save

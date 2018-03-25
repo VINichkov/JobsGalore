@@ -16,6 +16,9 @@ Rails.application.routes.draw do
     post '/create_employer'=> "clients/registrations#create_employer"
   end
 
+  get '/team/new/', to: 'clients#new_member', as: 'team_new'
+  post '/team/', to: 'clients#create_member', as: 'team_create'
+  delete '/team/:id', to: 'clients#destroy_member', as: 'team_destroy'
 
   #devise_for :clients
 
@@ -23,9 +26,7 @@ Rails.application.routes.draw do
   get "/edit_logo", to: 'companies#edit_logo'
   get "/settings_company", to: 'companies#settings_company'
   get '/company_jobs/:id', to:'companies#company_jobs', as: 'jobs_at_company'
-  get '/team/new/', to: 'companies#new_member', as: 'team_new'
-  post '/team/', to: 'companies#create_member', as: 'team_create'
-  delete '/team/:id', to: 'companies#destroy_member', as: 'team_destroy'
+
 
   resources :clients, only: [:create, :edit, :update]#, :destroy
   get "/edit_photo", to: 'clients#edit_photo'
@@ -74,6 +75,7 @@ Rails.application.routes.draw do
   delete '/admin/team/:id', to: 'companies#admin_destroy_member', as: 'admin_team_destroy'#+
   get '/admin/team/:id', to: 'companies#client_in_company_index', as: 'admin_company_team'#+
   get '/admin/member_of_team/:id', to: 'companies#admin_show_member_of_team', as: 'admin_member_show'#+
+
   #ADMINISTRATION Jobs
   get '/admin/member/:id', to: 'companies#admin_index_job', as: 'admin_index_job'#+
   get '/admin/members/jobs/new/:id', to: 'companies#admin_new_job', as: 'admin_new_job'#+

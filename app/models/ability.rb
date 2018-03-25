@@ -10,10 +10,13 @@ class Ability
     elsif user.employer?
       Rails.logger.debug "Cancan:: Employer"
       #############################################
-      can [:new, :create, :profile, :settings, :team, :edit, :update, :destroy, :edit_photo, :change_type] , Client do |client|
-        (client.id==user.id) or (client.company.client.find_by_id(user.id))
+      can [ :profile, :settings, :team, :edit, :update, :destroy, :edit_photo, :change_type, :destroy_member] , Client do |client|
+        (client==user) || (client.company.client.find_by_id(user.id))
       end
-      can [:settings_company, :edit_logo, :new_member, :create_member,  :edit, :update, :destroy, :edit_photo] , Company do |company|
+      can [:new_member, :create_member] , Client
+
+
+      can [:settings_company, :edit_logo,  :edit, :update, :destroy, :edit_photo] , Company do |company|
         company.client.find_by_id(user.id)
       end
       can [:show, :company_jobs], Company
@@ -33,6 +36,7 @@ class Ability
       can [:edit, :update, :profile, :settings, :destroy, :edit_photo] , Client do |client|
         client==user
       end
+      can [:show, :company_jobs], Company
       can [:new, :create, :show], Job
       can [ :edit, :update, :destroy], Job do |job|
         job.client==user

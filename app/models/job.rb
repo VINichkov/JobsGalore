@@ -61,6 +61,13 @@ class Job < ApplicationRecord
     @cap ? @cap : @cap = self.title.capitalize
   end
 
+  def save
+    if self.industry.nil?
+      self.industry=Industry.find_by_name('Other')
+    end
+    super
+  end
+
   protected
 
   def send_email

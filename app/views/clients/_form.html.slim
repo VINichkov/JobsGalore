@@ -1,4 +1,5 @@
-= form_for @client do |f|
+-option||={}
+= form_for @client, url:option[:url] do |f|
   - if @client.errors.any?
     #error_explanation
       h2 = "#{pluralize(@client.errors.count, "error")} prohibited this client from being saved:"
@@ -20,19 +21,7 @@
     .form-group
       = f.label "Gender"
       br
-      select.form-control[data-style="btn-default" name="client[gender]" ]
-        -if @client.gender.nil?
-          option[value="nil" selected] Unidentified
-          option[value="false"] Male
-          option[value="true"] Female
-        -elsif @client.gender
-          option[value="nil"] Unidentified
-          option[value="false"] Male
-          option[value="true" selected] Female
-        -else
-          option[value="nil"] Unidentified
-          option[value="false" selected] Male
-          option[value="true"] Female
+      =f.select(:gender, options_for_select([['Unidentified',''],['Male','false'],['Female','true']],@client.gender),{}, {class:'form-control','data-style':"btn-default"})
     br
     .form-group
       = f.label "Your birthday"
@@ -49,12 +38,28 @@
                         name: "client[location",
                         id: "client_location_id",
                         route:'/search_locations/',
-                        defaultName:"#{@client.location.suburb}, #{@client.location.state}",
-                        defaultId:@client.location.id)
+                        defaultName:@client.location&.name,
+                        defaultId:@client.location&.id)
     .form-group
       = f.label "Your phone number"
       br
       = react_component('InputMask', id: "phone", name: "client[phone]", class_name: "form-control", dataformat: "+61 d dddd ddddd", placeholder: "+61 9 9999 99999",defaultValue:@client.phone)
+    -if option[:url]== {:action=>"create_member"}
+      .form-group
+        = f.label "Email"
+        br
+        = f.email_field :email, autofocus: true, class: "form-control", placeholder: "surname@hotmail.com"
+      .form-group
+        = f.label :password
+        - if @minimum_password_length
+          em
+            = " (#{@minimum_password_length} characters minimum)"
+        br
+        = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "**************"
+      .form-group
+        = f.label :password_confirmation
+        br
+        = f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "**************"
     hr.colorgraph
       .row
         .col-xs-12.col-sm-6.col-md-6

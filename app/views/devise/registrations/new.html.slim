@@ -24,7 +24,7 @@
         .form-group
           = f.label "Gender"
           br
-          select.selectpicker.form-control[data-style="btn-default" name="client[gender]" ]
+          select.form-control[data-style="btn-default" name="client[gender]" ]
             option[value="false"] Male
             option[value="true"] Female
         br
@@ -42,7 +42,7 @@
         .form-group
           = f.label "Your location"
           br
-          =react_component('Autocomplete',className:"form-control dropdown-toggle",name:"client[location",id:"client_location_id")
+          =react_component('Autocomplete',className:"form-control dropdown-toggle",route:'/search_locations/',name:"client[location",id:"client_location_id")
         .form-group
           = f.label "Your phone number"
           br

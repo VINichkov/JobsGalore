@@ -44,7 +44,7 @@ class CompaniesController < ApplicationController
                                              :edit,
                                              :update,
                                              :destroy]
-  before_action :set_client, only:[:change_type, :destroy_member]
+
   #company
 
 
@@ -113,31 +113,6 @@ class CompaniesController < ApplicationController
   end
 
 
-  def new_member
-    @client = Client.new
-  end
-
-  def create_member
-    @client=Client.new(client_params)
-    @client.responsible.new(company: current_company)
-    @client.character='employee'
-    respond_to do |format|
-      if @client.save
-        format.html { redirect_to team_path, notice: 'Done!' }
-      else
-        format.html { render :new_member }
-      end
-    end
-  end
-
-  def destroy_member
-    @client.destroy
-    respond_to do |format|
-      format.html { redirect_to team_path, notice: 'Done!' }
-    end
-  end
-
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_company
@@ -150,14 +125,6 @@ class CompaniesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_params
       params.require(:company).permit(:name, :size_id, :location_id, :site, :logo, :recrutmentagency, :description, :realy, :industry_id)
-    end
-
-    def client_params
-      params.require(:client).permit(:firstname, :lastname, :email, :phone, :password, :character, :photo, :gender, :location_id, :company_id, :birth, :page)
-    end
-
-    def current_company
-      @company = current_client.company
     end
 
     def job_params

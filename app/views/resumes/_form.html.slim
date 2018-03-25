@@ -8,7 +8,7 @@
           li = message
 
   .form-group
-    = f.label :title, "Desired position"
+    = f.label :title, "Title"
     br
     = f.text_field :title, class:"form-control"
   .row
@@ -16,7 +16,7 @@
       .form-group
         = f.label :salary
         br
-        = f.text_field :salary, class:"form-control"
+        = salary f, :salary, class:"form-control", placeholder: "10 000"
     .col-md-6.col-lx-6.col-sm-12.col-xs-12
       .form-group
         = f.label :industry, "Location"
@@ -25,25 +25,19 @@
                 className: "form-control dropdown-toggle",
                 name: "resume[location",
                 id: "resume_location_id",
+                route:'/search_locations/',
                 defaultName: @resume.location ? "#{@resume.location.suburb}, #{@resume.location.state}" : "#{current_client.location.suburb}, #{current_client.location.state}",
                 defaultId: @resume.location ? @resume.location.id : current_client.location.id)
   .form-group
     =f.label :industry, "Professional area"
     br
-    =react_component("CategoryInsert",
-                      className:"selectpicker form-control",
-                      name:"resume[ind]",
-                      multiple:false,
-                      dataStyle:"bbtn-default",
-                      values: Industry.all.to_json,
-                      defaultValues:@resume.industry.to_json)
-  .col-xs-12.col-sm-12.col-md-12
-    .form-group
-      = f.label :description
-      br
-      = f.text_area :description, class: "markdown none"
-      div.editable
-        = render_markdown(@resume.description)
+    = f.collection_select(:industry_id, Industry.select(:id,:name).all, :id, :name, {prompt: true},{class:"form-control"})
+  .form-group
+    = f.label  :description, "Resume (CV)"
+    br
+    = f.text_area :description, class: "markdown none"
+    div.editable
+      = @resume.render_description
   hr.colorgraph
     .row
       .col-xs-6.col-md-6.col-sm-6.col-lg-6

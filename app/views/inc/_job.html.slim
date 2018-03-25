@@ -21,8 +21,8 @@
             = link_to(job.company.name.truncate(50, separator: " "), job.company)
           .row.text-center
             = link_to(image_bg(job.company.logo_url, "130px", "130px", "100px"), job.company)
-          .row.text-center
-            = "Posted: " +job.posted_date
+      .row.text-center
+        = "Posted: " +job.posted_date
 .row.border_top.hidden-lg.hidden-md.hidden-sm[class=" #{class_extras(job)}"]
   - if current_client && ((current_client.employer? && job.company ==  current_client.company) || job.client == current_client || current_client.admin?)
     = render 'inc/btn', object: job, option: {cl:"btn-group", min:true, class:'job', type:2}

@@ -1,52 +1,22 @@
 .container
+  - if @payment
+    h1 #{@payment.title}
+    - if @payment.params[:type] == '2'
+      .col-lg-8.col-md-8
+        = render "inc/job", job: @payment.ad
+    - elsif @payment.params[:type] == '3'
+      .col-lg-8.col-md-8
+        = render "inc/resume", resume: @payment.ad
   .row
-    -if @param
-      -if @param[:option] == '1'
-        h1 You are buying - Urgent $10 (7 day)
-        - if @param[:kind]=='2'
-          .col-lg-8.col-md-8
-            .panel.panel-warning
-              .panel-body.urgent
-                = render "inc/job", job: @ad
-        - elsif @param[:kind]=='3'
-          .col-lg-8.col-md-8
-            .panel.panel-warning
-              .panel-body.urgent
-                = render "inc/resume", resume: @ad
-      -elsif @param[:option] == '2'
-        h1 You are buying - Ad Top $20 (7 day)
-        - if @param[:kind]=='2'
-          .col-lg-8.col-md-8
-            .panel.panel-warning
-              .panel-body
-                = render "inc/job", job: @ad
-        - elsif @param[:kind]=='3'
-          .col-lg-8.col-md-8
-            .panel.panel-warning
-              .panel-body
-                = render "inc/resume", resume: @ad
-      -elsif @param[:option] == '3'
-        h1 You are buying - Highlight $5 (7 day)
-        - if @param[:kind]=='2'
-          .col-lg-8.col-md-8
-            .panel.panel-warning
-              .panel-body.highlight
-                = render "inc/job", job: @ad
-        - elsif @param[:kind]=='3'
-          .col-lg-8.col-md-8
-            .panel.panel-warning
-              .panel-body.highlight
-                = render "inc/resume", resume: @ad
-    .row
-      .col-lg-8.col-md-12.col-sm-12
-        .col-lg-6.col-md-6.col-sm-6.col-xs-12
-          =link_to "Pay now", @url, class: "btn btn-primary btn-block"
-          p
-        .col-lg-6.col-md-6.col-sm-6.col-xs-12
-          button.btn.btn-success.btn-block[onclick="history.back()"]
-            |Back
-          p
-    p
+    .col-lg-8.col-md-12.col-sm-12
+      .col-lg-6.col-md-6.col-sm-6.col-xs-12
+        = link_to("Pay now", paypal_url(@payment.url), class: "btn btn-primary btn-block")
+        p
+      .col-lg-6.col-md-6.col-sm-6.col-xs-12
+        button.btn.btn-success.btn-block[onclick="history.back()"]
+          |Back
+        p
+  p
 
 
 

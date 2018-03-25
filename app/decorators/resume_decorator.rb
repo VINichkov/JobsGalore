@@ -23,4 +23,8 @@ class ResumeDecorator < ApplicationDecorator
   def turn(extra)
     eval ("object.#{extra} ? object.#{extra}_off : object.#{extra}_on")
   end
+
+  def salary
+    object.salary.to_i.to_s
+  end
 end

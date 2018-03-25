@@ -95,7 +95,7 @@
                 |Jobs
                 b.caret
               ul.dropdown-menu
-                - if not (client_signed_in?) or (current_client.employer?)
+                - if not (client_signed_in?) or (current_client.resp?)
                   li
                     = link_to "Post new job", new_job_path, rel:"nofollow"
                 li

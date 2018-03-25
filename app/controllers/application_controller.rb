@@ -27,6 +27,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_company
+    @company = current_client.company
+  end
+
   def render_404
     raise ActionController::RoutingError.new('Not Found')
   end

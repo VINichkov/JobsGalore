@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   load_and_authorize_resource :client
-  before_action :set_client, only: [:show, :edit,:update, :destroy, :admin_edit_photo,:admin_show,:admin_edit,:admin_update,:admin_destroy ]
+  before_action :set_client, only: [:show, :edit,:update, :destroy,:change_type, :destroy_member, :admin_edit_photo,:admin_show,:admin_edit,:admin_update,:admin_destroy ]
   before_action :authenticate_client!
 
   # GET /clients
@@ -136,6 +136,28 @@ class ClientsController < ApplicationController
 
   def team
     @clients = current_client.object.company.client.all.includes(:location).order(firstname: :desc).paginate(page: params[:page], per_page:25).decorate
+  end
+
+  def new_member
+    @client = Client.new
+  end
+
+  def create_member
+    @client=Client.new(client_params.merge({company_id:current_company.id,character: 'employee'}))
+    respond_to do |format|
+      if @client.save
+        format.html { redirect_to team_path, notice: 'Done!' }
+      else
+        format.html { render :new_member }
+      end
+    end
+  end
+
+  def destroy_member
+    @client.destroy
+    respond_to do |format|
+      format.html { redirect_to team_path, notice: 'Done!' }
+    end
   end
 
   private
