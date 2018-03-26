@@ -9,23 +9,24 @@ class MainSearch
     unless switch[@param[:type]]
       context.fail!
     end
+
   end
 
   def company
     context.objs = Company.includes(:location,:industry).search(@param).order(:name).paginate(page: @page, per_page:21).decorate
-    context.name = 'Companies'
+    context.type = Objects::COMPANIES
     true
   end
 
   def job
     context.objs = Job.includes(:company,:location).search(@param).paginate(page: @page, per_page:25).order(created_at:  :desc).decorate
-    context.name = 'Jobs'
+    context.type = Objects::JOBS
     true
   end
 
   def resume
     context.objs = Resume.includes(:location, :client).search(@param).order(updated_at: :desc).paginate(page: @page, per_page:25).decorate
-    context.name = 'Resumes'
+    context.type = Objects::RESUMES
     true
   end
 

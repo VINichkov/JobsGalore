@@ -2,45 +2,16 @@ class IndexController < ApplicationController
   #authorize_resource only:[:admin]
   skip_before_action :verify_authenticity_token
   def main
-    @main = IndexDecorator.main
+    @main = Main.call
   end
 
   def advertising_terms_of_use
   end
 
-  def search
-    @name={}
-    param = params.permit(:category, :object, :page)
-    case param[:object]
-      when '1'
-        @objs = Industry.find_by_id(param[:category]).company.order(:name).paginate(page: param[:page], per_page:21)
-        @name = {name:'Companies by', industry: Industry.find_by_id(param[:category]).name}
-      when '2'
-        @objs = Industry.find_by_id(param[:category]).job.order(created_at: :desc).paginate(page: param[:page], per_page:25)
-        @name = {name:'Jobs by', industry: Industry.find_by_id(param[:category]).name}
-      when '3'
-        @objs = Industry.find_by_id(param[:category]).resumes.order(updated_at: :desc).paginate(page: param[:page], per_page:25)
-        @name = {name:'Resumes by', industry: Industry.find_by_id(param[:category]).name}
-      else
-        redirect_to '/404'
-    end
-  end
-
   def category_view
-    @name={}
-    param = params.permit(:category, :object, :page)
-    case param[:object]
-      when '1'
-        @objs = Industry.includes(:company).find_by_id(param[:category]).company.order(:name).paginate(page: param[:page], per_page:21).includes(:industry,:location)
-        @name = {name:'Companies by', industry: Industry.find_by_id(param[:category]).name}
-      when '2'
-        @objs = Industry.includes(:job).find_by_id(param[:category]).job.order(created_at: :desc).paginate(page: param[:page], per_page:25).includes(:company,:location)
-        @name = {name:'Jobs by', industry: Industry.find_by_id(param[:category]).name}
-      when '3'
-        @objs = Industry.includes(:resumes).find_by_id(param[:category]).resumes.order(updated_at: :desc).paginate(page: param[:page], per_page:25).includes(:location)
-        @name = {name:'Resumes by', industry: Industry.find_by_id(param[:category]).name}
-      else
-        redirect_to '/404'
+    @category_view = CategoryView.call(params:params.permit(:category, :object, :page))
+    unless @category_view.success?
+      render_404
     end
 
   end
@@ -55,7 +26,10 @@ class IndexController < ApplicationController
   end
 
   def by_category
-    @by_category = IndexDecorator.by_category(type:params[:obj])
+    @by_category = ByCategory.call(params:params[:obj])
+    unless @by_category.success?
+      render_404
+    end
   end
 
   def about
@@ -94,6 +68,7 @@ class IndexController < ApplicationController
       format.html{redirect_to root_url}
     end
   end
+
   def sitemaps
     @objs =[]
       respond_to do |format|
@@ -101,15 +76,15 @@ class IndexController < ApplicationController
           when '1'
             @objs << {url: root_url, date:Time.now.strftime("%Y-%m-%d"),changefreq:"hourly" }
           when '2'
-            Company.all.each do |company|
+            Company.select(:id, :updated_at).order(:id).find_each do |company|
               @objs <<{url: company_url(company), date:company.updated_at.strftime("%Y-%m-%d"),changefreq:"hourly" }
             end
           when '3'
-            Resume.all.each do |resume|
+            Resume.select(:id, :updated_at).order(:id).find_each do |resume|
               @objs <<{url: resume_url(resume), date:resume.updated_at.strftime("%Y-%m-%d"),changefreq:"hourly" }
             end
           else
-            Job.all.each do |job|
+            Job.select(:id, :updated_at).order(:id).find_each do |job|
               @objs <<{url: job_url(job), date:job.updated_at.strftime("%Y-%m-%d"),changefreq:"hourly" }
             end
         end
@@ -126,20 +101,9 @@ class IndexController < ApplicationController
   end
   private
 
-  def search_params
-    params.require(:search).permit(:industry, :object)
-  end
-
   def main_search_params
     params.permit(:page, main_search: [:type, :value, :page, :salary,  :options, :category, :location_id, :location_name, :urgen])
   end
 
-
-  def query_text(params)
-      text = ""
-      text = "fts @@ to_tsquery(:query)" unless params[:value].nil?
-      text = "and location_id = :location" unless params[:location].nil?
-      text = "and location_id = :" unless params[:location].nil?
-  end
 
 end

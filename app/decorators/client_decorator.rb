@@ -1,6 +1,7 @@
 class ClientDecorator < ApplicationDecorator
   delegate_all
   decorates_association :job
+  decorates_association :resume
   decorates_association :company
 
   def photo_url

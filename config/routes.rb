@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 
   resources :locations
   get '/search_locations/:query', to: 'locations#search'
+  get 'in_location/:location/:object', to: 'locations#in_location'
 
   #Dictionary
   get '/dictionary/:query', to: 'dictionaries#search'

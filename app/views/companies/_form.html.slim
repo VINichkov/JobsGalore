@@ -30,7 +30,6 @@
       .form-group
         = f.label :industry, "Industry"
         br
-        -puts @company.industry.to_s
         = react_component("Category",
                 className: "form-control",
                 name: "company[industry_id]",

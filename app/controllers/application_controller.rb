@@ -18,14 +18,6 @@ class ApplicationController < ActionController::Base
     @current_ability ||=Ability.new(current_client)
   end
 
-  def admin!
-    authenticate_client!
-    if current_client.admin?
-      true
-    else
-      render_404
-    end
-  end
 
   def current_company
     @company = current_client.company

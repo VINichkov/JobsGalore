@@ -14,8 +14,7 @@ class Client < ApplicationRecord
   has_many :gateway, dependent: :destroy
   has_many :resume, dependent: :destroy
   has_many :job, dependent: :destroy
-  has_many :respons, class_name:"Responsible", dependent: :destroy
-  has_many :responsible
+
 
 
   dragonfly_accessor :photo do

@@ -15,7 +15,7 @@
     .col-lg-4.col-md-4
       .panel.panel-default
         .panel-body
-          =company(@job.company)
+          =company_in_jobs(@job.company)
           p
         .well
           = render 'inc/summary', object: @job
@@ -30,7 +30,7 @@
           = @job.title_capitalize
       .row
         .col-sm-6.hidden-xs
-          =company(@job.company)
+          =company_in_jobs(@job.company)
           p
           .text-center
             = social_share_button_tag @job.title, url: job_url(@job), title:@job.title

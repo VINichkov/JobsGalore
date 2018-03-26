@@ -26,7 +26,7 @@ module CompanyHelper
            end
     html +=content_tag(:p) do
       p = content_tag :strong, "Location: "
-      p += object.location.name.html_safe
+      p += link_location(object.location.name, object.location, Objects::COMPANIES, class: 'text-warning')
     end
     html +=if object.size
              content_tag(:p) do
@@ -41,10 +41,10 @@ module CompanyHelper
            end
     html +=if object.industry
              ind = content_tag(:p) do
-                  content_tag :strong, "Indusrty: "
+               content_tag :strong, "Indusrty: "
              end
              ind +=content_tag( :ul) do
-                  content_tag(:li ," #{object.industry.name}")
+               content_tag(:li , link_industry(object.industry.name, object.industry, Objects::COMPANIES, class: 'text-success'))
              end
            end
   end

@@ -13,7 +13,7 @@ p
 p
   strong
     |Location: &nbsp;
-  |#{object.location.name}
+  = link_location(object.location.name, object.location, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-warning')
 - if not object.salary.blank?
   p
     strong
@@ -23,7 +23,8 @@ p
   strong
     |Professional area:
 ul
-  li #{- object.industry.name}
+  li
+    =link_industry(object.industry.name, object.industry, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-success')
 - if object.highlight
   p
     span.glyphicon.glyphicon-paperclip

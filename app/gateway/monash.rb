@@ -19,7 +19,6 @@ class Monash < Adapter
     table = @doc.at_css('[id="recent-jobs-content"]')
     table.css('tr').each do |row|
       if row['class'] != "summary"
-        #ЗП #puts row.css('td')[2].content
         title = row.at_css('[class="job-link"]').content
         close = row.css('time').first&.content
         close ? close = Date.parse(row.css('time').first&.content) : nil

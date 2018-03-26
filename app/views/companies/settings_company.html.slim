@@ -7,7 +7,7 @@
           = image_tag(@company.logo_url, size: "300x300", class: 'img-thumbnail', alt: @company.name)
           = link_to "Update logo", edit_logo_path, class:"btn btn-success btn-block btn_margin"
           = link_to "Edit information", edit_company_path(@company), class:"btn btn-primary btn-block btn_margin"
-        .col-md-8.col-lg-8
+        .col-md-8.col-lg-8.col-sm-6.col-xs-12
           h4 Name: #{@company.name}
           h4 Size: #{@company.size ? @company.size.size : "empty"}
           -if @company.site

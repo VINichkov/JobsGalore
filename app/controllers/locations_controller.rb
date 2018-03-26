@@ -67,6 +67,13 @@ class LocationsController < ApplicationController
     end
   end
 
+  def in_location
+    @in_location = InLocations.call(params:in_location_params)
+    unless @in_location.success?
+      render_404
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_location
@@ -76,5 +83,9 @@ class LocationsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def location_params
       params.require(:location).permit(:postcode, :suburb, :state, :page)
+    end
+
+    def in_location_params
+      params.permit(:location, :object, :page)
     end
 end

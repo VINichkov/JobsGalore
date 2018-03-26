@@ -41,7 +41,7 @@ class Ability
       can [ :edit, :update, :destroy], Job do |job|
         job.client==user
       end
-      can [:search], Location
+      can [:search, :in_location], Location
       can [:bill, :cancel_url, :create], Payment
       can [:new, :show, :log_in], Resume
       can :manage, Industryjob
@@ -55,7 +55,7 @@ class Ability
       end
       can [:show, :company_jobs], Company
       can [:new,:show], Job
-      can [:search], Location
+      can [:search, :in_location], Location
       can [:bill, :cancel_url, :create], Payment
       can [:new, :create, :show, :log_in], Resume
       can [ :edit, :update, :destroy], Resume do |resume|
@@ -66,7 +66,7 @@ class Ability
       ##############################################
       can [:show], Job
       can [:show, :company_jobs], Company
-      can [:search], Location
+      can [:search, :in_location], Location
       can [:bill, :cancel_url, :create], Payment
       can [:show, :log_in], Resume
       #can [:index], Industry

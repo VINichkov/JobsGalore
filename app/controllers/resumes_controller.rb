@@ -1,13 +1,10 @@
 class ResumesController < ApplicationController
-  before_action :authenticate_client!, only:[:log_in,:edit, :update, :destroy, :new, :create]
+  before_action :authenticate_client!, only:[:edit, :update, :destroy, :new, :create]
   load_and_authorize_resource :resume
   before_action :set_resume, only: [ :show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
 
   before_action :aplicant!, only: :new
 
-  def log_in
-     redirect_to resume_path(params[:id])
-  end
 
   # GET /resumes/1
   # GET /resumes/1.json
@@ -16,7 +13,7 @@ class ResumesController < ApplicationController
 
   # GET /resumes/new
   def new
-      @resume = Resume.new
+      @resume = Resume.new.decorate
   end
 
   # GET /resumes/1/edit
@@ -26,32 +23,19 @@ class ResumesController < ApplicationController
   # POST /resumes
   # POST /resumes.json
   def create
-    param = resume_params
-    industry = param[:ind]
-    experience=param[:experience]
-    param.delete(:ind)
-    param.delete(:experience)
-    param.delete(:location_name)
-    param[:client] = current_client
-    @resume = Resume.new(param)
-    if experience
-      experience.each do |exp, exp1|
-        if not(exp1[:position].empty?)
-          @resume.experience.new(employer:exp1[:employer], location_id:exp1[:location_id], site:exp1[:site], titlejob:exp1[:position], datestart:exp1[:datestart], dateend:exp1[:dateend], description:exp1[:description] )
-        end
-      end
-    end
-    @resume.industryresume.new(industry:Industry.find_by_id(industry.to_i))
+    @resume = Resume.new(resume_params).decorate
+    @resume.client = current_client if @resume.client.nil?
+    puts @resume.to_s
     respond_to do |format|
       if @resume.save
-        if @resume.client.send_email
-          ResumesMailer.add_resume({mail:@resume.client.email, firstname:@resume.client.firstname, id:@resume.id, title:@resume.title}).deliver_later
+        if @resume.client&.send_email
+          ResumesMailer.add_resume({mail: @resume.client.email, firstname: @resume.client.firstname, id: @resume.id, title: @resume.title}).deliver_later
         end
-        format.html { redirect_to client_root_path, notice: 'Resume was successfully created.' }
-        format.json { render :show, status: :created, location: @resume }
+        format.html {redirect_to client_root_path, notice: 'Resume was successfully created.'}
+        format.json {render :show, status: :created, location: @resume}
       else
-        format.html { render :new }
-        format.json { render json: @resume.errors, status: :unprocessable_entity }
+        format.html {render :new}
+        format.json {render json: @resume.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -59,31 +43,8 @@ class ResumesController < ApplicationController
   # PATCH/PUT /resumes/1
   # PATCH/PUT /resumes/1.json
   def update
-    param = resume_params
-    if param[:location_id].nil? or param[:location_id].empty?
-      param[:location_id]=find_location(param[:location_name])
-    end
-    industry = param[:ind]
-    experience=param[:experience]
-    param.delete(:ind)
-    param.delete(:experience)
-    param.delete(:location_name)
-    param[:client] = current_client
-    @resume.experience.destroy_all
-    if experience
-      experience.each do |exp, exp1|
-        if not(exp1[:position].empty?)
-            if exp1[:location_id].nil? or exp1[:location_id].empty?
-              exp1[:location_id]=find_location(exp1[:location_name])
-            end
-            @resume.experience.new(employer:exp1[:employer], location_id:exp1[:location_id], site:exp1[:site], titlejob:exp1[:position], datestart:exp1[:datestart], dateend:exp1[:dateend], description:exp1[:description] )
-          end
-      end
-    end
-    @resume.industryresume.destroy_all
-    @resume.industryresume.new(industry:Industry.find_by_id(industry))
     respond_to do |format|
-      if @resume.update(param)
+      if @resume.update(resume_params)
         format.html { redirect_to client_root_path, notice: 'Resume was successfully updated.' }
         format.json { render :show, status: :ok, location: @resume }
       else

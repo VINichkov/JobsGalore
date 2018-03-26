@@ -1,0 +1,14 @@
+- meta_head(  title:"#{@in_location.name}",
+        description: "#{@in_location.name}",
+        keywords: "#{@in_location.name}")
+.container
+  h1 ="#{@in_location.name}"
+  .col-lg-8.col-md-9.col-sm-12
+    - if @in_location.type == Objects::JOBS
+      = render partial:'inc/job', collection: @in_location.objs
+    - elsif @in_location.type==Objects::COMPANIES
+      = render partial:'inc/company', collection: @in_location.objs
+    - elsif @in_location.type==Objects::RESUMES
+      = render partial:'inc/resume', collection: @in_location.objs
+.text-center
+  = will_paginate_mini @in_location.objs

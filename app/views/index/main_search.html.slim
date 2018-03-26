@@ -1,11 +1,11 @@
 .container
   h1 =@result.name
   .col-lg-8.col-md-9.col-sm-12
-    - if @result.name == 'Jobs'
+    - if @result.type == Objects::JOBS
       = render partial: 'inc/job', collection: @result.objs
-    - elsif @result.name=='Companies'
+    - elsif @result.type==Objects::COMPANIES
       = render partial: 'inc/company', collection: @result.objs
-    - else @result.name=='Resumes'
+    - else @result.type==Objects::RESUMES
       = render partial: 'inc/resume', collection: @result.objs
 .text-center
-  = will_paginate_mini @objs
+  = will_paginate_mini @result.objs

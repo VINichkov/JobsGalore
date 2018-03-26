@@ -24,7 +24,7 @@ class Clients::RegistrationsController < Devise::RegistrationsController
                      character: param[:character],
                      password: param[:password],
                      gender:param[:gender]})
-     resource.company.new(name: param[:company_name],
+     resource.company = Company.new(name: param[:company_name],
                           location_id:param[:location_id],
                           recrutmentagency:param[:recrutmentagency])
      resource.save
@@ -42,7 +42,7 @@ class Clients::RegistrationsController < Devise::RegistrationsController
      else
        clean_up_passwords resource
        set_minimum_password_length
-       puts resource
+       Rails.logger.debug resource
        respond_with resource, action: sign_up_employer_path
      end
    end

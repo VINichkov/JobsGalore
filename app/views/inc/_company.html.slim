@@ -1,4 +1,4 @@
-.panel.panel-default
+.panel.panel-default.hidden-xs
   .panel-body
     .col-lg-3.col-md-3.col-sm-3.col-xs-12.text-center
       = link_to(image_bg(company.logo_url, "150px", "150px", "120px"), company)
@@ -15,8 +15,29 @@
             |Recruitment agency &nbsp;
       p
         = company.description_text + "..."
-      p
-        | #{company.industry.name} - #{company.location.name}
+      span
+        = link_industry(company.industry.name, company.industry, Objects::COMPANIES, class: 'text-success')
+      | &nbsp; - &nbsp;
+      span
+        = link_location(company.location.name, company.location, Objects::COMPANIES, class: 'text-warning')
+.row.border_top.hidden-lg.hidden-md.hidden-sm
+  h3
+    = link_to company.name, company
+  p
+  - if company.site
+    p
+      = link_to company.site, company.site, rel: "nofollow"
+  - if company.recrutmentagency
+    p
+      strong
+        |Recruitment agency &nbsp;
+  p
+    = company.description_text + "..."
+  span
+    = link_industry(company.industry.name, company.industry, Objects::COMPANIES, class: 'text-success')
+  | &nbsp; - &nbsp;
+  span
+    = link_location(company.location.name, company.location, Objects::COMPANIES, class: 'text-warning')
 
 
 

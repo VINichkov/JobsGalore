@@ -7,8 +7,8 @@
         p = resume.salary
       p
         = resume.description_text + "..."
-      span.text-warning
-        = resume.location.name
+      span
+        = link_location(resume.location.name, resume.location, Objects::RESUMES, class: 'text-warning')
     .col-lg-2.col-md-2.col-sm-2
       - if current_client && (resume.client == current_client || current_client.admin?)
         = render 'inc/btn', object: resume, option: {cl: "dropdown", class: 'resume', type: 3}
@@ -37,7 +37,7 @@
     = (current_client && (resume.client == current_client || current_client.admin? || current_client.resp?)) ? resume.client.full_name : "Anonymous"
   | &nbsp; - &nbsp;
   span.text-warning
-    = resume.location.name
+    = link_location(resume.location.name, resume.location, Objects::RESUMES, class: 'text-warning')
   - if resume.salary.blank?
     p = resume.salary
   p

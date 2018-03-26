@@ -1,5 +1,5 @@
-- meta_head(  title:"#{@by_category[:obj][:name]} by Category",
-        description: "#{@by_category[:obj][:name]} by Category",
-        keywords: "#{@by_category[:obj][:name]} by Category")
+- meta_head(  title:"#{@by_category.obj[:name]} by Category",
+        description: "#{@by_category.obj[:name]} by Category",
+        keywords: "#{@by_category.obj[:name]} by Category")
 .container
-  =by_category(category:@by_category[:category], name:@by_category[:obj][:name],code:@by_category[:obj][:code])
+  =render 'inc/by_category', type:@by_category.obj, category: @by_category.category

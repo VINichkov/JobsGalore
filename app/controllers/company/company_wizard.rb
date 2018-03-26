@@ -52,7 +52,7 @@ module Wizard
   def admin_create_member
     @client = Client.new(client_params)
     @id = params.require(:id).permit(:id).to_h
-    puts @id[:id]
+    Rails.logger.debug @id[:id]
     respond_to do |format|
       if @client.save
         Responsible.create(client_id:@client.id, company_id:@id[:id])

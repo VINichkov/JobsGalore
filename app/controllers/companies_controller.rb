@@ -1,26 +1,10 @@
 require 'company/company_wizard'
 require 'company/company_admin'
 class CompaniesController < ApplicationController
-
   include Wizard
   include Admin
-  before_action :admin!, only: [:admin_show,
-                                :admin_edit,
-                                :admin_update,
-                                :admin_destroy,
-                                :admin_edit_logo,
-                                :admin_destroy_member,
-                                :admin_show_member_of_team,
-                                :show_member_of_team,
-                                :admin_update_member,
-                                :admin_edit_member,
-                                :admin_index_job,
-                                :admin_new_job]
-  load_and_authorize_resource :company, only:[:show,
-                                              :edit,
-                                              :update,
-                                              :destroy,
-                                              :team]
+
+  load_and_authorize_resource :company
 
   before_action :set_member, only: [:admin_destroy_member,
                                     :admin_show_member_of_team,
@@ -39,14 +23,6 @@ class CompaniesController < ApplicationController
                                      :admin_destroy,
                                      :admin_edit_logo]
   before_action :current_company, only:[:settings_company, :edit_logo]
-  before_action :authenticate_client!, only:[:settings_company,
-                                             :edit_logo,
-                                             :edit,
-                                             :update,
-                                             :destroy]
-
-  #company
-
 
   def settings_company
   end
