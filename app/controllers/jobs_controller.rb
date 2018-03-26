@@ -22,7 +22,7 @@ class JobsController < ApplicationController
     @job = Job.new(job_params)
     @job.client = current_client if @job.client.nil?
     @job.company = current_client.company if @job.company.nil?
-
+    respond_to do |format|
       if @job.save
         format.html { redirect_to client_root_path, notice: 'Job was successfully created.' }
       else
