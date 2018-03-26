@@ -442,10 +442,9 @@ puts "== #{Time.now - ttime } end seed"
 end
 
 #version 2
-if 1==2
+if 1==1
   #step
   empty = Industry.find_by_name('Other')
-  empty.save!
   Job.all.each do |job|
     ind = Industryjob.find_by_job_id(job.id)&.industry
     if ind
