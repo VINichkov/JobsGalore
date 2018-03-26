@@ -5,7 +5,7 @@ class CreatePayment
     option = context.params[:item_number][0]
     type=context.params[:item_number][1]
     product_id = context.params[:item_number][2..params[:item_number].length-1]
-    Payment.create!(
+    Payment.create(
         params: context.params.to_s,
         product_id: product_id,
         kind:type,
