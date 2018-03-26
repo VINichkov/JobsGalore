@@ -13,7 +13,7 @@ class CreatePayment
         status: context.params[:payment_status],
         transaction_id: context.params[:txn_id]
     )
-    type=='2' ? obj = Job.find_by_id(product_id) : obj Resume.find_by_id(product_id)
+    type=='2' ? obj = Job.find_by_id(product_id) : obj=Resume.find_by_id(product_id)
       case option
         when '1'
           obj.urgent_on
