@@ -442,7 +442,7 @@ puts "== #{Time.now - ttime } end seed"
 end
 
 #version 2
-if 1==1
+if 1==2
   #step
   empty = Industry.find_by_name('Other')
   Job.all.each do |job|
@@ -470,7 +470,7 @@ if 1==1
     end
   end
 end
-if 1==1
+if 1==2
   Client.all.each do |client|
     company = Responsible.find_by_client_id(client.id)&.company
     if company
