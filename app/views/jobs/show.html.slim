@@ -4,7 +4,9 @@
                 keywords: @job.keywords,
                 url: job_url(@job),
                 image: @job.company.logo_url,
-                published: @job.updated_at})
+                published: @job.updated_at,
+                card: 'summary_large_image',
+                user: '@JobsGalore_AU'})
   .container.hidden-xs.hidden-sm
     .col-lg-8.col-md-8
       .row.well

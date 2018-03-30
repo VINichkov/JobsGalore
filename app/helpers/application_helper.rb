@@ -31,6 +31,11 @@ module ApplicationHelper
     meta_tag "og:url", arg[:url]
     meta_tag "og:image", arg[:image]
     meta_tag "article:published_time", arg[:published]
+    meta_tag "twitter:card",arg[:card]
+    meta_tag "twitter:site",arg[:user]
+    meta_tag "twitter:title",arg[:title]
+    meta_tag "twitter:description",arg[:description]
+    meta_tag "twitter:image:src",arg[:image]
   end
 
   def class_extras(object)
