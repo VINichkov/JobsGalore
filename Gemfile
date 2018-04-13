@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.4.2'
+ruby '2.5.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.4'#, '>= 5.0.0.1'
+gem 'rails', '~> 5.2.0.beta1'#, '~> 5.0.4'#, '>= 5.0.0.1'
 # Use postgresql as the database for Active Record
 gem 'pg'#, '~> 0.18'
 # Use Puma as the app server
@@ -28,18 +28,18 @@ gem 'bootstrap-sass'#, '~> 3.3.6'
 gem 'jquery-rails'
 gem 'will_paginate'#, '~> 3.1.0'
 gem 'social-share-button'
-gem 'cancancan', '~> 2.0.0'
-gem 'devise','~> 4.3.0'
+gem 'cancancan'#, '~> 2.0.0'
+gem 'devise','~> 4.4.3'
 gem 'dkim'
 gem 'markitdown'
 gem 'interactor'
 
 
 gem 'twitter'
-gem 'will_paginate-bootstrap' ,'~> 1.0.1'
+gem 'will_paginate-bootstrap'# ,'~> 1.0.1'
 #gem 'bcrypt', '~>3.1.11'
 
-gem "html_truncator", "~>0.4"
+gem "html_truncator"#, "~>0.4"
 gem 'slim-rails'
 gem 'slim'
 
@@ -69,9 +69,6 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen'#, '~> 2.0.0'
-  gem 'rack-mini-profiler', require: false
-  gem 'flamegraph'
-  gem 'stackprof'
 
 
 end
@@ -81,7 +78,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #gem 'spreadsheet'
 gem 'markdown-rails'
 
-gem 'sitemap_generator'
 #gem 'sidekiq'
 #gem 'redis'
 #gem 'redis-namespace'

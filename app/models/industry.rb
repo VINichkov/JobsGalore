@@ -6,6 +6,6 @@ class Industry < ApplicationRecord
   has_many :gateway, dependent: :destroy
 
   def self.all
-    @@all_cache ? @@all_cache : @@all_cache=super
+    @@all_cache ||=super
   end
 end

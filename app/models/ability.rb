@@ -14,17 +14,18 @@ class Ability
         (client==user) || (client.company.client.find_by_id(user.id))
       end
       can [:new_member, :create_member] , Client
-
-
       can [:settings_company, :edit_logo,  :edit, :update, :destroy, :edit_photo] , Company do |company|
         company.client.find_by_id(user.id)
       end
-      can [:show, :company_jobs], Company
-      can [:new, :create, :show], Job
+      can [:new] , Company do |company|
+        user.company.nil?
+      end
+      can [:show, :create, :company_jobs], Company
+      can [:new, :create_job, :show], Job
       can [:edit, :update, :destroy], Job do |job |
         job.company.client.include?(user)
       end
-      can [:search], Location
+      can [:search, :in_location], Location
       can [:bill, :cancel_url, :create], Payment
       can [:new, :show, :log_in], Resume
 
@@ -37,7 +38,7 @@ class Ability
         client==user
       end
       can [:show, :company_jobs], Company
-      can [:new, :create, :show], Job
+      can [:new, :create_job, :show, :create_temporary], Job
       can [ :edit, :update, :destroy], Job do |job|
         job.client==user
       end
@@ -47,28 +48,28 @@ class Ability
       can :manage, Industryjob
 
 
-    elsif user.character == 'aplicant'
-      Rails.logger.debug "Cancan:: Aplicant"
+    elsif user.character == 'applicant'
+      Rails.logger.debug "Cancan:: Applicant"
       #############################################
       can [:edit, :update, :destroy, :profile, :settings, :edit_photo] , Client do |client|
         client==user
       end
       can [:show, :company_jobs], Company
-      can [:new,:show], Job
+      can [:show], Job
       can [:search, :in_location], Location
       can [:bill, :cancel_url, :create], Payment
-      can [:new, :create, :show, :log_in], Resume
+      can [:new, :show, :create_temporary,  :create_resume], Resume
       can [ :edit, :update, :destroy], Resume do |resume|
         resume.client_id == user.id
       end
     else
       Rails.logger.debug "Cancan:: Other"
       ##############################################
-      can [:show], Job
-      can [:show, :company_jobs], Company
+      can [:new, :show, :create_temporary,  :create_job], Job
+      can [:new, :create, :show, :company_jobs], Company
       can [:search, :in_location], Location
       can [:bill, :cancel_url, :create], Payment
-      can [:show, :log_in], Resume
+      can [:new, :show, :create_temporary,  :create_resume], Resume
       #can [:index], Industry
     end
 

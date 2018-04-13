@@ -25,6 +25,7 @@ class CompaniesController < ApplicationController
   before_action :current_company, only:[:settings_company, :edit_logo]
 
   def settings_company
+
   end
 
   def edit_logo
@@ -43,7 +44,15 @@ class CompaniesController < ApplicationController
 
   # GET /companies/new
   def new
-    @company = Company.new
+    Rails.logger.debug "CompaniesController::new session #{session.to_json}"
+    if session[:workflow]
+      session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
+    elsif current_client
+      session[:workflow] = ClientWorkflow.desirialize(current_client)
+    else
+      render_404
+    end
+    @company = Company.new(location: session[:workflow].client.location ? session[:workflow].client.location : Location.default ).decorate
   end
 
   # GET /companies/1/edit
@@ -53,12 +62,23 @@ class CompaniesController < ApplicationController
   # POST /companies
   # POST /companies.json
   def create
-    @company = Company.new(company_params)
-    respond_to do |format|
-      if @company.save
-        format.html { redirect_to @company, notice: 'Company was successfully created.' }
-      else
-        format.html { render :new }
+    Rails.logger.debug "CompaniesController::create "
+    if session[:workflow]
+      session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
+      session[:workflow].company = Company.new(company_params).decorate
+      Rails.logger.debug "CompaniesController::@company = #{session[:workflow].company.to_json}"
+      respond_to do |format|
+        if session[:workflow].company.save
+          session[:workflow].client.save!
+          Rails.logger.debug "CompaniesController::create session #{session[:workflow].to_json}"
+          if current_client
+            format.html { redirect_to session[:workflow].url ? session[:workflow].url : client_root_path, notice: 'Company was successfully created.' }
+          else
+            format.html { redirect_to session[:workflow].url ? session[:workflow].url : session[:workflow].company, notice: 'Company was successfully created.' }
+          end
+        else
+          format.html { render :new }
+        end
       end
     end
   end

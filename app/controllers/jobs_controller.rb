@@ -1,30 +1,43 @@
 class JobsController < ApplicationController
-  before_action :authenticate_client!, only:[:new, :edit, :update, :destroy]
   load_and_authorize_resource :job
   before_action :set_job, only: [:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
-  before_action :employer!, only: :new
+  #before_action :employer!, only: :new
 
   def show
+    session[:workflow] = nil
   end
 
   # GET /jobs/new
   def new
-      @job = Job.new.decorate
+    session[:workflow] = nil
+    session[:workflow] = JobWorkflow.new(Job.new.decorate)
+    if current_client
+      session[:workflow].client = current_client
+    end
+    @job = session[:workflow].job
   end
 
   # GET /jobs/1/edit
   def edit
   end
 
+  def create_temporary
+    Rails.logger.debug "JobController::create_temporary session= #{session.to_json}"
+    session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
+    session[:workflow].job = Job.new(job_params)
+    respond_to do |format|
+      format.html { redirect_to session[:workflow].url}
+    end
+  end
+
   # POST /jobs
   # POST /jobs.json
-  def create
-    @job = Job.new(job_params)
-    @job.client = current_client if @job.client.nil?
-    @job.company = current_client.company if @job.company.nil?
+  def create_job
+    session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
+    @job = session[:workflow].job.decorate
     respond_to do |format|
       if @job.save
-        format.html { redirect_to client_root_path, notice: 'Job was successfully created.' }
+        format.html { redirect_to session[:workflow].url, notice: 'Job was successfully created.' }
       else
         format.html { render :new }
       end
@@ -125,11 +138,7 @@ class JobsController < ApplicationController
   end
 
   private
-    def employer!
-      if not current_client.resp?
-        redirect_to root_path, alert: "Please register as an employer"
-      end
-    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_job
       @job = Job.find(params[:id]).decorate

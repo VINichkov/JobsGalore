@@ -12,6 +12,12 @@ class Company < ApplicationRecord
   validates :name, presence: true
   #validates :location_id, presence: true
 
+  def save
+    if self.industry.nil?
+      self.industry=Industry.find_by_name('Other')
+    end
+    super
+  end
 
   protected
 

@@ -1,7 +1,8 @@
 class Client < ApplicationRecord
+
   # Include default devise modules. Others available are:
    #:omniauthable
-  before_save :rename
+  before_save :rename, :type
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -63,7 +64,19 @@ class Client < ApplicationRecord
   end
 
   def full_name
-    @full_name ? @full_name : @full_name = "#{self.firstname} #{self.lastname}".freeze
+    @full_name ||= self.firstname+' '+self.lastname
+  end
+
+  def type
+    if self.character.nil?
+      self.character='applicant'
+    elsif character == 'on'
+      self.character = 'employer'
+    end
+  end
+
+  def log
+    Rails.logger.debug "Зашли"
   end
 
 end

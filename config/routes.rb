@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   #devise_for :clients
 
-  resources :companies, only: [:show, :edit, :update, :destroy]
+  resources :companies, only: [:new,:create, :show, :edit, :update, :destroy]
   get "/edit_logo", to: 'companies#edit_logo'
   get "/settings_company", to: 'companies#settings_company'
   get '/company_jobs/:id', to:'companies#company_jobs', as: 'jobs_at_company'
@@ -110,9 +110,14 @@ Rails.application.routes.draw do
   resources :properts, only:[:index, :new, :create, :edit, :update, :destroy]
   resources :payments, only:[:show,:index]
 
+  resources :jobs, only:[:new, :show, :edit, :update, :destroy]
+  post "job_create/", to: "jobs#create_temporary", as: 'create_job'
+  get "jobs/", to: "jobs#create_job", as: 'jobs'
 
-  resources :jobs, only:[:new, :create, :show, :edit, :update, :destroy]
-  resources :resumes, only:[:new, :create, :show, :edit, :update, :destroy]
+  resources :resumes, only:[:new, :show, :edit, :update, :destroy]
+  post "resume_create/", to: "resumes#create_temporary", as: 'create_resume'
+  get "resumes/", to: "resumes#create_resume", as: 'resumes'
+
   get "/log_in/:id", to: "resumes#log_in", as: 'log_in'
   root  to: 'index#main'
   get "/terms_and_conditions", to: 'index#terms_and_conditions'

@@ -1,5 +1,7 @@
 class Location < ApplicationRecord
+  require 'benchmark'
   @@major_city=nil
+  @@default = nil
 
   has_many :client, dependent: :destroy
   has_many :company, dependent: :destroy
@@ -10,7 +12,7 @@ class Location < ApplicationRecord
 
 
   def name
-    @name ? @name : @name = "#{self.suburb}, #{self.state}".freeze
+    @name ||= self.suburb+', '+self.state
   end
 
   protected
@@ -18,8 +20,15 @@ class Location < ApplicationRecord
   scope :search, ->(query) {where("locations.fts @@ to_tsquery(:query)",{query:query})}
 
   def self.major
-    @@major_city ? @@major_city : @@major_city = select(:id,:suburb).where(suburb:["Sydney", "Melbourne", "Brisbane"]).all
+    @@major_city ||= select(:id,:suburb).where(suburb:["Sydney", "Melbourne", "Brisbane"]).all
       #@@major_city = select(:id,:suburb).where(suburb:["Sydney", "Melbourne", "Brisbane", "Gold Coast", "Perth", "Adelaide", "Hobart", "Darwin", "Canberra"]).all
   end
+
+
+
+  def self.default
+    @@default1 ||= find_by_suburb('Sydney')
+  end
+
 
 end

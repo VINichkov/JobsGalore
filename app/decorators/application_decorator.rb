@@ -5,23 +5,23 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   def description_meta
-    @description_meta ? @description_meta : @description_meta = markdown_to_text(object.description, 300)
+    @description_meta ||= markdown_to_text(object.description, 300)
   end
 
   def description_text
-    @description_text ? @description_text : @description_text = markdown_to_text(object.description, 300)
+    @description_text ||= markdown_to_text(object.description, 300)
   end
 
   def description_html
-    (@description_html ? @description_html : @description_html = RDiscount.new(object.description).to_html) if object.description
+    (@description_html ||= RDiscount.new(object.description).to_html) if object.description
   end
 
   def render_description
-    (@render_description ? @render_description : @render_description = self.description_html.gsub('<img',"<img class=\"img-thumbnail center-block\"").gsub('<a',"<a rel=\"nofollow\"").html_safe) if self.description_html
+    (@render_description ||= self.description_html.gsub('<img',"<img class=\"img-thumbnail center-block\"").gsub('<a',"<a rel=\"nofollow\"").html_safe) if self.description_html
   end
 
   def posted_date
-    @date ? @date : @date = object.created_at.strftime("%d %B %Y")
+    @date ||= object.created_at.strftime("%d %B %Y")
   end
 
   private

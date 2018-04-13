@@ -4,7 +4,7 @@ module PaymentsHelper
         cmd: '_xclick',
         charset: 'utf-8',
         business: 'accounting@jobsgalore.eu',
-        return: params[:type]=='2' ? job_url(params[:id]) : resume_url(params[:id]),
+        return: url_for(params[:id]),
         cancel_return: cancel_url_url,
         notify_url: payments_url,
         item_number:params[:item_number],

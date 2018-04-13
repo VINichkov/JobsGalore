@@ -1,4 +1,5 @@
-= form_for @resume do |f|
+-option||={}
+= form_for @resume, url:option[:url] do |f|
   hr.colorgraph
   - if @resume.errors.any?
     #error_explanation
@@ -26,8 +27,8 @@
                 name: "resume[location",
                 id: "resume_location_id",
                 route:'/search_locations/',
-                defaultName: @resume.location ? "#{@resume.location.suburb}, #{@resume.location.state}" : "#{current_client.location.suburb}, #{current_client.location.state}",
-                defaultId: @resume.location ? @resume.location.id : current_client.location.id)
+                defaultName: @resume.location ? @resume.location.name : (current_client ? current_client.location.name : Location.default.name),
+                defaultId: @resume.location ? @resume.location.id : (current_client ? current_client.location.id: Location.default.id))
   .form-group
     =f.label :industry, "Professional area"
     br

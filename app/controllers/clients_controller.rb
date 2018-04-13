@@ -1,6 +1,7 @@
 class ClientsController < ApplicationController
   load_and_authorize_resource :client
   before_action :set_client, only: [:show, :edit,:update, :destroy,:change_type, :destroy_member, :admin_edit_photo,:admin_show,:admin_edit,:admin_update,:admin_destroy ]
+  before_action :current_company, only: [:profile, :settings, :team]
   before_action :authenticate_client!
 
   # GET /clients
@@ -161,13 +162,14 @@ class ClientsController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
-    def set_client
-      @client = Client.find(params[:id])
-    end
+  def set_client
+    @client = Client.find(params[:id])
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def client_params
-        params.require(:client).permit(:firstname, :lastname, :email, :phone, :password, :character, :photo, :gender, :location_id, :birth, :send_email, :page)
-    end
+  def client_params
+    params.require(:client).permit(:firstname, :lastname, :email, :phone, :password, :character, :photo, :gender, :location_id, :birth, :send_email, :page)
+  end
 end

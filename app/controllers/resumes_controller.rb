@@ -1,41 +1,52 @@
 class ResumesController < ApplicationController
-  before_action :authenticate_client!, only:[:edit, :update, :destroy, :new, :create]
+  before_action :authenticate_client!, only:[:edit, :update, :destroy]
   load_and_authorize_resource :resume
   before_action :set_resume, only: [ :show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
 
-  before_action :aplicant!, only: :new
+  #before_action :applicant!, only: :new
 
 
   # GET /resumes/1
   # GET /resumes/1.json
   def show
+    session[:workflow] = nil
   end
 
   # GET /resumes/new
   def new
-      @resume = Resume.new.decorate
+    session[:workflow] = nil
+    session[:workflow] = ResumeWorkflow.new(Resume.new.decorate)
+    if current_client
+      session[:workflow].client = current_client
+    end
+    @resume = session[:workflow].resume
   end
 
+  def create_temporary
+    Rails.logger.debug "ResumesController:create_temporary session= #{session.to_json}"
+    session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
+    session[:workflow].resume = Resume.new(resume_params)
+    respond_to do |format|
+      format.html { redirect_to session[:workflow].url}
+    end
+  end
   # GET /resumes/1/edit
   def edit
   end
 
   # POST /resumes
   # POST /resumes.json
-  def create
-    @resume = Resume.new(resume_params).decorate
-    @resume.client = current_client if @resume.client.nil?
-    puts @resume.to_s
+  def create_resume
+    session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
+    @resume = session[:workflow].resume.decorate
     respond_to do |format|
       if @resume.save
         if @resume.client&.send_email
           ResumesMailer.add_resume({mail: @resume.client.email, firstname: @resume.client.firstname, id: @resume.id, title: @resume.title}).deliver_later
         end
-        format.html {redirect_to client_root_path, notice: 'Resume was successfully created.'}
-        format.json {render :show, status: :created, location: @resume}
+        format.html {redirect_to session[:workflow].url, notice: 'Resume was successfully created.'}
       else
         format.html {render :new}
-        format.json {render json: @resume.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -170,7 +181,7 @@ class ResumesController < ApplicationController
 
   private
 
-  def aplicant!
+  def applicant!
     if current_client.resp?
       redirect_to root_path, alert: "Please register as an applicant"
     end

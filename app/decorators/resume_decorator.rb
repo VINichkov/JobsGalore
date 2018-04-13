@@ -2,21 +2,12 @@ class ResumeDecorator < ApplicationDecorator
   delegate_all
   decorates_association :client
   def keywords
-    @keywords ? @keywords : @keywords = "Australia, Resumes, Resume, Galore, Jobsgalore,#{object.title}, Talent in #{object.location.name}, Talent, #{markdown_to_keywords(object.title)}"
+    @keywords ||= "Australia, Resumes, Resume, Galore, Jobsgalore,#{object.title}, Talent in #{object.location.name}, Talent, #{markdown_to_keywords(object.title)}"
   end
 
   def extras(arg)
-    case arg
-      when '1'
-        self.turn :urgent
-      when '2'
-        self.turn :top
-      when '3'
-        self.turn :highlight
-      else
-        return nil
-    end
-    true
+    swich = {'1'=>:urgent, '2'=> :top, '3'=> :highlight}
+    self.turn swich[arg]
   end
 
 

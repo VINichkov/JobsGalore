@@ -37,7 +37,7 @@
     .form-group
       =f.label :type
       br
-      =f.select :character,  options_for_select(["employer", "aplicant", "employee"], @client.character), {:'data-style'=>"btn-default"},{:class=>"selectpicker form-control"}
+      =f.select :character,  options_for_select(["employer", "applicant", "employee"], @client.character), {:'data-style'=>"btn-default"},{:class=>"selectpicker form-control"}
     .form-group
       = f.label "Your birthday"
       br

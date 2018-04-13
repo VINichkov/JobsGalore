@@ -1,66 +1,83 @@
 -option||={}
-= form_for @client, url:option[:url] do |f|
-  - if @client.errors.any?
+= form_for client,as: option[:as], html:option[:html], url:option[:url], method:option[:method]  do |f|
+  - if client.errors.any?
     #error_explanation
-      h2 = "#{pluralize(@client.errors.count, "error")} prohibited this client from being saved:"
+      h2 = "#{pluralize(client.errors.count, "error")} prohibited this client from being saved:"
       ul
-        - @client.errors.full_messages.each do |message|
+        - client.errors.full_messages.each do |message|
           li = message
   hr.colorgraph
     .row
       .col-xs-12.col-sm-6.col-md-6
         .form-group
-          = f.label "Your first name"
+          = f.label :firstname, '*Your first name'
           br
           = f.text_field :firstname, autofocus: true, class:"form-control",placeholder:"First Name"
       .col-xs-12.col-sm-6.col-md-6
         .form-group
-          = f.label "Your surname"
+          = f.label :lastname, "*Your surname"
           br
           = f.text_field :lastname, class:"form-control",placeholder:"Surname"
     .form-group
       = f.label "Gender"
       br
-      =f.select(:gender, options_for_select([['Unidentified',''],['Male','false'],['Female','true']],@client.gender),{}, {class:'form-control','data-style':"btn-default"})
+      =f.select(:gender, options_for_select([['Male','false'],['Female','true']],client.gender),{}, {class:'form-control','data-style':"btn-default"})
     br
     .form-group
       = f.label "Your birthday"
       br
       .input-group.date.datepicker_reg
-        input.form-control[type="text" value =(@client.birth ? @client.birth.strftime("%d %B %Y").to_s : "Empty") name="client[birth]"]
+        input.form-control[type="text" value =(client.birth ? client.birth.strftime("%d %B %Y").to_s : "Empty") name="client[birth]"]
         span.input-group-addon
           i.glyphicon.glyphicon-calendar
     .form-group
-      = f.label "Your location"
+      = f.label "Photo"
+      br
+      = react_component('Fileinput', id: "client_photo", name: "client[photo]", place_holder: "empty")
+    -if option[:devise] && !client.character
+      .form-group
+        = f.label :character, "*Are you an employer?"
+        .checkbox
+          label
+            input[type="checkbox" name="client[character]"]
+              |Employer
+    .form-group
+      = f.label :location, "*Your location"
       br
       = react_component('Autocomplete',
-                        className: "form-control dropdown-toggle",
-                        name: "client[location",
-                        id: "client_location_id",
-                        route:'/search_locations/',
-                        defaultName:@client.location&.name,
-                        defaultId:@client.location&.id)
+              className: "form-control dropdown-toggle",
+              name: "client[location",
+              id: "client_location_id",
+              route: '/search_locations/',
+              defaultName: client.location ? client.location.name :  Location.default.name,
+              defaultId: client.location ? client.location.id :  Location.default.id)
     .form-group
       = f.label "Your phone number"
       br
-      = react_component('InputMask', id: "phone", name: "client[phone]", class_name: "form-control", dataformat: "+61 d dddd ddddd", placeholder: "+61 9 9999 99999",defaultValue:@client.phone)
-    -if option[:url]== {:action=>"create_member"}
+      = react_component('InputMask', id: "phone", name: "client[phone]", class_name: "form-control", dataformat: "+61 d dddd ddddd", placeholder: "+61 9 9999 99999",defaultValue:@client&.phone)
+    -if (option[:url]== {:action=>"create_member"}) || (option[:devise])
       .form-group
-        = f.label "Email"
+        = f.label :email, "*Your email"
         br
         = f.email_field :email, autofocus: true, class: "form-control", placeholder: "surname@hotmail.com"
       .form-group
-        = f.label :password
+        = f.label :password, "*Password"
         - if @minimum_password_length
           em
             = " (#{@minimum_password_length} characters minimum)"
         br
         = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "**************"
       .form-group
-        = f.label :password_confirmation
+        = f.label :password_confirmation, "*Password confirmation"
         br
         = f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "**************"
     hr.colorgraph
+    -if option[:devise]
+      .row
+        .col-xs-6.col-md-6
+          = f.submit "Register", class: "btn btn-primary btn-block"
+        = render "devise/shared/links"
+    -else
       .row
         .col-xs-12.col-sm-6.col-md-6
           = f.submit class: "btn btn-primary btn-block"

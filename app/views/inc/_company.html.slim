@@ -14,7 +14,7 @@
           strong
             |Recruitment agency &nbsp;
       p
-        = company.description_text + "..."
+        = company.description_text.to_s + "..."
       span
         = link_industry(company.industry.name, company.industry, Objects::COMPANIES, class: 'text-success')
       | &nbsp; - &nbsp;
@@ -32,7 +32,7 @@
       strong
         |Recruitment agency &nbsp;
   p
-    = company.description_text + "..."
+    = company.description_text.to_s + "..."
   span
     = link_industry(company.industry.name, company.industry, Objects::COMPANIES, class: 'text-success')
   | &nbsp; - &nbsp;

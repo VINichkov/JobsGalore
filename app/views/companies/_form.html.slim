@@ -25,19 +25,13 @@
                 className: "form-control dropdown-toggle",
                 name: "company[location",
                 id: "company_location_id",
-                defaultName: @company.location ? "#{@company.location.suburb}, #{@company.location.state}":nil,
-                defaultId:@company.location ? @company.location.id : nil)
+                route:'/search_locations/',
+                defaultName: @company.location ? @company.location.name : Location.default.name,
+                defaultId:@company.location ? @company.location.id : Location.default.id)
       .form-group
         = f.label :industry, "Industry"
         br
-        = react_component("Category",
-                className: "form-control",
-                name: "company[industry_id]",
-                multiple: false,
-                dataStyle: "btn-default",
-                categories: Industry.all,
-                defaultValue:@company.industry)
-
+        = f.collection_select(:industry_id, Industry.select(:id, :name).all, :id, :name, {prompt: true}, {class: "form-control"})
       .form-group
         = f.check_box :recrutmentagency
         |  &nbsp;

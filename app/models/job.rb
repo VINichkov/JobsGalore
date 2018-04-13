@@ -54,16 +54,19 @@ class Job < ApplicationRecord
   end
 
   def salary
-    @salary ? @salary : @salary = calc_salary
+    @salary ||= calc_salary
   end
 
   def title_capitalize
-    @cap ? @cap : @cap = self.title.capitalize
+    @cap ||= self.title.capitalize
   end
 
   def save
     if self.industry.nil?
       self.industry=Industry.find_by_name('Other')
+    end
+    if self.company.nil? && self.client.company
+      self.company = self.client.company
     end
     super
   end

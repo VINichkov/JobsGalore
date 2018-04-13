@@ -20,7 +20,19 @@ class ApplicationController < ActionController::Base
 
 
   def current_company
-    @company = current_client.company
+    Rails.logger.debug "ApplicationController::current_company"
+    Rails.logger.debug "ApplicationController::current_client = #{current_client.to_json}"
+    if current_client.resp?
+      respond_to do |format|
+        if current_client.company.nil?
+          session[:workflow] = ClientWorkflow.new(current_client)
+          format.html { redirect_to session[:workflow].url, notice: 'Please, enter information about your company.' }
+        else
+          @company = current_client.company
+          format.html.none
+        end
+      end
+    end
   end
 
   def render_404
@@ -32,12 +44,9 @@ class ApplicationController < ActionController::Base
     config.default_controller = ApplicationController
   end
 
-  protected
 
   def current_client
     super&.decorate
   end
-
-
 
 end

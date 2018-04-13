@@ -2,9 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 class Adapter
   def initialize(arg = {})
-    @jobs = []
-    @doc = arg[:start_page]
-    @host = arg[:host]
+    @jobs, @doc, @host = [], arg[:start_page], arg[:host]
   end
 
   def read (index = nil)

@@ -1,4 +1,5 @@
-= form_for @job do |f|
+-option||={}
+= form_for @job , url:option[:url] do |f|
   hr.colorgraph
   - if @job.errors.any?
     #error_explanation
@@ -11,7 +12,7 @@
     = f.label :title
     br
     = f.text_field :title, class:"form-control"
-  - if current_client.admin?
+  - if current_client&.admin?
     .form-group
       = f.label :client
       br
@@ -28,8 +29,8 @@
                       name:"job[location",
                       id:"job_location_id",
                       route:'/search_locations/',
-                      defaultName: @job.location ? @job.location.name : current_client.location.name,
-                      defaultId: @job.location ? @job.location.id : current_client.location.id)
+                      defaultName: @job.location ? @job.location.name : (current_client ? current_client.location.name : Location.default.name),
+                      defaultId: @job.location ? @job.location.id : (current_client ? current_client.location.id: Location.default.id))
   .form-group
     = f.label :industry, "Industry"
     br
@@ -45,7 +46,7 @@
         = f.label :max, "Salary max"
         br
         = salary f, :salarymax, class:"form-control", placeholder: "100 000"
-  - if current_client.admin?
+  - if current_client&.admin?
     .form-group
       = f.label :close
       br
