@@ -21,7 +21,7 @@ gem "activerecord-import"
 gem 'react-rails'#, '~>1.10.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "font-awesome-rails"
-
+gem "sitemap_generator"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'
