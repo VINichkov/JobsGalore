@@ -35,7 +35,6 @@ class Autocomplete extends React.Component{
     handleSearchLocations(url){
         $.ajax({url:url,
             success: function (data) {
-                console.log(data);
                 this.setState({locations:data});
             }.bind(this)});
     }
