@@ -27,6 +27,7 @@ class Gateway < ApplicationRecord
     logs = "<p>Started: #{Time.now}</p>"
     begin
       eval "@gate = #{self.script}.new"
+      ind = Industry.find_by_name('Other')
       index = Job.where(company: company, client: client).map do |job|
         {title:job.title, date_end: job.close}
       end
@@ -39,7 +40,7 @@ class Gateway < ApplicationRecord
           new_job[:company] = company
           new_job[:location] = location
           job=Job.new(new_job)
-          #job.industryjob.new(industry: industry)
+          job.industry = ind
           job.save!
         rescue
           logs += "<p>Error: Job #{$!}</p>"

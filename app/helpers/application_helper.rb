@@ -7,9 +7,11 @@ module ApplicationHelper
     content_for :title, text
   end
   def meta_tag(tag, text)
+    puts "meta_#{tag}"
     content_for :"meta_#{tag}", text
   end
   def yield_meta_tag(tag, default_text='')
+    puts "meta_#{tag} = #{default_text}"
     content_for?(:"meta_#{tag}") ? content_for(:"meta_#{tag}") : default_text
   end
 
@@ -22,6 +24,7 @@ module ApplicationHelper
   end
 
   def meta_head(arg={})
+    puts arg
     title arg[:title]
     meta_tag "description",   arg[:description]
     meta_tag "keywords", arg[:keywords]
@@ -31,6 +34,11 @@ module ApplicationHelper
     meta_tag "og:url", arg[:url]
     meta_tag "og:image", arg[:image]
     meta_tag "article:published_time", arg[:published]
+    meta_tag "twitter:card",arg[:card]
+    meta_tag "twitter:site",arg[:user]
+    meta_tag "twitter:title",arg[:title]
+    meta_tag "twitter:description",arg[:description]
+    meta_tag "twitter:image:src",arg[:image]
   end
 
   def class_extras(object)

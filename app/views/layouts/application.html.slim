@@ -13,8 +13,16 @@ html
     meta[property="og:description" content=yield_meta_tag("og:description", "JobsGalore allows you to find work in Australia. JobsGalore is a quality database of CVs and vacancies, and the latest job and staff search services.")]
     meta[property="og:url" content=yield_meta_tag("og:url",root_url)]
     meta[property="og:image" content=yield_meta_tag("og:image",image_url("facebook.png"))]
-    - if content_for? :noindex
-      meta[name="robots" content="noindex, nofollow"]
+    - if yield_meta_tag("twitter:card")!=''
+      meta[name="twitter:card" content=yield_meta_tag("twitter:card")]
+    - if yield_meta_tag("twitter:site")!=''
+      meta[name="twitter:site" content=yield_meta_tag("twitter:site")]
+    - if yield_meta_tag("twitter:title")!=''
+      meta[name="twitter:title" content=yield_meta_tag("twitter:title")]
+    - if yield_meta_tag("twitter:description")!=''
+      meta[name="twitter:description" content=yield_meta_tag("twitter:description")]
+    - if yield_meta_tag("twitter:image:src")!=''
+      meta[name="twitter:image:src" content=yield_meta_tag("twitter:image:src")]
     - if yield_meta_tag("article:published_time")!=''
       meta[property="article:published_time" content= yield_meta_tag("article:published_time")]
     meta[name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"]
