@@ -1,6 +1,6 @@
 class IndexController < ApplicationController
   #authorize_resource only:[:admin]
-  skip_before_action :verify_authenticity_token
+  #skip_before_action :verify_authenticity_token
   def main
     @main = Main.call
   end

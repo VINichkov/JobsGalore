@@ -1,13 +1,13 @@
 class ApplicationWorkflow
   delegate :url_helpers, to: 'Rails.application.routes'
 
-  attr_accessor :state, :class
+  attr_accessor :state, :class, :notice
 
     def self.desirialize(arg)
-      Rails.logger.debug("ApplicationWorkflow::desirialize arg = #{arg.to_json}")
-      if arg["class"]
-        Rails.logger.debug "#{arg["class"]}.desirialize(#{arg})"
+      if  arg.class == Hash and arg["class"]
         eval "#{arg["class"]}.desirialize(#{arg})"
+      else
+        arg
       end
     end
 

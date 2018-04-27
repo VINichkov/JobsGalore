@@ -11,13 +11,13 @@
   .form-group
     = f.label :title, "Title"
     br
-    = f.text_field :title, class:"form-control"
+    = f.text_field :title, class:"form-control", required:"required"
   .row
     .col-md-6.col-lx-6.col-sm-12.col-xs-12
       .form-group
         = f.label :salary
         br
-        = salary f, :salary, class:"form-control", placeholder: "10 000"
+        = salary f, :salary, class:"form-control", placeholder: "10000"
     .col-md-6.col-lx-6.col-sm-12.col-xs-12
       .form-group
         = f.label :industry, "Location"

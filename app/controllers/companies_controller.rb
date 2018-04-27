@@ -22,7 +22,7 @@ class CompaniesController < ApplicationController
                                      :admin_update,
                                      :admin_destroy,
                                      :admin_edit_logo]
-  before_action :current_company, only:[:settings_company, :edit_logo]
+  before_action :set_current_company, only:[:update_logo, :settings_company, :edit_logo]
 
   def settings_company
 
@@ -31,6 +31,16 @@ class CompaniesController < ApplicationController
   def edit_logo
   end
 
+  def update_logo
+    param = company_params
+    respond_to do |format|
+      if param.nil? or @company.update(param)
+        format.html { redirect_to settings_company_path, notice: 'The logotype was successfully updated.' }
+      else
+        format.html { render :edit_logo }
+      end
+    end
+  end
   # GET /companies
   # GET /companies.json
   def index
@@ -44,7 +54,6 @@ class CompaniesController < ApplicationController
 
   # GET /companies/new
   def new
-    Rails.logger.debug "CompaniesController::new session #{session.to_json}"
     if session[:workflow]
       session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
     elsif current_client
@@ -66,11 +75,9 @@ class CompaniesController < ApplicationController
     if session[:workflow]
       session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
       session[:workflow].company = Company.new(company_params).decorate
-      Rails.logger.debug "CompaniesController::@company = #{session[:workflow].company.to_json}"
       respond_to do |format|
         if session[:workflow].company.save
           session[:workflow].client.save!
-          Rails.logger.debug "CompaniesController::create session #{session[:workflow].to_json}"
           if current_client
             format.html { redirect_to session[:workflow].url ? session[:workflow].url : client_root_path, notice: 'Company was successfully created.' }
           else
@@ -92,7 +99,7 @@ class CompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @company.update(company_params)
-        format.html { redirect_to settings_company_path, notice: 'Company was successfully updated.' }
+        format.html { redirect_to settings_company_path, notice: 'The Information about your company was successfully updated.' }
       else
         format.html { render :edit }
       end
@@ -120,7 +127,9 @@ class CompaniesController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_params
-      params.require(:company).permit(:name, :size_id, :location_id, :site, :logo, :recrutmentagency, :description, :realy, :industry_id)
+      if params[:company]
+        params.require(:company).permit(:name, :size_id, :location_id, :site, :logo, :recrutmentagency, :description, :realy, :industry_id)
+      end
     end
 
     def job_params
@@ -129,6 +138,10 @@ class CompaniesController < ApplicationController
 
     def set_jobs
       @client,  @company = params[:id].split('x')
+    end
+
+    def set_current_company
+      @company = current_company
     end
 
     def set_member

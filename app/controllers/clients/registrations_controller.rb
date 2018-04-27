@@ -7,13 +7,11 @@ class Clients::RegistrationsController < Devise::RegistrationsController
      build_resource
      if session[:workflow]
       session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
-      Rails.logger.debug "Clients::RegistrationsController::new @client_wf = #{session[:workflow].to_json}"
       session[:workflow].client= resource
      else
        session[:workflow] = ClientWorkflow.new(resource)
      end
      @client_wf=session[:workflow]
-     Rails.logger.debug "Clients::RegistrationsController::new @client_wf = #{@client_wf.to_json}"
    end
 
   # POST /resource
@@ -35,7 +33,6 @@ class Clients::RegistrationsController < Devise::RegistrationsController
      else
        clean_up_passwords @client_wf.client
        set_minimum_password_length
-       Rails.logger.debug "Не сохранили #{@client_wf.to_json}"
        respond_with @client_wf.client
      end
    end
@@ -87,7 +84,6 @@ class Clients::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up for inactive accounts.
    def after_inactive_sign_up_path_for(resource)
-     Rails.logger.debug "!!!!!!!!! after_inactive_sign_up_path_for____________Зашли #{resource}"
      super(resource)
    end
 

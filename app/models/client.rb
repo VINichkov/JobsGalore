@@ -22,6 +22,7 @@ class Client < ApplicationRecord
     after_assign do |attachment|
       # Auto orient all the images - so they will look as they should
       attachment.convert! '-resize 400x -quality 60 -gravity center', 'jpg'
+
     end
   end
 
@@ -75,8 +76,20 @@ class Client < ApplicationRecord
     end
   end
 
-  def log
-    Rails.logger.debug "Зашли"
-  end
+ def validate_workflow(wf = nil)
+   Rails.logger.debug "Client::validate_workflow #{self.to_json}"
+   Rails.logger.debug "Client::validate_workflow  wf = #{wf}"
+   Rails.logger.debug "Client::validate_workflow  wf == JobWorkflow and !self.resp? #{wf == JobWorkflow and !self.resp?}"
+   Rails.logger.debug "Client::validate_workflow  wf == ResumeWorkflow and self.resp? = #{wf == ResumeWorkflow and self.resp?}"
+   Rails.logger.debug "Client::validate_workflow  wf != ClientWorkflow = #{wf != ClientWorkflow}"
+   if wf && (wf == 'JobWorkflow' and !self.resp?)
+     errors.add(:character, :blank, message: "applicant")
+     true
+   elsif wf && wf == 'ResumeWorkflow' and self.resp?
+     errors.add(:character, :blank, message: "employer")
+     true
+   end
+
+ end
 
 end

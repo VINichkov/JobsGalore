@@ -51,7 +51,7 @@ class InputMask extends React.Component{
 
     render(){
        return(
-           <input style={this.state.style} autoComplete={this.state.autocomplete} id={this.state.id} onInput={this.handleInput} className={this.state.class_name} name={this.state.name} autoFocus="autofocus"  value={this.state.value} placeholder={this.state.placeholder} defaultValue={this.props.defaultValue}></input>
+           <input style={this.state.style} autoComplete={this.state.autocomplete} id={this.state.id} onInput={this.handleInput} className={this.state.class_name} name={this.state.name} autoFocus="autofocus"  value={this.state.value} placeholder={this.state.placeholder} defaultValue={this.props.defaultValue}  required="required"></input>
        );
     }
 }

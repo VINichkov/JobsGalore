@@ -22,11 +22,10 @@ class JobsController < ApplicationController
   end
 
   def create_temporary
-    Rails.logger.debug "JobController::create_temporary session= #{session.to_json}"
     session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
-    session[:workflow].job = Job.new(job_params)
+    session[:workflow].job = Job.new(session[:workflow].job.serializable_hash.merge(job_params))
     respond_to do |format|
-      format.html { redirect_to session[:workflow].url}
+      format.html { redirect_to session[:workflow].url, notice: session[:workflow].notice}
     end
   end
 
@@ -37,7 +36,7 @@ class JobsController < ApplicationController
     @job = session[:workflow].job.decorate
     respond_to do |format|
       if @job.save
-        format.html { redirect_to session[:workflow].url, notice: 'Job was successfully created.' }
+        format.html { redirect_to session[:workflow].url, notice: 'Job was successfully created.'}
       else
         format.html { render :new }
       end

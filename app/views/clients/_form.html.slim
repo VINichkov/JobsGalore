@@ -12,35 +12,29 @@
         .form-group
           = f.label :firstname, '*Your first name'
           br
-          = f.text_field :firstname, autofocus: true, class:"form-control",placeholder:"First Name"
+          = f.text_field :firstname, autofocus: true, class:"form-control",placeholder:"First Name", required:"required"
       .col-xs-12.col-sm-6.col-md-6
         .form-group
-          = f.label :lastname, "*Your surname"
+          = f.label :lastname, "*Your surname", required:"required"
           br
-          = f.text_field :lastname, class:"form-control",placeholder:"Surname"
-    .form-group
-      = f.label "Gender"
+          = f.text_field :lastname, class:"form-control",placeholder:"Surname", required:"required"
+    -unless (option[:url]== {:action=>"create_member"}) || (option[:devise])
+      .form-group
+        = f.label "Gender"
+        br
+        =f.select(:gender, options_for_select([['Male','false'],['Female','true']],client.gender),{}, {class:'form-control','data-style':"btn-default"})
       br
-      =f.select(:gender, options_for_select([['Male','false'],['Female','true']],client.gender),{}, {class:'form-control','data-style':"btn-default"})
-    br
-    .form-group
-      = f.label "Your birthday"
-      br
-      .input-group.date.datepicker_reg
-        input.form-control[type="text" value =(client.birth ? client.birth.strftime("%d %B %Y").to_s : "Empty") name="client[birth]"]
-        span.input-group-addon
-          i.glyphicon.glyphicon-calendar
-    .form-group
+      .form-group
+        = f.label "Your birthday"
+        br
+        .input-group.date.datepicker_reg
+          input.form-control[type="text" value =(client.birth ? client.birth.strftime("%d %B %Y").to_s : "Empty") name="client[birth]"]
+          span.input-group-addon
+            i.glyphicon.glyphicon-calendar
+    //.form-group
       = f.label "Photo"
       br
       = react_component('Fileinput', id: "client_photo", name: "client[photo]", place_holder: "empty")
-    -if option[:devise] && !client.character
-      .form-group
-        = f.label :character, "*Are you an employer?"
-        .checkbox
-          label
-            input[type="checkbox" name="client[character]"]
-              |Employer
     .form-group
       = f.label :location, "*Your location"
       br
@@ -52,25 +46,32 @@
               defaultName: client.location ? client.location.name :  Location.default.name,
               defaultId: client.location ? client.location.id :  Location.default.id)
     .form-group
-      = f.label "Your phone number"
+      = f.label :phone, "*Your phone number"
       br
       = react_component('InputMask', id: "phone", name: "client[phone]", class_name: "form-control", dataformat: "+61 d dddd ddddd", placeholder: "+61 9 9999 99999",defaultValue:@client&.phone)
+    - if option[:devise] && !client.character
+      .form-group
+        = f.label :character, "*Are you an employer?"
+        .checkbox
+          label
+            input[type="checkbox" name="client[character]"]
+              |Employer
     -if (option[:url]== {:action=>"create_member"}) || (option[:devise])
       .form-group
-        = f.label :email, "*Your email"
+        = f.label :email, "*Your email", required:"required"
         br
-        = f.email_field :email, autofocus: true, class: "form-control", placeholder: "surname@hotmail.com"
+        = f.email_field :email, autofocus: true, class: "form-control", placeholder: "surname@hotmail.com", required:"required"
       .form-group
         = f.label :password, "*Password"
         - if @minimum_password_length
           em
             = " (#{@minimum_password_length} characters minimum)"
         br
-        = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "**************"
+        = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "**************", required:"required"
       .form-group
         = f.label :password_confirmation, "*Password confirmation"
         br
-        = f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "**************"
+        = f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "**************", required:"required"
     hr.colorgraph
     -if option[:devise]
       .row

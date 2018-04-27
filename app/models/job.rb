@@ -1,4 +1,6 @@
 class Job < ApplicationRecord
+  serialize :preferences, Hash
+
   after_create :send_email
   before_save :date_close
   include Rails.application.routes.url_helpers
@@ -69,6 +71,11 @@ class Job < ApplicationRecord
       self.company = self.client.company
     end
     super
+  end
+
+  def merge(object)
+    object1 = self.to_json
+
   end
 
   protected

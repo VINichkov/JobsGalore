@@ -4,7 +4,7 @@ class JobDecorator < ApplicationDecorator
   decorates_association :company
 
   def keywords
-    @keywords ||= "Australia, Job, Jobs, Galore, Jobsgalore,#{object.title}, Job in #{object.location.name}, Company is #{object.company.name}, #{markdown_to_keywords(object.description)}"
+    @keywords ||= "Jobs Galore, Australia, Job, Jobs, Galore, Jobsgalore,#{object.title}, Job in #{object.location.name}, Company is #{object.company.name}, #{markdown_to_keywords(object.description)}"
   end
 
   def extras(arg)

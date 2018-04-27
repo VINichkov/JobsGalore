@@ -1,4 +1,6 @@
 class Resume < ApplicationRecord
+  serialize :preferences, Hash
+
   belongs_to :client
   belongs_to :location
   belongs_to :industry

@@ -6,19 +6,16 @@ class ResumeWorkflow < ApplicationWorkflow
     @resume = resume
     @class='ResumeWorkflow'
     @client =client
-    if @resume.client.nil? and @resume
+    if @resume.client.nil? and @client
       @resume.client = @client
     end
-    Rails.logger.debug("ResumeWorkflow::initialize  = #{self.to_json}")
   end
 
   def self.desirialize(arg=nil)
     if arg
-      Rails.logger.debug("ResumeWorkflow::desirialize #{arg.to_json}")
       if arg["resume"]
         if arg["client"]
           client = (arg["client"]["id"] ? Client.find_by_id(arg["client"]["id"]) : Client.new(arg["client"]))
-          Rails.logger.debug("ResumeWorkflow::desirialize #{arg.to_json}")
         end
         new(arg["resume"]["id"] ? Resume.find_by_id(arg["resume"]["id"]) : Resume.new(arg["resume"]), client)
       else
@@ -36,25 +33,32 @@ class ResumeWorkflow < ApplicationWorkflow
     switch[@state]
   end
 
+  def resume=(arg)
+    @resume = arg
+    if @resume.client.nil? and @client
+      @resume.client = @client
+    end
+  end
 
   def client=(arg)
     @client = arg
-    @client.character = 'applicant'
+    unless @client.character
+      @client.character = 'applicant'
+    end
     @resume&.client = arg
   end
 
   def update
-    Rails.logger.debug("ResumeWorkflow::actualize start #{self.to_json}")
     if @resume.nil?
       @state = :new
-    elsif @resume&.client.nil?
+    elsif @resume&.client.nil? or !@client.persisted?
       @state = :not_client
+
     elsif !@resume.persisted?
       @state = :not_persisted
     else
       @state = :final
     end
-    Rails.logger.debug("ResumeWorkflow::actualize end #{@state}")
   end
 
 end

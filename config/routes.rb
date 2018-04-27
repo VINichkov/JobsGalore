@@ -5,20 +5,18 @@ Rails.application.routes.draw do
   get 'sitemap', to: 'index#sitemap'
   get 'sitemap:id', to: 'index#sitemaps'
 
-  devise_for :clients, controllers:{ registrations: "clients/registrations",
+  devise_for  :clients, controllers:{ registrations: "clients/registrations",
                                      omniauthcallbacks: "clients/omniauthcallbacks",
                                      passwords: "clients/passwords",
                                      confirmations: "clients/confirmations",
                                      sessions: "clients/sessions",
                                      unlocks: "clients/unlocks"}
-  devise_scope :client do
-    get "/sign_up_employer" => "clients/registrations#sign_up_employer"
-    post '/create_employer'=> "clients/registrations#create_employer"
-  end
+  #devise_scope :client do
+  #  get "/sign_up_employer" => "clients/registrations#sign_up_employer"
+  #  post '/create_employer'=> "clients/registrations#create_employer"
+  #end
 
-  get '/team/new/', to: 'clients#new_member', as: 'team_new'
-  post '/team/', to: 'clients#create_member', as: 'team_create'
-  delete '/team/:id', to: 'clients#destroy_member', as: 'team_destroy'
+
 
   #devise_for :clients
 
@@ -26,14 +24,18 @@ Rails.application.routes.draw do
   get "/edit_logo", to: 'companies#edit_logo'
   get "/settings_company", to: 'companies#settings_company'
   get '/company_jobs/:id', to:'companies#company_jobs', as: 'jobs_at_company'
-
+  patch '/update_logo', to:"companies#update_logo", as: 'update_logo'
 
   resources :clients, only: [:create, :edit, :update]#, :destroy
+  get '/team/new/', to: 'clients#new_member', as: 'team_new'
+  post '/team/', to: 'clients#create_member', as: 'team_create'
+  delete '/team/:id', to: 'clients#destroy_member', as: 'team_destroy'
   get "/edit_photo", to: 'clients#edit_photo'
   get '/profile', to: 'clients#profile', as:  'client_root'
   get "/settings", to: 'clients#settings'
   get "/team/", to: 'clients#team', as: 'team'
   get  '/team_change/:id', to: 'clients#change_type', as: 'change_type'
+  patch '/update_photo', to:"clients#update_photo", as: 'update_photo'
 
   resources :locations
   get '/search_locations/:query', to: 'locations#search'

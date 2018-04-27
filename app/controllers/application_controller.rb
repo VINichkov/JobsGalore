@@ -6,8 +6,17 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :clear_session
+
+  private
+  def clear_session
+    if !['resumes','jobs','companies','clients'].include?(controller_name) and !['new','create'].include?(action_name)
+      session[:workflow] = nil if session[:workflow]
+    end
+  end
 
   protected
+
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys:[:location_id, :firstname, :lastname, :phone, :character, :photo, :photo, :gender, :birth])
@@ -20,18 +29,15 @@ class ApplicationController < ActionController::Base
 
 
   def current_company
-    Rails.logger.debug "ApplicationController::current_company"
-    Rails.logger.debug "ApplicationController::current_client = #{current_client.to_json}"
     if current_client.resp?
-      respond_to do |format|
         if current_client.company.nil?
           session[:workflow] = ClientWorkflow.new(current_client)
-          format.html { redirect_to session[:workflow].url, notice: 'Please, enter information about your company.' }
+          redirect_to session[:workflow].url, notice: 'Please, enter information about your company.'
         else
-          @company = current_client.company
-          format.html.none
+          #format.html.none
+          Rails.logger.debug "ApplicationController::current_client.company = #{current_client.company.to_json}"
+          current_client.company
         end
-      end
     end
   end
 

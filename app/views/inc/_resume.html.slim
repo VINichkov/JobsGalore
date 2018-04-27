@@ -15,9 +15,9 @@
       - elsif current_client&.resp?
         .row
           .row.text-center
-            = resume.client.full_name
+            = resume.client&.full_name
           .row.text-center
-            = image_bg(resume.client.photo_url, "130px", "130px", "100px")
+            = image_bg(resume.client&.photo_url, "130px", "130px", "100px")
           .row.text-center
             = "Posted: " +resume.posted_date
       - else
@@ -34,7 +34,7 @@
   h3
     = link_to resume.title, resume
   span.text-success
-    = (current_client && (resume.client == current_client || current_client.admin? || current_client.resp?)) ? resume.client.full_name : "Anonymous"
+    = (current_client && (resume.client == current_client || current_client.admin? || current_client.resp?)) ? resume.client&.full_name : "Anonymous"
   | &nbsp; - &nbsp;
   span.text-warning
     = link_location(resume.location.name, resume.location, Objects::RESUMES, class: 'text-warning')

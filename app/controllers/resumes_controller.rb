@@ -15,7 +15,7 @@ class ResumesController < ApplicationController
   # GET /resumes/new
   def new
     session[:workflow] = nil
-    session[:workflow] = ResumeWorkflow.new(Resume.new.decorate)
+    session[:workflow] = ResumeWorkflow.new(Resume.new.decorate, current_client)
     if current_client
       session[:workflow].client = current_client
     end
@@ -23,11 +23,10 @@ class ResumesController < ApplicationController
   end
 
   def create_temporary
-    Rails.logger.debug "ResumesController:create_temporary session= #{session.to_json}"
     session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
-    session[:workflow].resume = Resume.new(resume_params)
+    session[:workflow].resume = Resume.new(session[:workflow].resume.serializable_hash.merge(resume_params))
     respond_to do |format|
-      format.html { redirect_to session[:workflow].url}
+      format.html { redirect_to session[:workflow].url, notice: session[:workflow].notice}
     end
   end
   # GET /resumes/1/edit
@@ -44,7 +43,7 @@ class ResumesController < ApplicationController
         if @resume.client&.send_email
           ResumesMailer.add_resume({mail: @resume.client.email, firstname: @resume.client.firstname, id: @resume.id, title: @resume.title}).deliver_later
         end
-        format.html {redirect_to session[:workflow].url, notice: 'Resume was successfully created.'}
+        format.html {redirect_to session[:workflow].url, notice: current_client ? 'The CV was successfully created.' : flash[:notice]}
       else
         format.html {render :new}
       end
@@ -56,7 +55,7 @@ class ResumesController < ApplicationController
   def update
     respond_to do |format|
       if @resume.update(resume_params)
-        format.html { redirect_to client_root_path, notice: 'Resume was successfully updated.' }
+        format.html { redirect_to client_root_path, notice: 'The CV was successfully updated.' }
         format.json { render :show, status: :ok, location: @resume }
       else
         format.html { render :edit }
@@ -70,7 +69,7 @@ class ResumesController < ApplicationController
   def destroy
     @resume.destroy
     respond_to do |format|
-      format.html { redirect_to client_root_path, notice: 'Resume was successfully destroyed.' }
+      format.html { redirect_to client_root_path, notice: 'The CV was successfully destroyed.' }
     end
   end
 

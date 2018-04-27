@@ -13,6 +13,6 @@ class CompanyDecorator < ApplicationDecorator
   end
 
   def keywords
-    @keywords ||= "Australia, Job, Jobs, Galore, Jobsgalore,#{object.name}, #{markdown_to_keywords(object.description)}"
+    @keywords ||= "Jobs Galore, Australia, Job, Jobs, Galore, Jobsgalore,#{object.name}, #{markdown_to_keywords(object.description)}"
   end
 end
