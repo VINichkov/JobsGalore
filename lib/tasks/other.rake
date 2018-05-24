@@ -18,4 +18,9 @@ namespace :other do
     puts "! Task:extras_check: End"
   end
 
+  desc "ping to twitter bots"
+  task :ping => :environment  do
+    open( "https://botmelbourne.herokuapp.com/")
+  end
+
 end
