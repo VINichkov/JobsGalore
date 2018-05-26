@@ -14,11 +14,11 @@
       .row.well
         h1.text-center[itemprop="title"]
           = @job.title_capitalize
-        p
+        p[itemprop="description"]
           = @job.render_description
     .col-lg-4.col-md-4
       .panel.panel-default
-        .panel-body
+        .panel-body[itemprop="hiringOrganization" itemscope itemtype="http://schema.org/Organization"]
           =company_in_jobs(@job.company)
           p
         .well

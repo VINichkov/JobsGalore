@@ -121,7 +121,7 @@ class Job < ApplicationRecord
     text_query<< "fts @@ to_tsquery(:value)" if query[:value] != ""
     if not query[:salary].blank?
       query[:salary] = query[:salary].to_i
-      text_query << '((salarymin is NULL and (salarymax >= :salary or salarymax is NULL)) or (salarymin>=:salary) or (salarymin <=:salary and salarymax >= :salary))'
+      text_query << '((salarymin is NULL and salarymax >= :salary) or (salarymax is NULL and salarymin>=:salary) or (salarymin <=:salary and salarymax >= :salary))'
     end
 
     text_query = text_query.join(" and ")

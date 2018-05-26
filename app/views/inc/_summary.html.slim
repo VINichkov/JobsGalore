@@ -3,7 +3,8 @@ h4.text-center
 p
   strong
     | Posted:&nbsp;
-  =object.posted_date
+  span[itemprop="datePosted"]
+    =object.posted_date
 -if   object.class==JobDecorator
   .hidden-md.hidden-lg.hidden-sm
     p
@@ -13,19 +14,32 @@ p
 p
   strong
     |Location: &nbsp;
-
+  .hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="jobLocation" itemscope itemtype="http://schema.org/Place"]
+    span[itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"]
+      span[itemprop="addressLocality"]
+        =object.location.suburb
+      span[itemprop="addressRegion"]
+        =object.location.state
   = link_location(object.location.name, object.location, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-warning')
 - if not object.salary.blank?
   p
     strong
       |Salary: &nbsp;
-    | #{object.salary}
+    span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="amount" itemscope itemtype="http://schema.org/MonetaryAmount"]
+      -if object.class==JobDecorator
+        span[itemprop="currency" content="AUD"]
+        -if object.salarymin
+          span[itemprop="minValue" content=object.salarymin]
+        -if object.salarymax
+          span[itemprop="maxValue" content=object.salarymax]
+    span
+      | #{object.salary}
 p
   strong
     |Professional area:
 ul
   li
-    =link_industry(object.industry.name, object.industry, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-success')
+    =link_industry(object.industry.name, object.industry, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-success', itemprop:"industry")
 - if object.highlight
   p
     span.glyphicon.glyphicon-paperclip
