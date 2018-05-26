@@ -14,8 +14,10 @@
       .row.well
         h1.text-center[itemprop="title"]
           = @job.title_capitalize
-        p[itemprop="description"]
+        p
           = @job.render_description
+        span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
+          = @job.description_text
     .col-lg-4.col-md-4
       .panel.panel-default
         .panel-body[itemprop="hiringOrganization" itemscope itemtype="http://schema.org/Organization"]
