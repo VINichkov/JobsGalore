@@ -13,6 +13,7 @@ p
 p
   strong
     |Location: &nbsp;
+
   = link_location(object.location.name, object.location, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-warning')
 - if not object.salary.blank?
   p

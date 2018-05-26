@@ -8,10 +8,11 @@
                 card: 'summary_large_image',
                 user: '@JobsGalore_AU'})
 -cache(@job) do
-  .container.hidden-xs.hidden-sm
+  .container.hidden-xs.hidden-sm[itemscope itemtype="http://schema.org/JobPosting"]
+    meta[itemprop="specialCommitments" content="VeteranCommit"]
     .col-lg-8.col-md-8
       .row.well
-        h1.text-center
+        h1.text-center[itemprop="title"]
           = @job.title_capitalize
         p
           = @job.render_description
