@@ -2,7 +2,7 @@ class ResumeDecorator < ApplicationDecorator
   delegate_all
   decorates_association :client
   def keywords
-    @keywords ||= "Jobs Galore, Australia, Resumes, Resume, Galore, Jobsgalore,#{object.title}, Talent in #{object.location.name}, Talent, #{markdown_to_keywords(object.title)}"
+    @keywords ||= "CV, resume online, recrutment, Jobs Galore, Australia, Resumes, Resume, Galore, Jobsgalore,#{object.title}, Talent in #{object.location.name}, Talent, #{markdown_to_keywords(object.title)}"
   end
 
   def extras(arg)
