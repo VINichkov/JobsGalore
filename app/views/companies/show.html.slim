@@ -12,6 +12,14 @@
       = @company.render_description
       span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
         = @company.description_text
+      - @company.client&.each do |stuff|
+        span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="contactPoint" itemscope itemtype="http://schema.org/ContactPoint"]
+          span[itemprop="name"]
+            =stuff.full_name
+          span[itemprop="email"]
+            = stuff.email
+          span[itemprop="telephone"]
+            = stuff.phone
     =jobs_of_company(@company)
   .col-lg-4.col-md-4
     .panel.panel-default
