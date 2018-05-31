@@ -55,7 +55,7 @@ class Autocomplete extends React.Component{
         }
         return(
             <div>
-                <input itemprop="query-input" list={this.props.name} name={this.state.input ? this.props.name + "_name]" : this.props.name} autoComplete = "off" className={this.props.className} onInput={this.handleInput}  defaultValue = {this.props.defaultName} placeholder={this.props.place_holder} type="text"  id={this.props.id} style={this.props.style} required></input>
+                <input list={this.props.name} name={this.state.input ? this.props.name + "_name]" : this.props.name} autoComplete = "off" className={this.props.className} onInput={this.handleInput}  defaultValue = {this.props.defaultName} placeholder={this.props.place_holder} type="text"  id={this.props.id} style={this.props.style}></input>
                 {input_id}
                 <datalist id={this.props.name}>
                     {locations}

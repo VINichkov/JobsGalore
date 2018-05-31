@@ -68,7 +68,7 @@ class Search extends React.Component{
                                             <span className="input-group-addon" style={{width:'1%'}}>
                                                 $
                                             </span>
-                                            <InputMask style={{width:'100%'}} dataformat="dddddddddddd"autocomplete="off" id="salary" class_name="form-control" defaultValue={this.props.params ? this.props.params.salary: ''} name={this.props.name+'[salary]'} pattern="^[ 0-9]+$" type="text" placeholder="Salary"/>
+                                            <InputMask style={{width:'100%'}} dataformat="dddddddddddd"autocomplete="off" id="salary" class_name="form-control" defaultValue={this.props.params ? this.props.params.salary: ''} name={this.props.name+'[salary]'} pattern="^[ 0-9]+$" type="text" placeholder="Salary" not_required={true}/>
                                         </div>
                                     </div>
                                 </div>
