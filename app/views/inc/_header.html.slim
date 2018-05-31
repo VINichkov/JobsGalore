@@ -1,11 +1,6 @@
 -cache(current_client) do
   = print_header
   nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="navigation"]
-    span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemscope itemtype="http://schema.org/WebSite"]
-      meta[itemprop="url" content=root_url]
-      meta[itemprop="name" content=PropertsHelper::TITLE]
-      meta[itemprop="image" content=image_path("jg.png")]
-      meta[itemprop="description" content="JobsGalore allows you to find work in Australia. JobsGalore is a quality database of CVs and vacancies, and the latest job and staff search services."]
     ul.nav.navbar-nav
       - if client_signed_in?
         li
@@ -79,7 +74,11 @@
             | &nbsp;
             span.glyphicon.glyphicon-log-out
             | &nbsp; Log out
-  nav.navbar.navbar-static-top.navbar-default
+  nav.navbar.navbar-static-top.navbar-default[itemscope itemtype="http://schema.org/WebSite"]
+    meta[itemprop="url" content=root_url]
+    meta[itemprop="name" content=PropertsHelper::TITLE]
+    meta[itemprop="image" content=image_path("jg.png")]
+    meta[itemprop="description" content="JobsGalore allows you to find work in Australia. JobsGalore is a quality database of CVs and vacancies, and the latest job and staff search services."]
     .container
       .row
         .col-xs-12.hidden-sm.hidden-md.hidden-lg
@@ -128,7 +127,7 @@
           =render 'inc/header/client_drop_menu'
       .row
         .col-md-12
-          = form_tag('/search', method: :get, class: 'navbar-form')  do
+          = form_tag('/search', method: :get, class: 'navbar-form', itemprop:"potentialAction", itemscope:true, itemtype:"http://schema.org/SearchAction")  do
             = react_component("Search", name: 'main_search', categories: industries)
 -unless notice.nil? then
   .container
