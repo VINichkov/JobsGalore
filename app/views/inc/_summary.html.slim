@@ -32,6 +32,8 @@ p
           span[itemprop="minValue" content=object.salarymin]
         -if object.salarymax
           span[itemprop="maxValue" content=object.salarymax]
+        -if object.salarymax.nil? and object.salarymin.nil?
+          span[itemprop="value" content=false]
     span
       | #{object.salary}
 p
@@ -39,7 +41,9 @@ p
     |Professional area:
 ul
   li
-    =link_industry(object.industry.name, object.industry, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-success', itemprop:"industry")
+    span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="industry"]
+      =object.industry.name
+    =link_industry(object.industry.name, object.industry, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-success')
 - if object.highlight
   p
     span.glyphicon.glyphicon-paperclip
