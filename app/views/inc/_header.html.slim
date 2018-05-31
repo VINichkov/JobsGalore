@@ -1,11 +1,11 @@
 -cache(current_client) do
   = print_header
   nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="navigation"]
-    meta[itemscope itemtype="http://schema.org/WebSite"]
+    span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemscope itemtype="http://schema.org/WebSite"]
       meta[itemprop="url" content=root_url]
       meta[itemprop="name" content=PropertsHelper::TITLE]
       meta[itemprop="image" content=image_path("jg.png")]
-    meta[itemprop="description" content="JobsGalore allows you to find work in Australia. JobsGalore is a quality database of CVs and vacancies, and the latest job and staff search services."]
+      meta[itemprop="description" content="JobsGalore allows you to find work in Australia. JobsGalore is a quality database of CVs and vacancies, and the latest job and staff search services."]
     ul.nav.navbar-nav
       - if client_signed_in?
         li
