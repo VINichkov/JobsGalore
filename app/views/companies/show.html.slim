@@ -3,17 +3,22 @@
               keywords: @company.keywords,
               url: company_url(@company),
               image: @company.logo_url)
-.container.hidden-xs.hidden-sm
+.container.hidden-xs.hidden-sm[itemscope itemtype="http://schema.org/Organization"]
   .col-lg-8.col-md-8
     .row.well
-      = company_name(@company)
+      span[itemprop="name"]
+        = company_name(@company)
       p
       = @company.render_description
+      span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
+        = @company.description_text
     =jobs_of_company(@company)
   .col-lg-4.col-md-4
     .panel.panel-default
       .panel-body
         .row.text-center
+          span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="image"]
+            =@company.logo_url
           = image_bg(@company.logo_url, "300px", "300px", "250px")
         .row
           h3.text-center
@@ -24,7 +29,8 @@
           = social_share_button_tag @company.name
 .col-sm-12.col-xs-12.hidden-md.hidden-lg
   .panel-body
-    = company_name(@company)
+    span[itemprop="legalName"]
+      = company_name(@company)
     .row
       .col-xs-12.col-sm-6
         .row.text-center

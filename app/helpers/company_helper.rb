@@ -26,6 +26,10 @@ module CompanyHelper
            end
     html +=content_tag(:p) do
       p = content_tag :strong, "Location: "
+      p+= content_tag(:span, class: "hidden-xs hidden-md hidden-lg hidden-sm", itemprop:"location", :itemscope=>true , itemtype:"http://schema.org/PostalAddress" ) do
+        span = content_tag(:span,object.location.suburb ,itemprop:"addressLocality")
+        span += content_tag(:span,object.location.state ,itemprop:"addressRegion")
+      end
       p += link_location(object.location.name, object.location, Objects::COMPANIES, class: 'text-warning')
     end
     html +=if object.size
