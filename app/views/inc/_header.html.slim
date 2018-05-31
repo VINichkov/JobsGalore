@@ -128,6 +128,7 @@
       .row
         .col-md-12
           = form_tag('/search', method: :get, class: 'navbar-form', itemprop:"potentialAction", itemscope:true, itemtype:"http://schema.org/SearchAction")  do
+            meta[itemprop="target" content="#{root_url}search?utf8=✓&main_search[type]=2&main_search[value]={main_search[value]}"]
             = react_component("Search", name: 'main_search', categories: industries)
 -unless notice.nil? then
   .container
