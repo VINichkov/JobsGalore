@@ -27,7 +27,7 @@ p
   p
     strong
       |Salary: &nbsp;
-    span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="amount" itemscope itemtype="http://schema.org/MonetaryAmount"]
+    span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="baseSalary" itemscope itemtype="http://schema.org/MonetaryAmount"]
       -if object.class==JobDecorator
         span[itemprop="currency" content="AUD"]
         -if object.salarymin
@@ -37,7 +37,7 @@ p
     span
       | #{object.salary}
 -else
-  span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="amount" itemscope itemtype="http://schema.org/MonetaryAmount"]
+  span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="baseSalary" itemscope itemtype="http://schema.org/MonetaryAmount"]
     span[itemprop="currency" content="AUD"]
     span[itemprop="value" content=false]
 p
