@@ -5,6 +5,8 @@ p
     | Posted:&nbsp;
   span[itemprop="datePosted"]
     =object.posted_date
+  span[itemprop="validThrough"]
+    =object.try(:close)
 -if   object.class==JobDecorator
   .hidden-md.hidden-lg.hidden-sm
     p
@@ -32,10 +34,12 @@ p
           span[itemprop="minValue" content=object.salarymin]
         -if object.salarymax
           span[itemprop="maxValue" content=object.salarymax]
-        -if object.salarymax.nil? and object.salarymin.nil?
-          span[itemprop="value" content=false]
     span
       | #{object.salary}
+-else
+  span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="amount" itemscope itemtype="http://schema.org/MonetaryAmount"]
+    span[itemprop="currency" content="AUD"]
+    span[itemprop="value" content=false]
 p
   strong
     |Professional area:
