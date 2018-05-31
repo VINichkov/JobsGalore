@@ -33,8 +33,7 @@ html
     = csrf_meta_tags
     = stylesheet_link_tag('application', media: 'all')
     = javascript_include_tag('application')
-  body[itemscope itemtype="http://schema.org/WebSite"]
-    meta[itemprop="url" content=root_url]
+  body
     =render 'inc/header', industries: Industry.select(:id,:name).all
     = yield
     =render 'inc/footer'
