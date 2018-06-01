@@ -46,7 +46,6 @@ class Client < ApplicationRecord
       # uncomment the line below to skip the confirmation emails.
       # user.skip_confirmation!
     end
-    Rails.logger.debug "Client::from_omniauth окончили"
   end
 
   def self.new_with_session(params, session)
