@@ -12,9 +12,6 @@ Rails.application.routes.draw do
                                       sessions: "clients/sessions",
                                       unlocks: "clients/unlocks",
                                       omniauth_callbacks: 'clients/omniauth_callbacks' }
-  devise_scope :clients do
-    delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_client_session
-  end
   #devise_scope :client do
   #  get "/sign_up_employer" => "clients/registrations#sign_up_employer"
   #  post '/create_employer'=> "clients/registrations#create_employer"
