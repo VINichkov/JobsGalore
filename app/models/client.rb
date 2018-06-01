@@ -34,7 +34,9 @@ class Client < ApplicationRecord
   validates :phone, presence: true
 
   def self.from_omniauth(auth)
+    Rails.logger.debug "Client::from_omniauth #{auth.to_json}"
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      Rails.logger.debug "Client::from_omniauth нашли что то #{user.to_json}"
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
       user.name = auth.info.name   # assuming the user model has a name
@@ -44,6 +46,7 @@ class Client < ApplicationRecord
       # uncomment the line below to skip the confirmation emails.
       # user.skip_confirmation!
     end
+    Rails.logger.debug "Client::from_omniauth окончили"
   end
 
   def self.new_with_session(params, session)
