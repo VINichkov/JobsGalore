@@ -39,8 +39,8 @@ class Client < ApplicationRecord
       Rails.logger.debug "Client::from_omniauth нашли что то #{user.to_json}"
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
-      user.name = auth.info.name   # assuming the user model has a name
-      user.image = auth.info.image # assuming the user model has an image
+      user.firstname = auth.info.name   # assuming the user model has a name
+      user.photo = auth.info.image # assuming the user model has an image
       user.character='applicant'
       # If you are using confirmable and the provider(s) you use validate emails,
       # uncomment the line below to skip the confirmation emails.
