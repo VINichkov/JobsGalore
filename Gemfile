@@ -34,7 +34,7 @@ gem 'devise','~> 4.4.3'
 gem 'dkim'
 gem 'markitdown'
 gem 'interactor'
-
+gem 'omniauth-linkedin-oauth2'
 
 gem 'twitter'
 gem 'will_paginate-bootstrap'# ,'~> 1.0.1'

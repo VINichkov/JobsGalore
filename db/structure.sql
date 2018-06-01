@@ -1,14 +1,9 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 9.5.7
--- Dumped by pg_dump version 9.5.7
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
@@ -27,8 +22,6 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
-SET search_path = public, pg_catalog;
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -37,7 +30,7 @@ SET default_with_oids = false;
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE ar_internal_metadata (
+CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
     created_at timestamp without time zone NOT NULL,
@@ -49,7 +42,7 @@ CREATE TABLE ar_internal_metadata (
 -- Name: carearones; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE carearones (
+CREATE TABLE public.carearones (
     id integer NOT NULL,
     title_job character varying,
     descriptions text,
@@ -63,7 +56,7 @@ CREATE TABLE carearones (
 -- Name: carearones_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE carearones_id_seq
+CREATE SEQUENCE public.carearones_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -75,14 +68,14 @@ CREATE SEQUENCE carearones_id_seq
 -- Name: carearones_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE carearones_id_seq OWNED BY carearones.id;
+ALTER SEQUENCE public.carearones_id_seq OWNED BY public.carearones.id;
 
 
 --
 -- Name: clients; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE clients (
+CREATE TABLE public.clients (
     id integer NOT NULL,
     firstname character varying NOT NULL,
     lastname character varying NOT NULL,
@@ -113,7 +106,9 @@ CREATE TABLE clients (
     locked_at timestamp without time zone,
     "character" character varying,
     send_email boolean DEFAULT true NOT NULL,
-    company_id integer
+    company_id integer,
+    provider character varying,
+    uid character varying
 );
 
 
@@ -121,7 +116,7 @@ CREATE TABLE clients (
 -- Name: clients_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE clients_id_seq
+CREATE SEQUENCE public.clients_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -133,14 +128,14 @@ CREATE SEQUENCE clients_id_seq
 -- Name: clients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE clients_id_seq OWNED BY clients.id;
+ALTER SEQUENCE public.clients_id_seq OWNED BY public.clients.id;
 
 
 --
 -- Name: companies; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE companies (
+CREATE TABLE public.companies (
     id integer NOT NULL,
     name character varying,
     size_id integer,
@@ -161,7 +156,7 @@ CREATE TABLE companies (
 -- Name: companies_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE companies_id_seq
+CREATE SEQUENCE public.companies_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -173,14 +168,14 @@ CREATE SEQUENCE companies_id_seq
 -- Name: companies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE companies_id_seq OWNED BY companies.id;
+ALTER SEQUENCE public.companies_id_seq OWNED BY public.companies.id;
 
 
 --
 -- Name: educations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE educations (
+CREATE TABLE public.educations (
     id integer NOT NULL,
     education character varying,
     created_at timestamp without time zone NOT NULL,
@@ -192,7 +187,7 @@ CREATE TABLE educations (
 -- Name: educations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE educations_id_seq
+CREATE SEQUENCE public.educations_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -204,14 +199,14 @@ CREATE SEQUENCE educations_id_seq
 -- Name: educations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE educations_id_seq OWNED BY educations.id;
+ALTER SEQUENCE public.educations_id_seq OWNED BY public.educations.id;
 
 
 --
 -- Name: emails; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE emails (
+CREATE TABLE public.emails (
     id integer NOT NULL,
     email character varying
 );
@@ -221,7 +216,7 @@ CREATE TABLE emails (
 -- Name: emails_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE emails_id_seq
+CREATE SEQUENCE public.emails_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -233,14 +228,14 @@ CREATE SEQUENCE emails_id_seq
 -- Name: emails_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE emails_id_seq OWNED BY emails.id;
+ALTER SEQUENCE public.emails_id_seq OWNED BY public.emails.id;
 
 
 --
 -- Name: experiences; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE experiences (
+CREATE TABLE public.experiences (
     id integer NOT NULL,
     employer character varying NOT NULL,
     location_id integer,
@@ -259,7 +254,7 @@ CREATE TABLE experiences (
 -- Name: experiences_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE experiences_id_seq
+CREATE SEQUENCE public.experiences_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -271,14 +266,14 @@ CREATE SEQUENCE experiences_id_seq
 -- Name: experiences_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE experiences_id_seq OWNED BY experiences.id;
+ALTER SEQUENCE public.experiences_id_seq OWNED BY public.experiences.id;
 
 
 --
 -- Name: gateways; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE gateways (
+CREATE TABLE public.gateways (
     id integer NOT NULL,
     company_id integer,
     client_id integer,
@@ -296,7 +291,7 @@ CREATE TABLE gateways (
 -- Name: gateways_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE gateways_id_seq
+CREATE SEQUENCE public.gateways_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -308,14 +303,14 @@ CREATE SEQUENCE gateways_id_seq
 -- Name: gateways_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE gateways_id_seq OWNED BY gateways.id;
+ALTER SEQUENCE public.gateways_id_seq OWNED BY public.gateways.id;
 
 
 --
 -- Name: industries; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE industries (
+CREATE TABLE public.industries (
     id integer NOT NULL,
     name character varying NOT NULL,
     industry_id integer,
@@ -329,7 +324,7 @@ CREATE TABLE industries (
 -- Name: industries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE industries_id_seq
+CREATE SEQUENCE public.industries_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -341,14 +336,14 @@ CREATE SEQUENCE industries_id_seq
 -- Name: industries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE industries_id_seq OWNED BY industries.id;
+ALTER SEQUENCE public.industries_id_seq OWNED BY public.industries.id;
 
 
 --
 -- Name: industrycompanies; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE industrycompanies (
+CREATE TABLE public.industrycompanies (
     id integer NOT NULL,
     industry_id integer,
     company_id integer,
@@ -361,7 +356,7 @@ CREATE TABLE industrycompanies (
 -- Name: industrycompanies_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE industrycompanies_id_seq
+CREATE SEQUENCE public.industrycompanies_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -373,14 +368,14 @@ CREATE SEQUENCE industrycompanies_id_seq
 -- Name: industrycompanies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE industrycompanies_id_seq OWNED BY industrycompanies.id;
+ALTER SEQUENCE public.industrycompanies_id_seq OWNED BY public.industrycompanies.id;
 
 
 --
 -- Name: industryexperiences; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE industryexperiences (
+CREATE TABLE public.industryexperiences (
     id integer NOT NULL,
     industry_id integer,
     experience_id integer,
@@ -393,7 +388,7 @@ CREATE TABLE industryexperiences (
 -- Name: industryexperiences_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE industryexperiences_id_seq
+CREATE SEQUENCE public.industryexperiences_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -405,14 +400,14 @@ CREATE SEQUENCE industryexperiences_id_seq
 -- Name: industryexperiences_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE industryexperiences_id_seq OWNED BY industryexperiences.id;
+ALTER SEQUENCE public.industryexperiences_id_seq OWNED BY public.industryexperiences.id;
 
 
 --
 -- Name: industryjobs; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE industryjobs (
+CREATE TABLE public.industryjobs (
     id integer NOT NULL,
     industry_id integer,
     job_id integer,
@@ -425,7 +420,7 @@ CREATE TABLE industryjobs (
 -- Name: industryjobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE industryjobs_id_seq
+CREATE SEQUENCE public.industryjobs_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -437,14 +432,14 @@ CREATE SEQUENCE industryjobs_id_seq
 -- Name: industryjobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE industryjobs_id_seq OWNED BY industryjobs.id;
+ALTER SEQUENCE public.industryjobs_id_seq OWNED BY public.industryjobs.id;
 
 
 --
 -- Name: industryresumes; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE industryresumes (
+CREATE TABLE public.industryresumes (
     id integer NOT NULL,
     industry_id integer,
     resume_id integer,
@@ -457,7 +452,7 @@ CREATE TABLE industryresumes (
 -- Name: industryresumes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE industryresumes_id_seq
+CREATE SEQUENCE public.industryresumes_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -469,14 +464,14 @@ CREATE SEQUENCE industryresumes_id_seq
 -- Name: industryresumes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE industryresumes_id_seq OWNED BY industryresumes.id;
+ALTER SEQUENCE public.industryresumes_id_seq OWNED BY public.industryresumes.id;
 
 
 --
 -- Name: jobs; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE jobs (
+CREATE TABLE public.jobs (
     id integer NOT NULL,
     title character varying,
     location_id integer,
@@ -511,7 +506,7 @@ CREATE TABLE jobs (
 -- Name: jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE jobs_id_seq
+CREATE SEQUENCE public.jobs_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -523,14 +518,14 @@ CREATE SEQUENCE jobs_id_seq
 -- Name: jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE jobs_id_seq OWNED BY jobs.id;
+ALTER SEQUENCE public.jobs_id_seq OWNED BY public.jobs.id;
 
 
 --
 -- Name: languageresumes; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE languageresumes (
+CREATE TABLE public.languageresumes (
     id integer NOT NULL,
     resume_id integer,
     language_id integer,
@@ -544,7 +539,7 @@ CREATE TABLE languageresumes (
 -- Name: languageresumes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE languageresumes_id_seq
+CREATE SEQUENCE public.languageresumes_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -556,14 +551,14 @@ CREATE SEQUENCE languageresumes_id_seq
 -- Name: languageresumes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE languageresumes_id_seq OWNED BY languageresumes.id;
+ALTER SEQUENCE public.languageresumes_id_seq OWNED BY public.languageresumes.id;
 
 
 --
 -- Name: languages; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE languages (
+CREATE TABLE public.languages (
     id integer NOT NULL,
     name character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -575,7 +570,7 @@ CREATE TABLE languages (
 -- Name: languages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE languages_id_seq
+CREATE SEQUENCE public.languages_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -587,14 +582,14 @@ CREATE SEQUENCE languages_id_seq
 -- Name: languages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE languages_id_seq OWNED BY languages.id;
+ALTER SEQUENCE public.languages_id_seq OWNED BY public.languages.id;
 
 
 --
 -- Name: levels; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE levels (
+CREATE TABLE public.levels (
     id integer NOT NULL,
     name character varying NOT NULL,
     language boolean,
@@ -607,7 +602,7 @@ CREATE TABLE levels (
 -- Name: levels_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE levels_id_seq
+CREATE SEQUENCE public.levels_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -619,14 +614,14 @@ CREATE SEQUENCE levels_id_seq
 -- Name: levels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE levels_id_seq OWNED BY levels.id;
+ALTER SEQUENCE public.levels_id_seq OWNED BY public.levels.id;
 
 
 --
 -- Name: locations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE locations (
+CREATE TABLE public.locations (
     id integer NOT NULL,
     postcode character varying,
     suburb character varying,
@@ -642,7 +637,7 @@ CREATE TABLE locations (
 -- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE locations_id_seq
+CREATE SEQUENCE public.locations_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -654,14 +649,14 @@ CREATE SEQUENCE locations_id_seq
 -- Name: locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE locations_id_seq OWNED BY locations.id;
+ALTER SEQUENCE public.locations_id_seq OWNED BY public.locations.id;
 
 
 --
 -- Name: payments; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE payments (
+CREATE TABLE public.payments (
     id integer NOT NULL,
     params text,
     product_id integer,
@@ -678,7 +673,7 @@ CREATE TABLE payments (
 -- Name: payments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE payments_id_seq
+CREATE SEQUENCE public.payments_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -690,14 +685,14 @@ CREATE SEQUENCE payments_id_seq
 -- Name: payments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE payments_id_seq OWNED BY payments.id;
+ALTER SEQUENCE public.payments_id_seq OWNED BY public.payments.id;
 
 
 --
 -- Name: properts; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE properts (
+CREATE TABLE public.properts (
     id integer NOT NULL,
     code character varying,
     name character varying,
@@ -711,7 +706,7 @@ CREATE TABLE properts (
 -- Name: properts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE properts_id_seq
+CREATE SEQUENCE public.properts_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -723,14 +718,14 @@ CREATE SEQUENCE properts_id_seq
 -- Name: properts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE properts_id_seq OWNED BY properts.id;
+ALTER SEQUENCE public.properts_id_seq OWNED BY public.properts.id;
 
 
 --
 -- Name: responsibles; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE responsibles (
+CREATE TABLE public.responsibles (
     id integer NOT NULL,
     company_id integer,
     client_id integer,
@@ -743,7 +738,7 @@ CREATE TABLE responsibles (
 -- Name: responsibles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE responsibles_id_seq
+CREATE SEQUENCE public.responsibles_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -755,14 +750,14 @@ CREATE SEQUENCE responsibles_id_seq
 -- Name: responsibles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE responsibles_id_seq OWNED BY responsibles.id;
+ALTER SEQUENCE public.responsibles_id_seq OWNED BY public.responsibles.id;
 
 
 --
 -- Name: resumes; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE resumes (
+CREATE TABLE public.resumes (
     id integer NOT NULL,
     desiredjobtitle character varying NOT NULL,
     salary double precision,
@@ -791,7 +786,7 @@ CREATE TABLE resumes (
 -- Name: resumes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE resumes_id_seq
+CREATE SEQUENCE public.resumes_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -803,14 +798,14 @@ CREATE SEQUENCE resumes_id_seq
 -- Name: resumes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE resumes_id_seq OWNED BY resumes.id;
+ALTER SEQUENCE public.resumes_id_seq OWNED BY public.resumes.id;
 
 
 --
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE schema_migrations (
+CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
 
@@ -819,7 +814,7 @@ CREATE TABLE schema_migrations (
 -- Name: sizes; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE sizes (
+CREATE TABLE public.sizes (
     id integer NOT NULL,
     size character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -831,7 +826,7 @@ CREATE TABLE sizes (
 -- Name: sizes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE sizes_id_seq
+CREATE SEQUENCE public.sizes_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -843,14 +838,14 @@ CREATE SEQUENCE sizes_id_seq
 -- Name: sizes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE sizes_id_seq OWNED BY sizes.id;
+ALTER SEQUENCE public.sizes_id_seq OWNED BY public.sizes.id;
 
 
 --
 -- Name: skillsjobs; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE skillsjobs (
+CREATE TABLE public.skillsjobs (
     id integer NOT NULL,
     name character varying NOT NULL,
     level_id integer,
@@ -864,7 +859,7 @@ CREATE TABLE skillsjobs (
 -- Name: skillsjobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE skillsjobs_id_seq
+CREATE SEQUENCE public.skillsjobs_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -876,14 +871,14 @@ CREATE SEQUENCE skillsjobs_id_seq
 -- Name: skillsjobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE skillsjobs_id_seq OWNED BY skillsjobs.id;
+ALTER SEQUENCE public.skillsjobs_id_seq OWNED BY public.skillsjobs.id;
 
 
 --
 -- Name: skillsresumes; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE skillsresumes (
+CREATE TABLE public.skillsresumes (
     id integer NOT NULL,
     name character varying NOT NULL,
     level_id integer,
@@ -897,7 +892,7 @@ CREATE TABLE skillsresumes (
 -- Name: skillsresumes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE skillsresumes_id_seq
+CREATE SEQUENCE public.skillsresumes_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -909,382 +904,382 @@ CREATE SEQUENCE skillsresumes_id_seq
 -- Name: skillsresumes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE skillsresumes_id_seq OWNED BY skillsresumes.id;
+ALTER SEQUENCE public.skillsresumes_id_seq OWNED BY public.skillsresumes.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: carearones id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY carearones ALTER COLUMN id SET DEFAULT nextval('carearones_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY clients ALTER COLUMN id SET DEFAULT nextval('clients_id_seq'::regclass);
+ALTER TABLE ONLY public.carearones ALTER COLUMN id SET DEFAULT nextval('public.carearones_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: clients id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY companies ALTER COLUMN id SET DEFAULT nextval('companies_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY educations ALTER COLUMN id SET DEFAULT nextval('educations_id_seq'::regclass);
+ALTER TABLE ONLY public.clients ALTER COLUMN id SET DEFAULT nextval('public.clients_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: companies id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY emails ALTER COLUMN id SET DEFAULT nextval('emails_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY experiences ALTER COLUMN id SET DEFAULT nextval('experiences_id_seq'::regclass);
+ALTER TABLE ONLY public.companies ALTER COLUMN id SET DEFAULT nextval('public.companies_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: educations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY gateways ALTER COLUMN id SET DEFAULT nextval('gateways_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY industries ALTER COLUMN id SET DEFAULT nextval('industries_id_seq'::regclass);
+ALTER TABLE ONLY public.educations ALTER COLUMN id SET DEFAULT nextval('public.educations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: emails id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industrycompanies ALTER COLUMN id SET DEFAULT nextval('industrycompanies_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY industryexperiences ALTER COLUMN id SET DEFAULT nextval('industryexperiences_id_seq'::regclass);
+ALTER TABLE ONLY public.emails ALTER COLUMN id SET DEFAULT nextval('public.emails_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: experiences id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industryjobs ALTER COLUMN id SET DEFAULT nextval('industryjobs_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY industryresumes ALTER COLUMN id SET DEFAULT nextval('industryresumes_id_seq'::regclass);
+ALTER TABLE ONLY public.experiences ALTER COLUMN id SET DEFAULT nextval('public.experiences_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: gateways id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY jobs ALTER COLUMN id SET DEFAULT nextval('jobs_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY languageresumes ALTER COLUMN id SET DEFAULT nextval('languageresumes_id_seq'::regclass);
+ALTER TABLE ONLY public.gateways ALTER COLUMN id SET DEFAULT nextval('public.gateways_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: industries id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY languages ALTER COLUMN id SET DEFAULT nextval('languages_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY levels ALTER COLUMN id SET DEFAULT nextval('levels_id_seq'::regclass);
+ALTER TABLE ONLY public.industries ALTER COLUMN id SET DEFAULT nextval('public.industries_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: industrycompanies id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY locations ALTER COLUMN id SET DEFAULT nextval('locations_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY payments ALTER COLUMN id SET DEFAULT nextval('payments_id_seq'::regclass);
+ALTER TABLE ONLY public.industrycompanies ALTER COLUMN id SET DEFAULT nextval('public.industrycompanies_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: industryexperiences id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY properts ALTER COLUMN id SET DEFAULT nextval('properts_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY responsibles ALTER COLUMN id SET DEFAULT nextval('responsibles_id_seq'::regclass);
+ALTER TABLE ONLY public.industryexperiences ALTER COLUMN id SET DEFAULT nextval('public.industryexperiences_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: industryjobs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resumes ALTER COLUMN id SET DEFAULT nextval('resumes_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY sizes ALTER COLUMN id SET DEFAULT nextval('sizes_id_seq'::regclass);
+ALTER TABLE ONLY public.industryjobs ALTER COLUMN id SET DEFAULT nextval('public.industryjobs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: industryresumes id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY skillsjobs ALTER COLUMN id SET DEFAULT nextval('skillsjobs_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY skillsresumes ALTER COLUMN id SET DEFAULT nextval('skillsresumes_id_seq'::regclass);
+ALTER TABLE ONLY public.industryresumes ALTER COLUMN id SET DEFAULT nextval('public.industryresumes_id_seq'::regclass);
 
 
 --
--- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: jobs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY ar_internal_metadata
+ALTER TABLE ONLY public.jobs ALTER COLUMN id SET DEFAULT nextval('public.jobs_id_seq'::regclass);
+
+
+--
+-- Name: languageresumes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.languageresumes ALTER COLUMN id SET DEFAULT nextval('public.languageresumes_id_seq'::regclass);
+
+
+--
+-- Name: languages id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.languages ALTER COLUMN id SET DEFAULT nextval('public.languages_id_seq'::regclass);
+
+
+--
+-- Name: levels id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.levels ALTER COLUMN id SET DEFAULT nextval('public.levels_id_seq'::regclass);
+
+
+--
+-- Name: locations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.locations ALTER COLUMN id SET DEFAULT nextval('public.locations_id_seq'::regclass);
+
+
+--
+-- Name: payments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.payments ALTER COLUMN id SET DEFAULT nextval('public.payments_id_seq'::regclass);
+
+
+--
+-- Name: properts id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.properts ALTER COLUMN id SET DEFAULT nextval('public.properts_id_seq'::regclass);
+
+
+--
+-- Name: responsibles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.responsibles ALTER COLUMN id SET DEFAULT nextval('public.responsibles_id_seq'::regclass);
+
+
+--
+-- Name: resumes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resumes ALTER COLUMN id SET DEFAULT nextval('public.resumes_id_seq'::regclass);
+
+
+--
+-- Name: sizes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sizes ALTER COLUMN id SET DEFAULT nextval('public.sizes_id_seq'::regclass);
+
+
+--
+-- Name: skillsjobs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.skillsjobs ALTER COLUMN id SET DEFAULT nextval('public.skillsjobs_id_seq'::regclass);
+
+
+--
+-- Name: skillsresumes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.skillsresumes ALTER COLUMN id SET DEFAULT nextval('public.skillsresumes_id_seq'::regclass);
+
+
+--
+-- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
 
 
 --
--- Name: carearones_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: carearones carearones_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY carearones
+ALTER TABLE ONLY public.carearones
     ADD CONSTRAINT carearones_pkey PRIMARY KEY (id);
 
 
 --
--- Name: clients_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: clients clients_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY clients
+ALTER TABLE ONLY public.clients
     ADD CONSTRAINT clients_pkey PRIMARY KEY (id);
 
 
 --
--- Name: companies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: companies companies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY companies
+ALTER TABLE ONLY public.companies
     ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
 
 
 --
--- Name: educations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: educations educations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY educations
+ALTER TABLE ONLY public.educations
     ADD CONSTRAINT educations_pkey PRIMARY KEY (id);
 
 
 --
--- Name: emails_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: emails emails_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY emails
+ALTER TABLE ONLY public.emails
     ADD CONSTRAINT emails_pkey PRIMARY KEY (id);
 
 
 --
--- Name: experiences_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: experiences experiences_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY experiences
+ALTER TABLE ONLY public.experiences
     ADD CONSTRAINT experiences_pkey PRIMARY KEY (id);
 
 
 --
--- Name: gateways_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: gateways gateways_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY gateways
+ALTER TABLE ONLY public.gateways
     ADD CONSTRAINT gateways_pkey PRIMARY KEY (id);
 
 
 --
--- Name: industries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: industries industries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industries
+ALTER TABLE ONLY public.industries
     ADD CONSTRAINT industries_pkey PRIMARY KEY (id);
 
 
 --
--- Name: industrycompanies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: industrycompanies industrycompanies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industrycompanies
+ALTER TABLE ONLY public.industrycompanies
     ADD CONSTRAINT industrycompanies_pkey PRIMARY KEY (id);
 
 
 --
--- Name: industryexperiences_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: industryexperiences industryexperiences_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industryexperiences
+ALTER TABLE ONLY public.industryexperiences
     ADD CONSTRAINT industryexperiences_pkey PRIMARY KEY (id);
 
 
 --
--- Name: industryjobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: industryjobs industryjobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industryjobs
+ALTER TABLE ONLY public.industryjobs
     ADD CONSTRAINT industryjobs_pkey PRIMARY KEY (id);
 
 
 --
--- Name: industryresumes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: industryresumes industryresumes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industryresumes
+ALTER TABLE ONLY public.industryresumes
     ADD CONSTRAINT industryresumes_pkey PRIMARY KEY (id);
 
 
 --
--- Name: jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: jobs jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY jobs
+ALTER TABLE ONLY public.jobs
     ADD CONSTRAINT jobs_pkey PRIMARY KEY (id);
 
 
 --
--- Name: languageresumes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: languageresumes languageresumes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY languageresumes
+ALTER TABLE ONLY public.languageresumes
     ADD CONSTRAINT languageresumes_pkey PRIMARY KEY (id);
 
 
 --
--- Name: languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: languages languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY languages
+ALTER TABLE ONLY public.languages
     ADD CONSTRAINT languages_pkey PRIMARY KEY (id);
 
 
 --
--- Name: levels_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: levels levels_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY levels
+ALTER TABLE ONLY public.levels
     ADD CONSTRAINT levels_pkey PRIMARY KEY (id);
 
 
 --
--- Name: locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY locations
+ALTER TABLE ONLY public.locations
     ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
 
 
 --
--- Name: payments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: payments payments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY payments
+ALTER TABLE ONLY public.payments
     ADD CONSTRAINT payments_pkey PRIMARY KEY (id);
 
 
 --
--- Name: properts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: properts properts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY properts
+ALTER TABLE ONLY public.properts
     ADD CONSTRAINT properts_pkey PRIMARY KEY (id);
 
 
 --
--- Name: responsibles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: responsibles responsibles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY responsibles
+ALTER TABLE ONLY public.responsibles
     ADD CONSTRAINT responsibles_pkey PRIMARY KEY (id);
 
 
 --
--- Name: resumes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: resumes resumes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resumes
+ALTER TABLE ONLY public.resumes
     ADD CONSTRAINT resumes_pkey PRIMARY KEY (id);
 
 
 --
--- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY schema_migrations
+ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
 
 
 --
--- Name: sizes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: sizes sizes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY sizes
+ALTER TABLE ONLY public.sizes
     ADD CONSTRAINT sizes_pkey PRIMARY KEY (id);
 
 
 --
--- Name: skillsjobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: skillsjobs skillsjobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY skillsjobs
+ALTER TABLE ONLY public.skillsjobs
     ADD CONSTRAINT skillsjobs_pkey PRIMARY KEY (id);
 
 
 --
--- Name: skillsresumes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: skillsresumes skillsresumes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY skillsresumes
+ALTER TABLE ONLY public.skillsresumes
     ADD CONSTRAINT skillsresumes_pkey PRIMARY KEY (id);
 
 
@@ -1292,717 +1287,717 @@ ALTER TABLE ONLY skillsresumes
 -- Name: index_clients_on_company_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_clients_on_company_id ON clients USING btree (company_id);
+CREATE INDEX index_clients_on_company_id ON public.clients USING btree (company_id);
 
 
 --
 -- Name: index_clients_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_clients_on_confirmation_token ON clients USING btree (confirmation_token);
+CREATE UNIQUE INDEX index_clients_on_confirmation_token ON public.clients USING btree (confirmation_token);
 
 
 --
 -- Name: index_clients_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_clients_on_email ON clients USING btree (email);
+CREATE UNIQUE INDEX index_clients_on_email ON public.clients USING btree (email);
 
 
 --
 -- Name: index_clients_on_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_clients_on_location_id ON clients USING btree (location_id);
+CREATE INDEX index_clients_on_location_id ON public.clients USING btree (location_id);
 
 
 --
 -- Name: index_clients_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_clients_on_reset_password_token ON clients USING btree (reset_password_token);
+CREATE UNIQUE INDEX index_clients_on_reset_password_token ON public.clients USING btree (reset_password_token);
 
 
 --
 -- Name: index_clients_on_unlock_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_clients_on_unlock_token ON clients USING btree (unlock_token);
+CREATE UNIQUE INDEX index_clients_on_unlock_token ON public.clients USING btree (unlock_token);
 
 
 --
 -- Name: index_companies_on_fts; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_companies_on_fts ON companies USING gin (fts);
+CREATE INDEX index_companies_on_fts ON public.companies USING gin (fts);
 
 
 --
 -- Name: index_companies_on_industry_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_companies_on_industry_id ON companies USING btree (industry_id);
+CREATE INDEX index_companies_on_industry_id ON public.companies USING btree (industry_id);
 
 
 --
 -- Name: index_companies_on_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_companies_on_location_id ON companies USING btree (location_id);
+CREATE INDEX index_companies_on_location_id ON public.companies USING btree (location_id);
 
 
 --
 -- Name: index_companies_on_name; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_companies_on_name ON companies USING btree (name);
+CREATE INDEX index_companies_on_name ON public.companies USING btree (name);
 
 
 --
 -- Name: index_companies_on_size_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_companies_on_size_id ON companies USING btree (size_id);
+CREATE INDEX index_companies_on_size_id ON public.companies USING btree (size_id);
 
 
 --
 -- Name: index_experiences_on_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_experiences_on_location_id ON experiences USING btree (location_id);
+CREATE INDEX index_experiences_on_location_id ON public.experiences USING btree (location_id);
 
 
 --
 -- Name: index_experiences_on_resume_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_experiences_on_resume_id ON experiences USING btree (resume_id);
+CREATE INDEX index_experiences_on_resume_id ON public.experiences USING btree (resume_id);
 
 
 --
 -- Name: index_gateways_on_client_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_gateways_on_client_id ON gateways USING btree (client_id);
+CREATE INDEX index_gateways_on_client_id ON public.gateways USING btree (client_id);
 
 
 --
 -- Name: index_gateways_on_company_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_gateways_on_company_id ON gateways USING btree (company_id);
+CREATE INDEX index_gateways_on_company_id ON public.gateways USING btree (company_id);
 
 
 --
 -- Name: index_gateways_on_industry_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_gateways_on_industry_id ON gateways USING btree (industry_id);
+CREATE INDEX index_gateways_on_industry_id ON public.gateways USING btree (industry_id);
 
 
 --
 -- Name: index_gateways_on_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_gateways_on_location_id ON gateways USING btree (location_id);
+CREATE INDEX index_gateways_on_location_id ON public.gateways USING btree (location_id);
 
 
 --
 -- Name: index_industries_on_industry_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_industries_on_industry_id ON industries USING btree (industry_id);
+CREATE INDEX index_industries_on_industry_id ON public.industries USING btree (industry_id);
 
 
 --
 -- Name: index_industries_on_name; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_industries_on_name ON industries USING btree (name);
+CREATE INDEX index_industries_on_name ON public.industries USING btree (name);
 
 
 --
 -- Name: index_industrycompanies_on_company_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_industrycompanies_on_company_id ON industrycompanies USING btree (company_id);
+CREATE INDEX index_industrycompanies_on_company_id ON public.industrycompanies USING btree (company_id);
 
 
 --
 -- Name: index_industrycompanies_on_industry_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_industrycompanies_on_industry_id ON industrycompanies USING btree (industry_id);
+CREATE INDEX index_industrycompanies_on_industry_id ON public.industrycompanies USING btree (industry_id);
 
 
 --
 -- Name: index_industryexperiences_on_experience_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_industryexperiences_on_experience_id ON industryexperiences USING btree (experience_id);
+CREATE INDEX index_industryexperiences_on_experience_id ON public.industryexperiences USING btree (experience_id);
 
 
 --
 -- Name: index_industryexperiences_on_industry_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_industryexperiences_on_industry_id ON industryexperiences USING btree (industry_id);
+CREATE INDEX index_industryexperiences_on_industry_id ON public.industryexperiences USING btree (industry_id);
 
 
 --
 -- Name: index_industryjobs_on_industry_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_industryjobs_on_industry_id ON industryjobs USING btree (industry_id);
+CREATE INDEX index_industryjobs_on_industry_id ON public.industryjobs USING btree (industry_id);
 
 
 --
 -- Name: index_industryjobs_on_job_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_industryjobs_on_job_id ON industryjobs USING btree (job_id);
+CREATE INDEX index_industryjobs_on_job_id ON public.industryjobs USING btree (job_id);
 
 
 --
 -- Name: index_industryresumes_on_industry_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_industryresumes_on_industry_id ON industryresumes USING btree (industry_id);
+CREATE INDEX index_industryresumes_on_industry_id ON public.industryresumes USING btree (industry_id);
 
 
 --
 -- Name: index_industryresumes_on_resume_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_industryresumes_on_resume_id ON industryresumes USING btree (resume_id);
+CREATE INDEX index_industryresumes_on_resume_id ON public.industryresumes USING btree (resume_id);
 
 
 --
 -- Name: index_jobs_on_client_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_jobs_on_client_id ON jobs USING btree (client_id);
+CREATE INDEX index_jobs_on_client_id ON public.jobs USING btree (client_id);
 
 
 --
 -- Name: index_jobs_on_company_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_jobs_on_company_id ON jobs USING btree (company_id);
+CREATE INDEX index_jobs_on_company_id ON public.jobs USING btree (company_id);
 
 
 --
 -- Name: index_jobs_on_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_jobs_on_created_at ON jobs USING btree (created_at);
+CREATE INDEX index_jobs_on_created_at ON public.jobs USING btree (created_at);
 
 
 --
 -- Name: index_jobs_on_education_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_jobs_on_education_id ON jobs USING btree (education_id);
+CREATE INDEX index_jobs_on_education_id ON public.jobs USING btree (education_id);
 
 
 --
 -- Name: index_jobs_on_fts; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_jobs_on_fts ON jobs USING gin (fts);
+CREATE INDEX index_jobs_on_fts ON public.jobs USING gin (fts);
 
 
 --
 -- Name: index_jobs_on_industry_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_jobs_on_industry_id ON jobs USING btree (industry_id);
+CREATE INDEX index_jobs_on_industry_id ON public.jobs USING btree (industry_id);
 
 
 --
 -- Name: index_jobs_on_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_jobs_on_location_id ON jobs USING btree (location_id);
+CREATE INDEX index_jobs_on_location_id ON public.jobs USING btree (location_id);
 
 
 --
 -- Name: index_jobs_on_salarymax; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_jobs_on_salarymax ON jobs USING btree (salarymax);
+CREATE INDEX index_jobs_on_salarymax ON public.jobs USING btree (salarymax);
 
 
 --
 -- Name: index_jobs_on_salarymin; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_jobs_on_salarymin ON jobs USING btree (salarymin);
+CREATE INDEX index_jobs_on_salarymin ON public.jobs USING btree (salarymin);
 
 
 --
 -- Name: index_jobs_on_updated_at; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_jobs_on_updated_at ON jobs USING btree (updated_at);
+CREATE INDEX index_jobs_on_updated_at ON public.jobs USING btree (updated_at);
 
 
 --
 -- Name: index_languageresumes_on_language_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_languageresumes_on_language_id ON languageresumes USING btree (language_id);
+CREATE INDEX index_languageresumes_on_language_id ON public.languageresumes USING btree (language_id);
 
 
 --
 -- Name: index_languageresumes_on_level_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_languageresumes_on_level_id ON languageresumes USING btree (level_id);
+CREATE INDEX index_languageresumes_on_level_id ON public.languageresumes USING btree (level_id);
 
 
 --
 -- Name: index_languageresumes_on_resume_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_languageresumes_on_resume_id ON languageresumes USING btree (resume_id);
+CREATE INDEX index_languageresumes_on_resume_id ON public.languageresumes USING btree (resume_id);
 
 
 --
 -- Name: index_locations_on_fts; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_locations_on_fts ON locations USING gin (fts);
+CREATE INDEX index_locations_on_fts ON public.locations USING gin (fts);
 
 
 --
 -- Name: index_locations_on_parent_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_locations_on_parent_id ON locations USING btree (parent_id);
+CREATE INDEX index_locations_on_parent_id ON public.locations USING btree (parent_id);
 
 
 --
 -- Name: index_responsibles_on_client_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_responsibles_on_client_id ON responsibles USING btree (client_id);
+CREATE INDEX index_responsibles_on_client_id ON public.responsibles USING btree (client_id);
 
 
 --
 -- Name: index_responsibles_on_company_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_responsibles_on_company_id ON responsibles USING btree (company_id);
+CREATE INDEX index_responsibles_on_company_id ON public.responsibles USING btree (company_id);
 
 
 --
 -- Name: index_resumes_on_client_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resumes_on_client_id ON resumes USING btree (client_id);
+CREATE INDEX index_resumes_on_client_id ON public.resumes USING btree (client_id);
 
 
 --
 -- Name: index_resumes_on_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resumes_on_created_at ON resumes USING btree (created_at);
+CREATE INDEX index_resumes_on_created_at ON public.resumes USING btree (created_at);
 
 
 --
 -- Name: index_resumes_on_fts; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resumes_on_fts ON resumes USING gin (fts);
+CREATE INDEX index_resumes_on_fts ON public.resumes USING gin (fts);
 
 
 --
 -- Name: index_resumes_on_industry_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resumes_on_industry_id ON resumes USING btree (industry_id);
+CREATE INDEX index_resumes_on_industry_id ON public.resumes USING btree (industry_id);
 
 
 --
 -- Name: index_resumes_on_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resumes_on_location_id ON resumes USING btree (location_id);
+CREATE INDEX index_resumes_on_location_id ON public.resumes USING btree (location_id);
 
 
 --
 -- Name: index_resumes_on_salary; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resumes_on_salary ON resumes USING btree (salary);
+CREATE INDEX index_resumes_on_salary ON public.resumes USING btree (salary);
 
 
 --
 -- Name: index_resumes_on_updated_at; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resumes_on_updated_at ON resumes USING btree (updated_at);
+CREATE INDEX index_resumes_on_updated_at ON public.resumes USING btree (updated_at);
 
 
 --
 -- Name: index_skillsjobs_on_job_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_skillsjobs_on_job_id ON skillsjobs USING btree (job_id);
+CREATE INDEX index_skillsjobs_on_job_id ON public.skillsjobs USING btree (job_id);
 
 
 --
 -- Name: index_skillsjobs_on_level_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_skillsjobs_on_level_id ON skillsjobs USING btree (level_id);
+CREATE INDEX index_skillsjobs_on_level_id ON public.skillsjobs USING btree (level_id);
 
 
 --
 -- Name: index_skillsjobs_on_name; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_skillsjobs_on_name ON skillsjobs USING btree (name);
+CREATE INDEX index_skillsjobs_on_name ON public.skillsjobs USING btree (name);
 
 
 --
 -- Name: index_skillsresumes_on_level_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_skillsresumes_on_level_id ON skillsresumes USING btree (level_id);
+CREATE INDEX index_skillsresumes_on_level_id ON public.skillsresumes USING btree (level_id);
 
 
 --
 -- Name: index_skillsresumes_on_name; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_skillsresumes_on_name ON skillsresumes USING btree (name);
+CREATE INDEX index_skillsresumes_on_name ON public.skillsresumes USING btree (name);
 
 
 --
 -- Name: index_skillsresumes_on_resume_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_skillsresumes_on_resume_id ON skillsresumes USING btree (resume_id);
+CREATE INDEX index_skillsresumes_on_resume_id ON public.skillsresumes USING btree (resume_id);
 
 
 --
--- Name: tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
+-- Name: locations tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON locations FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'suburb', 'postcode', 'state');
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.locations FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'suburb', 'postcode', 'state');
 
-ALTER TABLE locations DISABLE TRIGGER tsvectorupdate;
+ALTER TABLE public.locations DISABLE TRIGGER tsvectorupdate;
 
 
 --
--- Name: tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
+-- Name: companies tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON companies FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'name', 'description');
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.companies FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'name', 'description');
 
 
 --
--- Name: tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
+-- Name: jobs tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON jobs FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'title', 'description');
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.jobs FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'title', 'description');
 
 
 --
--- Name: tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
+-- Name: resumes tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON resumes FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'desiredjobtitle', 'abouteme');
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.resumes FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'desiredjobtitle', 'abouteme');
 
 
 --
--- Name: fk_rails_003565a9fb; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: resumes fk_rails_003565a9fb; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resumes
-    ADD CONSTRAINT fk_rails_003565a9fb FOREIGN KEY (industry_id) REFERENCES industries(id);
+ALTER TABLE ONLY public.resumes
+    ADD CONSTRAINT fk_rails_003565a9fb FOREIGN KEY (industry_id) REFERENCES public.industries(id);
 
 
 --
--- Name: fk_rails_032ff5b3d0; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: industries fk_rails_032ff5b3d0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industries
-    ADD CONSTRAINT fk_rails_032ff5b3d0 FOREIGN KEY (industry_id) REFERENCES industries(id);
+ALTER TABLE ONLY public.industries
+    ADD CONSTRAINT fk_rails_032ff5b3d0 FOREIGN KEY (industry_id) REFERENCES public.industries(id);
 
 
 --
--- Name: fk_rails_1e99f51bd6; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: companies fk_rails_1e99f51bd6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY companies
-    ADD CONSTRAINT fk_rails_1e99f51bd6 FOREIGN KEY (location_id) REFERENCES locations(id);
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT fk_rails_1e99f51bd6 FOREIGN KEY (location_id) REFERENCES public.locations(id);
 
 
 --
--- Name: fk_rails_2c54a51ad1; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: responsibles fk_rails_2c54a51ad1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY responsibles
-    ADD CONSTRAINT fk_rails_2c54a51ad1 FOREIGN KEY (company_id) REFERENCES companies(id);
+ALTER TABLE ONLY public.responsibles
+    ADD CONSTRAINT fk_rails_2c54a51ad1 FOREIGN KEY (company_id) REFERENCES public.companies(id);
 
 
 --
--- Name: fk_rails_2d8974d3a3; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: industrycompanies fk_rails_2d8974d3a3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industrycompanies
-    ADD CONSTRAINT fk_rails_2d8974d3a3 FOREIGN KEY (industry_id) REFERENCES industries(id);
+ALTER TABLE ONLY public.industrycompanies
+    ADD CONSTRAINT fk_rails_2d8974d3a3 FOREIGN KEY (industry_id) REFERENCES public.industries(id);
 
 
 --
--- Name: fk_rails_3476d36c73; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: gateways fk_rails_3476d36c73; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY gateways
-    ADD CONSTRAINT fk_rails_3476d36c73 FOREIGN KEY (client_id) REFERENCES clients(id);
+ALTER TABLE ONLY public.gateways
+    ADD CONSTRAINT fk_rails_3476d36c73 FOREIGN KEY (client_id) REFERENCES public.clients(id);
 
 
 --
--- Name: fk_rails_3cd5abca1e; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: skillsjobs fk_rails_3cd5abca1e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY skillsjobs
-    ADD CONSTRAINT fk_rails_3cd5abca1e FOREIGN KEY (job_id) REFERENCES jobs(id);
+ALTER TABLE ONLY public.skillsjobs
+    ADD CONSTRAINT fk_rails_3cd5abca1e FOREIGN KEY (job_id) REFERENCES public.jobs(id);
 
 
 --
--- Name: fk_rails_3fc928c70b; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: industryresumes fk_rails_3fc928c70b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industryresumes
-    ADD CONSTRAINT fk_rails_3fc928c70b FOREIGN KEY (industry_id) REFERENCES industries(id);
+ALTER TABLE ONLY public.industryresumes
+    ADD CONSTRAINT fk_rails_3fc928c70b FOREIGN KEY (industry_id) REFERENCES public.industries(id);
 
 
 --
--- Name: fk_rails_493fe47dba; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: industryexperiences fk_rails_493fe47dba; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industryexperiences
-    ADD CONSTRAINT fk_rails_493fe47dba FOREIGN KEY (experience_id) REFERENCES experiences(id);
+ALTER TABLE ONLY public.industryexperiences
+    ADD CONSTRAINT fk_rails_493fe47dba FOREIGN KEY (experience_id) REFERENCES public.experiences(id);
 
 
 --
--- Name: fk_rails_58be162534; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: resumes fk_rails_58be162534; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resumes
-    ADD CONSTRAINT fk_rails_58be162534 FOREIGN KEY (client_id) REFERENCES clients(id);
+ALTER TABLE ONLY public.resumes
+    ADD CONSTRAINT fk_rails_58be162534 FOREIGN KEY (client_id) REFERENCES public.clients(id);
 
 
 --
--- Name: fk_rails_598396e933; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: skillsresumes fk_rails_598396e933; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY skillsresumes
-    ADD CONSTRAINT fk_rails_598396e933 FOREIGN KEY (resume_id) REFERENCES resumes(id);
+ALTER TABLE ONLY public.skillsresumes
+    ADD CONSTRAINT fk_rails_598396e933 FOREIGN KEY (resume_id) REFERENCES public.resumes(id);
 
 
 --
--- Name: fk_rails_5b8502059e; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: jobs fk_rails_5b8502059e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY jobs
-    ADD CONSTRAINT fk_rails_5b8502059e FOREIGN KEY (industry_id) REFERENCES industries(id);
+ALTER TABLE ONLY public.jobs
+    ADD CONSTRAINT fk_rails_5b8502059e FOREIGN KEY (industry_id) REFERENCES public.industries(id);
 
 
 --
--- Name: fk_rails_5bc7cd63b7; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: industryjobs fk_rails_5bc7cd63b7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industryjobs
-    ADD CONSTRAINT fk_rails_5bc7cd63b7 FOREIGN KEY (industry_id) REFERENCES industries(id);
+ALTER TABLE ONLY public.industryjobs
+    ADD CONSTRAINT fk_rails_5bc7cd63b7 FOREIGN KEY (industry_id) REFERENCES public.industries(id);
 
 
 --
--- Name: fk_rails_5c3982cde1; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: industryjobs fk_rails_5c3982cde1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industryjobs
-    ADD CONSTRAINT fk_rails_5c3982cde1 FOREIGN KEY (job_id) REFERENCES jobs(id);
+ALTER TABLE ONLY public.industryjobs
+    ADD CONSTRAINT fk_rails_5c3982cde1 FOREIGN KEY (job_id) REFERENCES public.jobs(id);
 
 
 --
--- Name: fk_rails_65e42eec04; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: skillsjobs fk_rails_65e42eec04; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY skillsjobs
-    ADD CONSTRAINT fk_rails_65e42eec04 FOREIGN KEY (level_id) REFERENCES levels(id);
+ALTER TABLE ONLY public.skillsjobs
+    ADD CONSTRAINT fk_rails_65e42eec04 FOREIGN KEY (level_id) REFERENCES public.levels(id);
 
 
 --
--- Name: fk_rails_7985a15ffb; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: languageresumes fk_rails_7985a15ffb; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY languageresumes
-    ADD CONSTRAINT fk_rails_7985a15ffb FOREIGN KEY (resume_id) REFERENCES resumes(id);
+ALTER TABLE ONLY public.languageresumes
+    ADD CONSTRAINT fk_rails_7985a15ffb FOREIGN KEY (resume_id) REFERENCES public.resumes(id);
 
 
 --
--- Name: fk_rails_81ca530391; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: companies fk_rails_81ca530391; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY companies
-    ADD CONSTRAINT fk_rails_81ca530391 FOREIGN KEY (industry_id) REFERENCES industries(id);
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT fk_rails_81ca530391 FOREIGN KEY (industry_id) REFERENCES public.industries(id);
 
 
 --
--- Name: fk_rails_880df2fbb3; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: responsibles fk_rails_880df2fbb3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY responsibles
-    ADD CONSTRAINT fk_rails_880df2fbb3 FOREIGN KEY (client_id) REFERENCES clients(id);
+ALTER TABLE ONLY public.responsibles
+    ADD CONSTRAINT fk_rails_880df2fbb3 FOREIGN KEY (client_id) REFERENCES public.clients(id);
 
 
 --
--- Name: fk_rails_91959a45b5; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: experiences fk_rails_91959a45b5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY experiences
-    ADD CONSTRAINT fk_rails_91959a45b5 FOREIGN KEY (location_id) REFERENCES locations(id);
+ALTER TABLE ONLY public.experiences
+    ADD CONSTRAINT fk_rails_91959a45b5 FOREIGN KEY (location_id) REFERENCES public.locations(id);
 
 
 --
--- Name: fk_rails_9650b12e65; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: gateways fk_rails_9650b12e65; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY gateways
-    ADD CONSTRAINT fk_rails_9650b12e65 FOREIGN KEY (industry_id) REFERENCES industries(id);
+ALTER TABLE ONLY public.gateways
+    ADD CONSTRAINT fk_rails_9650b12e65 FOREIGN KEY (industry_id) REFERENCES public.industries(id);
 
 
 --
--- Name: fk_rails_9a4dfd1104; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: industrycompanies fk_rails_9a4dfd1104; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industrycompanies
-    ADD CONSTRAINT fk_rails_9a4dfd1104 FOREIGN KEY (company_id) REFERENCES companies(id);
+ALTER TABLE ONLY public.industrycompanies
+    ADD CONSTRAINT fk_rails_9a4dfd1104 FOREIGN KEY (company_id) REFERENCES public.companies(id);
 
 
 --
--- Name: fk_rails_9aea75896a; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: languageresumes fk_rails_9aea75896a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY languageresumes
-    ADD CONSTRAINT fk_rails_9aea75896a FOREIGN KEY (language_id) REFERENCES languages(id);
+ALTER TABLE ONLY public.languageresumes
+    ADD CONSTRAINT fk_rails_9aea75896a FOREIGN KEY (language_id) REFERENCES public.languages(id);
 
 
 --
--- Name: fk_rails_9b863559a5; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: companies fk_rails_9b863559a5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY companies
-    ADD CONSTRAINT fk_rails_9b863559a5 FOREIGN KEY (size_id) REFERENCES sizes(id);
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT fk_rails_9b863559a5 FOREIGN KEY (size_id) REFERENCES public.sizes(id);
 
 
 --
--- Name: fk_rails_ae769b0e0b; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: clients fk_rails_ae769b0e0b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY clients
-    ADD CONSTRAINT fk_rails_ae769b0e0b FOREIGN KEY (location_id) REFERENCES locations(id);
+ALTER TABLE ONLY public.clients
+    ADD CONSTRAINT fk_rails_ae769b0e0b FOREIGN KEY (location_id) REFERENCES public.locations(id);
 
 
 --
--- Name: fk_rails_b062765ade; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: experiences fk_rails_b062765ade; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY experiences
-    ADD CONSTRAINT fk_rails_b062765ade FOREIGN KEY (resume_id) REFERENCES resumes(id);
+ALTER TABLE ONLY public.experiences
+    ADD CONSTRAINT fk_rails_b062765ade FOREIGN KEY (resume_id) REFERENCES public.resumes(id);
 
 
 --
--- Name: fk_rails_b0cc6672a9; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: gateways fk_rails_b0cc6672a9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY gateways
-    ADD CONSTRAINT fk_rails_b0cc6672a9 FOREIGN KEY (company_id) REFERENCES companies(id);
+ALTER TABLE ONLY public.gateways
+    ADD CONSTRAINT fk_rails_b0cc6672a9 FOREIGN KEY (company_id) REFERENCES public.companies(id);
 
 
 --
--- Name: fk_rails_b1f3718ea8; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: jobs fk_rails_b1f3718ea8; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY jobs
-    ADD CONSTRAINT fk_rails_b1f3718ea8 FOREIGN KEY (education_id) REFERENCES educations(id);
+ALTER TABLE ONLY public.jobs
+    ADD CONSTRAINT fk_rails_b1f3718ea8 FOREIGN KEY (education_id) REFERENCES public.educations(id);
 
 
 --
--- Name: fk_rails_b34da78090; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: jobs fk_rails_b34da78090; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY jobs
-    ADD CONSTRAINT fk_rails_b34da78090 FOREIGN KEY (company_id) REFERENCES companies(id);
+ALTER TABLE ONLY public.jobs
+    ADD CONSTRAINT fk_rails_b34da78090 FOREIGN KEY (company_id) REFERENCES public.companies(id);
 
 
 --
--- Name: fk_rails_b4dfe111b6; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: industryresumes fk_rails_b4dfe111b6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industryresumes
-    ADD CONSTRAINT fk_rails_b4dfe111b6 FOREIGN KEY (resume_id) REFERENCES resumes(id);
+ALTER TABLE ONLY public.industryresumes
+    ADD CONSTRAINT fk_rails_b4dfe111b6 FOREIGN KEY (resume_id) REFERENCES public.resumes(id);
 
 
 --
--- Name: fk_rails_cf58b01b64; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: industryexperiences fk_rails_cf58b01b64; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY industryexperiences
-    ADD CONSTRAINT fk_rails_cf58b01b64 FOREIGN KEY (industry_id) REFERENCES industries(id);
+ALTER TABLE ONLY public.industryexperiences
+    ADD CONSTRAINT fk_rails_cf58b01b64 FOREIGN KEY (industry_id) REFERENCES public.industries(id);
 
 
 --
--- Name: fk_rails_dec69062e5; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: gateways fk_rails_dec69062e5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY gateways
-    ADD CONSTRAINT fk_rails_dec69062e5 FOREIGN KEY (location_id) REFERENCES locations(id);
+ALTER TABLE ONLY public.gateways
+    ADD CONSTRAINT fk_rails_dec69062e5 FOREIGN KEY (location_id) REFERENCES public.locations(id);
 
 
 --
--- Name: fk_rails_dfb2269fe4; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: languageresumes fk_rails_dfb2269fe4; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY languageresumes
-    ADD CONSTRAINT fk_rails_dfb2269fe4 FOREIGN KEY (level_id) REFERENCES levels(id);
+ALTER TABLE ONLY public.languageresumes
+    ADD CONSTRAINT fk_rails_dfb2269fe4 FOREIGN KEY (level_id) REFERENCES public.levels(id);
 
 
 --
--- Name: fk_rails_e1588fa548; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: jobs fk_rails_e1588fa548; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY jobs
-    ADD CONSTRAINT fk_rails_e1588fa548 FOREIGN KEY (location_id) REFERENCES locations(id);
+ALTER TABLE ONLY public.jobs
+    ADD CONSTRAINT fk_rails_e1588fa548 FOREIGN KEY (location_id) REFERENCES public.locations(id);
 
 
 --
--- Name: fk_rails_e57ac8f3e0; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: resumes fk_rails_e57ac8f3e0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resumes
-    ADD CONSTRAINT fk_rails_e57ac8f3e0 FOREIGN KEY (location_id) REFERENCES locations(id);
+ALTER TABLE ONLY public.resumes
+    ADD CONSTRAINT fk_rails_e57ac8f3e0 FOREIGN KEY (location_id) REFERENCES public.locations(id);
 
 
 --
--- Name: fk_rails_f31c8994eb; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: skillsresumes fk_rails_f31c8994eb; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY skillsresumes
-    ADD CONSTRAINT fk_rails_f31c8994eb FOREIGN KEY (level_id) REFERENCES levels(id);
+ALTER TABLE ONLY public.skillsresumes
+    ADD CONSTRAINT fk_rails_f31c8994eb FOREIGN KEY (level_id) REFERENCES public.levels(id);
 
 
 --
--- Name: fk_rails_f3577d7dd3; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: jobs fk_rails_f3577d7dd3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY jobs
-    ADD CONSTRAINT fk_rails_f3577d7dd3 FOREIGN KEY (client_id) REFERENCES clients(id);
+ALTER TABLE ONLY public.jobs
+    ADD CONSTRAINT fk_rails_f3577d7dd3 FOREIGN KEY (client_id) REFERENCES public.clients(id);
 
 
 --
@@ -2056,6 +2051,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171227043153'),
 ('20171228040745'),
 ('20180204105551'),
-('20180218093045');
+('20180218093045'),
+('20180601064454');
 
 
