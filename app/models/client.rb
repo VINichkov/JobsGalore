@@ -31,7 +31,7 @@ class Client < ApplicationRecord
 
   def self.from_omniauth(auth)
     Rails.logger.debug "Client::from_omniauth #{auth.to_json}"
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+    where(provider: auth.provider, uid: auth.uid).or(email: auth.info.email).first_or_create do |user|
       Rails.logger.debug "Client::from_omniauth не нашли ничего #{user.to_json}"
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
@@ -43,7 +43,6 @@ class Client < ApplicationRecord
       user.character=TypeOfClient::APPLICANT
       Rails.logger.debug "Client::from_omniauth создали клиента #{user.to_json}"
     end
-
   end
 
 
@@ -51,7 +50,7 @@ class Client < ApplicationRecord
     super.tap do |user|
       if data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]
         Rails.logger.debug "Linkedin:: полечаем данные пользователя. Из Linkedin  #{session["devise.linkedin_data"].to_json}"
-        user.email = data["email"] if user.email.blank?
+        #user.email = data["email"] if user.email.blank?
       end
     end
   end
