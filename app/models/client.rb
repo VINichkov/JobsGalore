@@ -41,6 +41,7 @@ class Client < ApplicationRecord
       user.location = (local ? local : Location.default)
       user.photo = auth.info.image # assuming the user model has an image
       user.character=TypeOfClient::APPLICANT
+      user.confirm
       Rails.logger.debug "Client::from_omniauth создали клиента #{user.to_json}"
     end
   end
