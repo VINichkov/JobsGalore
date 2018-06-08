@@ -3,8 +3,8 @@ class MainSearch
 
   def call
     @page, @param = context.params[:page], context.params[:main_search]
-    @param[:value].delete!("!:*&()'`\"’")
-    @param[:value].blank? ? @param[:value] = '' : @param[:value] = @param[:value].split(" ").map{|t| t=t+":*"}.join("&")
+    @param[:value].delete!("!,.:*&()'`\"’")
+    @param[:value].blank? ? @param[:value] = '' : @param[:value] = @param[:value].split(" ").map{|t| t=t+":*"}.join("|")
     switch = LazyHash.new('1'=>->{company}, '2'=>->{job}, '3'=>->{resume})
     unless switch[@param[:type]]
       context.fail!

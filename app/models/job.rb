@@ -116,7 +116,7 @@ class Job < ApplicationRecord
     if not query[:location_id].blank?
       text_query << "location_id = :location_id"
     elsif not query[:location_name].blank?
-      locations = Location.search((query[:location_name].split(" ").map {|t| t=t+":*"}).join("&"))
+      locations = Location.search((query[:location_name].split(" ").map {|t| t=t+":*"}).join("|"))
       if not locations.blank?
         text_query << "location_id in "+locations.ids.to_s.sub("[","(").sub("]",")")
       end

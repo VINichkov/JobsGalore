@@ -32,10 +32,13 @@ class Client < ApplicationRecord
   def self.from_omniauth(auth)
     Rails.logger.debug "Client::from_omniauth #{auth.to_json}"
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      Rails.logger.debug "Client::from_omniauth нашли что то #{user.to_json}"
+      Rails.logger.debug "Client::from_omniauth не нашли ничего #{user.to_json}"
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
-      user.firstname = auth.info.name   # assuming the user model has a name
+      user.firstname = auth.info.first_name
+      user.lastname = auth.info.last_name
+      local = Location.search((auth.info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
+      user.location = (local ? local : Location.default)
       user.photo = auth.info.image # assuming the user model has an image
       user.character=TypeOfClient::APPLICANT
     end
