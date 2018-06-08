@@ -3,6 +3,7 @@ class JobWorkflow < ApplicationWorkflow
   attr_accessor :job, :client
 
   def initialize(job, client = nil)
+    Rails.logger.debug("!!!JobsWorkflow::Инициализация")
     @job = job
     @class='JobWorkflow'
     @client =client
@@ -15,6 +16,7 @@ class JobWorkflow < ApplicationWorkflow
   end
 
   def self.desirialize(arg=nil)
+    Rails.logger.debug("!!!JobsWorkflow::десириализация")
     if arg
       if arg["job"]
         if arg["client"]
@@ -29,9 +31,10 @@ class JobWorkflow < ApplicationWorkflow
   end
 
   def url
+    Rails.logger.debug("!!!JobsWorkflow::Вычисляем УРЛ")
     super
     switch = LazyHash.new(  new: ->{url_helpers.new_job_path},
-                            not_client: ->{url_helpers.new_client_registration_path},
+                            not_client: ->{url_helpers.new_client_session_path},
                             not_company: ->{url_helpers.new_company_path},
                             not_persisted: ->{url_helpers.jobs_path},
                             final: ->{url_helpers.job_path(@job)})
@@ -40,15 +43,22 @@ class JobWorkflow < ApplicationWorkflow
 
 
   def client=(arg)
+    Rails.logger.debug("!!!JobsWorkflow::Получаем клиента #{arg.to_json}")
     @client = arg
-    unless @client.character
-      @client.character = 'employer'
+    Rails.logger.debug("!!!JobsWorkflow::Получаем клиента: Аргументы 1 #{!(@client.character)} 2 #{@client.resp?} 3 #{!(@client.character or @client.resp?)}")
+    if @client.character.blank? or @client.applicant?
+      @client.character = TypeOfClient::EMPLOYER
+      Rails.logger.debug("!!!JobsWorkflow::Получаем клиента: Обновленный клиент #{arg.to_json}")
+      if @client.persisted?
+        @client.save!
+      end
     end
     @job.client = @client
     @job.company = @client.company
   end
 
   def company=(arg)
+    Rails.logger.debug("!!!JobsWorkflow::получаем компанию")
     @client&.company = arg
     @job&.company = arg
   end
@@ -59,6 +69,7 @@ class JobWorkflow < ApplicationWorkflow
 
 
   def update
+    Rails.logger.debug("!!!JobsWorkflow::актуализирунм")
     Rails.logger.debug("JobsWorkflow::actualize start #{self.to_json}")
     if @job.nil?
       @state = :new

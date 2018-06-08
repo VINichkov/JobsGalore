@@ -55,7 +55,7 @@ class ResumesController < ApplicationController
   def update
     respond_to do |format|
       if @resume.update(resume_params)
-        format.html { redirect_to client_root_path, notice: 'The CV was successfully updated.' }
+        format.html { redirect_to resumes_root_path, notice: 'The CV was successfully updated.' }
         format.json { render :show, status: :ok, location: @resume }
       else
         format.html { render :edit }
@@ -69,7 +69,7 @@ class ResumesController < ApplicationController
   def destroy
     @resume.destroy
     respond_to do |format|
-      format.html { redirect_to client_root_path, notice: 'The CV was successfully destroyed.' }
+      format.html { redirect_to resumes_root_path, notice: 'The CV was successfully destroyed.' }
     end
   end
 

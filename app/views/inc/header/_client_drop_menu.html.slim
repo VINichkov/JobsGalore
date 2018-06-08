@@ -5,10 +5,15 @@
         = current_client.full_name
         b.caret
       ul.dropdown-menu
+        - if current_client.resp?
+          li
+            = link_to jobs_root_path do
+              span.glyphicon.glyphicon-plus
+              | &nbsp; My jobs
         li
-          = link_to client_root_path do
+          = link_to resumes_root_path do
             span.glyphicon.glyphicon-user
-            | &nbsp; #{current_client.resp? ? "My Jobs" : "My Resumes"}
+            | &nbsp; My resumes
         li
           = link_to settings_path do
             span.glyphicon.glyphicon-cog

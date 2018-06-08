@@ -48,7 +48,7 @@ class JobsController < ApplicationController
   def update
     respond_to do |format|
       if @job.update(job_params)
-        format.html { redirect_to client_root_path, notice: 'Job was successfully updated.' }
+        format.html { redirect_to jobs_root_path, notice: 'Job was successfully updated.' }
       else
         format.html { render :edit }
       end
@@ -60,7 +60,7 @@ class JobsController < ApplicationController
   def destroy
     @job.destroy
     respond_to do |format|
-      format.html { redirect_to client_root_path, notice: 'Job was successfully destroyed.' }
+      format.html { redirect_to jobs_root_path, notice: 'Job was successfully destroyed.' }
     end
   end
 

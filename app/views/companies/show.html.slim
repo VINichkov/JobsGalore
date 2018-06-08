@@ -57,4 +57,4 @@
           = @company.render_description
         =jobs_of_company(@company)
 
-=render 'inc/contact', object: @company.object.client.find_by(character:'employer').decorate, title:""
+=render 'inc/contact', object: @company.object.client.find_by(character:TypeOfClient::EMPLOYER).decorate, title:""

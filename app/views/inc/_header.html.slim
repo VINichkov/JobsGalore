@@ -3,12 +3,21 @@
   nav.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.nav-min#mainnav[role="navigation"]
     ul.nav.navbar-nav
       - if client_signed_in?
+        .text-center
+          = image_bg(current_client.photo_url, "50px", "50px", "50px")
+        .text-center
+          | &nbsp; #{current_client.full_name} &nbsp;
+        -if current_client.resp?
+          li
+            = link_to jobs_root_path do
+              | &nbsp;
+              span.glyphicon.glyphicon-plus
+              | &nbsp; My jobs
         li
-          = link_to client_root_path do
-            = image_bg(current_client.photo_url, "50px", "50px", "50px")
-            span
-              | &nbsp; #{current_client.full_name} &nbsp;
-              span.glyphicon.glyphicon-chevron-right
+          = link_to resumes_root_path do
+            | &nbsp;
+            span.glyphicon.glyphicon-user
+            | &nbsp; My resumes
         li
           = link_to settings_path do
             | &nbsp;
@@ -30,7 +39,7 @@
             = link_to admin_path do
               span.glyphicon.glyphicon-eye-open
               | &nbsp; Administration of site
-      - if  (current_client&.resp?)
+      - if  current_client
         li
           = link_to new_job_path, rel: "nofollow" do
             |&nbsp;
@@ -58,7 +67,7 @@
           span.glyphicon.glyphicon-leaf
           |&nbsp; Companies by category
       - unless client_signed_in?
-        li.nav-item.le
+        li.nav-item
           = link_to new_client_session_path, rel: "nofollow" do
             |&nbsp;
             span.glyphicon.glyphicon-log-in
@@ -99,9 +108,8 @@
                 |Jobs
                 b.caret
               ul.dropdown-menu
-                - if not (client_signed_in?) or (current_client.resp?)
-                  li
-                    = link_to "Post new job", new_job_path, rel:"nofollow"
+                li
+                  = link_to "Post new job", new_job_path, rel:"nofollow"
                 li
                   a[href= '/by_category/2']
                     |Jobs by category
@@ -110,9 +118,8 @@
                 |Resumes
                 b.caret
               ul.dropdown-menu
-                - if not (current_client&.resp?)
-                  li
-                    = link_to "Post new resume", new_resume_path, rel:"nofollow"
+                li
+                  = link_to "Post new resume", new_resume_path, rel:"nofollow"
                 li
                   =link_to"Resumes by category",'/by_category/3'
             li.nav-item.hidden-sm

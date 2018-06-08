@@ -1,31 +1,22 @@
 class ClientsController < ApplicationController
   load_and_authorize_resource :client
   before_action :set_client, only: [:show, :edit,:update, :destroy,:change_type, :destroy_member, :admin_edit_photo,:admin_show,:admin_edit,:admin_update,:admin_destroy ]
-  before_action :current_company, only: [:profile, :settings, :team]
+  before_action :current_company, only: [ :team]
+  before_action :set_current_client, only: [:jobs, :resumes, :settings, :edit_photo]
   before_action :authenticate_client!
 
-  # GET /clients
-  # GET /clients.json
+
   def index
     @clients = Client.all.order(:email).paginate(page: client_params[:page], per_page:21)
   end
 
-  # GET /clients/1
-  # GET /clients/1.json
-  #def show
-  #end
+  def edit_photo;  end
 
-  def edit_photo
-    @client=current_client
-  end
+  def jobs;  end
 
-  def profile
-    @client=current_client
-  end
+  def resumes;  end
 
-  def settings
-
-  end
+  def settings;  end
 
   def change_type
     respond_to do |format|
@@ -35,18 +26,8 @@ class ClientsController < ApplicationController
     end
   end
 
-  # GET /clients/new
-  #def new
-  #  @client = Client.new
-  #end
+  def edit;  end
 
-  # GET /clients/1/edit
-  def edit
-  end
-
-
-  # POST /clients
-  # POST /clients.json
   def create
     @client = Client.new(client_params)
     respond_to do |format|
@@ -104,16 +85,16 @@ class ClientsController < ApplicationController
     @clients = Client.all.includes(:location).order(:email).paginate(page: params[:page], per_page:21)
   end
 
-  def admin_edit_photo
-  end
+  def admin_edit_photo;  end
+
   def admin_new
     @client = Client.new
   end
-  def admin_edit
-  end
-  def admin_show
 
-  end
+  def admin_edit;  end
+
+  def admin_show;  end
+
   def admin_create
     @client = Client.new(client_params)
     respond_to do |format|
@@ -159,7 +140,7 @@ class ClientsController < ApplicationController
   end
 
   def create_member
-    @client=Client.new(client_params.merge({company_id:current_company.id,character: 'employee'}))
+    @client=Client.new(client_params.merge({company_id:current_company.id,character: TypeOfClient::EMPLOYEE}))
     respond_to do |format|
       if @client.save
         format.html { redirect_to team_path, notice: 'Done!' }
@@ -183,6 +164,9 @@ class ClientsController < ApplicationController
     @client = Client.find(params[:id])
   end
 
+  def set_current_client
+    @client=current_client
+  end
     # Never trust parameters from the scary internet, only allow the white list through.
   def client_params
     if params[:client]

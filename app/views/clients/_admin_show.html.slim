@@ -64,7 +64,7 @@
     p
       strong type:
       = @client.character
-  -if @client.character =='employer' or @client.character =='employee' then
+  -if @client.character ==TypeOfClient::EMPLOYER or @client.character == TypeOfClient::EMPLOYEE then
     .row
       h2 Your jobs
     .row

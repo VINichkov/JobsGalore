@@ -85,6 +85,7 @@ class Job < ApplicationRecord
       JobsMailer.add_job({mail:self.client.email, firstname: self.client.full_name, id:self.id, title:self.title}).deliver_later
     end
   end
+
   def date_close
     if self.close.nil?
       self.close = Date.today+1.month

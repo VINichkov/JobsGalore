@@ -13,23 +13,12 @@ before_action :configure_sign_in_params, only: [:create]
      end
    end
 
-  # POST /resource/sign_in
+  #POST /resource/sign_in
    def create
-     self.resource = warden.authenticate!(auth_options)
-     session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow]) if session[:workflow]
-     if resource.validate_workflow(session[:workflow]&.class)
-       workflow = session[:workflow]
-       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-       session.clear
-       session[:workflow] = workflow
-       set_flash_message! :alert, :"sign_in_#{resource.errors[:character][0]}"
-       redirect_to new_client_session_path
-     else
+     super do
+       session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow]) if session[:workflow]
        session[:workflow].client = resource if session[:workflow]
        @url = session[:workflow].url if session[:workflow]
-       set_flash_message!(:notice, :signed_in)
-       sign_in(resource_name, resource)
-       respond_with resource, location: after_sign_in_path_for(resource)
      end
    end
 

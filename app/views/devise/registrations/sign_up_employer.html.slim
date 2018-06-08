@@ -68,7 +68,7 @@
           | &nbsp;  and  &nbsp;
           =link_to "Terms & Conditions", advertising_terms_of_use_path
         .form-group.hidden-xs.hidden-sm.hidden-md.hidden-lg
-          = f.text_field :character, value: 'employer'
+          = f.text_field :character, value: TypeOfClient::EMPLOYER
         hr.colorgraph
         .row
           .col-xs-6.col-md-6

@@ -79,7 +79,7 @@ class CompaniesController < ApplicationController
         if session[:workflow].company.save
           session[:workflow].client.save!
           if current_client
-            format.html { redirect_to session[:workflow].url ? session[:workflow].url : client_root_path, notice: 'Company was successfully created.' }
+            format.html { redirect_to session[:workflow].url ? session[:workflow].url : jobs_root_path, notice: 'Company was successfully created.' }
           else
             format.html { redirect_to session[:workflow].url ? session[:workflow].url : session[:workflow].company, notice: 'Company was successfully created.' }
           end

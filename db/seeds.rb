@@ -11,12 +11,13 @@ require 'mechanize'
 require 'bcrypt'
 
 #version 1
-if 1==1
+if 1==0
   begin
     Client.all.each do |client|
-      if client.character == 'Aplicant'
+      if client.character == 'aplicant'
         client.character = "Applicant"
       end
+      client.save!
     end
   rescue
     puts "Error: #{$!}"
@@ -41,7 +42,6 @@ if 1==1
   puts "--==Sizes #{Size.count}==--"
   puts "--==Skillsjobs #{Skillsjob.count}==--"
   puts "--==SkillsResumes #{Skillsresume.count}==--"
-
 
 end
 

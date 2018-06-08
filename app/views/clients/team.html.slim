@@ -26,7 +26,7 @@
             td = client.firstname
             td = client.lastname
             td = client.email
-            td = client.character=='employer' ? 'Employer' : 'Recruiter'
+            td = client.character==TypeOfClient::EMPLOYER ? 'Employer' : 'Recruiter'
             td = "#{client.location.name}"
             td = link_to 'Change type', change_type_path(client), class: "btn btn-warning btn-block "
             td = link_to 'Destroy', team_destroy_path(client), data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-danger btn-block "
@@ -39,7 +39,7 @@
           .col-sm-8.col-xs-12
             p #{client.full_name}
             p #{client.email}
-            p #{client.character=='employer' ? 'Employer' : 'Recruiter'}
+            p #{client.character==TypeOfClient::EMPLOYER ? 'Employer' : 'Recruiter'}
             p #{client.location.name}
             .col-sm-6.col-xs-12
               = link_to 'Change type', change_type_path(client), class: "btn btn-warning btn-block "

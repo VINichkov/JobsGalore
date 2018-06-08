@@ -4,8 +4,7 @@ class Client < ApplicationRecord
    #:omniauthable
   before_save :rename, :type
 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, omniauth_providers: %i[linkedin]
   if Rails.env.production?
     devise  :confirmable, :lockable, :timeoutable
@@ -17,7 +16,9 @@ class Client < ApplicationRecord
   has_many :resume, dependent: :destroy
   has_many :job, dependent: :destroy
 
-
+  validates :firstname, presence: true
+  validates :lastname, presence: true
+  validates :location, presence: true
 
   dragonfly_accessor :photo do
     after_assign do |attachment|
@@ -28,11 +29,6 @@ class Client < ApplicationRecord
   end
 
 
-  validates :firstname, presence: true
-  validates :lastname, presence: true
-  validates :location, presence: true
-  validates :phone, presence: true
-
   def self.from_omniauth(auth)
     Rails.logger.debug "Client::from_omniauth #{auth.to_json}"
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -41,16 +37,15 @@ class Client < ApplicationRecord
       user.password = Devise.friendly_token[0,20]
       user.firstname = auth.info.name   # assuming the user model has a name
       user.photo = auth.info.image # assuming the user model has an image
-      user.character='applicant'
-      # If you are using confirmable and the provider(s) you use validate emails,
-      # uncomment the line below to skip the confirmation emails.
-      # user.skip_confirmation!
+      user.character=TypeOfClient::APPLICANT
     end
   end
+
 
   def self.new_with_session(params, session)
     super.tap do |user|
       if data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]
+        Rails.logger.debug "Linkedin:: полечаем данные пользователя. Из Linkedin  #{session["devise.linkedin_data"].to_json}"
         user.email = data["email"] if user.email.blank?
       end
     end
@@ -65,15 +60,23 @@ class Client < ApplicationRecord
   end
 
   def resp?
-    (character=='employer')or(character=='employee') ? true : false
+    character==TypeOfClient::EMPLOYER or character==TypeOfClient::EMPLOYEE
   end
 
   def employer?
-    character=='employer' ? true : false
+    character==TypeOfClient::EMPLOYER
+  end
+
+  def employee?
+    character==TypeOfClient::EMPLOYEE
+  end
+
+  def applicant?
+    character==TypeOfClient::APPLICANT
   end
 
   def change_type
-    self.employer? ? self.character='employee' : self.character='employer'
+    self.employer? ? self.character=TypeOfClient::EMPLOYEE : self.character=TypeOfClient::EMPLOYER
     self.save
   end
 
@@ -93,9 +96,9 @@ class Client < ApplicationRecord
 
   def type
     if self.character.nil?
-      self.character='applicant'
+      self.character=TypeOfClient::APPLICANT
     elsif character == 'on'
-      self.character = 'employer'
+      self.character = TypeOfClient::EMPLOYER
     end
   end
 
@@ -106,10 +109,10 @@ class Client < ApplicationRecord
    Rails.logger.debug "Client::validate_workflow  wf == ResumeWorkflow and self.resp? = #{wf == ResumeWorkflow and self.resp?}"
    Rails.logger.debug "Client::validate_workflow  wf != ClientWorkflow = #{wf != ClientWorkflow}"
    if wf && (wf == 'JobWorkflow' and !self.resp?)
-     errors.add(:character, :blank, message: "applicant")
+     errors.add(:character, :blank, message: TypeOfClient::APPLICANT)
      true
    elsif wf && wf == 'ResumeWorkflow' and self.resp?
-     errors.add(:character, :blank, message: "employer")
+     errors.add(:character, :blank, message: TypeOfClient::EMPLOYER)
      true
    end
 
