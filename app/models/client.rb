@@ -41,6 +41,8 @@ class Client < ApplicationRecord
       user.location = (local ? local : Location.default)
       user.photo = auth.info.image # assuming the user model has an image
       user.character=TypeOfClient::APPLICANT
+      user.provider =auth.provider
+      user.uid =auth.uid
       user.confirm
       Rails.logger.debug "Client::from_omniauth создали клиента #{user.to_json}"
     end
@@ -52,6 +54,8 @@ class Client < ApplicationRecord
       if data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]
         Rails.logger.debug "Linkedin:: полечаем данные пользователя. Из Linkedin  #{session["devise.linkedin_data"].to_json}"
         #user.email = data["email"] if user.email.blank?
+        user.provider ||=auth.provider
+        user.uid ||=auth.uid
       end
     end
   end
