@@ -5,6 +5,12 @@
         h2 Log in
         hr.colorgraph
         .form-group
+          .row
+            .col-xs-6.col-md-4.col-sm-6.col-lg-4
+              = link_to client_linkedin_omniauth_authorize_path, class:"btn btn-linkedin btn-social" do
+                i.fa.fa-linkedin.text-left[aria-hidden="true"]
+                |&nbsp;|&nbsp;Sign in with linkedIn
+        .form-group
           = f.label :email
           br
           = f.email_field :email, autofocus: true, class:"form-control"
@@ -19,7 +25,6 @@
                 = f.check_box :remember_me
                 |Remember me
         hr.colorgraph
-        = link_to "Sign in with Facebook", client_linkedin_omniauth_authorize_path
         .row
           .col-xs-6.col-md-6.col-sm-6.col-lg-6
             = f.submit "Log in", class: "btn btn-primary btn-block"

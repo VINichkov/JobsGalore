@@ -5,7 +5,7 @@ p
     | Posted:&nbsp;
   span[itemprop="datePosted"]
     =object.posted_date
-  span[itemprop="validThrough"]
+  span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="validThrough"]
     =object.try(:close)
 -if   object.class==JobDecorator
   .hidden-md.hidden-lg.hidden-sm

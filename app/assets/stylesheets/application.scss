@@ -144,3 +144,16 @@ $size: 32px;
 .badge-error:hover {
   background-color: #953b39;
 }
+
+.btn-linkedin {
+  color: #fff;
+  background-color: #00a0dc;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+.btn-social {
+  position: relative;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
