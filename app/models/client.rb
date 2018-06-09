@@ -50,6 +50,7 @@ class Client < ApplicationRecord
 
 
   def self.new_with_session(params, session)
+    Rails.logger.debug "Linkedin:: полечаем данные пользователя. Из Linkedin  #{session.to_json}"
     super.tap do |user|
       if data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]
         Rails.logger.debug "Linkedin:: полечаем данные пользователя. Из Linkedin  #{session["devise.linkedin_data"].to_json}"
