@@ -36,6 +36,9 @@ class JobsController < ApplicationController
     @job = session[:workflow].job.decorate
     respond_to do |format|
       if @job.save
+        if @job.client&.send_email
+          JobsMailer.add_job({mail: @job.client.email, firstname: @job.client.firstname, id: @job.id, title: @job.title}).deliver_later
+        end
         format.html { redirect_to session[:workflow].url, notice: 'Job was successfully created.'}
       else
         format.html { render :new }
