@@ -22,6 +22,7 @@ class Client < ApplicationRecord
 
   dragonfly_accessor :photo do
     after_assign do |attachment|
+      Rails.logger.debug "Client::dragonfly_accessor  #{attachment}"
       # Auto orient all the images - so they will look as they should
       attachment.convert! '-resize 400x -quality 60 -gravity center', 'jpg'
 
