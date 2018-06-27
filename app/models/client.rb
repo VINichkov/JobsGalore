@@ -21,9 +21,8 @@ class Client < ApplicationRecord
   validates :location, presence: true
 
   dragonfly_accessor :photo do
-    Rails.logger.debug "Client::photo  #{attribute}"
     after_assign do |attachment|
-      Rails.logger.debug "Client::dragonfly_accessor  #{attachment}"
+      Rails.logger.debug "Client::dragonfly_accessor  #{attachment.to_json}"
       # Auto orient all the images - so they will look as they should
       attachment.convert! '-resize 400x -quality 60 -gravity center', 'jpg'
 
