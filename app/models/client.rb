@@ -21,7 +21,6 @@ class Client < ApplicationRecord
   validates :location, presence: true
 
   dragonfly_accessor :photo do
-    Rails.logger.debug "Client::photo_uid  #{self.photo_uid}"
     Rails.logger.debug "Client::photo  #{self.photo}"
     after_assign do |attachment|
       Rails.logger.debug "Client::dragonfly_accessor  #{attachment}"
