@@ -41,7 +41,7 @@ class Client < ApplicationRecord
       user.lastname = auth.info.last_name
       local = Location.search((auth.info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
       user.location = (local ? local : Location.default)
-      user.photo = auth.info.image # assuming the user model has an image
+      user.photo_url = auth.info.image # assuming the user model has an image
       user.character=TypeOfClient::APPLICANT
       user.confirm
       Rails.logger.debug "Client::from_omniauth создали клиента #{user.to_json}"
