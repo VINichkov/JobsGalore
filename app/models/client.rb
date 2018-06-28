@@ -20,14 +20,14 @@ class Client < ApplicationRecord
   validates :lastname, presence: true
   validates :location, presence: true
 
-  dragonfly_accessor :photo do
-    after_assign do |attachment|
-      Rails.logger.debug "Client::attachment attributes "
+  #dragonfly_accessor :photo do
+  #  after_assign do |attachment|
+   #   Rails.logger.debug "Client::attachment attributes "
       # Auto orient all the images - so they will look as they should
-      attachment.convert! '-resize 400x -quality 60 -gravity center', 'jpg'
+   #   attachment.convert! '-resize 400x -quality 60 -gravity center', 'jpg'
 
-    end
-  end
+   # end
+  #end
 
 
   def self.from_omniauth(auth)
