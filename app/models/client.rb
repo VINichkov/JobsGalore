@@ -20,7 +20,13 @@ class Client < ApplicationRecord
   validates :lastname, presence: true
   validates :location, presence: true
 
-  dragonfly_accessor :photo
+  dragonfly_accessor :photo do
+    after_assign do |attachment|
+     Rails.logger.debug "Client::attachment attributes "
+      # Auto orient all the images - so they will look as they should
+     attachment.convert! '-resize 400x -quality 60 -gravity center', 'jpg'
+    end
+  end
 
 
   def self.from_omniauth(auth)
@@ -35,7 +41,10 @@ class Client < ApplicationRecord
       user.location = (local ? local : Location.default)
       user.photo_url = auth.info.image # assuming the user model has an image
       user.character=TypeOfClient::APPLICANT
+      user.provider = auth.provider
+      user.uid = auth.uid
       user.confirm
+
       Rails.logger.debug "Client::from_omniauth создали клиента #{user.to_json}"
     end
   end
@@ -46,7 +55,7 @@ class Client < ApplicationRecord
     Rails.logger.debug "Linkedin:: полечаем данные пользователя. Из Linkedin  #{session.to_json}"
     super.tap do |user|
       if data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]
-        Rails.logger.debug "Linkedin:: полечаем данные пользователя. Из Linkedin  #{session["devise.linkedin_data"].to_json}"
+        Rails.logger.debug "Linkedin:: получаем данные пользователя. Из Linkedin  #{session["devise.linkedin_data"].to_json}"
         #user.email = data["email"] if user.email.blank?
         user.provider ||=auth.provider
         user.uid ||=auth.uid
