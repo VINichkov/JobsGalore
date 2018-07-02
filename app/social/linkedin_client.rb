@@ -1,5 +1,5 @@
 class LinkedinClient <LinkedIn
-  option :name, 'link'
+  option :name, 'linke'
 
   def raw_info
     Rails.logger.debug('Зашли  в класс')
