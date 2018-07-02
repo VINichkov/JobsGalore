@@ -1,10 +1,16 @@
-class LinkedinClient <LinkedIn
-  option :name, 'linke'
+require 'omniauth-oauth2'
 
-  def raw_info
-    Rails.logger.debug('Зашли  в класс')
-    @raw_info ||= access_token.get("/v1/people/~:(#{option_fields.join(',')})?format=json").parsed
+  module OmniAuth
+    module Strategies
+      class Linke <LinkedIn
+        option :name, 'linke'
+
+        def raw_info
+          Rails.logger.debug('Зашли  в класс')
+          @raw_info ||= access_token.get("/v1/people/~:(#{option_fields.join(',')})?format=json").parsed
+        end
+      end
+    end
   end
-end
 
-OmniAuth.config.add_camelization 'linke', 'LinkedinClient'
+OmniAuth.config.add_camelization 'linke', 'Linke'
