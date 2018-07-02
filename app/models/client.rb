@@ -44,7 +44,7 @@ class Client < ApplicationRecord
       user.provider = auth.provider
       user.uid = auth.uid
       user.confirm
-
+      user.description = auth.to_json
       Rails.logger.debug "Client::from_omniauth создали клиента #{user.to_json}"
     end
   end
