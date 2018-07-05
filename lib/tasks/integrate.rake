@@ -22,6 +22,39 @@ namespace :integrate do
   desc "Update industries"
   task :update_jobs => :environment do
     i=0
+    ind = { accounting: Industry.find_by_name('Accounting'),
+            adm: Industry.find_by_name('Administration & Secretarial'),
+            media:Industry.find_by_name('Advertising, Media, Arts & Entertainment'),
+            natural: Industry.find_by_name('Agriculture, Nature & Animal'),
+            finance: Industry.find_by_name('Banking & Finance'),
+            biotech: Industry.find_by_name('Biotech, R&D, Science'),
+            construction: Industry.find_by_name('Construction, Architecture & Interior Design'),
+            service: Industry.find_by_name('Customer Service & Call Centre'),
+            writing: Industry.find_by_name('Editorial & Writing'),
+            edication: Industry.find_by_name('Education, Childcare & Training'),
+            engineering: Industry.find_by_name('Engineering'),
+            franchise: Industry.find_by_name('Franchise & Business Ownership'),
+            goverment: Industry.find_by_name('Government, Defence & Emergency'),
+            health: Industry.find_by_name('Health, Medical & Pharmaceutical'),
+            hospitality: Industry.find_by_name('Hospitality, Travel & Tourism'),
+            hr: Industry.find_by_name('HR & Recruitment'),
+            insurance: Industry.find_by_name('Insurance & Superannuation'),
+            it: Industry.find_by_name('IT'),
+            legal: Industry.find_by_name('Legal'),
+            logistics: Industry.find_by_name('Logistics, Supply & Transport'),
+            manufacturing: Industry.find_by_name('Manufacturing & Industrial'),
+            marketing: Industry.find_by_name('Marketing'),
+            mining: Industry.find_by_name('Mining, Oil & Gas'),
+            other: Industry.find_by_name('Other'),
+            manager: Industry.find_by_name('Program & Project Management'),
+            property: Industry.find_by_name('Property & Real Estate'),
+            safety: Industry.find_by_name('Quality Assurance & Safety'),
+            retail: Industry.find_by_name('Retail'),
+            sales: Industry.find_by_name('Sales'),
+            security: Industry.find_by_name('Security & Protective Services'),
+            trades: Industry.find_by_name('Trades & Services'),
+            social: Industry.find_by_name('Voluntary, Charity & Social Work'),
+            home: Industry.find_by_name('Work from Home')}
     Job.all.each do |job|
       if job.industryjob.count == 0
         job.title.downcase!
@@ -29,86 +62,103 @@ namespace :integrate do
         puts "#{i}| #{job.title}  ---  #{job.company.name}"
         if accountant(job.title)
           puts "#{i}| #{job.title}  ---  Accounting"
-          #job.industryjob.create(industry: Industry.find_by_name('Accounting'))
+          #job.update(industry: int[:accounting])
         elsif administration(job.title)
           puts "#{i}| #{job.title}  ---  Administration & Secretarial"
-          #job.industryjob.create(industry: Industry.find_by_name('Administration & Secretarial'))
+          #job.update(industry: int[:adm])
         elsif media(job.title)
           puts "#{i}| #{job.title}  ---  Advertising, Media, Arts & Entertainment"
-          #job.industryjob.create(industry: Industry.find_by_name('Advertising, Media, Arts & Entertainment'))
+          #job.update(industry: int[:media])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Agriculture, Nature & Animal'))
+          puts "#{i}| #{job.title}  ---  Agriculture, Nature & Animal"
+          job.update(industry: int[:natural])
         elsif finance(job.title)
           puts "#{i}| #{job.title}  ---  Banking & Finance"
-          #job.industryjob.create(industry: Industry.find_by_name('Banking & Finance'))
+          #job.update(industry: int[:finance)
         elsif science(job.title)
           puts "#{i}| #{job.title}  ---  Biotech, R&D, Science"
-          #job.industryjob.create(industry: Industry.find_by_name('Biotech, R&D, Science'))
+          #job.update(industry: int[:biotech])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Construction, Architecture & Interior Design'))
+          puts "#{i}| #{job.title}  ---  Construction, Architecture & Interior Design"
+          job.update(industry: int[:construction])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Customer Service & Call Centre'))
+          puts "#{i}| #{job.title}  ---  Customer Service & Call Centre"
+          job.update(industry: int[:service])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Editorial & Writing'))
+          puts "#{i}| #{job.title}  ---  Editorial & Writing"
+          job.update(industry: int[:writing])
         elsif education(job.title)
           puts "#{i}| #{job.title}  ---  Education, Childcare & Training"
-          #job.industryjob.create(industry: Industry.find_by_name('Education, Childcare & Training'))
+          #job.update(industry: int[:edication])
         elsif enginering(job.title)
           puts "#{i}| #{job.title}  ---  Engineering"
-          #job.industryjob.create(industry: Industry.find_by_name('Engineering'))
+          #job.update(industry: int[:engineering)
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Franchise & Business Ownership'))
+          puts "#{i}| #{job.title}  ---  Franchise & Business Ownership"
+          job.update(industry: int[:franchise])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Government, Defence & Emergency'))
+          puts "#{i}| #{job.title}  ---  Government, Defence & Emergency"
+          job.update(industry: int[:goverment])
         elsif medical(job.title)
           puts "#{i}| #{job.title}  ---  Health, Medical & Pharmaceutical"
-          #job.industryjob.create(industry: Industry.find_by_name('Health, Medical & Pharmaceutical'))
+          #job.update(industry: int[:health)
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Hospitality, Travel & Tourism'))
+          puts "#{i}| #{job.title}  ---  Hospitality, Travel & Tourism"
+          job.update(industry: int[:hospitality])
         elsif hr(job.title)
           puts "#{i}| #{job.title}  ---  HR & Recruitment"
-          #job.industryjob.create(industry: Industry.find_by_name('HR & Recruitment'))
+          #job.update(industry: int[:hr])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Insurance & Superannuation'))
+          puts "#{i}| #{job.title}  ---  Insurance & Superannuation"
+          job.update(industry: int[:insurance])
         elsif it(job.title)
           puts "#{i}| #{job.title}  ---  IT"
-          #job.industryjob.create(industry: Industry.find_by_name('IT'))
+          #job.update(industry: int[:it])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Legal'))
+          puts "#{i}| #{job.title}  ---  Legal"
+          job.update(industry: int[:legal])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Logistics, Supply & Transport'))
+          puts "#{i}| #{job.title}  ---  Logistics, Supply & Transport"
+          job.update(industry: int[:logistics])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Manufacturing & Industrial'))
+          puts "#{i}| #{job.title}  ---  Manufacturing & Industrial"
+          job.update(industry: int[:manufacturing])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Marketing'))
+          puts "#{i}| #{job.title}  ---  Marketing"
+          job.update(industry: int[:marketing])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Mining, Oil & Gas'))
-        elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Other'))
+          puts "#{i}| #{job.title}  ---  Mining, Oil & Gas"
+          job.update(industry: int[:mining])
         elsif manager(job.title)
           puts "#{i}| #{job.title}  ---  Program & Project Management"
-          #job.industryjob.create(industry: Industry.find_by_name('Program & Project Management'))
+          #job.update(industry: int[:manager])
         elsif property(job.title)
           puts "#{i}| #{job.title}  ---  Property & Real Estate"
-          #job.industryjob.create(industry: Industry.find_by_name('Property & Real Estate'))
+          #job.update(industry: int[:property])
         elsif security(job.title)
           puts "#{i}| #{job.title}  ---  Quality Assurance & Safety"
-          #job.industryjob.create(industry: Industry.find_by_name('Quality Assurance & Safety'))
+          #job.update(industry: int[:safety])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Retail'))
+          puts "#{i}| #{job.title}  ---  Retail"
+          job.update(industry: int[:retail])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Sales'))
+          puts "#{i}| #{job.title}  ---  Sales"
+          job.update(industry: int[:sales])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Security & Protective Services'))
+          puts "#{i}| #{job.title}  ---  Security & Protective Services"
+          job.update(industry: int[:security])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Trades & Services'))
+          puts "#{i}| #{job.title}  ---  Trades & Services"
+          job.update(industry: int[:trades])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Voluntary, Charity & Social Work'))
+          puts "#{i}| #{job.title}  ---  Voluntary, Charity & Social Work"
+          job.update(industry: int[:social])
         elsif false
-          job.industryjob.create(industry: Industry.find_by_name('Work from Home'))
+          puts "#{i}| #{job.title}  ---  Work from Home"
+          job.update(industry: int[:home])
         elsif other(job.title)
-          puts "#{i}| #{job.title}  ---  Otherl"
-          #job.industryjob.create(industry: Industry.find_by_name('Other'))
+          puts "#{i}| #{job.title}  ---  Other"
+          #job.update(industry: int[:other])
         end
       end
     end
