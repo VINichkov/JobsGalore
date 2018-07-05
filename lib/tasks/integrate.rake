@@ -59,109 +59,109 @@ namespace :integrate do
       job.title.downcase!
       i += 1
       if accountant(job.title)
-        printr job, "Accounting"
+        printr job,i, "Accounting"
         #job.update(industry: int[:accounting])
       elsif administration(job.title)
-        printr job, "Administration & Secretarial"
+        printr job,i, "Administration & Secretarial"
         #job.update(industry: int[:adm])
       elsif media(job.title)
-        printr job, "Advertising, Media, Arts & Entertainment"
+        printr job,i, "Advertising, Media, Arts & Entertainment"
         #job.update(industry: int[:media])
       elsif false
-        printr job, "Agriculture, Nature & Animal"
+        printr job,i, "Agriculture, Nature & Animal"
         job.update(industry: int[:natural])
       elsif finance(job.title)
-        printr job, "Banking & Finance"
+        printr job,i, "Banking & Finance"
         #job.update(industry: int[:finance)
       elsif science(job.title)
-        printr job, "Biotech, R&D, Science"
+        printr job,i, "Biotech, R&D, Science"
         #job.update(industry: int[:biotech])
       elsif false
-        printr job, "Construction, Architecture & Interior Design"
+        printr job,i, "Construction, Architecture & Interior Design"
         job.update(industry: int[:construction])
       elsif false
-        printr job, "Customer Service & Call Centre"
+        printr job,i, "Customer Service & Call Centre"
         job.update(industry: int[:service])
       elsif false
-        printr job, "Editorial & Writing"
+        printr job,i, "Editorial & Writing"
         job.update(industry: int[:writing])
       elsif education(job.title)
-        printr job, "Education, Childcare & Training"
+        printr job,i, "Education, Childcare & Training"
         #job.update(industry: int[:edication])
       elsif enginering(job.title)
-        printr job, "Engineering"
+        printr job,i, "Engineering"
         #job.update(industry: int[:engineering)
       elsif false
-        printr job, "Franchise & Business Ownership"
+        printr job,i, "Franchise & Business Ownership"
         job.update(industry: int[:franchise])
       elsif false
-        printr job, "Government, Defence & Emergency"
+        printr job,i, "Government, Defence & Emergency"
         job.update(industry: int[:goverment])
       elsif medical(job.title)
-        printr job, "Health, Medical & Pharmaceutical"
+        printr job,i, "Health, Medical & Pharmaceutical"
         #job.update(industry: int[:health)
       elsif false
-        printr job, "Hospitality, Travel & Tourism"
+        printr job,i, "Hospitality, Travel & Tourism"
         job.update(industry: int[:hospitality])
       elsif hr(job.title)
-        printr job, "HR & Recruitment"
+        printr job,i, "HR & Recruitment"
         #job.update(industry: int[:hr])
       elsif false
-        printr job, "Insurance & Superannuation"
+        printr job,i, "Insurance & Superannuation"
         job.update(industry: int[:insurance])
       elsif it(job.title)
-        printr job, "IT"
+        printr job,i, "IT"
         #job.update(industry: int[:it])
       elsif false
-        printr job, "Legal"
+        printr job,i, "Legal"
         job.update(industry: int[:legal])
       elsif false
-        printr job, "Logistics, Supply & Transport"
+        printr job,i, "Logistics, Supply & Transport"
         job.update(industry: int[:logistics])
       elsif false
-        printr job, "Manufacturing & Industrial"
+        printr job,i, "Manufacturing & Industrial"
         job.update(industry: int[:manufacturing])
       elsif false
-        printr job, "Marketing"
+        printr job,i, "Marketing"
         job.update(industry: int[:marketing])
       elsif false
-        printr job, "Mining, Oil & Gas"
+        printr job,i, "Mining, Oil & Gas"
         job.update(industry: int[:mining])
       elsif manager(job.title)
-        printr job, "Program & Project Management"
+        printr job,i, "Program & Project Management"
         #job.update(industry: int[:manager])
       elsif property(job.title)
-        printr job, "Property & Real Estate"
+        printr job,i, "Property & Real Estate"
         #job.update(industry: int[:property])
       elsif security(job.title)
-        printr job, "Quality Assurance & Safety"
+        printr job,i, "Quality Assurance & Safety"
         #job.update(industry: int[:safety])
       elsif false
-        printr job, "Retail"
+        printr job,i, "Retail"
         job.update(industry: int[:retail])
       elsif false
-        printr job, "Sales"
+        printr job,i, "Sales"
         job.update(industry: int[:sales])
       elsif false
-        printr job, "Security & Protective Services"
+        printr job,i, "Security & Protective Services"
         job.update(industry: int[:security])
       elsif false
-        printr job, "Trades & Services"
+        printr job,i, "Trades & Services"
         job.update(industry: int[:trades])
       elsif false
-        printr job, "Voluntary, Charity & Social Work"
+        printr job,i, "Voluntary, Charity & Social Work"
         job.update(industry: int[:social])
       elsif false
-        printr job, "Work from Home"
+        printr job,i, "Work from Home"
         job.update(industry: int[:home])
       elsif other(job.title)
-        printr(job,"Other")
+        printr job,i, "Other"
         #job.update(industry: int[:other])
       end
     end
   end
 
-  def printr(job, text)
+  def printr(job,i, text)
     puts "#{i}| ID = #{job.id} - #{job.title} -- #{job.conpany.title} ---  #{text}"
   end
   def accountant (text = nil)
