@@ -58,105 +58,106 @@ namespace :integrate do
     Job.all.each do |job|
       job.title.downcase!
       i += 1
+      flag_update = true
       if accountant(job.title)
         printr job,i, "Accounting"
-        #job.update(industry: int[:accounting])
+        job.update(industry: int[:accounting]) if flag_update
       elsif administration(job.title)
         printr job,i, "Administration & Secretarial"
-        #job.update(industry: int[:adm])
+        job.update(industry: int[:adm]) if flag_update
       elsif media(job.title)
         printr job,i, "Advertising, Media, Arts & Entertainment"
-        #job.update(industry: int[:media])
+        job.update(industry: int[:media]) if flag_update
       elsif false
         printr job,i, "Agriculture, Nature & Animal"
-        job.update(industry: int[:natural])
+        job.update(industry: int[:natural]) if flag_update
       elsif finance(job.title)
         printr job,i, "Banking & Finance"
-        #job.update(industry: int[:finance)
+        job.update(industry: int[:finance) if flag_update
       elsif science(job.title)
         printr job,i, "Biotech, R&D, Science"
-        #job.update(industry: int[:biotech])
+        job.update(industry: int[:biotech]) if flag_update
       elsif false
         printr job,i, "Construction, Architecture & Interior Design"
-        job.update(industry: int[:construction])
+        job.update(industry: int[:construction]) if flag_update
       elsif false
         printr job,i, "Customer Service & Call Centre"
-        job.update(industry: int[:service])
+        job.update(industry: int[:service]) if flag_update
       elsif false
         printr job,i, "Editorial & Writing"
-        job.update(industry: int[:writing])
+        job.update(industry: int[:writing]) if flag_update
       elsif education(job.title)
         printr job,i, "Education, Childcare & Training"
-        #job.update(industry: int[:edication])
+        job.update(industry: int[:edication]) if flag_update
       elsif enginering(job.title)
         printr job,i, "Engineering"
-        #job.update(industry: int[:engineering)
+        job.update(industry: int[:engineering) if flag_update
       elsif false
         printr job,i, "Franchise & Business Ownership"
-        job.update(industry: int[:franchise])
+        job.update(industry: int[:franchise]) if flag_update
       elsif false
         printr job,i, "Government, Defence & Emergency"
-        job.update(industry: int[:goverment])
+        job.update(industry: int[:goverment]) if flag_update
       elsif medical(job.title)
         printr job,i, "Health, Medical & Pharmaceutical"
-        #job.update(industry: int[:health)
+        job.update(industry: int[:health) if flag_update
       elsif false
         printr job,i, "Hospitality, Travel & Tourism"
-        job.update(industry: int[:hospitality])
+        job.update(industry: int[:hospitality]) if flag_update
       elsif hr(job.title)
         printr job,i, "HR & Recruitment"
-        #job.update(industry: int[:hr])
+        job.update(industry: int[:hr]) if flag_update
       elsif false
         printr job,i, "Insurance & Superannuation"
-        job.update(industry: int[:insurance])
+        job.update(industry: int[:insurance]) if flag_update
       elsif it(job.title)
         printr job,i, "IT"
-        #job.update(industry: int[:it])
+        job.update(industry: int[:it]) if flag_update
       elsif false
         printr job,i, "Legal"
-        job.update(industry: int[:legal])
+        job.update(industry: int[:legal]) if flag_update
       elsif false
         printr job,i, "Logistics, Supply & Transport"
-        job.update(industry: int[:logistics])
+        job.update(industry: int[:logistics]) if flag_update
       elsif false
         printr job,i, "Manufacturing & Industrial"
-        job.update(industry: int[:manufacturing])
+        job.update(industry: int[:manufacturing]) if flag_update
       elsif false
         printr job,i, "Marketing"
-        job.update(industry: int[:marketing])
+        job.update(industry: int[:marketing]) if flag_update
       elsif false
         printr job,i, "Mining, Oil & Gas"
-        job.update(industry: int[:mining])
+        job.update(industry: int[:mining]) if flag_update
       elsif manager(job.title)
         printr job,i, "Program & Project Management"
-        #job.update(industry: int[:manager])
+        job.update(industry: int[:manager]) if flag_update
       elsif property(job.title)
         printr job,i, "Property & Real Estate"
-        #job.update(industry: int[:property])
+        job.update(industry: int[:property]) if flag_update
       elsif security(job.title)
         printr job,i, "Quality Assurance & Safety"
-        #job.update(industry: int[:safety])
+        job.update(industry: int[:safety]) if flag_update
       elsif false
         printr job,i, "Retail"
-        job.update(industry: int[:retail])
+        job.update(industry: int[:retail]) if flag_update
       elsif false
         printr job,i, "Sales"
-        job.update(industry: int[:sales])
+        job.update(industry: int[:sales]) if flag_update
       elsif false
         printr job,i, "Security & Protective Services"
-        job.update(industry: int[:security])
+        job.update(industry: int[:security]) if flag_update
       elsif false
         printr job,i, "Trades & Services"
-        job.update(industry: int[:trades])
+        job.update(industry: int[:trades]) if flag_update
       elsif false
         printr job,i, "Voluntary, Charity & Social Work"
-        job.update(industry: int[:social])
+        job.update(industry: int[:social]) if flag_update
       elsif false
         printr job,i, "Work from Home"
-        job.update(industry: int[:home])
+        job.update(industry: int[:home]) if flag_update
       elsif other(job.title)
         printr job,i, "Other"
-        #job.update(industry: int[:other])
+        job.update(industry: int[:other]) if flag_update
       end
     end
   end
@@ -201,7 +202,7 @@ namespace :integrate do
     (text.include?('head') and text.include?('asian')) or
     (text.include?('officer') and (text.include?('programs') or text.include?('admissions') or text.include?('credit') or text.include?('student') or text.include?('membership'))) or
     text.include?('advisor') or text.include?('educational') or text.include?('dean') or text.include?('educator') or text.include?('psychology') or text.include?('scholarship') or
-    text.include?('culture') or text.include?('post-doctoral') or text.include?('scientific') or text.include?('education') or text.include?('course') or text.include?('curriculum')
+    text.include?('culture') or text.include?('post-doctoral') or text.include?('scientific') or text.include?('education') or text.include?('course') or text.include?('curriculum') or text.include?('learning')
   else
     false
   end
