@@ -73,7 +73,7 @@ namespace :integrate do
         job.update(industry: int[:natural]) if flag_update
       elsif finance(job.title)
         printr job,i, "Banking & Finance"
-        job.update(industry: int[:finance) if flag_update
+        job.update(industry: int[:finance]) if flag_update
       elsif science(job.title)
         printr job,i, "Biotech, R&D, Science"
         job.update(industry: int[:biotech]) if flag_update
@@ -91,7 +91,7 @@ namespace :integrate do
         job.update(industry: int[:edication]) if flag_update
       elsif enginering(job.title)
         printr job,i, "Engineering"
-        job.update(industry: int[:engineering) if flag_update
+        job.update(industry: int[:engineering]) if flag_update
       elsif false
         printr job,i, "Franchise & Business Ownership"
         job.update(industry: int[:franchise]) if flag_update
@@ -100,7 +100,7 @@ namespace :integrate do
         job.update(industry: int[:goverment]) if flag_update
       elsif medical(job.title)
         printr job,i, "Health, Medical & Pharmaceutical"
-        job.update(industry: int[:health) if flag_update
+        job.update(industry: int[:health]) if flag_update
       elsif false
         printr job,i, "Hospitality, Travel & Tourism"
         job.update(industry: int[:hospitality]) if flag_update
