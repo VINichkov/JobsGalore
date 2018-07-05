@@ -58,110 +58,112 @@ namespace :integrate do
     Job.all.each do |job|
       job.title.downcase!
       i += 1
-      puts "#{i}| #{job.title}  ---  #{job.company.name}"
       if accountant(job.title)
-        puts "#{i}| #{job.title}  ---  Accounting"
+        print job, "Accounting"
         #job.update(industry: int[:accounting])
       elsif administration(job.title)
-        puts "#{i}| #{job.title}  ---  Administration & Secretarial"
+        print job, "Administration & Secretarial"
         #job.update(industry: int[:adm])
       elsif media(job.title)
-        puts "#{i}| #{job.title}  ---  Advertising, Media, Arts & Entertainment"
+        print job, "Advertising, Media, Arts & Entertainment"
         #job.update(industry: int[:media])
       elsif false
-        puts "#{i}| #{job.title}  ---  Agriculture, Nature & Animal"
+        print job, "Agriculture, Nature & Animal"
         job.update(industry: int[:natural])
       elsif finance(job.title)
-        puts "#{i}| #{job.title}  ---  Banking & Finance"
+        print job, "Banking & Finance"
         #job.update(industry: int[:finance)
       elsif science(job.title)
-        puts "#{i}| #{job.title}  ---  Biotech, R&D, Science"
+        print job, "Biotech, R&D, Science"
         #job.update(industry: int[:biotech])
       elsif false
-        puts "#{i}| #{job.title}  ---  Construction, Architecture & Interior Design"
+        print job, "Construction, Architecture & Interior Design"
         job.update(industry: int[:construction])
       elsif false
-        puts "#{i}| #{job.title}  ---  Customer Service & Call Centre"
+        print job, "Customer Service & Call Centre"
         job.update(industry: int[:service])
       elsif false
-        puts "#{i}| #{job.title}  ---  Editorial & Writing"
+        print job, "Editorial & Writing"
         job.update(industry: int[:writing])
       elsif education(job.title)
-        puts "#{i}| #{job.title}  ---  Education, Childcare & Training"
+        print job, "Education, Childcare & Training"
         #job.update(industry: int[:edication])
       elsif enginering(job.title)
-        puts "#{i}| #{job.title}  ---  Engineering"
+        print job, "Engineering"
         #job.update(industry: int[:engineering)
       elsif false
-        puts "#{i}| #{job.title}  ---  Franchise & Business Ownership"
+        print job, "Franchise & Business Ownership"
         job.update(industry: int[:franchise])
       elsif false
-        puts "#{i}| #{job.title}  ---  Government, Defence & Emergency"
+        print job, "Government, Defence & Emergency"
         job.update(industry: int[:goverment])
       elsif medical(job.title)
-        puts "#{i}| #{job.title}  ---  Health, Medical & Pharmaceutical"
+        print job, "Health, Medical & Pharmaceutical"
         #job.update(industry: int[:health)
       elsif false
-        puts "#{i}| #{job.title}  ---  Hospitality, Travel & Tourism"
+        print job, "Hospitality, Travel & Tourism"
         job.update(industry: int[:hospitality])
       elsif hr(job.title)
-        puts "#{i}| #{job.title}  ---  HR & Recruitment"
+        print job, "HR & Recruitment"
         #job.update(industry: int[:hr])
       elsif false
-        puts "#{i}| #{job.title}  ---  Insurance & Superannuation"
+        print job, "Insurance & Superannuation"
         job.update(industry: int[:insurance])
       elsif it(job.title)
-        puts "#{i}| #{job.title}  ---  IT"
+        print job, "IT"
         #job.update(industry: int[:it])
       elsif false
-        puts "#{i}| #{job.title}  ---  Legal"
+        print job, "Legal"
         job.update(industry: int[:legal])
       elsif false
-        puts "#{i}| #{job.title}  ---  Logistics, Supply & Transport"
+        print job, "Logistics, Supply & Transport"
         job.update(industry: int[:logistics])
       elsif false
-        puts "#{i}| #{job.title}  ---  Manufacturing & Industrial"
+        print job, "Manufacturing & Industrial"
         job.update(industry: int[:manufacturing])
       elsif false
-        puts "#{i}| #{job.title}  ---  Marketing"
+        print job, "Marketing"
         job.update(industry: int[:marketing])
       elsif false
-        puts "#{i}| #{job.title}  ---  Mining, Oil & Gas"
+        print job, "Mining, Oil & Gas"
         job.update(industry: int[:mining])
       elsif manager(job.title)
-        puts "#{i}| #{job.title}  ---  Program & Project Management"
+        print job, "Program & Project Management"
         #job.update(industry: int[:manager])
       elsif property(job.title)
-        puts "#{i}| #{job.title}  ---  Property & Real Estate"
+        print job, "Property & Real Estate"
         #job.update(industry: int[:property])
       elsif security(job.title)
-        puts "#{i}| #{job.title}  ---  Quality Assurance & Safety"
+        print job, "Quality Assurance & Safety"
         #job.update(industry: int[:safety])
       elsif false
-        puts "#{i}| #{job.title}  ---  Retail"
+        print job, "Retail"
         job.update(industry: int[:retail])
       elsif false
-        puts "#{i}| #{job.title}  ---  Sales"
+        print job, "Sales"
         job.update(industry: int[:sales])
       elsif false
-        puts "#{i}| #{job.title}  ---  Security & Protective Services"
+        print job, "Security & Protective Services"
         job.update(industry: int[:security])
       elsif false
-        puts "#{i}| #{job.title}  ---  Trades & Services"
+        print job, "Trades & Services"
         job.update(industry: int[:trades])
       elsif false
-        puts "#{i}| #{job.title}  ---  Voluntary, Charity & Social Work"
+        print job, "Voluntary, Charity & Social Work"
         job.update(industry: int[:social])
       elsif false
-        puts "#{i}| #{job.title}  ---  Work from Home"
+        print job, "Work from Home"
         job.update(industry: int[:home])
       elsif other(job.title)
-        puts "#{i}| #{job.title}  ---  Other"
+        print(job,"Other")
         #job.update(industry: int[:other])
       end
     end
   end
 
+  def print(job, text)
+    puts "#{i}| ID = #{job.id} - #{job.title} -- #{job.conpany.title} ---  #{text}"
+  end
   def accountant (text = nil)
     if text
       text.include?('accountant')
