@@ -28,7 +28,7 @@ namespace :integrate do
             natural: Industry.find_by_name('Agriculture, Nature & Animal'),
             finance: Industry.find_by_name('Banking & Finance'),
             biotech: Industry.find_by_name('Biotech, R&D, Science'),
-            construction: Industry.find_by_name('Construction, Architecture & Interior Design'),
+            construction: Industry.find_by_name('Construction, Architecture & inderior Design'),
             service: Industry.find_by_name('Customer Service & Call Centre'),
             writing: Industry.find_by_name('Editorial & Writing'),
             edication: Industry.find_by_name('Education, Childcare & Training'),
@@ -61,103 +61,103 @@ namespace :integrate do
       flag_update = true
       if accountant(job.title)
         printr job,i, "Accounting"
-        job.update(industry: int[:accounting]) if flag_update
+        job.update(industry: ind[:accounting]) if flag_update
       elsif administration(job.title)
         printr job,i, "Administration & Secretarial"
-        job.update(industry: int[:adm]) if flag_update
+        job.update(industry: ind[:adm]) if flag_update
       elsif media(job.title)
         printr job,i, "Advertising, Media, Arts & Entertainment"
-        job.update(industry: int[:media]) if flag_update
+        job.update(industry: ind[:media]) if flag_update
       elsif false
         printr job,i, "Agriculture, Nature & Animal"
-        job.update(industry: int[:natural]) if flag_update
+        job.update(industry: ind[:natural]) if flag_update
       elsif finance(job.title)
         printr job,i, "Banking & Finance"
-        job.update(industry: int[:finance]) if flag_update
+        job.update(industry: ind[:finance]) if flag_update
       elsif science(job.title)
         printr job,i, "Biotech, R&D, Science"
-        job.update(industry: int[:biotech]) if flag_update
+        job.update(industry: ind[:biotech]) if flag_update
       elsif false
-        printr job,i, "Construction, Architecture & Interior Design"
-        job.update(industry: int[:construction]) if flag_update
+        printr job,i, "Construction, Architecture & inderior Design"
+        job.update(industry: ind[:construction]) if flag_update
       elsif false
         printr job,i, "Customer Service & Call Centre"
-        job.update(industry: int[:service]) if flag_update
+        job.update(industry: ind[:service]) if flag_update
       elsif false
         printr job,i, "Editorial & Writing"
-        job.update(industry: int[:writing]) if flag_update
+        job.update(industry: ind[:writing]) if flag_update
       elsif education(job.title)
         printr job,i, "Education, Childcare & Training"
-        job.update(industry: int[:edication]) if flag_update
+        job.update(industry: ind[:edication]) if flag_update
       elsif enginering(job.title)
         printr job,i, "Engineering"
-        job.update(industry: int[:engineering]) if flag_update
+        job.update(industry: ind[:engineering]) if flag_update
       elsif false
         printr job,i, "Franchise & Business Ownership"
-        job.update(industry: int[:franchise]) if flag_update
+        job.update(industry: ind[:franchise]) if flag_update
       elsif false
         printr job,i, "Government, Defence & Emergency"
-        job.update(industry: int[:goverment]) if flag_update
+        job.update(industry: ind[:goverment]) if flag_update
       elsif medical(job.title)
         printr job,i, "Health, Medical & Pharmaceutical"
-        job.update(industry: int[:health]) if flag_update
+        job.update(industry: ind[:health]) if flag_update
       elsif false
         printr job,i, "Hospitality, Travel & Tourism"
-        job.update(industry: int[:hospitality]) if flag_update
+        job.update(industry: ind[:hospitality]) if flag_update
       elsif hr(job.title)
         printr job,i, "HR & Recruitment"
-        job.update(industry: int[:hr]) if flag_update
+        job.update(industry: ind[:hr]) if flag_update
       elsif false
         printr job,i, "Insurance & Superannuation"
-        job.update(industry: int[:insurance]) if flag_update
+        job.update(industry: ind[:insurance]) if flag_update
       elsif it(job.title)
         printr job,i, "IT"
-        job.update(industry: int[:it]) if flag_update
+        job.update(industry: ind[:it]) if flag_update
       elsif false
         printr job,i, "Legal"
-        job.update(industry: int[:legal]) if flag_update
+        job.update(industry: ind[:legal]) if flag_update
       elsif false
         printr job,i, "Logistics, Supply & Transport"
-        job.update(industry: int[:logistics]) if flag_update
+        job.update(industry: ind[:logistics]) if flag_update
       elsif false
         printr job,i, "Manufacturing & Industrial"
-        job.update(industry: int[:manufacturing]) if flag_update
+        job.update(industry: ind[:manufacturing]) if flag_update
       elsif false
         printr job,i, "Marketing"
-        job.update(industry: int[:marketing]) if flag_update
+        job.update(industry: ind[:marketing]) if flag_update
       elsif false
         printr job,i, "Mining, Oil & Gas"
-        job.update(industry: int[:mining]) if flag_update
+        job.update(industry: ind[:mining]) if flag_update
       elsif manager(job.title)
         printr job,i, "Program & Project Management"
-        job.update(industry: int[:manager]) if flag_update
+        job.update(industry: ind[:manager]) if flag_update
       elsif property(job.title)
         printr job,i, "Property & Real Estate"
-        job.update(industry: int[:property]) if flag_update
+        job.update(industry: ind[:property]) if flag_update
       elsif security(job.title)
         printr job,i, "Quality Assurance & Safety"
-        job.update(industry: int[:safety]) if flag_update
+        job.update(industry: ind[:safety]) if flag_update
       elsif false
         printr job,i, "Retail"
-        job.update(industry: int[:retail]) if flag_update
+        job.update(industry: ind[:retail]) if flag_update
       elsif false
         printr job,i, "Sales"
-        job.update(industry: int[:sales]) if flag_update
+        job.update(industry: ind[:sales]) if flag_update
       elsif false
         printr job,i, "Security & Protective Services"
-        job.update(industry: int[:security]) if flag_update
+        job.update(industry: ind[:security]) if flag_update
       elsif false
         printr job,i, "Trades & Services"
-        job.update(industry: int[:trades]) if flag_update
+        job.update(industry: ind[:trades]) if flag_update
       elsif false
         printr job,i, "Voluntary, Charity & Social Work"
-        job.update(industry: int[:social]) if flag_update
+        job.update(industry: ind[:social]) if flag_update
       elsif false
         printr job,i, "Work from Home"
-        job.update(industry: int[:home]) if flag_update
+        job.update(industry: ind[:home]) if flag_update
       elsif other(job.title)
         printr job,i, "Other"
-        job.update(industry: int[:other]) if flag_update
+        job.update(industry: ind[:other]) if flag_update
       end
     end
   end
