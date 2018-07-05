@@ -161,8 +161,8 @@ namespace :integrate do
     end
   end
 
-  def printr(job,i, text)
-    puts "#{i}| ID = #{job.id} - #{job.title} -- #{job.company.title} ---  #{text}"
+  def printr(job, i, text)
+    puts "#{i}| ID = #{job.id} - #{job.title} -- #{job.company.name} ---  #{text}"
   end
   def accountant (text = nil)
     if text
