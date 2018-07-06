@@ -2,7 +2,7 @@ namespace :post do
   desc "Post at Twitter"
   task :twitter => :environment  do
     puts "! Task:Post at Twitter: start"
-    #t = Time.now
+    t = Time.now
     #times_all = 15
     #time = t.localtime('+02:00').strftime("%H").to_i
     #times_left=times_all-time
