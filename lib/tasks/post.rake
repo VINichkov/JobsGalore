@@ -9,16 +9,7 @@ namespace :post do
     #if time > 0 or time<times_all
     companies = Gateway.pluck(:company_id)
     jobs = Job.where('company_id in (?) and date_trunc(\'day\',created_at)=date(?) and twitter is null',companies,t).all
-    index = jobs.count >1 ? rand(..jobs.count-1) : jobs.count
-    puts "!!!_________ index = #{index}"
-    if jobs.count>1
-    else
-
-    end
-
-
-    job = jobs[index]
-    job.post_at_twitter("#{Gateway.find_by_company_id(job.company_id).hashtags} #{job.title}" )
+    jobs.first.post_at_twitter("#{Gateway.find_by_company_id(job.company_id).hashtags} #{job.title}" )
       #if jobs.count !=0
         #count = (jobs.count % times_left)>0 ? (jobs.count/times_left +1) : jobs.count/times_left
         #jobs[0..count-1].each do |job|
