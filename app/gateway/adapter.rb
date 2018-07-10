@@ -16,9 +16,17 @@ class Adapter
 
   private
   def create_index(index = nil)
+    {indexd: indexd(index), index: index(index)}
+  end
+
+  def indexd(index)
     index&.map do |elem|
       elem[:date_end] ? elem[:title].to_s + elem[:date_end].strftime('%d.%m.%Y') : elem[:title].to_s
     end
+  end
+
+  def index(index)
+    index&.map { |elem| elem[:title].to_s}
   end
 
   def read_all_page
@@ -26,10 +34,15 @@ class Adapter
   end
 
   def put_in_jobs(arg={})
-    unless arg[:index]&.include?(arg[:close] ? arg[:title] + arg[:close].strftime('%d.%m.%Y') : arg[:title])
+    if arg[:close]
+      ad_was_published = arg[:index][:indexd].include?(arg[:title] + arg[:close].strftime('%d.%m.%Y'))
+    else
+      ad_was_published =arg[:index][:index].include?(arg[:title])
+    end
+    unless ad_was_published
       job = get_job arg[:link]
       unless job[:description].empty?
-        @jobs.push ({ title: arg[:title],
+        @jobs.push({ title: arg[:title],
                      close: arg[:close],
                      fulltime:job[:fulltime],
                      description:job[:description].force_encoding(Encoding::UTF_8)})
@@ -70,5 +83,7 @@ class Adapter
   def industry
     nil
   end
+
+
 
 end
