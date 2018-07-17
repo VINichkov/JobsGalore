@@ -34,6 +34,7 @@ class Adapter
   end
 
   def put_in_jobs(arg={})
+    arg[:title] = arg[:title].force_encoding(Encoding::UTF_8)
     if arg[:close]
       ad_was_published = arg[:index][:indexd].include?(arg[:title] + arg[:close].strftime('%d.%m.%Y'))
     else
@@ -42,6 +43,7 @@ class Adapter
     unless ad_was_published
       job = get_job arg[:link]
       unless job[:description].empty?
+        puts "! #{arg[:title]}"
         @jobs.push({ title: arg[:title],
                      close: arg[:close],
                      fulltime:job[:fulltime],

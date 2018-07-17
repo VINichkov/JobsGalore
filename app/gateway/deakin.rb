@@ -38,7 +38,7 @@ class Deakin < Adapter
           description = ''
           description +=  html.to_s
           description += "<p><a href=\"http://www.deakin.edu.au/about-deakin/work-at-deakin\">Apply for Job</a></p>"
-          @jobs.push ({  title: title,
+          @jobs.push({  title: title,
                          close: close,
                          fulltime: full_time,
                          description: html_to_markdown(description)})
