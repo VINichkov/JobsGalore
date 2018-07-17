@@ -9,6 +9,7 @@ namespace :integrate do
       open("http://www.bing.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
       puts "! Task:add_jobs: End: Company's name's \"#{gate.company.name}\""
     end
+    separate
     puts "! Task:add_jobs: End"
   end
 
@@ -19,148 +20,149 @@ namespace :integrate do
     puts "! Task:delete_jobs: End"
   end
 
-  desc "Update industries"
-  task :update_jobs => :environment do
-    i=0
-    ind = { accounting: Industry.find_by_name('Accounting'),
-            adm: Industry.find_by_name('Administration & Secretarial'),
-            media: Industry.find_by_name('Advertising, Media, Arts & Entertainment'),
-            natural: Industry.find_by_name('Agriculture, Nature & Animal'),
-            finance: Industry.find_by_name('Banking & Finance'),
-            biotech: Industry.find_by_name('Biotech, R&D, Science'),
-            construction: Industry.find_by_name('Construction, Architecture & inderior Design'),
-            service: Industry.find_by_name('Customer Service & Call Centre'),
-            writing: Industry.find_by_name('Editorial & Writing'),
-            edication: Industry.find_by_name('Education, Childcare & Training'),
-            engineering: Industry.find_by_name('Engineering'),
-            franchise: Industry.find_by_name('Franchise & Business Ownership'),
-            goverment: Industry.find_by_name('Government, Defence & Emergency'),
-            health: Industry.find_by_name('Health, Medical & Pharmaceutical'),
-            hospitality: Industry.find_by_name('Hospitality, Travel & Tourism'),
-            hr: Industry.find_by_name('HR & Recruitment'),
-            insurance: Industry.find_by_name('Insurance & Superannuation'),
-            it: Industry.find_by_name('IT'),
-            legal: Industry.find_by_name('Legal'),
-            logistics: Industry.find_by_name('Logistics, Supply & Transport'),
-            manufacturing: Industry.find_by_name('Manufacturing & Industrial'),
-            marketing: Industry.find_by_name('Marketing'),
-            mining: Industry.find_by_name('Mining, Oil & Gas'),
-            other: Industry.find_by_name('Other'),
-            manager: Industry.find_by_name('Program & Project Management'),
-            property: Industry.find_by_name('Property & Real Estate'),
-            safety: Industry.find_by_name('Quality Assurance & Safety'),
-            retail: Industry.find_by_name('Retail'),
-            sales: Industry.find_by_name('Sales'),
-            security: Industry.find_by_name('Security & Protective Services'),
-            trades: Industry.find_by_name('Trades & Services'),
-            social: Industry.find_by_name('Voluntary, Charity & Social Work'),
-            home: Industry.find_by_name('Work from Home')}
-    Job.all.each do |job|
-      job.title.downcase!
-      i += 1
-      flag_update = true
-      if accountant(job.title)
-        printr job,i, "Accounting"
-        job.update(industry: ind[:accounting]) if flag_update
-      elsif administration(job.title)
-        printr job,i, "Administration & Secretarial"
-        job.update(industry: ind[:adm]) if flag_update
-      elsif media(job.title)
-        printr job,i, "Advertising, Media, Arts & Entertainment"
-        job.update(industry: ind[:media]) if flag_update
-      elsif false
-        printr job,i, "Agriculture, Nature & Animal"
-        job.update(industry: ind[:natural]) if flag_update
-      elsif finance(job.title)
-        printr job,i, "Banking & Finance"
-        job.update(industry: ind[:finance]) if flag_update
-      elsif science(job.title)
-        printr job,i, "Biotech, R&D, Science"
-        job.update(industry: ind[:biotech]) if flag_update
-      elsif false
-        printr job,i, "Construction, Architecture & inderior Design"
-        job.update(industry: ind[:construction]) if flag_update
-      elsif false
-        printr job,i, "Customer Service & Call Centre"
-        job.update(industry: ind[:service]) if flag_update
-      elsif false
-        printr job,i, "Editorial & Writing"
-        job.update(industry: ind[:writing]) if flag_update
-      elsif education(job.title)
-        printr job,i, "Education, Childcare & Training"
-        job.update(industry: ind[:edication]) if flag_update
-      elsif enginering(job.title)
-        printr job,i, "Engineering"
-        job.update(industry: ind[:engineering]) if flag_update
-      elsif false
-        printr job,i, "Franchise & Business Ownership"
-        job.update(industry: ind[:franchise]) if flag_update
-      elsif false
-        printr job,i, "Government, Defence & Emergency"
-        job.update(industry: ind[:goverment]) if flag_update
-      elsif medical(job.title)
-        printr job,i, "Health, Medical & Pharmaceutical"
-        job.update(industry: ind[:health]) if flag_update
-      elsif false
-        printr job,i, "Hospitality, Travel & Tourism"
-        job.update(industry: ind[:hospitality]) if flag_update
-      elsif hr(job.title)
-        printr job,i, "HR & Recruitment"
-        job.update(industry: ind[:hr]) if flag_update
-      elsif false
-        printr job,i, "Insurance & Superannuation"
-        job.update(industry: ind[:insurance]) if flag_update
-      elsif it(job.title)
-        printr job,i, "IT"
-        job.update(industry: ind[:it]) if flag_update
-      elsif false
-        printr job,i, "Legal"
-        job.update(industry: ind[:legal]) if flag_update
-      elsif false
-        printr job,i, "Logistics, Supply & Transport"
-        job.update(industry: ind[:logistics]) if flag_update
-      elsif false
-        printr job,i, "Manufacturing & Industrial"
-        job.update(industry: ind[:manufacturing]) if flag_update
-      elsif false
-        printr job,i, "Marketing"
-        job.update(industry: ind[:marketing]) if flag_update
-      elsif false
-        printr job,i, "Mining, Oil & Gas"
-        job.update(industry: ind[:mining]) if flag_update
-      elsif manager(job.title)
-        printr job,i, "Program & Project Management"
-        job.update(industry: ind[:manager]) if flag_update
-      elsif property(job.title)
-        printr job,i, "Property & Real Estate"
-        job.update(industry: ind[:property]) if flag_update
-      elsif security(job.title)
-        printr job,i, "Quality Assurance & Safety"
-        job.update(industry: ind[:safety]) if flag_update
-      elsif false
-        printr job,i, "Retail"
-        job.update(industry: ind[:retail]) if flag_update
-      elsif false
-        printr job,i, "Sales"
-        job.update(industry: ind[:sales]) if flag_update
-      elsif false
-        printr job,i, "Security & Protective Services"
-        job.update(industry: ind[:security]) if flag_update
-      elsif false
-        printr job,i, "Trades & Services"
-        job.update(industry: ind[:trades]) if flag_update
-      elsif false
-        printr job,i, "Voluntary, Charity & Social Work"
-        job.update(industry: ind[:social]) if flag_update
-      elsif false
-        printr job,i, "Work from Home"
-        job.update(industry: ind[:home]) if flag_update
-      elsif other(job.title)
-        printr job,i, "Other"
-        job.update(industry: ind[:other]) if flag_update
+  def separate
+      i=0
+      ind = { accounting: Industry.find_by_name('Accounting'),
+              adm: Industry.find_by_name('Administration & Secretarial'),
+              media: Industry.find_by_name('Advertising, Media, Arts & Entertainment'),
+              natural: Industry.find_by_name('Agriculture, Nature & Animal'),
+              finance: Industry.find_by_name('Banking & Finance'),
+              biotech: Industry.find_by_name('Biotech, R&D, Science'),
+              construction: Industry.find_by_name('Construction, Architecture & inderior Design'),
+              service: Industry.find_by_name('Customer Service & Call Centre'),
+              writing: Industry.find_by_name('Editorial & Writing'),
+              edication: Industry.find_by_name('Education, Childcare & Training'),
+              engineering: Industry.find_by_name('Engineering'),
+              franchise: Industry.find_by_name('Franchise & Business Ownership'),
+              goverment: Industry.find_by_name('Government, Defence & Emergency'),
+              health: Industry.find_by_name('Health, Medical & Pharmaceutical'),
+              hospitality: Industry.find_by_name('Hospitality, Travel & Tourism'),
+              hr: Industry.find_by_name('HR & Recruitment'),
+              insurance: Industry.find_by_name('Insurance & Superannuation'),
+              it: Industry.find_by_name('IT'),
+              legal: Industry.find_by_name('Legal'),
+              logistics: Industry.find_by_name('Logistics, Supply & Transport'),
+              manufacturing: Industry.find_by_name('Manufacturing & Industrial'),
+              marketing: Industry.find_by_name('Marketing'),
+              mining: Industry.find_by_name('Mining, Oil & Gas'),
+              other: Industry.find_by_name('Other'),
+              manager: Industry.find_by_name('Program & Project Management'),
+              property: Industry.find_by_name('Property & Real Estate'),
+              safety: Industry.find_by_name('Quality Assurance & Safety'),
+              retail: Industry.find_by_name('Retail'),
+              sales: Industry.find_by_name('Sales'),
+              security: Industry.find_by_name('Security & Protective Services'),
+              trades: Industry.find_by_name('Trades & Services'),
+              social: Industry.find_by_name('Voluntary, Charity & Social Work'),
+              home: Industry.find_by_name('Work from Home')}
+      Job.all.each do |job|
+        job.title.downcase!
+        i += 1
+        flag_update = true
+        if accountant(job.title)
+          printr job,i, "Accounting"
+          job.update(industry: ind[:accounting]) if flag_update
+        elsif administration(job.title)
+          printr job,i, "Administration & Secretarial"
+          job.update(industry: ind[:adm]) if flag_update
+        elsif media(job.title)
+          printr job,i, "Advertising, Media, Arts & Entertainment"
+          job.update(industry: ind[:media]) if flag_update
+        elsif false
+          printr job,i, "Agriculture, Nature & Animal"
+          job.update(industry: ind[:natural]) if flag_update
+        elsif finance(job.title)
+          printr job,i, "Banking & Finance"
+          job.update(industry: ind[:finance]) if flag_update
+        elsif science(job.title)
+          printr job,i, "Biotech, R&D, Science"
+          job.update(industry: ind[:biotech]) if flag_update
+        elsif false
+          printr job,i, "Construction, Architecture & inderior Design"
+          job.update(industry: ind[:construction]) if flag_update
+        elsif false
+          printr job,i, "Customer Service & Call Centre"
+          job.update(industry: ind[:service]) if flag_update
+        elsif false
+          printr job,i, "Editorial & Writing"
+          job.update(industry: ind[:writing]) if flag_update
+        elsif education(job.title)
+          printr job,i, "Education, Childcare & Training"
+          job.update(industry: ind[:edication]) if flag_update
+        elsif enginering(job.title)
+          printr job,i, "Engineering"
+          job.update(industry: ind[:engineering]) if flag_update
+        elsif false
+          printr job,i, "Franchise & Business Ownership"
+          job.update(industry: ind[:franchise]) if flag_update
+        elsif false
+          printr job,i, "Government, Defence & Emergency"
+          job.update(industry: ind[:goverment]) if flag_update
+        elsif medical(job.title)
+          printr job,i, "Health, Medical & Pharmaceutical"
+          job.update(industry: ind[:health]) if flag_update
+        elsif false
+          printr job,i, "Hospitality, Travel & Tourism"
+          job.update(industry: ind[:hospitality]) if flag_update
+        elsif hr(job.title)
+          printr job,i, "HR & Recruitment"
+          job.update(industry: ind[:hr]) if flag_update
+        elsif false
+          printr job,i, "Insurance & Superannuation"
+          job.update(industry: ind[:insurance]) if flag_update
+        elsif it(job.title)
+          printr job,i, "IT"
+          job.update(industry: ind[:it]) if flag_update
+        elsif false
+          printr job,i, "Legal"
+          job.update(industry: ind[:legal]) if flag_update
+        elsif false
+          printr job,i, "Logistics, Supply & Transport"
+          job.update(industry: ind[:logistics]) if flag_update
+        elsif false
+          printr job,i, "Manufacturing & Industrial"
+          job.update(industry: ind[:manufacturing]) if flag_update
+        elsif false
+          printr job,i, "Marketing"
+          job.update(industry: ind[:marketing]) if flag_update
+        elsif false
+          printr job,i, "Mining, Oil & Gas"
+          job.update(industry: ind[:mining]) if flag_update
+        elsif manager(job.title)
+          printr job,i, "Program & Project Management"
+          job.update(industry: ind[:manager]) if flag_update
+        elsif property(job.title)
+          printr job,i, "Property & Real Estate"
+          job.update(industry: ind[:property]) if flag_update
+        elsif security(job.title)
+          printr job,i, "Quality Assurance & Safety"
+          job.update(industry: ind[:safety]) if flag_update
+        elsif false
+          printr job,i, "Retail"
+          job.update(industry: ind[:retail]) if flag_update
+        elsif false
+          printr job,i, "Sales"
+          job.update(industry: ind[:sales]) if flag_update
+        elsif false
+          printr job,i, "Security & Protective Services"
+          job.update(industry: ind[:security]) if flag_update
+        elsif false
+          printr job,i, "Trades & Services"
+          job.update(industry: ind[:trades]) if flag_update
+        elsif false
+          printr job,i, "Voluntary, Charity & Social Work"
+          job.update(industry: ind[:social]) if flag_update
+        elsif false
+          printr job,i, "Work from Home"
+          job.update(industry: ind[:home]) if flag_update
+        elsif other(job.title)
+          printr job,i, "Other"
+          job.update(industry: ind[:other]) if flag_update
+        end
       end
-    end
   end
+
+
 
   def printr(job, i, text)
     puts "#{i}| ID = #{job.id} - #{job.title} -- #{job.company.name} ---  #{text}"

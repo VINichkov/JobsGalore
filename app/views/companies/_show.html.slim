@@ -1,0 +1,66 @@
+- meta_head(  title:company.name,
+        description: company.description_meta,
+        keywords: company.keywords,
+        url: company_url(company),
+        image: company.logo_url)
+.container.hidden-xs.hidden-sm[itemscope itemtype="http://schema.org/Organization"]
+  .col-lg-8.col-md-8
+    .row.well
+      span[itemprop="name"]
+        h1.text-center
+          = highlight(company.name, query)
+          - if company.realy?
+            span.glyphicon.glyphicon-ok
+      p
+      = highlight(company.render_description, query)
+      span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
+        = company.description_text
+      - company.client&.each do |stuff|
+        span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="contactPoint" itemscope itemtype="http://schema.org/ContactPoint"]
+          span[itemprop="name"]
+            =stuff.full_name
+          span[itemprop="email"]
+            = stuff.email
+          span[itemprop="telephone"]
+            = stuff.phone
+          span[itemprop="contactType"]
+            |customer service
+    =jobs_of_company(company)
+  .col-lg-4.col-md-4
+    .panel.panel-default
+      .panel-body
+        .row.text-center
+          span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="image"]
+            =company.logo_url
+          = image_bg(company.logo_url, "300px", "300px", "250px")
+        .row
+          h3.text-center
+            |Company summary
+        .well
+          =company_summary(company)
+          = buttons("col-lg-12 col-md-12")
+          = social_share_button_tag company.name
+.col-sm-12.col-xs-12.hidden-md.hidden-lg
+  .panel-body
+    span[itemprop="legalName"]
+      h2.text-center
+        = highlight(company.name, query)
+        - if company.realy?
+          span.glyphicon.glyphicon-ok
+    .row
+      .col-xs-12.col-sm-6
+        .row.text-center
+          = image_bg(company.logo_url, "300px", "300px", "250px")
+          = social_share_button_tag company.name, class: "center-block"
+      .col-xs-12.col-sm-6
+        h3.text-center
+          |Company summary
+        = company_summary(company)
+        = buttons("col-xs-6")
+    .row
+      .col-xs-12.col-sm-12
+        p
+          = highlight(company.render_description, query)
+        =jobs_of_company(company)
+
+=render 'inc/contact', object: company.object.client.find_by(character:TypeOfClient::EMPLOYER).decorate, title:""

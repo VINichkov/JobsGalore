@@ -1,14 +1,5 @@
 module CompanyHelper
 
-  def company_name (object)
-    content_tag :h1, class:"text-center" do
-      html = object.name.html_safe
-      html += if object.realy?
-         content_tag( :span, nil,class: "glyphicon glyphicon-ok")
-      end
-    end
-  end
-
   def jobs_of_company (object)
     if object.jobs_count>0
        content_tag :div, class:"row" do

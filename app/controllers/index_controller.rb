@@ -18,9 +18,8 @@ class IndexController < ApplicationController
 
   def main_search
     @result = MainSearch.call(params:main_search_params)
-    if @result.success?
-      @objs, @name = @result.objs, @result.name
-    else
+    puts @result.query
+    if @result.failure?
       render_404
     end
   end

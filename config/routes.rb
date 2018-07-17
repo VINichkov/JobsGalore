@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   #devise_for :clients
 
   resources :companies, only: [:new,:create, :show, :edit, :update, :destroy]
+  get "companies/:id/:text", to: "companies#highlight_view", as: 'company_highlight_view'
   get "/edit_logo", to: 'companies#edit_logo'
   get "/settings_company", to: 'companies#settings_company'
   get '/company_jobs/:id', to:'companies#company_jobs', as: 'jobs_at_company'
@@ -115,10 +116,12 @@ Rails.application.routes.draw do
   resources :payments, only:[:show,:index]
 
   resources :jobs, only:[:new, :show, :edit, :update, :destroy]
+  get "jobs/:id/:text", to: "jobs#highlight_view", as: 'job_highlight_view'
   post "job_create/", to: "jobs#create_temporary", as: 'create_job'
   get "jobs/", to: "jobs#create_job", as: 'jobs'
 
   resources :resumes, only:[:new, :show, :edit, :update, :destroy]
+  get "resumes/:id/:text", to: "resumes#highlight_view", as: 'resume_highlight_view'
   post "resume_create/", to: "resumes#create_temporary", as: 'create_resume'
   get "resumes/", to: "resumes#create_resume", as: 'resumes'
 

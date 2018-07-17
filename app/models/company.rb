@@ -25,7 +25,10 @@ class Company < ApplicationRecord
   protected
 
   scope :search, ->(query) do
+    query = query.to_h if query.class != Hash
+    text_query = ''
     text_query = "fts @@ to_tsquery(:value)" if query[:value] != ""
+    logger.info("Company::search query = " + text_query + ", params= "+ query.to_s)
     where(text_query,query)
   end
 

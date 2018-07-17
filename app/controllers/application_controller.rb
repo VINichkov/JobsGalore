@@ -30,14 +30,14 @@ class ApplicationController < ActionController::Base
 
   def current_company
     if current_client.resp?
-        if current_client.company.nil?
-          session[:workflow] = ClientWorkflow.new(current_client)
-          redirect_to session[:workflow].url, notice: 'Please, enter information about your company.'
-        else
-          #format.html.none
-          Rails.logger.debug "ApplicationController::current_client.company = #{current_client.company.to_json}"
-          current_client.company
-        end
+      if current_client.company.nil?
+        session[:workflow] = ClientWorkflow.new(current_client)
+        redirect_to session[:workflow].url, notice: 'Please, enter information about your company.'
+      else
+        #format.html.none
+        Rails.logger.debug "ApplicationController::current_client.company = #{current_client.company.to_json}"
+        current_client.company
+      end
     end
   end
 

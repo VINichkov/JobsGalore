@@ -2,10 +2,11 @@
   h1 =@result.name
   .col-lg-8.col-md-9.col-sm-12
     - if @result.type == Objects::JOBS
-      = render partial: 'inc/job', collection: @result.objs
+      - puts @result.query
+      = render partial: 'inc/job', collection: @result.objs, locals:{query: @result.query}
     - elsif @result.type==Objects::COMPANIES
-      = render partial: 'inc/company', collection: @result.objs
+      = render partial: 'inc/company', collection: @result.objs, locals:{query: @result.query}
     - else @result.type==Objects::RESUMES
-      = render partial: 'inc/resume', collection: @result.objs
+      = render partial: 'inc/resume', collection: @result.objs, locals:{query: @result.query}
 .text-center
   = will_paginate_mini @result.objs

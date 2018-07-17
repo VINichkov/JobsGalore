@@ -1,10 +1,14 @@
 class JobsController < ApplicationController
   load_and_authorize_resource :job
-  before_action :set_job, only: [:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
+  before_action :set_job, only: [:highlight_view ,:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
   #before_action :employer!, only: :new
 
   def show
     session[:workflow] = nil
+  end
+
+  def highlight_view
+    @query = params[:text]
   end
 
   # GET /jobs/new

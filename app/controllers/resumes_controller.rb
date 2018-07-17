@@ -1,7 +1,7 @@
 class ResumesController < ApplicationController
   before_action :authenticate_client!, only:[:edit, :update, :destroy]
   load_and_authorize_resource :resume
-  before_action :set_resume, only: [ :show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
+  before_action :set_resume, only: [:highlight_view, :show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
 
   #before_action :applicant!, only: :new
 
@@ -10,6 +10,10 @@ class ResumesController < ApplicationController
   # GET /resumes/1.json
   def show
     session[:workflow] = nil
+  end
+
+  def highlight_view
+    @query = params[:text]
   end
 
   # GET /resumes/new

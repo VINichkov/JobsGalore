@@ -112,9 +112,9 @@ class Ability
   def base
     can [:new, :create_temporary, :create_job], Job
     can [:new, :create_temporary, :create_resume], Resume
-    can [:show, :company_jobs], Company
-    can [:show], Resume
-    can [:show], Job
+    can [:show, :company_jobs, :highlight_view], Company
+    can [:show, :highlight_view], Resume
+    can [:show, :highlight_view], Job
     can [:search, :in_location], Location
     can [:bill, :cancel_url, :create], Payment
   end
