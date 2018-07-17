@@ -11,9 +11,9 @@
         .col-sm-4.col-xs-12.hidden-lg.hidden-md
           = link_to "Post new job", new_job_path, class: "btn btn-primary btn-block btn_margin"
       -if @client.employer?
-        = render partial: 'inc/job', collection: @client.company&.job.object.order(created_at:  :desc).decorate
+        = render partial: 'inc/job', collection: @client.company&.job.object.order(created_at:  :desc).decorate, locals:{query:''}
       -else
-        = render partial: 'inc/job', collection: @client.job.object.order(created_at:  :desc).decorate
+        = render partial: 'inc/job', collection: @client.job.object.order(created_at:  :desc).decorate, locals:{query:''}
   - else
     h1 My Resumes
     .col-lg-3.col-md-3.hidden-sm.hidden-xs
@@ -25,4 +25,4 @@
       .row
         .col-sm-4.col-xs-12.hidden-lg.hidden-md
           = link_to "Post new resume", new_resume_path, class: "btn btn-primary btn-block btn_margin"
-      = render partial: 'inc/resume', collection: @client.resume.object.order(created_at:  :desc).decorate
+      = render partial: 'inc/resume', collection: @client.resume.object.order(created_at:  :desc).decorate, locals:{query:''}

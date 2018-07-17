@@ -3,10 +3,10 @@
     h1 #{@payment.title}
     - if @payment.params[:type] == '2'
       .col-lg-8.col-md-8
-        = render "inc/job", job: @payment.ad
+        = render "inc/job", job: @payment.ad, query:''
     - elsif @payment.params[:type] == '3'
       .col-lg-8.col-md-8
-        = render "inc/resume", resume: @payment.ad
+        = render "inc/resume", resume: @payment.ad, query:''
   .row
     .col-lg-8.col-md-12.col-sm-12
       .col-lg-6.col-md-6.col-sm-6.col-xs-12
