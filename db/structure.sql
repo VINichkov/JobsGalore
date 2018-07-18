@@ -22,6 +22,54 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: companies_trigger(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.companies_trigger() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+      begin
+        new.fts :=
+            setweight(to_tsvector('pg_catalog.english', coalesce(new.name,'')), 'A') ||
+            setweight(to_tsvector('pg_catalog.english', coalesce(new.description,'')), 'D');
+        return new;
+      end
+      $$;
+
+
+--
+-- Name: jobs_trigger(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.jobs_trigger() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+      begin
+        new.fts :=
+            setweight(to_tsvector('pg_catalog.english', coalesce(new.title,'')), 'A') ||
+            setweight(to_tsvector('pg_catalog.english', coalesce(new.description,'')), 'D');
+        return new;
+      end
+      $$;
+
+
+--
+-- Name: resumes_trigger(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.resumes_trigger() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+    begin
+      new.fts :=
+          setweight(to_tsvector('pg_catalog.english', coalesce(new.desiredjobtitle,'')), 'A') ||
+          setweight(to_tsvector('pg_catalog.english', coalesce(new.abouteme,'')), 'D');
+      return new;
+    end
+    $$;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -1695,21 +1743,21 @@ ALTER TABLE public.locations DISABLE TRIGGER tsvectorupdate;
 -- Name: companies tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.companies FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'name', 'description');
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.companies FOR EACH ROW EXECUTE PROCEDURE public.companies_trigger();
 
 
 --
 -- Name: jobs tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.jobs FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'title', 'description');
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.jobs FOR EACH ROW EXECUTE PROCEDURE public.jobs_trigger();
 
 
 --
 -- Name: resumes tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.resumes FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'desiredjobtitle', 'abouteme');
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.resumes FOR EACH ROW EXECUTE PROCEDURE public.resumes_trigger();
 
 
 --
@@ -2052,6 +2100,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171228040745'),
 ('20180204105551'),
 ('20180218093045'),
-('20180601064454');
+('20180601064454'),
+('20180717112526');
 
 

@@ -1,4 +1,5 @@
 class Job < ApplicationRecord
+  include PgSearch
   serialize :preferences, Hash
 
   after_create :send_email
@@ -109,20 +110,19 @@ class Job < ApplicationRecord
   scope :search, ->(query)  do
     query = query.to_h if query.class != Hash
     text_query=[]
-    if  not query[:category].blank?
-      text_query << "industry_id = :category"
-    end
+
+    text_query << "industry_id = :category" unless query[:category].blank?
 
     if not query[:location_id].blank?
       text_query << "location_id = :location_id"
     elsif not query[:location_name].blank?
       locations = Location.search((query[:location_name].split(" ").map {|t| t=t+":*"}).join("|"))
-      if not locations.blank?
-        text_query << "location_id in "+locations.ids.to_s.sub("[","(").sub("]",")")
-      end
+      text_query << "location_id in "+locations.ids.to_s.sub("[","(").sub("]",")") unless locations.blank?
     end
 
-    text_query<< "fts @@ to_tsquery(:value)" if query[:value] != ""
+    text_query << "fts @@ to_tsquery(:value)" if query[:value] != ""
+
+
     if not query[:salary].blank?
       query[:salary] = query[:salary].to_i
       text_query << '((salarymin is NULL and salarymax >= :salary) or (salarymax is NULL and salarymin>=:salary) or (salarymin <=:salary and salarymax >= :salary))'
@@ -130,8 +130,7 @@ class Job < ApplicationRecord
 
     text_query = text_query.join(" and ")
 
-    logger.info("Job::search query = " + text_query + ", params= "+ query.to_s)
-    where(text_query,query)
+    select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:close,:industry_id, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
   end
 
 

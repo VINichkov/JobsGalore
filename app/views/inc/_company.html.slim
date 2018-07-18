@@ -16,6 +16,7 @@
       p
         = highlight(company.description_text.to_s + "...", query)
       span
+        -puts company.id
         = link_industry(company.industry.name, company.industry, Objects::COMPANIES, class: 'text-success')
       | &nbsp; - &nbsp;
       span

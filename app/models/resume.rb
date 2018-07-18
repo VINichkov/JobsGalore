@@ -70,7 +70,6 @@ class Resume < ApplicationRecord
 
     text_query = text_query.join(" and ")
 
-    logger.info("Resume::search query = " + text_query + ", params= "+ query.to_s)
-    where(text_query,query)
+    select(:id, :desiredjobtitle, :location_id, :salary, :abouteme, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:industry_id, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
   end
 end

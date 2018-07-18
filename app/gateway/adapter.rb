@@ -43,7 +43,6 @@ class Adapter
     unless ad_was_published
       job = get_job arg[:link]
       unless job[:description].empty?
-        puts "! #{arg[:title]}"
         @jobs.push({ title: arg[:title],
                      close: arg[:close],
                      fulltime:job[:fulltime],

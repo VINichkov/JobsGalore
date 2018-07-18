@@ -28,8 +28,8 @@ class Company < ApplicationRecord
     query = query.to_h if query.class != Hash
     text_query = ''
     text_query = "fts @@ to_tsquery(:value)" if query[:value] != ""
-    logger.info("Company::search query = " + text_query + ", params= "+ query.to_s)
-    where(text_query,query)
+
+    select(:id, :name, :size_id, :logo_uid, :site, :location_id, :recrutmentagency, :description, :created_at, :updated_at, :realy, :industry_id, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
   end
 
   def rename()

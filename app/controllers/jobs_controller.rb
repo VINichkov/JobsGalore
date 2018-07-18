@@ -8,7 +8,7 @@ class JobsController < ApplicationController
   end
 
   def highlight_view
-    @query = params[:text]
+    @query = params[:text].split("/")
   end
 
   # GET /jobs/new
