@@ -41,6 +41,7 @@ class Adapter
   end
 
   def put_in_jobs(arg={})
+    arg[:title].downcase!
     @log.push("job = #{arg[:title] + arg[:close].strftime('%d.%m.%Y')}")
     if arg[:close]
       ad_was_published = arg[:index][:indexd].include?(arg[:title] + arg[:close].strftime('%d.%m.%Y'))
