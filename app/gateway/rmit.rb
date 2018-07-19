@@ -21,7 +21,7 @@ class Rmit < Adapter
     table = @doc.at_css('[id="recent-jobs-content"]')
     table.css('tr').each do |row|
       if row['class'] != "summary"
-        title = row.at_css('[class="job-link"]').content.gsub('/', ', ').encode!(Encoding::ISO_8859_1)
+        title = row.at_css('[class="job-link"]').content.gsub('/', ', ').encode!(Encoding::ISO_8859_1).force_encoding(Encoding::UTF_8)
         close = row.css('time').first&.content
         close ? close = Date.parse(close) : nil
         put_in_jobs(index:index, title:title, close:close, link:"#{@host}#{row.at_css('[class="job-link"]')[:href]}")

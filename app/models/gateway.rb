@@ -50,7 +50,7 @@ class Gateway < ApplicationRecord
       logs += "<p>Error: #{$!}</p>"
     end
     logs += "<p>Finished: #{Time.now}</p>"
-    self.log=logs
+    self.log=logs + @gate.log
     save!
   end
 

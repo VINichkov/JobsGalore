@@ -2,16 +2,23 @@ require 'open-uri'
 require 'nokogiri'
 class Adapter
   def initialize(arg = {})
+    @log = []
+    @log.push("Start")
     @jobs, @doc, @host = [], arg[:start_page], arg[:host]
   end
 
   def read (index = nil)
     index = create_index(index)
+    @log.push("index = #{index.to_s}")
     loop do
       list_jobs(index)
       break if read_all_page
     end
     @jobs
+  end
+
+  def log
+    @log.to_s
   end
 
   private
@@ -34,13 +41,14 @@ class Adapter
   end
 
   def put_in_jobs(arg={})
-    arg[:title] = arg[:title].force_encoding(Encoding::UTF_8)
+    @log.push("job = #{arg[:title] + arg[:close].strftime('%d.%m.%Y')}")
     if arg[:close]
       ad_was_published = arg[:index][:indexd].include?(arg[:title] + arg[:close].strftime('%d.%m.%Y'))
     else
       ad_was_published =arg[:index][:index].include?(arg[:title])
     end
     unless ad_was_published
+      @log.push(" !adding job = #{arg[:title] + arg[:close].strftime('%d.%m.%Y')}")
       job = get_job arg[:link]
       unless job[:description].empty?
         @jobs.push({ title: arg[:title],

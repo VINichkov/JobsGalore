@@ -2,6 +2,7 @@ class Monash < Adapter
   def initialize
     super(:start_page=> Nokogiri::HTML(open('http://careers.pageuppeople.com/513/cw/en/listing')),
               host: "http://careers.pageuppeople.com")
+
   end
 
   private
