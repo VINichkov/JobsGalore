@@ -22,6 +22,9 @@ gem 'react-rails'#, '~>1.10.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "font-awesome-rails"
 gem "sitemap_generator"
+gem 'redis-objects'
+gem 'aasm'
+gem 'rack-rewrite'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'

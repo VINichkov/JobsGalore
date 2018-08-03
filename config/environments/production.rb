@@ -14,6 +14,10 @@ Rails.application.configure do
       'Expires' => "#{1.year.from_now.to_formatted_s(:rfc822)}"
   }
 
+  config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
+    r301 %r{.*}, "https://www.jobsgalore.eu$&",
+         :if => Proc.new { |rack_env| rack_env['SERVER_NAME'] != 'www.jobsgalore.eu' }
+  end
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
