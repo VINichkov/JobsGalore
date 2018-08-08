@@ -49,7 +49,6 @@ class JobsController < ApplicationController
         format.html {render :new}
       end
     end
-
   end
 
   # PATCH/PUT /jobs/1

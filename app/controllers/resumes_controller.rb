@@ -45,9 +45,6 @@ class ResumesController < ApplicationController
     respond_to do |format|
       if @resume.save
         resume_workflow.save!(session[:workflow])
-        if @resume.client&.send_email
-          ResumesMailer.add_resume({mail: @resume.client.email, firstname: @resume.client.firstname, id: @resume.id, title: @resume.title}).deliver_later
-        end
         format.html {redirect_to workflow_link(resume_workflow) , notice: current_client ? 'The CV was successfully created.' : flash[:notice]}
       else
         format.html {render :new}

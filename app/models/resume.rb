@@ -13,6 +13,9 @@ class Resume < ApplicationRecord
   alias_attribute  :description,:abouteme
   alias_attribute  :title,:desiredjobtitle
 
+  after_create :send_email
+
+
   def add_viewed(arg = {})
     viewed.push(arg)
     save!
@@ -54,6 +57,12 @@ class Resume < ApplicationRecord
     {id:id, desiredjobtitle: desiredjobtitle, salary: salary, abouteme:abouteme, client_id:client_id, location_id:location_id}
   end
   protected
+
+  def send_email
+    if self.client.send_email?
+      ResumesMailer.add_resume({mail: self.client.email, firstname: self.client.full_name, id: self.id, title: self.title}).deliver_later
+    end
+  end
 
   scope :search, ->(query) do
     query = query.to_h if query.class != Hash
