@@ -123,7 +123,7 @@ class ClientsController < ApplicationController
     end
   end
   def admin_destroy
-    @client.company.destroy_all
+    @client.company&.destroy_all
     @client.destroy
     respond_to do |format|
       format.html { redirect_to admin_client_url, notice: 'Client was successfully destroyed.' }
