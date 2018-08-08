@@ -13,6 +13,11 @@ class Resume < ApplicationRecord
   alias_attribute  :description,:abouteme
   alias_attribute  :title,:desiredjobtitle
 
+  def add_viewed(arg = {})
+    viewed.push(arg)
+    save!
+  end
+
   def save
     if self.industry.nil?
       self.industry=Industry.find_by_name('Other')
@@ -43,6 +48,10 @@ class Resume < ApplicationRecord
   def top_off
     self.top = nil
     self.save
+  end
+
+  def to_short_h
+    {id:id, desiredjobtitle: desiredjobtitle, salary: salary, abouteme:abouteme, client_id:client_id, location_id:location_id}
   end
   protected
 

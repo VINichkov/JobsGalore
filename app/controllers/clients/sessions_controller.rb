@@ -1,24 +1,20 @@
 class Clients::SessionsController < Devise::SessionsController
-before_action :configure_sign_in_params, only: [:create]
+  before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
    def new
      super do
-       if session[:workflow]
-         session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
-         session[:workflow].client= resource
-       else
-         session[:workflow] = ClientWorkflow.new(resource)
-       end
+       client_wf = wf #{|obj| obj.update({client:resource})}
+       client_wf ||= add_new_workflow(class: :ClientWorkflow, client: resource)
+       client_wf.save!(session[:workflow])
      end
    end
 
   #POST /resource/sign_in
    def create
      super do
-       session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow]) if session[:workflow]
-       session[:workflow].client = resource if session[:workflow]
-       @url = session[:workflow].url if session[:workflow]
+       @client_wf = wf({client:resource})
+       @client_wf.save!(session[:workflow])
      end
    end
 
@@ -28,9 +24,11 @@ before_action :configure_sign_in_params, only: [:create]
    end
 
    protected
-   def after_sign_in_path_for(arg)
-     @url ? @url : super(arg)
+   def after_sign_in_path_for(resource)
+     patch = workflow_link(@client_wf)
+     patch ? patch : super(resource)
    end
+
   # If you have extra params to permit, append them to the sanitizer.
    def configure_sign_in_params
      devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])

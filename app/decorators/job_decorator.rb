@@ -13,7 +13,7 @@ class JobDecorator < ApplicationDecorator
   end
 
   def turn(extra)
-    eval ("object.#{extra} ? object.#{extra}_off : object.#{extra}_on")
+    eval("object.#{extra} ? object.#{extra}_off : object.#{extra}_on")
     true
   end
 

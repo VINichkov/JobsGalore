@@ -1,29 +1,15 @@
 class ApplicationWorkflow
-  delegate :url_helpers, to: 'Rails.application.routes'
+  include AASM
 
-  attr_accessor :state, :class, :notice
+  def save!(session)
+    Rails.logger.debug "#{self.class.to_s}.save!: session.id = #{session}"
+    Workflow.save!(self.to_slim_json,session)
+  end
 
-    def self.desirialize(arg)
-      if  arg.class == Hash and arg["class"]
-        eval "#{arg["class"]}.desirialize(#{arg})"
-      else
-        arg
-      end
-    end
+  private
 
-    def initialize(*arg)
-
-    end
-
-    def url
-      update
-    end
-
-
-    def update
-
-    end
-
-
+  def log_status_change
+    Rails.logger.debug "Изменения из #{aasm.from_state} в #{aasm.to_state} (event: #{aasm.current_event})"
+  end
 
 end

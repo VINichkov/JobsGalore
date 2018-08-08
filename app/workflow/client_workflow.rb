@@ -1,47 +1,52 @@
 class ClientWorkflow < ApplicationWorkflow
 
-  attr_accessor :client, :class
+  attr_accessor :client
 
-  def initialize(client=nil)
-    Rails.logger.debug("!!!ClientWorkflow::Инициализация")
-    @client = client
-    @class='ClientWorkflow'
+  def initialize(arg ={})
+    Rails.logger.debug  "ClientWorkflow.initialize: #{arg.to_json}, arg[:client].class = #{arg[:client].class} "
+    arg[:client] = (arg[:client][:id] ? Client.find_by_id(arg[:client][:id]) : Client.new(arg[:client])) if arg[:client].class == Hash
+    arg[:client] = Client.new if arg[:client].blank?
+    update_state({client:arg[:client], company:arg[:company]})
   end
 
-  def self.desirialize(arg=nil)
-    Rails.logger.debug("!!!ClientWorkflow::десириализация")
-    if arg
-      new(arg["client"]["id"] ? Client.find_by_id(arg["client"]["id"]) : Client.new(arg["client"]))
-    else
-      new(Client.new)
+  aasm  do
+    state :new, initial:true
+    state :not_company
+    state :final
+
+    after_all_transitions :log_status_change
+
+    event :update_state, :before=>:update_att do
+      transitions :from => :not_company, :to => :final, guard: :final
+      transitions :from => :new, :to => :final,  guard: :final
+      transitions :from => :new, :to => :not_company, guard: :not_company
+      transitions :from => :new, :to => :new, guard: :state_is_new
     end
+
   end
 
-  def company=(arg)
-    Rails.logger.debug("!!!ClientWorkflow::получаем компанию")
-    @client&.company = arg
+  def to_slim_json
+    {class:self.class.to_s, client:@client.to_short_h}.to_json
   end
 
-  def company
-    @client.company
+  private
+
+  def final
+    (@client&.applicant? or (@client&.resp? and @client&.company)) and @client&.persisted?
   end
 
-  def url
-    Rails.logger.debug("!!!ClientWorkflow::вычисляем УРЛ")
-    super
-    switch = {new: url_helpers.new_client_session_path, not_company: url_helpers.new_company_path, final: nil }
-    switch[@state]
+  def not_company
+    @client&.persisted? and @client&.resp? and !@client&.company_id?
   end
 
-  protected
-  def update
-    Rails.logger.debug("!!!ClientWorkflow::актуализируем")
-    if @client.nil?
-      @state = :new
-    elsif @client&.character == TypeOfClient::EMPLOYER && @client&.company.nil?
-      @state = :not_company
-    else
-      @state = :final
-    end
+  def state_is_new
+    !((@client&.applicant? or @client&.company) and @client&.persisted?) and !(@client&.persisted? and @client&.resp?)
   end
+
+  def update_att(arg = {})
+    Rails.logger.debug  "ClientWorkflow.update_att: class #{arg.class} - #{arg.to_json}"
+    @client =arg[:client] if arg[:client]
+    @client.update(company:arg[:company])  if @client&.company_id.blank? and arg[:company]
+  end
+
 end

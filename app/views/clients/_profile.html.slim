@@ -10,7 +10,7 @@
       .row
         .col-sm-4.col-xs-12.hidden-lg.hidden-md
           = link_to "Post new job", new_job_path, class: "btn btn-primary btn-block btn_margin"
-      -if @client.employer?
+      -if @client.employer? and @client.company
         = render partial: 'inc/job', collection: @client.company&.job.object.order(created_at:  :desc).decorate, locals:{query:''}
       -else
         = render partial: 'inc/job', collection: @client.job.object.order(created_at:  :desc).decorate, locals:{query:''}

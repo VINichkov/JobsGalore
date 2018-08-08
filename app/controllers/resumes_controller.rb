@@ -1,36 +1,36 @@
 class ResumesController < ApplicationController
-  before_action :authenticate_client!, only:[:edit, :update, :destroy]
+  #before_action :authenticate_client!, only:[:edit, :update, :destroy]
   load_and_authorize_resource :resume
-  before_action :set_resume, only: [:highlight_view, :show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
-
+  before_action :set_resume, only: [:views, :highlight_view, :show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
+  before_action :action_view, only:[:show, :highlight_view]
   #before_action :applicant!, only: :new
 
 
   # GET /resumes/1
   # GET /resumes/1.json
   def show
-    session[:workflow] = nil
   end
 
   def highlight_view
     @query = params[:text]
   end
 
+  def views
+  end
   # GET /resumes/new
   def new
     session[:workflow] = nil
-    session[:workflow] = ResumeWorkflow.new(Resume.new.decorate, current_client)
-    if current_client
-      session[:workflow].client = current_client
-    end
-    @resume = session[:workflow].resume
+    resume_workflow = add_new_workflow(class: :ResumeWorkflow)
+    @resume = resume_workflow.resume.decorate
+    resume_workflow.save!(session[:workflow])
   end
 
   def create_temporary
-    session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
-    session[:workflow].resume = Resume.new(session[:workflow].resume.serializable_hash.merge(resume_params))
+    resume_workflow = wf
+    resume_workflow.update_state(resume:Resume.new(resume_params), client: current_client)
+    resume_workflow.save!(session[:workflow])
     respond_to do |format|
-      format.html { redirect_to session[:workflow].url, notice: session[:workflow].notice}
+      format.html { redirect_to workflow_link(resume_workflow)}
     end
   end
   # GET /resumes/1/edit
@@ -40,14 +40,15 @@ class ResumesController < ApplicationController
   # POST /resumes
   # POST /resumes.json
   def create_resume
-    session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
-    @resume = session[:workflow].resume.decorate
+    resume_workflow = wf
+    @resume = resume_workflow.resume.decorate
     respond_to do |format|
       if @resume.save
+        resume_workflow.save!(session[:workflow])
         if @resume.client&.send_email
           ResumesMailer.add_resume({mail: @resume.client.email, firstname: @resume.client.firstname, id: @resume.id, title: @resume.title}).deliver_later
         end
-        format.html {redirect_to session[:workflow].url, notice: current_client ? 'The CV was successfully created.' : flash[:notice]}
+        format.html {redirect_to workflow_link(resume_workflow) , notice: current_client ? 'The CV was successfully created.' : flash[:notice]}
       else
         format.html {render :new}
       end
@@ -184,29 +185,35 @@ class ResumesController < ApplicationController
 
   private
 
-  def applicant!
-    if current_client.resp?
-      redirect_to root_path, alert: "Please register as an applicant"
+  def action_view
+    unless current_client&.admin? or current_client == @resume.client
+      @resume.add_viewed({user:current_client&.id, company: current_company&.id, time:Time.now, ip:request.remote_ip, lang:request.env['HTTP_ACCEPT_LANGUAGE'], agent:request.env['HTTP_USER_AGENT']})
     end
   end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_resume
-      @resume = Resume.find(params[:id]).decorate
-    end
+  #def applicant!
+  #  if current_client.resp?
+  #    redirect_to root_path, alert: "Please register as an applicant"
+  #  end
+  #end
 
-    def find_location(name)
-      loc = Location.search(name).limit(1)
-      if loc.nil? or loc.empty?
-        ""
-      else
-        loc.first.id
-      end
+    # Use callbacks to share common setup or constraints between actions.
+  def set_resume
+    @resume = Resume.find(params[:id]).decorate
+  end
+
+  def find_location(name)
+    loc = Location.search(name).limit(1)
+    if loc.nil? or loc.empty?
+      ""
+    else
+      loc.first.id
     end
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def resume_params
-      params.require(:resume).permit(:id, :title, :salary, :description , :client_id,:industry_id,
+  def resume_params
+    params.require(:resume).permit(:id, :title, :salary, :description , :client_id,:industry_id,
                                      :location_id, :location_name, :page, :option)
-         end
+  end
 end

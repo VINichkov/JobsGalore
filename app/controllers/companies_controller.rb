@@ -26,7 +26,6 @@ class CompaniesController < ApplicationController
   before_action :set_current_company, only:[:update_logo, :settings_company, :edit_logo]
 
   def settings_company
-
   end
 
   def edit_logo
@@ -59,14 +58,9 @@ class CompaniesController < ApplicationController
 
   # GET /companies/new
   def new
-    if session[:workflow]
-      session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
-    elsif current_client
-      session[:workflow] = ClientWorkflow.desirialize(current_client)
-    else
-      render_404
-    end
-    @company = Company.new(location: session[:workflow].client.location ? session[:workflow].client.location : Location.default ).decorate
+    client = wf
+    render_404 if session[:workflow].nil? and current_client.nil?
+    @company = Company.new(location: client.client.location ? client.client.location : Location.default ).decorate
   end
 
   # GET /companies/1/edit
@@ -76,21 +70,19 @@ class CompaniesController < ApplicationController
   # POST /companies
   # POST /companies.json
   def create
-    Rails.logger.debug "CompaniesController::create "
-    if session[:workflow]
-      session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
-      session[:workflow].company = Company.new(company_params).decorate
-      respond_to do |format|
-        if session[:workflow].company.save
-          session[:workflow].client.save!
-          if current_client
-            format.html { redirect_to session[:workflow].url ? session[:workflow].url : jobs_root_path, notice: 'Company was successfully created.' }
-          else
-            format.html { redirect_to session[:workflow].url ? session[:workflow].url : session[:workflow].company, notice: 'Company was successfully created.' }
-          end
+    @company = Company.new(company_params)
+    respond_to do |format|
+      if @company.save
+        client = wf
+        client.update_state(company: @company)
+        patch = workflow_link(client)
+        if current_client
+          format.html { redirect_to patch ? patch : jobs_root_path, notice: 'Company was successfully created.' }
         else
-          format.html { render :new }
+          format.html { redirect_to patch ? patch : @company, notice: 'Company was successfully created.' }
         end
+      else
+        format.html { render :new }
       end
     end
   end

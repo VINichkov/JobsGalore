@@ -546,7 +546,8 @@ CREATE TABLE public.jobs (
     client_id integer,
     close date,
     twitter character varying,
-    industry_id integer
+    industry_id integer,
+    viewed json[] DEFAULT '{}'::json[]
 );
 
 
@@ -826,7 +827,8 @@ CREATE TABLE public.resumes (
     highlight date,
     top date,
     urgent date,
-    industry_id integer
+    industry_id integer,
+    viewed json[] DEFAULT '{}'::json[]
 );
 
 
@@ -953,6 +955,38 @@ CREATE SEQUENCE public.skillsresumes_id_seq
 --
 
 ALTER SEQUENCE public.skillsresumes_id_seq OWNED BY public.skillsresumes.id;
+
+
+--
+-- Name: temporaries; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.temporaries (
+    id bigint NOT NULL,
+    session character varying,
+    object json[] DEFAULT '{}'::json[],
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: temporaries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.temporaries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: temporaries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.temporaries_id_seq OWNED BY public.temporaries.id;
 
 
 --
@@ -1121,6 +1155,13 @@ ALTER TABLE ONLY public.skillsjobs ALTER COLUMN id SET DEFAULT nextval('public.s
 --
 
 ALTER TABLE ONLY public.skillsresumes ALTER COLUMN id SET DEFAULT nextval('public.skillsresumes_id_seq'::regclass);
+
+
+--
+-- Name: temporaries id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.temporaries ALTER COLUMN id SET DEFAULT nextval('public.temporaries_id_seq'::regclass);
 
 
 --
@@ -1329,6 +1370,14 @@ ALTER TABLE ONLY public.skillsjobs
 
 ALTER TABLE ONLY public.skillsresumes
     ADD CONSTRAINT skillsresumes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: temporaries temporaries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.temporaries
+    ADD CONSTRAINT temporaries_pkey PRIMARY KEY (id);
 
 
 --
@@ -2101,6 +2150,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180204105551'),
 ('20180218093045'),
 ('20180601064454'),
-('20180717112526');
+('20180717112526'),
+('20180719095548'),
+('20180720094458');
 
 

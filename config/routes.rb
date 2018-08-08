@@ -117,11 +117,13 @@ Rails.application.routes.draw do
 
   resources :jobs, only:[:new, :show, :edit, :update, :destroy]
   get "jobs/:id/:text", to: "jobs#highlight_view", as: 'job_highlight_view'
+  get "views_of_a_job/:id", to: "jobs#views", as: 'job_views'
   post "job_create/", to: "jobs#create_temporary", as: 'create_job'
   get "jobs/", to: "jobs#create_job", as: 'jobs'
 
   resources :resumes, only:[:new, :show, :edit, :update, :destroy]
   get "resumes/:id/:text", to: "resumes#highlight_view", as: 'resume_highlight_view'
+  get "views_of_a_resume/:id", to: "resumes#views", as: 'resume_views'
   post "resume_create/", to: "resumes#create_temporary", as: 'create_resume'
   get "resumes/", to: "resumes#create_resume", as: 'resumes'
 

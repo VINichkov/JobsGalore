@@ -41,7 +41,7 @@ class Unsw < Adapter
               description += "<hr>"
               description += job.to_s
               hash[:description] = html_to_markdown(description)
-              @jobs.push ({  title: hash[:title],
+              @jobs.push({  title: hash[:title],
                             close: hash["Close Date"],
                             fulltime: hash[:fulltime],
                             description: hash[:description]})

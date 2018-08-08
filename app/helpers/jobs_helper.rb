@@ -19,7 +19,7 @@ module JobsHelper
   def last_job(job)
     content_tag(:li ) {
       li =content_tag(:hr)
-      li+=content_tag(:p, link_to(job.title, job))
+      li+=content_tag(:p, link_to(job.title.capitalize, job))
       li+=content_tag(:p, job.description_text + "...")
       li+=content_tag(:span, link_to(job.company.name, job.company, class: 'text-success'), class: "small")
       li+="&nbsp; - &nbsp;".html_safe

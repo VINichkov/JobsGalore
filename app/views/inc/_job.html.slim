@@ -3,7 +3,7 @@
     .col-lg-10.col-md-10.col-sm-10
       h3
         = link_to(highlight(job.title_capitalize, query), job_highlight_view_path(id:job, text:query), class: 'text-warning')
-      - if job.salary.blank? then
+      - if not job.salary.blank? then
         p = job.salary
       = highlight(job.description_text + "...",  query)
       p
@@ -12,6 +12,10 @@
         | &nbsp; - &nbsp;
       span
         = link_location(job.location.name, job.location, Objects::JOBS, class: 'text-warning')
+      - if current_client && ((current_client.employer? && job.company ==  current_client.company) || job.client == current_client || current_client.admin?)
+        span
+          | &nbsp; - &nbsp;
+          |Views #{job.viewed.count}
     .col-lg-2.col-md-2.col-sm-2
       - if current_client && ((current_client.employer? && job.company ==  current_client.company) || job.client == current_client || current_client.admin?)
         = render 'inc/btn', object: job, option: {cl:"dropdown", class:'job', type:2}
@@ -33,9 +37,14 @@
   | &nbsp; - &nbsp;
   span.text-warning
     = link_location(job.location.name, job.location, Objects::JOBS, class: 'text-warning')
-  - if job.salary.blank? then
+  - if not job.salary.blank? then
     p = job.salary
   p
     = highlight(job.description_text + "...", query)
   p.text-muted
-    |#{job.posted_date}
+    span
+      |#{job.posted_date}
+    - if current_client && ((current_client.employer? && job.company ==  current_client.company) || job.client == current_client || current_client.admin?)
+      span
+        | &nbsp; - &nbsp;
+        |Views #{job.viewed.count}

@@ -6,7 +6,7 @@ class Client < ApplicationRecord
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, omniauth_providers: %i[linkedin]
-  if Rails.env.production?
+  if !Rails.env.production?
     devise  :confirmable, :lockable, :timeoutable
   end
 
@@ -51,8 +51,8 @@ class Client < ApplicationRecord
 
 
   def self.new_with_session(params, session)
-    Rails.logger.debug "!!!Linkedin:: new_with_session зашли"
-    Rails.logger.debug "Linkedin:: полечаем данные пользователя. Из Linkedin  #{session.to_json}"
+    Rails.logger.debug "new_with_session зашли"
+    Rails.logger.debug "полечаем данные пользователя. Из Linkedin  #{session.to_json}"
     super.tap do |user|
       if data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]
         Rails.logger.debug "Linkedin:: получаем данные пользователя. Из Linkedin  #{session["devise.linkedin_data"].to_json}"
@@ -92,6 +92,10 @@ class Client < ApplicationRecord
     self.save
   end
 
+  def add_type(arg)
+    arg == TypeOfClient::APPLICANT ?  self.character = TypeOfClient::APPLICANT : self.character = TypeOfClient::EMPLOYER
+  end
+
   def rename()
     return unless self.photo.present?
     begin
@@ -104,6 +108,10 @@ class Client < ApplicationRecord
 
   def full_name
     @full_name ||= self.firstname+' '+self.lastname
+  end
+
+  def to_short_h
+    {id:id, firstname:firstname, lastname:lastname, email:email, phone:phone, password:password, photo_uid: photo_uid, gender:gender, location_id:location_id, character:character, company_id:company_id}
   end
 
   def type

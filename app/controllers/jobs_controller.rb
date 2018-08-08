@@ -1,6 +1,7 @@
 class JobsController < ApplicationController
   load_and_authorize_resource :job
-  before_action :set_job, only: [:highlight_view ,:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
+  before_action :set_job, only: [:views,:highlight_view ,:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
+  before_action :action_view, only:[:show, :highlight_view]
   #before_action :employer!, only: :new
 
   def show
@@ -11,14 +12,15 @@ class JobsController < ApplicationController
     @query = params[:text].split("/")
   end
 
+  def views
+  end
+
   # GET /jobs/new
   def new
     session[:workflow] = nil
-    session[:workflow] = JobWorkflow.new(Job.new.decorate)
-    if current_client
-      session[:workflow].client = current_client
-    end
-    @job = session[:workflow].job
+    job_workflow = add_new_workflow(class: :JobWorkflow)
+    @job = job_workflow.job.decorate
+    job_workflow.save!(session[:workflow])
   end
 
   # GET /jobs/1/edit
@@ -26,28 +28,31 @@ class JobsController < ApplicationController
   end
 
   def create_temporary
-    session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
-    session[:workflow].job = Job.new(session[:workflow].job.serializable_hash.merge(job_params))
+    job_workflow = wf
+    job_workflow.update_state(job:Job.new(job_params), client: current_client)
+    job_workflow.save!(session[:workflow])
     respond_to do |format|
-      format.html { redirect_to session[:workflow].url, notice: session[:workflow].notice}
+      format.html { redirect_to workflow_link(job_workflow)}
     end
   end
 
   # POST /jobs
   # POST /jobs.json
   def create_job
-    session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
-    @job = session[:workflow].job.decorate
+    job_workflow = wf
+    @job = job_workflow.job.decorate
     respond_to do |format|
       if @job.save
+        job_workflow.save!(session[:workflow])
         if @job.client&.send_email
           JobsMailer.add_job({mail: @job.client.email, firstname: @job.client.firstname, id: @job.id, title: @job.title}).deliver_later
         end
-        format.html { redirect_to session[:workflow].url, notice: 'Job was successfully created.'}
+        format.html {redirect_to workflow_link(job_workflow) , notice: current_client ?  'Job was successfully created.' : flash[:notice]}
       else
-        format.html { render :new }
+        format.html {render :new}
       end
     end
+
   end
 
   # PATCH/PUT /jobs/1
@@ -145,6 +150,12 @@ class JobsController < ApplicationController
 
   private
 
+    def action_view
+      unless current_client&.admin? or current_client == @job.client
+        @job.add_viewed({user:current_client&.id, company: current_company&.id, time:Time.now, ip:request.remote_ip, lang:request.env['HTTP_ACCEPT_LANGUAGE'], agent:request.env['HTTP_USER_AGENT']})
+      end
+
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_job
       @job = Job.find(params[:id]).decorate

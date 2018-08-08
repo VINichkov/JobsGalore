@@ -101,10 +101,10 @@ class Ability
   end
 
   def edit_resume_jobs_base(user)
-    can [:edit, :update, :destroy], Resume do |resume|
+    can [:edit, :update, :destroy, :views], Resume do |resume|
       resume.client_id == user.id
     end
-    can [:edit, :update, :destroy], Job do |job|
+    can [:edit, :update, :destroy, :views], Job do |job|
       job.client == user
     end
   end

@@ -1,4 +1,7 @@
+
 class ApplicationController < ActionController::Base
+  extend ActiveSupport::Concern
+  include Session
   rescue_from ActiveRecord::RecordNotFound, with:  :render_404
   rescue_from ActionController::RoutingError, with:  :render_404
   rescue_from CanCan::AccessDenied, with:  :render_404
@@ -10,7 +13,8 @@ class ApplicationController < ActionController::Base
 
   private
   def clear_session
-    if !['resumes','jobs','companies','clients'].include?(controller_name) and !['new','create'].include?(action_name)
+    unless ['resumes','jobs','companies','clients', 'registrations', 'sessions'].include?(controller_name) and ['new','create', 'create_temporary', 'create_job', 'create_resume'].include?(action_name)
+      Rails.logger.debug "---!!! Зачистили сессию controller_name #{controller_name} action_name #{action_name} !!!---"
       session[:workflow] = nil if session[:workflow]
     end
   end
@@ -29,13 +33,14 @@ class ApplicationController < ActionController::Base
 
 
   def current_company
-    if current_client.resp?
+    if current_client&.resp?
       if current_client.company.nil?
-        session[:workflow] = ClientWorkflow.new(current_client)
-        redirect_to session[:workflow].url, notice: 'Please, enter information about your company.'
+        session[:workflow] = nil
+        client = add_new_workflow(class: :ClientWorkflow, client:current_client)
+        client.save!(session[:workflow])
+        redirect_to workflow_link(client), notice: 'Please, enter information about your company.'
+        nil
       else
-        #format.html.none
-        Rails.logger.debug "ApplicationController::current_client.company = #{current_client.company.to_json}"
         current_client.company
       end
     end

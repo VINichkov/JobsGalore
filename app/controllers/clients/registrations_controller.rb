@@ -4,40 +4,46 @@ class Clients::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
    def new
-     build_resource
-     if session[:workflow]
-      session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
-      session[:workflow].client= resource
-     else
-       session[:workflow] = ClientWorkflow.new(resource)
+     super do
+       @client_wf = wf
+       @client_wf ||= add_new_workflow(class: :ClientWorkflow, client: resource)
+       @client_wf.save!(session[:workflow])
+       [ResumeWorkflow, JobWorkflow].include?(@client_wf.class) ? @flag = true : @flag = nil
      end
-     @client_wf=session[:workflow]
    end
 
   # POST /resource
    def create
-     session[:workflow] = ApplicationWorkflow.desirialize(session[:workflow])
-     session[:workflow].client.update(sign_up_params)
-     @client_wf = session[:workflow]
-     @client_wf.client.save
-     if @client_wf.client.persisted?
-       if @client_wf.client.active_for_authentication?
+     build_resource(sign_up_params)
+     @client_wf = wf
+     if @client_wf.class == ResumeWorkflow
+       resource.add_type(TypeOfClient::APPLICANT)
+     elsif @client_wf.class ==JobWorkflow
+       resource.add_type(TypeOfClient::EMPLOYER)
+     end
+     resource.save
+     @client_wf.update_state(client:resource)
+     if resource.persisted?
+       if resource.active_for_authentication?
          set_flash_message! :notice, :signed_up
-         sign_up(resource_name, @client_wf.client)
-         respond_with @client_wf.client, location: @client_wf.url ? @client_wf.url : after_sign_up_path_for(@client_wf.client)
+         sign_up(resource_name, resource)
+         @client_wf&.save!(session[:workflow])
+         respond_with resource, location: after_sign_up_path_for(resource)
        else
-         set_flash_message! :notice, :"signed_up_but_#{@client_wf.client.inactive_message}"
+         @client_wf&.save!(session[:workflow])
+         set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
          expire_data_after_sign_in!
-         respond_with @client_wf.client, location: @client_wf.url ? @client_wf.url : after_inactive_sign_up_path_for(@client_wf.client)
+         respond_with resource, location: after_inactive_sign_up_path_for(resource)
        end
      else
-       clean_up_passwords @client_wf.client
+       @client_wf&.save!(session[:workflow])
+       clean_up_passwords resource
        set_minimum_password_length
-       respond_with @client_wf.client
+       respond_with resource
      end
    end
 
-  # GET /resource/edit
+  # GET /resource/editclient_wf = workflow
    def edit
      super
    end
@@ -83,12 +89,14 @@ class Clients::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up.
    def after_sign_up_path_for(resource)
-     super(resource)
+     patch = workflow_link(@client_wf)
+     patch ? patch : super(resource)
    end
 
   # The path used after sign up for inactive accounts.
    def after_inactive_sign_up_path_for(resource)
-     super(resource)
+     patch = workflow_link(@client_wf)
+     patch ? patch : super(resource)
    end
 
 end
