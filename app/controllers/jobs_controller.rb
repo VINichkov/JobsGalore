@@ -44,9 +44,6 @@ class JobsController < ApplicationController
     respond_to do |format|
       if @job.save
         job_workflow.save!(session[:workflow])
-        if @job.client&.send_email
-          JobsMailer.add_job({mail: @job.client.email, firstname: @job.client.firstname, id: @job.id, title: @job.title}).deliver_later
-        end
         format.html {redirect_to workflow_link(job_workflow) , notice: current_client ?  'Job was successfully created.' : flash[:notice]}
       else
         format.html {render :new}
