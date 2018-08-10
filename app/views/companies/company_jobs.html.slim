@@ -1,15 +1,15 @@
-- meta_head(  title:"Jobs at #{@objs.first.company.name}",
-        description: "Jobs at #{@objs.first.company.name}",
-        keywords: @objs.pluck(:title).join(', '),
-        url: jobs_at_company_path(@objs.first.company),
-        image: @objs.first.company.logo_url)
+- meta_head(  title:"Jobs at #{@company.name}",
+        description: "Jobs at #{@company.name}",
+        keywords: @objs.blank? ? @company.keywords: @objs.pluck(:title).join(', '),
+        url: jobs_at_company_path(@company),
+        image: @company.logo_url)
 .container
-  h1 Jobs at #{@objs.first.company.name}
+  h1 Jobs at #{@company.name}
   .col-lg-3.col-md-3.hidden-sm.hidden-xs
     .panel.panel-default
       .panel-body.text-center
-        = link_to @objs.first.company.name, @objs.first.company
-        = image_bg(@objs.first.company.logo_url, "200px", "200px", "200px")
+        = link_to @company.name, @company
+        = image_bg(@company.logo_url, "200px", "200px", "200px")
   .col-sm-9.col-md-9.col-sm-12.col-xs-12
     = render partial: 'inc/job', collection: @objs, locals:{query:''}
 .text-center

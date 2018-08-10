@@ -14,6 +14,7 @@ class CompaniesController < ApplicationController
                                     :admin_index_job]
   before_action :set_jobs, only: [ :admin_new_job]
   before_action :set_company, only: [:highlight_view,
+                                     :company_jobs,
                                      :show,
                                      :edit,
                                      :update,

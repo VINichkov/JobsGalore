@@ -36,6 +36,7 @@ module ApplicationHelper
     meta_tag "twitter:title",arg[:title]
     meta_tag "twitter:description",arg[:description]
     meta_tag "twitter:image:src",arg[:image]
+    meta_tag "canonical",arg[:canonical]
   end
 
   def class_extras(object)

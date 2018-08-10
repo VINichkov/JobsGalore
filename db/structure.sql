@@ -73,7 +73,6 @@ CREATE FUNCTION public.resumes_trigger() RETURNS trigger
 SET default_tablespace = '';
 
 SET default_with_oids = false;
-
 --
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --

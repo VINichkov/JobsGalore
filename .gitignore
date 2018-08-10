@@ -15,7 +15,9 @@
 /.idea/*
 /public/system/*
 /db/importold/*
-
+/db/migrate/2019_analiz.rb
+/app/models/analize.rb
+logfile.txt
 
 # Added by npm-rails
 /node_modules
