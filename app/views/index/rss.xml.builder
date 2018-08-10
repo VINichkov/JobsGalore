@@ -25,7 +25,7 @@ cache @obj do
         xml.id obj.id
         xml.updated obj.updated_at.strftime('%FT%T%:z')
         xml.published obj.created_at.strftime('%FT%T%:z')
-        xml.content "<![CDATA[" + obj.description_meta + "<br />  <br /> " + "The post #{link_to obj.title, job_url(obj)}" , type:"html"
+        xml.summary "<![CDATA[ #{obj.description_text}  <br />  <br />   The post #{link_to obj.title, job_url(obj)} ]]>" , type:"html"
       end
     end
   end
