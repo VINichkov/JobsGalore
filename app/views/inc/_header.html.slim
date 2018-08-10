@@ -45,7 +45,6 @@
             |&nbsp;
             span.glyphicon.glyphicon-briefcase
             |&nbsp; Post new job
-      - if not (client_signed_in?) or not (current_client.resp?)
         li
           = link_to new_resume_path, rel: "nofollow" do
             |&nbsp;

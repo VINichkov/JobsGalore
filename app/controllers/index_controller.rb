@@ -105,6 +105,12 @@ class IndexController < ApplicationController
       format.html{redirect_to root_url}
     end
   end
+
+  def rss
+    t = Time.now
+    @obj = Job.select(:id,:title,:company_id, :location_id, :industry_id, :updated_at, :created_at, :description).includes(:company, :industry, :location).where(created_at:t-1.week..t).decorate
+    render :rss, formats: :xml
+  end
   private
 
   def main_search_params
