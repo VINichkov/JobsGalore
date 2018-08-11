@@ -21,11 +21,11 @@ cache @obj do
         xml.category term: obj.industry.name
         xml.category term: obj.location.suburb
         xml.category term: obj.location.state
-        xml.link rel:"alternate", href: job_url(obj)
+        xml.link rel:"alternate", type:"text/html", href: job_url(obj)
         xml.id obj.id
         xml.updated obj.updated_at.strftime('%FT%T%:z')
         xml.published obj.created_at.strftime('%FT%T%:z')
-        xml.summary "<![CDATA[ #{obj.description_text}  <br />  <br />   The post #{link_to obj.title, job_url(obj)} ]]>" , type:"html"
+        xml.summary "<p> #{obj.description_text}  </p>  <p>The post #{link_to obj.title, job_url(obj)} </p>" , type:"html"
       end
     end
   end
