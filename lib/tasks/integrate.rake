@@ -165,7 +165,7 @@ namespace :integrate do
 
 
   def printr(job, i, text)
-    puts "#{i}| ID = #{job.id} - #{job.title} -- #{job.company.name} ---  #{text}"
+    Rails.logger.debug "#{i}| ID = #{job.id} - #{job.title} -- #{job.company.name} ---  #{text}"
   end
   def accountant (text = nil)
     if text
