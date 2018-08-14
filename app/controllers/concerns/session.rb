@@ -4,7 +4,7 @@ module Session
       Rails.logger.debug  "!!!!!!@@ В Сессии присутсвует запись!!!"
       obj = Workflow.find_by_session(session[:workflow])
       yield obj if block_given?
-      Rails.logger.debug  "!!!!!!@@ клиент #{hash[:client].firstname} #{hash[:client].lastname}"
+      Rails.logger.debug  "!!!!!!@@ клиент #{hash[:client]&.firstname} #{hash[:client]&.lastname}"
       obj.update_state(hash) if hash[:client]
       obj
     end
