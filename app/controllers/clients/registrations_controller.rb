@@ -55,13 +55,6 @@ class Clients::RegistrationsController < Devise::RegistrationsController
 
   # DELETE /resource
    def destroy
-     if resource.employer?
-      resource.company.each do |company|
-        if company.client.count=1
-         company.destroy
-        end
-      end
-     end
      super
    end
 
