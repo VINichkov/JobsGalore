@@ -14,9 +14,11 @@ class ApplicationController < ActionController::Base
   private
 
   def clear_session
-    unless session[:workflow].nil? && ['resumes','jobs','companies','clients', 'registrations', 'sessions'].include?(controller_name) && ['new','create', 'create_temporary', 'create_job', 'create_resume'].include?(action_name)
-      Rails.logger.debug "---!!! Зачистили сессию controller_name #{controller_name} action_name #{action_name} !!!---"
-      session[:workflow] = nil
+    if session[:workflow]
+      unless session[:workflow] && ['resumes','jobs','companies','clients', 'registrations', 'sessions'].include?(controller_name) && ['new','create', 'create_temporary', 'create_job', 'create_resume'].include?(action_name)
+        Rails.logger.debug "---!!! Зачистили сессию controller_name #{controller_name} action_name #{action_name} !!!---"
+        session[:workflow] = nil
+      end
     end
   end
 

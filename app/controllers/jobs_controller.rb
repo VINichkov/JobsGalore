@@ -5,7 +5,6 @@ class JobsController < ApplicationController
   #before_action :employer!, only: :new
 
   def show
-    session[:workflow] = nil
   end
 
   def highlight_view
