@@ -4,6 +4,7 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   # You should also create an action method in this controller like this:
    def linkedin
+     Rails.logger.debug "---Clients::OmniauthCallbacksController linkedin"
        # You need to implement the method below in your model (e.g. app/models/user.rb)
      @client = Client.from_omniauth(request.env["omniauth.auth"])
      @client_wf = wf
@@ -37,6 +38,7 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
    end
 
    def after_sign_in_path_for(resource)
+     Rails.logger.debug "---Clients::OmniauthCallbacksController after_sign_in_path_for"
      patch = workflow_link(@client_wf)
      patch ? patch : super(resource)
    end
