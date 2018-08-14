@@ -12,10 +12,11 @@ class ApplicationController < ActionController::Base
   before_action :clear_session
 
   private
+
   def clear_session
-    unless ['resumes','jobs','companies','clients', 'registrations', 'sessions'].include?(controller_name) and ['new','create', 'create_temporary', 'create_job', 'create_resume'].include?(action_name)
+    unless session[:workflow].nil? && ['resumes','jobs','companies','clients', 'registrations', 'sessions'].include?(controller_name) && ['new','create', 'create_temporary', 'create_job', 'create_resume'].include?(action_name)
       Rails.logger.debug "---!!! Зачистили сессию controller_name #{controller_name} action_name #{action_name} !!!---"
-      session[:workflow] = nil if session[:workflow]
+      session[:workflow] = nil
     end
   end
 
@@ -35,7 +36,6 @@ class ApplicationController < ActionController::Base
   def current_company
     if current_client&.resp?
       if current_client.company.nil?
-        session[:workflow] = nil
         client = add_new_workflow(class: :ClientWorkflow, client:current_client)
         client.save!(session[:workflow])
         redirect_to workflow_link(client), notice: 'Please, enter information about your company.'
