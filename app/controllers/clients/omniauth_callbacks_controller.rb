@@ -6,7 +6,7 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
    def linkedin
        # You need to implement the method below in your model (e.g. app/models/user.rb)
      @client = Client.from_omniauth(request.env["omniauth.auth"])
-
+     @client_wf = wf
      if @client.persisted?
        sign_in_and_redirect @client, event: :authentication #this will throw if @user is not activated
        set_flash_message(:notice, :success, kind: "LinkedIn") if is_navigational_format?
@@ -34,5 +34,10 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # The path used when OmniAuth fails
    def after_omniauth_failure_path_for(scope)
      super(scope)
+   end
+
+   def after_sign_in_path_for(resource)
+     patch = workflow_link(@client_wf)
+     patch ? patch : super(resource)
    end
 end
