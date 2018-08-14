@@ -7,7 +7,7 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
      Rails.logger.debug "---Clients::OmniauthCallbacksController linkedin"
        # You need to implement the method below in your model (e.g. app/models/user.rb)
      @client = Client.from_omniauth(request.env["omniauth.auth"])
-     @client_wf = wf({client:@client})
+     @client_wf = wf(client:@client)
      if @client.persisted?
        sign_in_and_redirect @client, event: :authentication #this will throw if @user is not activated
        set_flash_message(:notice, :success, kind: "LinkedIn") if is_navigational_format?
