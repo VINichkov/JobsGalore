@@ -7,6 +7,7 @@
 //=require jasny-bootstrap
 //=require medium-editor.min
 //=require me-markdown.standalone.min
+//=require datalist-polyfill.min
 //= require react
 //= require components
 //= require react_ujs

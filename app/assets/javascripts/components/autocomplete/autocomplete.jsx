@@ -44,9 +44,7 @@ class Autocomplete extends React.Component{
         if ( this.state.locations !== null ) {
             var locations = this.state.locations.map(function(location) {
                 return(
-                            <option key={'location_li'+this.state.id+location.id} data-id = {location.id}>
-                                {location.name}
-                            </option>);
+                            <option key={'location_li'+this.state.id+location.id} data-id = {location.id} value={location.name} />);
             }.bind(this));
         }
         let input_id = null;
@@ -57,7 +55,7 @@ class Autocomplete extends React.Component{
             <div>
                 <input list={this.props.name} name={this.state.input ? this.props.name + "_name]" : this.props.name} autoComplete = "off" className={this.props.className} onInput={this.handleInput}  defaultValue = {this.props.defaultName} placeholder={this.props.place_holder} type="text"  id={this.props.id} style={this.props.style}></input>
                 {input_id}
-                <datalist id={this.props.name}>
+                <datalist id={this.props.name} >
                     {locations}
                 </datalist>
             </div>
