@@ -63,6 +63,6 @@
         p
           = highlight(company.render_description, query)
         =jobs_of_company(company)
-- client = company.object.client&.find_by(character:TypeOfClient::EMPLOYER).decorate
+- client = company.object.client.find_by(character:TypeOfClient::EMPLOYER)&.decorate
 -if client
   =render 'inc/contact', object: client, title:""
