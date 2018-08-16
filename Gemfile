@@ -38,6 +38,7 @@ gem 'dkim'
 gem 'markitdown'
 gem 'interactor'
 gem 'omniauth-linkedin-oauth2'
+gem 'linkedin'
 
 
 gem 'twitter'
