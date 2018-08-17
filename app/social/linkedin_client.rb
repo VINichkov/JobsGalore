@@ -1,0 +1,3 @@
+class LinkedinClient
+
+end

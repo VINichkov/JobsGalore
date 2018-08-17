@@ -47,6 +47,16 @@ class Client < ApplicationRecord
       #user.lastname = auth.to_json
       Rails.logger.debug "Client::from_omniauth создали клиента #{user.to_json}"
     end
+    Rails.logger.debug "-------------------------------------------------------------------"
+    url = URI.parse('https://api.linkedin.com/v1/people/')
+    Rails.logger.debug "Url  #{url.to_s}"
+    token = auth.credentials.token
+    a = Net::HTTP::Get.new(url.to_s)
+    Rails.logger.debug "Token #{token}"
+    a.add_field('Authorization:', token)
+    res = Net::HTTP.start(url.host, url.port) {|http|   http.request(req)  }
+    Rails.logger.debug "res #{res.body}"
+    Rails.logger.debug "-------------------------------------------------------------------"
   end
 
 
