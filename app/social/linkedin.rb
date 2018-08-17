@@ -2,7 +2,7 @@ require 'omniauth-oauth2'
 
 module OmniAuth
   module Strategies
-    class LinkedIn < OmniAuth::Strategies::OAuth2
+    class LinkedIn1 < OmniAuth::Strategies::OAuth2
 
 
       def access_token

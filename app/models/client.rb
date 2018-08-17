@@ -47,22 +47,22 @@ class Client < ApplicationRecord
       #user.lastname = auth.to_json
       Rails.logger.debug "Client::from_omniauth создали клиента #{user.to_json}"
     end
-    Rails.logger.debug "-------------------------------------------------------------------"
-    url = URI.parse('https://api.linkedin.com/v1/people/')
-    Rails.logger.debug "Url  #{url.to_s}"
-    token = auth.credentials.token
-    a = Net::HTTP::Get.new(url.to_s)
-    Rails.logger.debug "Token #{token}"
-    a.add_field(:authorization, token)
-    a.add_field(:connection, 'Keep-Alive')
-    a.add_field('x-li-format', 'json')
-    https =  Net::HTTP.new(url.host, url.port)
-    https.use_ssl = true
-    res = https.start {|http|
-      http.request(a)
-    }
-    Rails.logger.debug "res #{res.body}"
-    Rails.logger.debug "-------------------------------------------------------------------"
+    #Rails.logger.debug "-------------------------------------------------------------------"
+    #url = URI.parse('https://api.linkedin.com/v1/people/')
+    #Rails.logger.debug "Url  #{url.to_s}"
+    #token = auth.credentials.token
+    #a = Net::HTTP::Get.new(url.to_s)
+    #Rails.logger.debug "Token #{token}"
+    #a.add_field(:authorization, token)
+    #a.add_field(:connection, 'Keep-Alive')
+    #a.add_field('x-li-format', 'json')
+    #https =  Net::HTTP.new(url.host, url.port)
+    #https.use_ssl = true
+    #res = https.start {|http|
+    #  http.request(a)
+    #}
+    #Rails.logger.debug "res #{res.body}"
+    #Rails.logger.debug "-------------------------------------------------------------------"
     client
   end
 
