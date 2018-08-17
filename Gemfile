@@ -37,8 +37,8 @@ gem 'devise','~> 4.4.3'
 gem 'dkim'
 gem 'markitdown'
 gem 'interactor'
-gem 'omniauth-linkedin-oauth2'
-gem 'linkedin'
+#gem 'omniauth-linkedin-oauth2'
+#gem 'linkedin'
 
 
 gem 'twitter'
