@@ -39,7 +39,7 @@ gem 'markitdown'
 gem 'interactor'
 #gem 'omniauth-linkedin-oauth2'
 #gem 'linkedin'
-
+gem 'omniauth'
 
 gem 'twitter'
 gem 'will_paginate-bootstrap'# ,'~> 1.0.1'
