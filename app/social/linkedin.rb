@@ -6,7 +6,9 @@ module OmniAuth
 
 
       def access_token
-        puts "dsfsdfsdfsdfsdfsdfsddfsdfdsfdsfsd"
+        puts "oauth2_access_token.token = #{oauth2_access_token.token.to_s}"
+        puts "oauth2_access_token.class = #{oauth2_access_token.class}"
+        puts "oauth2_access_token.class = #{oauth2_access_token.to_json}"
         ::OAuth2::AccessToken.new(client, oauth2_access_token.token, {
             :mode => :query,
             :param_name => 'oauth2_access_token',
@@ -16,14 +18,12 @@ module OmniAuth
       end
 
       def raw_info
-        puts "dsfsdfsdfsdfsdfsdfsddfsdfdsfdsfsd"
         @raw_info ||= access_token.get("/v1/people/~:(#{option_fields.join(',')})?format=json").parsed
       end
 
       private
 
       def option_fields
-        puts "dsfsdfsdfsdfsdfsdfsddfsdfdsfdsfsdasdsadasdasd"
         fields = options.fields
         fields.map! { |f| f == "picture-url" ? "picture-url;secure=true" : f } if !!options[:secure_image_url]
         fields
