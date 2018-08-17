@@ -54,7 +54,7 @@ class Client < ApplicationRecord
     a = Net::HTTP::Get.new(url.to_s)
     Rails.logger.debug "Token #{token}"
     a.add_field('Authorization:', token)
-    res = Net::HTTP.start(url.host, url.port) {|http|   http.request(req)  }
+    res = Net::HTTP.start(url.host, url.port) {|http|   http.request(a)  }
     Rails.logger.debug "res #{res.body}"
     Rails.logger.debug "-------------------------------------------------------------------"
   end
