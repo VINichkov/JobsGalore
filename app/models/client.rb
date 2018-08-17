@@ -31,7 +31,7 @@ class Client < ApplicationRecord
 
   def self.from_omniauth(auth)
     Rails.logger.debug "Client::from_omniauth #{auth.to_json}"
-    where(provider: auth.provider, uid: auth.uid).or(where(email: auth.info.email)).first_or_create do |user|
+    client = where(provider: auth.provider, uid: auth.uid).or(where(email: auth.info.email)).first_or_create do |user|
       Rails.logger.debug "Client::from_omniauth не нашли ничего #{user.to_json}"
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
@@ -53,7 +53,9 @@ class Client < ApplicationRecord
     token = auth.credentials.token
     a = Net::HTTP::Get.new(url.to_s)
     Rails.logger.debug "Token #{token}"
-    a.add_field('Authorization:', token)
+    a.add_field(:authorization, token)
+    a.add_field(:connection, 'Keep-Alive')
+    a.add_field('x-li-format', 'json')
     https =  Net::HTTP.new(url.host, url.port)
     https.use_ssl = true
     res = https.start {|http|
@@ -61,6 +63,7 @@ class Client < ApplicationRecord
     }
     Rails.logger.debug "res #{res.body}"
     Rails.logger.debug "-------------------------------------------------------------------"
+    client
   end
 
 
