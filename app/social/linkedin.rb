@@ -21,6 +21,17 @@ module OmniAuth
         @raw_info ||= access_token.get("/v1/people/~:(#{option_fields.join(',')})?format=json").parsed
       end
 
+      credentials do
+        hash = {access_token: access_token.token}
+        hash[:client] = client
+        hash[:param_name] = 'oauth2_access_token'
+        hash[:expires_in ] = 'oauth2_access_token.expires_in'
+        hash[:refresh_token] = access_token.refresh_token if access_token.expires? && access_token.refresh_token
+        hash[:expires_at] = access_token.expires_at if access_token.expires?
+        hash[:expires] = access_token.expires?
+        hash
+      end
+
       private
 
       def option_fields
