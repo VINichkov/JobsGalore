@@ -6,9 +6,6 @@ module OmniAuth
 
 
       def access_token
-        puts "oauth2_access_token.token = #{oauth2_access_token.token.to_s}"
-        puts "oauth2_access_token.class = #{oauth2_access_token.class}"
-        puts "oauth2_access_token.class = #{oauth2_access_token.to_json}"
         ::OAuth2::AccessToken.new(client, oauth2_access_token.token, {
             :mode => :query,
             :param_name => 'oauth2_access_token',
@@ -18,6 +15,10 @@ module OmniAuth
       end
 
       def raw_info
+        puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        puts "get #{"/v1/people/~:(#{option_fields.join(',')})?format=json"}"
+        puts "options #{access_token.options.to_json}"
+        puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
         @raw_info ||= access_token.get("/v1/people/~:(#{option_fields.join(',')})?format=json").parsed
       end
 
