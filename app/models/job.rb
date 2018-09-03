@@ -116,19 +116,19 @@ class Job < ApplicationRecord
     query = query.to_h if query.class != Hash
     text_query=[]
 
-    text_query << "industry_id = :category" unless query[:category].blank?
+    text_query << "industry_id = :category" if query[:category].present?
 
     if query[:location_id].present?
       text_query << "location_id = :location_id"
     elsif query[:location_name].present?
       locations = Location.search((query[:location_name].split(" ").map {|t| t=t+":*"}).join("|"))
-      text_query << "location_id in "+locations.ids.to_s.sub("[","(").sub("]",")") unless locations.blank?
+      text_query << "location_id in "+locations.ids.to_s.sub("[","(").sub("]",")") if locations.present?
     end
 
     text_query << "fts @@ to_tsquery(:value)" if query[:value] != ""
 
 
-    if not query[:salary].blank?
+    if  query[:salary].present?
       query[:salary] = query[:salary].to_i
       text_query << '((salarymin is NULL and salarymax >= :salary) or (salarymax is NULL and salarymin>=:salary) or (salarymin <=:salary and salarymax >= :salary))'
     end
