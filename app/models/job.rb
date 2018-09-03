@@ -118,9 +118,9 @@ class Job < ApplicationRecord
 
     text_query << "industry_id = :category" unless query[:category].blank?
 
-    if not query[:location_id].blank?
+    if query[:location_id].present?
       text_query << "location_id = :location_id"
-    elsif not query[:location_name].blank?
+    elsif not query[:location_name].present?
       locations = Location.search((query[:location_name].split(" ").map {|t| t=t+":*"}).join("|"))
       text_query << "location_id in "+locations.ids.to_s.sub("[","(").sub("]",")") unless locations.blank?
     end
@@ -134,7 +134,7 @@ class Job < ApplicationRecord
     end
 
     text_query = text_query.join(" and ")
-    Rails.logger.info(text_query)
+    Rails.logger.info("Query::" + text_query + query.to_s)
     select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:close,:industry_id,:twitter, :viewed, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
   end
 
