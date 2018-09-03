@@ -134,7 +134,7 @@ class Job < ApplicationRecord
     end
 
     text_query = text_query.join(" and ")
-
+    Rails.logger.info(text_query)
     select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:close,:industry_id,:twitter, :viewed, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
   end
 
