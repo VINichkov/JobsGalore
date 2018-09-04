@@ -1,3 +1,0 @@
-class Carearone < ApplicationRecord
-
-end
