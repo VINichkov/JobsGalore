@@ -16,8 +16,10 @@ class Company < ApplicationRecord
     if self.industry.nil?
       self.industry=Industry.find_by_name('Other')
     end
-    if self.site[0..3].downcase != "http" and !self.site.blank?
-      self.site = 'http://'+self.site
+    if self.site.present?
+      if self.site[0..3].downcase != "http"
+        self.site = 'http://'+self.site
+      end
     end
     super
   end

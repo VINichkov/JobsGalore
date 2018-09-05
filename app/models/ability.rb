@@ -110,7 +110,7 @@ class Ability
   end
 
   def base
-    can [:new, :create_temporary, :create_job], Job
+    can [:new, :create_temporary, :create_job, :apply], Job
     can [:new, :create_temporary, :create_resume], Resume
     can [:show, :company_jobs, :highlight_view], Company
     can [:show, :highlight_view], Resume

@@ -39,17 +39,16 @@
             = link_to admin_path do
               span.glyphicon.glyphicon-eye-open
               | &nbsp; Administration of site
-      - if  current_client
-        li
-          = link_to new_job_path, rel: "nofollow" do
-            |&nbsp;
-            span.glyphicon.glyphicon-briefcase
-            |&nbsp; Post new job
-        li
-          = link_to new_resume_path, rel: "nofollow" do
-            |&nbsp;
-            span.glyphicon.glyphicon-paperclip
-            |&nbsp; Post new resume
+      li
+        = link_to new_job_path, rel: "nofollow" do
+          |&nbsp;
+          span.glyphicon.glyphicon-briefcase
+          |&nbsp; Post new job
+      li
+        = link_to new_resume_path, rel: "nofollow" do
+          |&nbsp;
+          span.glyphicon.glyphicon-paperclip
+          |&nbsp; Post new resume
       li
         = link_to '/by_category/2' do
           |&nbsp;

@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
   load_and_authorize_resource :job
-  before_action :set_job, only: [:views,:highlight_view ,:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
+  before_action :set_job, only: [:apply, :views,:highlight_view ,:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
   before_action :action_view, only:[:show, :highlight_view]
   #before_action :employer!, only: :new
 
@@ -47,6 +47,14 @@ class JobsController < ApplicationController
       else
         format.html {render :new}
       end
+    end
+  end
+
+  def apply
+    if @job.apply
+      redirect_to @job.apply, status:307
+    else
+      render_404
     end
   end
 

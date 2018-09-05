@@ -5,12 +5,22 @@ namespace :integrate do
     Gateway.all.each do |gate|
       puts "! Task:add_jobs: Start: It executes for company \"#{gate.company.name}\""
       gate.execute
-      open("http://google.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
-      open("http://www.bing.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
       puts "! Task:add_jobs: End: Company's name's \"#{gate.company.name}\""
     end
     separate
+    open("http://google.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
+    open("http://www.bing.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
     puts "! Task:add_jobs: End"
+  end
+
+  task :jora => :environment  do
+    puts "! Task:Jora: start"
+    jora = Jora.new
+    jobs = jora.get_list_jobs
+    if jobs
+      jora.create_jobs(jobs)
+    end
+    puts "! Task:Jora: End"
   end
 
   desc "Deletes unnecessary jobs"
