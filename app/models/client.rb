@@ -43,7 +43,7 @@ class Client < ApplicationRecord
       user.character=TypeOfClient::APPLICANT
       user.provider = auth.provider
       user.uid = auth.uid
-      user.confirm
+      user.skip_confirmation!
       #user.lastname = auth.to_json
       Rails.logger.debug "Client::from_omniauth создали клиента #{user.to_json}"
     end
