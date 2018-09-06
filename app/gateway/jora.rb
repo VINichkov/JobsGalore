@@ -45,7 +45,7 @@ class Jora < Adapter
 
   def get_list_jobs
     @jobs = @params.map do |params|
-       Nokogiri::HTML(open(@url+params[:query]), "User-Agent"=>'Googlebot 2.1').css('[id="jobresults"] [class="job"]').map do |job|
+       Nokogiri::HTML(open(@url+params[:query], {"User-Agent"=>'Googlebot 2.1'})).css('[id="jobresults"] [class="job"]').map do |job|
          salary = job.at_css('div div[class="salary"]')&.text&.gsub(',','')&.scan(/\d+/)
          if salary
            title = job.at_css('a[class="jobtitle"]')
@@ -68,7 +68,7 @@ class Jora < Adapter
 
   def get_job(url)
     begin
-      job = Nokogiri::HTML(open(url), "User-Agent"=>'Googlebot 2.1').at_css('div[id="vj_container"]')
+      job = Nokogiri::HTML(open(url, {"User-Agent"=>'Googlebot 2.1'})).at_css('div[id="vj_container"]')
       {description: html_to_markdown(job.at_css('div[class="summary"]').children.to_s), apply:@host + job.at_css('a[class="button apply_link"]')[:href]}
     rescue StandardError=>e
       Rails.logger.debug("Ошибка #{e.to_s}")
