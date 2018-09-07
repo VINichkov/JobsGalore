@@ -9,7 +9,7 @@
       .form-group
         = f.label :name
         br
-        = f.text_field :name, class:"form-control"
+        = f.text_field :name, class:"form-control", required:"required"
       .form-group
         = f.label :site
         br
@@ -25,8 +25,13 @@
                 className: "form-control dropdown-toggle",
                 name: "company[location",
                 id: "company_location_id",
-                defaultName: @company.location ? "#{@company.location.suburb}, #{@company.location.state}":nil,
-                defaultId:@company.location ? @company.location.id : nil)
+                route:'/search_locations/',
+                defaultName: @company.location ? @company.location.name : Location.default.name,
+                defaultId:@company.location ? @company.location.id : Location.default.id)
+      .form-group
+        = f.label :industry, "Industry"
+        br
+        = f.collection_select(:industry_id, Industry.select(:id, :name).all, :id, :name, {prompt: true}, {class: "form-control"})
       .form-group
         = f.check_box :recrutmentagency
         |  &nbsp;
@@ -36,7 +41,7 @@
         br
         = f.text_area :description, class: "markdown none"
         div.editable
-          = render_markdown(@company.description)
+          = @company.render_description
       hr.colorgraph
         .row
           .col-xs-12.col-md-6.col-sm-6.col-lg-6

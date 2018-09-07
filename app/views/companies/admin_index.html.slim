@@ -30,10 +30,10 @@
           td = company.size.size if company.size
           td = "#{company.location.suburb}, #{company.location.state}"
           td = company.site
-          td = company.client.pluck(:firstname, :lastname)
+          td = company.client.pluck(:firstname, :lastname).join(' ')
           td = company.recrutmentagency
           td = company.description&.truncate(50)
-          td = company.industry.pluck(:name)
+          td = company.industry.name
           th = link_to "Show team", admin_company_team_path(company), class: "btn btn-success btn-block "
           td = link_to 'Edit photo', admin_company_edit_logo_path(company), class: "btn btn-info btn-block "
           td = link_to 'Show', admin_company_show_path(company), class: "btn btn-primary btn-block "
