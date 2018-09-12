@@ -21,7 +21,7 @@ html[lang="en"]
     meta[property="og:title" content=yield_meta_tag("og:title", PropertsHelper::TITLE)]
     meta[property="og:description" content=yield_meta_tag("og:description", "JobsGalore allows you to find work in Australia. JobsGalore is a quality database of CVs and vacancies, and the latest job and staff search services.")]
     meta[property="og:url" content=yield_meta_tag("og:url",root_url)]
-    meta[property="og:image" content=yield_meta_tag("og:image",image_url("facebook.png"))]
+    meta[property="og:image" content=yield_meta_tag("og:image",image_url("jq.png"))]
     - if yield_meta_tag("twitter:card")!=''
       meta[name="twitter:card" content=yield_meta_tag("twitter:card")]
     - if yield_meta_tag("twitter:site")!=''
@@ -40,12 +40,13 @@ html[lang="en"]
     meta[name="description" content=yield_meta_tag("description", "JobsGalore allows you to find work in Australia. JobsGalore is a quality database of CVs and vacancies, and the latest job and staff search services.")]
     meta[name="keywords" content=yield_meta_tag("keywords","Jobs Galore, work, job, vacancy search, resume, jobs, Australia, vacancies, employment, looking for a job, search, seek, galore, money, solary, indeed, JobsGalore, jobs in university, post job free,  post jobs for free, look for job, seeking, job board")]
     = csrf_meta_tags
-    = stylesheet_link_tag('application', media: 'all')
-    = javascript_include_tag('application')
+
   body
     =render 'inc/header', industries: Industry.select(:id,:name).all
     = yield
     =render 'inc/footer'
+    = stylesheet_link_tag('application', media: 'all')
+    = javascript_include_tag('application')
     script.async
       |(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       |(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
