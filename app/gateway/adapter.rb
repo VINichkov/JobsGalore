@@ -41,14 +41,14 @@ class Adapter
 
   def put_in_jobs(arg={})
     arg[:title].downcase!
-    @log.push("job = #{arg[:title] + arg[:close].strftime('%d.%m.%Y')}")
+    @log.push("job = #{arg[:title]} #{arg[:close]&.strftime('%d.%m.%Y')}")
     if arg[:close]
       ad_was_published = arg[:index][:indexd].include?(arg[:title] + arg[:close].strftime('%d.%m.%Y'))
     else
       ad_was_published =arg[:index][:index].include?(arg[:title])
     end
     unless ad_was_published
-      @log.push(" !adding job = #{arg[:title] + arg[:close].strftime('%d.%m.%Y')}")
+      @log.push(" !adding job = #{arg[:title]} #{arg[:close]&.strftime('%d.%m.%Y')}")
       job = get_job arg[:link]
       unless job[:description].empty?
         @jobs.push({ title: arg[:title],
@@ -76,9 +76,7 @@ class Adapter
   end
 
   def href_edit(elem, attr, value)
-    if value[0] == '/'
-      elem[:href] = @host+value
-    end
+    value[0] == '/' ? elem[:href] = @host+value : elem[:href] = 'http://'+value
   end
 
   def gsub_html(arg)

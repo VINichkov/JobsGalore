@@ -29,7 +29,7 @@ class Gateway < ApplicationRecord
       eval "@gate = #{self.script}.new"
       ind = Industry.find_by_name('Other')
       index = Job.where(company: company, client: client).map do |job|
-        if company.name = "Deakin University"
+        if company.name == "Deakin University"
           job.sources
         else
           {title:job.title, date_end: job.close}
