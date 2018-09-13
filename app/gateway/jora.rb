@@ -55,7 +55,15 @@ class Jora < Adapter
              if company
               job = get_job(url)
               if job
-                {link: url, title:title[:title], company: company, salary_min: salary[0],salary_max:salary[1], location:params[:location], industry:params[:industry], apply:job[:apply], description:job[:description] }
+                {link: url,
+                 title:title[:title],
+                 company: company,
+                 salary_min: salary.present? ? salary[0] : nil ,
+                 salary_max: salary.present? ? salary[1] : nil ,
+                 location:params[:location],
+                 industry:params[:industry],
+                 apply:job[:apply],
+                 description:job[:description] }
               else
                 nil
               end
