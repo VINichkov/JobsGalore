@@ -230,7 +230,8 @@ ALTER SEQUENCE public.companies_id_seq OWNED BY public.companies.id;
 
 CREATE TABLE public.emails (
     id integer NOT NULL,
-    email character varying
+    email character varying,
+    arr jsonb[] DEFAULT '{}'::jsonb[]
 );
 
 
@@ -1389,6 +1390,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180719095548'),
 ('20180720094458'),
 ('20180904071613'),
+('20180913075713'),
 ('2019');
 
 

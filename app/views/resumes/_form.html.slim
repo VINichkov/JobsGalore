@@ -39,6 +39,11 @@
     = f.text_area :description, class: "markdown none"
     div.editable
       = @resume.render_description
+  .form-group
+    input#inp[type="file" accept=".txt"]
+    h5
+      small
+        |We accept.TXT
   hr.colorgraph
     .row
       .col-xs-6.col-md-6.col-sm-6.col-lg-6

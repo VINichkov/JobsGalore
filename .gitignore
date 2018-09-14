@@ -21,3 +21,11 @@ logfile.txt
 
 # Added by npm-rails
 /node_modules
+/public/assets
+/webpack-assets.json
+/webpack-assets-deploy.json
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity
