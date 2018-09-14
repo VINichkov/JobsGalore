@@ -47,7 +47,7 @@ class Jora < Adapter
     @jobs = @params.map do |params|
        Nokogiri::HTML(open(@url+params[:query], {"User-Agent"=>'Googlebot 2.1'})).css('[id="jobresults"] [class="job"]').map do |job|
          salary = job.at_css('div div[class="salary"]')&.text&.gsub(',','')&.scan(/\d+/)
-         if salary or [false, false, false, true].sample
+         if salary or [false, false, false, false, false, false, false, false, false, true].sample
            title = job.at_css('a[class="jobtitle"]')
            url = @host + title[:href][0..title[:href].index('?')-1]
            unless Job.find_by_sources(url)
