@@ -71,7 +71,7 @@ class Jora < Adapter
            end
          end
       end
-    end.flatten.compact
+    end.flatten.compact.uniq
   end
 
   def get_job(url)
