@@ -47,7 +47,7 @@ class Jora < Adapter
     @jobs = @params.map do |params|
        Nokogiri::HTML(open(@url+params[:query], {"User-Agent"=>'Googlebot 2.1'})).css('[id="jobresults"] [class="job"]').map do |job|
          salary = job.at_css('div div[class="salary"]')&.text&.gsub(',','')&.scan(/\d+/)
-         if salary or [false, false, false, false, false, false, false, false, false, true].sample
+         if salary or [false, false, false, false, false, false, false, true].sample
            title = job.at_css('a[class="jobtitle"]')
            url = @host + title[:href][0..title[:href].index('?')-1]
            unless Job.find_by_sources(url)
@@ -99,7 +99,7 @@ class Jora < Adapter
         if user.blank?
           puts "Компания новая. Создаем клиента #{"#{job[:company].gsub(' ','_')}@email.com.au"}"
           user = Client.new(firstname:job[:company], lastname:'HR', email:"#{job[:company].gsub(' ','_')}@email.com.au",location_id:job[:location], character:TypeOfClient::EMPLOYER, send_email:false, password:'11111111', password_confirmation:'11111111', company_id: company.id)
-          user.skip_confirmation!
+          user.skip_confirmation! if Rails.env.production?
           user.save
         end
         Job.create!(title:job[:title],
