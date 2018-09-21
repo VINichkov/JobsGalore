@@ -1,5 +1,5 @@
 
-if ENV["RAILS_ENV"]=="production"
+if ENV["RAILS_ENV"]=="production" and ENV["TEST"].nil?
   AssetSync.configure do |config|
 
     config.fog_provider = 'AWS'
