@@ -387,7 +387,6 @@ DEPENDENCIES
   interactor
   jbuilder
   jquery-rails
-  listen
   markdown-rails
   markitdown
   mechanize
