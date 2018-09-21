@@ -141,8 +141,9 @@ Rails.application.routes.draw do
   get "/send_offer", to:'index#send_offer'
   get '/search', to: 'index#main_search'
   get '/by_category/:obj', to: 'index#by_category'
+  get '/logo', to: 'index#logo'
+  get '/jg', to: 'index#jg'
   get '/:category/:object', to: 'index#category_view'
-
 
 
 

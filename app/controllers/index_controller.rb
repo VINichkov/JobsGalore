@@ -111,11 +111,22 @@ class IndexController < ApplicationController
     @obj = Job.select(:id,:title,:company_id, :location_id, :industry_id, :updated_at, :created_at, :description).includes(:company, :industry, :location).where(created_at:t-1.week..t).decorate
     render :rss, formats: :xml
   end
+
+  def logo
+    send_file 'public/jg.png', type: 'image/png', disposition: 'inline'
+  end
+
+  def jg
+    send_file 'public/face.jpg', type: 'image/png', disposition: 'inline'
+  end
+
   private
 
   def main_search_params
     params.permit(:page, main_search: [:type, :value, :page, :salary,  :options, :category, :location_id, :location_name, :urgen])
   end
+
+
 
 
 end
