@@ -8,7 +8,7 @@ if ENV["RAILS_ENV"]=="production" and
 
     # To use AWS reduced redundancy storage.
     # config.aws_reduced_redundancy = true
-    config.fog_directory = ENV["TEST"].nil? ? ENV['bucket'] :  ENV['bucket'].to_s+"/test"
+    config.fog_directory = ENV['bucket']
     config.fog_region = ENV['region']
     config.existing_remote_files = ENV['existing_remote_files']
 

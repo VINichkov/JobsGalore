@@ -97,7 +97,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.educations_id_seq
   config.active_record.dump_schema_after_migration = false
 
-  config.assets.prefix = "/#{ENV['RAILS_ENV']}/assets"
+  config.assets.prefix = ENV["TEST"].nil? ? "/#{ENV['RAILS_ENV']}/assets" :  "/#{ENV['RAILS_ENV']}/assets/test"
   config.force_ssl = true
   config.ssl_options = {  redirect: { status: 307} }
   #config.active_job.queue_adapter = :sidekiq

@@ -10,12 +10,13 @@ Dragonfly.app.configure do
 
   if ENV["RAILS_ENV"]=="production"
     datastore :s3,
-            bucket_name: ENV["TEST"].nil? ? ENV['bucket'] :  ENV['bucket'].to_s+"/test",
+            bucket_name: ENV['bucket'],
             access_key_id: ENV['access_key_id'],
             secret_access_key: ENV['secret_access_key'],
             region: ENV['region'],
             url_scheme: 'https',
-            url_host: "d2a5jvhcj7z8rz.cloudfront.net"
+            url_host: "d2a5jvhcj7z8rz.cloudfront.net",
+            root_path: "test"
 
 
   else
