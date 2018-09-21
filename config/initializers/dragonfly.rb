@@ -8,9 +8,9 @@ Dragonfly.app.configure do
 
   url_format "/media/:job/:name"
 
-  if ENV["RAILS_ENV"]=="production" and ENV["TEST"].nil?
+  if ENV["RAILS_ENV"]=="production"
     datastore :s3,
-            bucket_name: ENV['bucket'],
+            bucket_name: ENV["TEST"].nil? ? ENV['bucket'] :  ENV['bucket'].to_s+"/test",
             access_key_id: ENV['access_key_id'],
             secret_access_key: ENV['secret_access_key'],
             region: ENV['region'],
