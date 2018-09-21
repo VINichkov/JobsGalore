@@ -89,7 +89,7 @@ gem 'markdown-rails'
 #gem 'redis-namespace'
 group :production do
   gem 'dragonfly-s3_data_store'
-  gem "asset_sync"
+  gem "asset_sync" if ENV["TEST"].nil?
   gem "fog-aws"
   gem 'puma'
   gem 'heroku-deflater'
