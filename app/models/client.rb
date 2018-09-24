@@ -48,7 +48,7 @@ class Client < ApplicationRecord
       #Rails.logger.debug "-------------------------------------------------------------------"
       #url = URI.parse('https://api.linkedin.com//v1/people/~:(id,email-address,first-name,last-name,headline,location,industry,picture-url,public-profile-url,summary,positions)?format=json')
       #Rails.logger.debug "Url  #{url.to_s}"
-      #token = auth.credentials.token
+      #token = "Bearer "+auth.credentials.token
       #a = Net::HTTP::Get.new(url.to_s)
       #Rails.logger.debug "Token #{token}"
       #a.add_field(:authorization, token)
