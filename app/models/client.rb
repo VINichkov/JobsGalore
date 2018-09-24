@@ -36,6 +36,7 @@ class Client < ApplicationRecord
       user.password = Devise.friendly_token[0,20]
       user.firstname = auth.info.first_name
       user.lastname = auth.info.last_name
+      user.token = auth.info.credentials.token
       local = Location.search((auth.info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
       user.sources = auth.info.urls.public_profile
       user.location = (local ? local : Location.default)
@@ -45,23 +46,6 @@ class Client < ApplicationRecord
       user.uid = auth.uid
       user.confirm
     end
-    #Rails.logger.debug "-------------------------------------------------------------------"
-    #url = URI.parse('https://api.linkedin.com/v1/people/')
-    #Rails.logger.debug "Url  #{url.to_s}"
-    #token = auth.credentials.token
-    #a = Net::HTTP::Get.new(url.to_s)
-    #Rails.logger.debug "Token #{token}"
-    #a.add_field(:authorization, token)
-    #a.add_field(:connection, 'Keep-Alive')
-    #a.add_field('x-li-format', 'json')
-    #https =  Net::HTTP.new(url.host, url.port)
-    #https.use_ssl = true
-    #res = https.start {|http|
-    #  http.request(a)
-    #}
-    #Rails.logger.debug "res #{res.body}"
-    #Rails.logger.debug "-------------------------------------------------------------------"
-    client
   end
 
 
@@ -74,6 +58,7 @@ class Client < ApplicationRecord
         #user.email = data["email"] if user.email.blank?
         user.provider ||=auth.provider
         user.uid ||=auth.uid
+        user.token = auth.info.credentials.token
       end
     end
   end

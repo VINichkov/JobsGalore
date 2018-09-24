@@ -161,7 +161,8 @@ CREATE TABLE public.clients (
     company_id integer,
     provider character varying,
     uid character varying,
-    sources character varying
+    sources character varying,
+    token character varying
 );
 
 
@@ -1391,6 +1392,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180720094458'),
 ('20180904071613'),
 ('20180913075713'),
+('20180924055806'),
 ('2019');
 
 
