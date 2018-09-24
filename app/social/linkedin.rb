@@ -6,7 +6,6 @@ module OmniAuth
 
 
       option :scope, 'r_basicprofile r_emailaddress'
-      option :fields, []
 
       def access_token
         ::OAuth2::AccessToken.new(client, oauth2_access_token.token, {
@@ -18,7 +17,11 @@ module OmniAuth
       end
 
       def raw_info
-        @raw_info ||= access_token.get("/v1/people/~?format=json").parsed
+        puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        puts "get #{"/v1/people/~:(#{option_fields.join(',')})?format=json"}"
+        puts "options #{access_token.options.to_json}"
+        puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        @raw_info ||= access_token.get("/v1/people/~:(#{option_fields.join(',')})?format=json").parsed
       end
 
       credentials do
