@@ -9,16 +9,24 @@ Dragonfly.app.configure do
   url_format "/media/:job/:name"
 
   if ENV["RAILS_ENV"]=="production"
-    datastore :s3,
-            bucket_name: ENV['bucket'],
-            access_key_id: ENV['access_key_id'],
-            secret_access_key: ENV['secret_access_key'],
-            region: ENV['region'],
-            url_scheme: 'https',
-            url_host: "d2a5jvhcj7z8rz.cloudfront.net",
-            root_path: "test"
-
-
+    if ENV["TEST"].nil?
+      datastore :s3,
+              bucket_name: ENV['bucket'],
+              access_key_id: ENV['access_key_id'],
+              secret_access_key: ENV['secret_access_key'],
+              region: ENV['region'],
+              url_scheme: 'https',
+              url_host: "d2a5jvhcj7z8rz.cloudfront.net"
+    else
+      datastore :s3,
+                bucket_name: ENV['bucket'],
+                access_key_id: ENV['access_key_id'],
+                secret_access_key: ENV['secret_access_key'],
+                region: ENV['region'],
+                url_scheme: 'https',
+                url_host: "d2a5jvhcj7z8rz.cloudfront.net",
+                root_path: "test"
+    end
   else
     datastore :file,
               root_path: Rails.root.join('public/system/dragonfly', Rails.env),
