@@ -20,7 +20,8 @@ module OmniAuth
       def raw_info
         puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
         puts "get #{"/v1/people/~:(#{option_fields.join(',')})?format=json"}"
-        puts "options #{access_token.options.to_json}"
+        puts "access_token #{access_token.to_json}"
+        puts "access_token class #{access_token.class}"
         puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
         @raw_info ||= access_token.get("/v1/people/~:(#{option_fields.join(',')})?format=json").parsed
       end
