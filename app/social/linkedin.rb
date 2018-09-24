@@ -5,7 +5,7 @@ module OmniAuth
     class LinkedIn < OmniAuth::Strategies::OAuth2
 
 
-      option :scope, 'r_basicprofile r_emailaddress r_fullprofile'
+      option :scope, 'r_basicprofile r_emailaddress'
 
       def access_token
         ::OAuth2::AccessToken.new(client, oauth2_access_token.token, {
