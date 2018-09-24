@@ -32,7 +32,6 @@ class Client < ApplicationRecord
   def self.from_omniauth(auth)
     Rails.logger.debug "Client::from_omniauth #{auth.to_json}"
     client = where(provider: auth.provider, uid: auth.uid).or(where(email: auth.info.email)).first_or_create do |user|
-      Rails.logger.debug "Client::from_omniauth не нашли ничего #{user.to_json}"
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
       user.firstname = auth.info.first_name

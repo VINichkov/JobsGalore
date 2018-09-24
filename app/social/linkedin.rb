@@ -2,7 +2,7 @@ require 'omniauth-oauth2'
 
 module OmniAuth
   module Strategies
-    class LinkedIn1 < OmniAuth::Strategies::OAuth2
+    class LinkedIn < OmniAuth::Strategies::OAuth2
 
 
       option :scope, 'r_basicprofile r_emailaddress r_fullprofile'
