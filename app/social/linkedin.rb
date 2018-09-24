@@ -18,11 +18,7 @@ module OmniAuth
       end
 
       def raw_info
-        puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        puts "get #{"/v1/people/~:(#{option_fields.join(',')})?format=json"}"
-        puts "options #{access_token.options.to_json}"
-        puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        @raw_info ||= access_token.get("/v1/people/~:(#{option_fields.join(',')})?format=json").parsed
+        @raw_info ||= access_token.get("/v1/people/~?format=json").parsed
       end
 
       credentials do
