@@ -38,14 +38,13 @@ class Client < ApplicationRecord
       user.firstname = auth.info.first_name
       user.lastname = auth.info.last_name
       local = Location.search((auth.info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
+      user.sources = auth.urls.public_profile
       user.location = (local ? local : Location.default)
       user.photo_url = auth.info.image # assuming the user model has an image
       user.character=TypeOfClient::APPLICANT
       user.provider = auth.provider
       user.uid = auth.uid
       user.confirm
-      #user.lastname = auth.to_json
-      Rails.logger.debug "Client::from_omniauth создали клиента #{user.to_json}"
     end
     #Rails.logger.debug "-------------------------------------------------------------------"
     #url = URI.parse('https://api.linkedin.com/v1/people/')
