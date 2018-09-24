@@ -36,7 +36,7 @@ class Client < ApplicationRecord
       user.password = Devise.friendly_token[0,20]
       user.firstname = auth.info.first_name
       user.lastname = auth.info.last_name
-      user.token = auth.info.credentials.token
+      user.token = auth.credentials.token
       local = Location.search((auth.info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
       user.sources = auth.info.urls.public_profile
       user.location = (local ? local : Location.default)
@@ -58,7 +58,7 @@ class Client < ApplicationRecord
         #user.email = data["email"] if user.email.blank?
         user.provider ||=auth.provider
         user.uid ||=auth.uid
-        user.token = auth.info.credentials.token
+        user.token = auth.credentials.token
       end
     end
   end
