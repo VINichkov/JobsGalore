@@ -6,6 +6,7 @@ module OmniAuth
 
 
       option :scope, 'r_basicprofile r_emailaddress'
+      option :fields, ['id', 'email-address', 'first-name', 'last-name', 'headline', 'location', 'industry', 'picture-url', 'public-profile-url', 'birthDate', 'educations', 'honors', 'organizations', 'phoneNumbers', 'skills', 'websites']
 
       def access_token
         ::OAuth2::AccessToken.new(client, oauth2_access_token.token, {
