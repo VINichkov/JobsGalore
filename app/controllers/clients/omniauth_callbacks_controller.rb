@@ -5,6 +5,7 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # You should also create an action method in this controller like this:
    def linkedin
      Rails.logger.debug "---Clients::OmniauthCallbacksController linkedin"
+     Rails.logger.debug "---Clients::OmniauthCallbacksController params #{params.to_json}"
        # You need to implement the method below in your model (e.g. app/models/user.rb)
      @client = Client.from_omniauth(request.env["omniauth.auth"])
      Rails.logger.debug "request.env #{request.env["omniauth.auth"].to_json}"
@@ -19,7 +20,7 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
      end
    end
 
-   def resume_from_linkedin
+   def resume
      Rails.logger.debug "---Clients::OmniauthCallbacksController resume_from_linkedin"
      Client.from_omniauth(request.env["omniauth.auth"])
      Rails.logger.debug "request.env #{request.env["omniauth.auth"].to_json}"

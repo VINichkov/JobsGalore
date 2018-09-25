@@ -110,8 +110,8 @@ Rails.application.routes.draw do
   patch '/admin/resumes/:id', to: 'resumes#admin_update', as: 'admin_resumes_update'
   delete '/admin/resumes/:id', to: 'resumes#admin_destroy', as: 'admin_resumes_destroy'
 
-  resources :responsibles
-  resources :sizes
+  #resources :responsibles
+  #resources :sizes
   resources :industries
   resources :properts, only:[:index, :new, :create, :edit, :update, :destroy]
   resources :payments, only:[:show,:index]
