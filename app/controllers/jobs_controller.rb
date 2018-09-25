@@ -52,6 +52,9 @@ class JobsController < ApplicationController
 
   def apply
     if @job.apply
+      unless current_client&.admin?
+        @job.add_responded({user:current_client&.id, company: current_company&.id, time:Time.now, ip:request.remote_ip, lang:request.env['HTTP_ACCEPT_LANGUAGE'], agent:request.env['HTTP_USER_AGENT']})
+      end
       redirect_to @job.apply, status:307
     else
       render_404

@@ -428,7 +428,8 @@ CREATE TABLE public.jobs (
     industry_id integer,
     viewed json[] DEFAULT '{}'::json[],
     sources character varying,
-    apply character varying
+    apply character varying,
+    responded jsonb[] DEFAULT '{}'::jsonb[]
 );
 
 
@@ -1393,6 +1394,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180904071613'),
 ('20180913075713'),
 ('20180924055806'),
+('20180925073017'),
 ('2019');
 
 

@@ -16,6 +16,10 @@
         span
           | &nbsp; - &nbsp;
           |Views #{job.viewed.count}
+      - if current_client&.admin?
+        span
+          | &nbsp; - &nbsp;
+          |Responded #{job.responded.count}
     .col-lg-2.col-md-2.col-sm-2
       - if current_client && ((current_client.employer? && job.company ==  current_client.company) || job.client == current_client || current_client.admin?)
         = render 'inc/btn', object: job, option: {cl:"dropdown", class:'job', type:2}
@@ -48,3 +52,7 @@
       span
         | &nbsp; - &nbsp;
         |Views #{job.viewed.count}
+    - if current_client&.admin?
+      span
+        | &nbsp; - &nbsp;
+        |Responded #{job.responded.count}

@@ -22,6 +22,11 @@ class Job < ApplicationRecord
     save!
   end
 
+  def add_responded(arg = {})
+    responded.push(arg)
+    save!
+  end
+
   def post_at_twitter(arg)
     twitt = TwitterClient.new
     update(twitter:twitt.update("#{arg} \r\n #{job_url(self, host:PropertsHelper::HOST_NAME)}"))
@@ -135,6 +140,6 @@ class Job < ApplicationRecord
 
     text_query = text_query.join(" and ")
     Rails.logger.info("Query::" + text_query + query.to_s)
-    select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:close,:industry_id,:twitter, :viewed, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
+    select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:close,:industry_id,:twitter, :viewed,  :responded, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
   end
 end
