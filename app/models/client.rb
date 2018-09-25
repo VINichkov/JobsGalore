@@ -61,9 +61,7 @@ class Client < ApplicationRecord
       #Rails.logger.debug "res #{res.body}"
       #Rails.logger.debug "-------------------------------------------------------------------"
     end
-
   end
-
 
   def self.new_with_session(params, session)
     Rails.logger.debug "new_with_session зашли"
@@ -137,20 +135,24 @@ class Client < ApplicationRecord
     end
   end
 
- def validate_workflow(wf = nil)
-   Rails.logger.debug "Client::validate_workflow #{self.to_json}"
-   Rails.logger.debug "Client::validate_workflow  wf = #{wf}"
-   Rails.logger.debug "Client::validate_workflow  wf == JobWorkflow and !self.resp? #{wf == JobWorkflow and !self.resp?}"
-   Rails.logger.debug "Client::validate_workflow  wf == ResumeWorkflow and self.resp? = #{wf == ResumeWorkflow and self.resp?}"
-   Rails.logger.debug "Client::validate_workflow  wf != ClientWorkflow = #{wf != ClientWorkflow}"
-   if wf && (wf == 'JobWorkflow' and !self.resp?)
-     errors.add(:character, :blank, message: TypeOfClient::APPLICANT)
-     true
-   elsif wf && wf == 'ResumeWorkflow' and self.resp?
-     errors.add(:character, :blank, message: TypeOfClient::EMPLOYER)
-     true
-   end
+  def linkedin?
+    sources ? true : false
+  end
 
- end
+   def validate_workflow(wf = nil)
+     Rails.logger.debug "Client::validate_workflow #{self.to_json}"
+     Rails.logger.debug "Client::validate_workflow  wf = #{wf}"
+     Rails.logger.debug "Client::validate_workflow  wf == JobWorkflow and !self.resp? #{wf == JobWorkflow and !self.resp?}"
+     Rails.logger.debug "Client::validate_workflow  wf == ResumeWorkflow and self.resp? = #{wf == ResumeWorkflow and self.resp?}"
+     Rails.logger.debug "Client::validate_workflow  wf != ClientWorkflow = #{wf != ClientWorkflow}"
+     if wf && (wf == 'JobWorkflow' and !self.resp?)
+       errors.add(:character, :blank, message: TypeOfClient::APPLICANT)
+       true
+     elsif wf && wf == 'ResumeWorkflow' and self.resp?
+       errors.add(:character, :blank, message: TypeOfClient::EMPLOYER)
+       true
+     end
+
+   end
 
 end

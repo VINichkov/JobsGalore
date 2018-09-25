@@ -6,9 +6,7 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
    def linkedin
      Rails.logger.debug "---Clients::OmniauthCallbacksController linkedin"
      Rails.logger.debug "---Clients::OmniauthCallbacksController params #{params.to_json}"
-       # You need to implement the method below in your model (e.g. app/models/user.rb)
      @client = Client.from_omniauth(request.env["omniauth.auth"])
-     Rails.logger.debug "request.env #{request.env["omniauth.auth"].to_json}"
      @client_wf = wf(client:@client)
      if @client.persisted?
        @client_wf.save!(session[:workflow])
@@ -17,17 +15,6 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
      else
        session["devise.linkedin_data"] = request.env["omniauth.auth"]
        redirect_to new_client_registration_url
-     end
-   end
-
-   def resume
-     Rails.logger.debug "---Clients::OmniauthCallbacksController resume_from_linkedin"
-     Client.from_omniauth(request.env["omniauth.auth"])
-     Rails.logger.debug "request.env #{request.env["omniauth.auth"].to_json}"
-     if @client.persisted?
-       session["devise.linkedin_data"] = request.env["omniauth.auth"]
-       sign_in_and_redirect new_resume_url, event: :authentication
-       set_flash_message(:notice, :success, kind: "LinkedIn") if is_navigational_format?
      end
    end
   # More info at:
