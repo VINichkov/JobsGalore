@@ -8,7 +8,7 @@ module OmniAuth
 
       def raw_info
         Rails.logger.debug("_______________________________________________")
-        Rails.logger.debug(access_token.to_s)
+        Rails.logger.debug(access_token.to_json)
         Rails.logger.debug("/v1/people/~:(#{option_fields.join(',')})?format=json")
         Rails.logger.debug("_______________________________________________")
         @raw_info ||= access_token.get("/v1/people/~:(#{option_fields.join(',')})?format=json").parsed
