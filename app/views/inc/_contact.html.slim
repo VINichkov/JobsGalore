@@ -10,17 +10,17 @@
         .container-fluid
           .row
             .col-lg-3.col-md-3
-              = image_bg(object.photo_url, "60px", "60px", "60px")
+              = image_bg(object&.photo_url, "60px", "60px", "60px")
             .col-lg-9.col-md-9
-              = object.full_name
+              = object&.full_name
               br
               |Email:
               | &nbsp;
-              a[href ="mailto:#{ object.email}?subject=#{title}" rel="nofollow"] = object.email
+              a[href ="mailto:#{ object&.email}?subject=#{title}" rel="nofollow"] = object&.email
               br
               |Phone:
               | &nbsp;
-              a[href ="tel:#{ object.phone}" rel="nofollow" ] #{ object.phone}
+              a[href ="tel:#{ object&.phone}" rel="nofollow" ] #{ object&.phone}
       .modal-footer
         button[type="button" class="btn btn-default" data-dismiss="modal"]
           |Close

@@ -57,5 +57,5 @@
         p
           .text-center
             = social_share_button_tag job.title, url: job_url(job), title:job.title
-
-  =render 'inc/contact', object: job.client, title: "#{job.title} at #{PropertsHelper::COMPANY}.eu"
+  - unless job.apply
+    =render 'inc/contact', object: job.client, title: "#{job.title} at #{PropertsHelper::COMPANY}.eu"

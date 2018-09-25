@@ -23,7 +23,7 @@ p
       span[itemprop="addressRegion"]
         =object.location.state
   = link_location(object.location.name, object.location, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-warning')
-- if not object.salary.blank?
+- unless object.salary.blank?
   p
     strong
       |Salary: &nbsp;

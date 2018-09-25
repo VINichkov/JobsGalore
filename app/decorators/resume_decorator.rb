@@ -16,6 +16,6 @@ class ResumeDecorator < ApplicationDecorator
   end
 
   def salary
-    object.salary.to_i.to_s
+    "$"+object.salary.to_i.to_s if object.salary!=0
   end
 end

@@ -53,6 +53,7 @@ class Resume < ApplicationRecord
     self.save
   end
 
+
   def to_short_h
     {id:id, desiredjobtitle: desiredjobtitle, salary: salary, abouteme:abouteme, client_id:client_id, location_id:location_id}
   end
@@ -88,6 +89,6 @@ class Resume < ApplicationRecord
 
     text_query = text_query.join(" and ")
 
-    select(:id, :desiredjobtitle, :location_id, :salary, :abouteme, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:industry_id, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
+    select(:id, :desiredjobtitle, :location_id, :salary, :abouteme, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:industry_id, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"", :viewed).where(text_query,query)
   end
 end
