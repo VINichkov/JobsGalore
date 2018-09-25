@@ -28,7 +28,6 @@ class Client < ApplicationRecord
     end
   end
 
-
   def self.from_omniauth(auth)
     Rails.logger.debug "Client::from_omniauth #{auth.to_json}"
     client = where(provider: auth.provider, uid: auth.uid).or(where(email: auth.info.email)).first_or_create do |user|
@@ -62,6 +61,7 @@ class Client < ApplicationRecord
       #Rails.logger.debug "res #{res.body}"
       #Rails.logger.debug "-------------------------------------------------------------------"
     end
+
   end
 
 
@@ -71,7 +71,6 @@ class Client < ApplicationRecord
     super.tap do |user|
       if data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]
         Rails.logger.debug "Linkedin:: получаем данные пользователя. Из Linkedin  #{session["devise.linkedin_data"].to_json}"
-        #user.email = data["email"] if user.email.blank?
         user.provider ||=auth.provider
         user.uid ||=auth.uid
         user.token = auth.credentials.token
