@@ -86,7 +86,7 @@ class Job < ApplicationRecord
 
 
   def to_short_h
-    {id:id, title: title, salarymin: salarymin, salarymax: salarymax, description:description, client_id:client_id, company_id:company_id, location_id:location_id}
+    {id:id, title: title, salarymin: salarymin, salarymax: salarymax, description:description, client_id:client_id, company_id:company_id, location_id:location_id, industry_id:industry_id}
   end
 
   protected
