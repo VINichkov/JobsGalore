@@ -38,9 +38,6 @@ class ResumeWorkflow < ApplicationWorkflow
   end
 
   private
-  def state_is_new
-    @resume.nil?
-  end
 
   def update_att(arg = {})
     Rails.logger.debug "ResumeWorkflow.update_att: #{arg.to_json}"
@@ -49,6 +46,10 @@ class ResumeWorkflow < ApplicationWorkflow
       @client =arg[:client]
       @resume&.client_id = @client.id if @client.persisted? and @resume&.client_id.nil?
     end
+  end
+
+  def state_is_new
+    not (@resume&.title and @resume&.description)
   end
 
   def final
