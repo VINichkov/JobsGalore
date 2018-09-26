@@ -42,6 +42,7 @@ class ResumesController < ApplicationController
   def create_resume
     resume_workflow = wf
     @resume = resume_workflow.resume.decorate
+    Rails.logger.debug(session["devise.linkedin_data"])
     respond_to do |format|
       if @resume.save
         resume_workflow.save!(session[:workflow])
