@@ -26,7 +26,7 @@ class ResumesController < ApplicationController
     Rails.logger.debug(session["devise.linkedin_data"])
     Rails.logger.debug("!__________________________________________________!")
     resume_workflow = wf
-    resume_workflow ||= add_new_workflow(class: :ResumeWorkflow)
+    resume_workflow = add_new_workflow(class: :ResumeWorkflow) if resume_workflow.class != ResumeWorkflow
     @resume = resume_workflow.resume.decorate
     resume_workflow.save!(session[:workflow])
   end

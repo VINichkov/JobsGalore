@@ -41,7 +41,7 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
    def after_sign_in_path_for(resource)
      Rails.logger.debug "---Clients::OmniauthCallbacksController after_sign_in_path_for"
-     patch = workflow_link(@client_wf)
+     patch = workflow_link(@workflow)
      patch ? patch : super(resource)
    end
 end
