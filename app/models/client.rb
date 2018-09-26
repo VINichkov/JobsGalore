@@ -45,14 +45,14 @@ class Client < ApplicationRecord
       user.uid = auth.uid
       user.confirm
     end
-    a = auth.extra.raw_info.positions.values.last
+    a = auth.extra.raw_info.positions[:values].last
     Rails.logger.debug "Client::from_omniauth last class #{a.to_json}"
     Rails.logger.debug "Client::from_omniauth last class #{a.class}"
     Rails.logger.debug "Client::from_omniauth last class #{auth.extra.raw_info.positions[:values].to_json}"
     Rails.logger.debug "Client::from_omniauth last class #{auth.extra.raw_info.positions[:values].class}"
     resume = Resume.new( desiredjobtitle: auth.extra.raw_info.positions[:values].last.title,
                          industry: Industry.find_by_linkedin(auth.extra.raw_info.industry),
-                         abouteme: Markdown. auth.extra.raw_info.summary,
+                         abouteme: auth.extra.raw_info.summary,
                          sources: auth.info.urls.public_profile)
     [client, resume]
   end
