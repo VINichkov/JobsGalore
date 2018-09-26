@@ -30,13 +30,13 @@ class Client < ApplicationRecord
 
   def self.from_omniauth(auth)
     Rails.logger.debug "Client::from_omniauth #{auth.to_json}"
+    local = Location.search((auth.info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
     client = where(provider: auth.provider, uid: auth.uid).or(where(email: auth.info.email)).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
       user.firstname = auth.info.first_name
       user.lastname = auth.info.last_name
       user.token = auth.credentials.token
-      local = Location.search((auth.info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
       user.sources = auth.info.urls.public_profile
       user.location = (local ? local : Location.default)
       user.photo_url = auth.info.image # assuming the user model has an image
@@ -45,13 +45,9 @@ class Client < ApplicationRecord
       user.uid = auth.uid
       user.confirm
     end
-    a = auth.extra.raw_info.positions[:values].last
-    Rails.logger.debug "Client::from_omniauth last class #{a.to_json}"
-    Rails.logger.debug "Client::from_omniauth last class #{a.class}"
-    Rails.logger.debug "Client::from_omniauth last class #{auth.extra.raw_info.positions[:values].to_json}"
-    Rails.logger.debug "Client::from_omniauth last class #{auth.extra.raw_info.positions[:values].class}"
     resume = Resume.new( desiredjobtitle: auth.extra.raw_info.positions[:values].last.title,
-                         industry: Industry.find_by_linkedin(auth.extra.raw_info.industry),
+                         industry_id: Industry.find_by_linkedin(auth.extra.raw_info.industry).id,
+                         location_id: (local ? local.id : Location.default.id),
                          abouteme: auth.extra.raw_info.summary,
                          sources: auth.info.urls.public_profile)
     [client, resume]
