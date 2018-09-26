@@ -1,27 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
 class Jora < Adapter
-  puts "Обработка Jora"
-  INDUSTRY = [{code:Industry.find_by_name("Banking & Finance").id,text:'cat:banking-financial-services'},
-              {code:Industry.find_by_name("IT").id,text:'cat:information-communication-technology'},
-              {code:Industry.find_by_name("Engineering").id, text:'cat:engineering'},
-              {code:Industry.find_by_name("Sales").id, text:'cat:sales'},
-              {code:Industry.find_by_name("Health, Medical & Pharmaceutical").id, text:'cat:healthcare-medical'},
-              {code:Industry.find_by_name("Construction, Architecture & Interior Design").id, text:'cat:construction'},
-              {code:Industry.find_by_name("Accounting").id, text:'cat:accounting'},
-              {code:Industry.find_by_name("Administration & Secretarial").id, text:'cat:administration-office-support'},
-              {code:Industry.find_by_name("Trades & Services").id, text:'cat:trades-services'},
-              {code:Industry.find_by_name("Marketing").id, text:'cat:marketing-communications'},
-              {code:Industry.find_by_name("HR & Recruitment").id, text:'cat:human-resources-recruitment'},
-              {code:Industry.find_by_name("Education, Childcare & Training").id, text:'cat:education-training'},
-              {code:Industry.find_by_name("Manufacturing & Industrial").id, text:'cat:manufacturing-transport-logistics'},
-              {code:Industry.find_by_name("Administration & Secretarial").id, text:'cat:community-services-development'},
-              {code:Industry.find_by_name("Administration & Secretarial").id, text:'cat:consulting-strategy'},
-              {code:Industry.find_by_name("Property & Real Estate").id, text:'cat:real-estate-property'},
-              {code:Industry.find_by_name("Mining, Oil & Gas").id, text:'cat:mining-resources-energy'},
-              {code:Industry.find_by_name("Customer Service & Call Centre").id, text:'cat:call-centre-customer-service'},
-              {code:Industry.find_by_name("Retail").id, text:'cat:retail-consumer-products'},
-              {code:Industry.find_by_name("Construction, Architecture & Interior Design").id, text:'cat:design-architecture'},]
   SP = "facet_location"
   #SA = 110000
   LOCAL = [{name:'Melbourne VIC',code:Location.find_by_suburb("Melbourne").id},
@@ -32,7 +11,7 @@ class Jora < Adapter
 
   def initialize
     @params = [1].map do|i|
-      INDUSTRY.map do |industry|
+      Industry.from_jora_all.map do |industry|
         LOCAL.map do |local|
           {query:{a:'24h', l:local[:name], p:i, q:industry[:text],sp:SP,surl:SURL}.to_query,
            location:local[:code],

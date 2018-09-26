@@ -45,8 +45,10 @@ class Client < ApplicationRecord
       user.uid = auth.uid
       user.confirm
     end
-    resume = Resume.new(  title: auth.extra.raw_info.positions.title,
-                          description: auth.extra.raw_info.summary)
+    resume = Resume.new( desiredjobtitle: auth.extra.raw_info.positions.values[0].last,
+                         industry: Industry.find_by_linkedin(auth.extra.raw_info.industry),
+                         abouteme: Markdown. auth.extra.raw_info.summary,
+                         sources: auth.info.urls.public_profile)
     [client, resume]
   end
 
