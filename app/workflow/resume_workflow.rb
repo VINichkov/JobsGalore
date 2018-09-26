@@ -41,6 +41,7 @@ class ResumeWorkflow < ApplicationWorkflow
 
   def update_att(arg = {})
     Rails.logger.debug "ResumeWorkflow.update_att: #{arg.to_json}"
+    @to_start = arg[:to_start]
     @resume =arg[:resume] if arg[:resume]
     if arg[:client]
       @client =arg[:client]
@@ -49,7 +50,7 @@ class ResumeWorkflow < ApplicationWorkflow
   end
 
   def state_is_new
-    not (@resume&.title and @resume&.description)
+    (not (@resume&.title and @resume&.description)) or @to_start
   end
 
   def final

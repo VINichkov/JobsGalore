@@ -44,23 +44,10 @@ class Client < ApplicationRecord
       user.provider = auth.provider
       user.uid = auth.uid
       user.confirm
-      #Rails.logger.debug "-------------------------------------------------------------------"
-      #url = URI.parse('https://api.linkedin.com//v1/people/~:(id,email-address,first-name,last-name,headline,location,industry,picture-url,public-profile-url,summary,positions)?format=json')
-      #Rails.logger.debug "Url  #{url.to_s}"
-      #token = "Bearer "+auth.credentials.token
-      #a = Net::HTTP::Get.new(url.to_s)
-      #Rails.logger.debug "Token #{token}"
-      #a.add_field(:authorization, token)
-      #a.add_field(:connection, 'Keep-Alive')
-      #a.add_field('x-li-format', 'json')
-      #https =  Net::HTTP.new(url.host, url.port)
-      #https.use_ssl = true
-      #res = https.start {|http|
-      #  http.request(a)
-      #}
-      #Rails.logger.debug "res #{res.body}"
-      #Rails.logger.debug "-------------------------------------------------------------------"
     end
+    resume = Resume.new(  title: auth.extra.raw_info.positions.title,
+                          description: auth.extra.raw_info.summary)
+    [client, resume]
   end
 
   def self.new_with_session(params, session)
