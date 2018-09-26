@@ -22,11 +22,11 @@ class ResumesController < ApplicationController
     Rails.logger.debug("!__________________________________________________!")
     Rails.logger.debug(session["devise.linkedin_data"])
     Rails.logger.debug("!__________________________________________________!")
-    session[:workflow] = nil
     Rails.logger.debug("!__________________________________________________!")
     Rails.logger.debug(session["devise.linkedin_data"])
     Rails.logger.debug("!__________________________________________________!")
-    resume_workflow = add_new_workflow(class: :ResumeWorkflow)
+    resume_workflow = wf
+    resume_workflow ||= add_new_workflow(class: :ResumeWorkflow)
     @resume = resume_workflow.resume.decorate
     resume_workflow.save!(session[:workflow])
   end
