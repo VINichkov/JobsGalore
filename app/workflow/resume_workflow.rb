@@ -31,8 +31,6 @@ class ResumeWorkflow < ApplicationWorkflow
     end
   end
 
-
-
   def to_slim_json
     {class:self.class.to_s, client:@client.to_short_h, resume:@resume.to_short_h}.to_json
   end
@@ -64,5 +62,4 @@ class ResumeWorkflow < ApplicationWorkflow
   def not_client
     @resume.class == Resume and !@resume&.client_id? and !@resume.persisted?
   end
-
 end

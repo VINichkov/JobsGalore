@@ -48,7 +48,7 @@ class Client < ApplicationRecord
     resume = Resume.new( desiredjobtitle: auth.extra.raw_info.positions[:values].last.title,
                          industry_id: Industry.find_by_linkedin(auth.extra.raw_info.industry).id,
                          location_id: (local ? local.id : Location.default.id),
-                         abouteme: auth.extra.raw_info.summary,
+                         abouteme: auth.extra.raw_info.summary.gsub(/(\*|\_|\{|\}|\[|\]|\(|\)|\#|\+|\-|\.|\!)/){|s| "\\"+s},
                          sources: auth.info.urls.public_profile)
     [client, resume]
   end
@@ -114,7 +114,14 @@ class Client < ApplicationRecord
   end
 
   def to_short_h
-    {id:id, firstname:firstname, lastname:lastname, email:email, phone:phone, password:password, photo_uid: photo_uid, gender:gender, location_id:location_id, character:character, company_id:company_id}
+    {id:id, firstname:firstname,
+     lastname:lastname, email:email,
+     phone:phone, password:password,
+     photo_uid: photo_uid,
+     gender:gender,
+     location_id:location_id,
+     character:character,
+     company_id:company_id}
   end
 
   def type
