@@ -48,7 +48,7 @@ class Client < ApplicationRecord
     resume = Resume.new( desiredjobtitle: auth.extra.raw_info.positions[:values].last.title,
                          industry_id: Industry.find_by_linkedin(auth.extra.raw_info.industry).id,
                          location_id: (local ? local.id : Location.default.id),
-                         abouteme: auth.extra.raw_info.summary.gsub('\n','\n\n').gsub(/(\*|\_|\{|\}|\[|\]|\(|\)|\#|\+|\-|\.|\!)/){|s| "\\"+s},
+                         abouteme: auth.extra.raw_info.summary.gsub("\n","\n\n").gsub(/(\*|\_|\{|\}|\[|\]|\(|\)|\#|\+|\-|\.|\!)/){|s| "\\"+s},
                          sources: auth.info.urls.public_profile)
     [client, resume]
   end
