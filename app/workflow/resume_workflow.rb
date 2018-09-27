@@ -28,6 +28,7 @@ class ResumeWorkflow < ApplicationWorkflow
       transitions :from => :not_client, :to => :not_persisted, guard: :not_persisted
       transitions :from => :not_client, :to => :final, guard: :final
       transitions :from => :not_persisted, :to => :final, guard: :final
+      transitions :from => :not_persisted, :to => :not_persisted, guard: :not_persisted
     end
   end
 
