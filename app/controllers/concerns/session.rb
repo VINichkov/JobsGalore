@@ -11,11 +11,8 @@ module Session
   end
 
   def add_new_workflow(arg = {})
-    unless session[:workflow]
-      Rails.logger.debug  "@@ Сессия пуста"
-      session[:workflow] = session.id
-      Workflow.new(arg)
-    end
+    session[:workflow] = session.id
+    Workflow.new(arg)
   end
 
   def workflow_link(arg)
