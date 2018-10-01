@@ -45,7 +45,7 @@ class Client < ApplicationRecord
       user.uid = auth.uid
       user.confirm
     end
-    [client, Resume.new(OmniAuth::Strategies::Linkedin.linkedin_to_h(auth))]
+    [client, Resume.new(LinkedInClient.new.linkedin_to_h(auth))]
   end
 
   def self.new_with_session(params, session)
