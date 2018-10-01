@@ -29,8 +29,8 @@ class LinkedInClient
     https =  Net::HTTP.new(url.host, url.port)
     https.use_ssl = true
     res = https.start {|http|
-      http.request(a)
+      http.request(connect)
     }
-    Rails.logger.debug "res #{res.body}"
+    res.body
   end
 end
