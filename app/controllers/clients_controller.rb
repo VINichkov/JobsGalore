@@ -43,8 +43,10 @@ class ClientsController < ApplicationController
 
   def linkedin_resume_update
     if current_client
+      Rails.loger.debug(">>>>>>>>>>>>>>>>>>>>>linkedin_resume_update<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>")
       client = LinkedInClient.new
       @response = client.linkedin_to_h(client.get_profile(current_client.token))
+      Rails.loger.debug("@response = #{@response.to_s}")
     end
     render :linkedin_resume_update, formats: :json
   end
