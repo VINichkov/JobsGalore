@@ -18,7 +18,7 @@ class LinkedInClient
      industry_id: Industry.find_by_linkedin(auth.extra.raw_info.industry).id,
      location_id: (local ? local.id : Location.default.id),
      description: summary,
-     sources: auth.info.urls.public_profile}
+     sources: auth.extra.raw_info.publicProfileUrl}
   end
 
   def get_profile(token)
