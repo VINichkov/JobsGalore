@@ -1,5 +1,5 @@
 class LinkedInClient
-  def self.linkedin_to_h(auth)
+  def linkedin_to_h(auth)
     experience = auth&.extra&.raw_info&.positions[:values]&.last
     summary = auth&.extra&.raw_info&.summary.split("\n").compact.map{|t| "<p>#{t}</p>"}.join if auth.extra.raw_info.summary
     if experience
@@ -18,7 +18,7 @@ class LinkedInClient
      sources: auth.info.urls.public_profile}
   end
 
-  def self.get_profile(token)
+  def get_profile(token)
     url = URI.parse('https://api.linkedin.com/v1/people/')
     connect = Net::HTTP::Get.new(url.to_s)
     connect.add_field(:authorization, "Bearer "+token.to_s)
