@@ -46,15 +46,17 @@ class Client < ApplicationRecord
       user.confirm
       Date.new
     end
-    experience = auth.extra.raw_info.positions[:values].last
-    summary = auth.extra.raw_info.summary.split('\n').compact.map{|t| "<p>#{t}</p>"}.join
-    location = "<p><strong> Location: </strong>"+ experience.location.name+"</p>" if experience.location.name
-    dateStart = Date.new(experience.startDate.year, experience.startDate.month).strftime('%b%Y')
-    experienceSummary = experience.summary.split('\n').compact.map{|t| "<p>#{t}</p>"}.join
-    summary += %{<hr><h3>Experience</h3><strong>#{experience.title}</strong><strong>#{experience.company.name}</strong>
-                <p>#{dateStart} - Present</p>#{location}
-                #{experienceSummary}
-                  }
+    experience = auth.extra.raw_info.positions[:values]&.last
+    summary = auth.extra.raw_info.summary.split('\n').compact.map{|t| "<p>#{t}</p>"}.join if auth.extra.raw_info.summary
+    if experience
+      location = "<p><strong> Location: </strong>"+ experience.location.name+"</p>" if experience.location.name
+      dateStart = Date.new(experience.startDate.year, experience.startDate.month).strftime('%b%Y') if experience.startDate
+      experienceSummary = "<p>#{experience.summary.split('\n').compact.map{|t| "<p>#{t}</p>"}.join} - Present</p>" if experience.summary
+      experienceTitle = "<strong>#{experience.title}</strong>" if experience.title
+      experienceCompanyName = "<strong>#{experience.company.name}</strong>" if experience.company&.name
+      experienceFirst = "{<h3>Experience</h3><hr>"+experienceTitle + experienceCompanyName + experienceSummary+ dateStart+location+experienceSummary
+    end
+    summary += experienceFirst
     Rails.logger.debug "_____________________________HTML_________________________________"
     Rails.logger.debug summary
     Rails.logger.debug "_____________________________HTML_________________________________"
