@@ -1,1 +1,1 @@
-json.extract! @response, :title, :industry_id, :location_id, :description, :sources
+json.extract! @response
