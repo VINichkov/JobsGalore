@@ -3,7 +3,7 @@ require 'omniauth-oauth2'
 module OmniAuth
   module Strategies
     class LinkedIn < OmniAuth::Strategies::OAuth2
-      option :scope, 'r_basicprofile r_emailaddress rw_company_admin w_share'
+      option :scope, 'r_basicprofile r_emailaddress'
       option :fields, ['id', 'email-address', 'first-name', 'last-name', 'headline', 'location', 'industry', 'picture-url', 'public-profile-url', 'summary', 'positions']
 
       def raw_info
@@ -33,10 +33,10 @@ module OmniAuth
          sources: auth.info.urls.public_profile}
       end
 
-      def get_profile(token)
+      def self.get_profile(token)
         url = URI.parse('https://api.linkedin.com/v1/people/')
         connect = Net::HTTP::Get.new(url.to_s)
-        connect.add_field(:authorization, token)
+        connect.add_field(:authorization, "Bearer "+token.to_s)
         connect.add_field(:connection, 'Keep-Alive')
         connect.add_field('x-li-format', 'json')
         https =  Net::HTTP.new(url.host, url.port)
