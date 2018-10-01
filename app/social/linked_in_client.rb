@@ -1,7 +1,9 @@
 class LinkedInClient
+
   def linkedin_to_h(auth)
     experience = auth&.extra&.raw_info&.positions[:values]&.last
     summary = auth&.extra&.raw_info&.summary.split("\n").compact.map{|t| "<p>#{t}</p>"}.join if auth.extra.raw_info.summary
+    local = Location.search((auth.info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
     if experience
       location = "<p><strong> Location: </strong>"+ experience.location.name+"</p>" if experience.location.name
       date_start = "<p>#{Date.new(experience.startDate.year, experience.startDate.month).strftime('%b %Y')} - Present</p>" if experience.startDate
