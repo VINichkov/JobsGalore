@@ -47,13 +47,12 @@ class Client < ApplicationRecord
       Date.new
     end
     experience = auth.extra.raw_info.positions[:values].last
-    summary = auth.extra.raw_info.summary.gsub('\n','\n\r')
-    location = experience.location.name
+    summary = auth.extra.raw_info.summary.split('\n').compact.map{|t| "<p>#{t}</p>"}.join
+    location = "<p><strong> Location: </strong>"+ experience.location.name+"</p>" if experience.location.name
     dateStart = Date.new(experience.startDate.year, experience.startDate.month).strftime('%b%Y')
-    experienceSummary = experience.summary
+    experienceSummary = experience.summary.split('\n').compact.map{|t| "<p>#{t}</p>"}.join
     summary += %{<hr><h3>Experience</h3><strong>#{experience.title}</strong><strong>#{experience.company.name}</strong>
-                <p>#{location}</p>
-                <p>#{dateStart} - Present</p>
+                <p>#{dateStart} - Present</p>#{location}
                 #{experienceSummary}
                   }
     resume = Resume.new( desiredjobtitle: auth.extra.raw_info.headline,
