@@ -1,6 +1,7 @@
 class LinkedInClient
 
   def linkedin_to_h(auth)
+    Rails.logger.debug auth.class
     experience = auth&.extra&.raw_info&.positions[:values]&.last
     summary = auth&.extra&.raw_info&.summary.split("\n").compact.map{|t| "<p>#{t}</p>"}.join if auth.extra.raw_info.summary
     local = Location.search((auth.info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
