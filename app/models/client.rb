@@ -55,6 +55,9 @@ class Client < ApplicationRecord
                 <p>#{dateStart} - Present</p>#{location}
                 #{experienceSummary}
                   }
+    Rails.logger.debug "_____________________________HTML_________________________________"
+    Rails.logger.debug summary
+    Rails.logger.debug "_____________________________HTML_________________________________"
     resume = Resume.new( desiredjobtitle: auth.extra.raw_info.headline,
                          industry_id: Industry.find_by_linkedin(auth.extra.raw_info.industry).id,
                          location_id: (local ? local.id : Location.default.id),
