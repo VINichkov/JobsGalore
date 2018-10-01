@@ -32,6 +32,6 @@ class LinkedInClient
     res = https.start {|http|
       http.request(connect)
     }
-    {"extra":{"raw_info":JSON.parse(res.body)}}
+    OmniAuth::AuthHash.new({"extra":{"raw_info":JSON.parse(res.body)}})
   end
 end
