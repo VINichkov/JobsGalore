@@ -41,6 +41,11 @@ class ClientsController < ApplicationController
     end
   end
 
+  def linkedin_resume_update
+    @current_client = current_client
+
+  end
+
   # PATCH/PUT /clients/1
   # PATCH/PUT /clients/1.json
   def update

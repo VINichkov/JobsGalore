@@ -44,39 +44,19 @@ class Client < ApplicationRecord
       user.provider = auth.provider
       user.uid = auth.uid
       user.confirm
-      Date.new
     end
-    experience = auth&.extra&.raw_info&.positions[:values]&.last
-    summary = auth&.extra&.raw_info&.summary.split("\n").compact.map{|t| "<p>#{t}</p>"}.join if auth.extra.raw_info.summary
-    if experience
-      location = "<p><strong> Location: </strong>"+ experience.location.name+"</p>" if experience.location.name
-      date_start = "<p>#{Date.new(experience.startDate.year, experience.startDate.month).strftime('%b %Y')} - Present</p>" if experience.startDate
-      experience_summary = experience.summary.split("\n").compact.map{|t| "<p>#{t}</p>"}.join if experience.summary
-      experience_title = "<strong>#{experience.title}</strong>" if experience.title
-      experience_company_name = "<strong>#{experience.company.name}</strong>" if experience.company&.name
-      experience_first = "{<h3>Experience</h3><hr>"+experience_title.to_s + experience_company_name.to_s + date_start.to_s+location.to_s+experience_summary.to_s
-      summary += experience_first.to_s
-    end
-    Rails.logger.debug "_____________________________HTML_________________________________"
-    Rails.logger.debug summary
-    Rails.logger.debug "_____________________________HTML_________________________________"
-    resume = Resume.new( desiredjobtitle: auth.extra.raw_info.headline,
-                         industry_id: Industry.find_by_linkedin(auth.extra.raw_info.industry).id,
-                         location_id: (local ? local.id : Location.default.id),
-                         abouteme: summary,
-                         sources: auth.info.urls.public_profile)
-    [client, resume]
+    [client, Resume.new(OmniAuth::Strategies::Linkedin.linkedin_to_h(auth))]
   end
 
   def self.new_with_session(params, session)
     Rails.logger.debug "new_with_session зашли"
-    Rails.logger.debug "полечаем данные пользователя. Из Linkedin  #{session.to_json}"
     super.tap do |user|
       if data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]
-        Rails.logger.debug "Linkedin:: получаем данные пользователя. Из Linkedin  #{session["devise.linkedin_data"].to_json}"
         user.provider ||=auth.provider
         user.uid ||=auth.uid
         user.token = auth.credentials.token
+        user.sources ||= auth.info.urls.public_profile
+        user.photo_url ||= auth.info.image
       end
     end
   end
@@ -152,11 +132,6 @@ class Client < ApplicationRecord
   end
 
    def validate_workflow(wf = nil)
-     Rails.logger.debug "Client::validate_workflow #{self.to_json}"
-     Rails.logger.debug "Client::validate_workflow  wf = #{wf}"
-     Rails.logger.debug "Client::validate_workflow  wf == JobWorkflow and !self.resp? #{wf == JobWorkflow and !self.resp?}"
-     Rails.logger.debug "Client::validate_workflow  wf == ResumeWorkflow and self.resp? = #{wf == ResumeWorkflow and self.resp?}"
-     Rails.logger.debug "Client::validate_workflow  wf != ClientWorkflow = #{wf != ClientWorkflow}"
      if wf && (wf == 'JobWorkflow' and !self.resp?)
        errors.add(:character, :blank, message: TypeOfClient::APPLICANT)
        true
