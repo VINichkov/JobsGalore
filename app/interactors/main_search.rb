@@ -3,7 +3,7 @@ class MainSearch
 
   def call
     @page, @param = context.params[:page], context.params[:main_search]
-    @param[:value].delete!("!,.:*&()'`\"’")
+    @param[:value].delete!("<>{}#@!,.:*&()'`\"’")
     if @param[:value].blank?
       @param[:value] = ''
       context.query = ''

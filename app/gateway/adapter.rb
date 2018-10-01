@@ -80,11 +80,11 @@ class Adapter
   end
 
   def gsub_html(arg)
-    arg.gsub("<span>","").gsub("</span>","").gsub("<div>","").gsub("</div>","").gsub("<br>","").gsub("<h1>","<h4>").gsub("<h2>","<h4>").gsub("</h3>","<h4>").gsub("</h1>","<h4>").gsub("</h2>","<h4>").gsub("<h3>","<h4>").squish.gsub("> <","><")
+    arg.gsub("<span>","").gsub("</span>","").gsub("<div>","").gsub("</div>","").gsub("<h1>","<h4>").gsub("<h2>","<h4>").gsub("</h3>","<h4>").gsub("</h1>","<h4>").gsub("</h2>","<h4>").gsub("<h3>","<h4>").squish.gsub("> <","><")
   end
 
   def html_to_markdown(arg)
-    Markitdown.from_nokogiri(Nokogiri::HTML(gsub_html(update_attr(arg))))
+    gsub_html(update_attr(arg))
   end
 
   def industry

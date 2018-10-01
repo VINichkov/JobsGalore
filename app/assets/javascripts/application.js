@@ -5,7 +5,6 @@
 //= require social-share-button
 //=require jasny-bootstrap
 //=require medium-editor.min
-//=require me-markdown.standalone.min
 //=require datalist-polyfill.min
 //= require react
 //= require components
@@ -31,11 +30,6 @@ $(function() {
     var markDownEl = $(".markdown")[0],
         elements = $('.editable')[0],
         editor = new MediumEditor(elements, {
-            extensions: {
-                markdown: new MeMarkdown(function (md) {
-                    markDownEl.textContent = md;
-                })
-            },
             placeholder: {
                 /* This example includes the default options for placeholder,
                    if nothing is passed this is what it used */
@@ -46,7 +40,7 @@ $(function() {
                 /* These are the default options for the toolbar,
                    if nothing is passed this is what is used */
                 allowMultiParagraphSelection: true,
-                buttons: ['bold', 'italic', 'underline', 'anchor', 'h4', 'orderedlist', 'unorderedlist'],
+                buttons: ['bold', 'italic', 'underline', 'anchor', 'h3' ,'h4' , 'orderedlist', 'unorderedlist'],
                 diffLeft: 0,
                 diffTop: -10,
                 firstButtonClass: 'medium-editor-button-first',
@@ -60,6 +54,10 @@ $(function() {
                 updateOnEmptySelection: false
             }
         });
+    editor.subscribe('editableInput', function (event, editable) {
+        markDownEl.textContent = editable.innerHTML;
+    });
+
     $("#inp").change(function() {
         readURL(this);
     });

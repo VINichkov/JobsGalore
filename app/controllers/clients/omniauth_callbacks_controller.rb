@@ -4,13 +4,10 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   # You should also create an action method in this controller like this:
    def linkedin
-     Rails.logger.debug "---Clients::OmniauthCallbacksController linkedin"
-     Rails.logger.debug "---Clients::OmniauthCallbacksController params #{params.to_json}"
      @client, resume = Client.from_omniauth(request.env["omniauth.auth"])
      @workflow = wf(client:@client)
-     @workflow.update_state(resume:resume, to_start: true)
+     @workflow.update_state(resume:resume, to_start: true) if @workflow.class == ResumeWorkflow
      if @client.persisted?
-       session["devise.linkedin_data"] = request.env["omniauth.auth"]
        @workflow.save!(session[:workflow])
        sign_in_and_redirect @client, event: :authentication #this will throw if @user is not activated
        set_flash_message(:notice, :success, kind: "LinkedIn") if is_navigational_format?

@@ -8,16 +8,20 @@ class ApplicationDecorator < Draper::Decorator
     @description_meta ||= markdown_to_text(object.description, 300)
   end
 
+  def title
+    @title ||= object.title&.html_safe
+  end
+
   def description_text
     @description_text ||= markdown_to_text(object.description, 300)
   end
 
   def description_html
-    (@description_html ||= RDiscount.new(object.description).to_html) if object.description
+    @description_html ||= object.description
   end
 
   def render_description
-    (@render_description ||= self.description_html.gsub('<img',"<img class=\"img-thumbnail center-block\"").gsub('<a',"<a rel=\"nofollow\"").html_safe) if self.description_html
+    (@render_description ||= self.description_html&.gsub('<img',"<img class=\"img-thumbnail center-block\"")&.gsub('<a',"<a rel=\"nofollow\"")&.html_safe)
   end
 
   def posted_date
@@ -38,7 +42,7 @@ class ApplicationDecorator < Draper::Decorator
 
   def markdown_to_text (arg, truncate=nil)
     if arg
-      text = Nokogiri::HTML(RDiscount.new(arg).to_html).text.squish
+      text = HtmlToPlainText.plain_text(arg).squish
       if truncate
         text= text.truncate(truncate, separator: ' ',omission: '')
       end

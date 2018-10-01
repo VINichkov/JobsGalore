@@ -19,15 +19,7 @@ class ResumesController < ApplicationController
   end
   # GET /resumes/new
   def new
-    Rails.logger.debug("!__________________________________________________!")
-    Rails.logger.debug(session["devise.linkedin_data"])
-    Rails.logger.debug("!__________________________________________________!")
-    Rails.logger.debug("!__________________________________________________!")
-    Rails.logger.debug(session["devise.linkedin_data"])
-    Rails.logger.debug("!__________________________________________________!")
     resume_workflow = wf
-    Rails.logger.debug("resume_workflow.class #{resume_workflow.class}")
-    Rails.logger.debug("resume_workflow.class != ResumeWorkflow #{resume_workflow.class != ResumeWorkflow}")
     resume_workflow = add_new_workflow(class: :ResumeWorkflow) if resume_workflow.class != ResumeWorkflow
     @resume = resume_workflow.resume.decorate
     resume_workflow.save!(session[:workflow])
@@ -218,7 +210,7 @@ class ResumesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
   def resume_params
-    params.require(:resume).permit(:id, :title, :salary, :description , :client_id,:industry_id,
+    params.require(:resume).permit(:id, :title, :salary_form, :description , :client_id,:industry_id,
                                      :location_id, :location_name, :page, :option)
   end
 end

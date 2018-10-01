@@ -12,8 +12,10 @@ class Resume < ApplicationRecord
 
   alias_attribute  :description,:abouteme
   alias_attribute  :title,:desiredjobtitle
+  alias_attribute :salary_form, :salary
 
   after_create :send_email
+
 
 
   def add_viewed(arg = {})
@@ -89,6 +91,6 @@ class Resume < ApplicationRecord
 
     text_query = text_query.join(" and ")
 
-    select(:id, :desiredjobtitle, :location_id, :salary, :abouteme, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:industry_id, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"", :viewed).where(text_query,query)
+    select(:id, :desiredjobtitle, :location_id, :salary_form, :abouteme, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:industry_id, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"", :viewed).where(text_query,query)
   end
 end
