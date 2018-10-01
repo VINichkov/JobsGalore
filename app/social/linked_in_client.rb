@@ -21,7 +21,7 @@ class LinkedInClient
   end
 
   def get_profile(token)
-    url = URI.parse('https://api.linkedin.com/v1/people/')
+    url = URI.parse('https://api.linkedin.com/v1/people/~:(id,email-address,first-name,last-name,headline,location,industry,picture-url,public-profile-url,summary,positions)?format=json')
     connect = Net::HTTP::Get.new(url.to_s)
     connect.add_field(:authorization, "Bearer "+token.to_s)
     connect.add_field(:connection, 'Keep-Alive')

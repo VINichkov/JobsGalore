@@ -51,7 +51,9 @@ class Client < ApplicationRecord
   def self.new_with_session(params, session)
     Rails.logger.debug "new_with_session зашли"
     super.tap do |user|
+      Rails.logger.debug "Создали новую сессию"
       if data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]
+        Rails.logger.debug "Обновим все"
         user.provider ||=auth.provider
         user.uid ||=auth.uid
         user.token = auth.credentials.token
