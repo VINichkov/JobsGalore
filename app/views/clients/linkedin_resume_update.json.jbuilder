@@ -1,1 +1,1 @@
-json.extract! @response
+@response.to_json
