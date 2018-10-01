@@ -91,7 +91,7 @@ class Ability
   end
 
   def edit_profile(user)
-    can [:edit, :update, :settings, :destroy, :edit_photo, :update_photo], Client do |client|
+    can [:edit, :update, :settings, :destroy, :edit_photo, :update_photo, :linkedin_resume_update], Client do |client|
       client == user
     end
   end

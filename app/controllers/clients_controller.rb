@@ -42,8 +42,11 @@ class ClientsController < ApplicationController
   end
 
   def linkedin_resume_update
-    @current_client = current_client
-
+    if current_client
+      client = LinkedInClient.new
+      @response = client.linkedin_to_h(client.get_profile(current_client.token))
+    end
+    render :linkedin_resume_update, formats: :json
   end
 
   # PATCH/PUT /clients/1
