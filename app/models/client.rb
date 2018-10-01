@@ -45,6 +45,7 @@ class Client < ApplicationRecord
       user.uid = auth.uid
       user.confirm
     end
+    client.update(token: auth.credentials.token)
     [client, Resume.new(LinkedInClient.new.linkedin_to_h(auth))]
   end
 
