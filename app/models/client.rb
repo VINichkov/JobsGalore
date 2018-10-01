@@ -46,8 +46,8 @@ class Client < ApplicationRecord
       user.confirm
     end
     experience = auth.extra.raw_info.positions[:values].last
-    summary = auth.extra.raw_info.summary.gsub("\n","\n\n").gsub(/(\*|\_|\{|\}|\[|\]|\(|\)|\#|\+|\-|\.|\!)/){|s| "\\"+s}
-    summary += %{\n\n\n\n###Experience\n\n*#{experience.title}*\n\n**#{experience.company.name}**
+    summary = auth.extra.raw_info.summary
+    summary += %{\n\n<h3>Experience</h3>\n<strong>#{experience.title}</strong>\n**#{experience.company.name}**
                   }
     resume = Resume.new( desiredjobtitle: auth.extra.raw_info.headline,
                          industry_id: Industry.find_by_linkedin(auth.extra.raw_info.industry).id,
