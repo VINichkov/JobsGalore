@@ -31,6 +31,6 @@ class LinkedInClient
     res = https.start {|http|
       http.request(connect)
     }
-    res.body
+    {"extra":{"raw_info":JSON.parse(res.body)}}
   end
 end
