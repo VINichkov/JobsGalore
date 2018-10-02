@@ -1,7 +1,6 @@
 class LinkedInClient
 
   def linkedin_to_h(auth)
-    Rails.logger.debug("LinkedInClient.linkedin_to_h  #{auth.to_s}")
     if auth
       experience = auth&.extra&.raw_info&.positions[:values]&.last
       summary = auth&.extra&.raw_info&.summary.split("\n").compact.map{|t| "<p>#{t}</p>"}.join if auth.extra.raw_info.summary
@@ -36,7 +35,6 @@ class LinkedInClient
       res = https.start {|http|
         http.request(connect)
       }
-      Rails.logger.debug("LinkedInClient.get_profile  #{res.body.to_s}")
       OmniAuth::AuthHash.new({"extra":{"raw_info":JSON.parse(res.body)}})
     end
   end

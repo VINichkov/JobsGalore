@@ -76,27 +76,7 @@ $(function() {
     var uploadDOCX = function(uploadFile) {
         var zip = new JSZip().loadAsync(uploadFile);
         console.log(zip.file('document.xml').async('string'));
-        /*
-        zip.loadAsync(uploadFile).then(function (f) {
-            f.forEach(function (relativePath, zipEntry) {
-                if (relativePath == "word/document.xml") {
-                    console.log(zipEntry.as);
-                    console.log('Зашли1');
-                    console.log(zip.file(relativePath));
-                    zip.file(relativePath).async('text').then(function(content) {
-                        console.log('Зашли');
-                        console.log(content);
-                    });
-                }
-            });
-        });
-        */
-        //JSZip.loadAsync(uploadFile).then(function(f) {
-        //   zip = f;
-        //});
 
-        //let text= doc.getFullText();
-        //console.log(text);
     };
 
     var uploadPDF = function(uploadFile) {
@@ -125,13 +105,17 @@ $(function() {
                 default:
                     console.log("другой тип")
             }
-
-            //let reader = new FileReader();
-            //reader.onload = uploadTXT;
-            //reader.rea
-            //reader.readAsText(input.files[0]);
         }
     }
+
+    $(".linkedin_click").click( function () {
+        $.get('/linkedin_resume_update', function(data) {
+            $("[name='resume[title]']").val(data.title);
+            editor.setContent(data.description,0);
+            $("[name='resume[industry_id]']").val(data.industry_id);
+            console.log(data.title);
+        });
+    });
 
 
 });

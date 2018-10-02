@@ -7,7 +7,27 @@
       ul
         - @resume.errors.full_messages.each do |message|
           li = message
-
+  .row
+    .form-group
+      - if current_client&.linkedin?
+        .hidden-xs.col-md-6.col-sm-6.col-lg-6
+          buttons.btn.btn-linkedin.btn-bloc.linkedin_click
+            i.fa.fa-linkedin.text-left[aria-hidden="true"]
+            |&nbsp;|&nbsp;Resume from LinkedIn
+        .col-xs-6.hidden-md.hidden-sm.hidden-lg
+          buttons.btn.btn-linkedin.btn-block.linkedin_click
+            i.fa.fa-linkedin.text-left[aria-hidden="true"]
+            |&nbsp;|&nbsp;Resume
+      - elsif current_client.nil?
+        .hidden-xs.col-md-6.col-sm-6.col-lg-6
+          = link_to client_linkedin_omniauth_authorize_path(resume: true), class: "btn btn-linkedin btn-block" do
+            i.fa.fa-linkedin.text-left[aria-hidden="true"]
+            |&nbsp;|&nbsp;Resume from LinkedIn
+        .col-xs-6.hidden-md.hidden-sm.hidden-lg
+          = link_to client_linkedin_omniauth_authorize_path(resume: true), class: "btn btn-linkedin btn-block" do
+            i.fa.fa-linkedin.text-left[aria-hidden="true"]
+            |&nbsp;|&nbsp;Resume
+  p
   .form-group
     = f.label :title, "Title"
     br

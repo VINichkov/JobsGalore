@@ -12,6 +12,7 @@ module Session
 
   def add_new_workflow(arg = {})
     session[:workflow] = session.id
+    Rails.logger.debug  "!!!!!!@@ Создали новый Workflow объект с классом #{arg}!!!"
     Workflow.new(arg)
   end
 
