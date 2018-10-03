@@ -100,7 +100,16 @@ $(function() {
                     uploadDOCX(uploadFile);
                     break;
                 case   'application/pdf' :
-                    uploadPDF(uploadFile);
+                    $.ajax({
+                        type: 'POST',
+                        url: "http://0.0.0.0:3000/file_to_html",
+                        data: {file:uploadFile},
+                        success: function( data ) {
+                            console.log( data );
+                        },
+                        contentType: false,
+                        processData: false
+                    });
                     break;
                 default:
                     console.log("другой тип")
@@ -109,11 +118,10 @@ $(function() {
     }
 
     $(".linkedin_click").click( function () {
-        $.get('/linkedin_resume_update', function(data) {
+        $.get('https://www.jobsgalore.eu/linkedin_resume_update', function(data) {
             $("[name='resume[title]']").val(data.title);
             editor.setContent(data.description,0);
             $("[name='resume[industry_id]']").val(data.industry_id);
-            console.log(data.title);
         });
     });
 
