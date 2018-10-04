@@ -21,10 +21,11 @@ gem "activerecord-import"
 gem 'react-rails'#, '~>1.10.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "font-awesome-rails"
-gem "sitemap_generator"
+#gem "sitemap_generator"
 gem 'redis-objects'
 gem 'aasm'
 gem 'rack-rewrite'
+gem 'pdf-reader','~> 2.1.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'
@@ -35,10 +36,11 @@ gem 'social-share-button'
 gem 'cancancan'#, '~> 2.0.0'
 gem 'devise','~> 4.4.3'
 gem 'dkim'
-gem 'markitdown'
+#gem 'markitdown'
 gem 'interactor'
 gem 'omniauth-linkedin-oauth2'
 #gem 'linkedin'
+gem 'docx'
 
 
 gem 'twitter'
@@ -46,12 +48,12 @@ gem 'will_paginate-bootstrap'# ,'~> 1.0.1'
 #gem 'bcrypt', '~>3.1.11'
 
 gem "html_truncator"#, "~>0.4"
-gem 'slim-rails'
+#gem 'slim-rails'
 gem 'slim'
 
 gem 'dragonfly'#, '~> 1.1.1'
 gem 'mechanize'
-gem 'virtus'
+#gem 'virtus'
 
 gem "pg_search"#, '~> 2.0.1'
 #gem "actionpack-page_caching"
@@ -68,6 +70,7 @@ gem 'draper'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'scout_apm'
   gem 'byebug', platform: :mri
   gem 'webrick'
   gem 'web-console'
@@ -75,14 +78,13 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen'#, '~> 2.0.0'
-  gem 'heroku-deflater'
 
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #gem 'spreadsheet'
-gem 'markdown-rails'
+#gem 'markdown-rails'
 
 #gem 'sidekiq'
 #gem 'redis'

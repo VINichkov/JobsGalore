@@ -73,20 +73,6 @@ $(function() {
         };
         reader.readAsText(uploadFile);
     };
-    var uploadDOCX = function(uploadFile) {
-        var zip = new JSZip().loadAsync(uploadFile);
-        console.log(zip.file('document.xml').async('string'));
-
-    };
-
-    var uploadPDF = function(uploadFile) {
-        let zip = new JSZip.loadAsync(uploadFile);
-        console.log(zip);
-        let doc= new Docxtemplater().loadZip(uploadFile);
-        console.log(doc);
-        let text= doc.getFullText();
-        console.log(text);
-    };
 
     function readURL(input) {
         if (input.files) {
@@ -96,23 +82,19 @@ $(function() {
                 case 'text/plain':
                     uploadTXT(uploadFile);
                     break;
-                case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-                    uploadDOCX(uploadFile);
-                    break;
-                case   'application/pdf' :
+                default:
+                    fd = new FormData;
+                    fd.append('file', uploadFile);
                     $.ajax({
                         type: 'POST',
                         url: "http://0.0.0.0:3000/file_to_html",
-                        data: {file:uploadFile},
+                        data: fd,
                         success: function( data ) {
-                            console.log( data );
+                            editor.setContent(data.description,0);
                         },
                         contentType: false,
                         processData: false
                     });
-                    break;
-                default:
-                    console.log("другой тип")
             }
         }
     }

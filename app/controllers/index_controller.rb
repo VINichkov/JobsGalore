@@ -112,6 +112,11 @@ class IndexController < ApplicationController
     render :rss, formats: :xml
   end
 
+  def file_to_html
+    @file = OfficeDocumentToHtml.call(params: params.permit(:file))
+    render :file_to_html, formats: :json
+  end
+
   def logo
     send_file 'public/jg.png', type: 'image/png', disposition: 'inline'
   end
