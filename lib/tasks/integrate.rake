@@ -23,13 +23,6 @@ namespace :integrate do
     puts "! Task:Jora: End"
   end
 
-  desc "Deletes unnecessary jobs"
-  task :delete_jobs => :environment  do
-    puts "! Task:delete_jobs: start"
-    Job.delete_jobs
-    puts "! Task:delete_jobs: End"
-  end
-
   def separate
       i=0
       ind = { accounting: Industry.find_by_name('Accounting'),

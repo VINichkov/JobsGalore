@@ -12,7 +12,10 @@ namespace :other do
       db.execute("update resumes set urgent=null where urgent+7 < to_date(\'#{t}\',\'YYYY-MM-DD\')")
       db.execute("update resumes set top=null where top+7 < to_date(\'#{t}\',\'YYYY-MM-DD\')")
       db.close
+      db = nil
     rescue
+      db.close
+      db = nil
       puts "____________________Error: #{$!}"
     end
     puts "! Task:extras_check: End"
@@ -20,7 +23,11 @@ namespace :other do
 
   desc "ping to twitter bots"
   task :ping => :environment  do
-    open( "https://botmelbourne.herokuapp.com/")
+    begin
+      open( "https://botmelbourne.herokuapp.com/")
+    rescue
+      puts "____________________Error: #{$!}"
+    end
   end
 
 end
