@@ -70,7 +70,7 @@ gem 'draper'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'scout_apm'
+
   gem 'byebug', platform: :mri
   gem 'webrick'
   gem 'web-console'
@@ -90,6 +90,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #gem 'redis'
 #gem 'redis-namespace'
 group :production do
+  gem 'scout_apm'
   gem 'dragonfly-s3_data_store'
   gem "asset_sync"
   gem "fog-aws"
