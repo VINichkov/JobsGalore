@@ -103,6 +103,7 @@ $(function() {
         }
     }
 
+
     $(".linkedin_click").click( function () {
         $.get("<%=Rails.application.routes.url_helpers.linkedin_resume_url%>", function(data) {
             $("[name='resume[title]']").val(data.title);
