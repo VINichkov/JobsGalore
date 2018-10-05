@@ -19,7 +19,7 @@ Rails.application.configure do
    #      :if => Proc.new { |rack_env| rack_env['SERVER_NAME'] != 'www.jobsgalore.eu' }
   #end
   # Full error reports are disabled and caching is turned on.
-  config.consider_all_requests_local       = false
+  #config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
   # Disable serving static files from the `/public` folder by default since
