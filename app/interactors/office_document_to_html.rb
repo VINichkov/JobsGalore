@@ -1,53 +1,32 @@
 class OfficeDocumentToHtml
   include Interactor
-  COUNT = 18000
+  COUNT = 3600
   def call
-    begin
+    #begin
       file = context.params[:file]
-      document = LazyHash.new("application/pdf"=>->{pdf(file.to_io)},  "application/vnd.openxmlformats-officedocument.wordprocessingml.document"=>->{docx(file.to_io)})
+      document = LazyHash.new("application/pdf"=>->{to_html(PDF::Reader.new(file.to_io).pages)},
+                              "application/vnd.openxmlformats-officedocument.wordprocessingml.document"=>->{Docx.new(file.to_io).to_html(COUNT)})
       context.result = {description: context.html=document[file.content_type]}
-    rescue
-      Rails.logger.info("Error PDF: #{$!}")
-      context.result = {description:nil}
-    end
+    #rescue
+     # Rails.logger.info("Error Document: #{$!}")
+      #context.result = {description:nil}
+    #end
   end
 
   private
+  # TODO все конверторы или отдельным сервисом или серез с\go
 
-  def pdf(file)
-    t = Time.now
+  def to_html(party)
     i = 0
-    a = PDF::Reader.new(file).pages.map do |page|
-      page.text.split("\n").compact.map do |str|
-        i +=str.count
-        "<p>#{str}</p>"
+    a=[]
+    party.each do |p|
+      i +=p.text.length
+      p.text.gsub("<","&lt;").gsub(">","&gt;").split("\n").compact.each do |str|
+        a.push("<p>#{str}</p>")
       end
       break if i>=COUNT
-    end.join
-    puts "Время выполнения: #{(Time.now - t)*1000} ms"
-    a
-  end
-
-  def doc(file)
-    File.open(file) do |f|
-      puts f.read
     end
-    nil
-  end
-
-  def docx(file)
-    t = Time.now
-    doc = Docx::Document.open(file)
-    a=doc.paragraphs.map do |p|
-      p.to_html
-    end.join
-    puts a
-    puts "Время выполнения: #{(Time.now - t)*1000} ms"
-    a
-  end
-
-  def clean_html(html)
-    Nokogiri::HTML(html).at_css('body').children.to_s
+    a.join
   end
 
 end

@@ -2,7 +2,6 @@
   h1 =@result.name
   .col-lg-8.col-md-9.col-sm-12
     - if @result.type == Objects::JOBS
-      - puts @result.query
       = render partial: 'inc/job', collection: @result.objs, locals:{query: @result.query}
     - elsif @result.type==Objects::COMPANIES
       = render partial: 'inc/company', collection: @result.objs, locals:{query: @result.query}

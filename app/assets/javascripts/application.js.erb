@@ -74,33 +74,36 @@ $(function() {
         reader.readAsText(uploadFile);
     };
 
+    var uploadPdfDocx = function(uploadFile) {
+        let fd = new FormData;
+        fd.append('file', uploadFile);
+        $.ajax({
+            type: 'POST',
+            url: <%=file_to_html_url%>,
+            data: fd,
+            success: function( data ) {
+                editor.setContent(data.description,0);
+            },
+            contentType: false,
+            processData: false
+        });
+    };
+
     function readURL(input) {
         if (input.files) {
             let uploadFile = input.files[0];
-            console.log(uploadFile);
             switch(uploadFile.type){
                 case 'text/plain':
                     uploadTXT(uploadFile);
                     break;
                 default:
-                    fd = new FormData;
-                    fd.append('file', uploadFile);
-                    $.ajax({
-                        type: 'POST',
-                        url: "http://0.0.0.0:3000/file_to_html",
-                        data: fd,
-                        success: function( data ) {
-                            editor.setContent(data.description,0);
-                        },
-                        contentType: false,
-                        processData: false
-                    });
+                    uploadPdfDocx(uploadFile);
             }
         }
     }
 
     $(".linkedin_click").click( function () {
-        $.get('https://www.jobsgalore.eu/linkedin_resume_update', function(data) {
+        $.get(<%= linkedin_resume_url%>, function(data) {
             $("[name='resume[title]']").val(data.title);
             editor.setContent(data.description,0);
             $("[name='resume[industry_id]']").val(data.industry_id);

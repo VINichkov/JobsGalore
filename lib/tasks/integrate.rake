@@ -3,13 +3,15 @@ namespace :integrate do
   task :add_jobs => :environment  do
     puts "! Task:add_jobs: start"
     Gateway.all.each do |gate|
-      puts "! Task:add_jobs: Start: It executes for company \"#{gate.company.name}\""
       gate.execute
-      puts "! Task:add_jobs: End: Company's name's \"#{gate.company.name}\""
     end
     separate
-    open("http://google.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
-    open("http://www.bing.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
+    begin
+      open("http://google.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
+      open("http://www.bing.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
+    rescue
+      puts "____________________Error: #{$!}"
+    end
     puts "! Task:add_jobs: End"
   end
 
@@ -20,6 +22,7 @@ namespace :integrate do
     if jobs
       jora.create_jobs(jobs)
     end
+    jobs = nil
     puts "! Task:Jora: End"
   end
 
@@ -58,7 +61,7 @@ namespace :integrate do
               trades: Industry.find_by_name('Trades & Services'),
               social: Industry.find_by_name('Voluntary, Charity & Social Work'),
               home: Industry.find_by_name('Work from Home')}
-      Job.all.each do |job|
+      Job.where("created_at >= ? and industry_id = ?", Time.now.beginning_of_day, ind[:other].id).each do |job|
         job.title.downcase!
         i += 1
         flag_update = true

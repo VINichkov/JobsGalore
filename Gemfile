@@ -40,8 +40,7 @@ gem 'dkim'
 gem 'interactor'
 gem 'omniauth-linkedin-oauth2'
 #gem 'linkedin'
-gem 'docx'
-
+gem 'rubyzip'
 
 gem 'twitter'
 gem 'will_paginate-bootstrap'# ,'~> 1.0.1'
@@ -67,8 +66,10 @@ gem 'draper'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'scout_apm'
 
 group :development, :test do
+
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
 
   gem 'byebug', platform: :mri
@@ -90,7 +91,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #gem 'redis'
 #gem 'redis-namespace'
 group :production do
-  gem 'scout_apm'
+
   gem 'dragonfly-s3_data_store'
   gem "asset_sync"
   gem "fog-aws"

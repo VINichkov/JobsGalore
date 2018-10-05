@@ -100,9 +100,6 @@ GEM
       responders
       warden (~> 1.2.3)
     dkim (1.0.1)
-    docx (0.3.0)
-      nokogiri (~> 1.8, >= 1.8.1)
-      rubyzip (~> 1.2, >= 1.2.1)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     dragonfly (1.1.5)
@@ -381,7 +378,6 @@ DEPENDENCIES
   coffee-rails
   devise (~> 4.4.3)
   dkim
-  docx
   dragonfly
   dragonfly-s3_data_store
   draper
@@ -403,6 +399,7 @@ DEPENDENCIES
   rails (~> 5.2.0)
   react-rails
   redis-objects
+  rubyzip
   sass-rails
   scout_apm
   slim
