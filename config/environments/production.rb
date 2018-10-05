@@ -19,7 +19,7 @@ Rails.application.configure do
    #      :if => Proc.new { |rack_env| rack_env['SERVER_NAME'] != 'www.jobsgalore.eu' }
   #end
   # Full error reports are disabled and caching is turned on.
-  #config.consider_all_requests_local       = false
+  config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
   # Disable serving static files from the `/public` folder by default since
@@ -85,6 +85,11 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
+  end
   #config.gem 'sitemap_generator'
   config.action_controller.asset_host = "https://d2a5jvhcj7z8rz.cloudfront.net"
   config.action_mailer.asset_host ="https://d2a5jvhcj7z8rz.cloudfront.net"
