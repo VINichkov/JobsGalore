@@ -66,7 +66,7 @@ gem 'draper'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-gem 'scout_apm'
+gem 'scout_apm' if ENV["TEST"] != "test"
 
 group :development, :test do
 
