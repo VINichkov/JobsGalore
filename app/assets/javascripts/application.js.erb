@@ -1,3 +1,4 @@
+
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
@@ -79,7 +80,7 @@ $(function() {
         fd.append('file', uploadFile);
         $.ajax({
             type: 'POST',
-            url: <%=file_to_html_url%>,
+            url: "<%=Rails.application.routes.url_helpers.file_to_html_url%>",
             data: fd,
             success: function( data ) {
                 editor.setContent(data.description,0);
@@ -103,7 +104,7 @@ $(function() {
     }
 
     $(".linkedin_click").click( function () {
-        $.get(<%= linkedin_resume_url%>, function(data) {
+        $.get("<%=Rails.application.routes.url_helpers.linkedin_resume_url%>", function(data) {
             $("[name='resume[title]']").val(data.title);
             editor.setContent(data.description,0);
             $("[name='resume[industry_id]']").val(data.industry_id);

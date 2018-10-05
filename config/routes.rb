@@ -1,3 +1,4 @@
+Rails.application.routes.default_url_options[:host] = ENV["HOST"]
 Rails.application.routes.draw do
   resources :gateways
   get '/gatetway/execute/:id', to: "gateways#execute", as: "gateway_execute"
@@ -5,7 +6,7 @@ Rails.application.routes.draw do
   get 'sitemap', to: 'index#sitemap'
   get 'sitemap:id', to: 'index#sitemaps'
   get 'rss', to: 'index#rss'
-  post 'file_to_html', to: 'index#file_to_html'
+  post 'file_to_html', to: 'index#file_to_html', as: "file_to_html"
 
   devise_for  :clients, controllers:{ registrations: "clients/registrations",
                                       omniauthcallbacks: "clients/omniauthcallbacks",
