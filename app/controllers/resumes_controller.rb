@@ -29,7 +29,7 @@ class ResumesController < ApplicationController
   def create_temporary
     Rails.logger.debug "<<<ResumesController create_temporary:>>>"
     resume_workflow = wf
-    resume_workflow.update_state(resume:Resume.new(resume_params), client: current_client)
+    resume_workflow.update_state(resume:Resume.new(resume_params), client: current_client, not_linkedin: true)
     resume_workflow.save!(session[:workflow])
     respond_to do |format|
       format.html { redirect_to workflow_link(resume_workflow)}

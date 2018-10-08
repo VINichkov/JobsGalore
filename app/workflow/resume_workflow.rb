@@ -1,6 +1,6 @@
 class ResumeWorkflow < ApplicationWorkflow
 
-  attr_accessor :resume, :client
+  attr_accessor :resume, :client, :not_linkedin
 
   def initialize(arg={})
     Rails.logger.debug "ResumeWorkflow.initialize: arg[:client].class = #{arg[:client].class}   arg[:resume].class =#{arg[:resume].class},  #{arg.to_json} "
@@ -8,7 +8,7 @@ class ResumeWorkflow < ApplicationWorkflow
     arg[:client] = Client.new if arg[:client].blank?
     arg[:resume] = (arg[:resume][:id] ? Resume.find_by_id(arg[:resume][:id]) : Resume.new(arg[:resume]))  if arg[:resume].class == Hash
     arg[:resume] = Resume.new if arg[:resume].blank?
-    update_state({resume:arg[:resume], client: arg[:client]})
+    update_state({resume:arg[:resume], client: arg[:client], not_linkedin: arg[:not_linkedin]})
   end
 
   aasm  do
@@ -33,7 +33,7 @@ class ResumeWorkflow < ApplicationWorkflow
   end
 
   def to_slim_json
-    {class:self.class.to_s, client:@client.to_short_h, resume:@resume.to_short_h}.to_json
+    {class:self.class.to_s, client:@client.to_short_h, resume:@resume.to_short_h, not_linkedin:@not_linkedin }.to_json
   end
 
   private
@@ -42,6 +42,7 @@ class ResumeWorkflow < ApplicationWorkflow
     Rails.logger.debug "ResumeWorkflow.update_att: #{arg.to_json}"
     @to_start = arg[:to_start]
     @resume =arg[:resume] if arg[:resume]
+    @not_linkedin = arg[:not_linkedin] if arg[:not_linkedin]
     if arg[:client]
       @client =arg[:client]
       @resume&.client_id = @client.id if @client.persisted? and @resume&.client_id.nil?
