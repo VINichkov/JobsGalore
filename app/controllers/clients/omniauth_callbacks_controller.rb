@@ -6,7 +6,7 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
    def linkedin
      Rails.logger.debug "<<<Clients::OmniauthCallbacksController linkedin:>>>"
      Rails.logger.debug "<<<Clients::OmniauthCallbacksController params = #{params.permit(:resume)[:resume]}>>>"
-     @client = Client.from_omniauth(request.env["omniauth.auth"])
+     @client,resume = Client.from_omniauth(request.env["omniauth.auth"])
      @workflow = wf(client:@client)
      if @client.persisted?
        @workflow.save!(session[:workflow])
