@@ -22,7 +22,7 @@ class Workflow
 
 
   def self.connect()
-    Redis.new(url: ENV["REDIS_URL"])
+    Connect.instance
   end
 
 end
