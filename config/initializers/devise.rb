@@ -251,7 +251,6 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :linkedin, "78lj0n332mamaw", "DRUsMDeUlFsFtR3v", token_params: { parse: :json }
-  config.omniauth :resume_from_linkedin, "78lj0n332mamaw", "DRUsMDeUlFsFtR3v", {token_params: { parse: :json }, name: :linkedin}
   #,  token_params: { parse: :json }
   # ==> Warden configuration
   # If you want to use other strategies, that are

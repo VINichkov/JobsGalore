@@ -5,7 +5,7 @@ class Client < ApplicationRecord
   before_save :rename, :type
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
-  devise :omniauthable, omniauth_providers: %i[linkedin resume_from_linkedin]
+  devise :omniauthable, omniauth_providers: %i[linkedin]
   if Rails.env.production?
     devise  :confirmable, :lockable, :timeoutable
   end
