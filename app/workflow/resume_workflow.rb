@@ -45,6 +45,7 @@ class ResumeWorkflow < ApplicationWorkflow
     if arg[:client]
       @client =arg[:client]
       @resume&.client_id = @client.id if @client.persisted? and @resume&.client_id.nil?
+      Rails.logger.debug "!!!  ResumeWorkflow.update_att: @resume&.client_id #{@resume&.client_id} @client.persisted? #{@client.persisted?}"
     end
   end
 
