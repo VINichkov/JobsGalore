@@ -43,7 +43,7 @@ class Client < ApplicationRecord
       user.character=TypeOfClient::APPLICANT
       user.provider = auth.provider
       user.uid = auth.uid
-      user.confirm
+      user.skip_confirmation!
     end
     client.update(token: auth.credentials.token, sources: auth.info.urls.public_profile)
     [client, Resume.new(LinkedInClient.new.linkedin_to_h(auth))]

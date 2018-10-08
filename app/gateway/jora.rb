@@ -79,7 +79,7 @@ class Jora < Adapter
         if user.blank?
           puts "Компания новая. Создаем клиента #{"#{job[:company].gsub(' ','_')}@email.com.au"}"
           user = Client.new(firstname:job[:company], lastname:'HR', email:"#{job[:company].gsub(' ','_')}@email.com.au",location_id:job[:location], character:TypeOfClient::EMPLOYER, send_email:false, password:'11111111', password_confirmation:'11111111', company_id: company.id)
-          user.confirm if Rails.env.production?
+          user.skip_confirmation! if Rails.env.production?
           user.save!
         end
         Job.create!(title:job[:title],
