@@ -4,6 +4,7 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   # You should also create an action method in this controller like this:
    def linkedin
+     Rails.logger.debug "<<<Clients::OmniauthCallbacksController linkedin:>>>"
      @client, resume = Client.from_omniauth(request.env["omniauth.auth"])
      @workflow = wf(client:@client)
      @workflow.update_state(resume:resume, to_start: true) if @workflow.class == ResumeWorkflow
