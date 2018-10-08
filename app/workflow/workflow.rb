@@ -22,7 +22,7 @@ class Workflow
 
 
   def self.connect()
-    Connect.instance
+    Connect.instance.redis
   end
 
 end
