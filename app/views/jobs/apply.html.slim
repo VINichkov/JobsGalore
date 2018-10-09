@@ -1,0 +1,9 @@
+.container
+  .row
+    .col-xs-12.col-sm-12.col-md-8.col-lg-8.col-md-offset-2.col-lg-offset-2
+      = react_component("ApplyJob",
+              name:'apply',
+              title: {name: @job.title, link: job_url},
+              company:@job.company.name,
+              location:{name:@job.location.name, id:@job.location.id},
+              linkedin_url: client_linkedin_omniauth_authorize_url)
