@@ -5,7 +5,7 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # You should also create an action method in this controller like this:
    def linkedin
      Rails.logger.debug "<<<Clients::OmniauthCallbacksController linkedin:>>>"
-     @redirect = Redirect.new(session)
+     @redirect = Redirect.new(session.id)
      @client,resume = Client.from_omniauth(request.env["omniauth.auth"])
      unless @redirect.route?
        @workflow = wf(client:@client)

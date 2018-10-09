@@ -57,7 +57,7 @@ class JobsController < ApplicationController
       end
       redirect_to @job.apply, status:307
     end
-    Redirect.new(session, apply_url(@job))
+    Redirect.new(session.id, apply_url(@job))
   end
 
   # PATCH/PUT /jobs/1
