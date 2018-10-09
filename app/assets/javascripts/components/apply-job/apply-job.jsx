@@ -6,8 +6,7 @@ class ApplyJob extends React.Component{
     render(){
         return(
             <div>
-                <p><strong> Are you applying for the following job:</strong></p>
-                <h3><strong><a href={this.props.title.link}>{this.props.title.name}</a></strong></h3>
+                <h3> Are you applying for the following job: <strong><a href={this.props.title.link}>{this.props.title.name}</a></strong></h3>
                 <p>
                     <span className="text-success">
                         <span className="glyphicon glyphicon-home"></span>
