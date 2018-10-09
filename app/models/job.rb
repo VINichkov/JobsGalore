@@ -135,7 +135,7 @@ class Job < ApplicationRecord
 
     if  query[:salary].present?
       query[:salary] = query[:salary].to_i
-      text_query << '((salarymin is NULL and salarymax >= :salary) or (salarymax is NULL and salarymin>=:salary) or (salarymin <=:salary and salarymax >= :salary))'
+      text_query << '((salarymin>=:salary) or (salarymax >= :salary))'
     end
 
     text_query = text_query.join(" and ")
