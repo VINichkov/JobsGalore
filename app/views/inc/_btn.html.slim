@@ -51,10 +51,12 @@ div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' : "btn-group #{option[:m
           |Delete
   - else
     - if object.try(:apply)&.blank?
+      -puts object.try(:apply)
       div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
         a.btn.btn-primary.btn-block[href= apply_path(object)   rel="nofollow"]
           |Apply for job
     - else
+      -puts object.try(:apply)
       div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
         a.btn.btn-primary.btn-block[href= apply_path(object) target="_blank" onclick="document.location.href = '#{new_resume_url}' " rel="nofollow"]
           |Apply for job
