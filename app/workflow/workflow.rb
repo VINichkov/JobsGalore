@@ -18,8 +18,9 @@ class Workflow
     Rails.logger.debug  "!! Workflow.find_by_session!: #{arg.to_json}"
     redis  = connect()
     response = redis.get(arg)
+    Rails.logger.debug  "!! Workflow.find_by_session!: нашли  #{response}"
     if response
-      object = JSON.parse(redis.get(arg))#, opts={symbolize_names:true})
+      object = JSON.parse(response, opts={symbolize_names:true})
       object ? self.new(object) : false
     else
       nil
@@ -27,7 +28,6 @@ class Workflow
   end
 
   private
-
   def self.connect()
     Connect.instance.redis
   end
