@@ -19,8 +19,6 @@ class Redirect
     @route ? true : false
   end
 
-  private
-
   def save!(session)
     Rails.logger.debug "<--Redirect save #{@route}  session.id = #{session} -->"
     Workflow.save!(@route,session)
