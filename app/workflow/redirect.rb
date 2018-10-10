@@ -12,7 +12,7 @@ class Redirect
   def update_state(arg={});  end
 
   def to_slim_json
-    {route:@route}.to_json
+    {class:self.class.to_s,route:@route}.to_json
   end
 
   def route?
