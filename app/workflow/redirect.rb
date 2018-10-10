@@ -20,7 +20,7 @@ class Redirect
   end
 
   def save!(session)
-    Rails.logger.debug "<--Redirect save #{@route}  session.id = #{session} -->"
+    Rails.logger.debug "<--Redirect save #{to_slim_json}  session.id = #{session} -->"
     Workflow.save!(@route,session)
   end
 
