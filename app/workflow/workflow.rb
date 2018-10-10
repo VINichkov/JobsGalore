@@ -19,7 +19,7 @@ class Workflow
     redis  = connect()
     response = redis.get(arg)
     if response
-      object = JSON.parse(redis.get(arg), opts={symbolize_names:true})
+      object = JSON.parse(redis.get(arg))#, opts={symbolize_names:true})
       object ? self.new(object) : false
     else
       nil
