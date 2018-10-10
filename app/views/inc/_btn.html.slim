@@ -50,16 +50,18 @@ div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' : "btn-group #{option[:m
         - else
           |Delete
   - else
-    - if object.try(:apply)&.blank?
-      -puts "<<<<<<<<<<<<<<<<<<<<<<<<<<#{object.try(:apply)}>>>>>>>>>>>>>>>>>>>>>>"
+    - if object.class == JobDecorator && object.apply.blank?
       div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
         a.btn.btn-primary.btn-block[href= apply_path(object)   rel="nofollow"]
           |Apply for job
-    - else
-      -puts "<<<<<<<<<<<<<<<<<<<<<<<<<<#{object.try(:apply)}>>>>>>>>>>>>>>>>>>>>>>"
+    - elsif object.class == JobDecorator && object.apply
       div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
         a.btn.btn-primary.btn-block[href= apply_path(object) target="_blank" onclick="document.location.href = '#{new_resume_url}' " rel="nofollow"]
           |Apply for job
+    - else
+      div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
+        button.btn.btn-primary.btn-block[data-toggle="modal" data-target="#contact"]
+          |Contact
   div[class = "#{(option[:cl]  =='dropdown' ? 'btn_margin' : 'btn-group')}"]
     button.btn.btn-success.btn-block[onclick="history.back()"]
       - if option[:min]
