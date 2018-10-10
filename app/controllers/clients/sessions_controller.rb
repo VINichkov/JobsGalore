@@ -4,7 +4,7 @@ class Clients::SessionsController < Devise::SessionsController
   # GET /resource/sign_in
    def new
      super do
-       client_wf = wf #{|obj| obj.update({client:resource})}
+       client_wf = restore_workflow_object #{|obj| obj.update({client:resource})}
        client_wf ||= add_new_workflow(class: :ClientWorkflow, client: resource)
        client_wf.save!(session[:workflow])
      end
@@ -13,7 +13,8 @@ class Clients::SessionsController < Devise::SessionsController
   #POST /resource/sign_in
    def create
      super do
-       @client_wf = wf({client:resource})
+       @client_wf = restore_workflow_object
+       @client_wf.update_state({client:resource})
        @client_wf.save!(session[:workflow])
      end
    end

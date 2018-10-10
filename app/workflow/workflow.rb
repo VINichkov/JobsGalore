@@ -3,7 +3,8 @@ class Workflow
   def self.new(arg={})
     switch = LazyHash.new(  ClientWorkflow: ->{ClientWorkflow.new(arg)},
                             JobWorkflow: ->{JobWorkflow.new(arg)},
-                            ResumeWorkflow: ->{ResumeWorkflow.new(arg)})
+                            ResumeWorkflow: ->{ResumeWorkflow.new(arg)},
+                            Redirect: ->{Redirect.new(arg)})
     switch[arg[:class].to_sym]
   end
 
@@ -16,10 +17,16 @@ class Workflow
   def self.find_by_session(arg)
     Rails.logger.debug  "!! Workflow.find_by_session!: #{arg.to_json}"
     redis  = connect()
-    object = JSON.parse(redis.get(arg), opts={symbolize_names:true})
-    object ? self.new(object) : false
+    response = redis.get(arg)
+    if response
+      object = JSON.parse(redis.get(arg), opts={symbolize_names:true})
+      object ? self.new(object) : false
+    else
+      nil
+    end
   end
 
+  private
 
   def self.connect()
     Connect.instance.redis

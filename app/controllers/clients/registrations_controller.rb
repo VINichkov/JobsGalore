@@ -5,7 +5,7 @@ class Clients::RegistrationsController < Devise::RegistrationsController
   # GET /resource/sign_up
    def new
      super do
-       @client_wf = wf
+       @client_wf = restore_workflow_object
        @client_wf ||= add_new_workflow(class: :ClientWorkflow, client: resource)
        @client_wf.save!(session[:workflow])
        [ResumeWorkflow, JobWorkflow].include?(@client_wf.class) ? @flag = true : @flag = nil
@@ -15,7 +15,7 @@ class Clients::RegistrationsController < Devise::RegistrationsController
   # POST /resource
    def create
      build_resource(sign_up_params)
-     @client_wf = wf
+     @client_wf = restore_workflow_object
      if @client_wf.class == ResumeWorkflow
        resource.add_type(TypeOfClient::APPLICANT)
      elsif @client_wf.class ==JobWorkflow

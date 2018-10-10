@@ -1,22 +1,14 @@
 module Session
-  def wf(hash={})
-    if session[:workflow]
-      begin
-        Rails.logger.debug  "!!!!!!@@ В Сессии присутсвует запись!!!"
-        obj = Workflow.find_by_session(session[:workflow])
-        yield obj if block_given?
-        obj.update_state(hash) if hash[:client]
-        obj
-      rescue
-        session[:workflow] = nil
-        nil
-      end
+  def restore_workflow_object
+    begin
+      obj = Workflow.find_by_session(session[:workflow])
+    rescue
+      Rails.logger.debug  "Error restore_workflow_object: #{$!}"
+      nil
     end
   end
 
   def add_new_workflow(arg = {})
-    session[:workflow] = session.id
-    Rails.logger.debug  "!!!!!!@@ Создали новый Workflow объект с классом #{arg}!!!"
     Workflow.new(arg)
   end
 
@@ -33,6 +25,10 @@ module Session
       routs
     when :JobWorkflow
       routs = job_link(arg)
+      Rails.logger.debug  "-->> Link to #{routs}"
+      routs
+    when :Redirect
+      routs = arg.route
       Rails.logger.debug  "-->> Link to #{routs}"
       routs
     else

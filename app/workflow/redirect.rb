@@ -1,18 +1,18 @@
 class Redirect
-  def initialize(session, route = nil)
-     @session = session
-     if route
-       @route = route
-       Rails.logger.debug "<--Redirect create #{@route}  session.id = #{@session}  -->"
-       save!(session)
-     else
-       @route =  Workflow.find_by_session(@session)
-       Rails.logger.debug "<--Redirect find_by_session #{@route}  session.id = #{@session}  -->"
-     end
+
+  def initialize(arg ={})
+    Rails.logger.debug  "Redirect.initialize: #{arg.to_json} "
+    @route = arg[:route]
   end
 
   def route
     @route
+  end
+
+  def update_state(arg={});  end
+
+  def to_slim_json
+    {route:@route}.to_json
   end
 
   def route?

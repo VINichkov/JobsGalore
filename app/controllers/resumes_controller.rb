@@ -20,7 +20,7 @@ class ResumesController < ApplicationController
   # GET /resumes/new
   def new
     Rails.logger.debug "<<<ResumesController NEW:>>>"
-    resume_workflow = wf
+    resume_workflow = restore_workflow_object
     resume_workflow = add_new_workflow(class: :ResumeWorkflow) if resume_workflow.class != ResumeWorkflow
     @resume = resume_workflow.resume.decorate
     resume_workflow.save!(session[:workflow])
@@ -28,7 +28,7 @@ class ResumesController < ApplicationController
 
   def create_temporary
     Rails.logger.debug "<<<ResumesController create_temporary:>>>"
-    resume_workflow = wf
+    resume_workflow = restore_workflow_object
     resume_workflow.update_state(resume:Resume.new(resume_params), client: current_client, not_linkedin: true)
     resume_workflow.save!(session[:workflow])
     respond_to do |format|
@@ -43,7 +43,7 @@ class ResumesController < ApplicationController
   # POST /resumes.json
   def create_resume
     Rails.logger.debug "<<<ResumesController create_resume:>>>"
-    resume_workflow = wf
+    resume_workflow = restore_workflow_object
     @resume = resume_workflow.resume.decorate
     respond_to do |format|
       if @resume.save

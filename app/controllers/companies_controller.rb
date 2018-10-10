@@ -59,7 +59,7 @@ class CompaniesController < ApplicationController
 
   # GET /companies/new
   def new
-    client = wf
+    client = restore_workflow_object
     render_404 if session[:workflow].nil? and current_client.nil?
     @company = Company.new(location: client.client.location ? client.client.location : Location.default ).decorate
   end
@@ -74,7 +74,7 @@ class CompaniesController < ApplicationController
     @company = Company.new(company_params)
     respond_to do |format|
       if @company.save
-        client = wf
+        client = restore_workflow_object
         client.update_state(company: @company)
         patch = workflow_link(client)
         if current_client

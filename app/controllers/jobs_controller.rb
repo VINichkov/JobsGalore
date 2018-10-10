@@ -27,7 +27,7 @@ class JobsController < ApplicationController
   end
 
   def create_temporary
-    job_workflow = wf
+    job_workflow = restore_workflow_object
     job_workflow.update_state(job:Job.new(job_params), client: current_client)
     job_workflow.save!(session[:workflow])
     respond_to do |format|
@@ -38,7 +38,7 @@ class JobsController < ApplicationController
   # POST /jobs
   # POST /jobs.json
   def create_job
-    job_workflow = wf
+    job_workflow = restore_workflow_object
     @job = job_workflow.job.decorate
     respond_to do |format|
       if @job.save
