@@ -9,6 +9,7 @@ module Session
   end
 
   def add_new_workflow(arg = {})
+    session[:workflow] = session.id
     Workflow.new(arg)
   end
 
