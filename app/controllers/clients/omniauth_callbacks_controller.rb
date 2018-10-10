@@ -7,10 +7,10 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
      Rails.logger.debug "<<<Clients::OmniauthCallbacksController linkedin:>>>"
      @client,resume = Client.from_omniauth(request.env["omniauth.auth"])
      @workflow = restore_workflow_object
-     @workflow.update_state(client:@client)
-     @workflow.update_state(resume:resume, to_start: true)  if @workflow.class == ResumeWorkflow && !@workflow.not_linkedin
+     @workflow&.update_state(client:@client)
+     @workflow&.update_state(resume:resume, to_start: true)  if @workflow.class == ResumeWorkflow && !@workflow.not_linkedin
      if @client.persisted?
-       @workflow.save!(session[:workflow]) unless @redirect.route?
+       @workflow&.save!(session[:workflow])
        sign_in_and_redirect @client, event: :authentication #this will throw if @user is not activated
        set_flash_message(:notice, :success, kind: "LinkedIn") if is_navigational_format?
      else
@@ -40,12 +40,8 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
    end
 
    def after_sign_in_path_for(resource)
-     if @redirect.route?
        Rails.logger.debug "---Clients::OmniauthCallbacksController after_sign_in_path_for"
        patch = workflow_link(@workflow)
        patch ? patch : super(resource)
-     else
-       @redirect.route
-     end
    end
 end

@@ -28,8 +28,8 @@ class JobsController < ApplicationController
 
   def create_temporary
     job_workflow = restore_workflow_object
-    job_workflow.update_state(job:Job.new(job_params), client: current_client)
-    job_workflow.save!(session[:workflow])
+    job_workflow&.update_state(job:Job.new(job_params), client: current_client)
+    job_workflow&.save!(session[:workflow])
     respond_to do |format|
       format.html { redirect_to workflow_link(job_workflow)}
     end

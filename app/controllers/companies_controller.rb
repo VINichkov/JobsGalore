@@ -75,7 +75,7 @@ class CompaniesController < ApplicationController
     respond_to do |format|
       if @company.save
         client = restore_workflow_object
-        client.update_state(company: @company)
+        client&.update_state(company: @company)
         patch = workflow_link(client)
         if current_client
           format.html { redirect_to patch ? patch : jobs_root_path, notice: 'Company was successfully created.' }
