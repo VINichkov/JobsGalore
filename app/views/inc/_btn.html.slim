@@ -50,7 +50,7 @@ div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' : "btn-group #{option[:m
         - else
           |Delete
   - else
-    - if object.try(:apply)&.present?
+    - if object.try(:apply)&.blank?
       div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
         a.btn.btn-primary.btn-block[href= apply_path(object)   rel="nofollow"]
           |Apply for job
