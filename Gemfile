@@ -67,7 +67,7 @@ gem 'draper'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'scout_apm'
+
 
 group :development, :test do
 

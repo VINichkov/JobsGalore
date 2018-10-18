@@ -18,7 +18,6 @@ class Category extends React.Component{
 
     render(){
         let options = this.state.categories.map(function (category) {
-
             return (<option key={category.id} value={category.id}>{category.name}</option>);
         });
         return(
