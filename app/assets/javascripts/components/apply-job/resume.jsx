@@ -7,13 +7,12 @@ class Resume extends React.Component{
         this.handleOnClickResume =  this.handleOnClickResume.bind(this);
     }
 
-
     handleClickItem(){
         this.state.visible ? this.setState({visible:false}) : this.setState({visible:true})
     }
 
     handleOnClickResume(){
-        this.setState({checked:true});
+        this.props.onchange('resume_'+this.props.keyResume);
     }
 
     render(){
@@ -42,7 +41,7 @@ class Resume extends React.Component{
         return(
                 <div className={styleResume} key={this.props.keyResume} onClick={this.handleOnClickResume}>
                     <div className="panel-heading">
-                        <input type="radio" id={"contactChoice"+this.props.keyResume} checked={this.state.checked} name="contact" value={this.props.resume.title} />
+                        <input type="radio" id={"contactChoice"+this.props.keyResume} checked={this.props.check} name="resume" value={this.props.resume.title} />
                         <a href={"/resumes/"+this.props.resume.idr}>&nbsp;{this.props.resume.title}</a>
                         <span style={{float: "right"}}> <a  onClick={this.handleClickItem}>Show</a></span>
                     </div>

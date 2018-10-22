@@ -1,5 +1,7 @@
 class Redirect
 
+  attr_accessor :client
+
   def initialize(arg ={})
     Rails.logger.debug  "Redirect.initialize: #{arg.to_json} "
     @route = arg[:route]
@@ -9,7 +11,10 @@ class Redirect
     @route
   end
 
-  def update_state(arg={});  end
+  def update_state(arg={})
+    Rails.logger.debug  "Redirect.update_state: class #{arg.class} - #{arg.to_json}"
+    @client =arg[:client] if arg[:client]
+  end
 
   def to_slim_json
     {class:self.class.to_s,route:@route}.to_json

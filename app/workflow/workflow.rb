@@ -27,6 +27,11 @@ class Workflow
     end
   end
 
+  def self.delete(arg)
+    redis  = connect()
+    redis.del(arg)
+  end
+
   private
   def self.connect()
     Connect.instance.redis

@@ -11,11 +11,11 @@
     .form-group
       - if current_client&.linkedin?
         .hidden-xs.col-md-6.col-sm-6.col-lg-6
-          buttons.btn.btn-linkedin.btn-bloc.linkedin_click
+          button.btn.btn-linkedin.btn-bloc.linkedin_click
             i.fa.fa-linkedin.text-left[aria-hidden="true"]
             |&nbsp;|&nbsp;Resume from LinkedIn
         .col-xs-6.hidden-md.hidden-sm.hidden-lg
-          buttons.btn.btn-linkedin.btn-block.linkedin_click
+          button.btn.btn-linkedin.btn-block.linkedin_click
             i.fa.fa-linkedin.text-left[aria-hidden="true"]
             |&nbsp;|&nbsp;Resume
       - elsif current_client.nil?

@@ -57,8 +57,8 @@ class JobsController < ApplicationController
       end
       redirect_to @job.apply, status:307
     end
-    #resume_workflow = add_new_workflow(class: :Redirect, route: apply_url(@job)) #TODO Убрать
-    #resume_workflow.save!(session[:workflow]) #TODO Убрать
+    resume_workflow = add_new_workflow(class: :Redirect, route: apply_url(@job)) #TODO Убрать
+    resume_workflow.save!(session[:workflow]) #TODO Убрать
   end
 
   # PATCH/PUT /jobs/1

@@ -18,7 +18,7 @@ gem 'coffee-rails'#, '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 gem "activerecord-import"
 # Use react as the JavaScript library
-gem 'react-rails'#, '~>1.10.0'
+gem 'react-rails', '~>2.4.7'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "font-awesome-rails"
 #gem "sitemap_generator"
