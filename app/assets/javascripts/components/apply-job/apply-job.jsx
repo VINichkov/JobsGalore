@@ -2,13 +2,15 @@ class ApplyJob extends React.Component{
     constructor(props){
         super(props);
         let resumes= {new_resume:{checked:false}};
-        this.props.resumes.map(function(resume, i){
-            resumes["resume_"+i] = {resume: resume, checked:false};
-        }.bind(this));
-        resumes.resume_0 !== null ? resumes.resume_0.checked = true :  resumes.new_resume.checked = true;
-        this.state = {
-            resumes: resumes
-        };
+        if (this.props.resumes !==null) {
+            this.props.resumes.map(function (resume, i) {
+                resumes["resume_" + i] = {resume: resume, checked: false};
+            }.bind(this));
+            resumes.resume_0 !== null ? resumes.resume_0.checked = true : resumes.new_resume.checked = true;
+            this.state = {
+                resumes: resumes
+            };
+        }
         this.handleChangeFocus =  this.handleChangeFocus.bind(this);
     }
 
