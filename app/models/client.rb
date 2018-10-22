@@ -1,11 +1,6 @@
 class Client < ApplicationRecord
-  include ClientDTO
-  include Omniauth
-  include TypeClient
 
   before_save :rename, :type
-
-
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, omniauth_providers: %i[linkedin]
