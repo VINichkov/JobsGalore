@@ -1,7 +1,3 @@
-require 'concerns/clients/clietnDTO'
-require 'concerns/clients/omniauth'
-require 'concerns/clients/type_client'
-
 class Client < ApplicationRecord
   include ClientDTO
   include Omniauth
