@@ -40,7 +40,6 @@ class Ability
     view_profile_resumes
     manager_team(user)
     create_company
-    edit_profile(user)
     edit_resume_jobs_base(user)
     base
   end
@@ -67,7 +66,7 @@ class Ability
   end
 
   def manager_team(user)
-    can [:jobs, :resumes, :settings, :team, :edit, :update, :destroy, :edit_photo, :change_type, :destroy_member, :update_photo], Client do |client|
+    can [:jobs, :resumes, :settings, :team, :edit, :update, :destroy, :edit_photo, :linkedin_resume_update, :change_type, :destroy_member, :update_photo], Client do |client|
       (client == user) || (client.company.client.include?(user))
     end
     can [:new_member, :create_member], Client
