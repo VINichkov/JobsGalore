@@ -17,6 +17,7 @@ class LinkedInClient
       {title: auth.extra.raw_info.headline,
        industry_id: Industry.find_by_linkedin(auth.extra.raw_info.industry).id,
        location_id: (local ? local.id : Location.default.id),
+       location_name: (local ? local.name : Location.default.name),
        description: summary,
        sources: auth.extra.raw_info.publicProfileUrl}
     end

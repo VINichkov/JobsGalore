@@ -1,5 +1,5 @@
 class Location < ApplicationRecord
-  require 'benchmark'
+
   @@major_city=nil
   @@default = nil
 

@@ -4,7 +4,9 @@ class NewResume extends React.Component{
         this.state = {
             text: this.props.text,
             title:null,
-            industry:null};
+            industry:null,
+            location_name:this.props.location.name,
+            location_id:this.props.location.id};
         this._divEditable = React.createRef();
 
         this._fileInput = React.createRef();
@@ -82,7 +84,9 @@ class NewResume extends React.Component{
     handleLinkedIn(){
         $.get(this.props.linkedin_resume_url, function(data) {
             this.setState({ title:data.title,
-                            industry:{id:data.industry_id}});
+                            industry:{id:data.industry_id},
+                            location_id:data.location_id,
+                            location_name:data.location_name});
             this.medium.setContent(data.description,0);
         }.bind(this));
     }
@@ -136,8 +140,8 @@ class NewResume extends React.Component{
                                           name = "resume[location"
                                           id = "resume_location_id"
                                           route = "/search_locations/"
-                                          defaultName = {this.props.location.name}
-                                          defaultId = {this.props.location.id}/>
+                                          defaultName = {this.state.location_name}
+                                          defaultId = {this.state.location_id}/>
                         </div>
                     </div>
                 </div>
