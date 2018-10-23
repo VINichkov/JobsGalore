@@ -18,6 +18,7 @@ class ClientWorkflow < ApplicationWorkflow
 
     event :update_state, :before=>:update_att do
       transitions :from => :not_company, :to => :final, guard: :final
+      transitions :from => :not_company, to=>:not_company, guard: :not_company
       transitions :from => :new, :to => :final,  guard: :final
       transitions :from => :new, :to => :not_company, guard: :not_company
       transitions :from => :new, :to => :new, guard: :state_is_new
