@@ -34,18 +34,18 @@ class ClientWorkflow < ApplicationWorkflow
 
   def final
     Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
-    Rails.logger.debug "&&& to final (@client&.applicant? or (@client&.resp? && @client&.company_id?)) && @client&.persisted?} &&&"
-    Rails.logger.debug "&&& to final (#{@client&.applicant?} or (#{@client&.resp?} && #{@client&.company_id?})) && #{@client&.persisted?}} &&&"
-    Rails.logger.debug "&&& to final #{(@client&.applicant? or (@client&.resp? && @client&.company_id?)) && @client&.persisted?} &&&"
+    Rails.logger.debug "&&& to final (@client&.applicant? or (@client&.resp? && @client&.company)) && @client&.persisted?} &&&"
+    Rails.logger.debug "&&& to final (#{@client&.applicant?} or (#{@client&.resp?} && #{@client&.company})) && #{@client&.persisted?}} &&&"
+    Rails.logger.debug "&&& to final #{(@client&.applicant? or (@client&.resp? && @client&.company)) && @client&.persisted?} &&&"
     Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
-    (@client&.applicant? or (@client&.resp? && @client&.company_id?)) && @client&.persisted?
+    (@client&.applicant? or (@client&.resp? && @client&.company)) && @client&.persisted?
   end
 
   def not_company
     Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
-    Rails.logger.debug "&&& to not_company @client&.persisted? && @client&.resp? && !@client&.company_id? &&&"
-    Rails.logger.debug "&&& to not_company #{@client&.persisted?} && #{@client&.resp?} && #{!@client&.company_id?} &&&"
-    Rails.logger.debug "&&& to not_company #{@client&.persisted? && @client&.resp? && !@client&.company_id?} &&&"
+    Rails.logger.debug "&&& to not_company @client&.persisted? && @client&.resp? && !@client&.company &&&"
+    Rails.logger.debug "&&& to not_company #{@client&.persisted?} && #{@client&.resp?} && #{!@client&.company} &&&"
+    Rails.logger.debug "&&& to not_company #{@client&.persisted? && @client&.resp? && !@client&.company} &&&"
     Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
     @client&.persisted? && @client&.resp? && !@client&.company_id?
   end
@@ -56,13 +56,13 @@ class ClientWorkflow < ApplicationWorkflow
     Rails.logger.debug "&&& to state_is_new  =  !((#{@client&.applicant?} or #{@client&.company}) && #{@client&.persisted?}) && !(#{@client&.persisted?} && #{@client&.resp?}) &&&"
     Rails.logger.debug "&&& to state_is_new  = #{ !((@client&.applicant? or @client&.company) && @client&.persisted?) && !(@client&.persisted? && @client&.resp?)} &&&"
     Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
-    !((@client&.applicant? or @client&.company_id?) && @client&.persisted?) && !(@client&.persisted? && @client&.resp?)
+    !((@client&.applicant? or @client&.company) && @client&.persisted?) && !(@client&.persisted? && @client&.resp?)
   end
 
   def update_att(arg = {})
     Rails.logger.debug  "-----ClientWorkflow.update_att: #{arg.to_json}"
     @client =arg[:client] if arg[:client]
-    @client.update(company:arg[:company])  if @client&.company_id.blank? and arg[:company]
+    @client.update(company:arg[:company])  if @client&.company.blank? and arg[:company]
   end
 
 end
