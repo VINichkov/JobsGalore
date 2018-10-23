@@ -8,7 +8,7 @@ class Ability
       Rails.logger.debug "Cancan:: Admin"
       can :manage, :all
     elsif user.employer?
-      Rails.logger.debug "Cancan:: Other"
+      Rails.logger.debug "Cancan:: Employer"
       ##############################################
       role_employer(user)
     elsif user.employee?

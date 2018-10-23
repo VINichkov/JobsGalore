@@ -3,7 +3,7 @@ class ClientWorkflow < ApplicationWorkflow
   attr_accessor :client
 
   def initialize(arg ={})
-    Rails.logger.debug  "ClientWorkflow.initialize: #{arg.to_json}, arg[:client].class = #{arg[:client].class} "
+    Rails.logger.debug  "ClientWorkflow.initialize: #{arg.to_json}"
     arg[:client] = (arg[:client][:id] ? Client.find_by_id(arg[:client][:id]) : Client.new(arg[:client])) if arg[:client].class == Hash
     arg[:client] = Client.new if arg[:client].blank?
     update_state({client:arg[:client], company:arg[:company]})
@@ -44,7 +44,7 @@ class ClientWorkflow < ApplicationWorkflow
   end
 
   def update_att(arg = {})
-    Rails.logger.debug  "ClientWorkflow.update_att: class #{arg.class} - #{arg.to_json}"
+    Rails.logger.debug  "-----ClientWorkflow.update_att"
     @client =arg[:client] if arg[:client]
     @client.update(company:arg[:company])  if @client&.company_id.blank? and arg[:company]
   end

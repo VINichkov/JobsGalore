@@ -3,7 +3,7 @@ class JobWorkflow < ApplicationWorkflow
   attr_accessor :job, :client
 
   def initialize(arg={})
-    Rails.logger.debug  "JobWorkflow.initialize: arg[:client].class = #{arg[:client].class}   arg[:resume].class =#{arg[:job].class}, #{arg.to_json}"
+    Rails.logger.debug  "JobWorkflow.initialize: #{arg.to_json}"
     arg[:client] = (arg[:client][:id] ? Client.find_by_id(arg[:client][:id]) : Client.new(arg[:client])) if arg[:client].class == Hash
     arg[:client] = Client.new if arg[:client].blank?
     arg[:job] = (arg[:job][:id] ? Job.find_by_id(arg[:job][:id]) : Job.new(arg[:job])) if arg[:job].class == Hash
@@ -62,7 +62,7 @@ class JobWorkflow < ApplicationWorkflow
   end
 
   def update_att(arg = {})
-    Rails.logger.debug  "JobWorkflow.update_att: class #{arg.class} - #{arg.to_json}"
+    Rails.logger.debug  "JobWorkflow.update_att"
     @job =arg[:job] if arg[:job]
     if arg[:client]
       @client =arg[:client]
