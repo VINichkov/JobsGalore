@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   load_and_authorize_resource :client
-  before_action :set_client, only: [:show, :edit,:update, :destroy,:change_type, :destroy_member, :admin_edit_photo,:admin_show,:admin_edit,:admin_update,:admin_destroy ]
+  before_action :set_client, only: [:show, :edit,:update, :destroy,:change_type, :linkedin_resume_update, :destroy_member, :admin_edit_photo,:admin_show,:admin_edit,:admin_update,:admin_destroy ]
   before_action :current_company, only: [ :team]
   before_action :set_current_client, only: [:jobs, :resumes, :settings, :edit_photo]
   #before_action :authenticate_client!
