@@ -94,13 +94,13 @@ class NewResume extends React.Component{
             buttonLinkedIn = <div className="row">
                                 <div className="form-group">
                                     <div className="hidden-xs col-md-6 col-sm-6 col-lg-6">
-                                        <a className="btn btn-linkedin btn-bloc">
+                                        <a className="btn btn-linkedin btn-bloc" onClick={this.handleLinkedIn}>
                                             <i className="fa fa-linkedin text-left" aria-hidden="true"/>
                                             &nbsp;|&nbsp;Resume from LinkedIn
                                         </a>
                                     </div>
                                     <div className="col-xs-6 hidden-md hidden-sm hidden-lg">
-                                        <a className="btn btn-linkedin btn-bloc">
+                                        <a className="btn btn-linkedin btn-bloc" onClick={this.handleLinkedIn}>
                                             <i className="fa fa-linkedin text-left" aria-hidden="true"/>
                                             &nbsp;|&nbsp;Resume
                                         </a>
