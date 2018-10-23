@@ -33,18 +33,30 @@ class ClientWorkflow < ApplicationWorkflow
   private
 
   def final
-    Rails.logger.debug "&&& to final #{(@client&.applicant? or (@client&.resp? and @client&.company)) and @client&.persisted?} &&&"
-    (@client&.applicant? or (@client&.resp? and @client&.company)) and @client&.persisted?
+    Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
+    Rails.logger.debug "&&& to final (@client&.applicant? or (@client&.resp? && @client&.company_id?)) && @client&.persisted?} &&&"
+    Rails.logger.debug "&&& to final (#{@client&.applicant?} or (#{@client&.resp?} && #{@client&.company_id?})) && #{@client&.persisted?}} &&&"
+    Rails.logger.debug "&&& to final #{(@client&.applicant? or (@client&.resp? && @client&.company_id?)) && @client&.persisted?} &&&"
+    Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
+    (@client&.applicant? or (@client&.resp? && @client&.company_id?)) && @client&.persisted?
   end
 
   def not_company
-    Rails.logger.debug "&&& to not_company #{@client&.persisted? and @client&.resp? and !@client&.company_id?} &&&"
-    @client&.persisted? and @client&.resp? and !@client&.company_id?
+    Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
+    Rails.logger.debug "&&& to not_company @client&.persisted? && @client&.resp? && !@client&.company_id? &&&"
+    Rails.logger.debug "&&& to not_company #{@client&.persisted?} && #{@client&.resp?} && #{!@client&.company_id?} &&&"
+    Rails.logger.debug "&&& to not_company #{@client&.persisted? && @client&.resp? && !@client&.company_id?} &&&"
+    Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
+    @client&.persisted? && @client&.resp? && !@client&.company_id?
   end
 
   def state_is_new
-    Rails.logger.debug "&&& to state_is_new  = #{ !((@client&.applicant? or @client&.company) and @client&.persisted?) and !(@client&.persisted? and @client&.resp?)} &&&"
-    !((@client&.applicant? or @client&.company) and @client&.persisted?) and !(@client&.persisted? and @client&.resp?)
+    Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
+    Rails.logger.debug "&&& to state_is_new  =  !((@client&.applicant? or @client&.company) && @client&.persisted?) && !(@client&.persisted? && @client&.resp?) &&&"
+    Rails.logger.debug "&&& to state_is_new  =  !((#{@client&.applicant?} or #{@client&.company}) && #{@client&.persisted?}) && !(#{@client&.persisted?} && #{@client&.resp?}) &&&"
+    Rails.logger.debug "&&& to state_is_new  = #{ !((@client&.applicant? or @client&.company) && @client&.persisted?) && !(@client&.persisted? && @client&.resp?)} &&&"
+    Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
+    !((@client&.applicant? or @client&.company_id?) && @client&.persisted?) && !(@client&.persisted? && @client&.resp?)
   end
 
   def update_att(arg = {})
