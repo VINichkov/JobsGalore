@@ -40,6 +40,7 @@ class ApplicationController < ActionController::Base
   def current_company
     if current_client&.resp?
       if current_client.company.nil?
+        puts "<<<<<<<<<<<<<Компания не заполнена>>>>>>>>>>>>>>>>>>"
         client = add_new_workflow(class: :ClientWorkflow, client:current_client)
         client.save!(session[:workflow])
         redirect_to workflow_link(client), notice: 'Please, enter information about your company.'
