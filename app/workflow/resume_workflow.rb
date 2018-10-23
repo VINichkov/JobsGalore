@@ -39,7 +39,7 @@ class ResumeWorkflow < ApplicationWorkflow
   private
 
   def update_att(arg = {})
-    Rails.logger.debug "ResumeWorkflow.update_att:"
+    Rails.logger.debug "ResumeWorkflow.update_att: #{arg.to_json}"
     @to_start = arg[:to_start]
     @resume =arg[:resume] if arg[:resume]
     @not_linkedin = arg[:not_linkedin] if arg[:not_linkedin]

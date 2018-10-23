@@ -43,12 +43,12 @@ class ClientWorkflow < ApplicationWorkflow
   end
 
   def state_is_new
-    Rails.logger.debug "&&& State_is_new !((@client&.applicant? = #{@client&.applicant?} or @client&.company = #{@client&.company}) and @client&.persisted? = #{@client&.persisted?}) and !(@client&.persisted? = #{@client&.persisted?} and @client&.resp? = #{@client&.resp?}) &&&"
+    Rails.logger.debug "&&& State_is_new !((@client&.applicant? = #{@client&.applicant?} or @client&.company = #{@client&.company}) and @client&.persisted? = #{@client&.persisted?}) and !(@client&.persisted? = #{@client&.persisted?} and @client&.resp? = #{@client&.persisted?}) &&&"
     !((@client&.applicant? or @client&.company) and @client&.persisted?) and !(@client&.persisted? and @client&.resp?)
   end
 
   def update_att(arg = {})
-    Rails.logger.debug  "-----ClientWorkflow.update_att"
+    Rails.logger.debug  "-----ClientWorkflow.update_att: #{arg.to_json}"
     @client =arg[:client] if arg[:client]
     @client.update(company:arg[:company])  if @client&.company_id.blank? and arg[:company]
   end

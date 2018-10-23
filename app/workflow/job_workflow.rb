@@ -62,7 +62,7 @@ class JobWorkflow < ApplicationWorkflow
   end
 
   def update_att(arg = {})
-    Rails.logger.debug  "JobWorkflow.update_att"
+    Rails.logger.debug  "JobWorkflow.update_att: #{arg.to_json}"
     @job =arg[:job] if arg[:job]
     if arg[:client]
       @client =arg[:client]
