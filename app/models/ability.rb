@@ -40,6 +40,7 @@ class Ability
     view_profile_resumes
     manager_team(user)
     create_company
+    edit_profile(user)
     edit_resume_jobs_base(user)
     base
   end
