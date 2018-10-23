@@ -4,9 +4,7 @@ class NewResume extends React.Component{
         this.state = {
             text: this.props.text,
             title:null,
-            industry:null,
-
-        };
+            industry:null};
         this._divEditable = React.createRef();
 
         this._fileInput = React.createRef();
@@ -96,16 +94,16 @@ class NewResume extends React.Component{
             buttonLinkedIn = <div className="row">
                                 <div className="form-group">
                                     <div className="hidden-xs col-md-6 col-sm-6 col-lg-6">
-                                        <button className="btn btn-linkedin btn-bloc">
+                                        <a className="btn btn-linkedin btn-bloc">
                                             <i className="fa fa-linkedin text-left" aria-hidden="true"/>
                                             &nbsp;|&nbsp;Resume from LinkedIn
-                                        </button>
+                                        </a>
                                     </div>
                                     <div className="col-xs-6 hidden-md hidden-sm hidden-lg">
-                                        <button className="btn btn-linkedin btn-bloc">
+                                        <a className="btn btn-linkedin btn-bloc">
                                             <i className="fa fa-linkedin text-left" aria-hidden="true"/>
                                             &nbsp;|&nbsp;Resume
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
