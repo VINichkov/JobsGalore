@@ -33,14 +33,17 @@ class ClientWorkflow < ApplicationWorkflow
   private
 
   def final
+    Rails.logger.debug "&&& Final ((@client&.applicant? = #{@client&.applicant?} or (@client&.resp? = #{@client&.resp?} and @client&.company = #{@client&.company.present?})) and @client&.persisted?= #{@client&.persisted?} ) &&&"
     (@client&.applicant? or (@client&.resp? and @client&.company)) and @client&.persisted?
   end
 
   def not_company
+    Rails.logger.debug "&&& Not_company @client&.persisted? = #{@client&.persisted?} and @client&.resp? = #{@client&.resp?} and !@client&.company_id? = #{@client&.company_id?} &&&"
     @client&.persisted? and @client&.resp? and !@client&.company_id?
   end
 
   def state_is_new
+    Rails.logger.debug "&&& State_is_new !((@client&.applicant? = #{@client&.applicant?} or @client&.company = #{@client&.company}) and @client&.persisted? = #{@client&.persisted?}) and !(@client&.persisted? = #{@client&.persisted?} and @client&.resp? = #{@client&.resp?}) &&&"
     !((@client&.applicant? or @client&.company) and @client&.persisted?) and !(@client&.persisted? and @client&.resp?)
   end
 
