@@ -35,29 +35,29 @@ class ClientWorkflow < ApplicationWorkflow
 
   def final
     Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
-    Rails.logger.debug "&&& to final (@client&.applicant? or (@client&.resp? && @client&.company)) && @client&.persisted?} &&&"
-    Rails.logger.debug "&&& to final (#{@client&.applicant?} or (#{@client&.resp?} && #{@client&.company})) && #{@client&.persisted?}} &&&"
-    Rails.logger.debug "&&& to final #{(@client&.applicant? or (@client&.resp? && @client&.company)) && @client&.persisted?} &&&"
+    Rails.logger.debug "&&& to final (@client&.applicant? or (@client&.resp? && @client&.company.present?)) && @client&.persisted?} &&&"
+    Rails.logger.debug "&&& to final (#{@client&.applicant?} or (#{@client&.resp?} && #{@client&.company.present?})) && #{@client&.persisted?}} &&&"
+    Rails.logger.debug "&&& to final #{(@client&.applicant? or (@client&.resp? && @client&.company.present?)) && @client&.persisted?} &&&"
     Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
-    (@client&.applicant? or (@client&.resp? && @client&.company)) && @client&.persisted?
+    (@client&.applicant? or (@client&.resp? && @client&.company.present?)) && @client&.persisted?
   end
 
   def not_company
     Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
-    Rails.logger.debug "&&& to not_company @client&.persisted? && @client&.resp? && !@client&.company &&&"
-    Rails.logger.debug "&&& to not_company #{@client&.persisted?} && #{@client&.resp?} && #{!@client&.company} &&&"
-    Rails.logger.debug "&&& to not_company #{@client&.persisted? && @client&.resp? && !@client&.company} &&&"
+    Rails.logger.debug "&&& to not_company @client&.persisted? && @client&.resp? && !@client&.company.present? &&&"
+    Rails.logger.debug "&&& to not_company #{@client&.persisted?} && #{@client&.resp?} && #{!@client&.company.present?} &&&"
+    Rails.logger.debug "&&& to not_company #{@client&.persisted? && @client&.resp? && !@client&.company.present?} &&&"
     Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
-    @client&.persisted? && @client&.resp? && !@client&.company_id?
+    @client&.persisted? && @client&.resp? && !@client&.company.present?
   end
 
   def state_is_new
     Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
-    Rails.logger.debug "&&& to state_is_new  =  !((@client&.applicant? or @client&.company) && @client&.persisted?) && !(@client&.persisted? && @client&.resp?) &&&"
-    Rails.logger.debug "&&& to state_is_new  =  !((#{@client&.applicant?} or #{@client&.company}) && #{@client&.persisted?}) && !(#{@client&.persisted?} && #{@client&.resp?}) &&&"
-    Rails.logger.debug "&&& to state_is_new  = #{ !((@client&.applicant? or @client&.company) && @client&.persisted?) && !(@client&.persisted? && @client&.resp?)} &&&"
+    Rails.logger.debug "&&& to state_is_new  =  !((@client&.applicant? or @client&.company.present?) && @client&.persisted?) && !(@client&.persisted? && @client&.resp?) &&&"
+    Rails.logger.debug "&&& to state_is_new  =  !((#{@client&.applicant?} or #{@client&.company.present?}) && #{@client&.persisted?}) && !(#{@client&.persisted?} && #{@client&.resp?}) &&&"
+    Rails.logger.debug "&&& to state_is_new  = #{ !((@client&.applicant? or @client&.company.present?) && @client&.persisted?) && !(@client&.persisted? && @client&.resp?)} &&&"
     Rails.logger.debug "&&&------------------------------------------------------------------------------------------------------&&&"
-    !((@client&.applicant? or @client&.company) && @client&.persisted?) && !(@client&.persisted? && @client&.resp?)
+    !((@client&.applicant? or @client&.company.present?) && @client&.persisted?) && !(@client&.persisted? && @client&.resp?)
   end
 
   def update_att(arg = {})
