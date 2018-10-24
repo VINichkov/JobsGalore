@@ -1,3 +1,3 @@
 if @response
-  json.extract! @response, :title, :industry_id, :location_id, :description
+  json.extract! @response, :title, :industry_id, :location_id, :location_name, :description
 end

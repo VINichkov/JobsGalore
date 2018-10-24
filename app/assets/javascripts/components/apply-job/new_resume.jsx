@@ -86,10 +86,11 @@ class NewResume extends React.Component{
         $.get(this.props.linkedin_resume_url, function(data) {
             console.log("We get title:"+data.title+" industry:"+ data.industry_id+" location_id:"+data.location_id+" location_name:"+data.location_name+" description:"+data.description);
             this.setState({ title:data.title,
-                            industry:{id:data.industry_id},
+                            industry: {id: data.industry_id},
                             location_id:data.location_id,
                             location_name:data.location_name});
             this.medium.setContent(data.description,0);
+            console.log("We get title:"+this.state.title+" industry:"+ this.state.industry.id+" location_id:"+this.state.location_id+" location_name:"+this.state.location_name);
         }.bind(this));
         console.log("Well done!");
     }
