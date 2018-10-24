@@ -44,7 +44,6 @@ class ClientsController < ApplicationController
   def linkedin_resume_update
     if current_client
       if Rails.env.production?
-        puts "!______________Зашли_______________!"
         client = LinkedInClient.new
         @response = client.linkedin_to_h(client.get_profile(current_client.token))
       else
