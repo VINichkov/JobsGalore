@@ -6,7 +6,8 @@ class NewResume extends React.Component{
             title:null,
             industry:null,
             location_name:this.props.location.name,
-            location_id:this.props.location.id};
+            location_id:this.props.location.id,
+            flagVisible: false};
         this._divEditable = React.createRef();
 
         this._fileInput = React.createRef();
@@ -82,20 +83,19 @@ class NewResume extends React.Component{
     }
 
     handleLinkedIn(){
-        console.log("You clicked to 'Resume from LinkedIn'");
         $.get(this.props.linkedin_resume_url, function(data) {
-            console.log("We get title:"+data.title+" industry:"+ data.industry_id+" location_id:"+data.location_id+" location_name:"+data.location_name+" description:"+data.description);
             this.setState({ title:data.title,
                             industry: {id: data.industry_id},
                             location_id:data.location_id,
-                            location_name:data.location_name});
+                            location_name:data.location_name,
+                            flagVisible: !this.state.flagVisible});
             this.medium.setContent(data.description,0);
-            console.log("We get title:"+this.state.title+" industry:"+ this.state.industry.id+" location_id:"+this.state.location_id+" location_name:"+this.state.location_name);
         }.bind(this));
         console.log("Well done!");
     }
 
     render(){
+        let flag;
         let field_new_resume;
         let buttonLinkedIn;
         if (this.props.user_from_linkedin){
@@ -150,9 +150,9 @@ class NewResume extends React.Component{
                     </div>
                 </div>
                 <div className="form-group">
-                    <label>Professional area</label>
+                    <label>Professional area </label>
                     <br/>
-                    <Category style={{width:'100%'}} defaultValue={this.props.industry} className="form-control navbar-btn" name="resume[category]" categories = {this.props.categories}/>
+                    <Category style={{width:'100%'}} defaultValue={this.state.industry} className="form-control navbar-btn" name="resume[category]" categories = {this.props.categories}/>
                 </div>
                 <div className="form-group">
                     <label>Resume (CV)</label>
@@ -167,7 +167,7 @@ class NewResume extends React.Component{
             </div>;
         }
         return(
-            <div>
+            <div key = {this.state.flagVisible}>
                 <div className="panel panel-info" >
                     <div className="panel-heading " onClick={this.handleOnClickResume} >
                         <input type="radio" id="new_resume_head" name="resume" value="New resume" checked={this.props.check}/> New resume
