@@ -82,13 +82,16 @@ class NewResume extends React.Component{
     }
 
     handleLinkedIn(){
+        console.log("You clicked to 'Resume from LinkedIn'");
         $.get(this.props.linkedin_resume_url, function(data) {
+            console.log("We get "+ data);
             this.setState({ title:data.title,
                             industry:{id:data.industry_id},
                             location_id:data.location_id,
                             location_name:data.location_name});
             this.medium.setContent(data.description,0);
         }.bind(this));
+        console.log("Well done!");
     }
 
     render(){
