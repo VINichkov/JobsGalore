@@ -6,20 +6,6 @@ class Autorization extends React.Component{
     render(){
         return(
             <div>
-                <h4> Are you applying for the following job:</h4>
-                <h3><strong><a href={this.props.title.link}>{this.props.title.name}</a></strong></h3>
-                <p>
-                    <span className="text-success">
-                        <span className="glyphicon glyphicon-home"></span>
-                        &nbsp;
-                        {this.props.company}
-                    </span>
-                    <span>&nbsp; - &nbsp;</span>
-                    <span className="text-warning">
-                        {this.props.location.name}
-                    </span>
-                </p>
-                <hr className="colorgraph"/>
                 <div className="form-group">
                     <label>Aready a member?</label>
                     <div className="row">
