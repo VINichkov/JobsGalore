@@ -3,6 +3,7 @@ class LinkedInClient
   def linkedin_to_h(auth)
     if auth
       experience = auth&.extra&.raw_info&.positions[:values]&.last
+      summary = ''
       summary = auth&.extra&.raw_info&.summary.split("\n").compact.map{|t| "<p>#{t}</p>"}.join if auth.extra.raw_info.summary
       local = Location.search((auth.extra.raw_info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
       if experience
