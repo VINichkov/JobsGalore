@@ -27,7 +27,6 @@ class SendResume
       end
     else
       resume = Resume.find_by_id(context.params[:resume])
-      puts resume.to_json
       if resume.blank?
         raise "We apologize for the inconvenience, but this service is temporarily unavailable."
       end
