@@ -23,12 +23,14 @@ class SendResume
       resume[:client_id] = current_client.id
       resume = Resume.create(resume)
       unless resume.persisted?
-        raise "We apologize for the inconvenience, but this service is temporarily unavailable. 1"
+        raise "We apologize for the inconvenience, but this service is temporarily unavailable."
       end
     else
       resume = Resume.find_by_id(context.params[:resume])
+      puts resume.to_json
+      resume
       if resume.blank?
-        raise "We apologize for the inconvenience, but this service is temporarily unavailable. 2"
+        raise "We apologize for the inconvenience, but this service is temporarily unavailable."
       end
     end
   end
@@ -36,8 +38,6 @@ class SendResume
   def send(resume, job, letter)
     Rails.logger.debug("Q_____________________________________________________________________!")
     Rails.logger.debug("#{resume.to_json}")
-    Rails.logger.debug("#{job.to_json}")
-    Rails.logger.debug("#{letter.to_json}")
     Rails.logger.debug("Q_____________________________________________________________________!")
     ResumesMailer.send_to_employer(resume, job, letter).deliver_later
   end
