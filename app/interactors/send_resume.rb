@@ -23,12 +23,12 @@ class SendResume
       resume[:client_id] = current_client.id
       resume = Resume.create(resume)
       unless resume.persisted?
-        raise "We apologize for the inconvenience, but this service is temporarily unavailable."
+        raise "We apologize for the inconvenience, but this service is temporarily unavailable. 1"
       end
     else
-      resume = Resume.find_by_id(context.params[:new_resume])
+      resume = Resume.find_by_id(context.params[:resume])
       if resume.blank?
-        raise "We apologize for the inconvenience, but this service is temporarily unavailable."
+        raise "We apologize for the inconvenience, but this service is temporarily unavailable. 2"
       end
     end
   end
