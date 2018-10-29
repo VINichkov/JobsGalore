@@ -6,6 +6,7 @@ class SendResume
       resume = create_resume(context.params)
       send(resume, Job.find_by_id(context.params[:job]), context.params[:text])
     rescue
+      Rails.logger.debug("ERROR #{$!}")
       context.fail!
     end
   end
@@ -33,6 +34,11 @@ class SendResume
   end
 
   def send(resume, job, letter)
+    Rails.logger.debug("Q_____________________________________________________________________!")
+    Rails.logger.debug("#{resume.to_json}")
+    Rails.logger.debug("#{job.to_json}")
+    Rails.logger.debug("#{letter.to_json}")
+    Rails.logger.debug("Q_____________________________________________________________________!")
     ResumesMailer.send_to_employer(resume, job, letter).deliver_later
   end
 end

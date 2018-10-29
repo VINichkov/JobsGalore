@@ -177,7 +177,6 @@ class ClientsController < ApplicationController
 
   def send_resume
     @send_resume = SendResume.call(params:send_params)
-
   end
 
 
