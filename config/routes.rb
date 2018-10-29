@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   get  '/team_change/:id', to: 'clients#change_type', as: 'change_type'
   patch '/update_photo', to:"clients#update_photo", as: 'update_photo'
   get '/linkedin_resume_update', to:"clients#linkedin_resume_update", as: 'linkedin_resume'
+  post 'send_resume', to: 'clients#send_resume', as: 'send'
 
   resources :locations
   get '/search_locations/:query', to: 'locations#search'

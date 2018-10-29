@@ -5,4 +5,12 @@ class ResumesMailer < ApplicationMailer
     @resume = resume
     mail(to:@resume[:mail], subject: "Your resume was published on JobsGalore!")
   end
+
+  def send_to_employer(resume, job, letter)
+    @resume = resume
+    @job = job
+    @letter = letter
+    mail(to:job.client.email, subject: job.title)
+  end
+
 end

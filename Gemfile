@@ -26,6 +26,7 @@ gem 'redis-objects'
 gem 'aasm'
 gem 'rack-rewrite'
 gem 'pdf-reader','~> 2.1.0'
+gem 'wicked_pdf'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'

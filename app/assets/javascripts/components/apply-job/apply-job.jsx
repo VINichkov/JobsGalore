@@ -1,16 +1,13 @@
 class ApplyJob extends React.Component{
     constructor(props){
         super(props);
+        this.state={inputLetter:""};
         this._options={
                 placeholder: {
-                    /* This example includes the default options for placeholder,
-                       if nothing is passed this is what it used */
                     text: 'Type your text here',
                     hideOnClick: true
                 },
                 toolbar: {
-                    /* These are the default options for the toolbar,
-                       if nothing is passed this is what is used */
                     allowMultiParagraphSelection: true,
                     buttons: ['bold', 'italic', 'underline', 'anchor', 'h3' ,'h4' , 'orderedlist', 'unorderedlist'],
                     diffLeft: 0,
@@ -20,7 +17,6 @@ class ApplyJob extends React.Component{
                     relativeContainer: null,
                     standardizeSelectionStart: false,
                     static: false,
-                    /* options which only apply when static is true */
                     align: 'center',
                     sticky: false,
                     updateOnEmptySelection: false
@@ -40,15 +36,14 @@ class ApplyJob extends React.Component{
         this.handleChangeFocus =  this.handleChangeFocus.bind(this);
     }
     componentDidMount(){
-        let text = "<p>Hi,</p><p>I\'m interested in the Ruby engineer job which I found on Jora. I believe I have the appropriate experience for this role. Please contact me if you would like to discuss further.</p>"+
-            "<p>I look forward to hearing from you.</p>";
-        let dom = ReactDOM.findDOMNode(this._divEditableL.current);
-        this.medium = new MediumEditor(dom, this._options);
-        this.medium.subscribe('editableInput', (e) => {
-            this._updated = true;
-            this.change(dom.innerHTML);
-        });
-
+        if (this.props.resumes !== null) {
+            let dom = ReactDOM.findDOMNode(this._divEditableL.current);
+            this.setState({inputLetter:dom.innerHTML});
+            this.medium = new MediumEditor(dom, this._options);
+            this.medium.subscribe('editableInput', (e) => {
+                this.setState({inputLetter:dom.innerHTML});
+            });
+        }
     }
 
 
@@ -91,12 +86,14 @@ class ApplyJob extends React.Component{
             let old_resume = this.props.resumes.map(function(resume, i){
                 return (   <Resume resume = {this.state.resumes["resume_"+i].resume}
                                    onchange = {this.handleChangeFocus}
+                                   name = "letter[resume]"
                                    check = {this.state.resumes["resume_"+i].checked}
                                    key ={i}
                                    keyResume = {i}/> );
             }.bind(this));
             step = <div>
-                        <form>
+                        <form action={this.props.send_url} method='post'>
+                            <input type="text" name="letter[job]" className="none" defaultValue={this.props.job} value={this.props.job}/>
                             <NewResume location = {this.props.location}
                                        check = {this.state.resumes.new_resume.checked}
                                        categories = {this.props.categories}
@@ -104,7 +101,9 @@ class ApplyJob extends React.Component{
                                        url_for_parse = {this.props.url_for_parse}
                                        user_from_linkedin = {this.props.user_from_linkedin}
                                        linkedin_resume_url ={this.props.linkedin_resume_url}
-                                       options = {this._options}/>
+                                       options = {this._options}
+                                       name="letter[new_resume]"
+                                       nameCheckbox = "letter[resume]"/>
                             <hr/>
                             <p><strong>Resumes:</strong></p>
                             {old_resume}
@@ -112,7 +111,7 @@ class ApplyJob extends React.Component{
                             <div className="form-group">
                                 <label>A brief message to employer (optional)</label>
                                 <br/>
-                                <textarea name="letter[description]"  className="markdown none" id="letter_description"></textarea>
+                                <textarea name="letter[text]" value={this.state.inputLetter} className="markdown none" id="letter_description"></textarea>
                                 <div id = 'letter' className="editable" ref={this._divEditableL}>
                                     <p>Hi,</p>
                                     <p>I'm interested in the {this.props.title.name} job which I found on <a href="www.jobsgalore.eu">Jobs Galore</a>. I believe I have the appropriate experience for this role. Please contact me if you would like to discuss further.</p>
@@ -121,10 +120,13 @@ class ApplyJob extends React.Component{
                             </div>
                             <div className="row">
                                 <div className="col-xs-6 col-lg-6">
-                                    <input type="submit" className="btn btn-primary btn-block" />
+                                    <a href className="btn btn-success   btn-block">Back</a>
+                                </div>
+                                <div className="col-xs-6 col-lg-6">
+                                    <input type="submit" className="btn btn-primary btn-block" value="Apply"/>
                                 </div>
                             </div>
-
+                            <br/>
                         </form>
                     </div>
         }

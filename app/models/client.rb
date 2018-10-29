@@ -102,7 +102,7 @@ class Client < ApplicationRecord
 
   def resumes_for_apply
     resume.select(:id, :title, :salary, :description, :location_id, :industry_id).all.limit(5).includes(:location,:industry).map  do |t|
-      {idr: t.id,
+      {id: t.id,
        title: t.title,
        location: t.location&.name,
        industry: t.industry&.name,

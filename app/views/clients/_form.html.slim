@@ -85,14 +85,15 @@
     hr.colorgraph
     -if option[:devise]
       .row
+        = render "devise/shared/links"
         .col-xs-6.col-md-6
           = f.submit "Register", class: "btn btn-primary btn-block"
-        = render "devise/shared/links"
     -else
       .row
         .col-xs-12.col-sm-6.col-md-6
-          = f.submit class: "btn btn-primary btn-block"
+          = link_to 'Back', :back, class:"btn btn-success btn-block "
           p
         .col-xs-12.col-sm-6.col-md-6
-          = link_to 'Back', :back, class:"btn btn-success btn-block "
+          = f.submit class: "btn btn-primary btn-block"
+
     br

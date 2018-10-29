@@ -41,8 +41,8 @@ class Resume extends React.Component{
         return(
                 <div className={styleResume} key={this.props.keyResume} onClick={this.handleOnClickResume}>
                     <div className="panel-heading">
-                        <input type="radio" id={"contactChoice"+this.props.keyResume} checked={this.props.check} name="resume" value={this.props.resume.title} />
-                        <span href={"/resumes/"+this.props.resume.idr}>&nbsp;{this.props.resume.title}</span>
+                        <input type="radio" id={"contactChoice"+this.props.keyResume} checked={this.props.check} name={this.props.name} value={this.props.resume.id} />
+                        <span>&nbsp;{this.props.resume.title}</span>
                         <span style={{float: "right"}}> <a  onClick={this.handleClickItem}>Show</a></span>
                     </div>
                     {description}

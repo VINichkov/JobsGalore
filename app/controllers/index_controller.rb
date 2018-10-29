@@ -13,7 +13,6 @@ class IndexController < ApplicationController
     unless @category_view.success?
       render_404
     end
-
   end
 
   def main_search
@@ -49,6 +48,7 @@ class IndexController < ApplicationController
   end
 
   def send_offer
+    send_params
   end
 
   def terms_and_conditions
@@ -130,8 +130,6 @@ class IndexController < ApplicationController
   def main_search_params
     params.permit(:page, main_search: [:type, :value, :page, :salary,  :options, :category, :location_id, :location_name, :urgen])
   end
-
-
 
 
 end

@@ -7,9 +7,9 @@ class NewResume extends React.Component{
             industry:null,
             location_name:this.props.location.name,
             location_id:this.props.location.id,
-            flagVisible: false};
+            inputDescription:""};
         this._divEditable = React.createRef();
-
+        this._inputDescription = React.createRef();
         this._fileInput = React.createRef();
         this.handleOnClickResume =  this.handleOnClickResume.bind(this);
         this.readURL = this.readURL.bind(this);
@@ -18,12 +18,13 @@ class NewResume extends React.Component{
 
 
     componentDidUpdate() {
-        let dom = ReactDOM.findDOMNode(this._divEditable.current);
-        this.medium = new MediumEditor(dom, this.props.options);
-        this.medium.subscribe('editableInput', (e) => {
-            this._updated = true;
-            this.change(dom.innerHTML);
-        });
+        if (this.props.check) {
+            let dom = ReactDOM.findDOMNode(this._divEditable.current);
+            this.medium = new MediumEditor(dom, this.props.options);
+            this.medium.subscribe('editableInput', (e) => {
+                this.setState({inputDescription:dom.innerHTML});
+            });
+        }
     }
 
     componentWillUnmount() {
@@ -123,7 +124,7 @@ class NewResume extends React.Component{
                 <div className="form-group">
                     <label>Title</label>
                     <br/>
-                    <input type="text" defaultValue={this.state.title} name="resume[title]" className="form-control" required="required" />
+                    <input type="text" defaultValue={this.state.title} name={this.props.name+"[title]"} className="form-control" required="required" />
                 </div>
                 <div className="row">
                     <div className="col-md-6 col-lx-6 col-sm-12 col-xs-12">
@@ -132,7 +133,7 @@ class NewResume extends React.Component{
                             <br/>
                             <div className="input-group">
                                 <span className="input-group-addon">$</span>
-                                <input type="text" name="resume[salary]" className="form-control" required="required"/>
+                                <input type="text" name={this.props.name+"[salary]"} className="form-control"/>
                             </div>
                         </div>
                     </div>
@@ -141,7 +142,7 @@ class NewResume extends React.Component{
                             <label>Location</label>
                             <br/>
                             <Autocomplete className = "form-control dropdown-toggle"
-                                          name = "resume[location"
+                                          name = {this.props.name+"[location"}
                                           id = "resume_location_id"
                                           route = "/search_locations/"
                                           defaultName = {this.state.location_name}
@@ -152,12 +153,12 @@ class NewResume extends React.Component{
                 <div className="form-group">
                     <label>Professional area </label>
                     <br/>
-                    <Category style={{width:'100%'}} defaultValue={this.state.industry} className="form-control navbar-btn" name="resume[category]" categories = {this.props.categories}/>
+                    <Category style={{width:'100%'}} defaultValue={this.state.industry} className="form-control navbar-btn" name={this.props.name+"[category]"} categories = {this.props.categories}/>
                 </div>
                 <div className="form-group">
                     <label>Resume (CV)</label>
                     <br/>
-                    <textarea name="resume[description]"  className="markdown none" id="resume_description"></textarea>
+                    <textarea name={this.props.name+"[description]"}  value={this.state.inputDescription} className="markdown none" id="resume_description"></textarea>
                     <div className="editable" ref={this._divEditable}></div>
                 </div>
                 <div className="form-group">
@@ -170,7 +171,7 @@ class NewResume extends React.Component{
             <div key = {this.state.flagVisible}>
                 <div className="panel panel-info" >
                     <div className="panel-heading " onClick={this.handleOnClickResume} >
-                        <input type="radio" id="new_resume_head" name="resume" value="New resume" checked={this.props.check}/> New resume
+                        <input type="radio" id="new_resume_head" name={this.props.nameCheckbox} value="New resume" checked={this.props.check}/> New resume
                     </div>
                     {field_new_resume}
                 </div>

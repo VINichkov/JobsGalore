@@ -3,6 +3,7 @@ class ClientsController < ApplicationController
   before_action :set_client, only: [:show, :edit,:update, :destroy,:change_type, :destroy_member, :admin_edit_photo,:admin_show,:admin_edit,:admin_update,:admin_destroy ]
   before_action :current_company, only: [ :team]
   before_action :set_current_client, only: [:jobs, :resumes, :settings, :edit_photo]
+  skip_before_action :verify_authenticity_token, only: [:send_resume]
   #before_action :authenticate_client!
 
 
@@ -174,9 +175,20 @@ class ClientsController < ApplicationController
     end
   end
 
+  def send_resume
+    @send_resume = SendResume.call(params:send_params)
+
+  end
+
+
   private
 
-    # Use callbacks to share common setup or constraints between actions.
+  def send_params
+    params.require(:letter).permit(:resume, :text, :job, new_resume: {})
+  end
+
+
+  # Use callbacks to share common setup or constraints between actions.
   def set_client
     @client = Client.find(params[:id])
   end
