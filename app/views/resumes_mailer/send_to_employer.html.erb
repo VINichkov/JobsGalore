@@ -1,4 +1,5 @@
 <hr/>
 <p><%=@resume.client.full_name%>(<a href=<%=@resume.client.email%>><%=@resume.client.email%></a>) applied to <a href=<%=job_url(@job)%>><%=@job.title%></a> job in <%= @job.location.name %></p>
 <hr/>
+<%= render inline: @letter %>
 
