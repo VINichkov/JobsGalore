@@ -58,6 +58,7 @@ class Resume < ApplicationRecord
   def to_short_h
     {id:id, desiredjobtitle: desiredjobtitle, salary: salary, abouteme:abouteme, client_id:client_id, location_id:location_id, industry_id:industry_id}
   end
+
   protected
 
   def send_email

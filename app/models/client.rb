@@ -86,7 +86,7 @@ class Client < ApplicationRecord
    end
 
   def full_name
-    @full_name ||= self.firstname+' '+self.lastname
+    @full_name ||= self.firstname.capitalize+' '+self.lastname.capitalize
   end
 
   def to_short_h

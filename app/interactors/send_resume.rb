@@ -20,7 +20,7 @@ class SendResume
       resume[:industry_id] = resume[:category]
       resume.delete(:category)
       resume.delete(:location_name)
-      resume[:client_id] = current_client.id
+      resume[:client_id] = context.current_client_id
       resume = Resume.create(resume)
       unless resume.persisted?
         raise "We apologize for the inconvenience, but this service is temporarily unavailable."
@@ -35,9 +35,6 @@ class SendResume
   end
 
   def send(resume, job, letter)
-    Rails.logger.debug("Q_____________________________________________________________________!")
-    Rails.logger.debug("#{resume.to_json}")
-    Rails.logger.debug("Q_____________________________________________________________________!")
     ResumesMailer.send_to_employer(resume, job, letter).deliver_later
   end
 end

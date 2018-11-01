@@ -176,7 +176,7 @@ class ClientsController < ApplicationController
   end
 
   def send_resume
-    @send_resume = SendResume.call(params:send_params)
+    @send_resume = SendResume.call(params:send_params, current_client_id: current_client.id)
   end
 
 

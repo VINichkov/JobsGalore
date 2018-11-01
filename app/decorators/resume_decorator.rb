@@ -1,4 +1,5 @@
 class ResumeDecorator < ApplicationDecorator
+  include Draper::LazyHelpers
   delegate_all
   decorates_association :client
   def keywords
@@ -18,4 +19,16 @@ class ResumeDecorator < ApplicationDecorator
   def salary
     @salary ||="$"+object.salary.to_i.to_s if object.salary.present? && object.salary!=0
   end
+
+  def full_resume
+    puts "!!!--- #{Dragonfly.app.remote_url_for(client.photo_uid)}"
+    html = ""
+    html += "<h1>#{client.full_name}</h1>"
+    html += h.image_tag(Dragonfly.app.remote_url_for(client.photo_uid))
+    html += "<p>#{location.name}</p>"
+    html += "<p>#{salary}</p>" if salary
+    html += "<h2>#{title}</h2>"
+    html += description
+  end
+
 end

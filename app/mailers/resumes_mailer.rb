@@ -6,9 +6,7 @@ class ResumesMailer < ApplicationMailer
   end
 
   def send_to_employer(resume, job, letter)
-    @resume = resume
-    @job = job
-    @letter = letter
+    @resume, @job, @letter = resume, job, letter
     mail(to:job.client.email, subject: job.title)
   end
 

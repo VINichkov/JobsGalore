@@ -10,10 +10,8 @@ html
     br
     |Kind Regards,
     br
-    |Team of
-    a[href= root_url ]
-      | #{PropertsHelper::COMPANY}
+    |Team of #{link_to PropertsHelper::COMPANY,root_url}
     br
     div
       span
-        =image_tag(image_path("jg.png"), size: "200x100",alt: "Jobs Galore")
+        =image_tag(image_path("jg.png"), size: "250x100",alt: "Jobs Galore")

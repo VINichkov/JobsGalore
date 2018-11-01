@@ -5,6 +5,22 @@ class IndexController < ApplicationController
     @main = Main.call
   end
 
+  def pdf
+    respond_to do |format|
+      format.pdf do
+        pdf = Prawn::Document.new
+        pdf.styled_text Resume.find_by_id(959).decorate.full_resume
+        send_data pdf.render,
+                  filename: "export.pdf",
+                  type: 'application/pdf',
+                  disposition: 'inline'
+      end
+      format.html do
+        render inline: Resume.find_by_id(959).decorate.full_resume
+      end
+    end
+  end
+
   def advertising_terms_of_use
   end
 
