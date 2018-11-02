@@ -21,7 +21,6 @@ class ResumeDecorator < ApplicationDecorator
   end
 
   def full_resume
-    puts "!!!--- #{Dragonfly.app.remote_url_for(client.photo_uid)}"
     html = ""
     html += "<h1>#{client.full_name}</h1>"
     html += h.image_tag(Dragonfly.app.remote_url_for(client.photo_uid))

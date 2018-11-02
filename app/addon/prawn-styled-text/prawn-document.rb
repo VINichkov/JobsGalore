@@ -70,7 +70,7 @@ Prawn::Document.class_eval do
           image_options[:width]  = options[:width]  if options[:width]
           image_options[:height] = options[:height] if options[:height]
           begin
-            self.image context[:src], image_options
+            self.image open(context[:src]), image_options
           rescue
             Rails.logger.info("Error: #{$!}")
           end
@@ -82,6 +82,12 @@ Prawn::Document.class_eval do
 
   private
   def setting
+    self.font_families.update(
+        "OpenSans" => { normal: "#{Rails.root.join("vendor/assets/fonts/OpenSans-Regular.ttf")}",
+                        :bold        => "#{Rails.root.join("vendor/assets/fonts/OpenSans-Bold.ttf")}",
+                        :italic      =>  "#{Rails.root.join("vendor/assets/fonts/OpenSans-Italic.ttf")}",
+                        :bold_italic => "#{Rails.root.join("vendor/assets/fonts/OpenSans-BoldItalic.ttf")}"})
+    self.font 'OpenSans'
     self.bounds.add_right_padding(50)
   end
 end
