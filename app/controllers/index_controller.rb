@@ -6,11 +6,7 @@ class IndexController < ApplicationController
   end
 
   def pdf
-    respond_to do |format|
-      format.html do
-        render inline: resume.full_resume
-      end
-    end
+  
   end
 
   def advertising_terms_of_use
