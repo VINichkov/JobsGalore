@@ -7,8 +7,6 @@ class IndexController < ApplicationController
 
   def pdf
     respond_to do |format|
-
-      end
       format.html do
         render inline: resume.full_resume
       end
