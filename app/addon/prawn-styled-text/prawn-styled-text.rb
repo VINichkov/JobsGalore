@@ -3,7 +3,7 @@ require_relative 'callbacks'
 require_relative 'prawn-document'
 
 module PrawnStyledText
-  BLOCK_TAGS = [ :br, :div, :h1, :h2, :h3, :h4, :h5, :h6, :hr, :li, :p, :ul ]
+  BLOCK_TAGS = [ :br, :div, :h1, :h2, :h3, :h4, :h5, :h6, :hr, :li, :p, :ul, :table ]
   DEF_HEADING_T = 16
   DEF_HEADING_H = 8
   DEF_MARGIN_UL = 15
@@ -84,6 +84,7 @@ module PrawnStyledText
   def self.text_node( pdf, data )
     context = { pre: '', options: {} }
     styles = []
+    table = []
     font_size = pdf.font_size
     data.each do |part|
       # Evalutate tag
@@ -94,6 +95,7 @@ module PrawnStyledText
         context[:options][:link] = link if link
       when :b, :strong # bold
         styles.push :bold
+      when :table
       when :del, :s
         @@strike_through ||= StrikeThroughCallback.new( pdf )
         context[:options][:callback] = @@strike_through

@@ -46,6 +46,9 @@ Prawn::Document.class_eval do
         extra_options[:pre] = context[:pre] if context[:pre]
         parts << { text: text }.merge( options ) # push the data
       elsif type == :closing_tag
+        if context[:tag] == :table
+          puts " #{data} "
+        end
         self.formatted_text( context[:text] ) if context[:text]
         if context[:tag] == :hr
           self.dash( options[:dash].include?( ',' ) ? options[:dash].split( ',' ).map( &:to_i ) : options[:dash].to_i ) if options[:dash]
@@ -67,10 +70,12 @@ Prawn::Document.class_eval do
             pos = options[:'image-position'].to_i
             image_options[:position] = pos > 0 ? pos : options[:'image-position']
           end
-          image_options[:width]  = options[:width]  if options[:width]
-          image_options[:height] = options[:height] if options[:height]
+          image_options[:width] = options[:width] ? options[:width]  : 200
+          #image_options[:height] = options[:height] ? options[:height] : 150
           begin
-            self.image open(context[:src]), image_options
+            url= Rails.env.development? ? 'http://127.0.0.1:3000'+ context[:src].to_s : context[:src]
+            puts image_options
+            self.image open(url), image_options
           rescue
             Rails.logger.info("Error: #{$!}")
           end
@@ -82,12 +87,6 @@ Prawn::Document.class_eval do
 
   private
   def setting
-    self.font_families.update(
-        "OpenSans" => { normal: "#{Rails.root.join("vendor/assets/fonts/OpenSans-Regular.ttf")}",
-                        :bold        => "#{Rails.root.join("vendor/assets/fonts/OpenSans-Bold.ttf")}",
-                        :italic      =>  "#{Rails.root.join("vendor/assets/fonts/OpenSans-Italic.ttf")}",
-                        :bold_italic => "#{Rails.root.join("vendor/assets/fonts/OpenSans-BoldItalic.ttf")}"})
-    self.font 'OpenSans'
-    self.bounds.add_right_padding(50)
+    #self.bounds.add_right_padding(50)
   end
 end

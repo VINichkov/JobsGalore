@@ -31,7 +31,7 @@ class SendResume
         raise "We apologize for the inconvenience, but this service is temporarily unavailable."
       end
     end
-    resume
+    resume.decorate
   end
 
   def send(resume, job, letter)
