@@ -80,6 +80,7 @@ class ApplyJob extends React.Component{
                           company = {this.props.company}
                           location = {this.props.location}
                           sign_in={this.props.sign_in}
+                          sign_up={this.props.sign_up}
                           linkedin_url = {this.props.linkedin_url}
             />;
         } else {

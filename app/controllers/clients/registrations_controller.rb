@@ -1,6 +1,7 @@
 class Clients::RegistrationsController < Devise::RegistrationsController
  before_action :configure_sign_up_params, only: [:create]
  before_action :configure_account_update_params, only: [:update]
+ skip_before_action :verify_authenticity_token, only: [:create]
 
   # GET /resource/sign_up
    def new
@@ -8,7 +9,7 @@ class Clients::RegistrationsController < Devise::RegistrationsController
        @client_wf = restore_workflow_object
        @client_wf ||= add_new_workflow(class: :ClientWorkflow, client: resource)
        @client_wf.save!(session[:workflow])
-       [ResumeWorkflow, JobWorkflow].include?(@client_wf.class) ? @flag = true : @flag = nil
+       #[ResumeWorkflow, JobWorkflow].include?(@client_wf.class) ? @flag = true : @flag = nil
      end
    end
 
@@ -38,8 +39,8 @@ class Clients::RegistrationsController < Devise::RegistrationsController
      else
        @client_wf&.save!(session[:workflow])
        clean_up_passwords resource
-       set_minimum_password_length
-       respond_with resource
+       alert = resource.errors.full_messages.map { |msg|  msg }.join(' ')
+       @client_wf.try(:route?) ? redirect_to(@client_wf.route, alert:alert) : respond_with(resource)
      end
    end
 

@@ -4,9 +4,12 @@ class SendResume
   def call
     begin
       resume = create_resume(context.params)
-      send(resume, Job.find_by_id(context.params[:job]), context.params[:text])
+      context.job = Job.find_by_id(context.params[:job])
+      send(resume, context.job, context.params[:text])
+      context.msg = 'Your resume sent'
     rescue
       Rails.logger.debug("ERROR #{$!}")
+      context.msg = $!
       context.fail!
     end
   end

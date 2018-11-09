@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   get 'sitemap', to: 'index#sitemap'
   get 'sitemap:id', to: 'index#sitemaps'
   get 'rss', to: 'index#rss'
-  get 'pdf', to: 'index#pdf'
   post 'file_to_html', to: 'index#file_to_html', as: "file_to_html"
 
   devise_for  :clients, controllers:{ registrations: "clients/registrations",

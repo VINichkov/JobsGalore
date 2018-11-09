@@ -94,7 +94,7 @@ class Resume < ApplicationRecord
           summary += "<p><strong>E-mail: </strong>#{client.email}</p>"
           summary += "<p><strong>Phone number: </strong>#{client.phone }</p>" if client.phone
           summary += "<p><strong>Birthday: </strong>#{client.birth&.strftime("%d %B %Y")}</p>" if client.birth
-          summary += "<p><strong>Salary: </strong>#{salary}</p>" if salary
+          summary += "<p><strong>Desired Salary: </strong>#{salary}</p>" if salary
           pdf.styled_text summary
         end
       end

@@ -5,10 +5,6 @@ class IndexController < ApplicationController
     @main = Main.call
   end
 
-  def pdf
-  
-  end
-
   def advertising_terms_of_use
   end
 
@@ -49,10 +45,6 @@ class IndexController < ApplicationController
         ContactUsMailer.send_to_customers(adress.email).deliver_later
       end
     redirect_to(root_path, notice: "Show must go on!!!")
-  end
-
-  def send_offer
-    send_params
   end
 
   def terms_and_conditions

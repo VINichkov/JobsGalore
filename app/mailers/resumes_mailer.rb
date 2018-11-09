@@ -7,8 +7,6 @@ class ResumesMailer < ApplicationMailer
 
   def send_to_employer(resume, job, letter)
     @resume, @job, @letter = resume, job, letter
-    @resume.decorate
-    puts @resume.class
     attachments["#{@resume.client.full_name}.pdf"] = @resume.to_pdf
     mail(to:job.client.email, subject: job.title)
   end

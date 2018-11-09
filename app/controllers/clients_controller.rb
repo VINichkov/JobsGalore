@@ -4,8 +4,6 @@ class ClientsController < ApplicationController
   before_action :current_company, only: [ :team]
   before_action :set_current_client, only: [:jobs, :resumes, :settings, :edit_photo]
   skip_before_action :verify_authenticity_token, only: [:send_resume]
-  #before_action :authenticate_client!
-
 
   def index
     @clients = Client.all.order(:email).paginate(page: client_params[:page], per_page:21)
@@ -45,8 +43,7 @@ class ClientsController < ApplicationController
   def linkedin_resume_update
     if current_client
       if Rails.env.production?
-        client = LinkedInClient.new
-        @response = client.linkedin_to_h(client.get_profile(current_client.token))
+        @response = LinkedInClient.new.client.linkedin_to_h(client.get_profile(current_client.token))
       else
         @response = {:title=>"Administrator JobsGalore.eu",
                      :industry_id=>19,
@@ -177,8 +174,14 @@ class ClientsController < ApplicationController
 
   def send_resume
     @send_resume = SendResume.call(params:send_params, current_client_id: current_client.id)
+    respond_to do |format|
+      if @send_resume.success?
+          format.html { redirect_to job_path(@send_resume.job), notice: @send_resume.msg }
+      else
+          format.html { redirect_to job_path(@send_resume.job), alert:  @send_resume.msg }
+      end
+    end
   end
-
 
   private
 

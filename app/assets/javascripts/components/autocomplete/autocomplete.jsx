@@ -51,11 +51,11 @@ class Autocomplete extends React.Component{
         }
         let input_id = null;
         if (this.state.input) {
-            input_id = <input list={this.props.name} key={this.props.name + "_id]"} id={"input_get"+this.props.id} name={this.props.name + "_id]"} defaultValue = {this.state.defaultId} className={this.props.className} style = {ilStyle}/>;
+            input_id = <input list={this.props.name} ref={this.props.idRef} key={this.props.name + "_id]"} id={"input_get"+this.props.id} name={this.props.name + "_id]"} defaultValue = {this.state.defaultId} className={this.props.className} style = {ilStyle}/>;
         }
         return(
             <div>
-                <input list={this.props.name}  key = {this.state.input ? this.props.name + "_name]" : this.props.name} name={this.state.input ? this.props.name + "_name]" : this.props.name} autoComplete = "off" className={this.props.className} onInput={this.handleInput}  defaultValue = {this.state.defaultName} placeholder={this.props.place_holder} type="text"  id={this.props.id} style={this.props.style}></input>
+                <input list={this.props.name}  ref={this.props.nameRef} key = {this.state.input ? this.props.name + "_name]" : this.props.name} name={this.state.input ? this.props.name + "_name]" : this.props.name} autoComplete = "off" className={this.props.className} onInput={this.handleInput}  defaultValue = {this.state.defaultName} placeholder={this.props.place_holder} type="text"  id={this.props.id} style={this.props.style}></input>
                 {input_id}
                 <datalist id={this.props.name} >
                     {locations}

@@ -24,47 +24,55 @@ class Autorization extends React.Component{
                 </div>
                 <hr className="colorgraph"/>
                 <p><strong> Personal information:</strong></p>
-                <div className='row'>
-                    <div className="col-xs-12 col-sm-6 col-md-6">
-                        <div className="form-group">
-                            <label>*Your first name</label>
-                            <input type='text' autoFocus className="form-control" placeholder="First Name" required="required"/>
+                <form method="post" action={this.props.sign_up} >
+                    <div className='row'>
+                        <div className="col-xs-12 col-sm-6 col-md-6">
+                            <div className="form-group">
+                                <label>*Your first name</label>
+                                <input type='text' ref={this._inputName} autoFocus name="client[firstname]" className="form-control" placeholder="First Name" required="required"/>
+                            </div>
+                        </div>
+                        <div className="col-xs-12 col-sm-6 col-md-6">
+                            <div className="form-group">
+                                <label>*Your surname</label>
+                                <input type='text' ref={this._inputSurname}  name="client[lastname]" className="form-control" placeholder="Surname" required="required"/>
+                            </div>
                         </div>
                     </div>
-                    <div className="col-xs-12 col-sm-6 col-md-6">
-                        <div className="form-group">
-                            <label>*Your surname</label>
-                            <input type='text' autoFocus className="form-control" placeholder="Surname" required="required"/>
-                        </div>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label>*Your location</label>
-                    <br/>
-                    <Autocomplete className="form-control dropdown-toggle"
-                                  name="client[location"
-                                  id= "client_location_id"
-                                  route='/search_locations/'
-                                  defaultName= {this.props.location.name}
-                                  defaultId={this.props.location.id} />
-                </div>
-                <div className="form-group">
-                    <label>*Your phone number</label>
-                    <input type='tel' autoFocus className="form-control" placeholder="+61 9 9999 99999" required="required"/>
-                </div>
-                <div className="form-group">
-                    <label>*Password</label>
-                    (6 characters minimum)
-                    <br/>
-                    <input type='password'  autoComplete="off" className="form-control" placeholder="**************" required="required"/>
-                </div>
-                <div className="row">
                     <div className="form-group">
-                        <div className="col-xs-6 col-sm-6 col-md-6">
-                            <button className="btn btn-primary btn-block">Continue</button>
+                        <label>*Your location</label>
+                        <br/>
+                        <Autocomplete className="form-control dropdown-toggle"
+                                      name="client[location"
+                                      id= "client_location_id"
+                                      route='/search_locations/'
+                                      nameRef ={this._inputLocationName}
+                                      idRef = {this._inputLocationId}
+                                      defaultName= {this.props.location.name}
+                                      defaultId={this.props.location.id} />
+                    </div>
+                    <div className="form-group">
+                        <label>*Your phone number</label>
+                        <InputMask inputRef={this._inputPhone} id="phone" name="client[phone]" class_name="form-control" dataformat="dd dddd dddddd" placeholder="02 9999 9999"/>
+                    </div>
+                    <div className="form-group">
+                        <label>*Your e-mail</label>
+                        <input type='email' ref={this._inputEmail} name="client[email]" className="form-control" placeholder="example@mail.com.au" required="required"/>
+                    </div>
+                    <div className="form-group">
+                        <label>*Password</label>
+                        (6 characters minimum)
+                        <br/>
+                        <input type='password' ref={this._inputPassword}  name="client[password]" autoComplete="off" className="form-control" placeholder="**************" required="required"/>
+                    </div>
+                    <div className="row">
+                        <div className="form-group">
+                            <div className="col-xs-6 col-sm-6 col-md-6">
+                                <input type="submit" className="btn btn-primary btn-block" value="Continue"/>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
                 <hr className="colorgraph"/>
             </div>
         );
