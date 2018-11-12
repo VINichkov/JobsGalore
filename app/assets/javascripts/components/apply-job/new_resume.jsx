@@ -9,21 +9,21 @@ class NewResume extends React.Component{
             location_id:this.props.location.id,
             inputDescription:""};
         this._divEditable = React.createRef();
-        this._inputDescription = React.createRef();
         this._fileInput = React.createRef();
         this.handleOnClickResume =  this.handleOnClickResume.bind(this);
         this.readURL = this.readURL.bind(this);
         this.handleLinkedIn = this.handleLinkedIn.bind(this);
     }
 
-
     componentDidUpdate() {
-        if (this.props.check) {
+        if (this.props.check && this.medium == null) {
             let dom = ReactDOM.findDOMNode(this._divEditable.current);
             this.medium = new MediumEditor(dom, this.props.options);
             this.medium.subscribe('editableInput', (e) => {
                 this.setState({inputDescription:dom.innerHTML});
             });
+        } else if(!this.props.check) {
+            this.medium=null;
         }
     }
 
@@ -92,7 +92,6 @@ class NewResume extends React.Component{
                             flagVisible: !this.state.flagVisible});
             this.medium.setContent(data.description,0);
         }.bind(this));
-        console.log("Well done!");
     }
 
     render(){
