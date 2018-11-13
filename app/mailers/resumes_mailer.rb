@@ -11,4 +11,9 @@ class ResumesMailer < ApplicationMailer
     mail(to:job.client.email, subject: job.title)
   end
 
+  def send_message(resume, letter, client)
+    @letter, @client, @resume = letter, client, resume
+    mail(to:@resume.client.email, subject: @resume.title)
+  end
+
 end

@@ -67,4 +67,4 @@
             = social_share_button_tag resume.title, url: resume_url(resume), title:resume.title
   -if client_signed_in?
     -if current_client.resp?
-      =render 'inc/contact', object: resume.client, title: "#{resume.title} at #{PropertsHelper::COMPANY}.eu"
+      =render 'inc/contact', object: resume.client, title: "#{resume.title} on #{PropertsHelper::COMPANY}.eu"

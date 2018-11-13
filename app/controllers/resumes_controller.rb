@@ -1,7 +1,7 @@
 class ResumesController < ApplicationController
   #before_action :authenticate_client!, only:[:edit, :update, :destroy]
   load_and_authorize_resource :resume
-  before_action :set_resume, only: [:views, :highlight_view, :show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
+  before_action :set_resume, only: [:message,:views, :highlight_view, :show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
   before_action :action_view, only:[:show, :highlight_view]
   #before_action :applicant!, only: :new
 
@@ -181,6 +181,17 @@ class ResumesController < ApplicationController
         format.html { redirect_to job_path(@job),  notice: 'Error!!!.' }
       end
     end
+  end
+
+  def message
+    #if @job.apply
+      #unless current_client&.admin?
+      #  @job.add_responded({user:current_client&.id, company: current_company&.id, time:Time.now, ip:request.remote_ip, lang:request.env['HTTP_ACCEPT_LANGUAGE'], agent:request.env['HTTP_USER_AGENT']})
+      #end
+      #redirect_to @job.apply, status:307
+    #end
+    resume_workflow = add_new_workflow(class: :Redirect, route: msg_url(@resume)) #TODO Убрать
+    resume_workflow.save!(session[:workflow]) #TODO Убрать
   end
 
   private

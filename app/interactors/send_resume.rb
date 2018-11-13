@@ -6,7 +6,7 @@ class SendResume
       resume = create_resume(context.params)
       context.job = Job.find_by_id(context.params[:job])
       send(resume, context.job, context.params[:text])
-      context.msg = 'Your resume sent'
+      context.msg = 'Your resume was successfully sent!'
     rescue
       Rails.logger.debug("ERROR #{$!}")
       context.msg = $!

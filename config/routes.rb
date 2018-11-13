@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   patch '/update_photo', to:"clients#update_photo", as: 'update_photo'
   get '/linkedin_resume_update', to:"clients#linkedin_resume_update", as: 'linkedin_resume'
   post 'send_resume', to: 'clients#send_resume', as: 'send'
+  post 'send_message', to: 'clients#send_message', as: 'send_msg'
 
   resources :locations
   get '/search_locations/:query', to: 'locations#search'
@@ -132,6 +133,7 @@ Rails.application.routes.draw do
   get "views_of_a_resume/:id", to: "resumes#views", as: 'resume_views'
   post "resume_create/", to: "resumes#create_temporary", as: 'create_resume'
   get "resumes/", to: "resumes#create_resume", as: 'resumes'
+  get "message/:id", to: "resumes#message", as: 'msg'
 
   get "/log_in/:id", to: "resumes#log_in", as: 'log_in'
   root  to: 'index#main'

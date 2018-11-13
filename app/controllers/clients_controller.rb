@@ -3,7 +3,7 @@ class ClientsController < ApplicationController
   before_action :set_client, only: [:show, :edit,:update, :destroy,:change_type, :destroy_member, :admin_edit_photo,:admin_show,:admin_edit,:admin_update,:admin_destroy ]
   before_action :current_company, only: [ :team]
   before_action :set_current_client, only: [:jobs, :resumes, :settings, :edit_photo]
-  skip_before_action :verify_authenticity_token, only: [:send_resume]
+  skip_before_action :verify_authenticity_token, only: [:send_resume, :send_message]
 
   def index
     @clients = Client.all.order(:email).paginate(page: client_params[:page], per_page:21)
@@ -179,6 +179,17 @@ class ClientsController < ApplicationController
           format.html { redirect_to job_path(@send_resume.job), notice: @send_resume.msg }
       else
           format.html { redirect_to job_path(@send_resume.job), alert:  @send_resume.msg }
+      end
+    end
+  end
+
+  def send_message
+    @send_message = SendMessage.call(params:send_params, current_client: current_client)
+    respond_to do |format|
+      if @send_message.success?
+        format.html { redirect_to resume_path(@send_message.resume), notice: @send_message.msg }
+      else
+        format.html { redirect_to resume_path(@send_message.resume), alert:  @send_message.msg }
       end
     end
   end

@@ -91,7 +91,7 @@ class Ability
   end
 
   def edit_profile(user)
-    can [:edit, :update, :settings, :destroy, :edit_photo, :update_photo, :send_resume, :linkedin_resume_update], Client do |client|
+    can [:edit, :update, :settings, :destroy, :edit_photo, :update_photo, :send_resume, :linkedin_resume_update, :send_message], Client do |client|
       client == user
     end
   end
@@ -111,7 +111,7 @@ class Ability
 
   def base
     can [:new, :create_temporary, :create_job, :apply], Job
-    can [:new, :create_temporary, :create_resume], Resume
+    can [:new, :create_temporary, :create_resume, :message], Resume
     can [:show, :company_jobs, :highlight_view], Company
     can [:show, :highlight_view], Resume
     can [:show, :highlight_view], Job
