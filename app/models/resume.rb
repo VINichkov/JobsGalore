@@ -86,15 +86,19 @@ class Resume < ApplicationRecord
       pdf.text client.full_name, size: 24, align: :center
       pdf.bounding_box([pdf.bounds.left, pdf.bounds.top - 25], :width => pdf.bounds.width, :height => 160) do
         pdf.bounding_box([pdf.bounds.left, pdf.bounds.top], :width => pdf.bounds.width / 2, :height => pdf.bounds.height) do
-          url = Rails.env.development? ? 'http://127.0.0.1:3000' + Dragonfly.app.remote_url_for(client.photo_uid).to_s : Dragonfly.app.remote_url_for(client.photo_uid)
-          pdf.image open(url), height: 150
+          if  client.photo_uid
+            url = image_bg Rails.env.development? ? 'http://127.0.0.1:3000' + Dragonfly.app.remote_url_for(client.photo_uid).to_s : Dragonfly.app.remote_url_for(client.photo_uid)
+            pdf.image open(url), height: 150
+          else
+            pdf.image Rails.root.join("app/assets/images/avatar.jpg"), height: 150
+          end
         end
         pdf.bounding_box([pdf.bounds.width / 2 + 10, pdf.bounds.top], :width => pdf.bounds.width / 2 - 10, :height => pdf.bounds.height) do
           summary = "<p><strong>Location: </strong>#{location.name}</p>"
           summary += "<p><strong>E-mail: </strong>#{client.email}</p>"
           summary += "<p><strong>Phone number: </strong>#{client.phone }</p>" if client.phone
           summary += "<p><strong>Birthday: </strong>#{client.birth&.strftime("%d %B %Y")}</p>" if client.birth
-          summary += "<p><strong>Desired Salary: </strong>#{salary}</p>" if salary
+          summary += "<p><strong>Desired Salary: </strong>$#{salary.to_i.to_s}</p>" if salary
           pdf.styled_text summary
         end
       end

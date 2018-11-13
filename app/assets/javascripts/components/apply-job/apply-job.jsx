@@ -9,7 +9,7 @@ class ApplyJob extends React.Component{
                 },
                 toolbar: {
                     allowMultiParagraphSelection: true,
-                    buttons: ['bold', 'italic', 'underline', 'anchor', 'h3' ,'h4' , 'orderedlist', 'unorderedlist'],
+                    buttons: ['bold', 'italic', 'underline',  'h3' ,'h4' , 'orderedlist', 'unorderedlist'],
                     diffLeft: 0,
                     diffTop: -10,
                     firstButtonClass: 'medium-editor-button-first',
@@ -36,7 +36,7 @@ class ApplyJob extends React.Component{
         this.handleChangeFocus =  this.handleChangeFocus.bind(this);
     }
     componentDidMount(){
-        if (this.props.resumes !== null) {
+        if (this.props.resumes !== null && this.medium == null ) {
             let dom = ReactDOM.findDOMNode(this._divEditableL.current);
             this.setState({inputLetter:dom.innerHTML});
             this.medium = new MediumEditor(dom, this._options);
@@ -121,7 +121,7 @@ class ApplyJob extends React.Component{
                             </div>
                             <div className="row">
                                 <div className="col-xs-6 col-lg-6">
-                                    <a href className="btn btn-success   btn-block">Back</a>
+                                    <a href={this.props.title.link} className="btn btn-success btn-block">Back</a>
                                 </div>
                                 <div className="col-xs-6 col-lg-6">
                                     <input type="submit" className="btn btn-primary btn-block" value="Apply"/>
