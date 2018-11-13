@@ -90,6 +90,8 @@ class NewResume extends React.Component{
                             location_id:data.location_id,
                             location_name:data.location_name,
                             flagVisible: !this.state.flagVisible});
+            console.log(data.description);
+            console.log(this.medium);
             this.medium.setContent(data.description,0);
         }.bind(this));
     }
@@ -152,7 +154,7 @@ class NewResume extends React.Component{
                 <div className="form-group">
                     <label>Professional area </label>
                     <br/>
-                    <Category style={{width:'100%'}} defaultValue={this.state.industry} className="form-control navbar-btn" name={this.props.name+"[category]"} categories = {this.props.categories}/>
+                    <Category style={{width:'100%'}}  key = {this.state.flagVisible} defaultValue={this.state.industry} className="form-control navbar-btn" name={this.props.name+"[category]"} categories = {this.props.categories}/>
                 </div>
                 <div className="form-group">
                     <label>Resume (CV)</label>
@@ -167,7 +169,7 @@ class NewResume extends React.Component{
             </div>;
         }
         return(
-            <div key = {this.state.flagVisible}>
+            <div>
                 <div className="panel panel-info" >
                     <div className="panel-heading " onClick={this.handleOnClickResume} >
                         <input type="radio" id="new_resume_head" name={this.props.nameCheckbox} value="New resume" checked={this.props.check}/> New resume
