@@ -87,7 +87,7 @@ class Resume < ApplicationRecord
       pdf.bounding_box([pdf.bounds.left, pdf.bounds.top - 25], :width => pdf.bounds.width, :height => 160) do
         pdf.bounding_box([pdf.bounds.left, pdf.bounds.top], :width => pdf.bounds.width / 2, :height => pdf.bounds.height) do
           if  client.photo_uid
-            url = image_bg Rails.env.development? ? 'http://127.0.0.1:3000' + Dragonfly.app.remote_url_for(client.photo_uid).to_s : Dragonfly.app.remote_url_for(client.photo_uid)
+            url = Rails.env.development? ? 'http://127.0.0.1:3000' + Dragonfly.app.remote_url_for(client.photo_uid).to_s : Dragonfly.app.remote_url_for(client.photo_uid)
             pdf.image open(url), height: 150
           else
             pdf.image Rails.root.join("app/assets/images/avatar.jpg"), height: 150
