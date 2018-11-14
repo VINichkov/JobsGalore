@@ -1,6 +1,4 @@
 -option||={}
--Rails.logger.debug("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC")
--Rails.logger.debug(option.to_json)
 = form_for client,as: option[:as], html:option[:html], url:option[:url], method:option[:method]  do |f|
   - if client.errors.any?
     #error_explanation
@@ -87,15 +85,14 @@
     hr.colorgraph
     -if option[:devise]
       .row
-        = render "devise/shared/links"
         .col-xs-6.col-md-6
           = f.submit "Register", class: "btn btn-primary btn-block"
+        = render "devise/shared/links"
     -else
       .row
         .col-xs-12.col-sm-6.col-md-6
-          = link_to 'Back', :back, class:"btn btn-success btn-block "
+          = f.submit class: "btn btn-primary btn-block"
           p
         .col-xs-12.col-sm-6.col-md-6
-          = f.submit class: "btn btn-primary btn-block"
-
+          = link_to 'Back', :back, class:"btn btn-success btn-block "
     br
