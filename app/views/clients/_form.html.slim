@@ -1,4 +1,6 @@
 -option||={}
+-Rails.logger.debug("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC")
+-Rails.logger.debug(option.to_json)
 = form_for client,as: option[:as], html:option[:html], url:option[:url], method:option[:method]  do |f|
   - if client.errors.any?
     #error_explanation
