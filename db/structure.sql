@@ -429,7 +429,8 @@ CREATE TABLE public.jobs (
     viewed json[] DEFAULT '{}'::json[],
     sources character varying,
     apply character varying,
-    responded jsonb[] DEFAULT '{}'::jsonb[]
+    responded jsonb[] DEFAULT '{}'::jsonb[],
+    viewed_count integer
 );
 
 
@@ -583,7 +584,8 @@ CREATE TABLE public.resumes (
     urgent date,
     industry_id integer,
     viewed json[] DEFAULT '{}'::json[],
-    sources character varying
+    sources character varying,
+    viewed_count integer
 );
 
 
@@ -1395,6 +1397,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180913075713'),
 ('20180924055806'),
 ('20180925073017'),
+('20181114111921'),
 ('2019');
 
 

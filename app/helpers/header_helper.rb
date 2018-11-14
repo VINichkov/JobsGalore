@@ -1,6 +1,6 @@
 module HeaderHelper
   def logo(arg={})
-    image_tag(image_path("method-draw-image.png"), size: arg[:size], alt:"Jobs Galore")
+    image_tag(image_path("jg.png"), size: arg[:size], alt:"Jobs Galore")
   end
   def print_header
     content_tag(:div, class: "print_header"){

@@ -19,6 +19,7 @@ class Job < ApplicationRecord
 
   def add_viewed(arg = {})
     viewed.push(arg)
+    self.viewed_count += 1
     save!
   end
 
@@ -140,6 +141,6 @@ class Job < ApplicationRecord
 
     text_query = text_query.join(" and ")
     Rails.logger.info("Query::" + text_query + query.to_s)
-    select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:close,:industry_id,:twitter, :viewed,  :responded, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
+    select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:close,:industry_id,:twitter, :viewed_count,  :responded, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
   end
 end

@@ -15,7 +15,7 @@
       - if current_client && ((current_client.employer? && job.company ==  current_client.company) || job.client == current_client || current_client.admin?)
         span
           | &nbsp; - &nbsp;
-          |Views #{job.viewed.count}
+          |Views #{job.viewed_count}
       - if current_client&.admin?
         span
           | &nbsp; - &nbsp;
@@ -51,7 +51,7 @@
     - if current_client && ((current_client.employer? && job.company ==  current_client.company) || job.client == current_client || current_client.admin?)
       span
         | &nbsp; - &nbsp;
-        |Views #{job.viewed.count}
+        |Views #{job.viewed_count}
     - if current_client&.admin?
       span
         | &nbsp; - &nbsp;

@@ -12,39 +12,12 @@ require 'bcrypt'
 
 #version 1
 if 1 == 1
-
-    Resume.all.each do |resume|
-      if resume.description.present?
-        begin
-        resume.description = RDiscount.new(resume.description)&.to_html.to_s
-        resume.save!
-        rescue
-          puts "Resume Ошибка #{$!} id #{resume.id}"
-        end
-      end
-    end
-
-    Job.all.each do |job|
-      if job.description.present?
-        begin
-        job.description = RDiscount.new(job.description)&.to_html.to_s
-        job.save!
-        rescue
-          puts "Job Ошибка #{$!} id #{job.id}"
-        end
-      end
-    end
-    Company.all.each do |company|
-      if company.description.present?
-        begin
-        company.description = RDiscount.new(company.description)&.to_html.to_s
-        company.save!
-        rescue
-          puts "Company Ошибка #{$!} id #{company.id}"
-        end
-      end
-    end
-
+  Job.all.find_each(batch_size: 100) do |obj|
+    obj.update(viewed_count:obj.viewed.count)
+  end
+  Resume.all.find_each(batch_size: 100) do |obj|
+    obj.update(viewed_count:obj.viewed.count)
+  end
   puts "--==Clients #{Client.count}==--"
   puts "--==Companies #{Company.count}==--"
   puts "--==Industries #{Industry.count}==--"

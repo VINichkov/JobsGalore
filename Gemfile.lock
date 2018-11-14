@@ -149,6 +149,7 @@ GEM
     hashie (3.5.7)
     heroku-deflater (0.6.3)
       rack (>= 1.4.5)
+    hodel_3000_compliant_logger (0.1.1)
     html_truncator (0.4.2)
       nokogiri (~> 1.5)
     http (3.3.0)
@@ -223,6 +224,9 @@ GEM
     oga (2.15)
       ast
       ruby-ll (~> 2.1)
+    oink (0.10.1)
+      activerecord
+      hodel_3000_compliant_logger
     omniauth (1.8.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
@@ -402,6 +406,7 @@ DEPENDENCIES
   listen
   mechanize
   oga
+  oink
   omniauth-linkedin-oauth2
   pdf-reader (~> 2.1.0)
   pg

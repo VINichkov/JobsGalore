@@ -12,7 +12,7 @@
       - if current_client == resume.client
         span
           | &nbsp; - &nbsp;
-          |Views #{resume.viewed.count}
+          |Views #{resume.viewed_count}
     .col-lg-2.col-md-2.col-sm-2
       - if current_client && (resume.client == current_client || current_client.admin?)
         = render 'inc/btn', object: resume, option: {cl: "dropdown", class: 'resume', type: 3}
@@ -52,4 +52,4 @@
     - if current_client == resume.client
       span
         | &nbsp; - &nbsp;
-        |Views #{resume.viewed.count}
+        |Views #{resume.viewed_count}

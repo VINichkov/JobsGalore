@@ -28,6 +28,7 @@ gem 'rack-rewrite'
 gem 'pdf-reader','~> 2.1.0'
 gem 'prawn'
 gem 'oga'
+gem "oink"
 #gem 'prawn-styled-text'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

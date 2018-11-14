@@ -20,6 +20,7 @@ class Resume < ApplicationRecord
 
   def add_viewed(arg = {})
     viewed.push(arg)
+    self.viewed_count += 1
     save!
   end
 
@@ -141,6 +142,6 @@ class Resume < ApplicationRecord
 
     text_query = text_query.join(" and ")
 
-    select(:id, :desiredjobtitle, :location_id, :salary_form, :abouteme, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:industry_id, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"", :viewed).where(text_query,query)
+    select(:id, :desiredjobtitle, :location_id, :salary_form, :abouteme, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:industry_id, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"", :viewed_count).where(text_query,query)
   end
 end
