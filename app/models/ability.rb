@@ -66,7 +66,7 @@ class Ability
   end
 
   def manager_team(user)
-    can [:jobs, :resumes, :settings, :team, :edit, :update, :destroy, :edit_photo, :send_resume, :linkedin_resume_update, :change_type, :destroy_member, :update_photo], Client do |client|
+    can [:jobs, :resumes, :settings, :team, :edit, :update, :destroy, :edit_photo, :send_message,  :send_resume, :linkedin_resume_update, :change_type, :destroy_member, :update_photo], Client do |client|
       (client == user) || (client.company.client.include?(user))
     end
     can [:new_member, :create_member], Client
