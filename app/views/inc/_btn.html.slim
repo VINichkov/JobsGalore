@@ -25,7 +25,7 @@ div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' : "btn-group #{option[:m
             - if object.highlight
               = link_to "Highlight -", url_for("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
             - else
-              = link_to "Highlight +", url_for    ("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
+              = link_to "Highlight +", url_for("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
       - else
         - if PropertsHelper::URGENT== "true"
           li
