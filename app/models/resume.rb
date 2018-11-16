@@ -20,7 +20,7 @@ class Resume < ApplicationRecord
 
   def add_viewed(arg = {})
     viewed.push(arg)
-    self.viewed_count += 1
+    self.viewed_count ? self.viewed_count += 1 : self.viewed_count=1
     save!
   end
 

@@ -1,0 +1,8 @@
+version: '3'
+volumes:
+  postgres_data: {}
+services:
+  app:
+    build:
+      context: ../../.rvm/gems/ruby-2.5.1/gems/social-share-button-1.1.0/app/assets/images
+      dockerfile: ./docker/app/Dockerfile
