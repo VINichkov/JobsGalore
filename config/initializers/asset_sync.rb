@@ -1,6 +1,13 @@
 
 if ENV["RAILS_ENV"]=="production"
   AssetSync.configure do |config|
+    puts 'AWS'
+    puts ENV["S3_ACCESS_KEY_ID"]
+    puts ENV["S3_SECRET_ACCESS_KEY"]
+    puts ENV['bucket']
+    puts ENV['region']
+    puts ENV['existing_remote_files']
+    puts 'AWS!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 
     config.fog_provider = 'AWS'
     config.aws_access_key_id = ENV["S3_ACCESS_KEY_ID"]
