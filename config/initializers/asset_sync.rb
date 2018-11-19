@@ -1,5 +1,5 @@
 
-if ENV["RAILS_ENV"]=="production"
+if ENV["RAILS_ENV"]=="production" and
   AssetSync.configure do |config|
     puts 'AWS'
     puts ENV["S3_ACCESS_KEY_ID"]
