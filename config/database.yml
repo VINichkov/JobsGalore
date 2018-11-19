@@ -22,8 +22,8 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: postgres
-  password: root
+  username: <%= ENV['MONGO_DATABASE_USER'] %>
+  password: <%= ENV['MONGO_DATABASE_PASSWORD'] %>
 
 development:
   <<: *default
@@ -88,5 +88,5 @@ test:
 production:
   <<: *default
   database: mongo_production
-  username: postgres
+  username: <%= ENV['MONGO_DATABASE_USER'] %>
   password: <%= ENV['MONGO_DATABASE_PASSWORD'] %>

@@ -23,7 +23,6 @@ class Clients::ConfirmationsController < Devise::ConfirmationsController
 
   # The path used after confirmation.
    def after_confirmation_path_for(resource_name, resource)
-     logger.debug "!!!!!!!!! after_sign_up_path_for____________Зашли #{resource_name}, #{resource}"
      super(resource_name, resource)
    end
 end

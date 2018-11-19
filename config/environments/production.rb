@@ -109,8 +109,8 @@ Rails.application.configure do
       address:              'smtp.yandex.ru',
       port:                 587,
       domain:               'yandex.ru',
-      user_name:            'email@jobsgalore.eu',
-      password:             'NichkovaAygul1984',
+      user_name:            ENV["EMAIL_LOGIN"],
+      password:             ENV["EMAIL_PASSWORD"],
       authentication:       'plain',
       enable_starttls_auto: true  }
   config.action_mailer.raise_delivery_errors = true

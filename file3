@@ -1,6 +1,0 @@
-aLoading production environment (Rails 5.2.0)
-irb(main):001:0> adasdasd
-[1mTraceback[m (most recent call last):
-        1: from (irb):1
-[1mNameError ([4mundefined local variable or method `adasdasd' for main:Object[0;1m)[m
-irb(main):002:0> 
