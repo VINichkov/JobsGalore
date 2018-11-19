@@ -12,16 +12,16 @@ Dragonfly.app.configure do
     if ENV["TEST"].nil?
       datastore :s3,
               bucket_name: ENV['bucket'],
-              access_key_id: ENV['access_key_id'],
-              secret_access_key: ENV['secret_access_key'],
+              access_key_id: ENV["S3_ACCESS_KEY_ID"],
+              secret_access_key: ENV["S3_SECRET_ACCESS_KEY"],
               region: ENV['region'],
               url_scheme: 'https',
               url_host: "d2a5jvhcj7z8rz.cloudfront.net"
     else
       datastore :s3,
                 bucket_name: ENV['bucket'],
-                access_key_id: ENV['access_key_id'],
-                secret_access_key: ENV['secret_access_key'],
+                access_key_id: ENV["S3_ACCESS_KEY_ID"],
+                secret_access_key: ENV["S3_SECRET_ACCESS_KEY"],
                 region: ENV['region'],
                 url_scheme: 'https',
                 url_host: "d2a5jvhcj7z8rz.cloudfront.net",

@@ -2,13 +2,9 @@
 if ENV["RAILS_ENV"]=="production"
   AssetSync.configure do |config|
 
-    puts 'AWS'
-    puts ENV['access_key_id']
-    puts  ENV['secret_access_key']
-
     config.fog_provider = 'AWS'
-    config.aws_access_key_id = ENV['access_key_id']
-    config.aws_secret_access_key = ENV['secret_access_key']
+    config.aws_access_key_id = ENV["S3_ACCESS_KEY_ID"]
+    config.aws_secret_access_key = ENV["S3_SECRET_ACCESS_KEY"]
 
     # To use AWS reduced redundancy storage.
     # config.aws_reduced_redundancy = true
