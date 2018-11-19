@@ -1,19 +1,19 @@
 # Project Mango
 
-This is an attempt to create an analogue of the popular sites hh.ru, monster.com, careere.com.au, superjob.ru
+This is an attempt to create an analogue of the popular sites hh.ru, monster.com, careere.com.au, superjob.ru, jora.com.au, seek.com.au
 
 ## Software Requirements
 
 * Ruby and Rails
 * PostgresSQL
+* Redis
 * React js
 * Slim
-* coffee script
 
 ## Installation
 
-    git clone git://github.com/vnochkov/mongo.git
-    cd mongo
+    git clone git://github.com/vnochkov/gobsgalore.git
+    cd gobsgalore
     bundle
     
 Then initialize the database and start the server:
@@ -25,9 +25,6 @@ Then initialize the database and start the server:
 
 At this point you should have a working site with some basic seed data that you can start to customize.
 
-## ER Diagram
- ![Image alt](https://github.com/VINichkov/mongo/blob/master/diagram.jpg)
-
 ## License
 
-The MIT License - Copyright (c) 2016 Vyacheslav Nichkov
+The MIT License - Copyright (c) 2018 Vyacheslav Nichkov

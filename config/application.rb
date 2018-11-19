@@ -7,7 +7,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Mongo
+module Mango
   class Application < Rails::Application
     config.before_configuration do
       env_aws = Rails.root.join("config", 'asset_sync.yml').to_s
