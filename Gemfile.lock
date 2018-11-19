@@ -94,6 +94,13 @@ GEM
     capistrano-rails (1.4.0)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
+    capistrano-rvm (0.1.2)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2)
+    capistrano3-puma (3.1.1)
+      capistrano (~> 3.7)
+      capistrano-bundler
+      puma (~> 3.4)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     coffee-rails (4.2.2)
@@ -409,8 +416,11 @@ DEPENDENCIES
   bootstrap-sass
   byebug
   cancancan
-  capistrano (~> 3.10)
-  capistrano-rails (~> 1.3)
+  capistrano
+  capistrano-bundler
+  capistrano-rails
+  capistrano-rvm
+  capistrano3-puma
   coffee-rails
   devise (~> 4.4.3)
   dkim

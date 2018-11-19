@@ -30,6 +30,7 @@ logfile.txt
 yarn-debug.log*
 .yarn-integrity
 /key/*
+/shared/*
 email
 dkim
 *.pem
