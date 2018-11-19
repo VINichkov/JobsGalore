@@ -29,6 +29,7 @@ logfile.txt
 /node_modules
 yarn-debug.log*
 .yarn-integrity
+/key/*
 email
 dkim
 *.pem
