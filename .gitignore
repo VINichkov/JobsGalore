@@ -36,3 +36,6 @@ dkim
 *.pem
 *.crt
 *.key
+
+# Ignore application configuration
+/config/application.yml
