@@ -1,26 +1,39 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.11.0"
+#require 'net/ssh/proxy/command'
 
+#lock "~> 3.11.0"
+server 'ec2-18-188-218-128.us-east-2.compute.amazonaws.com',
+       user: 'ubuntu',
+       port: '22',
+       roles: [:web, :app, :db],
+       primary: true,
+       ssh_options: {
+           user: 'ubuntu', # overrides user setting above
+           keys: %w(Vyacheslav2406.pem),
+           forward_agent: false,
+           auth_methods: %w(publickey),
+       }
+#set :ssh_options, proxy: Net::SSH::Proxy::Command.new('ssh -i "Vyacheslav2406.pem" ec2-18-188-218-128.us-east-2.compute.amazonaws.com')
+set :rvm_custom_path, '/usr/share/rvm'
 set :application, "JobsGalore"
 set :repo_url, "git@github.com:VINichkov/JobsGalore.git"
-set :user,            'ubuntu'
-set :puma_threads,    [4, 16]
-set :puma_workers,    0
+#set :puma_threads,    [4, 16]
+#set :puma_workers,    0
 
 set :pty,             true
-set :use_sudo,        false
-set :stage,           :production
-set :deploy_via,      :remote_cache
-set :deploy_to,       "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
-set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
-set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
-set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
-set :puma_access_log, "#{release_path}/log/puma.error.log"
-set :puma_error_log,  "#{release_path}/log/puma.access.log"
-set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
-set :puma_preload_app, true
-set :puma_worker_timeout, nil
-set :puma_init_active_record, true  # Change to false when not using ActiveRecord
+set :use_sudo,        true
+#set :stage,           :production
+#set :deploy_via,      :remote_cache
+#set :deploy_to,       "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
+#set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
+#set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
+#set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
+#set :puma_access_log, "#{release_path}/log/puma.error.log"
+#set :puma_error_log,  "#{release_path}/log/puma.access.log"
+#set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
+#set :puma_preload_app, true
+#set :puma_worker_timeout, nil
+#set :puma_init_active_record, true  # Change to false when not using ActiveRecord
 
 ## Defaults:
 # set :scm,           :git
@@ -30,20 +43,20 @@ set :puma_init_active_record, true  # Change to false when not using ActiveRecor
 # set :keep_releases, 5
 
 ## Linked Files & Directories (Default None):
-# set :linked_files, %w{config/database.yml}
-# set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+ set :linked_files, %w{config.ru Procfile Rakefile}
+ set :linked_dirs,  %w{bin log app config lib loc public tmp vendor}
 
-namespace :puma do
-  desc 'Create Directories for Puma Pids and Socket'
-  task :make_dirs do
-    on roles(:app) do
-      execute "mkdir #{shared_path}/tmp/sockets -p"
-      execute "mkdir #{shared_path}/tmp/pids -p"
-    end
-  end
+#namespace :puma do
+#  desc 'Create Directories for Puma Pids and Socket'
+#  task :make_dirs do
+#    on roles(:app) do
+#      execute "mkdir #{shared_path}/tmp/sockets -p"
+#      execute "mkdir #{shared_path}/tmp/pids -p"
+#    end
+#  end
 
-  before :start, :make_dirs
-end
+#  before :start, :make_dirs
+#end
 
 namespace :deploy do
   desc "Make sure local git is in sync with remote."

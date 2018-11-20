@@ -59,3 +59,35 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
+#
+#  role :app, %w{deploy@ec2-my-ip.eu-west-1.compute.amazonaws.com}
+#     role :web, %w{deploy@ec2-my-ip.eu-west-1.compute.amazonaws.com}
+#     role :db,  %w{deploy@ec2-my-ip.eu-west-1.compute.amazonaws.com}
+#     set :deploy_to, "/myfolder"
+#     server 'ec2-my-ip.eu-west-1.compute.amazonaws.com',
+#     user: 'ec2-user',
+#     port: '22',
+#     roles: %w{web app db},
+#     :primary => true,
+#     ssh_options: {
+#         user: 'ec2-user', # overrides user setting above
+#         keys: %w(/home/local_machine_user/.ssh/aws_ssh_key_pair.pem),
+#         forward_agent: false,
+#         auth_methods: %w(publickey password),
+#         password: 'please use keys'
+#
+
+server 'ec2-my-ip.eu-west-1.compute.amazonaws.com',
+       user: 'ec2-user',
+       port: '22',
+       roles: %w{web app db},
+       :primary => true,
+       ssh_options: {
+           user: 'ec2-user', # overrides user setting above
+           keys: %w(/home/local_machine_user/.ssh/aws_ssh_key_pair.pem),
+           forward_agent: false,
+           auth_methods: %w(publickey password),
+           password: 'please use keys'
+       }
+
+
