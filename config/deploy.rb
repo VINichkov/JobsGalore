@@ -5,7 +5,7 @@
 server 'ec2-18-188-218-128.us-east-2.compute.amazonaws.com',
        user: 'ubuntu',
        port: '22',
-       roles: [:web, :app, :db],
+       roles: [:web, :app],
        primary: true,
        ssh_options: {
            user: 'ubuntu', # overrides user setting above
@@ -35,17 +35,36 @@ set :puma_error_log,  "#{release_path}/log/puma.access.log"
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
-set :other_option, Figaro.env.other_option
+
+set :DATABASE_URL, Figaro.env.DATABASE_URL
+set :HOST, Figaro.env.HOST
+set :LANG, Figaro.env.LANG
+set :RACK_ENV, Figaro.env.RACK_ENV
+set :RAILS_ENV, Figaro.env.RAILS_ENV
+set :RAILS_LOG_TO_STDOUT, Figaro.env.RAILS_LOG_TO_STDOUT
+set :RAILS_MAX_THREADS, Figaro.env.RAILS_MAX_THREADS
+set :RAILS_SERVE_STATIC_FILES, Figaro.env.RAILS_SERVE_STATIC_FILES
+set :REDIS_URL, Figaro.env.REDIS_URL
+set :SECRET_KEY_BASE, Figaro.env.SECRET_KEY_BASE
+set :EMAIL_LOGIN, Figaro.env.EMAIL_LOGIN
+set :EMAIL_PASSWORD, Figaro.env.EMAIL_PASSWORD
+set :S3_ACCESS_KEY_ID, Figaro.env.S3_ACCESS_KEY_ID
+set :S3_SECRET_ACCESS_KEY, Figaro.env.S3_SECRET_ACCESS_KEY
+set :MONGO_DATABASE_PASSWORD, Figaro.env.MONGO_DATABASE_PASSWORD
+set :MONGO_DATABASE_USER, Figaro.env.MONGO_DATABASE_USER
+set :DM_KIT_KEY, Figaro.env.DM_KIT_KEY
+set :bucket, Figaro.env.bucket
+set :region, Figaro.env.region
+set :existing_remote_files, Figaro.env.existing_remote_files
 
 ## Defaults:
- set :scm,           :git
  set :branch,        :master
  set :format,        :pretty
  set :log_level,     :info
  set :keep_releases, 5
 
 ## Linked Files & Directories (Default None):
- #set :linked_files, %w{config/database.yml}
+ set :linked_files, %w{key/private.pem}
  #set :linked_dirs,   %w{bin log tmp/pids tmp/cache tmp/sockets public/system}
 
 namespace :puma do
@@ -79,6 +98,7 @@ namespace :deploy do
       invoke 'deploy'
     end
   end
+
 
   desc 'Restart application'
   task :restart do
@@ -123,7 +143,7 @@ end
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
-# Default value for local_user is ENV['USER']
+# Default value for local_user is Figaro.env.USER']
 # set :local_user, -> { `git config user.name`.chomp }
 
 # Default value for keep_releases is 5
