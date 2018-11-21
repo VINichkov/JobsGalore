@@ -36,35 +36,14 @@ set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
 
-set :DATABASE_URL, Figaro.env.DATABASE_URL
-set :HOST, Figaro.env.HOST
-set :LANG, Figaro.env.LANG
-set :RACK_ENV, Figaro.env.RACK_ENV
-set :RAILS_ENV, Figaro.env.RAILS_ENV
-set :RAILS_LOG_TO_STDOUT, Figaro.env.RAILS_LOG_TO_STDOUT
-set :RAILS_MAX_THREADS, Figaro.env.RAILS_MAX_THREADS
-set :RAILS_SERVE_STATIC_FILES, Figaro.env.RAILS_SERVE_STATIC_FILES
-set :REDIS_URL, Figaro.env.REDIS_URL
-set :SECRET_KEY_BASE, Figaro.env.SECRET_KEY_BASE
-set :EMAIL_LOGIN, Figaro.env.EMAIL_LOGIN
-set :EMAIL_PASSWORD, Figaro.env.EMAIL_PASSWORD
-set :S3_ACCESS_KEY_ID, Figaro.env.S3_ACCESS_KEY_ID
-set :S3_SECRET_ACCESS_KEY, Figaro.env.S3_SECRET_ACCESS_KEY
-set :MONGO_DATABASE_PASSWORD, Figaro.env.MONGO_DATABASE_PASSWORD
-set :MONGO_DATABASE_USER, Figaro.env.MONGO_DATABASE_USER
-set :DM_KIT_KEY, Figaro.env.DM_KIT_KEY
-set :bucket, Figaro.env.bucket
-set :region, Figaro.env.region
-set :existing_remote_files, Figaro.env.existing_remote_files
-
 ## Defaults:
  set :branch,        :master
  set :format,        :pretty
- set :log_level,     :info
+ set :log_level,     :debug
  set :keep_releases, 5
 
 ## Linked Files & Directories (Default None):
- set :linked_files, %w{key/private.pem}
+ set :linked_files, %w{key/private.pem config/application.yml}
  #set :linked_dirs,   %w{bin log tmp/pids tmp/cache tmp/sockets public/system}
 
 namespace :puma do
