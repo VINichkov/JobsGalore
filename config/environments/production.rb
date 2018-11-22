@@ -99,8 +99,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   #config.assets.prefix = ENV["TEST"].nil? ? "/#{ENV['RAILS_ENV']}/assets" :  "/#{ENV['RAILS_ENV']}/assets/test"
-  config.force_ssl = true
-  config.ssl_options = {  redirect: { status: 307} }
+  #config.force_ssl = true
+  #config.ssl_options = {  redirect: { status: 307} }
   #config.active_job.queue_adapter = :sidekiq
   config.action_mailer.default_url_options = { host: "https://www.jobsgalore.eu"}
   config.action_mailer.delivery_method = :smtp

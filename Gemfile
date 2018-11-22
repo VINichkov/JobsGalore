@@ -96,7 +96,6 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #gem 'spreadsheet'
 #gem 'markdown-rails'
-
 #gem 'sidekiq'
 #gem 'redis'
 #gem 'redis-namespace'
