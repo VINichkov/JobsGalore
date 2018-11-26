@@ -2,19 +2,19 @@
 #require 'net/ssh/proxy/command'
 
 #lock "~> 3.11.0"
-server 'ec2-18-188-218-128.us-east-2.compute.amazonaws.com',
+server 'ec2-52-64-242-65.ap-southeast-2.compute.amazonaws.com',
        user: 'ubuntu',
        port: '22',
        roles: [:web, :app],
        primary: true,
        ssh_options: {
            user: 'ubuntu', # overrides user setting above
-           keys: %w(Vyacheslav2406.pem),
+           keys: %w(jobsgalore.pem),
            forward_agent: false,
            auth_methods: %w(publickey),
        }
 #set :ssh_options, proxy: Net::SSH::Proxy::Command.new('ssh -i "Vyacheslav2406.pem" ec2-18-188-218-128.us-east-2.compute.amazonaws.com')
-set :rvm_custom_path, '/usr/share/rvm'
+#set :rvm_custom_path, '/usr/share/rvm'
 set :application, "JobsGalore"
 set :repo_url, "git@github.com:VINichkov/JobsGalore.git"
 #set :puma_threads,    [4, 16]
