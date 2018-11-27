@@ -6,7 +6,7 @@ begin
 rescue
   Dkim::private_key = OpenSSL::PKey::RSA.new(ENV['DM_KIT_KEY'].gsub("\\n", "\n"))
 end
-
+#
 
 # This will sign all ActionMailer deliveries
 ActionMailer::Base.register_interceptor(Dkim::Interceptor)
