@@ -9,10 +9,10 @@ Rails.application.configure do
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
-  config.public_file_server.headers = {
-      'Cache-Control' => 'public, max-age = 31536000',
-      'Expires' => "#{1.year.from_now.to_formatted_s(:rfc822)}"
-  }
+  #config.public_file_server.headers = {
+  #    'Cache-Control' => 'public, max-age = 31536000',
+  #    'Expires' => "#{1.year.from_now.to_formatted_s(:rfc822)}"
+  #}
 
   #config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
    # r301 %r{.*}, "https://www.jobsgalore.eu$&",
@@ -91,14 +91,14 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
   #config.gem 'sitemap_generator'
-  config.action_controller.asset_host = "https://d2a5jvhcj7z8rz.cloudfront.net"
-  config.action_mailer.asset_host ="https://d2a5jvhcj7z8rz.cloudfront.net"
+  config.action_controller.asset_host = "https://d3dv41bs0cmiw6.cloudfront.net"
+  config.action_mailer.asset_host ="https://d3dv41bs0cmiw6.cloudfront.net"
 
 
   # Do not dump schema after migrations.educations_id_seq
   config.active_record.dump_schema_after_migration = false
 
-  #config.assets.prefix = ENV["TEST"].nil? ? "/#{ENV['RAILS_ENV']}/assets" :  "/#{ENV['RAILS_ENV']}/assets/test"
+  config.assets.prefix = "/#{ENV['RAILS_ENV']}/assets/test" if ENV["TEST"]
   #config.force_ssl = true
   #config.ssl_options = {  redirect: { status: 307} }
   #config.active_job.queue_adapter = :sidekiq
