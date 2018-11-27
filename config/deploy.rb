@@ -39,7 +39,7 @@ set :puma_init_active_record, true  # Change to false when not using ActiveRecor
 ## Defaults:
  set :branch,        :master
  set :format,        :pretty
- set :log_level,     :debug
+ set :log_level,     :info
  set :keep_releases, 5
 
 ## Linked Files & Directories (Default None):
