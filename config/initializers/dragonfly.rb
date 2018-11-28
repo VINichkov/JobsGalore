@@ -16,7 +16,7 @@ Dragonfly.app.configure do
               secret_access_key: ENV["S3_SECRET_ACCESS_KEY"],
               region: ENV['region'],
               url_scheme: 'https',
-              url_host: "d2a5jvhcj7z8rz.cloudfront.net"
+              url_host: "d3dv41bs0cmiw6.cloudfront.net"
     else
       datastore :s3,
                 bucket_name: ENV['bucket'],
@@ -24,7 +24,7 @@ Dragonfly.app.configure do
                 secret_access_key: ENV["S3_SECRET_ACCESS_KEY"],
                 region: ENV['region'],
                 url_scheme: 'https',
-                url_host: "d2a5jvhcj7z8rz.cloudfront.net",
+                url_host: "d3dv41bs0cmiw6.cloudfront.net",
                 root_path: "test"
     end
   else
