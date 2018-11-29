@@ -34,6 +34,7 @@ install_plugin Capistrano::SCM::Git
 # require "capistrano/chruby"
  require "capistrano/bundler"
  require 'capistrano/rails'
+require 'capistrano/rails/console'
  require 'capistrano/puma'
  install_plugin Capistrano::Puma
  require "capistrano/rails/assets"

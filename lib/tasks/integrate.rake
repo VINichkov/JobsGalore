@@ -15,6 +15,10 @@ namespace :integrate do
     puts "! Task:add_jobs: End"
   end
 
+  task :destroy_jobs => :environment do
+    Job.where("close <= :data", data: Time.now).destroy_all
+  end
+
   task :jora => :environment  do
     puts "! Task:Jora: start"
     jora = Jora.new

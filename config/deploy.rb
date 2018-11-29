@@ -2,7 +2,7 @@
 #require 'net/ssh/proxy/command'
 
 #lock "~> 3.11.0"
-server 'ec2-52-64-242-65.ap-southeast-2.compute.amazonaws.com',
+server 'jobsgalore.eu',
        user: 'ubuntu',
        port: '22',
        roles: [:web, :app],

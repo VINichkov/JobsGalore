@@ -80,6 +80,7 @@ group :development, :test do
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
   gem 'capistrano-figaro',   require: false
+  gem 'capistrano-rails-console',   require: false
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
 
   gem 'byebug', platform: :mri

@@ -1,0 +1,4 @@
+  INFO [2eb7c95c] Running ~/.rvm/bin/rvm default do bundle exec rails console -e production as ubuntu@jobsgalore.eu
+WARNING: Use strings for Figaro configuration. 10 was converted to "10".
+Loading production environment (Rails 5.2.0)
+2.5.1 :001 > [K2.5.1 :001 > 
