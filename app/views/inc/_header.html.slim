@@ -50,11 +50,6 @@
           span.glyphicon.glyphicon-paperclip
           |&nbsp; Post new resume
       li
-        = link_to '/by_category/2' do
-          |&nbsp;
-          span.glyphicon.glyphicon-gift
-          |&nbsp; Jobs by category
-      li
         = link_to '/by_category/3' do
           |&nbsp;
           span.glyphicon.glyphicon-bullhorn
@@ -108,9 +103,6 @@
               ul.dropdown-menu
                 li
                   = link_to "Post new job", new_job_path, rel:"nofollow"
-                li
-                  a[href= '/by_category/2']
-                    |Jobs by category
             li.nav-item
               a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
                 |Resumes

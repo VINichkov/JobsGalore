@@ -1078,6 +1078,13 @@ CREATE INDEX index_jobs_on_salarymin ON public.jobs USING btree (salarymin);
 
 
 --
+-- Name: index_jobs_on_sources; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_jobs_on_sources ON public.jobs USING btree (sources);
+
+
+--
 -- Name: index_jobs_on_updated_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1398,6 +1405,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180924055806'),
 ('20180925073017'),
 ('20181114111921'),
+('20181130075311'),
 ('2019');
 
 

@@ -38,8 +38,16 @@ class Search extends React.Component{
     render() {
         let ilStyle={display:'none'};
         let options = null;
+        let cat = null;
         let button_option = 'btn-info';
         if (this.state.active_options) {
+            if (this.state.type_search_code == 3){
+                cat = <div className="form-group" style={{display:'inline'}}>
+                                <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                    <Category key="catecory" style={{width:'100%'}} defaultValue={this.props.params ? this.props.params.category: ''} name={this.props.name+'[category]'} categories = {this.props.categories} id="category_search" className="form-control navbar-btn"/>
+                                </div>
+                            </div>;
+            }
             if (this.state.type_search_code == 2 || this.state.type_search_code == 3){
                 options =   [<div key="otions_key" className="row">
                                 <div className="form-group" style={{display:'inline'}}>
@@ -51,11 +59,7 @@ class Search extends React.Component{
                                         </label>
                                     </div>
                                 </div>
-                                <div className="form-group" style={{display:'inline'}}>
-                                    <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <Category key="catecory" style={{width:'100%'}} defaultValue={this.props.params ? this.props.params.category: ''} name={this.props.name+'[category]'} categories = {this.props.categories} id="category_search" className="form-control navbar-btn"/>
-                                    </div>
-                                </div>
+                                {cat}
                                 <div className="form-group" style={{display:'inline'}}>
                                     <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                         <Autocomplete style={{width:'100%'}} className="form-control dropdown-toggle" route='/search_locations/' defaultId={this.props.params ? this.props.params.location_id:''} defaultName={this.props.params ? this.props.params.location_name:''} name={this.props.name+'[location'} id="location_search"  place_holder="Location"/>

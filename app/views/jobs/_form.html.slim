@@ -31,10 +31,6 @@
                       route:'/search_locations/',
                       defaultName: @job.location ? @job.location.name : (current_client ? current_client.location.name : Location.default.name),
                       defaultId: @job.location ? @job.location.id : (current_client ? current_client.location.id: Location.default.id))
-  .form-group
-    = f.label :industry, "Industry"
-    br
-    = f.collection_select(:industry_id, Industry.select(:id,:name).all, :id, :name, {prompt: true},{class:"form-control"})
   .row
     .col-xs-12.col-sm-6.col-md-6
       .form-group

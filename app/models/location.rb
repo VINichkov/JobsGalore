@@ -20,8 +20,8 @@ class Location < ApplicationRecord
   scope :search, ->(query) {where("locations.fts @@ to_tsquery(:query)",{query:query})}
 
   def self.major
-    @@major_city ||= select(:id,:suburb).where(suburb:["Sydney", "Melbourne", "Brisbane"]).all
-      #@@major_city = select(:id,:suburb).where(suburb:["Sydney", "Melbourne", "Brisbane", "Gold Coast", "Perth", "Adelaide", "Hobart", "Darwin", "Canberra"]).all
+    #@@major_city ||= select(:id,:suburb).where(suburb:["Sydney", "Melbourne", "Brisbane"]).all
+    @@major_city = select(:id,:suburb).where(suburb:["Sydney", "Melbourne", "Brisbane", "Gold Coast", "Perth", "Adelaide", "Hobart", "Darwin", "Canberra"]).all
   end
 
 

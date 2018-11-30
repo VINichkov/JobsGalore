@@ -22,11 +22,7 @@ namespace :integrate do
   task :jora => :environment  do
     puts "! Task:Jora: start"
     jora = Jora.new
-    jobs = jora.get_list_jobs
-    if jobs
-      jora.create_jobs(jobs)
-    end
-    jobs = nil
+    jora.get_list_jobs
     puts "! Task:Jora: End"
   end
 

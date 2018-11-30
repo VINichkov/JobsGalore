@@ -39,14 +39,16 @@ p
 -else
   span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="baseSalary" itemscope itemtype="http://schema.org/MonetaryAmount"]
     span[itemprop="currency" content="AUD"]
-p
-  strong
-    |Professional area:
-ul
-  li
-    span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="industry"]
-      =object.industry.name
-    =link_industry(object.industry.name, object.industry, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-success')
+-if object.class==ResumeDecorator
+  p
+    strong
+      |Professional area:
+  ul
+
+      li
+        span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="industry"]
+          =object.industry.name
+        =link_industry(object.industry.name, object.industry,  Objects::RESUMES, class: 'text-success')
 - if object.highlight
   p
     span.glyphicon.glyphicon-paperclip
