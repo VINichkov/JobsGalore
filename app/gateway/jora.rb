@@ -32,7 +32,6 @@ class Jora < Adapter
           t= Time.now
           count_ads =  request&.css('body div[id="main"] div[id="centre_col"] div[id="search_info"] span')&.last.text.delete(',').to_i
           break if count_ads.nil?
-          puts  count_ads
           count_page = count_ads / 10
           count_page +=1 if (count_ads % 10 > 0)
           iter  = count_page > MAX_PAGE ? MAX_PAGE : count_page
@@ -60,10 +59,7 @@ class Jora < Adapter
       arg[:p] +=1
       arg.delete(:p) if arg[:p] == 1
       url = @url+arg.to_query
-      puts "----#{url} "
-      a = Nokogiri::HTML(@proxy.connect(url))
-      puts  "Ушли дальше"
-      a
+      Nokogiri::HTML(@proxy.connect(url))
     rescue
       puts ("Ошибка #{$!}")
       nil
@@ -73,8 +69,6 @@ class Jora < Adapter
 
   def get_list(arg, lacation)
     arg.css('[id="jobresults"] [class="job"]').each do |job|
-      salary = job.at_css('div div[class="salary"]')&.text&.gsub(',','')&.scan(/\d+/)
-      title = job.at_css('a[class="jobtitle"]')
       t = Time.now
       url = @host + title[:href][0..title[:href].index('?') - 1]
       flag = Job.find_by_sources(url)
@@ -82,13 +76,10 @@ class Jora < Adapter
       unless flag
         company = job.at_css('div span[class="company"]')&.text
         if company
-          t = Time.now
-          puts "url = #{url}"
           job = get_job(url)
-          puts "Job is null" unless job
-          puts "got job #{Time.now - t} s"
           if job
-            puts "Записали #{title[:title]}"
+            salary = job.at_css('div div[class="salary"]')&.text&.gsub(',','')&.scan(/\d+/)
+            title = job.at_css('a[class="jobtitle"]')
             create_jobs(link: url,
                         title: title[:title],
                         company: company,
@@ -108,14 +99,15 @@ class Jora < Adapter
   def get_job(url)
     begin
       t = Time.now
-      puts "Count #{@count_all}"
       @count_all +=1
       job = Nokogiri::HTML(@proxy.connect(url)).at_css('div[id="vj_container"]')
-      a = {description: html_to_markdown(job.at_css('div[class="summary"]').children.to_s), apply:@host + job.at_css('a[class="button apply_link"]')[:href]}
+      apply_link = job.at_css('a[class="button apply_link"]')
+      apply = apply_link ? @host +apply_link[:href] : url
+      a = {description: html_to_markdown(job.at_css('div[class="summary"]').children.to_s), apply:apply}
       @time_download2 += Time.now - t
       a
-    rescue StandardError=>e
-      Rails.logger.debug("Ошибка #{e.to_s}")
+    rescue
+      puts ("Ошибка #{ $!}")
       nil
     end
   end
@@ -139,8 +131,8 @@ class Jora < Adapter
     end
     user = company.client.first
     if user.blank?
-      puts "Компания новая. Создаем клиента #{"#{job[:company].gsub(' ', '_')}@email.com.au"}"
-      user = Client.new(firstname: job[:company], lastname: 'HR', email: "#{job[:company].gsub(' ', '_')}#{(0...8).map { (97 + rand(26)).chr }.join}@email.com.au", location_id: job[:location], character: TypeOfClient::EMPLOYER, send_email: false, password: '11111111', password_confirmation: '11111111', company_id: company.id)
+      email = "#{job[:company].gsub(' ', '_')}#{(0...8).map { (97 + rand(26)).chr }.join}@email.com.au"
+      user = Client.new(firstname: job[:company], lastname: 'HR', email:email , location_id: job[:location], character: TypeOfClient::EMPLOYER, send_email: false, password: '11111111', password_confirmation: '11111111', company_id: company.id)
       user.skip_confirmation! if Rails.env.production?
       user.save!
     end
@@ -152,10 +144,8 @@ class Jora < Adapter
                 company: company,
                 client: user,
                 sources: job[:link],
-                industry_id: job[:industry],
                 apply: job[:apply])
     @time_create += Time.now - t
   end
-
 
 end

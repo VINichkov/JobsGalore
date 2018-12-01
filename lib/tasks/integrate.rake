@@ -16,14 +16,16 @@ namespace :integrate do
   end
 
   task :destroy_jobs => :environment do
+    puts "! Task:Destroy: start #{Time.now}"
     Job.where("close <= :data", data: Time.now).destroy_all
+    puts "! Task:Destroy: end #{Time.now}"
   end
 
   task :jora => :environment  do
-    puts "! Task:Jora: start"
+    puts "! Task:Jora: start #{Time.now}"
     jora = Jora.new
     jora.get_list_jobs
-    puts "! Task:Jora: End"
+    puts "! Task:Jora: End #{Time.now}"
   end
 
   def separate
