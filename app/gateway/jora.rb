@@ -70,6 +70,8 @@ class Jora < Adapter
   def get_list(arg, lacation)
     arg.css('[id="jobresults"] [class="job"]').each do |job|
       t = Time.now
+      salary = job.at_css('div div[class="salary"]')&.text&.gsub(',','')&.scan(/\d+/)
+      title = job.at_css('a[class="jobtitle"]')
       url = @host + title[:href][0..title[:href].index('?') - 1]
       flag = Job.find_by_sources(url)
       @time_db += Time.now - t
@@ -78,8 +80,6 @@ class Jora < Adapter
         if company
           job = get_job(url)
           if job
-            salary = job.at_css('div div[class="salary"]')&.text&.gsub(',','')&.scan(/\d+/)
-            title = job.at_css('a[class="jobtitle"]')
             create_jobs(link: url,
                         title: title[:title],
                         company: company,
