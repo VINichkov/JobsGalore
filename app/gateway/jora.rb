@@ -4,7 +4,7 @@ require './app/addon/Proxy'
 class Jora < Adapter
   SP = "facet_location"
   LOCAL = Location.select(:id, :suburb, :state).all.map{|city| {name:city.suburb + ' '+ city.state,code:city.id}}
-  MAX_PAGE = 1
+  MAX_PAGE = 5
 
   def initialize
     @proxy = Proxy.new
