@@ -121,9 +121,8 @@ class Job < ApplicationRecord
   scope :search, ->(query)  do
     query = query.to_h if query.class != Hash
     text_query=[]
-
     text_query << "industry_id = :category" if query[:category].present?
-
+    text_query << "urgent is not null"  if query[:urgent].present?
     if query[:location_id].present?
       text_query << "location_id = :location_id"
     elsif query[:location_name].present?

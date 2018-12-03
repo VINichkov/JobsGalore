@@ -17,6 +17,7 @@ class IndexController < ApplicationController
 
   def main_search
     @result = MainSearch.call(params:main_search_params)
+    @search = @result.param
     if @result.failure?
       render_404
     end
@@ -124,7 +125,7 @@ class IndexController < ApplicationController
   private
 
   def main_search_params
-    params.permit(:page, main_search: [:type, :value, :page, :salary,  :options, :category, :location_id, :location_name, :urgen])
+    params.permit(:page, main_search: [:type, :value, :page, :salary,  :options, :category, :location_id, :location_name, :urgent, :open])
   end
 
 

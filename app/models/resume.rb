@@ -121,21 +121,19 @@ class Resume < ApplicationRecord
   scope :search, ->(query) do
     query = query.to_h if query.class != Hash
     text_query=[]
-    if  not query[:category].blank?
-      text_query << "industry_id = :category"
-    end
 
-    if not query[:location_id].blank?
+    text_query << "industry_id = :category" if  query[:category].present?
+    text_query << "urgent is not null"  if query[:urgent].present?
+
+    if query[:location_id].present?
       text_query << "location_id = :location_id"
-    elsif not query[:location_name].blank?
+    elsif query[:location_name].present?
       locations = Location.search((query[:location_name].split(" ").map {|t| t=t+":*"}).join("|"))
-      if not locations.blank?
-        text_query << "location_id in "+locations.ids.to_s.sub("[","(").sub("]",")")
-      end
+      text_query << "location_id in "+locations.ids.to_s.sub("[","(").sub("]",")") if locations.present?
     end
 
     text_query<< "fts @@ to_tsquery(:value)" if query[:value] != ""
-    if not query[:salary].blank?
+    if query[:salary].present?
       query[:salary] = query[:salary].to_i
       text_query << '(salary <= :salary or salary is NULL)'
     end

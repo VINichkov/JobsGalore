@@ -39,7 +39,7 @@ html[lang="en"]
     = csrf_meta_tags
 
   body
-    =render 'inc/header', industries: Industry.select(:id,:name).all
+    =render 'inc/header', industries: Industry.select(:id,:name).all, search: @search
     = yield
     =render 'inc/footer'
     script.async
