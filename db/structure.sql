@@ -426,10 +426,8 @@ CREATE TABLE public.jobs (
     close date,
     twitter character varying,
     industry_id integer,
-    viewed json[] DEFAULT '{}'::json[],
     sources character varying,
     apply character varying,
-    responded jsonb[] DEFAULT '{}'::jsonb[],
     viewed_count integer
 );
 
@@ -558,6 +556,42 @@ ALTER SEQUENCE public.properts_id_seq OWNED BY public.properts.id;
 
 
 --
+-- Name: respondeds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.respondeds (
+    id bigint NOT NULL,
+    client_id integer,
+    ip character varying,
+    lang character varying,
+    agent character varying,
+    doc_id integer,
+    doc_type character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: respondeds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.respondeds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: respondeds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.respondeds_id_seq OWNED BY public.respondeds.id;
+
+
+--
 -- Name: resumes; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -583,7 +617,6 @@ CREATE TABLE public.resumes (
     top date,
     urgent date,
     industry_id integer,
-    viewed json[] DEFAULT '{}'::json[],
     sources character varying,
     viewed_count integer
 );
@@ -646,6 +679,42 @@ CREATE SEQUENCE public.sizes_id_seq
 --
 
 ALTER SEQUENCE public.sizes_id_seq OWNED BY public.sizes.id;
+
+
+--
+-- Name: vieweds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.vieweds (
+    id bigint NOT NULL,
+    client_id integer,
+    ip character varying,
+    lang character varying,
+    agent character varying,
+    doc_id integer,
+    doc_type character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: vieweds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.vieweds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: vieweds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.vieweds_id_seq OWNED BY public.vieweds.id;
 
 
 --
@@ -733,6 +802,13 @@ ALTER TABLE ONLY public.properts ALTER COLUMN id SET DEFAULT nextval('public.pro
 
 
 --
+-- Name: respondeds id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.respondeds ALTER COLUMN id SET DEFAULT nextval('public.respondeds_id_seq'::regclass);
+
+
+--
 -- Name: resumes id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -744,6 +820,13 @@ ALTER TABLE ONLY public.resumes ALTER COLUMN id SET DEFAULT nextval('public.resu
 --
 
 ALTER TABLE ONLY public.sizes ALTER COLUMN id SET DEFAULT nextval('public.sizes_id_seq'::regclass);
+
+
+--
+-- Name: vieweds id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.vieweds ALTER COLUMN id SET DEFAULT nextval('public.vieweds_id_seq'::regclass);
 
 
 --
@@ -851,6 +934,14 @@ ALTER TABLE ONLY public.properts
 
 
 --
+-- Name: respondeds respondeds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.respondeds
+    ADD CONSTRAINT respondeds_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: resumes resumes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -872,6 +963,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.sizes
     ADD CONSTRAINT sizes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: vieweds vieweds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.vieweds
+    ADD CONSTRAINT vieweds_pkey PRIMARY KEY (id);
 
 
 --
@@ -1106,6 +1205,13 @@ CREATE INDEX index_locations_on_parent_id ON public.locations USING btree (paren
 
 
 --
+-- Name: index_respondeds_on_doc_id_and_doc_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_respondeds_on_doc_id_and_doc_type ON public.respondeds USING btree (doc_id, doc_type);
+
+
+--
 -- Name: index_resumes_on_client_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1152,6 +1258,13 @@ CREATE INDEX index_resumes_on_salary ON public.resumes USING btree (salary);
 --
 
 CREATE INDEX index_resumes_on_updated_at ON public.resumes USING btree (updated_at);
+
+
+--
+-- Name: index_vieweds_on_doc_id_and_doc_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_vieweds_on_doc_id_and_doc_type ON public.vieweds USING btree (doc_id, doc_type);
 
 
 --
@@ -1406,6 +1519,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180925073017'),
 ('20181114111921'),
 ('20181130075311'),
+('20181203085507'),
 ('2019');
 
 

@@ -4,6 +4,7 @@ class Resume < ApplicationRecord
   belongs_to :client
   belongs_to :location
   belongs_to :industry
+  has_many :viewed, as: :doc, dependent: :destroy
 
   validates :title, presence: true
   validates :location, presence: true
@@ -19,7 +20,7 @@ class Resume < ApplicationRecord
 
 
   def add_viewed(arg = {})
-    viewed.push(arg)
+    viewed.create!(arg)
     self.viewed_count ? self.viewed_count += 1 : self.viewed_count=1
     save!
   end

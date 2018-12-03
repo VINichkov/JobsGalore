@@ -9,6 +9,8 @@ class Job < ApplicationRecord
   belongs_to :location
   belongs_to :company
   belongs_to :industry
+  has_many :viewed, as: :doc, dependent: :destroy
+  has_many :responded, as: :doc, dependent: :destroy
 
   validates :title, presence: true
   validates :company, presence: true
@@ -18,13 +20,13 @@ class Job < ApplicationRecord
   attr_accessor :location_name
 
   def add_viewed(arg = {})
-    viewed.push(arg)
+    viewed.create!(arg)
     self.viewed_count ? self.viewed_count += 1 : self.viewed_count=1
     save!
   end
 
   def add_responded(arg = {})
-    responded.push(arg)
+    responded.create!(arg)
     save!
   end
 

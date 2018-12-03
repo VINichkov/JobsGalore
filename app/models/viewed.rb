@@ -1,0 +1,3 @@
+class Viewed < ApplicationRecord
+
+end

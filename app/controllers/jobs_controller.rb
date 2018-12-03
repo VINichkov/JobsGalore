@@ -53,7 +53,7 @@ class JobsController < ApplicationController
   def apply
     if @job.apply
       unless current_client&.admin?
-        @job.add_responded({user:current_client&.id, company: current_company&.id, time:Time.now, ip:request.remote_ip, lang:request.env['HTTP_ACCEPT_LANGUAGE'], agent:request.env['HTTP_USER_AGENT']})
+        @job.add_responded({client_id:current_client&.id, ip:request.remote_ip, lang:request.env['HTTP_ACCEPT_LANGUAGE'], agent:request.env['HTTP_USER_AGENT']})
       end
       redirect_to @job.apply, status:307
     end
@@ -158,7 +158,7 @@ class JobsController < ApplicationController
 
     def action_view
       unless current_client&.admin? or current_client == @job.client
-        @job.add_viewed({user:current_client&.id, company: current_company&.id, time:Time.now, ip:request.remote_ip, lang:request.env['HTTP_ACCEPT_LANGUAGE'], agent:request.env['HTTP_USER_AGENT']})
+        @job.add_viewed({client_id:current_client&.id, ip:request.remote_ip, lang:request.env['HTTP_ACCEPT_LANGUAGE'], agent:request.env['HTTP_USER_AGENT']})
       end
 
     end

@@ -11,13 +11,8 @@ require 'mechanize'
 require 'bcrypt'
 
 #version 1
-if 1 == 1
-  Job.all.find_each(batch_size: 100) do |obj|
-    obj.update(viewed_count:obj.viewed.count)
-  end
-  Resume.all.find_each(batch_size: 100) do |obj|
-    obj.update(viewed_count:obj.viewed.count)
-  end
+if 1 == 2
+
   puts "--==Clients #{Client.count}==--"
   puts "--==Companies #{Company.count}==--"
   puts "--==Industries #{Industry.count}==--"
