@@ -4,7 +4,7 @@
     display: block;
 }
 /* вид текста label */
-.label_not_checked, label{
+.label_not_checked{
         padding-top: 10px;
         //padding-bottom: 5px;
         color: #333;
@@ -13,7 +13,7 @@
 }
 
 /* вид текста label при активном переключателе */
-.label_checked,  label{
+.label_checked{
     padding-top: 10px;
     //padding-bottom: 5px;
     color: #449d44;

@@ -20,7 +20,7 @@ class Job < ApplicationRecord
   attr_accessor :location_name
 
   def add_viewed(arg = {})
-    if Viewed.fit(arg)
+    unless Viewed.fit(arg)
       viewed.create!(arg)
       self.viewed_count ? self.viewed_count += 1 : self.viewed_count=1
       save!
