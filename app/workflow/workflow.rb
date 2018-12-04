@@ -10,26 +10,32 @@ class Workflow
 
   def self.save!(object,session)
     Rails.logger.debug  "!! Workflow.save!: object = #{object.to_json}, session.id #{session}"
-    redis  = connect()
-    redis.set(session, object, ex:3600)
+    if session.present?
+      redis  = connect()
+      redis.set(session, object, ex:3600)
+    end
   end
 
   def self.find_by_session(arg)
     Rails.logger.debug  "!! Workflow.find_by_session!: #{arg.to_json}"
-    redis  = connect()
-    response = redis.get(arg)
-    Rails.logger.debug  "!! Workflow.find_by_session!: нашли   #{response}"
-    if response
-      object = JSON.parse(response, opts={symbolize_names:true})
-      object ? self.new(object) : false
-    else
-      nil
+    if arg.present?
+      redis  = connect()
+      response = redis.get(arg)
+      Rails.logger.debug  "!! Workflow.find_by_session!: нашли   #{response}"
+      if response
+        object = JSON.parse(response, opts={symbolize_names:true})
+        object ? self.new(object) : false
+      else
+        nil
+      end
     end
   end
 
   def self.delete(arg)
-    redis  = connect()
-    redis.del(arg)
+    if arg.present?
+      redis  = connect()
+      redis.del(arg)
+    end
   end
 
   private
