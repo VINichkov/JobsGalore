@@ -4,7 +4,7 @@ require './app/addon/Proxy'
 class Jora < Adapter
   SP = "facet_location"
   LOCAL = Location.select(:id, :suburb, :state).all.map{|city| {name:city.suburb,code:city.id}}
-  MAX_PAGE = 5
+  MAX_PAGE = 40
   ST = "date"
 
   def initialize
@@ -28,7 +28,6 @@ class Jora < Adapter
           query = {a: '24h', l: local[:name], p: i,  sp: SP, st:ST}
           request = get_page(query)
           t = Time.now - t
-          puts "--- Запрос новой локации #{t}"
           @time_download += t
           t= Time.now
           count_ads =  request&.css('body div[id="main"] div[id="centre_col"] div[id="search_info"] span')&.last.text.delete(',').to_i
