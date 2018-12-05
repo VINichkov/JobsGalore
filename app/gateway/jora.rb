@@ -3,7 +3,7 @@ require 'nokogiri'
 require './app/addon/Proxy'
 class Jora < Adapter
   SP = "facet_location"
-  LOCAL = Location.select(:id, :suburb, :state).all.map{|city| {name:city.suburb + ' '+ city.state,code:city.id}}
+  LOCAL = Location.select(:id, :suburb, :state).all.map{|city| {name:city.suburb,code:city.id}}
   MAX_PAGE = 5
 
   def initialize
