@@ -4,7 +4,7 @@ require './app/addon/Proxy'
 class Jora < Adapter
   SP = "facet_location"
   LOCAL = Location.select(:id, :suburb, :state).all.map{|city| {name:city.suburb,code:city.id}}
-  MAX_PAGE = 40
+  MAX_PAGE = 10
   ST = "date"
 
   def initialize
@@ -22,7 +22,8 @@ class Jora < Adapter
     @time_download2 = 0
     @count_all = 1
     w = Time.now
-    LOCAL.map do |local|
+    puts LOCAL.count
+    LOCAL.each do |local|
       MAX_PAGE.times do |i|
           t= Time.now
           query = {a: '24h', l: local[:name], p: i,  sp: SP, st:ST}
@@ -38,7 +39,7 @@ class Jora < Adapter
           get_list(request, local[:code])
           @time_hokogiri += Time.now - t
           break if (i + 1 ) == iter
-        end
+      end
     end
     puts "Time db = #{@time_db + @time_db2} s"
     puts "Time db 1 = #{@time_db} s"
@@ -132,6 +133,7 @@ class Jora < Adapter
     user = company.client.first
     if user.blank?
       email = "#{job[:company].gsub(' ', '_')}#{(0...8).map { (97 + rand(25)).chr }.join}@email.com.au"
+      puts "Email is #{email}"
       user = Client.new(firstname: job[:company], lastname: 'HR', email:email , location_id: job[:location], character: TypeOfClient::EMPLOYER, send_email: false, password: '11111111', password_confirmation: '11111111', company_id: company.id)
       user.skip_confirmation! if Rails.env.production?
       user.save!
