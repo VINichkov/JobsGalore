@@ -5,17 +5,20 @@
 }
 /* вид текста label */
 .label_not_checked{
-        padding-top: 10px;
-        //padding-bottom: 5px;
-        color: #333;
-        cursor: pointer;
-        display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    color: #333;
+    cursor: pointer;
+    display: inline-block;
 }
 
+.label_checked ~ div {
+    padding-bottom: 10px;
+}
 /* вид текста label при активном переключателе */
 .label_checked{
     padding-top: 10px;
-    //padding-bottom: 5px;
+    padding-bottom: 5px;
     color: #449d44;
     cursor: pointer;
     display: inline-block;

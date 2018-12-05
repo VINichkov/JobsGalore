@@ -5,6 +5,7 @@ class Jora < Adapter
   SP = "facet_location"
   LOCAL = Location.select(:id, :suburb, :state).all.map{|city| {name:city.suburb,code:city.id}}
   MAX_PAGE = 5
+  ST = "date"
 
   def initialize
     @proxy = Proxy.new
@@ -24,7 +25,7 @@ class Jora < Adapter
     LOCAL.map do |local|
       MAX_PAGE.times do |i|
           t= Time.now
-          query = {a: '24h', l: local[:name], p: i,  sp: SP}
+          query = {a: '24h', l: local[:name], p: i,  sp: SP, st:ST}
           request = get_page(query)
           t = Time.now - t
           puts "--- Запрос новой локации #{t}"
@@ -131,7 +132,7 @@ class Jora < Adapter
     end
     user = company.client.first
     if user.blank?
-      email = "#{job[:company].gsub(' ', '_')}#{(0...8).map { (97 + rand(26)).chr }.join}@email.com.au"
+      email = "#{job[:company].gsub(' ', '_')}#{(0...8).map { (97 + rand(15)).chr }.join}@email.com.au"
       user = Client.new(firstname: job[:company], lastname: 'HR', email:email , location_id: job[:location], character: TypeOfClient::EMPLOYER, send_email: false, password: '11111111', password_confirmation: '11111111', company_id: company.id)
       user.skip_confirmation! if Rails.env.production?
       user.save!
