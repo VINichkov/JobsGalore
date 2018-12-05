@@ -5,7 +5,7 @@ ruby '2.5.1'
 gem 'rails', '~> 5.2.0'#, '~> 5.0.4'#, '>= 5.0.0.1'
 # Use postgresql as the database for Active Record
 gem 'pg'#, '~> 0.18'
-gem 'lightio'
+#gem 'lightio'
 # Use Puma as the app server
 
 # Use SCSS for stylesheets

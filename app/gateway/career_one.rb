@@ -1,7 +1,7 @@
 require 'open-uri'
 require 'nokogiri'
 require './app/addon/Proxy'
-require 'lightio'
+#require 'lightio'
 # apply monkey patch at beginning
 
 class CareerOne < Adapter
