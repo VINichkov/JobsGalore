@@ -22,10 +22,11 @@ namespace :integrate do
   end
 
   task :jora => :environment  do
-    puts "! Task:Jora: start #{Time.now}"
+    t = Time.now
+    puts "! Task:Jora: start #{t}"
     jora = Jora.new
     jora.get_list_jobs
-    puts "! Task:Jora: End #{Time.now}"
+    puts "! Task:Jora: End #{Time.now}   - #{Time.now - t}"
   end
 
   def separate

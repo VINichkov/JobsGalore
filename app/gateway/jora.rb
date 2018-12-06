@@ -1,65 +1,109 @@
 require 'open-uri'
 require 'nokogiri'
 require './app/addon/Proxy'
+
 class Jora < Adapter
-  SP = "facet_location"
-  LOCAL = Location.select(:id, :suburb, :state).all.map{|city| {name:city.suburb,code:city.id}}
+  SP = "facet_listed_date"
   MAX_PAGE = 10
   ST = "date"
+
 
   def initialize
     @proxy = Proxy.new
     @host = 'https://au.jora.com'
     @url = 'https://au.jora.com/j?'
+    @local = Thread::Queue.new()
+    #@local << {name:'Sydney',code:9522}
+    Location.select(:id, :suburb, :state).all.map{|city| @local << {name:city.suburb,code:city.id}}
+    @index = Job.select(:sources).where(":yesterday<=created_at and sources like :host", yesterday: Time.now.beginning_of_day - 1.day, host:@host+'%').pluck(:sources)
+    @jobs = Thread::Queue.new()
   end
+
 
   def get_list_jobs
-    @time_db = 0
-    @time_db2 = 0
-    @time_hokogiri = 0
-    @time_create = 0
-    @time_download = 0
-    @time_download2 = 0
-    @count_all = 1
-    w = Time.now
-    puts LOCAL.count
-    LOCAL.each do |local|
-      MAX_PAGE.times do |i|
-          t= Time.now
-          query = {a: '24h', l: local[:name], p: i,  sp: SP, st:ST}
-          request = get_page(query)
-          t = Time.now - t
-          @time_download += t
-          t= Time.now
-          count_ads =  request&.css('body div[id="main"] div[id="centre_col"] div[id="search_info"] span')&.last.text.delete(',').to_i
-          break if count_ads.nil?
-          count_page = count_ads / 10
-          count_page +=1 if (count_ads % 10 > 0)
-          iter  = count_page > MAX_PAGE ? MAX_PAGE : count_page
-          get_list(request, local[:code])
-          @time_hokogiri += Time.now - t
-          break if (i + 1 ) == iter
+    threads = []
+    11.times do |i|
+      threads << Thread.new do
+        if i != 10
+          while local = @local.pop
+            @local.close if @local.size == 0
+            t = Time.now
+            puts "Поток #{i} берет локацию #{local[:name]}"
+            get_location(local, i)
+            puts "Окончание #{i} #{local[:name]}  t = #{Time.now - t} s"
+          end
+        else
+          while job  = @jobs.pop
+            if @jobs.size == 0 and @local.closed?
+              sleep 30
+              @jobs.close
+            end
+            t = Time.now
+            puts "Поток #{i} сохраняем вакансию #{job[:title]}"
+            create_jobs(job)
+            puts "Окончание #{i} #{job[:title]} t = #{Time.now - t} s"
+          end
+        end
       end
     end
-    puts "Time db = #{@time_db + @time_db2} s"
-    puts "Time db 1 = #{@time_db} s"
-    puts "Time db 2 = #{@time_db2} s"
-    puts "Time hokogiri = #{@time_hokogiri - @time_create - @time_download2} s"
-    puts "Time create = #{@time_create} s"
-    puts "Time download = #{@time_download + @time_download2} s"
-    puts "Time download 1 = #{@time_download } s"
-    puts "Time download 2 = #{@time_download2} s"
-    puts "Count all = #{@count_all}"
-    puts "All Time = #{Time.now - w}"
+    threads.each(&:join)
   end
 
-  private
+  def get_location(local, j)
+    end_job = false
+    MAX_PAGE.times do |i|
+      break if end_job
+      query = {a: '24h',button:nil, l: local[:name], p: i,  sp: SP, st:ST}
+      puts "Поток #{j} query = #{query}"
+      request = get_page(query)
+      count_ads =  request&.css('body div[id="main"] div[id="centre_col"] div[id="search_info"] span')&.last&.text&.delete(',').to_i
+      puts "Поток #{j}  count_ads = #{count_ads}"
+      break if count_ads.nil? or count_ads==0
+      count_page = count_ads / 10
+      count_page +=1 if (count_ads % 10 > 0)
+      iter  = count_page > MAX_PAGE ? MAX_PAGE : count_page
+      end_job = get_list(request, local[:code], j)
+      break if (i + 1 ) == iter
+    end
+  end
+
+  def get_list(arg, lacation, j)
+    end_job = false
+    arg.css('div[id="main"] div[id="centre_col"] ul[id="jobresults"] div[class="job"]').each do |job|
+      title = job.at_css('a[class="jobtitle"]')
+      title ||=   job.at_css('a[class="job"]')
+      url = @host + title[:href][0..title[:href].index('?') - 1]
+      puts "Поток #{j} job url  = #{url}"
+      if @index.include?(url)
+        puts "Поток #{j} Url is in index"
+        end_job = true
+        break
+      end
+      salary = job.at_css('div div[class="salary"]')&.text&.gsub(',','')&.scan(/\d+/)
+      company = job.at_css('div span[class="company"]')&.text
+      if company
+        job = get_job(url, j)
+        if job
+          @jobs<<{link: url,
+                      title: title[:title],
+                      company: company,
+                      salary_min: salary.present? ? salary[0] : nil,
+                      salary_max: salary.present? ? salary[1] : nil,
+                      location: lacation,
+                      apply: job[:apply],
+                      description: job[:description]}
+        end
+      end
+    end
+    end_job
+  end
 
   def get_page(arg)
     begin
       arg[:p] +=1
       arg.delete(:p) if arg[:p] == 1
       url = @url+arg.to_query
+      puts "URL job list = #{url}"
       Nokogiri::HTML(@proxy.connect(url))
     rescue
       puts ("Ошибка #{$!}")
@@ -67,55 +111,19 @@ class Jora < Adapter
     end
   end
 
-
-  def get_list(arg, lacation)
-    arg.css('[id="jobresults"] [class="job"]').each do |job|
-      t = Time.now
-      salary = job.at_css('div div[class="salary"]')&.text&.gsub(',','')&.scan(/\d+/)
-      title = job.at_css('a[class="jobtitle"]')
-      url = @host + title[:href][0..title[:href].index('?') - 1]
-      flag = Job.find_by_sources(url)
-      @time_db += Time.now - t
-      unless flag
-        company = job.at_css('div span[class="company"]')&.text
-        if company
-          job = get_job(url)
-          if job
-            create_jobs(link: url,
-                        title: title[:title],
-                        company: company,
-                        salary_min: salary.present? ? salary[0] : nil,
-                        salary_max: salary.present? ? salary[1] : nil,
-                        location: lacation,
-                        apply: job[:apply],
-                        description: job[:description])
-          else
-            nil
-          end
-        end
-      end
-    end
-  end
-
-  def get_job(url)
+  def get_job(url, j)
     begin
-      t = Time.now
-      @count_all +=1
-      job = Nokogiri::HTML(@proxy.connect(url)).at_css('div[id="vj_container"]')
+      job = Nokogiri::HTML(@proxy.connect(url))&.at_css('div[id="vj_container"]')
       apply_link = job.at_css('a[class="button apply_link"]')
       apply = apply_link ? @host +apply_link[:href] : url
-      a = {description: html_to_markdown(job.at_css('div[class="summary"]').children.to_s), apply:apply}
-      @time_download2 += Time.now - t
-      a
+     {description: html_to_markdown(job.at_css('div[class="summary"]').children.to_s), apply:apply}
     rescue
-      puts ("Ошибка #{ $!}")
+      puts ("Поток #{j} Ошибка #{ $!} #{job}")
       nil
     end
   end
 
-  def create_jobs(arg)
-    t = Time.now
-    job= arg
+  def create_jobs(job)
     old_company = true
     company = Company.find_or_create_by(name: job[:company]) do |comp|
       puts "Не нашли компанию #{job[:company]}. Создаем новую"
@@ -125,16 +133,12 @@ class Jora < Adapter
       comp.industry_id = job[:industry]
       old_company = false
     end
-    if old_company
-      e = Time.now
-      company.job.where(title:job[:title], location_id: job[:location]).destroy_all
-      @time_db2 += Time.now - e
-    end
+    company.job.where(title: job[:title], location_id: job[:location]).destroy_all if old_company
     user = company.client.first
     if user.blank?
-      email = "#{job[:company].gsub(' ', '_')}#{(0...8).map { (97 + rand(25)).chr }.join}@email.com.au"
+      email = "#{job[:company].gsub(' ', '_')}#{(0...8).map {(97 + rand(25)).chr}.join}@email.com.au"
       puts "Email is #{email}"
-      user = Client.new(firstname: job[:company], lastname: 'HR', email:email , location_id: job[:location], character: TypeOfClient::EMPLOYER, send_email: false, password: '11111111', password_confirmation: '11111111', company_id: company.id)
+      user = Client.new(firstname: job[:company], lastname: 'HR', email: email, location_id: job[:location], character: TypeOfClient::EMPLOYER, send_email: false, password: '11111111', password_confirmation: '11111111', company_id: company.id)
       user.skip_confirmation! if Rails.env.production?
       user.save!
     end
@@ -147,7 +151,5 @@ class Jora < Adapter
                 client: user,
                 sources: job[:link],
                 apply: job[:apply])
-    @time_create += Time.now - t
   end
-
 end
