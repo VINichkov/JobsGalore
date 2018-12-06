@@ -4,7 +4,7 @@ require './app/addon/Proxy'
 
 class Jora < Adapter
   SP = "facet_listed_date"
-  MAX_PAGE = 10
+  MAX_PAGE = 2
   ST = "date"
 
 
@@ -113,7 +113,7 @@ class Jora < Adapter
 
   def get_job(url, j)
     begin
-      job = Nokogiri::HTML(@proxy.connect(url))&.at_css('div[id="vj_container"]')
+      job = Nokogiri::HTML(@proxy.connect(url))
       apply_link = job.at_css('a[class="button apply_link"]')
       apply = apply_link ? @host +apply_link[:href] : url
      {description: html_to_markdown(job.at_css('div[class="summary"]').children.to_s), apply:apply}
