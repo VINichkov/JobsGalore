@@ -35,7 +35,7 @@ class Jora < Adapter
         else
           while job  = @jobs.pop
             if @jobs.size == 0 and @local.closed?
-              sleep 30
+              sleep 90
               @jobs.close
             end
             t = Time.now
