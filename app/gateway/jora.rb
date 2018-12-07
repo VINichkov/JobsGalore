@@ -20,6 +20,7 @@ class Jora < Adapter
     location.map{|city| @local << {name:city.suburb,code:city.id}}
     @index = Job.select(:sources).where(":yesterday<=created_at and sources like :host and location_id in (:lids)", yesterday: arg == 3 ? Time.now.beginning_of_day - 2.day : Time.now.beginning_of_day - 1.day, host:@host+'%', lids:location.ids).pluck(:sources)
     @jobs = Thread::Queue.new()
+    @count_job = {}
   end
 
 
@@ -46,6 +47,7 @@ class Jora < Adapter
       end
     end
     threads.each(&:join)
+    puts  @count_job
   end
 
   def get_location(local, j)
@@ -136,6 +138,7 @@ class Jora < Adapter
       user.skip_confirmation! if Rails.env.production?
       user.save!
     end
+    @count_job[job[:location]] ? @count_job[job[:location]] +=1 : @count_job[job[:location]] = 1
     Job.create!(title: job[:title],
                 location_id: job[:location],
                 salarymin: job[:salary_min],
