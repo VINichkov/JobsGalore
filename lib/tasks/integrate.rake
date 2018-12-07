@@ -21,12 +21,17 @@ namespace :integrate do
     puts "! Task:Destroy: end #{Time.now}"
   end
 
-  task :jora => :environment  do
+  task :jora_always => :environment do jora(1) end
+  task :jora_often => :environment do jora(1) end
+  task :jora_sometime => :environment do jora(1) end
+
+  def jora(arg)
+    a = ["always", "often", "sometime"]
     t = Time.now
-    puts "! Task:Jora: start #{t}"
-    jora = Jora.new
+    puts "! Task:Jora_#{a[arg-1]}: start #{t}"
+    jora = Jora.new(arg)
     jora.get_list_jobs
-    puts "! Task:Jora: End #{Time.now}   - #{Time.now - t}"
+    puts "! Task:Jora_#{a[arg-1]}: End #{Time.now}   - #{Time.now - t}"
   end
 
   def separate

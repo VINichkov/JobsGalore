@@ -8,29 +8,31 @@ class Jora < Adapter
   ST = "date"
 
 
-  def initialize
+  def initialize(arg)
     @proxy = Proxy.new
     @host = 'https://au.jora.com'
     @url = 'https://au.jora.com/j?'
     @local = Thread::Queue.new()
-    #@local << {name:'Sydney',code:9522}
-    Location.select(:id, :suburb, :state).all.map{|city| @local << {name:city.suburb,code:city.id}}
-    @index = Job.select(:sources).where(":yesterday<=created_at and sources like :host", yesterday: Time.now.beginning_of_day - 1.day, host:@host+'%').pluck(:sources)
+    query = ['suburb in (\'Melbourne\',\'Brisbane\', \'Sydney\')',
+             'suburb in (\'Liverpool\',\'Penrith\', \'Logan City\', \'Dandenong\', \'Parramatta\', \'Melton\', \'Adelaide\', \'Port Adelaide\', \'Ipswich\', \'Kensington\', \'Caboolture\', \'Redland City\', \'Frankston\', \'Mount Barker\', \'Canberra\', \'Perth\', \'Fremantle\', \'Newcastle\')',
+             'suburb not in (\'Melbourne\',\'Brisbane\', \'Sydney\', \'Liverpool\',\'Penrith\', \'Logan City\', \'Dandenong\', \'Parramatta\', \'Melton\', \'Adelaide\', \'Port Adelaide\', \'Ipswich\', \'Kensington\', \'Caboolture\', \'Redland City\', \'Frankston\', \'Mount Barker\', \'Canberra\', \'Perth\', \'Fremantle\', \'Newcastle\')']
+    location = Location.select(:id, :suburb, :state).where(query[arg - 1])
+    location.map{|city| @local << {name:city.suburb,code:city.id}}
+    @index = Job.select(:sources).where(":yesterday<=created_at and sources like :host and location_id in (:lids)", yesterday: arg == 3 ? Time.now.beginning_of_day - 2.day : Time.now.beginning_of_day - 1.day, host:@host+'%', lids:location.ids).pluck(:sources)
     @jobs = Thread::Queue.new()
   end
 
 
   def get_list_jobs
     threads = []
-    11.times do |i|
+    count_treads = @local.size == 3 ? 3 :10
+    count_treads.times do |i|
       threads << Thread.new do
-        if i != 10
+        if i != count_treads
           while local = @local.pop
             @local.close if @local.size == 0
             t = Time.now
-            puts "Поток #{i} берет локацию #{local[:name]}"
             get_location(local, i)
-            puts "Окончание #{i} #{local[:name]}  t = #{Time.now - t} s"
           end
         else
           while job  = @jobs.pop
@@ -38,10 +40,7 @@ class Jora < Adapter
               sleep 90
               @jobs.close
             end
-            t = Time.now
-            puts "Поток #{i} сохраняем вакансию #{job[:title]}"
             create_jobs(job)
-            puts "Окончание #{i} #{job[:title]} t = #{Time.now - t} s"
           end
         end
       end
@@ -57,7 +56,6 @@ class Jora < Adapter
       puts "Поток #{j} query = #{query}"
       request = get_page(query)
       count_ads =  request&.css('body div[id="main"] div[id="centre_col"] div[id="search_info"] span')&.last&.text&.delete(',').to_i
-      puts "Поток #{j}  count_ads = #{count_ads}"
       break if count_ads.nil? or count_ads==0
       count_page = count_ads / 10
       count_page +=1 if (count_ads % 10 > 0)
@@ -73,9 +71,7 @@ class Jora < Adapter
       title = job.at_css('a[class="jobtitle"]')
       title ||=   job.at_css('a[class="job"]')
       url = @host + title[:href][0..title[:href].index('?') - 1]
-      puts "Поток #{j} job url  = #{url}"
       if @index.include?(url)
-        puts "Поток #{j} Url is in index"
         end_job = true
         break
       end
@@ -126,7 +122,6 @@ class Jora < Adapter
   def create_jobs(job)
     old_company = true
     company = Company.find_or_create_by(name: job[:company]) do |comp|
-      puts "Не нашли компанию #{job[:company]}. Создаем новую"
       comp.name = job[:company]
       comp.size = Size.first
       comp.location_id = job[:location]
@@ -137,7 +132,6 @@ class Jora < Adapter
     user = company.client.first
     if user.blank?
       email = "#{job[:company].gsub(' ', '_')}#{(0...8).map {(97 + rand(25)).chr}.join}@email.com.au"
-      puts "Email is #{email}"
       user = Client.new(firstname: job[:company], lastname: 'HR', email: email, location_id: job[:location], character: TypeOfClient::EMPLOYER, send_email: false, password: '11111111', password_confirmation: '11111111', company_id: company.id)
       user.skip_confirmation! if Rails.env.production?
       user.save!
