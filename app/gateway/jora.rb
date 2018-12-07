@@ -26,10 +26,10 @@ class Jora < Adapter
 
   def get_list_jobs
     threads = []
-    count_treads = @local.size == 3 ? 3 :10
+    count_treads = @local.size == 3 ? 4 : 11
     count_treads.times do |i|
       threads << Thread.new do
-        if i != count_treads
+        if i != count_treads-1
           while local = @local.pop
             @local.close if @local.size == 0
             t = Time.now
@@ -55,7 +55,7 @@ class Jora < Adapter
     MAX_PAGE.times do |i|
       break if end_job
       query = {a: '24h',button:nil, l: local[:name], p: i,  sp: SP, st:ST}
-      puts "Поток #{j} query = #{query}"
+      puts "Thread:#{j} query = #{query}"
       request = get_page(query)
       count_ads =  request&.css('body div[id="main"] div[id="centre_col"] div[id="search_info"] span')&.last&.text&.delete(',').to_i
       break if count_ads.nil? or count_ads==0
@@ -69,14 +69,7 @@ class Jora < Adapter
 
   def get_list(arg, lacation, j)
     end_job = false
-    jobs =arg.css('div[id="main"] div[id="centre_col"] ul[id="jobresults"] div[class="job"]')
-    if jobs.count < 10
-      puts "Поток #{j} количество записей меньше чем нужно!!!"
-      puts "Поток #{j} __________________________________________________________________________"
-      puts arg
-      puts "Поток #{j} __________________________________________________________________________"
-    end
-    jobs.each do |job|
+    arg.css('div[id="main"] div[id="centre_col"] ul[id="jobresults"] div[class="job"]').each do |job|
       title = job.at_css('a[class="jobtitle"]')
       title ||=   job.at_css('a[class="job"]')
       url = @host + title[:href][0..title[:href].index('?') - 1]
@@ -89,14 +82,14 @@ class Jora < Adapter
       if company
         job = get_job(url, j)
         if job
-          @jobs<<{link: url,
+          @jobs.push({link: url,
                       title: title[:title],
                       company: company,
                       salary_min: salary.present? ? salary[0] : nil,
                       salary_max: salary.present? ? salary[1] : nil,
                       location: lacation,
                       apply: job[:apply],
-                      description: job[:description]}
+                      description: job[:description]})
         end
       end
     end
@@ -108,7 +101,7 @@ class Jora < Adapter
       arg[:p] +=1
       arg.delete(:p) if arg[:p] == 1
       url = @url+arg.to_query
-      puts "URL job list = #{url}"
+      #puts "Thread:#{j} URL job list = #{url}"
       Nokogiri::HTML(@proxy.connect(url))
     rescue
       puts ("Ошибка #{$!}")
@@ -118,12 +111,13 @@ class Jora < Adapter
 
   def get_job(url, j)
     begin
+     #puts("->>>Thread:#{j} url: #{url}")
       job = Nokogiri::HTML(@proxy.connect(url))
       apply_link = job.at_css('a[class="button apply_link"]')
       apply = apply_link ? @host +apply_link[:href] : url
      {description: html_to_markdown(job.at_css('div[class="summary"]').children.to_s), apply:apply}
     rescue
-      puts ("Поток #{j} Ошибка #{ $!} #{job}")
+      puts("Thread:#{j} Ошибка #{ $!} #{job}")
       nil
     end
   end
@@ -145,7 +139,7 @@ class Jora < Adapter
       user.skip_confirmation! if Rails.env.production?
       user.save!
     end
-    puts "Сохраняем #{job[:title]}  в #{job[:location]}"
+    #puts "Сохраняем #{job[:title]}  в #{job[:location]}"
     @count_job[job[:location]] ? @count_job[job[:location]] +=1 : @count_job[job[:location]] = 1
     Job.create!(title: job[:title],
                 location_id: job[:location],
