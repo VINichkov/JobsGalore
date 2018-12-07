@@ -69,7 +69,14 @@ class Jora < Adapter
 
   def get_list(arg, lacation, j)
     end_job = false
-    arg.css('div[id="main"] div[id="centre_col"] ul[id="jobresults"] div[class="job"]').each do |job|
+    jobs =arg.css('div[id="main"] div[id="centre_col"] ul[id="jobresults"] div[class="job"]')
+    if jobs.count < 10
+      puts "Поток #{j} количество записей меньше чем нужно!!!"
+      puts "Поток #{j} __________________________________________________________________________"
+      puts arg
+      puts "Поток #{j} __________________________________________________________________________"
+    end
+    jobs.each do |job|
       title = job.at_css('a[class="jobtitle"]')
       title ||=   job.at_css('a[class="job"]')
       url = @host + title[:href][0..title[:href].index('?') - 1]
@@ -138,6 +145,7 @@ class Jora < Adapter
       user.skip_confirmation! if Rails.env.production?
       user.save!
     end
+    puts "Сохраняем #{job[:title]}  в #{job[:location]}"
     @count_job[job[:location]] ? @count_job[job[:location]] +=1 : @count_job[job[:location]] = 1
     Job.create!(title: job[:title],
                 location_id: job[:location],
