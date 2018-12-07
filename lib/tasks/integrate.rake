@@ -22,8 +22,8 @@ namespace :integrate do
   end
 
   task :jora_always => :environment do jora(1) end
-  task :jora_often => :environment do jora(1) end
-  task :jora_sometime => :environment do jora(1) end
+  task :jora_often => :environment do jora(2) end
+  task :jora_sometime => :environment do jora(3) end
 
   def jora(arg)
     a = ["always", "often", "sometime"]
