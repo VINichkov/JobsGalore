@@ -19,7 +19,12 @@
               |Major cities
           -@main.city.each do |t|
             li.col-sm-4.col-md-12.col-lg-12
-              =link_location(t.suburb, t, Objects::JOBS)
+              = link_to local_object_path(t,Objects::JOBS) do
+                |#{t.suburb}
+                span.badge[style = "float: right"]
+                  |#{t.counts_jobs}
+
+
     .col-lg-9.col-md-9.hidden-sm.hidden-xs
       -cache @main.jobs do
         - unless @main.jobs.empty?

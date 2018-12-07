@@ -11,7 +11,7 @@ require 'mechanize'
 require 'bcrypt'
 
 #version 1
-if 1 == 1
+if 1 == 2
 
   JSON.parse(File.read('./db/import/1Location_do_not_work2.json'))["Location"].each do |local|
     Location.where(suburb: local['suburb'], state:local['state']).first_or_create(postcode: local['postcode'],suburb: local['suburb'].downcase.capitalize, state:local['state'])

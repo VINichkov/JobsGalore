@@ -463,7 +463,8 @@ CREATE TABLE public.locations (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     parent_id integer,
-    fts tsvector
+    fts tsvector,
+    counts_jobs integer
 );
 
 
@@ -1520,6 +1521,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181114111921'),
 ('20181130075311'),
 ('20181203085507'),
+('20181207094318'),
 ('2019');
 
 

@@ -4,7 +4,7 @@ require './app/addon/Proxy'
 
 class Jora < Adapter
   SP = "facet_listed_date"
-  MAX_PAGE = 10
+  MAX_PAGE = 40
   ST = "date"
 
 
