@@ -2,6 +2,7 @@ class MainSearch
   include Interactor
 
   def call
+    context.sort = context.params.to_h
     @page, @param = context.params[:page], context.params[:main_search]
     context.param = @param.clone
     @param[:value].delete!("<>{}#@!,.:*&()'`\"’")
@@ -20,20 +21,24 @@ class MainSearch
 
   end
 
+  def sort(type)
+    type == "date" ? 'created_at DESC, rank DESC' : 'rank DESC, created_at DESC'
+  end
+
   def company
-    context.objs = Company.includes(:location,:industry).search(@param).order('rank DESC, created_at DESC').paginate(page: @page, per_page:21).decorate
+    context.objs = Company.includes(:location,:industry).search(@param).order(sort(@param[:sort])).paginate(page: @page, per_page:21).decorate
     context.type = Objects::COMPANIES
     true
   end
 
   def job
-    context.objs = Job.includes(:company,:location).search(@param).order('rank DESC, created_at DESC').paginate(page: @page, per_page:25).decorate
+    context.objs = Job.includes(:company,:location).search(@param).order(sort(@param[:sort])).paginate(page: @page, per_page:25).decorate
     context.type = Objects::JOBS
     true
   end
 
   def resume
-    context.objs = Resume.includes(:location, :client).search(@param).order('rank DESC, created_at DESC').paginate(page: @page, per_page:25).decorate
+    context.objs = Resume.includes(:location, :client).search(@param).order(sort(@param[:sort])).paginate(page: @page, per_page:25).decorate
     context.type = Objects::RESUMES
     true
   end

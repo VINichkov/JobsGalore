@@ -94,6 +94,35 @@ class Job < ApplicationRecord
     {id:id, title: title, salarymin: salarymin, salarymax: salarymax, description:description, client_id:client_id, company_id:company_id, location_id:location_id, industry_id:industry_id}
   end
 
+  def self.automatic_create(**job)
+    old_company = true
+    company = Company.find_or_create_by(name: job[:company]) do |comp|
+      comp.name = job[:company]
+      comp.size = Size.first
+      comp.location_id = job[:location]
+      comp.industry_id = job[:industry]
+      old_company = false
+    end
+    company.job.where(title: job[:title], location_id: job[:location]).destroy_all if old_company
+    user = company.client.first
+    if user.blank?
+      email = "#{job[:company].gsub(' ', '_')}#{(0...8).map {(97 + rand(25)).chr}.join}@email.com.au"
+      user = Client.new(firstname: job[:company], lastname: 'HR', email: email, location_id: job[:location], character: TypeOfClient::EMPLOYER, send_email: false, password: '11111111', password_confirmation: '11111111', company_id: company.id)
+      user.skip_confirmation! if Rails.env.production?
+      user.save!
+    end
+    Rails.logger.debug "Сохраняем #{job[:title]}  в #{job[:location]}"
+    Job.create!(title: job[:title],
+                location_id: job[:location],
+                salarymin: job[:salary_min],
+                salarymax: job[:salary_max],
+                description: job[:description],
+                company: company,
+                client: user,
+                sources: job[:link],
+                apply: job[:apply])
+  end
+
   protected
 
   def send_email

@@ -54,4 +54,19 @@ module ApplicationHelper
   def will_paginate_mini(objects)
     will_paginate objects, {renderer: BootstrapPagination::Rails, inner_window:1, outer_window:0, previous_label:'&#8592;', next_label: '&#8594;'}
   end
+
+  def sort_by_search(query)
+    content_tag :h4 do
+      h4 = "Sort by: ".html_safe
+      h4 += if (query[:main_search][:sort]=="date")
+              query[:main_search][:sort] = :relevance
+              text = link_to :relevance, search_url(query)
+              text +=" | date".html_safe
+            else
+              query[:main_search][:sort] = :date
+              text = "relevance | ".html_safe
+              text +=link_to :date, search_url(query)
+            end
+    end
+  end
 end

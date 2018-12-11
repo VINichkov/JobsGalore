@@ -1,7 +1,10 @@
 require 'open-uri'
 require 'nokogiri'
+
 class Adapter
+
   def initialize(arg = {})
+
     @log = ["Start"]
     @jobs, @doc, @host = [], arg[:start_page], arg[:host]
   end

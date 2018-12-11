@@ -125,7 +125,7 @@ class IndexController < ApplicationController
   private
 
   def main_search_params
-    params.permit(:page, main_search: [:type, :value, :page, :salary,  :options, :category, :location_id, :location_name, :urgent, :open])
+    params.permit(:page, main_search: [:type, :value, :page, :salary,  :options, :category, :location_id, :location_name, :urgent, :open, :sort])
   end
 
 
