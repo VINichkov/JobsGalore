@@ -1,12 +1,11 @@
-class Jora < Crawler
-  SP = "facet_listed_date"
+class Indeed < Crawler
   MAX_PAGE = 10
   ST = "date"
 
   def initialize
     super
-    @host = 'https://au.jora.com'
-    @url = 'https://au.jora.com/j?'
+    @host = 'https://au.indeed.com'
+    @url = 'https://au.indeed.com/jobs?'
     #@local << {name:'Sydney',code:9522}
     Location.select(:id, :suburb, :state).all.each{|city| @local << {name:city.suburb,code:city.id}}
     @count_job = {}
@@ -19,38 +18,25 @@ class Jora < Crawler
 
   def get_main_page(local, j)
     end_job = false
-    count_page = nil
-    iter = nil
     MAX_PAGE.times do |i|
       break if end_job
-      query = {a: '24h',button:nil, l: local[:name], p: i,  sp: SP, st:ST}
+      query = {q:nil, l: local[:name],sort: ST, start: i}
       puts "-------Thread:#{j} локация = #{local[:name]} --- страница #{i+1}---------"
       request = get_list_jobs(query)
-      if i==0
-        count_ads =  request&.css('div#search_info span,  div.search-count span')&.last&.text&.delete(',').to_i
-        if count_ads.nil? or count_ads==0
-          #to_file(request, "#{local[:name]}_#{i}.html")
-          break
-        end
-        count_page = count_ads / 10
-        count_page +=1 if (count_ads % 10 > 0)
-        puts "! Thread:#{j} Количество страниц всего #{count_page}"
-        iter  = count_page > MAX_PAGE ? MAX_PAGE : count_page
-      end
-      end_job = get_list(request, local[:code], j)
-      break if (i + 1 ) == iter
+      end_job = get_list(request, local[:code], j, "#{local[:name]}_#{i}.html")
     end
   end
 
-  def get_list(arg, lacation, j)
+  def get_list(arg, lacation, j, filename)
     end_job = false
-    jobs = arg.css('ul#jobresults li.result')
+    jobs = arg.css('td#resultsCol div.result, div#jobResults a.result')
     puts "Thread:#{j} На странице #{jobs.count} работ"
-    #to_file(arg, filename) if job.count == 0
+    to_file(arg, filename) if jobs.count == 0 or jobs.count >10
+    end_job = true if jobs.count == 0
     jobs.each do |job|
-      title = job.at_css('a.jobtitle, a.job')
-      url = @host + title[:href][0..title[:href].index('?') - 1]
-      company = job.at_css('div span.company')&.text
+      title = job.at_css('a.turnstileLink')
+      url = url_to_job(title[:href])
+      company = job.at_css('span.company')&.text&.squish
       puts "<<<title: #{title[:title]} | company: #{company}>>>"
       if company
         compare = compare_with_index(url:url, title: title[:title], company:company)
@@ -60,7 +46,7 @@ class Jora < Crawler
         elsif compare==:same_title_and_company
           nil
         else
-          salary = job.at_css('div div.salary')&.text&.gsub(',','')&.scan(/\d+/)
+          salary = job.at_css('div.salary')&.text&.gsub(',','')&.scan(/\d+/)
           job = get_job(url, j)
           if job
             @jobs.push({link: url,
@@ -78,25 +64,38 @@ class Jora < Crawler
       else
         puts "!@@@@ Thread:#{j}  ВНИМАНИЕ для #{title[:title]} компания пуста  @@@@!"
       end
-
     end
     end_job
   end
 
+  def url_to_job(url)
+    if url=~(/^\/company/)
+      @host + url
+    else
+      @host + "/viewjob"+url[url.index('?')..url.length-1]
+    end
+  end
+
   def get_list_jobs(arg)
-      arg[:p] +=1
-      arg.delete(:p) if arg[:p] == 1
+      arg[:start] != 0 ? arg[:start] *=10 : arg.delete(:start)
       url = @url+arg.to_query
       puts "---> Thread:#{j} URL job list = #{url}"
       get_page(url)
   end
 
   def get_job(url, j)
-      puts("->>>Thread:#{j} url: #{url}")
+      puts("->>>Thread:#{j} работа ---> url: #{url}")
       job = get_page(url)
-      apply_link = job.at_css('a[class="button apply_link"]')
-      apply = apply_link ? @host +apply_link[:href] : url
-     {description: html_to_markdown(job.at_css('div.summary').children.to_s), apply:apply}
+      apply_link = job.css('div#viewJobButtonLinkContainer a, div#jobsearch-ViewJobButtons-container a')
+      apply_link = apply_link&.first
+      apply = apply_link ? apply_link[:href] : url
+      description = job.at_css('div.jobsearch-JobComponent-description')
+      if description
+        {description: html_to_markdown(job.at_css('div.jobsearch-JobComponent-description').children.to_s), apply:apply}
+      else
+        puts "Thread:#{j} ERROR description is null #{url}"
+        nil
+      end
   end
 
   def create_jobs(job)

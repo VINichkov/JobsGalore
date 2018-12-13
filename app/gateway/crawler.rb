@@ -61,10 +61,10 @@ class Crawler
   def compare_with_index(**arg)
     if @index.include?(arg[:url])
       puts "!!! Нашли ссылку на работу. Уже присутсвует в БД !!!"
-      true
+      :same_sources
     elsif @index_full.include?(arg[:title] + " || " + arg[:company])
       "!!! Нашли работу по наименованию компании и заглавию #{arg[:title] + " || " + arg[:company]} !!!"
-      true
+      :same_title_and_company
     else
       false
     end
@@ -84,6 +84,10 @@ class Crawler
       end
     end
     attr.to_s
+  end
+
+  def href_edit(elem, attr, value)
+    value[0] == '/' ? elem[:href] = @host+value : elem[:href] = 'http://'+value
   end
 
   def gsub_html(arg)

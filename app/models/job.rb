@@ -106,7 +106,8 @@ class Job < ApplicationRecord
     company.job.where(title: job[:title], location_id: job[:location]).destroy_all if old_company
     user = company.client.first
     if user.blank?
-      email = "#{job[:company].gsub(' ', '_')}#{(0...8).map {(97 + rand(25)).chr}.join}@email.com.au"
+      email = "#{job[:company].delete("<>{}#@!,.:*&()'`\"’").gsub(' ', '_')}#{(0...8).map {(97 + rand(25)).chr}.join}@email.com.au"
+      puts email
       user = Client.new(firstname: job[:company], lastname: 'HR', email: email, location_id: job[:location], character: TypeOfClient::EMPLOYER, send_email: false, password: '11111111', password_confirmation: '11111111', company_id: company.id)
       user.skip_confirmation! if Rails.env.production?
       user.save!

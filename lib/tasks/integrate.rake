@@ -28,6 +28,13 @@ namespace :integrate do
     puts "! Task:Jora: End #{Time.now}   - #{Time.now - t}"
   end
 
+  task :indeed => :environment  do
+    t = Time.now
+    puts "! Task:Jora: start #{t}"
+    Indeed.new.run
+    puts "! Task:Jora: End #{Time.now}   - #{Time.now - t}"
+  end
+
   def separate
       i=0
       ind = { accounting: Industry.find_by_name('Accounting'),
