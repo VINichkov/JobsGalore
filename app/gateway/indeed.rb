@@ -31,7 +31,6 @@ class Indeed < Crawler
     end_job = false
     jobs = arg.css('td#resultsCol div.result, div#jobResults a.result')
     puts "Thread:#{j} На странице #{jobs.count} работ"
-    to_file(arg, filename) if jobs.count == 0 or jobs.count >10
     end_job = true if jobs.count == 0
     jobs.each do |job|
       title = job.at_css('a.turnstileLink')
