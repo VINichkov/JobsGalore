@@ -1,6 +1,6 @@
 class Jora < Crawler
   SP = "facet_listed_date"
-  MAX_PAGE = 10
+  MAX_PAGE = 2
   ST = "date"
 
   def initialize
