@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'robot', to: 'index#robot'
   get 'sitemap', to: 'index#sitemap'
   get 'sitemap:id', to: 'index#sitemaps'
-  get 'rss', to: 'index#rss'
+  #get 'rss', to: 'index#rss'
   post 'file_to_html', to: 'index#file_to_html', as: "file_to_html"
 
   devise_for  :clients, controllers:{ registrations: "clients/registrations",

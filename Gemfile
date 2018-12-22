@@ -57,6 +57,7 @@ gem 'slim'
 gem 'dragonfly'#, '~> 1.1.1'
 gem 'mechanize'
 gem 'virtus'
+#gem 'kaminari'
 
 gem "pg_search"#, '~> 2.0.1'
 #gem "actionpack-page_caching"
