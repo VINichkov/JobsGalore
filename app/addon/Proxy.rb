@@ -1,3 +1,5 @@
+require 'net/http'
+
 class Proxy
   def connect(arg = 'https://rbc.ru')
     arg= {url: arg}
@@ -7,7 +9,8 @@ class Proxy
     while flag and i<3 do
       begin
         i +=1
-        respond = open('https://blooming-lake-12024.herokuapp.com/open?' +arg.to_query).read
+        uri = URI('https://blooming-lake-12024.herokuapp.com/open?' +arg.to_query)
+        respond = Net::HTTP.get(uri).force_encoding('UTF-8')
         flag = false
       rescue
         puts("Ошибка #{$!}")

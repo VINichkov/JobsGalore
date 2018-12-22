@@ -3,7 +3,7 @@
 # To ban all spiders from the entire site uncomment the next two lines:
 # User-agent: *
 # Disallow: /
-host: www.jobsgalore.eu
+host: jobsgalore.eu
 User-agent: *
 Disallow: /gatetway/
 Disallow: /clients/
@@ -20,4 +20,31 @@ Disallow: /clients/sign_in
 Disallow: /clients/sign_up
 Disallow: /sign_up_employer
 Disallow: /clients/password/new
-Sitemap: https://www.JobsGalore.eu/sitemap.xml
+
+User-agent: AhrefsBot
+Disallow: /
+User-agent: MJ12bot
+Disallow: /
+User-agent: Detectify
+Disallow: /
+User-agent: dotbot
+Disallow: /
+User-agent: Riddler
+Disallow: /
+User-agent: SemrushBot
+Disallow: /
+User-agent: LinkpadBot
+Disallow: /
+User-agent: BLEXBot
+Disallow: /
+User-agent: FlipboardProxy
+Disallow: /
+User-agent: aiHitBot
+Disallow: /
+User-agent: trovitBot
+Disallow: /
+User-agent: BUbiNG
+Disallow: /
+User-agent: MauiBot
+Disallow: /
+Sitemap: https://JobsGalore.eu/sitemap.xml

@@ -1,4 +1,3 @@
-require 'open-uri'
 require 'nokogiri'
 require './app/addon/Proxy'
 
@@ -6,36 +5,95 @@ class Crawler
 
   def initialize
     @proxy = Proxy.new
-    jobs_for_index = Job.includes(:company).where(":yesterday<=jobs.created_at", yesterday: Time.now.beginning_of_day - 1.day)
-    @index = jobs_for_index.pluck(:sources)
-    @index_full = jobs_for_index.map{|t|t.title + " || " + t.company.name }
-    @local = Thread::Queue.new()
-    @jobs = Thread::Queue.new()
-    @quantity_threads = 11
+    @queue_local = Thread::Queue.new()
+    Location.select(:id, :suburb, :state).all.each{|city| @queue_local << {name:city.suburb,code:city.id}}
+    @queue_jobs_for_save = Thread::Queue.new()
+    @queue_for_prepare_jobs = Thread::Queue.new()
+    @queue_tasks_get_jobs = Thread::Queue.new()
+    @block_list = []
+    @quantity_threads = {conveer_get_list: 4, conveer_prepare_job:1, conveer_get_job: 14, conveer_save_job: 1}
+    @count_job = {}
   end
 
   def run
-    threads = []
-    @quantity_threads.times do |i|
-      threads << Thread.new do
-        if i != @quantity_threads -1
-          while local = @local.pop
-            if @local.size == 0
-              puts "<><>Локации кончились. Закрываем поток<><>"
-              @local.close
-            end
-            get_main_page(local, i)
-          end
-        else
-          while job  = @jobs.pop
-            sleep 60 if @jobs.size == 0 and @local.closed?
-            @jobs.close if @jobs.size == 0 and @local.closed?
-            create_jobs(job)
-          end
+    #Конвеер 1 | 10 потоков
+    @group_a = create_conveer(@quantity_threads[:conveer_get_list]){|i| conveer_get_list(i)}
+    #Конвеер 2 | 1 потоков
+    @group_b = create_conveer(@quantity_threads[:conveer_prepare_job]){|i| conveer_prepare_job(i)}
+    #Конвеер 3 | 10 потоков
+    @group_c = create_conveer(@quantity_threads[:conveer_get_job]){|i|conveer_get_job(i)}
+    #Конвеер 4 | 1 потоков
+    @group_d = create_conveer(@quantity_threads[:conveer_save_job]){|i|conveer_save_job(i)}
+    #@threads.each(&:join)
+    (@group_a.list + @group_b.list + @group_c.list + @group_d.list).each{|t| t.join(60)}
+    puts @count_job
+  end
+
+  def conveer_get_list(i)
+      i = "conveer_get_list_#{i}"
+      while obj = @queue_local.pop
+        get_main_page(obj, i) if obj #and 1==2
+        if @queue_local.size == 0
+          @queue_local.close
+          Thread.current.exit
         end
       end
+  end
+
+  def conveer_prepare_job(i)
+    i = "conveer_prepare_job_#{i}"
+    while true
+      if @queue_for_prepare_jobs.size > 0
+        obj = @queue_for_prepare_jobs.pop
+        get_list(obj, i) if obj
+      else
+        sleep 2
+      end
+      if @queue_for_prepare_jobs.size == 0 and @group_a.list.size == 0
+        @queue_for_prepare_jobs.close
+        Thread.current.exit
+      end
     end
-    threads.each(&:join)
+  end
+
+  def conveer_get_job(i)
+    i = "conveer_get_job_#{i}"
+    while true
+      if @queue_tasks_get_jobs.size > 0
+        obj = @queue_tasks_get_jobs.pop()
+        get_job(obj, i) if obj
+      else
+        sleep 2
+      end
+      if @queue_tasks_get_jobs.size == 0 and @group_b.list.size == 0
+        @queue_tasks_get_jobs.close
+        Thread.current.exit
+      end
+    end
+  end
+
+  def conveer_save_job(i)
+    i = "conveer_save_job_#{i}"
+    while true
+      if @queue_jobs_for_save.size >0
+        obj = @queue_jobs_for_save.pop
+        create_jobs(obj) if obj
+      else
+        sleep 2
+      end
+      if @queue_jobs_for_save.size == 0 and @group_c.list.size ==0
+        @queue_jobs_for_save.close
+        Thread.current.exit
+      end
+    end
+  end
+
+  def create_conveer(len = 1)
+    threads = ThreadGroup.new
+    len.times do |i|
+      threads.add(Thread.new{yield(i)})
+    end
+    threads
   end
 
   def get_page(url)
@@ -48,21 +106,36 @@ class Crawler
   end
 
   def create_jobs(job)
+    @count_job[job[:location_name]] ? @count_job[job[:location_name]] +=1 : @count_job[job[:location_name]] = 1
     Job.automatic_create(job)
   end
 
   def to_file(text, name)
     puts "Не нашли количества страниц всего сохраняем страницу полностью"
-    file = File.new(name,"w")
+      file = File.new(name,"w")
     file.puts text
     file.close
   end
 
-  def compare_with_index(**arg)
-    if @index.include?(arg[:url])
-      puts "!!! Нашли ссылку на работу. Уже присутсвует в БД !!!"
+  def how_long(text)
+    if text == "Just posted" or text=~/hour|1 day|minute/ or text.blank?
+      true
+    else
+      false
+    end
+  end
+
+  def get_list_jobs(arg, thread)
+    url = @url+arg.to_query
+    puts "#{Time.now}  ---> Thread = #{thread} , location = #{arg[:location_name]}, page = #{arg[:page]}, message =  URL job_list: #{url}"
+    get_page(url)
+  end
+
+  def compare_with_index(arg)
+    if Job.find_by_sources(arg[:url])
+      puts "!!! Нашли ссылку на работу. Уже присутсвует в БД !!! #{arg[:url]} | #{arg[:title]} }"
       :same_sources
-    elsif @index_full.include?(arg[:title] + " || " + arg[:company])
+    elsif Job.where(title: arg[:title], company_id: Company.find_by_name(arg[:company])).first
       "!!! Нашли работу по наименованию компании и заглавию #{arg[:title] + " || " + arg[:company]} !!!"
       :same_title_and_company
     else
@@ -71,7 +144,6 @@ class Crawler
   end
 
   def update_attr(attr)
-    attr = Nokogiri::HTML(attr)
     attr.css('*').each do |elem|
       if elem&.count>0 then
         elem.each do |attr, value|

@@ -15,6 +15,17 @@ namespace :integrate do
     puts "! Task:add_jobs: End"
   end
 
+  task test: :environment do
+      c = Job.all.pluck(:title, :created_at)
+      a = []
+      50.times do
+        a << Thread.new do
+          sleep 20
+        end
+      end
+      a.each(&:join)
+  end
+
   task :destroy_jobs => :environment do
     puts "! Task:Destroy: start #{Time.now}"
     Job.where("close <= :data", data: Time.now).destroy_all
@@ -30,9 +41,9 @@ namespace :integrate do
 
   task :indeed => :environment  do
     t = Time.now
-    puts "! Task:Jora: start #{t}"
+    puts "! Task:Indeed: start #{t}"
     Indeed.new.run
-    puts "! Task:Jora: End #{Time.now}   - #{Time.now - t}"
+    puts "! Task:Indeed: End #{Time.now}   - #{Time.now - t}"
   end
 
   def separate
