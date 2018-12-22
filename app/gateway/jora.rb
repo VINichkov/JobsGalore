@@ -85,7 +85,7 @@ class Jora < Crawler
     puts("#{Time.now} ->>>Thread = #{thread}  , location = #{obj[:location_name]}, page = #{obj[:page]}, message = работа ---> url: #{obj[:link]}")
     job = get_page(obj[:link])
     apply_link = job&.css('a.apply_link')&.first
-    puts("#{Time.now} ->>>Thread = #{thread}  , location = #{obj[:location_name]}, page = #{obj[:page]}, message = apply_link #{apply_link}")
+    #puts("#{Time.now} ->>>Thread = #{thread}  , location = #{obj[:location_name]}, page = #{obj[:page]}, message = apply_link #{apply_link}")
     apply = apply_link ? @host +apply_link[:href] : obj[:link]
     description = job&.at_css('div.summary')&.children
     if description
