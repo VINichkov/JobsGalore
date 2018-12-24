@@ -46,6 +46,13 @@ namespace :integrate do
     puts "! Task:Indeed: End #{Time.now}   - #{Time.now - t}"
   end
 
+  task :careerone => :environment  do
+    t = Time.now
+    puts "! Task:Indeed: start #{t}"
+    CareerOne.new.run
+    puts "! Task:Indeed: End #{Time.now}   - #{Time.now - t}"
+  end
+
   def separate
       i=0
       ind = { accounting: Industry.find_by_name('Accounting'),

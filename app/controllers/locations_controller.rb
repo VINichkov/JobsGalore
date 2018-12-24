@@ -69,6 +69,7 @@ class LocationsController < ApplicationController
 
   def in_location
     @in_location = InLocations.call(params:in_location_params)
+    @search = @in_location.query
     unless @in_location.success?
       render_404
     end

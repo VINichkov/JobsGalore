@@ -77,7 +77,7 @@ class Crawler
     while true
       if @queue_jobs_for_save.size >0
         obj = @queue_jobs_for_save.pop
-        create_jobs(obj) if obj
+        create_jobs(obj, i) if obj
       else
         sleep 2
       end
@@ -105,8 +105,9 @@ class Crawler
     end
   end
 
-  def create_jobs(job)
+  def create_jobs(job, thread)
     @count_job[job[:location_name]] ? @count_job[job[:location_name]] +=1 : @count_job[job[:location_name]] = 1
+    puts "#{Time.now}  Thread = #{thread} , location = #{job[:location_name]}, page = #{job[:page]}, message = create job #{job[:link]}"
     Job.automatic_create(job)
   end
 
@@ -125,18 +126,18 @@ class Crawler
     end
   end
 
-  def get_list_jobs(arg, thread)
+  def get_list_jobs(arg, thread, location, page)
     url = @url+arg.to_query
-    puts "#{Time.now}  ---> Thread = #{thread} , location = #{arg[:location_name]}, page = #{arg[:page]}, message =  URL job_list: #{url}"
+    puts "#{Time.now}  ---> Thread = #{thread} , location = #{location}, page = #{page}, message =  URL job_list: #{url}"
     get_page(url)
   end
 
   def compare_with_index(arg)
     if Job.find_by_sources(arg[:url])
-      puts "!!! Нашли ссылку на работу. Уже присутсвует в БД !!! #{arg[:url]} | #{arg[:title]} }"
+      puts "#{Time.now} Thread = #{arg[:thread]}, location = #{arg[:location_name]}, page = #{arg[:page]}, message = !!! Нашли ссылку на работу. Уже присутсвует в БД !!! #{arg[:url]} | #{arg[:title]} }"
       :same_sources
     elsif Job.where(title: arg[:title], company_id: Company.find_by_name(arg[:company])).first
-      "!!! Нашли работу по наименованию компании и заглавию #{arg[:title] + " || " + arg[:company]} !!!"
+      puts "#{Time.now} Thread = #{arg[:thread]}, location = #{arg[:location_name]}, page = #{arg[:page]}, message =!!! Нашли работу по наименованию компании и заглавию #{arg[:title] + " || " + arg[:company]} !!!"
       :same_title_and_company
     else
       false

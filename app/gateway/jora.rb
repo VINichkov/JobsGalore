@@ -17,7 +17,7 @@ class Jora < Crawler
       break if end_job or @block_list.include?(obj[:code])
       query = {a: '24h',button:nil, l: obj[:name], p: i,  sp: SP, st:ST}
       #puts "-------Thread:#{j} локация = #{obj[:name]} --- страница #{i+1}---------"
-      request = get_list_jobs(query, thread)
+      request = get_list_jobs(query, thread, obj[:name], i+1)
       if request
         if i==0
           count_ads =  request&.css('div#search_info span,  div.search-count span')&.last&.text&.delete(',').to_i
@@ -49,7 +49,7 @@ class Jora < Crawler
         company = job.at_css('div span.company')&.text
         #puts "<<<title: #{title[:title]} | company: #{company}>>>"
         if company
-          compare = compare_with_index(url:url, title: title[:title], company:company)
+          compare = compare_with_index(url:url, title: title[:title], company:company, thread: thread, location: list_of_jobs[:location_name], page: list_of_jobs[:page])
           if compare == :same_sources
             end_job = true
             @block_list.push(list_of_jobs[:location])
@@ -75,14 +75,14 @@ class Jora < Crawler
     end_job
   end
 
-  def get_list_jobs(arg, thread)
+  def get_list_jobs(arg, thread, location, page)
       arg[:p] +=1
       arg.delete(:p) if arg[:p] == 1
       super
   end
 
   def get_job(obj, thread)
-    puts("#{Time.now} ->>>Thread = #{thread}  , location = #{obj[:location_name]}, page = #{obj[:page]}, message = работа ---> url: #{obj[:link]}")
+    puts("#{Time.now} ->>>Thread = #{thread}, location = #{obj[:location_name]}, page = #{obj[:page]}, message = работа ---> url: #{obj[:link]}")
     job = get_page(obj[:link])
     apply_link = job&.css('a.apply_link')&.first
     #puts("#{Time.now} ->>>Thread = #{thread}  , location = #{obj[:location_name]}, page = #{obj[:page]}, message = apply_link #{apply_link}")

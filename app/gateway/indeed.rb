@@ -17,7 +17,7 @@ class Indeed < Crawler
       break if end_job or @block_list.include?(obj[:code])
       query = {q:nil, l: obj[:name],sort: ST, start: i}
       #puts "#{Time.now} Thread = #{thread} location =  #{obj[:name]} --- page = #{i+1}"
-      request = get_list_jobs(query, thread)
+      request = get_list_jobs(query, thread, obj[:name], i+1)
       if request
         if i==0
           count_ads =  request.css('div#searchCount')&.text&.delete(',').scan(/\d+/).last.to_i
@@ -48,7 +48,7 @@ class Indeed < Crawler
         url = url_to_job(title[:href])
         company = job.at_css('span.company')&.text&.squish
         if company
-          compare = compare_with_index(url:url, title: title[:title], company:company)
+          compare = compare_with_index(url:url, title: title[:title], company:company, thread: thread, location: list_of_jobs[:location_name], page: list_of_jobs[:page])
           if compare == :same_sources
             end_job = true
             @block_list.push(list_of_jobs[:location])
@@ -80,7 +80,7 @@ class Indeed < Crawler
     url=~(/^\/company/) ? @host + url : @host + "/viewjob"+url[url.index('?')..url.length-1]
   end
 
-  def get_list_jobs(arg, thread)
+  def get_list_jobs(arg, thread, location, page)
       arg[:start] != 0 ? arg[:start] *= 10 : arg.delete(:start)
       super
   end
