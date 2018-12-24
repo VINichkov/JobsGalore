@@ -58,30 +58,29 @@ class IndexController < ApplicationController
   end
 
   def sitemap
-    respond_to do |format|
-      format.xml
-      format.html{redirect_to root_url}
-    end
+    @max_page_companies = count_page(Company.count)
+    @max_page_resumes = count_page(Resume.count)
+    @max_page_jobs = count_page(Job.count)
+    render :sitemap, formats: :xml
   end
 
   def sitemaps
     @objs =[]
-      respond_to do |format|
         time = Time.now.strftime("%Y-%m-%d")
         case params[:id]
           when '1'
             @objs << {url: root_url, date:time,changefreq:"hourly" }
           when '2'
-            Company.select(:id, :updated_at).order(:id).find_each do |company|
+            Company.select(:id, :updated_at).order(:id).paginate(page: params[:page], per_page:10000).find_each do |company|
               @objs <<{url: company_url(company), date:company.updated_at.strftime("%Y-%m-%d"),changefreq:"hourly" }
               @objs <<{url: jobs_at_company_url(company), date: time,changefreq:"hourly" }
             end
           when '3'
-            Resume.select(:id, :updated_at).order(:id).find_each do |resume|
+            Resume.select(:id, :updated_at).order(:id).paginate(page: params[:page], per_page:10000).find_each do |resume|
               @objs <<{url: resume_url(resume), date:resume.updated_at.strftime("%Y-%m-%d"),changefreq:"hourly" }
             end
           when '4'
-            Job.select(:id, :updated_at).order(:id).find_each do |job|
+            Job.select(:id, :updated_at).order(:id).paginate(page: params[:page], per_page:10000).find_each do |job|
               @objs <<{url: job_url(job), date:job.updated_at.strftime("%Y-%m-%d"),changefreq:"hourly" }
             end
           when '5'
@@ -91,9 +90,7 @@ class IndexController < ApplicationController
               @objs <<{url: local_object_url(location.id, Objects::COMPANIES.code), date:time,changefreq:"hourly" }
             end
         end
-        format.xml{ render :xml => @obj}
-        format.html{redirect_to root_url}
-      end
+    render :sitemaps, formats: :xml
   end
 
   def robot
@@ -128,5 +125,8 @@ class IndexController < ApplicationController
     params.permit(:page, main_search: [:type, :value, :page, :salary,  :options, :category, :location_id, :location_name, :urgent, :open, :sort])
   end
 
-
+  def count_page(count)
+    res = count / 10000
+    res += 1 if (count % 10000)>0
+  end
 end

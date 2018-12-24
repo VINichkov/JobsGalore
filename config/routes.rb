@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get '/gatetway/execute/:id', to: "gateways#execute", as: "gateway_execute"
   get 'robot', to: 'index#robot'
   get 'sitemap', to: 'index#sitemap'
-  get 'sitemap:id', to: 'index#sitemaps'
+  get 'sitemap_obj:id', to: 'index#sitemaps', as: "sitemap_object"
   #get 'rss', to: 'index#rss'
   post 'file_to_html', to: 'index#file_to_html', as: "file_to_html"
 
