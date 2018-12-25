@@ -79,7 +79,7 @@ $(function() {
         fd.append('file', uploadFile);
         $.ajax({
             type: 'POST',
-            url: "<%=Rails.application.routes.url_helpers.file_to_html_url%>",
+            url: "<%=Rails.application.routes.path_helpers.file_to_html_url%>",
             data: fd,
             success: function( data ) {
                 editor.setContent(data.description,0);
