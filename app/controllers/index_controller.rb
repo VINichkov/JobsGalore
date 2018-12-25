@@ -2,7 +2,7 @@ class IndexController < ApplicationController
   #authorize_resource only:[:admin]
   #skip_before_action :verify_authenticity_token
   def main
-    @main = Main.call
+    @main = Main.call(query:@search)
   end
 
   def advertising_terms_of_use
@@ -17,6 +17,13 @@ class IndexController < ApplicationController
 
   def main_search
     @result = MainSearch.call(params:main_search_params)
+    a = @result.param.to_h
+    cookies[:query] = {value: JSON.generate({ type: a["type"],
+                                              value:"",
+                                              location_id:a["location_id"],
+                                              location_name:a["location_name"],
+                                              open:false}),
+                       expires: 1.year}
     @search = @result.param
     if @result.failure?
       render_404

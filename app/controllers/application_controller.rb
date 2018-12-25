@@ -10,8 +10,18 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :clear_session
+  before_action :get_cookies
 
   private
+
+  def get_cookies
+    if @search.blank?
+      cookies[:query].present? ? @search = JSON.parse(cookies[:query]) : @search = { type: Objects::JOBS.code,
+                                                                            value:"", location_id:'',
+                                                                            location_name:"Australia",
+                                                                            open:false}
+    end
+  end
 
   def clear_session
     if session[:workflow]
