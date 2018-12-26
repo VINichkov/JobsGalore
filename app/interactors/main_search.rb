@@ -6,7 +6,7 @@ class MainSearch
     @page, @param = context.params[:page], context.params[:main_search]
     context.param = @param.clone
     @param[:value].delete!("<>{}#@!,.:*&()'`\"’|")
-    @param[:value] = @param[:value].gsub(/((\W|^|\s)(of|on|in|from|i|you|he|she|it|is|are|r|s|we|they|m|who|am|me|whom|her|him|us|them|my|mine|his|hers|your|yours|our|ours|their|theirs|whose|its|that|which|where|why|a|the|as|an|over|under|to|whith|whithout|by|at|into|onto)(\s|$|\W))/,' ')
+    @param[:value] = @param[:value].gsub(/((\W|^|\s)(of|on|in|from|i|you|he|she|it|is|are|r|s|we|they|m|who|am|me|whom|her|him|us|them|my|mine|his|hers|your|yours|our|ours|their|theirs|whose|its|that|which|where|why|a|the|as|an|over|under|to|whith|whithout|by|at|into|onto|)(\s|$|\W))/,' ')
     if @param[:value].blank?
       @param[:value] = ''
       context.query = ''
