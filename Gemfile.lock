@@ -40,8 +40,6 @@ GEM
       activemodel (= 5.2.0)
       activesupport (= 5.2.0)
       arel (>= 9.0)
-    activerecord-import (0.24.0)
-      activerecord (>= 3.2)
     activestorage (5.2.0)
       actionpack (= 5.2.0)
       activerecord (= 5.2.0)
@@ -284,7 +282,6 @@ GEM
     public_suffix (3.0.2)
     puma (3.11.4)
     rack (2.0.5)
-    rack-rewrite (1.5.1)
     rack-test (1.0.0)
       rack (>= 1.0, < 3)
     rails (5.2.0)
@@ -404,7 +401,6 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    webrick (1.4.2)
     webrobots (0.1.2)
     websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
@@ -418,7 +414,6 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
-  activerecord-import
   asset_sync
   bcrypt
   bootstrap-sass
@@ -431,7 +426,6 @@ DEPENDENCIES
   capistrano-rails-console
   capistrano-rvm
   capistrano3-puma
-  coffee-rails
   devise (~> 4.4.3)
   dkim
   dragonfly
@@ -454,7 +448,6 @@ DEPENDENCIES
   pg_search
   prawn
   puma
-  rack-rewrite
   rails (~> 5.2.0)
   react-rails (~> 2.4.7)
   redis-objects
@@ -469,7 +462,6 @@ DEPENDENCIES
   uglifier
   virtus
   web-console
-  webrick
   will_paginate
   will_paginate-bootstrap
 

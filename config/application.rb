@@ -1,5 +1,4 @@
 require_relative 'boot'
-require_relative 'single.rb'
 require_relative '../app/addon/prawn-styled-text/prawn-styled-text.rb'
 require 'rails/all'
 
