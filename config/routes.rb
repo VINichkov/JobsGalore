@@ -151,6 +151,8 @@ Rails.application.routes.draw do
   get '/jg', to: 'index#jg'
   get '/:category/:object', to: 'index#category_view'
 
+  #errors
+  get '*path', to: 'errors#error_404', via: :all
 
 
   #resources :educations

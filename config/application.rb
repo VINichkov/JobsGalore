@@ -9,7 +9,6 @@ Bundler.require(*Rails.groups)
 
 module Mango
   class Application < Rails::Application
-
     config.active_record.schema_format = :sql
 
     #config.public_file_server.headers = {
