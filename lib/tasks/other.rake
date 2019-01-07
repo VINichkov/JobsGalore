@@ -13,6 +13,12 @@ namespace :other do
       db.execute("update resumes set top=null where top+7 < to_date(\'#{t}\',\'YYYY-MM-DD\')")
       db.close
       db = nil
+      Job.where("created_at > :date and fts @@ to_tsquery(:value) and urgent is null",{date: Time.now.beginning_of_day - 1.day,value:"urgent"}).update_all(urgent:Time.now)
+      a = Job.where("created_at > :date and fts @@ to_tsquery(:value)",{date: Time.now.beginning_of_day - 1.day,value:"urgent"})
+      (a.count / 2).times do
+        a.sample.update(highlight:Time.now)
+      end
+      Job.where("created_at > :date and highlight is null and (salarymin >= 100000 or salarymax >= 100000)",{date: Time.now.beginning_of_day - 1.day}).update_all(highlight:Time.now)
     rescue
       db.close
       db = nil
