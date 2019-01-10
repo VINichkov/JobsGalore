@@ -142,7 +142,7 @@ Rails.application.routes.draw do
   get "/about", to: 'index#about'
   get "/contact", to: 'index#contact'
   get "/advertising_terms_of_use", to: 'index#advertising_terms_of_use'
-  post "/send", to: 'index#send_mail'
+  post "/send", to: 'index#send_mail', as: "send_email"
   post "/send_customers", to: 'index#send_to_customers'
   get "/send_offer", to:'index#send_offer'
   get '/search', to: 'index#main_search'
