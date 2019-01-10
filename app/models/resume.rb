@@ -113,6 +113,16 @@ class Resume < ApplicationRecord
     pdf.render
   end
 
+  def key
+    key_words =  self.fts.split(' ').map{|t| t.split(":")}
+    key_words.map do |t|
+      if t[1]=~/A/
+        {t[0].delete("'")=>t[1].count(',')+6}
+      else
+        {t[0].delete("'")=>t[1].count(',')+1}
+      end
+    end.sort{|x, y| y.values[0]<=> x.values[0]}[0..2].map{|t| t.keys.first}.join(' ')
+  end
   protected
 
   def send_email
