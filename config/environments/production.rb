@@ -107,12 +107,12 @@ Rails.application.configure do
   #config.action_mailer.default_options = { from: "#{PropertsHelper::COMPANY} <#{PropertsHelper::EMAIL}>" }
   config.action_mailer.smtp_settings = {
       address:              'localhost',
-      port:                 2525,
-      domain:               'jobsgalore.ru',
-      user_name:            ENV["EMAIL_LOGIN"],
-      password:             ENV["EMAIL_PASSWORD"],
-      authentication:       'plain',
-      enable_starttls_auto: true  }
+      port:                 25,
+      domain:               'jobsgalore.ru'}
+      #user_name:            ENV["EMAIL_LOGIN"],
+      #password:             ENV["EMAIL_PASSWORD"],
+      #authentication:       'plain',
+      #enable_starttls_auto: true  }
   config.action_mailer.raise_delivery_errors = true
   #config.action_controller.page_cache_directory = "#{Rails.root}/public/cached_pages"
 end
