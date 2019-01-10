@@ -105,10 +105,12 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "https://www.jobsgalore.eu"}
   config.action_mailer.delivery_method = :smtp
   #config.action_mailer.default_options = { from: "#{PropertsHelper::COMPANY} <#{PropertsHelper::EMAIL}>" }
-  config.action_mailer.smtp_settings = {
-      address:              'localhost',
-      port:                 25,
-      domain:               'jobsgalore.ru'}
+  config.action_mailer.smtp_settings = :sendmail#{
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default_options = {from: 'noreply@jobsgalore.eu'}
+      #address:              'localhost',
+      #port:                 25,
+      #domain:               'jobsgalore.ru'}
       #user_name:            ENV["EMAIL_LOGIN"],
       #password:             ENV["EMAIL_PASSWORD"],
       #authentication:       'plain',
