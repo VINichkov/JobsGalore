@@ -107,12 +107,12 @@ Rails.application.configure do
   #config.action_mailer.default_options = { from: "#{PropertsHelper::COMPANY} <#{PropertsHelper::EMAIL}>" }
   #config.action_mailer.smtp_settings = :sendmail#{
   #config.action_mailer.perform_deliveries = true
-  #config.action_mailer.default_options = {from: 'noreply@jobsgalore.eu'}
+  config.action_mailer.default_options = {from: 'noreply@jobsgalore.eu'}
   config.action_mailer.smtp_settings = {
       address:              '127.0.0.1',
-      port:                 25,
-      domain:               'jobsgalore.eu',
-      user_name:            ENV["EMAIL_LOGIN"]}
+      port:                 25}
+      #domain:               'jobsgalore.eu',
+      #user_name:            ENV["EMAIL_LOGIN"]}
       #address:              '127.0.0.1',
       #port:                 25,
       #domain:               'jobsgalore.ru'}
