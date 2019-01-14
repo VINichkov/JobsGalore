@@ -111,7 +111,9 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
       address:              '127.0.0.1',
       port:                 25,
-      domain:               'jobsgalore.eu'}
+      domain:               'jobsgalore.eu',
+      enable_starttls_auto: true,
+      openssl_verify_mode:  'none'}
       #user_name:            ENV["EMAIL_LOGIN"]}
       #address:              '127.0.0.1',
       #port:                 25,
