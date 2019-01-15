@@ -120,7 +120,7 @@ class Crawler
 
   def how_long(text, thread, location, page, title)
     log(location, thread, page, "title: #{title} how_long::#{text}")
-    if text == "Just posted" or text=~/hour|1 day|minute/ or text.blank?
+    if text == "Just posted" or text=~/hour|1 day|minute|Today/ or text.blank?
       true
     else
       false
@@ -134,10 +134,10 @@ class Crawler
   end
 
   def compare_with_index(arg)
-    if Job.find_by_sources(arg[:url])
+    if Job.where(location_id: arg[:location_id],  sources:arg[:url]).first
       log(arg[:location], arg[:thread], arg[:page], "!!! Нашли ссылку на работу. Уже присутсвует в БД !!! #{arg[:url]} | #{arg[:title]} }")
       :same_sources
-    elsif Job.where(title: arg[:title], company_id: Company.find_by_name(arg[:company])).first
+    elsif Job.where(title: arg[:title], company_id: Company.find_by_name(arg[:company]), location_id: arg[:location_id]).first
       log(arg[:location], arg[:thread], arg[:page], "!!! Нашли работу по наименованию компании и заглавию #{arg[:title] + " || " + arg[:company]} !!!")
       :same_title_and_company
     else

@@ -49,7 +49,7 @@ class Jora < Crawler
         company = job.at_css('div span.company')&.text
         log(list_of_jobs[:location_name], thread, list_of_jobs[:page], "title: #{title[:title]} | company: #{company}")
         if company
-          compare = compare_with_index(url:url, title: title[:title], company:company, thread: thread, location: list_of_jobs[:location_name], page: list_of_jobs[:page])
+          compare = compare_with_index(url:url, title: title[:title], company:company, location_id: list_of_jobs[:location] , thread: thread, location: list_of_jobs[:location_name], page: list_of_jobs[:page])
           if compare == :same_sources
             end_job = true
             @block_list.push(list_of_jobs[:location])
