@@ -1,9 +1,10 @@
 <h1>Daily Job Alert</h1>
 
 <% @list_of_jobs.each do |job|%>
-  <h3><%= job.title_capitalize%></h3>
-  <span><%= link_to job.company.name, job.company%> &nbsp; - &nbsp;</span>
-  <span><%= link_to job.location.name , local_object_url(job.location.id,Objects::JOBS.code)%></span>
+  <hr>
+  <h3 style="color:#66512c"><%= link_to job.title_capitalize, job %></h3>
+  <span style="color: #3c763d; "><%= link_to job.company.name, job.company%> &nbsp; - &nbsp;</span>
+  <span style="color: #66512c;"><%= link_to job.location.name , local_object_url(job.location.id,Objects::JOBS.code)%></span>
   <% if not job.salary.blank? then %>
     <p><%= job.salary%></p>
   <% end %>
