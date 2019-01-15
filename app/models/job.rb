@@ -150,6 +150,19 @@ class Job < ApplicationRecord
     end
   end
 
+  scope :search_for_send, ->(**arg) do
+    text_query=[]
+    query={date:Time.now - 1.day}
+    if arg[:location]
+      text_query<<"location_id = :location"
+      query[:location] =  arg[:location]
+    end
+    text_query << "created_at = :date"
+    text_query << "fts @@ to_tsquery(:value)"
+    query[:value] = arg[:value].split(" ").map{|t| t=t+":*"}.join("|")
+    text_query = text_query.join(" and ")
+    select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:close,:industry_id,:twitter, :viewed_count,  "ts_rank_cd(fts,  to_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query).order('rank DESC').limit(10)
+  end
 
 
   scope :search, ->(query)  do
@@ -174,6 +187,6 @@ class Job < ApplicationRecord
 
     text_query = text_query.join(" and ")
     Rails.logger.info("Query::" + text_query + query.to_s)
-    select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:close,:industry_id,:twitter, :viewed_count,  "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
+    select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:close,:industry_id,:twitter, :viewed_count,  "ts_rank_cd(fts,  to_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
   end
 end
