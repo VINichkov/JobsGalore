@@ -107,7 +107,7 @@ class Crawler
 
   def create_jobs(job, thread)
     @count_job[job[:location_name]] ? @count_job[job[:location_name]] +=1 : @count_job[job[:location_name]] = 1
-    puts "#{Time.now}  Thread = #{thread} , location = #{job[:location_name]}, page = #{job[:page]}, message = create job #{job[:link]}"
+    log(job[:location_name], thread, nil, "create job #{job[:link]}")
     Job.automatic_create(job)
   end
 
@@ -118,7 +118,8 @@ class Crawler
     file.close
   end
 
-  def how_long(text)
+  def how_long(text, thread, location, page, title)
+    log(location, thread, page, "title: #{title} how_long::#{text}")
     if text == "Just posted" or text=~/hour|1 day|minute/ or text.blank?
       true
     else
@@ -128,16 +129,16 @@ class Crawler
 
   def get_list_jobs(arg, thread, location, page)
     url = @url+arg.to_query
-    puts "#{Time.now}  ---> Thread = #{thread} , location = #{location}, page = #{page}, message =  URL job_list: #{url}"
+    log(location, thread, page, "URL job_list: #{url}")
     get_page(url)
   end
 
   def compare_with_index(arg)
     if Job.find_by_sources(arg[:url])
-      puts "#{Time.now} Thread = #{arg[:thread]}, location = #{arg[:location_name]}, page = #{arg[:page]}, message = !!! Нашли ссылку на работу. Уже присутсвует в БД !!! #{arg[:url]} | #{arg[:title]} }"
+      log(arg[:location], arg[:thread], arg[:page], "!!! Нашли ссылку на работу. Уже присутсвует в БД !!! #{arg[:url]} | #{arg[:title]} }")
       :same_sources
     elsif Job.where(title: arg[:title], company_id: Company.find_by_name(arg[:company])).first
-      puts "#{Time.now} Thread = #{arg[:thread]}, location = #{arg[:location_name]}, page = #{arg[:page]}, message =!!! Нашли работу по наименованию компании и заглавию #{arg[:title] + " || " + arg[:company]} !!!"
+      log(arg[:location], arg[:thread], arg[:page], "!!! Нашли работу по наименованию компании и заглавию #{arg[:title] + " || " + arg[:company]} !!!")
       :same_title_and_company
     else
       false
@@ -169,6 +170,10 @@ class Crawler
 
   def html_to_markdown(arg)
     gsub_html(update_attr(arg))
+  end
+
+  def log(location = nil, thread = nil, page = nil, message = nil)
+    puts "#{Time.now} | location = #{location}, thread = #{thread}, page = #{page}, message = #{message}"
   end
 
 end
