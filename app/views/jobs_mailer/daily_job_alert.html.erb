@@ -7,5 +7,5 @@
   <% if not job.salary.blank? then %>
     <p><%= job.salary%></p>
   <% end %>
-  <p><%=job.description_text + "..." %></p>
+  <p><%=HtmlToPlainText.plain_text(job.description).squish.truncate(300, separator: ' ',omission: '') + "..." %></p>
 <% end %>

@@ -161,7 +161,7 @@ class Job < ApplicationRecord
     text_query << "fts @@ to_tsquery(:value)"
     query[:value] = arg[:value].split(" ").map{|t| t=t+":*"}.join("|")
     text_query = text_query.join(" and ")
-    select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:close,:industry_id,:twitter, :viewed_count,  "ts_rank_cd(fts,  to_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query).order('rank DESC').limit(10)
+    select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight,:top,:urgent,:client_id,:close,:industry_id,:twitter, :viewed_count,  "ts_rank_cd(fts,  to_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query).order('rank DESC').limit(10).to_a
   end
 
 
