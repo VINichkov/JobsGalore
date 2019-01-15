@@ -43,8 +43,8 @@ class Jora < Crawler
     log(list_of_jobs[:location_name], thread, list_of_jobs[:page], "На странице #{list_of_jobs[:jobs].count} работ")
     end_job = true if list_of_jobs[:jobs].count == 0
     list_of_jobs[:jobs].each do |job|
+      title = job.at_css('a.jobtitle, a.job')
       if how_long(job.at_css('span.date')&.text, thread, list_of_jobs[:location_name], list_of_jobs[:page], title[:title])
-        title = job.at_css('a.jobtitle, a.job')
         url = @host + title[:href][0..title[:href].index('?') - 1]
         company = job.at_css('div span.company')&.text
         log(list_of_jobs[:location_name], thread, list_of_jobs[:page], "title: #{title[:title]} | company: #{company}")
