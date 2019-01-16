@@ -152,12 +152,12 @@ class Job < ApplicationRecord
 
   scope :search_for_send, ->(**arg) do
     text_query=[]
-    query={date:Time.now - 1.day}
+    query={date:Time.now - 1.days}
     if arg[:location]
       text_query<<"location_id = :location"
       query[:location] =  arg[:location]
     end
-    text_query << "created_at = :date"
+    text_query << "created_at >= :date"
     text_query << "fts @@ to_tsquery(:value)"
     query[:value] = arg[:value].split(" ").map{|t| t=t+":*"}.join("|")
     text_query = text_query.join(" and ")
