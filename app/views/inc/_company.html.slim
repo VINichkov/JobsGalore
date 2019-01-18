@@ -4,7 +4,7 @@
       = link_to(image_bg(company.logo_url, "150px", "150px", "120px"), company)
     .col-lg-9.col-md-9.col-sm-9.col-xs-12
       h3
-        = link_to(highlight(company.name, query), company_highlight_view_path(id:company, text:query), class: 'text-warning')
+        = link_to(highlight(company.name, Search.str_to_highlight(query)), company_highlight_view_path(id:company, text:query), class: 'text-warning')
       p
       - if company.site
         p
@@ -14,7 +14,7 @@
           strong
             |Recruitment agency &nbsp;
       p
-        = highlight(company.description_text.to_s + "...", query)
+        = highlight(company.description_text.to_s + "...", Search.str_to_highlight(query))
       span
         = link_industry(company.industry.name, company.industry, Objects::COMPANIES, class: 'text-success')
       | &nbsp; - &nbsp;
@@ -22,7 +22,7 @@
         = link_location(company.location.name, company.location, Objects::COMPANIES, class: 'text-warning')
 .row.border_top.hidden-lg.hidden-md.hidden-sm
   h3
-    = link_to(highlight(company.name, query), company_highlight_view_path(id:company, text:query))
+    = link_to(highlight(company.name, Search.str_to_highlight(query)), company_highlight_view_path(id:company, text:query))
   p
   - if company.site
     p
@@ -32,7 +32,7 @@
       strong
         |Recruitment agency &nbsp;
   p
-    = highlight(company.description_text.to_s + "...", query)
+    = highlight(company.description_text.to_s + "...", Search.str_to_highlight(query))
   span
     = link_industry(company.industry.name, company.industry, Objects::COMPANIES, class: 'text-success')
   | &nbsp; - &nbsp;

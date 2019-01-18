@@ -2,11 +2,11 @@
   div[class="panel-body #{class_extras(resume)}"]
     .col-lg-10.col-md-10.col-sm-10
       h3
-        = link_to(highlight(resume.title, query),  resume_highlight_view_path(id:resume, text:query), class: 'text-warning')
+        = link_to(highlight(resume.title, Search.str_to_highlight(query)),  resume_highlight_view_path(id:resume, text:query), class: 'text-warning')
       - if resume.salary.blank?
         p = resume.salary
       p
-        = highlight(resume.description_text + "...", query)
+        = highlight(resume.description_text + "...", Search.str_to_highlight(query))
       span
         = link_location(resume.location.name, resume.location, Objects::RESUMES, class: 'text-warning')
       - if current_client == resume.client
@@ -36,7 +36,7 @@
   - if current_client && (resume.client == current_client || current_client.admin?)
     = render 'inc/btn', object: resume, option: {cl:"btn-group", min:true, class:'resume', type:3}
   h3
-    = link_to(highlight(resume.title, query), resume_highlight_view_path(id:resume, text:query))
+    = link_to(highlight(resume.title, Search.str_to_highlight(query)), resume_highlight_view_path(id:resume, text:query))
   span.text-success
     = (current_client && (resume.client == current_client || current_client.admin? || current_client.resp?)) ? resume.client&.full_name : "Anonymous"
   | &nbsp; - &nbsp;
@@ -45,7 +45,7 @@
   - if resume.salary.blank?
     p = resume.salary
   p
-    = highlight(resume.description_text + "...", query)
+    = highlight(resume.description_text + "...", Search.str_to_highlight(query))
   p.text-muted
     span
       |#{resume.posted_date}

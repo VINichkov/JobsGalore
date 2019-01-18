@@ -9,9 +9,9 @@
     .col-lg-8.col-md-8
       .row.well
         h1.text-center
-          = highlight(resume.title, query)
+          = highlight(resume.title, Search.str_to_highlight(query))
         p
-          = highlight(resume.render_description, query)
+          = highlight(resume.render_description, Search.str_to_highlight(query))
     .col-lg-4.col-md-4
       .panel.panel-default
         .panel-body
@@ -34,7 +34,7 @@
     .panel-body
       .col-sm-12.hidden-md.hidden-lg.hidden-xs
         h2.text-center
-          = highlight(resume.title, query)
+          = highlight(resume.title, Search.str_to_highlight(query))
       .row
         .col-sm-6.hidden-xs
           - if current_client && (current_client.resp? || (resume.client.id == current_client.id) || current_client.admin?)
@@ -52,7 +52,7 @@
         .col-sm-6.col-xs-12
           .hidden-md.hidden-lg.hidden-sm
             h3.text-center
-              = highlight(resume.title, query)
+              = highlight(resume.title, Search.str_to_highlight(query))
           = render 'inc/summary', object: resume
           p
           .btn-group.btn-group-justified
@@ -60,7 +60,7 @@
       .row
         .col-sm-12
           p
-            = highlight(resume.render_description, query)
+            = highlight(resume.render_description, Search.str_to_highlight(query))
       .hidden-md.hidden-lg.hidden-sm
         p
           .text-center

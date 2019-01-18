@@ -2,10 +2,10 @@
   div[class="panel-body #{class_extras(job)}"]
     .col-lg-10.col-md-10.col-sm-10
       h3
-        = link_to(highlight(job.title_capitalize, query), job_highlight_view_path(id:job, text:query), class: 'text-warning')
+        = link_to(highlight(job.title_capitalize, Search.str_to_highlight(query)), job_highlight_view_path(id:job, text:query), class: 'text-warning')
       - if not job.salary.blank? then
         p = job.salary
-      = highlight(job.description_text + "...",  query)
+      = highlight(job.description_text + "...",  Search.str_to_highlight(query))
       p
       span
         = link_to job.company.name, job.company, class: 'text-success'
@@ -35,7 +35,7 @@
   - if current_client && ((current_client.employer? && job.company ==  current_client.company) || job.client == current_client || current_client.admin?)
     = render 'inc/btn', object: job, option: {cl:"btn-group", min:true, class:'job', type:2}
   h3
-    = link_to(highlight(job.title_capitalize, query), job_highlight_view_path(id:job, text:query))
+    = link_to(highlight(job.title_capitalize, Search.str_to_highlight(query)), job_highlight_view_path(id:job, text:query))
   span
     = link_to job.company.name, job.company, class: 'text-success'
   | &nbsp; - &nbsp;
@@ -44,7 +44,7 @@
   - if not job.salary.blank? then
     p = job.salary
   p
-    = highlight(job.description_text + "...", query)
+    = highlight(job.description_text + "...", Search.str_to_highlight(query))
   p.text-muted
     span
       |#{job.posted_date}

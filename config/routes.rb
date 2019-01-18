@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'sitemap_obj:id', to: 'index#sitemaps', as: "sitemap_object"
   #get 'rss', to: 'index#rss'
   post 'file_to_html', to: 'index#file_to_html', as: "file_to_html"
+  post 'clientforalert', to: 'clientforalert#create', as: "clientforalert"
 
   devise_for  :clients, controllers:{ registrations: "clients/registrations",
                                       omniauthcallbacks: "clients/omniauthcallbacks",

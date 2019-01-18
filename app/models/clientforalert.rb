@@ -1,0 +1,3 @@
+class Clientforalert < ApplicationRecord
+
+end

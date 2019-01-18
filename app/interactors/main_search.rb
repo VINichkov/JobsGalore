@@ -10,12 +10,12 @@ class MainSearch
     end
     context.param = @param.clone
     @param[:value].delete!("<>{}#@!,.:*&()'`\"’|")
-    @param[:value] = @param[:value].gsub(/((\W|^|\s)(of|on|in|from|i|you|he|she|it|is|are|r|s|we|they|m|who|am|me|whom|her|him|us|them|my|mine|his|hers|your|yours|our|ours|their|theirs|whose|its|that|which|where|why|a|the|as|an|over|under|to|whith|whithout|by|at|into|onto|)(\s|$|\W))/,' ')
     if @param[:value].blank?
-      @param[:value] = ''
       context.query = ''
+      @param[:value] = ''
     else
-      context.query = @param[:value].split(" ")
+      context.query = @param[:value]
+      @param[:value] = Search.str_to_search(@param[:value])
       @param[:value] = @param[:value].split(" ").map{|t| t=t+":*"}.join("|")
     end
     switch = LazyHash.new('1'=>->{company}, '2'=>->{job}, '3'=>->{resume})

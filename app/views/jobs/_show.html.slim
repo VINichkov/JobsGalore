@@ -14,9 +14,9 @@
     .col-lg-8.col-md-8
       .row.well
         h1.text-center[itemprop="title"]
-          = highlight(job.title_capitalize, query)
+          = highlight(job.title_capitalize, Search.str_to_highlight(query))
         p
-          = highlight(job.render_description, query)
+          = highlight(job.render_description, Search.str_to_highlight(query))
         span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
           = job.description_text
     .col-lg-4.col-md-4
@@ -34,7 +34,7 @@
     .panel-body
       .col-sm-12.hidden-md.hidden-lg.hidden-xs
         h2.text-center
-          = highlight(job.title_capitalize, query)
+          = highlight(job.title_capitalize, Search.str_to_highlight(query))
       .row
         .col-sm-6.hidden-xs
           =company_in_jobs(job.company)
@@ -44,7 +44,7 @@
         .col-sm-6.col-xs-12
           .hidden-md.hidden-lg.hidden-sm
             h3.text-center
-              = highlight(job.title_capitalize, query)
+              = highlight(job.title_capitalize, Search.str_to_highlight(query))
           = render 'inc/summary', object: job
           p
           .btn-group.btn-group-justified
@@ -52,10 +52,13 @@
       .row
         .col-sm-12
           p
-            = highlight(job.render_description, query)
+            = highlight(job.render_description, Search.str_to_highlight(query))
       .hidden-md.hidden-lg.hidden-sm
         p
           .text-center
             = social_share_button_tag job.title, url: job_url(job), title:job.title
   - unless job.apply
     =render 'inc/contact', object: job.client, title: "#{job.title} at #{PropertsHelper::COMPANY}.eu"
+  -if cookies[:alert].blank? and !client_signed_in?
+    -cookies[:alert]= true
+    =react_component("Alert", keys: query.present? ? query.join : job.title, location_id:job.location_id, location_name:job.location.name, url: root_url)

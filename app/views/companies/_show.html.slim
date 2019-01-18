@@ -9,11 +9,11 @@
     .row.well
       span[itemprop="name"]
         h1.text-center
-          = highlight(company.name, query)
+          = highlight(company.name, Search.str_to_highlight(query))
           - if company.realy?
             span.glyphicon.glyphicon-ok
       p
-      = highlight(company.render_description, query)
+      = highlight(company.render_description, Search.str_to_highlight(query))
       span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
         = company.description_text
       - company.client&.each do |stuff|
@@ -45,7 +45,7 @@
   .panel-body
     span[itemprop="legalName"]
       h2.text-center
-        = highlight(company.name, query)
+        = highlight(company.name, Search.str_to_highlight(query))
         - if company.realy?
           span.glyphicon.glyphicon-ok
     .row
@@ -61,7 +61,7 @@
     .row
       .col-xs-12.col-sm-12
         p
-          = highlight(company.render_description, query)
+          = highlight(company.render_description, Search.str_to_highlight(query))
         =jobs_of_company(company)
 - client = company.object.client.find_by(character:TypeOfClient::EMPLOYER)&.decorate
 -if client

@@ -75,43 +75,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: analizes; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.analizes (
-    id integer NOT NULL,
-    "user" character varying,
-    company character varying,
-    "time" timestamp without time zone,
-    ip character varying,
-    lang character varying,
-    agent character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: analizes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.analizes_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: analizes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.analizes_id_seq OWNED BY public.analizes.id;
-
-
---
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -121,6 +84,39 @@ CREATE TABLE public.ar_internal_metadata (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
+
+
+--
+-- Name: clientforalerts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.clientforalerts (
+    id bigint NOT NULL,
+    email character varying,
+    key character varying,
+    location_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: clientforalerts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.clientforalerts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: clientforalerts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.clientforalerts_id_seq OWNED BY public.clientforalerts.id;
 
 
 --
@@ -719,10 +715,10 @@ ALTER SEQUENCE public.vieweds_id_seq OWNED BY public.vieweds.id;
 
 
 --
--- Name: analizes id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: clientforalerts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.analizes ALTER COLUMN id SET DEFAULT nextval('public.analizes_id_seq'::regclass);
+ALTER TABLE ONLY public.clientforalerts ALTER COLUMN id SET DEFAULT nextval('public.clientforalerts_id_seq'::regclass);
 
 
 --
@@ -831,19 +827,19 @@ ALTER TABLE ONLY public.vieweds ALTER COLUMN id SET DEFAULT nextval('public.view
 
 
 --
--- Name: analizes analizes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.analizes
-    ADD CONSTRAINT analizes_pkey PRIMARY KEY (id);
-
-
---
 -- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: clientforalerts clientforalerts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.clientforalerts
+    ADD CONSTRAINT clientforalerts_pkey PRIMARY KEY (id);
 
 
 --
@@ -1274,8 +1270,6 @@ CREATE INDEX index_vieweds_on_doc_id_and_doc_type ON public.vieweds USING btree 
 
 CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.locations FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'suburb', 'postcode', 'state');
 
-ALTER TABLE public.locations DISABLE TRIGGER tsvectorupdate;
-
 
 --
 -- Name: companies tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
@@ -1522,6 +1516,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181130075311'),
 ('20181203085507'),
 ('20181207094318'),
-('2019');
+('20190116113913');
 
 
