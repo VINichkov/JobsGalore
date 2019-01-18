@@ -41,7 +41,8 @@ class Alert extends React.Component{
                             email: this._email.current.value,
                             location_id: (this._location.current.value==="" || this._location.current.value==="Australia") ? "" : this.state.location_id
                         }
-                    })
+                    });
+                $("#alert").modal('hide');
             }
         } else {
             if (this._email.current.value !== "" && this.checkEmail(this._email.current.value)) {
@@ -53,7 +54,8 @@ class Alert extends React.Component{
                             email: this._email.current.value,
                             location_id: this.props.location_id
                         }
-                    })
+                    });
+                $("#alert").modal('hide');
             } else {
                 this.setState({errorEmail:true});
             }
