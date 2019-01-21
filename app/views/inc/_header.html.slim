@@ -40,12 +40,12 @@
               span.glyphicon.glyphicon-eye-open
               | &nbsp; Administration of site
       li
-        = link_to new_job_path, rel: "nofollow" do
+        = link_to new_job_path do
           |&nbsp;
           span.glyphicon.glyphicon-briefcase
           |&nbsp; Post new job
       li
-        = link_to new_resume_path, rel: "nofollow" do
+        = link_to new_resume_path do
           |&nbsp;
           span.glyphicon.glyphicon-paperclip
           |&nbsp; Post new resume
@@ -61,12 +61,12 @@
           |&nbsp; Companies by category
       - unless client_signed_in?
         li.nav-item
-          = link_to new_client_session_path, rel: "nofollow" do
+          = link_to new_client_session_path do
             |&nbsp;
             span.glyphicon.glyphicon-log-in
             |&nbsp; Log in
         li.nav-item
-          = link_to new_client_registration_path, rel: "nofollow" do
+          = link_to new_client_registration_path do
             |&nbsp;
             span.glyphicon.glyphicon-registration-mark
             |&nbsp; Sign up
@@ -106,14 +106,14 @@
                 b.caret
               ul.dropdown-menu
                 li
-                  = link_to "Post new job", new_job_path, rel:"nofollow"
+                  = link_to "Post new job", new_job_path
             li.nav-item
               a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
                 |Resumes
                 b.caret
               ul.dropdown-menu
                 li
-                  = link_to "Post new resume", new_resume_path, rel:"nofollow"
+                  = link_to "Post new resume", new_resume_path
                 li
                   =link_to"Resumes by category",'/by_category/3'
             li.nav-item.hidden-sm
