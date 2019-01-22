@@ -2,8 +2,7 @@ class JobsMailer < ApplicationMailer
 
   def add_job(job)
     @job = job
-    #!!TODO
-    mail(to:@job[:mail], subject: "Your Job have published on Jobs Galore!")
+    mail(to:@job[:mail], subject: "New opportunity was just posted on Jobs Galore!")
   end
 
   def daily_job_alert(email, list_of_jobs)

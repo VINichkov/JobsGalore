@@ -10,8 +10,8 @@ class InLocations
   end
 
   def company
-    location=Location.includes(:company).find_by_id(@location)
-    context.objs = location.company.order(:name).paginate(page: @page, per_page:21).includes(:industry,:location).decorate
+    context.objs = Company.where(location_id: @location).order(:name).paginate(page: @page, per_page:21).includes(:industry,:location).decorate
+    location=context.objs.first.location
     context.name = location.name
     context.query = {type: Objects::COMPANIES.code, value:"", location_id:location.id, location_name:location.name, open:false}
     context.suburb = location.suburb
@@ -21,8 +21,8 @@ class InLocations
   end
 
   def job
-    location=Location.includes(:job).find_by_id(@location)
-    context.objs = location.job.order(created_at: :desc).paginate(page: @page, per_page:25).includes(:company,:location).decorate
+    context.objs = Job.where(location_id: @location).order(created_at: :desc).paginate(page: @page, per_page:25).includes(:company, :location).decorate
+    location=context.objs.first.location
     context.name = location.name
     context.query = {type: Objects::JOBS.code, value:"", location_id:location.id, location_name:location.name, open:false}
     context.suburb = location.suburb
@@ -32,8 +32,8 @@ class InLocations
   end
 
   def resume
-    location=Location.includes(:resume).find_by_id(@location)
-    context.objs = location.resume.order(updated_at: :desc).paginate(page: @page, per_page:25).includes(:location).decorate
+    context.objs = Resume.where(location_id: @location).order(created_at: :desc).paginate(page: @page, per_page:25).includes(:location, :client).decorate
+    location=context.objs.first.location
     context.name = location.name
     context.query = {type: Objects::RESUMES.code, value:"", location_id:location.id, location_name:location.name, open:false}
     context.suburb = location.suburb
