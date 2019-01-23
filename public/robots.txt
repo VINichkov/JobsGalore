@@ -47,4 +47,6 @@ User-agent: CCBot
 Disallow: /
 User-agent: AlphaSeoBot-SA
 Disallow: /
+User-agent: dotbot
+Disallow: /
 Sitemap: https://JobsGalore.eu/sitemap.xml

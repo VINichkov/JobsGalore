@@ -9,7 +9,7 @@ class MainSearch
       @param[:location_id] = ''
     end
     context.param = @param.clone
-    @param[:value].delete!("<>{}#@!,.:*&()'`\"’|")
+    @param[:value].delete!("<>{}#@!,:*&()'`\"’|")
     if @param[:value].blank?
       context.query = ''
       @param[:value] = ''
