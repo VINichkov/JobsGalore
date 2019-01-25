@@ -1,6 +1,5 @@
 class ContactUsMailer < ApplicationMailer
 
-
   def send_mail(email)
     @email = email
     mail(to:'v.nichkov@hotmail.com', subject: "Contact")
@@ -8,5 +7,10 @@ class ContactUsMailer < ApplicationMailer
 
   def send_to_customers(mail)
       mail(to:mail, subject: "New website of jobs. We offer to join.")
+  end
+
+  def alert_of_change(arg)
+    @arg = arg
+    mail(to:'v.nichkov@hotmail.com', subject: "A chang on JobsGalore")
   end
 end
