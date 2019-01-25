@@ -57,7 +57,7 @@ namespace :other do
     report[:new_pay_sum] = Payment.where("created_at >= :date and kindpay = 1", date: Time.now - 1.day).count * 10 + Payment.where("created_at >= :date and kindpay = 3", date: Time.now - 1.day).count * 5
     report[:new_viewed] = Viewed.where("created_at >= :date", date: Time.now - 1.day).count
     if report[:new_resumes] or report[:new_jobs] or report[:new_client] or report[:new_company] or report[:new_pay_count] or report[:new_pay_sum] or report[:new_viewed]
-      ContactUsMailer.alert_of_change(report)
+      ContactUsMailer.alert_of_change(report).deliver_now
     end
     puts "! Task:report: End #{Time.now - t}"
   end

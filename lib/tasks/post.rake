@@ -22,7 +22,7 @@ namespace :post do
   task :twitt => :environment  do
     puts "! Task:Post at Twitter: start"
     if job.present?
-      job.post_at_twitter("##{job.location.suburb} #{job.full_keywords(5).map{|t| "#"+t}.join(" ")} #{job.title} #{job.salary}").deliver_now
+      job.post_at_twitter("##{job.location.suburb} #{job.full_keywords(5).map{|t| "#"+t}.join(" ")} #{job.title} #{job.salary}")
     end
     puts "! Task:Post at Twitter: End"
   end
