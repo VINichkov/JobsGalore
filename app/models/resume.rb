@@ -17,7 +17,26 @@ class Resume < ApplicationRecord
 
   after_create :send_email
 
-
+  def full_keywords(count_keys=1 , min_length_word=4)
+    if self.title
+      array_keywords = []
+      array_keywords = self.title&.gsub(/[^[:word:]]/,' ')&.downcase&.split(' ')*5
+      array_keywords += self.description&.gsub(/[^[:word:]]/,' ')&.downcase&.split(' ') if self.description
+      array_keywords.compact!
+      puts  array_keywords.class
+      index_hash = {}
+      array_keywords.each do |word|
+        if word.length>min_length_word
+          index_hash[word] ?  index_hash[word] +=1 : index_hash[word]=1
+        end
+      end
+      array_keywords = []
+      index_hash.each do |key, value|
+        array_keywords << {key => value}
+      end
+      array_keywords.sort{|x, y| y.values[0]<=> x.values[0]}[0..count_keys-1].map{|t| t.keys.first}
+    end
+  end
 
   def add_viewed(arg = {})
     unless Viewed.fit(arg)
