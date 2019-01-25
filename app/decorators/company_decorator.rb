@@ -1,6 +1,6 @@
 class CompanyDecorator < ApplicationDecorator
   delegate_all
-  decorates_findersls
+  decorates_finders
   decorates_association :job
   decorates_association :client
 
