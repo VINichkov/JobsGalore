@@ -12,7 +12,7 @@ class Workflow
     Rails.logger.debug  "!! Workflow.save!: object = #{object.to_json}, session.id #{session}"
     if session.present?
       redis  = connect()
-      redis.set(session, object, ex:3600)
+      redis.set(session, object, ex:7200)
     end
   end
 

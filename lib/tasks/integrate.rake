@@ -28,7 +28,7 @@ namespace :integrate do
 
   task :destroy_jobs => :environment do
     puts "! Task:Destroy: start #{Time.now}"
-    Job.where("close <= :data", data: Time.now).destroy_all
+    Job.where("close <= :data and urgent is null and top is null and highlight is null", data: Time.now).destroy_all
     puts "! Task:Destroy: end #{Time.now}"
   end
 
