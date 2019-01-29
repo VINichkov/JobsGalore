@@ -11,7 +11,6 @@ class ClientforalertController < ApplicationController
   private
 
   def clientforalert_params
-    puts params
     params.require(:clientforalert).permit(:email, :key, :location_id)
   end
 end

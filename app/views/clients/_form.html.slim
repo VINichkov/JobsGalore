@@ -86,13 +86,16 @@
     -if option[:devise]
       .row
         .col-xs-6.col-md-6
+          = link_to "Log in", new_session_path(resource_name), class: "btn btn-success btn-block"
+          br
+        .col-xs-6.col-md-6
           = f.submit "Register", class: "btn btn-primary btn-block"
-        = render "devise/shared/links"
+          br
     -else
       .row
         .col-xs-12.col-sm-6.col-md-6
-          = f.submit class: "btn btn-primary btn-block"
-          p
-        .col-xs-12.col-sm-6.col-md-6
           = link_to 'Back', :back, class:"btn btn-success btn-block "
+        .col-xs-12.col-sm-6.col-md-6
+          = f.submit "Add", class: "btn btn-primary btn-block"
+
     br
