@@ -154,7 +154,7 @@ class Job < ApplicationRecord
 
   def date_close
     if self.close.nil?
-      self.close = Date.today+1.month
+      self.close = Date.today+21.days
     end
   end
 
