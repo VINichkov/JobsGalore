@@ -1188,6 +1188,13 @@ CREATE INDEX index_jobs_on_updated_at ON public.jobs USING btree (updated_at);
 
 
 --
+-- Name: index_jobs_on_urgent; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_jobs_on_urgent ON public.jobs USING btree (urgent);
+
+
+--
 -- Name: index_locations_on_fts; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1516,6 +1523,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181130075311'),
 ('20181203085507'),
 ('20181207094318'),
-('20190116113913');
+('20190116113913'),
+('20190201152729');
 
 
