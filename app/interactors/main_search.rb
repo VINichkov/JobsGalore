@@ -1,5 +1,6 @@
 class MainSearch
   include Interactor
+  MAX_OBJECT = 500
 
   def call
     context.sort = context.params.to_h
@@ -25,6 +26,20 @@ class MainSearch
 
   end
 
+  def count_jobs(value, location)
+    if value.blank? and  location.blank?
+      MAX_OBJECT
+    elsif value.blank? and location.present?
+      locat = Location.find_by_suburb(location)
+      if locat.present?
+        locat.counts_jobs < MAX_OBJECT ? nil : MAX_OBJECT
+      else
+        MAX_OBJECT
+      end
+    else
+      nil
+    end
+  end
   def sort(type, value)
     if value.present?
       type == "date" ? 'created_at DESC, rank DESC' : 'rank DESC, created_at DESC'
@@ -34,19 +49,19 @@ class MainSearch
   end
 
   def company
-    context.objs = Company.includes(:location,:industry).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:21).decorate
+    context.objs = Company.includes(:location,:industry).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:21, total_entries: count_jobs(@param[:value], @param[:location_name])).decorate
     context.type = Objects::COMPANIES
     true
   end
 
   def job
-    context.objs = Job.includes(:company,:location).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:25).decorate
+    context.objs = Job.includes(:company,:location).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:25, total_entries: count_jobs(@param[:value], @param[:location_name])).decorate
     context.type = Objects::JOBS
     true
   end
 
   def resume
-    context.objs = Resume.includes(:location, :client).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:25).decorate
+    context.objs = Resume.includes(:location, :client).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:25, total_entries: count_jobs(@param[:value], @param[:location_name])).decorate
     context.type = Objects::RESUMES
     true
   end

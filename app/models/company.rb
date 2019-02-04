@@ -15,7 +15,6 @@ class Company < ApplicationRecord
       array_keywords = self.name&.gsub(/[^[:word:]]/,' ')&.downcase&.split(' ')*5
       array_keywords += self.description&.gsub(/[^[:word:]]/,' ')&.downcase&.split(' ')  if self.description
       array_keywords.compact!
-      puts  array_keywords.class
       index_hash = {}
       array_keywords.each do |word|
         if word.length>min_length_word

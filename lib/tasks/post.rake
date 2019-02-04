@@ -21,6 +21,7 @@ namespace :post do
 
   task :twitt => :environment  do
     puts "! Task:Post at Twitter: start"
+    job = Job.where('location_id in (:location) and created_at >= :date and twitter is null and ((salarymin>=:salary) or (salarymax >= :salary))', date: Time.now - 1.day, location: Location.major.pluck(:id), salary: 150000).all.sample
     if job.present?
       job.post_at_twitter("##{job.location.suburb} #{job.full_keywords(5).map{|t| "#"+t}.join(" ")} #{job.title} #{job.salary}")
     end
