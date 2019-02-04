@@ -24,7 +24,7 @@
               |Major cities
           -@main.city.each do |t|
             li.col-sm-4.col-md-12.col-lg-12
-              = link_to local_object_path(t,Objects::JOBS.code) do
+              = link_to "#{local_object_path(t,Objects::JOBS.code) +"?"+ {:utm_source=>:email, :utm_medium=>:email, :utm_campaign=>:resume_alert}.to_query}" do
                 |#{t.suburb}
                 span.badge[style = "float: right"]
                   |#{t.counts_jobs}

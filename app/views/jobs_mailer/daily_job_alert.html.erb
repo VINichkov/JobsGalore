@@ -2,9 +2,9 @@
 
 <% @list_of_jobs.each do |job|%>
   <hr style='align:"left"; width:375px; size:1px;'>
-  <h3 ><%= link_to job.title_capitalize, job, style:"color:#66512c" %></h3>
-  <span ><%= link_to job.company.name, job.company, style:"color: #3c763d; "%> &nbsp; - &nbsp;</span>
-  <span ><%= link_to job.location.name , local_object_url(job.location.id,Objects::JOBS.code), style:"color: #66512c;"%></span>
+  <h3 ><%= link_to job.title_capitalize, job_url(job) + @utm, style:"color:#66512c" %></h3>
+  <span ><%= link_to job.company.name, companies_url(job.company)  + @utm, style:"color: #3c763d; "%> &nbsp; - &nbsp;</span>
+  <span ><%= link_to job.location.name , local_object_url(job.location.id,Objects::JOBS.code)+ @utm, style:"color: #66512c;"%></span>
   <% if not job.salary.blank? then %>
     <p><%= job.salary%></p>
   <% end %>
