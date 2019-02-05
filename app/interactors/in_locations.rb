@@ -1,5 +1,13 @@
 class InLocations
   include Interactor
+  MAX_OBJECT=500
+  def count_jobs(location)
+    if location.present?
+      location.counts_jobs < MAX_OBJECT ? nil : MAX_OBJECT
+    else
+      MAX_OBJECT
+    end
+  end
 
   def call
     @page, @location = context.params[:page], context.params[:location]
@@ -10,8 +18,9 @@ class InLocations
   end
 
   def company
-    context.objs = Company.where(location_id: @location).order(:name).paginate(page: @page, per_page:21).includes(:industry,:location).decorate
-    location=context.objs.first.location
+    loc = Location.find_by_id @location
+    context.objs = Company.where(location_id: @location).order(:name).paginate(page: @page, per_page:21, total_entries: count_jobs(loc)).includes(:industry).decorate
+    location=loc
     context.name = location.name
     context.query = {type: Objects::COMPANIES.code, value:"", location_id:location.id, location_name:location.name, open:false}
     context.suburb = location.suburb
@@ -21,8 +30,9 @@ class InLocations
   end
 
   def job
-    context.objs = Job.where(location_id: @location).order(created_at: :desc).paginate(page: @page, per_page:25).includes(:company, :location).decorate
-    location=context.objs.first.location
+    loc = Location.find_by_id @location
+    context.objs = Job.where(location_id: @location).order(created_at: :desc).paginate(page: @page, per_page:25, total_entries: count_jobs(loc)).includes(:company).decorate
+    location=loc
     context.name = location.name
     context.query = {type: Objects::JOBS.code, value:"", location_id:location.id, location_name:location.name, open:false}
     context.suburb = location.suburb

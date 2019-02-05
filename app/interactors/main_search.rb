@@ -30,7 +30,8 @@ class MainSearch
     if value.blank? and  location.blank?
       MAX_OBJECT
     elsif value.blank? and location.present?
-      locat = Location.find_by_suburb(location)
+      puts "sdfdsfds"
+      locat = Location.find_by_id(location)
       if locat.present?
         locat.counts_jobs < MAX_OBJECT ? nil : MAX_OBJECT
       else
@@ -49,19 +50,19 @@ class MainSearch
   end
 
   def company
-    context.objs = Company.includes(:location,:industry).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:21, total_entries: count_jobs(@param[:value], @param[:location_name])).decorate
+    context.objs = Company.includes(:location,:industry).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:21, total_entries: count_jobs(@param[:value], @param[:location_id])).decorate
     context.type = Objects::COMPANIES
     true
   end
 
   def job
-    context.objs = Job.includes(:company,:location).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:25, total_entries: count_jobs(@param[:value], @param[:location_name])).decorate
+    context.objs = Job.includes(:company,:location).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:25, total_entries: count_jobs(@param[:value], @param[:location_id])).decorate
     context.type = Objects::JOBS
     true
   end
 
   def resume
-    context.objs = Resume.includes(:location, :client).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:25, total_entries: count_jobs(@param[:value], @param[:location_name])).decorate
+    context.objs = Resume.includes(:location, :client).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:25).decorate
     context.type = Objects::RESUMES
     true
   end
