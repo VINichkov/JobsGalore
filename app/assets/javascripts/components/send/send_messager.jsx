@@ -98,7 +98,7 @@ class SendMessage extends React.Component{
                             <a href={this.props.title.link} className="btn btn-success btn-block">Back</a>
                         </div>
                         <div className="col-xs-6 col-lg-6">
-                            <input type="submit" className="btn btn-primary btn-block" value="Apply"/>
+                            <input type="submit" className="btn btn-primary btn-block" value="Send"/>
                         </div>
                     </div>
                     <br/>

@@ -4,7 +4,7 @@ class Client < ApplicationRecord
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, omniauth_providers: %i[linkedin]
-  if Rails.env.production?
+  if Rails.env.production? or 1==1
     devise  :confirmable, :lockable, :timeoutable
   end
 

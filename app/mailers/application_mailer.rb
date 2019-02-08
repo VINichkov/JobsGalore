@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  #default from: "#{PropertsHelper::COMPANY} <#{PropertsHelper::EMAIL}>"
-  default from: ENV["EMAIL_LOGIN"]
+  helper(EmailHelper)
+  default from: "#{PropertsHelper::COMPANY} <#{ENV["EMAIL_LOGIN"]}>"
   layout 'mailer'
 end

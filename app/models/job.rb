@@ -60,17 +60,21 @@ class Job < ApplicationRecord
   def highlight_on
     self.highlight = Date.today
     self.save
+    turn_on_option("Highlight")
   end
 
   def urgent_on
     self.urgent = Date.today
     self.save
+    turn_on_option("Urgent")
   end
   def top_on
     self.top = Date.today
     self.save
+    turn_on_option("Top")
   end
   def highlight_off
+
     self.highlight = nil
     self.save
   end
@@ -109,6 +113,11 @@ class Job < ApplicationRecord
     super
   end
 
+  def turn_on_option(option)
+    if self.client.send_email
+      JobsMailer.turn_on_option(option, self).deliver_later
+    end
+  end
 
   def to_short_h
     {id:id, title: title, salarymin: salarymin, salarymax: salarymax, description:description, client_id:client_id, company_id:company_id, location_id:location_id, industry_id:industry_id}

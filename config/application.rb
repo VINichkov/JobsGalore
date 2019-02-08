@@ -9,6 +9,10 @@ Bundler.require(*Rails.groups)
 module Mango
   class Application < Rails::Application
     config.active_record.schema_format = :sql
+    config.to_prepare do
+      Devise::Mailer.layout "mailer"
+      Devise::Mailer.helper :email
+    end
 
     #config.public_file_server.headers = {
      #   'Cache-Control' => 'public, max-age = 604800',

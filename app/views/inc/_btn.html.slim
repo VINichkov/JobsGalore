@@ -11,21 +11,21 @@ div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' : "btn-group #{option[:m
         - if PropertsHelper::URGENT== "true"
           li
             - if object.urgent
-              = link_to "Urgent -", url_for("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 1})"), method: :post
+              = link_to "Urgent -", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 1})"), method: :post
             - else
-              = link_to "Urgent +", url_for("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 1})"), method: :post
+              = link_to "Urgent +", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 1})"), method: :post
         - if PropertsHelper::TOP == "true"
           li
             - if object.top
-              = link_to "Top -", url_for("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 2})"), method: :post
+              = link_to "Top -", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 2})"), method: :post
             - else
-              = link_to "Top +", url_for("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 2})"), method: :post
+              = link_to "Top +", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 2})"), method: :post
         - if PropertsHelper::HIGHLIGHT == "true"
           li
             - if object.highlight
-              = link_to "Highlight -", url_for("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
+              = link_to "Highlight -", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
             - else
-              = link_to "Highlight +", url_for("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
+              = link_to "Highlight +", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
       - else
         - if PropertsHelper::URGENT== "true"
           li

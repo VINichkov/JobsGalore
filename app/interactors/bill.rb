@@ -2,15 +2,19 @@ class Bill
   include Interactor
 
   def call
-    services = LazyHash.new('1'=>->{urgent}, '2'=>->{top}, '3'=>->{highlight})
-    context.params[:type] == '2' ? context.ad = Job.find_by_id(context.params[:id]).decorate : context.ad = Resume.find_by_id(context.params[:id]).decorate
-    services = services[context.params[:option]]
-    context.url = { id: context.params[:id],
-                    type: context.params[:type],
-                    item_number:"#{context.params[:option]}#{context.params[:type]}#{context.params[:id]}",
-                    item_name:services.name,
-                    price: services.price}
-    if context.ad.blank? or services.price.blank?
+    begin
+      services = LazyHash.new('1'=>->{urgent}, '2'=>->{top}, '3'=>->{highlight})
+      context.params[:type] == '2' ? context.ad = Job.find_by_id(context.params[:id]).decorate : context.ad = Resume.find_by_id(context.params[:id]).decorate
+      services = services[context.params[:option]]
+      context.url = { id: context.params[:id],
+                      type: context.params[:type],
+                      item_number:"#{context.params[:option]}#{context.params[:type]}#{context.params[:id]}",
+                      item_name:services.name,
+                      price: services.price}
+      if context.ad.blank? or services.price.blank?
+        context.fail!
+      end
+    rescue
       context.fail!
     end
   end

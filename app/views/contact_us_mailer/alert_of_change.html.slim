@@ -1,19 +1,28 @@
-h1 Изменения за день
-h3 Новые резюме за день!
-p =@arg[:new_resumes]
-hr
-h3 Новые ваканнсии
-p =@arg[:new_jobs]
-hr
-h3 Новые клиенты
-p =@arg[:new_client]
-hr
-h3 Заполенные компании
-p =@arg[:new_company]
-hr
-h3 Новые транзакции
-p #{@arg[:new_pay_count]} || #{@arg[:new_pay_sum]}
-hr
-h3 Новые просмотры
-p = @arg[:new_viewed]
+div[style=title_email]
+  div[style=h1_email]
+    |Изменения за день
+div[style=body_email]
+  div[style=h3_email]
+    |Новые резюме за день!
+  =@arg[:new_resumes]
+  =space_email
+  div[style=h3_email]
+    |Новые ваканнсии
+  =@arg[:new_jobs]
+  =space_email
+  div[style=h3_email]
+    |Новые клиенты
+  =@arg[:new_client]
+  = space_email
+  div[style=h3_email]
+    |Заполенные компании
+  =@arg[:new_company]
+  = space_email
+  div[style=h3_email]
+    |Новые транзакции
+  |#{@arg[:new_pay_count]} || #{@arg[:new_pay_sum]}
+  = space_email
+  div[style=h3_email]
+    |Новые просмотры
+  = @arg[:new_viewed]
 

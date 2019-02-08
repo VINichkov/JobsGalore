@@ -1,4 +1,3 @@
-
 class ApplicationController < ActionController::Base
   extend ActiveSupport::Concern
   include Session

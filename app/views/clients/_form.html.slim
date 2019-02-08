@@ -41,10 +41,6 @@
           input.form-control[type="text" value =(client.birth ? client.birth.strftime("%d %B %Y").to_s : "Empty") name="client[birth]"]
           span.input-group-addon
             i.glyphicon.glyphicon-calendar
-    //.form-group
-      = f.label "Photo"
-      br
-      = react_component('Fileinput', id: "client_photo", name: "client[photo]", place_holder: "empty")
     .form-group
       = f.label :location, "*Your location"
       br
@@ -56,16 +52,9 @@
               defaultName: client.location ? client.location.name :  Location.default.name,
               defaultId: client.location ? client.location.id :  Location.default.id)
     .form-group
-      = f.label :phone, "*Your phone number"
+      = f.label :phone, "Your phone number (optional)"
       br
       = react_component('InputMask', id: "phone", name: "client[phone]", class_name: "form-control", dataformat: "dd dddd dddddd", placeholder: "02 9999 9999",defaultValue:@client&.phone)
-    - if option[:devise] and option[:ad].nil?
-      .form-group
-        = f.label :character, "*Are you an employer?"
-        .checkbox
-          label
-            input[type="checkbox" name="client[character]" checked= client.character ]
-              |Employer
     -if (option[:url]== {:action=>"create_member"}) || (option[:devise])
       .form-group
         = f.label :email, "*Your email", required:"required"
