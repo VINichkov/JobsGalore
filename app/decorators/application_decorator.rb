@@ -28,6 +28,9 @@ class ApplicationDecorator < Draper::Decorator
     @date ||= object.created_at.strftime("%d %B %Y")
   end
 
+  def close_date
+    @close ||= object.dt_close.strftime("%d %B %Y")
+  end
   private
   def markdown_to_keywords (arg)
     if arg

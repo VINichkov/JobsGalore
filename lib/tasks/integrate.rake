@@ -33,6 +33,7 @@ namespace :integrate do
     if Time.now < time
       Job.where("created_at <= :data and urgent is null and top is null and highlight is null", data: Time.now - 15.days).destroy_all
     end
+    biggest_company
     puts "! Task:Destroy: end #{Time.now}"
   end
 
@@ -336,5 +337,10 @@ namespace :integrate do
     else
       false
     end
+  end
+
+  def biggest_company
+    Company.where("id in (select q.id from (select c.name, c.id, count(c.id)/15 as cou from companies c, jobs j where c.id = j.company_id group by c.id) q where q.cou >= 3)").update_all(big: true)
+    Company.where("id not in (select q.id from (select c.name, c.id, count(c.id)/15 as cou from companies c, jobs j where c.id = j.company_id group by c.id) q where q.cou >= 3)").update_all(big: false)
   end
 end

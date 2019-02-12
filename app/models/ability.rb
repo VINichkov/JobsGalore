@@ -104,7 +104,7 @@ class Ability
     can [:edit, :update, :destroy, :views], Resume do |resume|
       resume.client_id == user.id
     end
-    can [:edit, :update, :destroy, :views], Job do |job|
+    can [:edit, :update, :destroy, :views, :prolong], Job do |job|
       job.client == user
     end
   end

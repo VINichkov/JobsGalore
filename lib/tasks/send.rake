@@ -1,4 +1,7 @@
 namespace :send do
+
+  #(a.close - Time.now.to_date).to_i
+  #
   desc "Send daily job alert"
   task :send_deily_job => :environment  do
     puts "! Task:Send daily job alert #{Time.now}"

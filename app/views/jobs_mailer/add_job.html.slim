@@ -2,12 +2,14 @@ div[style=title_email]
   div[style=h1_email]
     |Your job opportunity was successfully posted on Jobs Galore!
 div[style=body_email]
-  |You have successfully posted your job opportunity on Jobs Galore.
-  |Link to Job #{link_to @job[:title], job_url(@job[:id]) + "?"+@utm, target: "_blank" }
+  |You have successfully posted your job opportunity #{link_to @job[:title], job_url(@job[:id]) + "?"+@utm, target: "_blank"} on Jobs Galore.
+  div[style=button_email]
+    = link_to 'Show', job_url(@job[:id]) + "?"+@utm, style: link_email, target: "_blank"
   =space_email
   =space_email
-  div[style=h3_email]
+  strong
     |You can promote your job opportunity:
+  =space_email true
   =space_email
   strong
     |Highlight $5 (7 day)
@@ -17,7 +19,7 @@ div[style=body_email]
   div[style=button_email]
     = link_to 'Activate', bill_url(bill: {id: @job[:id], type:2, option: 3}) + "&"+@utm , style: link_email, target: "_blank"
   =space_email
-  hr
+  =space_email true
   =space_email
   strong
     |Urgent $10 (7 day)

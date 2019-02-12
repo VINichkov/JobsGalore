@@ -2,7 +2,8 @@ class Job < ApplicationRecord
   include PgSearch
   serialize :preferences, Hash
 
-  after_create :send_email
+  after_create :send_email_after_add_job
+  before_destroy :send_email_before_destroy
   before_save :date_close
   include Rails.application.routes.url_helpers
   belongs_to :client
@@ -74,17 +75,19 @@ class Job < ApplicationRecord
     turn_on_option("Top")
   end
   def highlight_off
-
     self.highlight = nil
     self.save
+    turn_off_option("Highlight")
   end
   def urgent_off
     self.urgent = nil
     self.save
+    turn_off_option("Urgent")
   end
   def top_off
     self.top = nil
     self.save
+    turn_off_option("Top")
   end
 
   def self.delete_jobs
@@ -93,6 +96,25 @@ class Job < ApplicationRecord
 
   def self.today_jobs
     Job.where("date_trunc('day',created_at) = date(?)", Time.now)
+  end
+
+  def days_before_сlose
+    @date_now ||= Time.now.to_date
+    (self.dt_close - @date_now).to_i
+  end
+
+  def dt_close
+    [self.close, self.urgent, self.top, self.highlight].compact.max
+  end
+
+  def can_prolong?
+    days= self.days_before_сlose
+    days <= 2 ? days : false
+  end
+
+  def prolong
+    self.close =  Time.now + 14.days
+    self.save
   end
 
   def salary
@@ -113,11 +135,6 @@ class Job < ApplicationRecord
     super
   end
 
-  def turn_on_option(option)
-    if self.client.send_email
-      JobsMailer.turn_on_option(option, self).deliver_later
-    end
-  end
 
   def to_short_h
     {id:id, title: title, salarymin: salarymin, salarymax: salarymax, description:description, client_id:client_id, company_id:company_id, location_id:location_id, industry_id:industry_id}
@@ -155,9 +172,27 @@ class Job < ApplicationRecord
 
   protected
 
-  def send_email
-    if self.client.send_email?
+  def send_email_after_add_job
+    if self.client.send_email_about_job?
       JobsMailer.add_job({mail:self.client.email, firstname: self.client.full_name, id:self.id, title:self.title}).deliver_later
+    end
+  end
+
+  def send_email_before_destroy
+    if self.client.send_email_about_job?
+      JobsMailer.remove_job(self).deliver_later
+    end
+  end
+
+  def turn_on_option(option)
+    if self.client.send_email
+      JobsMailer.turn_on_option(option, self).deliver_later
+    end
+  end
+
+  def turn_off_option(option)
+    if self.client.send_email
+      JobsMailer.turn_off_option(option, self).deliver_later
     end
   end
 

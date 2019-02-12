@@ -4,7 +4,7 @@ class Client < ApplicationRecord
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, omniauth_providers: %i[linkedin]
-  if Rails.env.production? or 1==1
+  if Rails.env.production? #or 1==1
     devise  :confirmable, :lockable, :timeoutable
   end
 
@@ -26,6 +26,10 @@ class Client < ApplicationRecord
       # Auto orient all the images - so they will look as they should
      attachment.convert! '-resize 400x -quality 60 -gravity center', 'jpg'
     end
+  end
+
+  def send_email_about_job?
+    self.send_email && self.company&.big == false
   end
 
   def self.from_omniauth(auth)

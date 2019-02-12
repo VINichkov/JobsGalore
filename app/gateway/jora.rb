@@ -83,11 +83,13 @@ class Jora < Crawler
       super
   end
 
+
+
   def get_job(obj, thread)
     log(obj[:location_name], thread, obj[:page], "title: #{obj[:title]} работа ---> url: #{obj[:link]}")
     job = get_page(obj[:link])
     apply_link = job&.css('a.apply_link')&.first
-    apply = apply_link ? @host +apply_link[:href] : obj[:link]
+    apply = apply_calculate(obj, apply_link)
     log(obj[:location_name], thread, obj[:page], "title: #{obj[:title]} apply_link #{apply}")
     description = job&.at_css('div.summary')&.children
     if description
@@ -102,6 +104,26 @@ class Jora < Crawler
                                    apply:  apply})
     else
       log(obj[:location_name], thread, obj[:page], "title: #{obj[:title]} ERROR description is null #{obj[:link]}")
+      nil
+    end
+  end
+
+  def apply_calculate(obj,apply_link)
+    if obj[:company] == "Jora Local"
+      jora_local_apply(@host +apply_link[:href])
+    else
+      apply_link ? @host +apply_link[:href] : obj[:link]
+    end
+
+  end
+
+  def jora_local_apply(url)
+    begin
+      url = URI(Nokogiri::HTML(@proxy.redirect(url)).at_css("a")[:href])
+      url.query =  {tracking: :jobsgalore, utm_source: :jobsgaloreeu, utm_campaign: :jobsgaloreeu, utm_medium: :organic}.to_query
+      url.to_s
+    rescue
+      puts ("Ошибка #{$!}")
       nil
     end
   end

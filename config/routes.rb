@@ -128,6 +128,7 @@ Rails.application.routes.draw do
   post "job_create/", to: "jobs#create_temporary", as: 'create_job'
   get "jobs/", to: "jobs#create_job", as: 'jobs'
   get "apply_job/:id", to: "jobs#apply", as: 'apply'
+  get "prolong/:id", to: "jobs#prolong", as: 'prolong'
 
   resources :resumes, only:[:new, :show, :edit, :update, :destroy]
   get "resumes/:id/:text", to: "resumes#highlight_view", as: 'resume_highlight_view'

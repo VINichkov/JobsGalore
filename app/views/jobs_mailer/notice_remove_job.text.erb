@@ -1,0 +1,20 @@
+The job opportunity <%=@job.title%>(<%= job_url(@job) + "&" + @utm%> in <%=@job.location.name%> will be removed in <%=@days == 1 ? "1 day" : "2 days"%>. You can prolong it up to 14 days.
+<%=job_url(@job) + "&" + @utm%>
+<% if @job.highlight.blank? or @job.urgent.blank?%>
+
+You can also activate:
+===========================
+<%if @job.highlight.blank?%>
+Highlight $5 (7 day)
+
+A highlighted job opportunity stand out from the other ads on the search and browse results due to the orange background colour. A highlighted job opportunity have greater visibility and therefore receive more visits and replies than other Ads.
+<%= bill_url(bill: {id: @job.id, type: 2, option: 3}) + "&" + @utm%>
+<% end %>
+<%if @job.urgent.blank?%>
+
+Urgent $10 (7 day)
+
+In a hurry? Add an Urgent tag to your job opportunity. It's a great way to attract serious offers quickly.
+<%=     bill_url(bill: {id: @job.id, type: 2, option: 1}) + "&" + @utm%>
+<% end %>
+<% end %>

@@ -18,5 +18,6 @@ class SendMessage
 
   def send(resume, letter, client)
     ResumesMailer.send_message(resume, letter, client).deliver_later
+    ResumesMailer.send_message(resume, letter, client, true).deliver_later
   end
 end

@@ -1,0 +1,9 @@
+div[style=title_email]
+  div[style=h1_email]
+    |Your job opportunity was successfully removed!
+div[style=body_email]
+  |The job opportunity #{@job.title} in #{@job.location.name} was successfully removed.
+  =space_email
+  |You can post a new job opportunity.
+  div[style=button_email]
+    = link_to 'Post new job', new_job_url(@job) + "&" + @utm, style: link_email, target: "_blank"

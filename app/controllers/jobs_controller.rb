@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
   load_and_authorize_resource :job
-  before_action :set_job, only: [:apply, :views,:highlight_view ,:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
+  before_action :set_job, only: [:prolog, :apply, :views,:highlight_view ,:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
   before_action :action_view, only:[:show, :highlight_view]
   #before_action :employer!, only: :new
 
@@ -26,6 +26,14 @@ class JobsController < ApplicationController
   def edit
   end
 
+  def prolong
+    if @job.prolong
+      respond_to do |format|
+        format.html {redirect_to job_path(@job), notice:'The job opportunity was successfully prolonged.'}
+      end
+    end
+  end
+
   def create_temporary
     job_workflow = restore_workflow_object
     job_workflow&.update_state(job:Job.new(job_params), client: current_client)
@@ -43,7 +51,7 @@ class JobsController < ApplicationController
     respond_to do |format|
       if @job.save
         job_workflow.save!(session[:workflow])
-        format.html {redirect_to workflow_link(job_workflow) , notice: current_client ?  'Job was successfully created.' : flash[:notice]}
+        format.html {redirect_to workflow_link(job_workflow) , notice: current_client ?  'The job opportunity was successfully created.' : flash[:notice]}
       else
         format.html {render :new}
       end
@@ -66,7 +74,7 @@ class JobsController < ApplicationController
   def update
     respond_to do |format|
       if @job.update(job_params)
-        format.html { redirect_to jobs_root_path, notice: 'Job was successfully updated.' }
+        format.html { redirect_to jobs_root_path, notice: 'The job opportunity was successfully updated.' }
       else
         format.html { render :edit }
       end
@@ -78,7 +86,7 @@ class JobsController < ApplicationController
   def destroy
     @job.destroy
     respond_to do |format|
-      format.html { redirect_to jobs_root_path, notice: 'Job was successfully destroyed.' }
+      format.html { redirect_to jobs_root_path, notice: 'The job opportunity was successfully destroyed.' }
     end
   end
 
@@ -113,7 +121,7 @@ class JobsController < ApplicationController
     @job.industryjob.new(industry:Industry.find_by_id(industry))
     respond_to do |format|
       if @job.save
-        format.html { redirect_to admin_jobs_show_path(@job), notice: 'Job was successfully created.' }
+        format.html { redirect_to admin_jobs_show_path(@job), notice: 'The job opportunity was successfully created.' }
       else
         format.html { render :admin_new }
       end
@@ -126,7 +134,7 @@ class JobsController < ApplicationController
     param = job_params
     respond_to do |format|
       if @job.update(param)
-        format.html { redirect_to admin_jobs_url, notice: 'Job was successfully updated.' }
+        format.html { redirect_to admin_jobs_url, notice: 'The job opportunity was successfully updated.' }
       else
         format.html { render :admin_edit }
       end
@@ -138,7 +146,7 @@ class JobsController < ApplicationController
   def admin_destroy
     @job.destroy
     respond_to do |format|
-      format.html { redirect_to admin_jobs_url,  notice: 'Job was successfully destroyed.' }
+      format.html { redirect_to admin_jobs_url,  notice: 'The job opportunity was successfully destroyed.' }
     end
   end
 

@@ -1,11 +1,11 @@
 div[style=title_email]
   div[style=h1_email]
-    |The option "#{@option}" was turned on
+    |The option "#{@option}" was turned off
 div[style=body_email]
   strong
     |The job opportunity #{@job.title} in #{@job.location.name}.
   =space_email
-  |The option "#{@option}" has successfully activated.
+  |The option "#{@option}" has turned off.
   div[style=button_email]
     = link_to 'Show', job_url(@job) + "&" + @utm, style: link_email, target: "_blank"
   - if @job.highlight.blank? or @job.urgent.blank?
@@ -14,7 +14,7 @@ div[style=body_email]
     =space_email true
     =space_email
     div[style=h3_email]
-      |You can also activate:
+      |You can promote your job opportunity:
     -if @job.highlight.blank?
       strong
         |Highlight $5 (7 day)

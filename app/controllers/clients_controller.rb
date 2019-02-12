@@ -2,7 +2,8 @@ class ClientsController < ApplicationController
   load_and_authorize_resource :client
   before_action :set_client, only: [:show, :edit,:update, :destroy,:change_type, :destroy_member, :admin_edit_photo,:admin_show,:admin_edit,:admin_update,:admin_destroy ]
   before_action :current_company, only: [ :team]
-  before_action :set_current_client, only: [:jobs, :resumes, :settings, :edit_photo]
+  before_action :set_current_client, only: [ :resumes, :settings, :edit_photo]
+  before_action :set_profile_params, only: :jobs
   skip_before_action :verify_authenticity_token, only: [:send_resume, :send_message]
 
   def index
@@ -11,7 +12,13 @@ class ClientsController < ApplicationController
 
   def edit_photo;  end
 
-  def jobs;  end
+  def jobs
+    if @client.employer?
+       @jobs = Job.where(company_id: @client.company_id).includes(:location, :client, :company).order(location_id: :asc, created_at:  :desc).paginate(page: @page, per_page:21).decorate
+    elsif  @client.employee?
+      @jobs =  Job.where(client_id: @client.id).includes(:location, :client, :company).order(location_id: :asc, created_at:  :desc).paginate(page: @page, per_page:21).decorate
+    end
+  end
 
   def resumes;  end
 
@@ -205,6 +212,11 @@ class ClientsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_client
     @client = Client.find(params[:id])
+  end
+
+  def set_profile_params
+    @client = current_client
+    @page = params[:page]
   end
 
   def set_current_client
