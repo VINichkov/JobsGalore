@@ -39,9 +39,8 @@
       .form-group
         = f.label :description
         br
-        = f.text_area :description, class: "markdown none"
-        div.editable
-          = @company.render_description
+        = f.text_area :description, class: "tinymce", contenteditable: false, :rows => 20
+        = tinymce_script
       hr.colorgraph
         .row
           .col-xs-12.col-md-6.col-sm-6.col-lg-6

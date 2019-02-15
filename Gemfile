@@ -21,6 +21,7 @@ gem 'pdf-reader','~> 2.1.0'
 gem 'prawn'
 gem 'oga'
 gem "oink"
+gem 'tinymce-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'

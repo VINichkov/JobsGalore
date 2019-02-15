@@ -47,14 +47,14 @@
       = f.label :close
       br
       .input-group.date.datepicker_reg
-        input.form-control[type="text" name="job[close]" value =(@job.close ? @job.close.strftime("%d %B %Y").to_s : (Date.today+1.month).strftime("%d %B %Y").to_s) autocomplete="off"]
+        input.form-control[type="text" name="job[close]" value =(@job.close ? @job.close.strftime("%d %B %Y").to_s : (Date.today+15.days).strftime("%d %B %Y").to_s) autocomplete="off"]
         span.input-group-addon
           i.glyphicon.glyphicon-calendar
   .form-group
     = f.label :description
-    = f.text_area :description,  class:"markdown none"
-    div.editable
-      = @job.render_description
+    br
+    = f.text_area :description, class: "tinymce", contenteditable: false, :rows => 20
+    = tinymce_script
   hr.colorgraph
   .row
     .col-xs-6.col-lg-6

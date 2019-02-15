@@ -21,7 +21,11 @@ class Resume < ApplicationRecord
     if self.title
       array_keywords = []
       array_keywords = self.title&.gsub(/[^[:word:]]/,' ')&.downcase&.split(' ')*5
-      array_keywords += self.description&.gsub(/[^[:word:]]/,' ')&.downcase&.split(' ') if self.description
+      if self.description
+        desc = HtmlToPlainText.plain_text(self.description)
+        desc = Search.str_to_search(desc)&.squish
+        array_keywords += desc&.gsub(/[^[:word:]]/,' ')&.downcase&.split(' ')
+      end
       array_keywords.compact!
       index_hash = {}
       array_keywords.each do |word|
@@ -82,6 +86,8 @@ class Resume < ApplicationRecord
   end
 
   def to_pdf
+    Rails.logger.debug("Начинаем формировать PDF")
+    t = Time.now
     pdf = Prawn::Document.new
     pdf.font_families.update(
         "OpenSans" => {normal: "#{Rails.root.join("vendor/assets/fonts/OpenSans-Regular.ttf")}",
@@ -109,15 +115,19 @@ class Resume < ApplicationRecord
       pdf.bounding_box([pdf.bounds.left, pdf.bounds.top - 25], :width => pdf.bounds.width, :height => 160) do
         pdf.bounding_box([pdf.bounds.left, pdf.bounds.top], :width => pdf.bounds.width / 2, :height => pdf.bounds.height) do
           if  client.photo_uid
+            Rails.logger.debug("Получаем аватар")
+            t1 = Time.now
             url = Rails.env.development? ? 'http://127.0.0.1:3000' + Dragonfly.app.remote_url_for(client.photo_uid).to_s : Dragonfly.app.remote_url_for(client.photo_uid)
             begin
-              pdf.image open(url), height: 150
+              pdf.image open(url, :read_timeout => 10), height: 150
             rescue
-              Rails.logger.error("Error: При иотправлении резбме не смогли дастать аватар для клиента #{client.id})")
+              Rails.logger.error("Error: При отправлении резюме не смогли дастать аватар для клиента #{client.id})")
               pdf.image Rails.root.join("app/assets/images/avatar.jpg"), height: 150
             end
+            Rails.logger.debug("Получили аватар время: #{Time.now - t1} s")
           else
             pdf.image Rails.root.join("app/assets/images/avatar.jpg"), height: 150
+            Rails.logger.debug("Получили аватар время: #{Time.now - t1} s")
           end
         end
         pdf.bounding_box([pdf.bounds.width / 2 + 10, pdf.bounds.top], :width => pdf.bounds.width / 2 - 10, :height => pdf.bounds.height) do
@@ -133,7 +143,9 @@ class Resume < ApplicationRecord
       pdf.text title, size: 20
       pdf.styled_text description
     end
-    pdf.render
+    result = pdf.render
+    Rails.logger.debug("Сформировали PDF: #{Time.now - t} s")
+    result
   end
 
   def key

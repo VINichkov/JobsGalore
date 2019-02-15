@@ -56,10 +56,9 @@
   .form-group
     = f.label  :description, "Resume (CV)"
     br
-    = f.text_area :description, class: "markdown none"
-    div.editable
-      = @resume.render_description
-  .form-group
+    = f.text_area :description, class: "tinymce",  contenteditable:false,  :rows => 20
+    = tinymce_script
+  /.form-group
     input#inp[type="file" accept=".txt, .docx, .pdf"]
     h5
       small

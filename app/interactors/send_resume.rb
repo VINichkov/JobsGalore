@@ -38,7 +38,8 @@ class SendResume
   end
 
   def send(resume, job, letter)
-    ResumesMailer.send_to_employer(resume, job, letter).deliver_later
-    ResumesMailer.send_to_employer(resume, job, letter, true).deliver_later
+    pdf = resume.to_pdf
+    ResumesMailer.send_to_employer(resume, job, pdf, letter).deliver_later
+    ResumesMailer.send_to_employer(resume, job, pdf, letter, true).deliver_later
   end
 end

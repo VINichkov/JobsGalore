@@ -11,24 +11,17 @@ class NewResume extends React.Component{
         this._divEditable = React.createRef();
         this._fileInput = React.createRef();
         this.handleOnClickResume =  this.handleOnClickResume.bind(this);
-        this.readURL = this.readURL.bind(this);
         this.handleLinkedIn = this.handleLinkedIn.bind(this);
     }
 
     componentDidUpdate() {
-        if (this.props.check && this.medium == null) {
-            let dom = ReactDOM.findDOMNode(this._divEditable.current);
-            this.medium = new MediumEditor(dom, this.props.options);
-            this.medium.subscribe('editableInput', (e) => {
-                this.setState({inputDescription:dom.innerHTML});
-            });
-        } else if(!this.props.check) {
-            this.medium=null;
+        if (this.props.check) {
+            tinymce.init(tinyEditorOptions);
         }
     }
 
     componentWillUnmount() {
-        this.medium.destroy();
+        tinymce.remove("textarea#resume_description")
     }
 
     componentWillReceiveProps(nextProps) {
@@ -42,47 +35,6 @@ class NewResume extends React.Component{
         this.props.onchange('new_resume');
     }
 
-    readURL() {
-        let input = this._fileInput.current;
-        let uploadTXT = function(uploadFile) {
-            let reader = new FileReader();
-            reader.onload = function (e) {
-                let html = e.target.result;
-                html = html.replace(new RegExp('<','g'), "&lt;");
-                html = html.replace(new RegExp('>','g'), "&gt;");
-                this.medium.setContent(html,0);
-                //this._divEditable.current.innerHTML = html;
-            }.bind(this);
-            reader.readAsText(uploadFile);
-        }.bind(this);
-
-        let uploadPdfDocx = function(uploadFile) {
-            let fd = new FormData;
-            fd.append('file', uploadFile);
-            $.ajax({
-                type: 'POST',
-                url: this.props.url_for_parse,
-                data: fd,
-                success: function( data ) {
-                    this.medium.setContent(data.description,0);
-                }.bind(this),
-                contentType: false,
-                processData: false
-            });
-        }.bind(this);
-
-        if (input.files) {
-            let uploadFile = input.files[0];
-            switch(uploadFile.type){
-                case 'text/plain':
-                    uploadTXT(uploadFile);
-                    break;
-                default:
-                    uploadPdfDocx(uploadFile);
-            }
-        }
-    }
-
     handleLinkedIn(){
         $.get(this.props.linkedin_resume_url, function(data) {
             this.setState({ title:data.title,
@@ -90,9 +42,6 @@ class NewResume extends React.Component{
                             location_id:data.location_id,
                             location_name:data.location_name,
                             flagVisible: !this.state.flagVisible});
-            console.log(data.description);
-            console.log(this.medium);
-            this.medium.setContent(data.description,0);
         }.bind(this));
     }
 
@@ -159,14 +108,13 @@ class NewResume extends React.Component{
                 <div className="form-group">
                     <label>Resume (CV)</label>
                     <br/>
-                    <textarea name={this.props.name+"[description]"}  value={this.state.inputDescription} className="markdown none" id="resume_description"></textarea>
-                    <div className="editable" ref={this._divEditable}></div>
+                    <textarea name={this.props.name+"[description]"} className="tinymce"  rows="20"  id="resume_description"></textarea>
+
                 </div>
-                <div className="form-group">
-                    <input ref={this._fileInput} type="file" id='inp' accept=".txt, .docx, .pdf" onChange={this.readURL}/>
-                    <h5><small>We accept.TXT .DOCX .PDF</small></h5>
-                </div>
+
             </div>;
+        }else{
+            tinymce.remove("textarea#resume_description");
         }
         return(
             <div>
@@ -178,9 +126,5 @@ class NewResume extends React.Component{
                 </div>
             </div>
         );
-    }
-
-    change(text) {
-        if (this.props.onChange) this.props.onChange(text, this.medium);
     }
 }

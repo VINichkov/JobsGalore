@@ -24,7 +24,11 @@ class Job < ApplicationRecord
     if self.title
       array_keywords = []
       array_keywords = self.title&.gsub(/[^[:word:]]/,' ')&.downcase&.split(' ')*5
-      array_keywords += self.description&.gsub(/[^[:word:]]/,' ')&.downcase&.split(' ') if self.description
+      if self.description
+        desc = HtmlToPlainText.plain_text(self.description)
+        desc = Search.str_to_search(desc)&.squish
+        array_keywords += desc&.gsub(/[^[:word:]]/,' ')&.downcase&.split(' ')
+      end
       array_keywords.compact!
       index_hash = {}
       array_keywords.each do |word|
