@@ -12,10 +12,16 @@
 //= require tinymce
 //=require html-formatting.js
 
+
+
 var tinyEditorOptions={
     selector: "textarea",
-    plugins: "paste",
+    plugins: "paste lists stylebuttons",
+    branding: false,
+    toolbar: 'formatselect | bold italic underline backcolor | alignleft aligncenter alignright | numlist bullist outdent indent  | removeformat ',
+    image_advtab: true,
     menubar: null,
+    block_formats: 'Paragraph=p; Heading 3=h3; Heading 4=h4;',
     paste_preprocess: function(plugin, args) {
         console.log(args.content);
     },
