@@ -15,6 +15,15 @@
       |More jobs in real time – Search&nbsp;
       strong #{Location.select(:counts_jobs).inject(0){|rez, elem| rez +=elem.counts_jobs}}
       |&nbsp;jobs now.
+    p
+  .row.hidden-lg.hidden-md
+    .col-sm-12.col-xs-12.text-center
+      |Do you want to get a dream job?
+    .col-sm-6.col-xs-6.align-center
+      |Let employers find you
+    .col-sm-6.col-xs-6
+      = link_to "Post new resume", new_resume_path, class: "btn btn-danger btn-block", rel: "nofollow"
+      p
   .row
     .col-lg-3.col-md-3
       .well

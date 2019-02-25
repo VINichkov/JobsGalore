@@ -1,4 +1,5 @@
 -option||={}
+=javascript_include_tag("editor.js")
 = form_for @resume, url:option[:url] do |f|
   hr.colorgraph
   - if @resume.errors.any?
@@ -10,32 +11,35 @@
   .row
     .form-group
       - if current_client&.linkedin?
-        .hidden-xs.col-md-6.col-sm-6.col-lg-6
-          a.btn.btn-linkedin.btn-bloc.linkedin_click
-            i.fa.fa-linkedin.text-left[aria-hidden="true"]
-            |&nbsp;|&nbsp;Resume from LinkedIn
-        .col-xs-6.hidden-md.hidden-sm.hidden-lg
+        .col-xs-12.col-md-6.col-sm-6.col-lg-6
           a.btn.btn-linkedin.btn-block.linkedin_click
             i.fa.fa-linkedin.text-left[aria-hidden="true"]
-            |&nbsp;|&nbsp;Resume
+            |&nbsp;|&nbsp;Resume from LinkedIn
       - elsif current_client.nil?
-        .hidden-xs.col-md-6.col-sm-6.col-lg-6
+        .col-xs-12.col-md-6.col-sm-6.col-lg-6
           = link_to client_linkedin_omniauth_authorize_path(resume: true), class: "btn btn-linkedin btn-block" do
             i.fa.fa-linkedin.text-left[aria-hidden="true"]
             |&nbsp;|&nbsp;Resume from LinkedIn
-        .col-xs-6.hidden-md.hidden-sm.hidden-lg
-          = link_to client_linkedin_omniauth_authorize_path(resume: true), class: "btn btn-linkedin btn-block" do
-            i.fa.fa-linkedin.text-left[aria-hidden="true"]
-            |&nbsp;|&nbsp;Resume
+      .col-xs-12.col-md-6.col-sm-6.col-lg-6
+        .hidden-md.hidden-lg.hidden-sm
+          p
+        label.btn.btn-warning.btn-block[for="inp"]
+          i.glyphicon.glyphicon-upload
+          |&nbsp;|&nbsp;Upload a resume (.txt .docx)
+          input#inp[type="file" accept=".txt, .docx, .pdf" style="display:none;" ]
   p
   .form-group
     = f.label :title, "Title"
+    em
+      |&nbsp(Put your profession or skills here, not your name.)
     br
     = f.text_field :title, class:"form-control", required:"required"
   .row
     .col-md-6.col-lx-6.col-sm-12.col-xs-12
       .form-group
-        = f.label :salary, "Desired Salary (Optional)"
+        = f.label :salary, "Desired Salary"
+        em
+          |&nbsp;(Optional)
         br
         = salary f, :salary_form, class:"form-control", placeholder: "10000"
     .col-md-6.col-lx-6.col-sm-12.col-xs-12
@@ -56,13 +60,8 @@
   .form-group
     = f.label  :description, "Resume (CV)"
     br
-    = f.text_area :description, class: "tinymce",  contenteditable:false,  :rows => 20
+    = f.text_area :description, id:"editor_resume",class: "tinymce",  contenteditable:false,  :rows => 20
     = tinymce_script
-  /.form-group
-    input#inp[type="file" accept=".txt, .docx, .pdf"]
-    h5
-      small
-        |We accept.TXT .DOCX .PDF
   hr.colorgraph
     .row
       .col-lg-6.col-md-6.col-xs-6.col-sm-6

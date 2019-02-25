@@ -9,14 +9,75 @@
 //= require react
 //= require components
 //= require react_ujs
-//= require tinymce
+//= /require tinymce
 //=require html-formatting.js
 
+var uploadTXT = function(uploadFile,tiny_id) {
+    let ed = tinymce.get(tiny_id);
+    ed.setProgressState(1); // Show progress
+    let reader = new FileReader();
+    reader.onload = function (e) {
+        let html = e.target.result;
+        html = html.replace(new RegExp('<','g'), "&lt;");
+        html = html.replace(new RegExp('>','g'), "&gt;");
+        window.setTimeout(function() {
+            ed.setContent(html, { format: 'html' });
+            ed.setProgressState(0); // Hide progress
+        }, 3000);
+    };
+    reader.readAsText(uploadFile);
+};
 
+var uploadPdfDocx = function(uploadFile,tiny_id) {
+    let ed = tinymce.get(tiny_id);
+    ed.setProgressState(1);
+    let fd = new FormData;
+    fd.append('file', uploadFile);
+    ed.setProgressState(1);
+    $.ajax({
+        type: 'POST',
+        url: "<%=Rails.application.routes.url_helpers.file_to_html_path%>",
+        data: fd,
+        success: function( data ) {
+            // Show progress
+            window.setTimeout(function() {
+                ed.setContent(data.description, { format: 'html' });
+                ed.setProgressState(0); // Hide progress
+            }, 3000);
+        },
+        contentType: false,
+        processData: false
+    });
+};
 
+var readURL = function (input, tiny_id) {
+    if (input.files) {
+        let uploadFile = input.files[0];
+        switch(uploadFile.type){
+            case 'text/plain':
+                uploadTXT(uploadFile,tiny_id);
+                break;
+            default:
+                uploadPdfDocx(uploadFile,tiny_id);
+        }
+    }
+}
+
+var tinyValidElements={
+    'h1,h2,h3,h4,h5,h6,p,ul,li,strong,pre,code,b,span,div': {
+        valid_styles: 'text-align,color',
+        valid_classes: '',
+        valid_attributes: 'style, href, color'
+    },
+    'form': {
+        valid_styles: null,
+        valid_classes: null,
+        valid_attributes: 'color'
+    }
+};
 var tinyEditorOptions={
     selector: "textarea",
-    plugins: "paste lists stylebuttons",
+    plugins: "paste lists",
     branding: false,
     toolbar: 'formatselect | bold italic underline backcolor | alignleft aligncenter alignright | numlist bullist outdent indent  | removeformat ',
     image_advtab: true,
@@ -25,21 +86,10 @@ var tinyEditorOptions={
     paste_preprocess: function(plugin, args) {
         console.log(args.content);
     },
+    theme_advanced_buttons3_add : "pastetext,pasteword,selectall",
     paste_postprocess: function (plugin, args) {
-        var
-            valid_elements = {
-                'h1,h2,h3,h4,h5,h6,p,ul,li,strong,pre,code,b,span,div': {
-                    valid_styles: 'text-align,color',
-                    valid_classes: '',
-                    valid_attributes: 'style, href, color'
-                },
-                'form': {
-                    valid_styles: null,
-                    valid_classes: null,
-                    valid_attributes: 'color'
-                }
-            };
-        htmlFormatting(args.node, valid_elements);
+        console.log(args);
+        htmlFormatting(args.node, tinyValidElements);
     }
 };
 
@@ -50,16 +100,5 @@ $(function() {
         autoclose: true
     });
 
-    $("#inp").change(function() {
-        readURL(this);
-    });
-
-    $(".linkedin_click").click( function () {
-        $.get("<%=Rails.application.routes.url_helpers.linkedin_resume_url%>", function(data) {
-            $("[name='resume[title]']").val(data.title);
-            editor.setContent(data.description,0);
-            $("[name='resume[industry_id]']").val(data.industry_id);
-        });
-    });
 
 });

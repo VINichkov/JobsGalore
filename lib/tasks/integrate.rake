@@ -28,10 +28,10 @@ namespace :integrate do
 
   task :destroy_jobs => :environment do
     puts "! Task:Destroy: start #{Time.now}"
-    Job.where("close <= :data and urgent is null and top is null and highlight is null", data: Time.now).destroy_all
-    time = Time.new 2019,2,20,0,0,0
+    Job.where("close <= :data and urgent is null and top is null and highlight is null", data: Time.now).delete_all
+    time = Time.new 2019,3,10,0,0,0
     if Time.now < time
-      Job.where("created_at <= :data and urgent is null and top is null and highlight is null", data: Time.now - 15.days).destroy_all
+      Job.where("created_at <= :data and urgent is null and top is null and highlight is null", data: Time.now - 15.days).delete_all
     end
     biggest_company
     puts "! Task:Destroy: end #{Time.now}"

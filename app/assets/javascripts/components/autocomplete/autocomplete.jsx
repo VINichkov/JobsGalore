@@ -51,7 +51,7 @@ class Autocomplete extends React.Component{
         }
         let input_id = null;
         if (this.state.input) {
-            input_id = <input list={this.props.name} ref={this.props.idRef} key={this.props.name + "_id]"} id={"input_get"+this.props.id} name={this.props.name + "_id]"} defaultValue = {this.state.defaultId} className={this.props.className} style = {ilStyle}/>;
+            input_id = <input ref={this.props.idRef} key={this.props.name + "_id]"} id={"input_get"+this.props.id} name={this.props.name + "_id]"} defaultValue = {this.state.defaultId} className={this.props.className} style = {ilStyle}/>;
         }
         return(
             <div>

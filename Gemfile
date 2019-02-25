@@ -22,6 +22,10 @@ gem 'prawn'
 gem 'oga'
 gem "oink"
 gem 'tinymce-rails'
+#gem 'pdf2html'
+#gem 'origami'
+gem "docx"
+gem "ffi"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'

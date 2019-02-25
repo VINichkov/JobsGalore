@@ -5,7 +5,7 @@ class OfficeDocumentToHtml
     #begin
       file = context.params[:file]
       document = LazyHash.new("application/pdf"=>->{to_html(PDF::Reader.new(file.to_io).pages)},
-                              "application/vnd.openxmlformats-officedocument.wordprocessingml.document"=>->{Docx.new(file.to_io).to_html(COUNT)})
+                              "application/vnd.openxmlformats-officedocument.wordprocessingml.document"=>->{html_from_docx(file.to_io)})
       context.result = {description: context.html=document[file.content_type]}
     #rescue
      # Rails.logger.info("Error Document: #{$!}")
@@ -28,5 +28,15 @@ class OfficeDocumentToHtml
     end
     a.join
   end
+
+  def html_from_docx(arg)
+    t = Time.now
+    Rails.logger.debug("Начинаем преобразовывать в html")
+    #res = Docx::Document.open(arg).to_html
+    res = Doc.new(arg).to_html
+    Rails.logger.debug("Закончили преобразование в html.  Время #{Time.now - t} s")
+    res
+  end
+
 
 end
