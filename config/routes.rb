@@ -156,7 +156,6 @@ Rails.application.routes.draw do
   #errors
   get '*path', to: 'errors#error_404', via: :all
 
-
   #resources :educations
   #resources :languageresume
   #resources :experiences

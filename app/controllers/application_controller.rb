@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with:  :render_404
   #rescue_from ActionController::RoutingError, with:  :render_404
   rescue_from CanCan::AccessDenied, with:  :render_404
-
   include ApplicationHelper
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -60,7 +59,8 @@ class ApplicationController < ActionController::Base
   end
 
   def render_404
-    render file: "#{Rails.root}/public/404", status: :not_found
+    @main = Main.call(query:@search)
+    render file: "errors/error_404", status: :not_found
   end
 
 
