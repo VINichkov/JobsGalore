@@ -38,8 +38,9 @@ gem 'cancancan'#, '~> 2.0.0'
 gem 'devise','~> 4.4.3'
 gem 'dkim'
 gem 'interactor'
-gem 'omniauth-linkedin-oauth2'
+gem 'omniauth-linkedin-oauth2', '~> 0.2.5'
 gem 'omniauth-google-oauth2'
+
 gem 'rubyzip'
 
 gem 'twitter'
