@@ -20,16 +20,16 @@ class Client < ApplicationRecord
   validates :lastname, presence: true
   validates :location, presence: true
 
-  dragonfly_accessor :photo do
-    after_assign do |attachment|
-     Rails.logger.info "Client::attachment attributes "
-     if attachment
-       Rails.logger.info "Client::dragonfly_accessor не пусто "
-     end
-      # Auto orient all the images - so they will look as they should
-     attachment.convert! '-resize 400x -quality 60 -gravity center', 'jpg'
-    end
-  end
+  #dragonfly_accessor :photo do
+  #  after_assign do |attachment|
+  #   Rails.logger.info "Client::attachment attributes "
+  #   if attachment
+  #     Rails.logger.info "Client::dragonfly_accessor не пусто "
+  #   end
+  #    # Auto orient all the images - so they will look as they should
+  #   attachment.convert! '-resize 400x -quality 60 -gravity center', 'jpg'
+  #  end
+  #end
 
   def send_email_about_job?
     self.send_email && self.company&.big == false
