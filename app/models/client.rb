@@ -22,7 +22,10 @@ class Client < ApplicationRecord
 
   dragonfly_accessor :photo do
     after_assign do |attachment|
-     Rails.logger.debug "Client::attachment attributes "
+     Rails.logger.info "Client::attachment attributes "
+     if attachment
+       Rails.logger.info "Client::dragonfly_accessor не пусто "
+     end
       # Auto orient all the images - so they will look as they should
      attachment.convert! '-resize 400x -quality 60 -gravity center', 'jpg'
     end
@@ -48,6 +51,7 @@ class Client < ApplicationRecord
       user.token = auth.credentials.token
       user.sources = sources
       user.location = (local ? local : Location.default)
+      Rails.logger.info "!!!!! Client::from_omniauth картнка по адресу #{auth.info.image}"
       user.photo_url = auth.info.image # assuming the user model has an image
       user.character=TypeOfClient::APPLICANT
       user.provider = auth.provider
