@@ -4,19 +4,11 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   # You should also create an action method in this controller like this:
    def linkedin
-     Rails.logger.debug "<<<Clients::OmniauthCallbacksController linkedin:>>>"
-     @client,resume = Client.from_omniauth(request.env["omniauth.auth"])
-     @workflow = restore_workflow_object
-     @workflow&.update_state(client:@client)
-     @workflow&.update_state(resume:resume, to_start: true)  if @workflow.class == ResumeWorkflow && !@workflow.not_linkedin
-     if @client.persisted?
-       @workflow&.save!(session[:workflow])
-       sign_in_and_redirect @client, event: :authentication #this will throw if @user is not activated
-       set_flash_message(:notice, :success, kind: "LinkedIn") if is_navigational_format?
-     else
-       session["devise.linkedin_data"] = request.env["omniauth.auth"]
-       redirect_to new_client_registration_url
-     end
+     workflow_omniauth('linkedin', 'LinkedIn')
+   end
+
+   def google_oauth2
+     workflow_omniauth('google_oauth2', 'Google')
    end
 
   # More info at:
@@ -44,4 +36,20 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
        patch = workflow_link(@workflow)
        patch ? patch : super(resource)
    end
+
+  def workflow_omniauth(provider, name)
+    Rails.logger.debug "<<<Clients::OmniauthCallbacksController #{provider}:>>>"
+    @client,resume = Client.from_omniauth(request.env["omniauth.auth"])
+    @workflow = restore_workflow_object
+    @workflow&.update_state(client:@client)
+    @workflow&.update_state(resume:resume, to_start: true)  if @workflow.class == ResumeWorkflow && !@workflow.not_linkedin
+    if @client.persisted?
+      @workflow&.save!(session[:workflow])
+      sign_in_and_redirect @client, event: :authentication #this will throw if @user is not activated
+      set_flash_message(:notice, :success, kind: name) if is_navigational_format?
+    else
+      session["devise.#{provider}_data"] = request.env["omniauth.auth"]
+      redirect_to new_client_registration_url
+    end
+  end
 end
