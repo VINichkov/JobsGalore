@@ -3,7 +3,9 @@ require 'dragonfly/s3_data_store'
 
 # Configure
 Dragonfly.app.configure do
-  plugin :imagemagick
+  plugin :imagemagick#,
+         #convert_command: "#{Rails.root}",   # defaults to "convert"
+         #identify_command: "#{Rails.root}"  # defaults to "identify"
   secret "c0ae201052ba1f5fa75c839423975b8adf2401c6fbbf5ae540251fb8d97354d4"
 
   url_format "/media/:job/:name"

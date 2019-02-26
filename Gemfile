@@ -49,7 +49,7 @@ gem 'will_paginate-bootstrap'# ,'~> 1.0.1'
 gem "html_truncator"#, "~>0.4"
 gem 'slim'
 
-gem 'dragonfly'#, '~> 1.1.1'
+gem 'dragonfly', '~> 1.1.5'
 gem 'mechanize'
 gem 'virtus'
 
