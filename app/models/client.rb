@@ -3,7 +3,7 @@ class Client < ApplicationRecord
   before_save :rename, :type
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
-  devise :omniauthable, omniauth_providers: %i[linkedin]
+  devise :omniauthable, omniauth_providers: %i[linkedin google_oauth2]
   if Rails.env.production? #or 1==1
     devise  :confirmable, :lockable, :timeoutable
   end
@@ -33,7 +33,7 @@ class Client < ApplicationRecord
   end
 
   def self.from_omniauth(auth)
-    Rails.logger.debug "Client::from_omniauth #{auth.to_json}"
+    Rails.logger.info "Client::from_omniauth #{auth.to_json}"
     local = Location.search((auth.info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
     client = where(provider: auth.provider, uid: auth.uid).or(where(email: auth.info.email)).first_or_create do |user|
       user.email = auth.info.email
@@ -54,11 +54,11 @@ class Client < ApplicationRecord
   end
 
   def self.new_with_session(params, session)
-    Rails.logger.debug "new_with_session зашли"
+    Rails.logger.info "new_with_session зашли"
     super.tap do |user|
-      Rails.logger.debug "Создали новую сессию"
+      Rails.logger.info "Создали новую сессию"
       if data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]
-        Rails.logger.debug "Обновим все"
+        Rails.logger.info "Обновим все"
         user.provider ||=auth.provider
         user.uid ||=auth.uid
         user.token = auth.credentials.token

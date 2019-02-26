@@ -7,6 +7,7 @@ class Clients::RegistrationsController < Devise::RegistrationsController
    def new
      super do
        @client_wf = restore_workflow_object
+       @client_wf
        @client_wf ||= add_new_workflow(class: :ClientWorkflow, client: resource)
        @client_wf.update_state(client: resource) if @client_wf.class==Redirect
        @client_wf.save!(session[:workflow])

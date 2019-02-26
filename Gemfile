@@ -26,6 +26,7 @@ gem 'tinymce-rails'
 #gem 'origami'
 gem "docx"
 gem "ffi"
+gem 'omniauth-google-oauth2', '~> 0.2.2'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'
