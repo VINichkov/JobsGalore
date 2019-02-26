@@ -34,14 +34,19 @@ class Client < ApplicationRecord
 
   def self.from_omniauth(auth)
     Rails.logger.info "Client::from_omniauth #{auth.to_json}"
-    local = Location.search((auth.info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
+    if auth.info&.location
+      local = Location.search((auth.info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
+    else
+      local = nil
+    end
+    sources = (auth.info.urls.public_profile ? auth.info.urls.public_profile : auth.info.urls.google)
     client = where(provider: auth.provider, uid: auth.uid).or(where(email: auth.info.email)).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
       user.firstname = auth.info.first_name
       user.lastname = auth.info.last_name
       user.token = auth.credentials.token
-      user.sources = auth.info.urls.public_profile
+      user.sources = sources
       user.location = (local ? local : Location.default)
       user.photo_url = auth.info.image # assuming the user model has an image
       user.character=TypeOfClient::APPLICANT
@@ -49,7 +54,9 @@ class Client < ApplicationRecord
       user.uid = auth.uid
       user.skip_confirmation!
     end
-    client.update(token: auth.credentials.token, sources: auth.info.urls.public_profile)
+    if auth.credentials.token.blank?
+      client.update(token: auth.credentials.token, sources: sources)
+    end
     [client, Resume.new(LinkedInClient.new.linkedin_to_h(auth))]
   end
 
@@ -57,12 +64,12 @@ class Client < ApplicationRecord
     Rails.logger.info "new_with_session зашли"
     super.tap do |user|
       Rails.logger.info "Создали новую сессию"
-      if data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]
+      if (data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]) or (data = session["devise.google_oauth2"] && session["devise.google_oauth2"]["extra"]["raw_info"])
         Rails.logger.info "Обновим все"
         user.provider ||=auth.provider
         user.uid ||=auth.uid
         user.token = auth.credentials.token
-        user.sources ||= auth.info.urls.public_profile
+        user.sources ||= (auth.info.urls.public_profile ? auth.info.urls.public_profile : auth.info.urls.google)
         user.photo_url ||= auth.info.image
       end
     end
