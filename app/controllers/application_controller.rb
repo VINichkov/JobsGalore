@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     if session[:workflow]
       unless session[:workflow] &&
           %w(resumes jobs companies clients locations registrations sessions omniauth_callbacks index).include?(controller_name) &&
-          %w(linkedin new create search create_temporary create_job create_resume linkedin_resume_update file_to_html).include?(action_name)
+          %w(linkedin google_oauth2 new create search create_temporary create_job create_resume linkedin_resume_update file_to_html).include?(action_name)
         Rails.logger.debug "---!!! Зачистили сессию controller_name #{controller_name} action_name #{action_name} !!!---"
         session[:workflow] = nil
       end
