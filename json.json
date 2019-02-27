@@ -1,0 +1,50 @@
+{
+  "provider": "google_oauth2",
+  "uid": "109815392208850981976",
+  "info": {
+    "name": "Вячеслав Ничков",
+    "email": "slava.nichkov@gmail.com",
+    "first_name": "Вячеслав",
+    "last_name": "Ничков",
+    "image": "https://lh4.googleusercontent.com/-NrHFOyI---8/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3re1RTsEqz246jiEFTr9qZIELTLNcw/mo/photo.jpg",
+    "urls": {
+      "google": "https://plus.google.com/109815392208850981976"
+    }
+  },
+  "credentials": {
+    "token": "ya29.Glu8BhdLeoUWrmC6ba0gFDNIn6BNlvdNPqDGJqlBdgbrim8uaLqhqcpqm9-FL-LbGRnOpo0FRuNCUmAvu6rXiOy8ND0GyYUSCfh04vJKVliluBBLArFPMTrDKWsB",
+    "expires_at": 1551179059,
+    "expires": true
+  },
+  "extra": {
+    "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImYyNGQ2YTE5MzA2NjljYjc1ZjE5NzBkOGI3NTRhYTE5M2YwZDkzMWYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI1MzQ1MDUzMzgwMjAtZWcyZXZiajN1cjh1ZDV2dHA5cG9lN2ZyMGZ2ZmZycG0uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1MzQ1MDUzMzgwMjAtZWcyZXZiajN1cjh1ZDV2dHA5cG9lN2ZyMGZ2ZmZycG0uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDk4MTUzOTIyMDg4NTA5ODE5NzYiLCJlbWFpbCI6InNsYXZhLm5pY2hrb3ZAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJVS09pcF9UV2FxeUg3cXFyQm1idHRRIiwibmFtZSI6ItCS0Y_Rh9C10YHQu9Cw0LIg0J3QuNGH0LrQvtCyIiwicGljdHVyZSI6Imh0dHBzOi8vbGg0Lmdvb2dsZXVzZXJjb250ZW50LmNvbS8tTnJIRk95SS0tLTgvQUFBQUFBQUFBQUkvQUFBQUFBQUFBQUEvQUNIaTNyZTFSVHNFcXoyNDZqaUVGVHI5cVpJRUxUTE5jdy9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoi0JLRj9GH0LXRgdC70LDQsiIsImZhbWlseV9uYW1lIjoi0J3QuNGH0LrQvtCyIiwibG9jYWxlIjoicnUiLCJpYXQiOjE1NTExNzU0NjAsImV4cCI6MTU1MTE3OTA2MH0.WEMue_R9ikNqHl9VQDhWEwNx6Ji9YbRKlTJzq7KjhjIPvDdutkhc_F1zqNhsmHyB2SPM2T8NTu-AWAuTERdWNoVTum8IneMy71japNl22ogIEZFxDggtBS-xdNxqDCyEVL8gkGqhycDIs1LtC-CJa43rgN9f_UdXfr3o6YXAIxywOe33Ui1bDSgjbrxG9WXyKE2EoZ62sxgSWeH4iOewm5E60FRRtZLfSXeOKuinEtccjWxvvQLotlKH6WEXclojmi3v131TEoPYUt_P25oJjh38m0JyOXOg4dxDibPVt4tIYTfV7UueTQ3NevBNpElFpqrx6IELsPht5SS5V6Ac8w",
+    "id_info": {
+      "iss": "https://accounts.google.com",
+      "azp": "534505338020-eg2evbj3ur8ud5vtp9poe7fr0fvffrpm.apps.googleusercontent.com",
+      "aud": "534505338020-eg2evbj3ur8ud5vtp9poe7fr0fvffrpm.apps.googleusercontent.com",
+      "sub": "109815392208850981976",
+      "email": "slava.nichkov@gmail.com",
+      "email_verified": true,
+      "at_hash": "UKOip_TWaqyH7qqrBmbttQ",
+      "name": "Вячеслав Ничков",
+      "picture": "https://lh4.googleusercontent.com/-NrHFOyI---8/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3re1RTsEqz246jiEFTr9qZIELTLNcw/s96-c/photo.jpg",
+      "given_name": "Вячеслав",
+      "family_name": "Ничков",
+      "locale": "ru",
+      "iat": 1551175460,
+      "exp": 1551179060
+    },
+    "raw_info": {
+      "sub": "109815392208850981976",
+      "name": "Вячеслав Ничков",
+      "given_name": "Вячеслав",
+      "family_name": "Ничков",
+      "profile": "https://plus.google.com/109815392208850981976",
+      "picture": "https://lh4.googleusercontent.com/-NrHFOyI---8/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3re1RTsEqz246jiEFTr9qZIELTLNcw/mo/photo.jpg",
+      "email": "slava.nichkov@gmail.com",
+      "email_verified": true,
+      "gender": "male",
+      "locale": "ru"
+    }
+  }
+}
