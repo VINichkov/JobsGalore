@@ -42,7 +42,7 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @client,resume = Client.from_omniauth(request.env["omniauth.auth"])
     @workflow = restore_workflow_object
     @workflow&.update_state(client:@client)
-    @workflow&.update_state(resume:resume, to_start: true)  if @workflow.class == ResumeWorkflow && !@workflow.not_linkedin
+    @workflow&.update_state(resume:resume, to_start: true)  if resume && @workflow.class == ResumeWorkflow && !@workflow.not_linkedin
     if @client.persisted?
       @workflow&.save!(session[:workflow])
       sign_in_and_redirect @client, event: :authentication #this will throw if @user is not activated

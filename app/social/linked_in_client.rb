@@ -1,6 +1,7 @@
 class LinkedInClient
 
   def linkedin_to_h(auth)
+    begin
     if auth
       experience = auth&.extra&.raw_info&.positions[:values]&.last
       summary = ''
@@ -21,6 +22,9 @@ class LinkedInClient
        location_name: (local ? local.name : Location.default.name),
        description: summary,
        sources: auth.extra.raw_info.publicProfileUrl}
+    end
+    rescue
+      nil
     end
   end
 
