@@ -20,7 +20,7 @@ class Client < ApplicationRecord
   validates :lastname, presence: true
   validates :location, presence: true
 
-  #dragonfly_accessor :photo do
+  dragonfly_accessor :photo #do
   #  after_assign do |attachment|
   #   Rails.logger.info "Client::attachment attributes "
   #   if attachment
