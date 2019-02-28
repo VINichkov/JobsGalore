@@ -40,6 +40,7 @@ gem 'dkim'
 gem 'interactor'
 gem 'omniauth-linkedin-oauth2', '~> 0.2.5'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
 
 gem 'rubyzip'
 

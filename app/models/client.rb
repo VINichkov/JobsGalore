@@ -3,7 +3,7 @@ class Client < ApplicationRecord
   before_save :rename, :type
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
-  devise :omniauthable, omniauth_providers: %i[linkedin google_oauth2]
+  devise :omniauthable, omniauth_providers: %i[linkedin google_oauth2 facebook]
   if Rails.env.production? #or 1==1
     devise  :confirmable, :lockable, :timeoutable
   end
@@ -64,11 +64,21 @@ class Client < ApplicationRecord
     [client, Resume.new(LinkedInClient.new.linkedin_to_h(auth))]
   end
 
+  def conditions(session)
+    if (data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]) or
+        (data = session["devise.google_oauth2"] && session["devise.google_oauth2"]["extra"]["raw_info"]) or
+        (data = session["devise.facebook"] && session["devise.facebook"]["extra"]["raw_info"])
+      true
+    else
+      false
+    end
+  end
+
   def self.new_with_session(params, session)
     Rails.logger.info "new_with_session зашли"
     super.tap do |user|
       Rails.logger.info "Создали новую сессию"
-      if (data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]) or (data = session["devise.google_oauth2"] && session["devise.google_oauth2"]["extra"]["raw_info"])
+      if conditions(session)
         Rails.logger.info "Обновим все"
         user.provider ||=auth.provider
         user.uid ||=auth.uid
@@ -166,7 +176,7 @@ class Client < ApplicationRecord
   end
 
   def linkedin?
-    sources ? true : false
+    provider == 'linkedin' ? true : false
   end
 
 end

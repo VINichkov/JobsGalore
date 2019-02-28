@@ -4,16 +4,7 @@
       = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
         h2 Log in
         hr.colorgraph
-        .form-group
-          .row
-            .hidden-xs.col-md-6.col-sm-6.col-lg-6
-              = link_to client_linkedin_omniauth_authorize_path, class:"btn btn-linkedin btn-block" do
-                i.fa.fa-linkedin.text-left[aria-hidden="true"]
-                |&nbsp;|&nbsp;Sign in with linkedIn
-            .hidden-xs.col-md-6.col-sm-6.col-lg-6
-              = link_to client_google_oauth2_omniauth_authorize_path, class: "btn btn-google btn-block" do
-                i.fa.fa-google.text-left[aria-hidden="true"]
-                |&nbsp;|&nbsp;Sign in with Google
+        = render 'devise/shared/oauth'
         .form-group
           = f.label :email
           br
@@ -37,14 +28,4 @@
             = f.submit "Log in", class: "btn btn-primary btn-block"
             br
           = render "devise/shared/links"
-        .form-group
-          .row
-            .col-xs-12.hidden-md.hidden-sm.hidden-lg
-              = link_to client_linkedin_omniauth_authorize_path, class: "btn btn-linkedin btn-block" do
-                i.fa.fa-linkedin.text-left[aria-hidden="true"]
-                |&nbsp;|&nbsp;Sign in with linkedIn
-              p
-            .col-xs-12.hidden-md.hidden-sm.hidden-lg
-              = link_to client_google_oauth2_omniauth_authorize_path, class: "btn btn-google btn-block" do
-                i.fa.fa-google.text-left[aria-hidden="true"]
-                |&nbsp;|&nbsp;Sign in with Google
+

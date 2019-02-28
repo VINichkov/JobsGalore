@@ -11,6 +11,10 @@ class Clients::OmniauthCallbacksController < Devise::OmniauthCallbacksController
      workflow_omniauth('google_oauth2', 'Google')
    end
 
+   def facebook
+     workflow_omniauth('facebook', 'Facebook')
+   end
+
   # More info at:
   # https://github.com/plataformatec/devise#omniauth
 
