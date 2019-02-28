@@ -50,7 +50,6 @@ class Client < ApplicationRecord
       user.token = auth.credentials.token
       user.sources = sources
       user.location = (local ? local : Location.default)
-      Rails.logger.info "!!!!! Client::from_omniauth картнка по адресу #{auth.info.image}"
       user.photo_url = auth.info.image # assuming the user model has an image
       user.character=TypeOfClient::APPLICANT
       user.provider = auth.provider
@@ -74,16 +73,18 @@ class Client < ApplicationRecord
   end
 
   def self.new_with_session(params, session)
-    Rails.logger.info "new_with_session зашли"
+    Rails.logger.debug "new_with_session зашли"
     super.tap do |user|
-      Rails.logger.info "Создали новую сессию"
-      if conditions(session)
-        Rails.logger.info "Обновим все"
-        user.provider ||=auth.provider
-        user.uid ||=auth.uid
-        user.token = auth.credentials.token
-        user.sources ||= (auth.info.urls&.public_profile || auth.info.urls&.google)
-        user.photo_url ||= auth.info.image
+      Rails.logger.debug "Создали новую сессию"
+      if (data = session["devise.linkedin_data"] && session["devise.linkedin_data"]["extra"]["raw_info"]) or
+          (data = session["devise.google_oauth2"] && session["devise.google_oauth2"]["extra"]["raw_info"]) or
+          (data = session["devise.facebook"] && session["devise.facebook"]["extra"]["raw_info"])
+        Rails.logger.debug "Обновим все #{data}"
+        user.provider =data.provider
+        user.uid =data.uid
+        user.token = data.credentials.token
+        user.sources ||= (data.info.urls&.public_profile || data.info.urls&.google)
+        user.photo_url ||= data.info.image
       end
     end
   end

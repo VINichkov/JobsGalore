@@ -67,6 +67,8 @@ class JobsController < ApplicationController
     end
     resume_workflow = add_new_workflow(class: :Redirect, route: apply_url(@job)) #TODO Убрать
     resume_workflow.save!(session[:workflow]) #TODO Убрать
+    redirect_to new_client_session_path if current_client.blank?
+
   end
 
   # PATCH/PUT /jobs/1
