@@ -36,13 +36,12 @@ class Client < ApplicationRecord
   end
 
   def self.from_omniauth(auth)
-    Rails.logger.info "Client::from_omniauth #{auth.to_json}"
     if auth.info&.location
       local = Location.search((auth.info.location.name.delete("!.,:*&()'`\"’").split(" ").map {|t| t=t+":*"}).join("|")).first
     else
       local = nil
     end
-    sources = (auth.info.urls.public_profile ? auth.info.urls.public_profile : auth.info.urls.google)
+    sources = (auth.info.urls&.public_profile || auth.info.urls&.google )
     client = where(provider: auth.provider, uid: auth.uid).or(where(email: auth.info.email)).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
@@ -83,7 +82,7 @@ class Client < ApplicationRecord
         user.provider ||=auth.provider
         user.uid ||=auth.uid
         user.token = auth.credentials.token
-        user.sources ||= (auth.info.urls.public_profile ? auth.info.urls.public_profile : auth.info.urls.google)
+        user.sources ||= (auth.info.urls&.public_profile || auth.info.urls&.google)
         user.photo_url ||= auth.info.image
       end
     end
