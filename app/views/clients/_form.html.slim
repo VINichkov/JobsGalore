@@ -10,16 +10,11 @@
     -if option[:devise]
       = render 'devise/shared/oauth'
     .row
-      .col-xs-12.col-sm-6.col-md-6
+      .col-xs-12.col-sm-12.col-md-12
         .form-group
-          = f.label :firstname, '*Your first name'
+          = f.label :full_name, '*Your full name'
           br
-          = f.text_field :firstname, autofocus: true, class:"form-control",placeholder:"First Name", required:"required"
-      .col-xs-12.col-sm-6.col-md-6
-        .form-group
-          = f.label :lastname, "*Your surname", required:"required"
-          br
-          = f.text_field :lastname, class:"form-control",placeholder:"Surname", required:"required"
+          = f.text_field :full_name, autofocus: true, class:"form-control",placeholder:"Homer Simpson", required:"required"
     -unless (option[:url]== {:action=>"create_member"}) || (option[:devise])
       .form-group
         = f.label "Gender"
@@ -44,7 +39,9 @@
               defaultName: client.location ? client.location.name :  Location.default.name,
               defaultId: client.location ? client.location.id :  Location.default.id)
     .form-group
-      = f.label :phone, "Your phone number (optional)"
+      = f.label :phone, "Your phone number"
+      em
+        |&nbsp;(optional)
       br
       = react_component('InputMask', id: "phone", name: "client[phone]", class_name: "form-control", dataformat: "dd dddd dddddd", placeholder: "02 9999 9999",defaultValue:@client&.phone)
     -if (option[:url]== {:action=>"create_member"}) || (option[:devise])
@@ -59,10 +56,6 @@
             = " (#{@minimum_password_length} characters minimum)"
         br
         = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "**************", required:"required"
-      .form-group
-        = f.label :password_confirmation, "*Password confirmation"
-        br
-        = f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "**************", required:"required"
     hr.colorgraph
     -if option[:devise]
       .row

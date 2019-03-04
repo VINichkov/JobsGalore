@@ -1,6 +1,7 @@
 class JobsController < ApplicationController
   load_and_authorize_resource :job
-  before_action :set_job, only: [:prolog, :apply, :views,:highlight_view ,:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
+  before_action :authenticate_client!, :only => [:apply]
+  before_action :set_job, only: [:prolong, :apply, :views,:highlight_view ,:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
   before_action :action_view, only:[:show, :highlight_view]
   #before_action :employer!, only: :new
 
@@ -16,9 +17,11 @@ class JobsController < ApplicationController
 
   # GET /jobs/new
   def new
+    Rails.logger.debug "Зачистим сессию"
     session[:workflow] = nil
-    job_workflow = add_new_workflow(class: :JobWorkflow)
+    job_workflow = add_new_workflow(class: :JobWorkflow, session: session)
     @job = job_workflow.job.decorate
+    Rails.logger.debug("_______________ #{session[:workflow]}")
     job_workflow.save!(session[:workflow])
   end
 
@@ -35,7 +38,7 @@ class JobsController < ApplicationController
   end
 
   def create_temporary
-    job_workflow = restore_workflow_object
+    job_workflow = restore_workflow_object(session[:workflow])
     job_workflow&.update_state(job:Job.new(job_params), client: current_client)
     job_workflow&.save!(session[:workflow])
     respond_to do |format|
@@ -46,7 +49,7 @@ class JobsController < ApplicationController
   # POST /jobs
   # POST /jobs.json
   def create_job
-    job_workflow = restore_workflow_object
+    job_workflow = restore_workflow_object(session[:workflow])
     @job = job_workflow.job.decorate
     respond_to do |format|
       if @job.save
@@ -65,10 +68,9 @@ class JobsController < ApplicationController
       end
       redirect_to @job.apply, status:307
     end
-    resume_workflow = add_new_workflow(class: :Redirect, route: apply_url(@job)) #TODO Убрать
+    resume_workflow = add_new_workflow(class: :Redirect, route: apply_url(@job), session: session) #TODO Убрать
     resume_workflow.save!(session[:workflow]) #TODO Убрать
     redirect_to new_client_session_path if current_client.blank?
-
   end
 
   # PATCH/PUT /jobs/1

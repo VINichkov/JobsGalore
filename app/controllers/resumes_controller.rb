@@ -20,15 +20,15 @@ class ResumesController < ApplicationController
   # GET /resumes/new
   def new
     Rails.logger.debug "<<<ResumesController NEW:>>>"
-    resume_workflow = restore_workflow_object
-    resume_workflow = add_new_workflow(class: :ResumeWorkflow) if resume_workflow.class != ResumeWorkflow
+    resume_workflow = restore_workflow_object(session[:workflow])
+    resume_workflow = add_new_workflow(class: :ResumeWorkflow, session: session) if resume_workflow.class != ResumeWorkflow
     @resume = resume_workflow.resume.decorate
     resume_workflow.save!(session[:workflow])
   end
 
   def create_temporary
     Rails.logger.debug "<<<ResumesController create_temporary:>>>"
-    resume_workflow = restore_workflow_object
+    resume_workflow = restore_workflow_object(session[:workflow])
     resume_workflow&.update_state(resume:Resume.new(resume_params), client: current_client, not_linkedin: true)
     resume_workflow&.save!(session[:workflow])
     respond_to do |format|
@@ -43,7 +43,7 @@ class ResumesController < ApplicationController
   # POST /resumes.json
   def create_resume
     Rails.logger.debug "<<<ResumesController create_resume:>>>"
-    resume_workflow = restore_workflow_object
+    resume_workflow = restore_workflow_object(session[:workflow])
     @resume = resume_workflow.resume.decorate
     respond_to do |format|
       if @resume.save
@@ -190,7 +190,8 @@ class ResumesController < ApplicationController
       #end
       #redirect_to @job.apply, status:307
     #end
-    resume_workflow = add_new_workflow(class: :Redirect, route: msg_url(@resume)) #TODO Убрать
+    resume_workflow = add_new_workflow(class: :Redirect, route: msg_url(@resume), session: session) #TODO Убрать
+    Rails.logger.debug("_______________ #{session[:workflow]}")
     resume_workflow.save!(session[:workflow]) #TODO Убрать
   end
 

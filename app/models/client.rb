@@ -17,7 +17,7 @@ class Client < ApplicationRecord
   has_many :viewed
 
   validates :firstname, presence: true
-  validates :lastname, presence: true
+  #validates :lastname, presence: true
   validates :location, presence: true
 
   dragonfly_accessor :photo #do
@@ -113,7 +113,17 @@ class Client < ApplicationRecord
    end
 
   def full_name
-    @full_name ||= self.firstname.capitalize+' '+self.lastname.capitalize
+    self.firstname.capitalize+' '+self.lastname&.capitalize  if self.firstname
+  end
+
+  def full_name=(arg)
+    fio = arg.split(' ')
+    self.firstname = fio[0] if fio[0].present?
+    if fio.length > 1 && fio[1..fio.length-1].present?
+      self.lastname = fio[1..fio.length-1].join(' ')
+    else
+      self.lastname = ' '
+    end
   end
 
   def to_short_h

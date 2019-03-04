@@ -1,7 +1,7 @@
 module Session
-  def restore_workflow_object
+  def restore_workflow_object(arg)
     begin
-      obj = Workflow.find_by_session(session[:workflow])
+      Workflow.find_by_session(arg)
     rescue
       Rails.logger.debug  "Error restore_workflow_object: #{$!}"
       nil
@@ -9,7 +9,7 @@ module Session
   end
 
   def add_new_workflow(arg = {})
-    session[:workflow] = session.id
+    arg[:session][:workflow] = arg[:session].id
     Workflow.new(arg)
   end
 

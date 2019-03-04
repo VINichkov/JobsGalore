@@ -6,9 +6,9 @@ class Clients::RegistrationsController < Devise::RegistrationsController
   # GET /resource/sign_up
    def new
      super do
-       @client_wf = restore_workflow_object
-       @client_wf
-       @client_wf ||= add_new_workflow(class: :ClientWorkflow, client: resource)
+       @client_wf = restore_workflow_object(session[:workflow])
+       @client_wf ||= add_new_workflow(class: :ClientWorkflow, client: resource, session: session)
+       Rails.logger.debug("_______________ #{session[:workflow]}")
        @client_wf.update_state(client: resource) if @client_wf.class==Redirect
        @client_wf.save!(session[:workflow])
        #[ResumeWorkflow, JobWorkflow].include?(@client_wf.class) ? @flag = true : @flag = nil
@@ -18,7 +18,7 @@ class Clients::RegistrationsController < Devise::RegistrationsController
   # POST /resource
    def create
      build_resource(sign_up_params)
-     @client_wf = restore_workflow_object
+     @client_wf = restore_workflow_object(session[:workflow])
      if @client_wf.class == ResumeWorkflow
        resource.add_type(TypeOfClient::APPLICANT)
      elsif @client_wf.class ==JobWorkflow
@@ -75,7 +75,7 @@ class Clients::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
    def configure_sign_up_params
-     devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
+     devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute, :full_name])
    end
 
 

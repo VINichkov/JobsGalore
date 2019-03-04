@@ -14,10 +14,11 @@ class ApplicationController < ActionController::Base
 
   def get_cookies
     if @search.blank?
-      cookies[:query].present? ? @search = JSON.parse(cookies[:query]) : @search = { type: Objects::JOBS.code,
-                                                                            value:"", location_id:'',
-                                                                            location_name:"Australia",
-                                                                            open:false}
+      if cookies[:query].present?
+        @search = JSON.parse(cookies[:query])
+      else
+        @search = { type: Objects::JOBS.code,value:"", location_id:'', location_name:"Australia", open:false}
+      end
     end
   end
 
@@ -25,7 +26,7 @@ class ApplicationController < ActionController::Base
     if session[:workflow]
       unless session[:workflow] &&
           %w(resumes jobs companies clients locations registrations sessions omniauth_callbacks index).include?(controller_name) &&
-          %w(linkedin google_oauth2 new create search create_temporary create_job create_resume linkedin_resume_update file_to_html).include?(action_name)
+          %w(linkedin google_oauth2 facebook new apply create search create_temporary create_job create_resume linkedin_resume_update file_to_html).include?(action_name)
         Rails.logger.debug "---!!! Зачистили сессию controller_name #{controller_name} action_name #{action_name} !!!---"
         session[:workflow] = nil
       end
@@ -48,8 +49,9 @@ class ApplicationController < ActionController::Base
   def current_company
     if current_client&.resp?
       if current_client.company.nil?
-        client = add_new_workflow(class: :ClientWorkflow, client:current_client)
+        client = add_new_workflow(class: :ClientWorkflow, client:current_client, session: session)
         client.save!(session[:workflow])
+        Rails.logger.debug("_______________ #{session[:workflow]}")
         redirect_to workflow_link(client), notice: 'Please, enter information about your company.'
         nil
       else
