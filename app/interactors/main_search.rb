@@ -30,14 +30,13 @@ class MainSearch
     if value.blank? and  location.blank?
       MAX_OBJECT
     elsif value.blank? and location.present?
-      puts "sdfdsfds"
       locat = Location.find_by_id(location)
       if locat.present?
         locat.counts_jobs < MAX_OBJECT ? nil : MAX_OBJECT
       else
         MAX_OBJECT
       end
-    else
+    elsif
       nil
     end
   end

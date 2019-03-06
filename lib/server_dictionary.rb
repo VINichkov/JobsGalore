@@ -13,15 +13,20 @@ class ServerDictionary
     rez=[]
     if query
       i=0
-      @arr_word[:"#{query[0]}"].each do |name|
-        if i<arg[:limit]
-          if name >=query
-            rez<<{id: i,name:name}
-            i+=1
+      list_of_words = @arr_word[:"#{query[0]}"]
+      if list_of_words.present?
+        list_of_words.each do |name|
+          if i<arg[:limit]
+            if name >=query
+              rez<<{id: i,name:name}
+              i+=1
+            end
+          else
+            break;
           end
-        else
-          break;
         end
+      else
+        rez<<{id: i,name:query}
       end
     end
     rez
