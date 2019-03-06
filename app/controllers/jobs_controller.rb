@@ -17,11 +17,9 @@ class JobsController < ApplicationController
 
   # GET /jobs/new
   def new
-    Rails.logger.debug "Зачистим сессию"
     session[:workflow] = nil
     job_workflow = add_new_workflow(class: :JobWorkflow, session: session)
     @job = job_workflow.job.decorate
-    Rails.logger.debug("_______________ #{session[:workflow]}")
     job_workflow.save!(session[:workflow])
   end
 
