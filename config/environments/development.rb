@@ -25,9 +25,10 @@ Rails.application.configure do
 
   #  config.cache_store = :null_store
   #end
+  #config.consider_all_requests_local       = false #from production
   config.action_controller.perform_caching = false
   # Don't care if the mailer can't send.
-
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?#from production
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -43,7 +44,7 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
   config.log_level = :debug
-
+  #config.cache_store = :memory_store, { size: 64.megabytes }#from production
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
@@ -51,7 +52,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
 
   #config.action_controller.page_cache_directory = "#{Rails.root}/public/cached_pages"
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+    config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   #config.action_controller.asset_host = "http://localhost:3000"
   #
