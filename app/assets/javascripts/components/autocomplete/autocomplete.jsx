@@ -20,35 +20,33 @@ class Autocomplete extends React.Component{
         this.handleInput = this.handleInput.bind(this);
     }
     componentDidMount(){
-        let input = $('#' + this.props.id).first();
-        if (input !=null) {
-            input.typeahead({
+        let input_id = null;
+        if (this.state.input) {
+            input_id = $('#input_get' + this.props.id).first();
+            this.setState({input_id: input_id});
+        }
+        let autocomplete = $('#' + this.props.id).first();
+
+        if (autocomplete !=null) {
+            autocomplete.typeahead({
                 hint: true,
                 highlight: true,
                 minLength: 1,
-                source:  '', //["rub", "rubber", "rubbing", "rubbish", "ruby", "rudder", "rude", "rudimentary", "rueful", "ruffle" ],
+                source:  '',
+                autoSelect: false,
+                onSelect: function(item) {
+                    if (this.state.input && input_id !== null) {
+                        input_id.val(item.value);
+                    }
+                 }.bind(this),
             });
-            this.setState({autocomplete: input});
-        }
-        if (this.state.input) {
-            this.setState({input_id: document.querySelector('#input_get' + this.props.id)});
+            this.setState({autocomplete: autocomplete});
         }
     }
     handleInput(){
-        let not_found = true;
-        if (this.state.input && this.state.locations !==null){
-            for(let i=0; i< this.state.locations.length; i++){
-                if (this.state.locations[i].name === this.state.autocomplete.value){
-                    this.state.input_id.value =(this.state.locations[i].id);
-                    not_found = false;
-                    break;
-                }
-            }
-        }
-        if (not_found && this.state.autocomplete.val().length>0) {
+        if ( this.state.autocomplete.val().length>0) {
             this.handleSearchLocations(this.props.route+this.state.autocomplete.val()+".json");
         }
-
     }
 
     handleSearchLocations(url){
@@ -71,7 +69,6 @@ class Autocomplete extends React.Component{
             <div>
                 <input   ref={this.props.nameRef} key = {this.state.input ? this.props.name + "_name]" : this.props.name} name={this.state.input ? this.props.name + "_name]" : this.props.name} autoComplete = "off" className={this.props.className} onInput={this.handleInput}  defaultValue = {this.state.defaultName} placeholder={this.props.place_holder} type="text"  id={this.props.id} style={this.props.style}/>
                 {input_id}
-
             </div>
         );
     }
