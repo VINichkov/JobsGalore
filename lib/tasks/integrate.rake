@@ -15,16 +15,6 @@ namespace :integrate do
     puts "! Task:add_jobs: End"
   end
 
-  task test: :environment do
-      c = Job.all.pluck(:title, :created_at)
-      a = []
-      50.times do
-        a << Thread.new do
-          sleep 20
-        end
-      end
-      a.each(&:join)
-  end
 
   task :destroy_jobs => :environment do
     puts "! Task:Destroy: start #{Time.now}"
@@ -35,6 +25,10 @@ namespace :integrate do
     end
     biggest_company
     puts "! Task:Destroy: end #{Time.now}"
+  end
+
+  task :demo_biggest => :environment do
+    biggest_company
   end
 
   task :jora => :environment  do

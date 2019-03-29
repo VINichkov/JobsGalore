@@ -1,4 +1,5 @@
 class Job < ApplicationRecord
+  SHELF_LIFE = 15
   include PgSearch
   serialize :preferences, Hash
 
@@ -202,7 +203,7 @@ class Job < ApplicationRecord
 
   def date_close
     if self.close.nil?
-      self.close = Date.today+15.days
+      self.close = Date.today+SHELF_LIFE.days
     end
   end
 

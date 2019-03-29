@@ -5,8 +5,9 @@ div[style=body_email]
   strong
     |Dear #{@resume[:firstname]}
   =space_email
-  |You have successfully posted your resume on Jobs Galore.
-  |Link to resume #{link_to @resume[:title], resume_url(@resume[:id]) + "?"+@utm}
+  |You have successfully posted your resume #{link_to @resume[:title], resume_url(@resume[:id]) + "?"+@utm} on Jobs Galore.
+  div[style=button_email]
+    = link_to 'Show', resume_url(@resume[:id]) + "?" + @utm, style: link_email, target: "_blank"
   =space_email
   =space_email
   div[style=h3_email]

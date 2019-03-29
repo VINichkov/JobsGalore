@@ -1,38 +1,42 @@
 class JobsMailer < ApplicationMailer
 
   def add_job(job)
-    @utm = {:utm_source=>:email, :utm_medium=>:email, :utm_campaign=>:new_job}.to_query
+    @utm = create_utm :new_job
     @job = job
     mail(to:@job[:mail], subject: "New job opportunity was just posted on Jobs Galore!")
   end
 
   def daily_job_alert(email, list_of_jobs)
-    @utm = "?"+{:utm_source=>:email, :utm_medium=>:email, :utm_campaign=>:resume_alert}.to_query
+    @utm = "?"+create_utm(:resume_alert)
     @list_of_jobs = list_of_jobs
     mail(to: email, subject: "Daily Jobs Alert")
   end
 
   def turn_on_option(option, job)
-    @utm = "?"+{:utm_source=>:email, :utm_medium=>:email, :utm_campaign=>:turn_on}.to_query
+    @utm = "?"+create_utm(:turn_on)
     @option, @job = option, job
     mail(to: job.client.email, subject: "The option \"#{option}\" was turned on")
   end
 
   def turn_off_option(option, job)
-    @utm = "?"+{:utm_source=>:email, :utm_medium=>:email, :utm_campaign=>:turn_off}.to_query
+    @utm = "?"+create_utm(:turn_off)
     @option, @job = option, job
     mail(to: job.client.email, subject: "The option \"#{option}\" was turned off")
   end
 
   def notice_remove_job(days, job)
-    @utm = "?"+{:utm_source=>:email, :utm_medium=>:email, :utm_campaign=>:notice_remove_job}.to_query
+    @utm = "?"+create_utm(:notice_remove_job)
     @days, @job = days, job
     mail(to: job.client.email, subject: "Notification")
   end
 
   def remove_job(job)
-    @utm = "?"+{:utm_source=>:email, :utm_medium=>:email, :utm_campaign=>:remove_job}.to_query
+    @utm = "?"+create_utm(:remove_job)
     @job = job
     mail(to: job.client.email, subject: "The job opportunity was just removed")
+  end
+
+  def create_utm(utm_campaign)
+    {:utm_source=>:email, :utm_medium=>:email, :utm_campaign=>utm_campaign}.to_query
   end
 end

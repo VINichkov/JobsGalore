@@ -252,7 +252,11 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :linkedin, ENV["LINKEDIN_APP_ID"], ENV["LINKEDIN_APP_SECRET"], token_params: { parse: :json }
   config.omniauth :google_oauth2, ENV["GOOGLE_APP_ID"], ENV["GOOGLE_APP_SECRET"], {}
-  config.omniauth :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"], {}
+  config.omniauth :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"],
+                  client_options: {
+                      site: "https://graph.facebook.com/v3.2",
+                      authorize_url: "https://www.facebook.com/v3.2/dialog/oauth"
+                  }
   #,  token_params: { parse: :json }
   # ==> Warden configuration
   # If you want to use other strategies, that are
