@@ -1,13 +1,31 @@
 class ResumesMailer < ApplicationMailer
 
   def add_resume(resume)
-    @utm = {:utm_source=>:email, :utm_medium=>:email, :utm_campaign=>:new_resume}.to_query
+    @utm = create_utm(:new_resume)
     @resume = resume
     mail(to:@resume[:mail], subject: "Your resume was just posted on Jobs Galore!")
   end
 
+  def remove_resume(resume)
+    @utm = "?"+create_utm(:remove_resume)
+    @resume = resume
+    mail(to: @resume.client.email, subject: "The resume was just removed")
+  end
+
+  def turn_on_option(option, resume)
+    @utm = "?"+create_utm(:turn_on)
+    @option, @resume = option, resume
+    mail(to: resume.client.email, subject: "The option \"#{option}\" was turned on")
+  end
+
+  def turn_off_option(option, resume)
+    @utm = "?"+create_utm(:turn_off)
+    @option, @resume = option, resume
+    mail(to: resume.client.email, subject: "The option \"#{option}\" was turned off")
+  end
+
   def send_to_employer(resume, job, pdf, letter, copy =nil)
-    @utm = {:utm_source=>:email, :utm_medium=>:email, :utm_campaign=>:letter_to_employer}.to_query
+    @utm = create_utm(:letter_to_employer)
     @resume, @job, @letter = resume, job, letter
     client = (!copy ? job.client.email : PropertsHelper::ADMIN)
     attachments["#{@resume.client.full_name}.pdf"] = pdf
@@ -15,7 +33,7 @@ class ResumesMailer < ApplicationMailer
   end
 
   def send_message(resume, letter, client, copy = nil)
-    @utm = {:utm_source=>:email, :utm_medium=>:email, :utm_campaign=>:letter_to_applicant}.to_query
+    @utm = create_utm(:letter_to_applicant)
     @letter, @client, @resume = letter, client, resume
     client = (!copy ? @resume.client.email : PropertsHelper::ADMIN)
     mail(to:client, subject: @resume.title)

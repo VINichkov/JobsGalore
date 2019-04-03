@@ -41,7 +41,7 @@ class Ability
     manager_team(user)
     create_company
     edit_resume_jobs_base(user)
-    base
+    base(user)
   end
 
   def role_employee(user)
@@ -49,7 +49,7 @@ class Ability
     view_profile_resumes
     edit_profile(user)
     edit_resume_jobs_base(user)
-    base
+    base(user)
   end
 
   def role_applicant(user)
@@ -57,12 +57,12 @@ class Ability
     create_company
     edit_profile(user)
     edit_resume_jobs_base(user)
-    base
+    base(user)
   end
 
-  def role_other
+  def role_other(user = nil)
     create_company
-    base
+    base(user)
   end
 
   def manager_team(user)
@@ -109,8 +109,11 @@ class Ability
     end
   end
 
-  def base
-    can [:new, :create_temporary, :create_job, :apply], Job
+  def base(user = nil)
+    can [:new, :create_temporary, :create_job, :apply ], Job
+    can [ :prolong ], Job do |job|
+      user == nil or user == job.client
+    end
     can [:new, :create_temporary, :create_resume, :message], Resume
     can [:show, :company_jobs, :highlight_view], Company
     can [:show, :highlight_view], Resume

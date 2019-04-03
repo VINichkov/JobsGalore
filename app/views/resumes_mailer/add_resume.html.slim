@@ -13,20 +13,9 @@ div[style=body_email]
   div[style=h3_email]
     |You can promote your resume:
   =space_email
-  strong
-    |Highlight $5 (7 day)
-  = space_email
-  |A highlighted resume stand out from the other ads on the search and browse results due to the orange background colour.
-  |A highlighted resume have greater visibility and therefore receive more visits and replies than other Ads.
-  div[style=button_email]
-    = link_to 'Activate', bill_url(bill: {id: @resume[:id], type:3, option: 3}) + "&" + @utm, style: link_email, target: "_blank"
+  =render 'resumes_mailer/party_of_email/highlight'
   hr
   =space_email
-  strong
-    |Urgent $10 (7 day)
-  =space_email
-  |In a hurry? Add an Urgent tag to your resume. It's a great way to attract serious offers quickly.
-  div[style=button_email]
-    = link_to 'Activate', bill_url(bill: {id: @resume[:id], type:3, option: 1}) + "&" + @utm, style: link_email, target: "_blank"
+  =render 'resumes_mailer/party_of_email/urgent'
 
 

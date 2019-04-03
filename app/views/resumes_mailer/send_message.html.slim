@@ -7,4 +7,4 @@ div[style=body_email]
   =space_email
   | #{@client.full_name} #{link_to @client.email, "mailto:#{@client.email}?subject=RE:#{@resume.title}"}  sent you a message:
   div[style=message_email]
-     = render inline: @letter
+    = render inline: @letter

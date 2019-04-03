@@ -172,13 +172,13 @@ class ResumesController < ApplicationController
   end
 
   def admin_extras
-    param = job_params
-    @job = Job.find_by_id(param[:id]).decorate
+    param = resume_params
+    @resume = Resume.find_by_id(param[:id]).decorate
     respond_to do |format|
-      if @job.extras(param[:option])
-        format.html { redirect_to job_path(@job),  notice: 'Done' }
+      if @resume.extras(param[:option])
+        format.html { redirect_to resume_path(@resume),  notice: 'Done' }
       else
-        format.html { redirect_to job_path(@job),  notice: 'Error!!!.' }
+        format.html { redirect_to resume_path(@resume),  notice: 'Error!!!.' }
       end
     end
   end

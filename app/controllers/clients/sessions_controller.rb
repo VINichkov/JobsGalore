@@ -13,9 +13,13 @@ class Clients::SessionsController < Devise::SessionsController
   #POST /resource/sign_in
    def create
      super do
-       @client_wf = restore_workflow_object(session[:workflow])
-       @client_wf.update_state({client:resource})
-       @client_wf.save!(session[:workflow])
+       begin
+         @client_wf = restore_workflow_object(session[:workflow])
+         @client_wf.update_state({client:resource})
+         @client_wf.save!(session[:workflow])
+       rescue
+         Rails.logger.debug("Error: #{$!}")
+       end
      end
    end
 

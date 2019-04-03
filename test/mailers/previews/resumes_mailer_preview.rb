@@ -1,12 +1,21 @@
 # Preview all emails at http://localhost:3000/rails/mailers/resumes_mailer
 class ResumesMailerPreview < ActionMailer::Preview
-  def send_mail
-    ContactUsMailer.send_mail(email: "Тестовый емеил")
-  end
 
   def add_resume
     resume = Resume.last
     ResumesMailer.add_resume({mail: resume.client.email, firstname: resume.client.full_name, id: resume.id, title: resume.title})
+  end
+
+  def remove_resume
+    ResumesMailer.remove_resume(Resume.last)
+  end
+
+  def turn_on_option
+    ResumesMailer.turn_on_option("Urgent", Resume.find_by_id(43))
+  end
+
+  def turn_off_option
+    ResumesMailer.turn_off_option("Urgent", Resume.find_by_id(43))
   end
 
   def send_to_employer(resume, job, pdf, letter, copy =nil)

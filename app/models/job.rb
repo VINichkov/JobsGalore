@@ -119,6 +119,7 @@ class Job < ApplicationRecord
 
   def prolong
     self.close =  Time.now + 14.days
+    Rails.logger.debug("Проведена пролонгация записи #{self.title} - #{self.id}")
     self.save
   end
 
@@ -178,13 +179,14 @@ class Job < ApplicationRecord
   protected
 
   def send_email_after_add_job
-    if self.client.send_email_about_job?
-      JobsMailer.add_job({mail:self.client.email, firstname: self.client.full_name, id:self.id, title:self.title}).deliver_later
+    if self.client.send_email
+      JobsMailer.add_job(self ).deliver_later
+      JobsMailer.add_job(self, true).deliver_later
     end
   end
 
   def send_email_before_destroy
-    if self.client.send_email_about_job?
+    if self.client.send_email
       JobsMailer.remove_job(self).deliver_later
     end
   end

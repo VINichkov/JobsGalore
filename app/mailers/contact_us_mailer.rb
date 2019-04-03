@@ -11,6 +11,6 @@ class ContactUsMailer < ApplicationMailer
 
   def alert_of_change(arg)
     @arg = arg
-    mail(to:'v.nichkov@hotmail.com', subject: "changes on JobsGalore")
+    mail(to: PropertsHelper::ADMIN, subject: "changes on JobsGalore")
   end
 end

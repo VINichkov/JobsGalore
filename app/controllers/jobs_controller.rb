@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
   load_and_authorize_resource :job
-  before_action :authenticate_client!, :only => [:apply]
+  before_action :authenticate_client!, only: [:apply, :prolong]
   before_action :set_job, only: [:prolong, :apply, :views,:highlight_view ,:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
   before_action :action_view, only:[:show, :highlight_view]
   #before_action :employer!, only: :new

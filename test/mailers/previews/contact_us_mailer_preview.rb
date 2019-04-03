@@ -1,7 +1,7 @@
 # Preview all emails at http://localhost:3000/rails/mailers/contact_us_mailer
 class ContactUsMailerPreview < ActionMailer::Preview
   def send_mail
-    ContactUsMailer.send_mail(email: "Тестовый емеил")
+    ContactUsMailer.send_mail(firstname: "Timur", lastname:"Nichkov", email:"timur@mail.com", subject:"Выгодное предложение", message:"Добрый день! Мы хотели бы с вами сотрудничать", phone: "89503304534")
   end
 
   def send_to_customers

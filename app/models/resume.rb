@@ -16,6 +16,7 @@ class Resume < ApplicationRecord
   alias_attribute :salary_form, :salary
 
   after_create :send_email
+  before_destroy :send_email_before_destroy
 
   def full_keywords(count_keys=1 , min_length_word=4)
     if self.title
@@ -59,26 +60,32 @@ class Resume < ApplicationRecord
   def highlight_on
     self.highlight = Date.today
     self.save
+    turn_on_option("Highlight")
   end
   def urgent_on
     self.urgent = Date.today
     self.save
+    turn_on_option("Urgent")
   end
   def top_on
     self.top = Date.today
     self.save
+    turn_on_option("Top")
   end
   def highlight_off
     self.highlight = nil
     self.save
+    turn_off_option("Highlight")
   end
   def urgent_off
     self.urgent = nil
     self.save
+    turn_off_option("Urgent")
   end
   def top_off
     self.top = nil
     self.save
+    turn_off_option("Top")
   end
 
   def to_short_h
@@ -159,6 +166,24 @@ class Resume < ApplicationRecord
     end.sort{|x, y| y.values[0]<=> x.values[0]}[0..2].map{|t| t.keys.first}.join(' ')
   end
   protected
+
+  def turn_on_option(option)
+    if self.client.send_email
+      ResumesMailer.turn_on_option(option, self).deliver_later
+    end
+  end
+
+  def turn_off_option(option)
+    if self.client.send_email
+      ResumesMailer.turn_off_option(option, self).deliver_later
+    end
+  end
+
+  def send_email_before_destroy
+    if self.client.send_email
+      ResumesMailer.remove_resume(self).deliver_later
+    end
+  end
 
   def send_email
     if self.client.send_email?

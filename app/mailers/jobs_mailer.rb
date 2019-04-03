@@ -1,9 +1,10 @@
 class JobsMailer < ApplicationMailer
 
-  def add_job(job)
+  def add_job(job, copy = nil)
     @utm = create_utm :new_job
     @job = job
-    mail(to:@job[:mail], subject: "New job opportunity was just posted on Jobs Galore!")
+    client = (copy ?  PropertsHelper::ADMIN : @job.client.email)
+    mail(to:client, subject: "New job opportunity «#{@job.title}» in #{@job.location.name} was just posted on Jobs Galore!")
   end
 
   def daily_job_alert(email, list_of_jobs)
@@ -36,7 +37,5 @@ class JobsMailer < ApplicationMailer
     mail(to: job.client.email, subject: "The job opportunity was just removed")
   end
 
-  def create_utm(utm_campaign)
-    {:utm_source=>:email, :utm_medium=>:email, :utm_campaign=>utm_campaign}.to_query
-  end
+
 end
