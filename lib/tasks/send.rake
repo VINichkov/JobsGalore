@@ -28,5 +28,25 @@ namespace :send do
     end
     puts "! Task:Send daily job alert: End #{Time.now}"
   end
+
+  desc "Send invitation to post resume"
+  task :send_invate_to_post_resume => :environment do
+    puts "! Task:Send invitation to post resume #{Time.now}"
+    client_for_sending = Clientforalert.all.map do |t|
+      client = Client.find_by_email(t.email)
+      if client.present?
+        t.email if client.resume.count == 0
+      else
+        t.email
+      end
+    end
+    client_for_sending += Client.where(send_email: true, character: TypeOfClient::APPLICANT).map do |t|
+      t.email if t.resume.count == 0
+    end
+    client_for_sending.compact.uniq.each do |email|
+      ClientMailer.send_invite_for_posting_resume(email).deliver_now
+    end
+    puts "! Task:Send invitation to post resume: End #{Time.now}"
+  end
 end
 
