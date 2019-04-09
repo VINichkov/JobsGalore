@@ -10,7 +10,6 @@
 //= require react
 //= require components
 //= require react_ujs
-//= /require tinymce
 //=require html-formatting.js
 
 var uploadTXT = function(uploadFile,tiny_id) {
@@ -89,23 +88,11 @@ var tinyEditorOptions={
     },
     theme_advanced_buttons3_add : "pastetext,pasteword,selectall",
     paste_postprocess: function (plugin, args) {
-        console.log(args);
         htmlFormatting(args.node, tinyValidElements);
     }
 };
 
 $(function() {
-        var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-            'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-            'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-            'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-            'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-            'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-            'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-            'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-            'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-        ];
-
 
         $('#city').typeahead({
             source: states

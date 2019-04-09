@@ -70,4 +70,8 @@ module ApplicationHelper
     end
   end
 
+  def editor
+    javascript_include_tag("http://tinymce.cachefly.net/4.0/tinymce.min.js")
+  end
+
 end
