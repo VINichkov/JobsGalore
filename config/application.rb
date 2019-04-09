@@ -13,7 +13,6 @@ module Mango
       Devise::Mailer.layout "mailer"
       Devise::Mailer.helper :email
     end
-    config.tinymce.install = :compile
     #config.public_file_server.headers = {
      #   'Cache-Control' => 'public, max-age = 604800',
     #    'Expires' => "#{1.year.from_now.to_formatted_s(:rfc822)}"
