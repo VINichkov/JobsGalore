@@ -379,7 +379,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    tinymce-rails (5.0.0)
+    tinymce-rails (5.0.3)
       railties (>= 3.1.1)
     ttfunk (1.5.1)
     twitter (6.2.0)
@@ -472,7 +472,7 @@ DEPENDENCIES
   social-share-button
   spring
   spring-watcher-listen
-  tinymce-rails (~> 5.0.0)
+  tinymce-rails (~> 5.0.3)
   twitter
   tzinfo-data
   uglifier
