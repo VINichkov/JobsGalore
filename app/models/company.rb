@@ -41,6 +41,17 @@ class Company < ApplicationRecord
     super
   end
 
+  def add_name(name)
+    self.names.nil? ? self.names = [name] : self.names.push(name)
+    self.save
+  end
+
+  def self.find_by_names_or_name(name)
+    company = self.find_by_names("{#{name}}")
+    company.nil? ? self.find_by_name(name) : company
+  end
+
+
   protected
 
   scope :search, ->(query) do

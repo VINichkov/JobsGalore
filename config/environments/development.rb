@@ -4,10 +4,10 @@ Rails.application.configure do
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = true #false
+  config.cache_classes = false
 
   # Do not eager load code on boot.
-  config.eager_load = true #false
+  config.eager_load = false
 
   # Show full error reports.
   #config.consider_all_requests_local = true
@@ -30,11 +30,8 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?#from production
 
-  config.assets.js_compressor = Uglifier.new(harmony: true) #from production
-  config.assets.gzip = true#from production
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
-
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load

@@ -199,7 +199,8 @@ CREATE TABLE public.companies (
     updated_at timestamp without time zone NOT NULL,
     fts tsvector,
     industry_id integer,
-    big boolean DEFAULT false NOT NULL
+    big boolean DEFAULT false NOT NULL,
+    names character varying[]
 );
 
 
@@ -1526,6 +1527,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181207094318'),
 ('20190116113913'),
 ('20190201152729'),
-('20190212081338');
+('20190212081338'),
+('20190416091635');
 
 

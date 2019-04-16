@@ -137,7 +137,7 @@ class Crawler
     if Job.where(location_id: arg[:location_id],  sources:arg[:url]).first
       log(arg[:location], arg[:thread], arg[:page], "!!! Нашли ссылку на работу. Уже присутсвует в БД !!! #{arg[:url]} | #{arg[:title]} }")
       :same_sources
-    elsif Job.where(title: arg[:title], company_id: Company.find_by_name(arg[:company]), location_id: arg[:location_id]).first
+    elsif Job.where(title: arg[:title], company_id: Company.find_by_names_or_name(arg[:company]), location_id: arg[:location_id]).first
       log(arg[:location], arg[:thread], arg[:page], "!!! Нашли работу по наименованию компании и заглавию #{arg[:title] + " || " + arg[:company]} !!!")
       :same_title_and_company
     else
