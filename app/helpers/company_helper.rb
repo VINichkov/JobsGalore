@@ -36,7 +36,7 @@ module CompanyHelper
            end
     html +=if object.industry
              ind = content_tag(:p) do
-               content_tag :strong, "Indusrty: "
+               content_tag :strong, "Industry: "
              end
              ind +=content_tag( :ul) do
                content_tag(:li , link_industry(object.industry.name, object.industry, Objects::COMPANIES, class: 'text-success'))
