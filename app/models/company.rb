@@ -56,8 +56,19 @@ class Company < ApplicationRecord
 
   scope :search, ->(query) do
     query = query.to_h if query.class != Hash
-    text_query = ''
-    text_query = "fts @@ to_tsquery(:value)" if query[:value] != ""
+    text_query=[]
+
+    text_query << "fts @@ to_tsquery(:value)" if query[:value].present?
+    text_query << "industry_id = :category" if  query[:category].present?
+
+    if query[:location_id].present?
+      text_query << "location_id = :location_id"
+    elsif query[:location_name].present?
+      locations = Location.search((query[:location_name].split(" ").map {|t| t=t+":*"}).join("|"))
+      text_query << "location_id in "+locations.ids.to_s.sub("[","(").sub("]",")") if locations.present?
+    end
+
+    text_query = text_query.join(" and ")
 
     select(:id, :name, :size_id, :logo_uid, :site, :location_id, :recrutmentagency, :description, :created_at, :updated_at, :realy, :industry_id, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
   end

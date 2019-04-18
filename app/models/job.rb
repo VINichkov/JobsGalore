@@ -150,7 +150,8 @@ class Job < ApplicationRecord
     old_company = true
     company = Company.find_by_names_or_name(job[:company])
     if company.nil?
-      company = Company.create(name:job[:company], size: Size.first, location_id: job[:location], industry_id: job[:industry], old_company: false)
+      company = Company.create(name:job[:company], size: Size.first, location_id: job[:location], industry_id: job[:industry])
+      old_company = false
     end
     company.job.where(title: job[:title], location_id: job[:location]).destroy_all if old_company
     user = company.client.first
