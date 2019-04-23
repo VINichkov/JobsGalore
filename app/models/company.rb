@@ -47,7 +47,7 @@ class Company < ApplicationRecord
   end
 
   def self.find_by_names_or_name(name)
-    company = self.find_by_names("{#{name}}")
+    company = self.find_by_names([name])
     company.nil? ? self.find_by_name(name) : company
   end
 
