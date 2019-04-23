@@ -60,7 +60,7 @@ class JobsController < ApplicationController
   end
 
   def apply
-    if @job.apply
+    if @job.apply and !@job.client&.send_email
       unless current_client&.admin?
         @job.add_responded({client_id:current_client&.id, ip:request.remote_ip, lang:request.env['HTTP_ACCEPT_LANGUAGE'], agent:request.env['HTTP_USER_AGENT']})
       end

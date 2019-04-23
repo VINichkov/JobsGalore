@@ -179,7 +179,7 @@ class Job < ApplicationRecord
   def send_email_after_add_job
     if self.client.send_email
       JobsMailer.add_job(self ).deliver_later
-      JobsMailer.add_job(self, true).deliver_later
+      #JobsMailer.add_job(self, true).deliver_later
     end
   end
 

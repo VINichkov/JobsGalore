@@ -13,7 +13,7 @@
       = render partial: 'inc/job', collection: @jobs, locals:{query:''}
 
     .text-center
-      = will_paginate_mini @jobs
+      = will_paginate_mini @jobs if @jobs
   - else
     h1 My Resumes
     .col-lg-3.col-md-3.hidden-sm.hidden-xs
