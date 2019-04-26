@@ -187,7 +187,7 @@ class Resume < ApplicationRecord
 
   def send_email
     if self.client.send_email?
-      ResumesMailer.add_resume({mail: self.client.email, firstname: self.client.full_name, id: self.id, title: self.title}).deliver_later
+      ResumesMailer.add_resume(self).deliver_later
     end
   end
 

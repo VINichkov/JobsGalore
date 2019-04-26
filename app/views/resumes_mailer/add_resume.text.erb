@@ -1,9 +1,9 @@
 Your resume was successfully posted on Jobs Galore!
 
-Dear <%=@resume[:firstname]%>,
+Dear <%=@resume.client.firstname%>,
 
 You've successfully posted your resume on Jobs Galore.
-The link to the resume <%=resume_url(@resume[:id])%>
+The link to the resume <%=resume_url(@resume.id)%>
 
 You can take extras:
 

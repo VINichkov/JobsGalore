@@ -3,7 +3,7 @@ class ResumesMailer < ApplicationMailer
   def add_resume(resume)
     @utm = create_utm(:new_resume)
     @resume = resume
-    mail(to:@resume[:mail], subject: "Your resume was just posted on Jobs Galore!")
+    mail(to:@resume.client.email, subject: "Your resume was just posted on Jobs Galore!")
   end
 
   def remove_resume(resume)

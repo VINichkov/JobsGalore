@@ -8,7 +8,7 @@ class Company < ApplicationRecord
   has_many :gateway, dependent: :destroy
   dragonfly_accessor :logo
   validates :name, presence: true
-  #validates :location_id, presence: true
+  # validates :location_id, presence: true
   def full_keywords(count_keys=1 , min_length_word=4)
     if self.name
       array_keywords = []

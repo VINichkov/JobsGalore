@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'robot', to: 'index#robot'
   get 'sitemap', to: 'index#sitemap'
   get 'sitemap_obj:id', to: 'index#sitemaps', as: "sitemap_object"
-  #get 'rss', to: 'index#rss'
+  # get 'rss', to: 'index#rss'
   post 'file_to_html', to: 'index#file_to_html', as: "file_to_html"
   post 'clientforalert', to: 'clientforalert#create', as: "clientforalert"
 
@@ -16,14 +16,16 @@ Rails.application.routes.draw do
                                       sessions: "clients/sessions",
                                       unlocks: "clients/unlocks",
                                       omniauth_callbacks: 'clients/omniauth_callbacks' }
-  #devise_scope :client do
+  # devise_scope :client do
   #  get "/sign_up_employer" => "clients/registrations#sign_up_employer"
   #  post '/create_employer'=> "clients/registrations#create_employer"
-  #end
+  # end
 
+  namespace :admin do
+    resources :client_with_resume,  only: [:new, :create]
+  end
 
-
-  #devise_for :clients
+  # devise_for :clients
 
   resources :companies, only: [:new,:create, :show, :edit, :update, :destroy]
   get "companies/:id/:text", to: "companies#highlight_view", as: 'company_highlight_view'
@@ -51,7 +53,7 @@ Rails.application.routes.draw do
   get '/search_locations/:query', to: 'locations#search'
   get 'in_location/:location/:object', to: 'locations#in_location', as: "local_object"
 
-  #Dictionary
+  # Dictionary
   get '/dictionary/:query', to: 'dictionaries#search'
 
   #payment
