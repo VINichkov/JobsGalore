@@ -7,17 +7,21 @@ class Admin::ClientWithResumeController < ApplicationController
   def create
     @client_with_resume = Admin::CreateClientWithResume.new(client_with_resume_params)
     if @client_with_resume.save
-      text_notice = <<~STR
-      Hello #{@client_with_resume.resume.client.firstname},
-
-      The resume has posted.
-
-      Your login: #{@client_with_resume.email}
-      Your password: #{@client_with_resume.password}
-
-      Please, tell your friends about us.
-      Thank you in advance!
-      STR
+      if @client_with_resume.flag
+        text_notice = <<~STR
+        Hello #{@client_with_resume.resume.client.firstname},
+  
+        The resume has posted.
+  
+        Your login: #{@client_with_resume.email}
+        Your password: #{@client_with_resume.password}
+  
+        Please, tell your friends about us.
+        Thank you in advance!
+        STR
+      else
+        text_notice = "The resume has posted."
+      end
       redirect_to resume_url(@client_with_resume.resume), notice: text_notice
     else
       render :new

@@ -15,13 +15,14 @@ class Admin::CreateClientWithResume
   attribute :description
   attribute :password
   attribute :resume
+  attribute :flag
 
   def save
-    flag = false
+    self.flag = false
     self.password = phone.present? ? phone : email
     client = Client.find_by_email(email)
     if client.blank?
-      flag = true
+      self.flag = true
       client = Client.new(
         email: email,
         phone: phone,
@@ -41,7 +42,7 @@ class Admin::CreateClientWithResume
         client: client
       )
       if resume.save
-        if flag
+        if self.flag
           params = {
             name: client.firstname,
             email: email,
