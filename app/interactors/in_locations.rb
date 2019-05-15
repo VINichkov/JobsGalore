@@ -43,7 +43,7 @@ class InLocations
 
   def resume
     context.objs = Resume.where(location_id: @location).order(created_at: :desc).paginate(page: @page, per_page:25).includes(:location, :client).decorate
-    location=context.objs.first.location
+    location = context.objs.first&.location || Location.find_by_id(@location)
     context.name = location.name
     context.query = {type: Objects::RESUMES.code, value:"", location_id:location.id, location_name:location.name, open:false}
     context.suburb = location.suburb
