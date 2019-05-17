@@ -12,6 +12,14 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def redirect_back_to_url
+    full_url = URI(request.original_fullpath)
+    Rails.logger.info(full_url)
+    query = full_url.query
+    Rails.logger.info(query)
+    #CGI.parse(URI(request.original_url).query))[:url]
+  end
+
   def get_cookies
     if @search.blank?
       if cookies[:query].present?

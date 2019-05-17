@@ -5,6 +5,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -68,6 +69,30 @@ CREATE FUNCTION public.resumes_trigger() RETURNS trigger
       return new;
     end
     $$;
+
+
+--
+-- Name: user_rank(tsvector, text, text, text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.user_rank(field tsvector, query_full text, query text, mode_execute text[]) RETURNS real
+    LANGUAGE plpgsql
+    AS $$
+      DECLARE rank_by_query float4;
+      begin
+        rank_by_query := 0;
+        if (rank_by_query = 0 and ARRAY['phrase'] <@ mode_execute) then
+          rank_by_query := ts_rank_cd(field, phraseto_tsquery(query_full))*1000;
+        end if;
+        if (rank_by_query = 0 and ARRAY['plain'] <@ mode_execute) then
+          rank_by_query := ts_rank_cd(field, plainto_tsquery(query_full))*50;
+        end if;
+        if (rank_by_query = 0 and ARRAY['none'] <@ mode_execute) then
+          rank_by_query := ts_rank_cd(field, to_tsquery(query));
+        end if;
+        return rank_by_query;
+      end;
+      $$;
 
 
 SET default_tablespace = '';
@@ -221,6 +246,43 @@ CREATE SEQUENCE public.companies_id_seq
 --
 
 ALTER SEQUENCE public.companies_id_seq OWNED BY public.companies.id;
+
+
+--
+-- Name: email_hrs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.email_hrs (
+    id bigint NOT NULL,
+    email character varying DEFAULT ''::character varying NOT NULL,
+    company_id bigint,
+    phone character varying,
+    send_email boolean,
+    contact boolean,
+    location_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    fio character varying
+);
+
+
+--
+-- Name: email_hrs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.email_hrs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: email_hrs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.email_hrs_id_seq OWNED BY public.email_hrs.id;
 
 
 --
@@ -403,14 +465,6 @@ CREATE TABLE public.jobs (
     location_id integer,
     salarymin double precision,
     salarymax double precision,
-    permanent boolean,
-    casual boolean,
-    temp boolean,
-    contract boolean,
-    fulltime boolean,
-    parttime boolean,
-    flextime boolean,
-    remote boolean,
     description character varying,
     company_id integer,
     career character varying,
@@ -598,14 +652,6 @@ CREATE TABLE public.resumes (
     id integer NOT NULL,
     desiredjobtitle character varying NOT NULL,
     salary double precision,
-    permanent boolean,
-    casual boolean,
-    temp boolean,
-    contract boolean,
-    fulltime boolean,
-    parttime boolean,
-    flextime boolean,
-    remote boolean,
     abouteme character varying,
     client_id integer,
     created_at timestamp without time zone NOT NULL,
@@ -738,6 +784,13 @@ ALTER TABLE ONLY public.companies ALTER COLUMN id SET DEFAULT nextval('public.co
 
 
 --
+-- Name: email_hrs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.email_hrs ALTER COLUMN id SET DEFAULT nextval('public.email_hrs_id_seq'::regclass);
+
+
+--
 -- Name: emails id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -858,6 +911,14 @@ ALTER TABLE ONLY public.clients
 
 ALTER TABLE ONLY public.companies
     ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: email_hrs email_hrs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.email_hrs
+    ADD CONSTRAINT email_hrs_pkey PRIMARY KEY (id);
 
 
 --
@@ -1047,6 +1108,27 @@ CREATE INDEX index_companies_on_name ON public.companies USING btree (name);
 --
 
 CREATE INDEX index_companies_on_size_id ON public.companies USING btree (size_id);
+
+
+--
+-- Name: index_email_hrs_on_company_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_email_hrs_on_company_id ON public.email_hrs USING btree (company_id);
+
+
+--
+-- Name: index_email_hrs_on_email; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_email_hrs_on_email ON public.email_hrs USING btree (email);
+
+
+--
+-- Name: index_email_hrs_on_location_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_email_hrs_on_location_id ON public.email_hrs USING btree (location_id);
 
 
 --
@@ -1334,6 +1416,14 @@ ALTER TABLE ONLY public.gateways
 
 
 --
+-- Name: email_hrs fk_rails_3e2309a3ab; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.email_hrs
+    ADD CONSTRAINT fk_rails_3e2309a3ab FOREIGN KEY (location_id) REFERENCES public.locations(id);
+
+
+--
 -- Name: industryexperiences fk_rails_493fe47dba; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1419,6 +1509,14 @@ ALTER TABLE ONLY public.gateways
 
 ALTER TABLE ONLY public.jobs
     ADD CONSTRAINT fk_rails_b34da78090 FOREIGN KEY (company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: email_hrs fk_rails_c06729e589; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.email_hrs
+    ADD CONSTRAINT fk_rails_c06729e589 FOREIGN KEY (company_id) REFERENCES public.companies(id);
 
 
 --
@@ -1528,6 +1626,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190116113913'),
 ('20190201152729'),
 ('20190212081338'),
-('20190416091635');
+('20190416091635'),
+('20190514065624'),
+('20190514070814'),
+('20190517062747'),
+('20190517072016');
 
 

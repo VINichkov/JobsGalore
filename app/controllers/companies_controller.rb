@@ -97,6 +97,7 @@ class CompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @company.update(company_params)
+        #Rails.logger.info("----<< #{redirect_back_to_url} >>-----")
         format.html { redirect_to settings_company_path, notice: 'The Information about your company was successfully updated.' }
       else
         format.html { render :edit }
@@ -115,36 +116,39 @@ class CompaniesController < ApplicationController
 
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_company
-      @company = Company.find_by(id:params[:id]).decorate
-    end
 
-    def set_client
-      @client = Client.find_by(id:params[:id])
-    end
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def company_params
-      if params[:company]
-        params.require(:company).permit(:name, :size_id, :location_id, :site, :logo, :recrutmentagency, :description, :realy, :industry_id)
-      end
-    end
 
-    def job_params
-      params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :client_id, :career, :industry_id, :close,:page)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_company
+    @company = Company.find_by(id: params[:id]).decorate
+  end
 
-    def set_jobs
-      @client,  @company = params[:id].split('x')
-    end
+  def set_client
+    @client = Client.find_by(id: params[:id])
+  end
 
-    def set_current_company
-      @company = current_company
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def company_params
+    if params[:company]
+      params.require(:company).permit(:name, :size_id, :location_id, :site, :logo, :recrutmentagency, :description, :realy, :industry_id)
     end
+  end
 
-    def set_member
-      a = params[:id].split('x')
-      @client = Client.find(a[0])
-      @company =a[1]
-    end
+  def job_params
+    params.require(:job).permit(:title, :location_id, :salarymin, :salarymax, :permanent, :casual, :temp, :contract, :fulltime, :parttime, :flextime, :remote, :description, :company_id, :education_id, :client_id, :career, :industry_id, :close, :page)
+  end
+
+  def set_jobs
+    @client, @company = params[:id].split('x')
+  end
+
+  def set_current_company
+    @company = current_company
+  end
+
+  def set_member
+    a = params[:id].split('x')
+    @client = Client.find(a[0])
+    @company = a[1]
+  end
 end

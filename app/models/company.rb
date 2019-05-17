@@ -6,6 +6,8 @@ class Company < ApplicationRecord
   belongs_to :industry
   has_many :client
   has_many :gateway, dependent: :destroy
+  has_many :email_hr, dependent: :destroy
+
   dragonfly_accessor :logo
   validates :name, presence: true
   # validates :location_id, presence: true

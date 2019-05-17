@@ -16,6 +16,7 @@ class MainSearch
       @param[:value] = ''
     else
       context.query = @param[:value]
+      @param[:old_value] = @param[:value]
       @param[:value] = Search.str_to_search(@param[:value])
       @param[:value] = @param[:value].split(" ").map{|t| t=t+":*"}.join("|")
     end

@@ -1,0 +1,3 @@
+.btn_margin
+  = link_to "Edit",  edit_company_path(company, url: request.original_url) , class: "btn btn-primary btn-block"
+  = link_to "Delete", company_path(company )+ original_url , data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block"

@@ -74,4 +74,8 @@ module ApplicationHelper
     javascript_include_tag("http://tinymce.cachefly.net/4.0/tinymce.min.js")
   end
 
+  def original_url
+    "?url=#{request.original_url}"
+  end
+
 end
