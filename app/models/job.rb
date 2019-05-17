@@ -231,23 +231,28 @@ class Job < ApplicationRecord
     text_query = []
     text_query << 'industry_id = :category' if query[:category].present?
     text_query << 'urgent is not null' if query[:urgent].present?
+    flag = true
     if query[:location_id].present?
       text_query << 'location_id = :location_id'
+      flag = false
     elsif query[:location_name].present?
       locations = Location.search((query[:location_name].split(' ').map { |t| t += ':*' }).join('|'))
       if locations.present?
         text_query << 'location_id in ' + locations.ids.to_s.sub('[', '(').sub(']', ')')
-      else
-        date = if ENV['RAILS_ENV'] == 'development'
-                 Job.last.created_at - 2.weeks
-               else
-                 2.weeks.ago
-               end
-        text_query << "created_at >= TO_DATE('#{date.to_date}', 'yyyy-mm-dd')"
-        mode = "ARRAY['phrase', 'plain']"
+        flag = false
       end
+
     end
 
+    if flag
+      date =  if ENV['RAILS_ENV'] == 'development'
+                Job.last.created_at - 2.weeks
+              else
+                1.weeks.ago
+              end
+      text_query << "created_at >= TO_DATE('#{date.to_date}', 'yyyy-mm-dd')"
+      mode = "ARRAY['phrase', 'plain']"
+    end
     text_query << 'fts @@ to_tsquery(:value)' if query[:value] != ''
 
     if query[:salary].present?
@@ -257,6 +262,7 @@ class Job < ApplicationRecord
     mode ||= "ARRAY['phrase', 'plain', 'none']"
     text_query = text_query.join(' and ')
     Rails.logger.info('Query::' + text_query + query.to_s)
+    Rails.logger.info('Mode query::' + mode + query.to_s)
     select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight, :top, :urgent, :client_id, :close, :industry_id, :twitter, :viewed_count, "user_rank(fts, '#{query[:old_value]}', '#{query[:value]}', #{mode}) AS \"rank\"").where(text_query, query)
   }
 end
