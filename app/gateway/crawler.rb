@@ -128,7 +128,7 @@ class Crawler
   end
 
   def get_list_jobs(arg, thread, location, page)
-    url = @url+arg.to_query
+    url = @url + arg.to_query
     log(location, thread, page, "URL job_list: #{url}")
     get_page(url)
   end

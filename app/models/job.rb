@@ -252,9 +252,9 @@ class Job < ApplicationRecord
               end
       text_query << "created_at >= TO_DATE('#{date.to_date}', 'yyyy-mm-dd')"
       mode = "ARRAY['phrase', 'plain']"
-      text_query << 'fts @@ plainto_tsquery(:old_value)' if query[:old_value] != ''
+      text_query << 'fts @@ plainto_tsquery(:old_value)' if query[:old_value].present?
     else
-      text_query << 'fts @@ to_tsquery(:value)' if query[:value] != ''
+      text_query << 'fts @@ to_tsquery(:value)' if query[:value].present?
     end
 
 

@@ -1,6 +1,21 @@
-class EmailHr < ApplicationRecord
-  belongs_to :location
-  belongs_to :company
+class EmailHr
+  include Virtus.model(strict: true)
+  include ActiveModel::Model
 
-  validates :company, presence: true
+  attribute :subject
+  attribute :fullname
+  attribute :email
+  attribute :phone
+  attribute :location_id
+  attribute :location_name
+  attribute :industry
+  attribute :title
+  attribute :description
+  attribute :password
+  attribute :resume
+  attribute :flag
+
+  def save
+
+  end
 end
