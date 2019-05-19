@@ -30,14 +30,14 @@ class Crawler
   end
 
   def conveer_get_list(i)
-      i = "conveer_get_list_#{i}"
-      while obj = @queue_local.pop
-        get_main_page(obj, i) if obj #and 1==2
-        if @queue_local.size == 0
-          @queue_local.close
-          Thread.current.exit
-        end
+    i = "conveer_get_list_#{i}"
+    while obj = @queue_local.pop
+      get_main_page(obj, i) if obj #and 1==2
+      if @queue_local.size == 0
+        @queue_local.close
+        Thread.current.exit
       end
+    end
   end
 
   def conveer_prepare_job(i)
@@ -134,7 +134,12 @@ class Crawler
   end
 
   def compare_with_index(arg)
-    if Job.where(location_id: arg[:location_id],  sources:arg[:url]).first
+    block_list = []
+    block_list.push("Jora Local")
+    if block_list.include?(arg[:title])
+      log(arg[:location], arg[:thread], arg[:page], "!!! Компания в блок листе !!! #{arg[:title]}")
+      :block_list
+    elsif Job.where(location_id: arg[:location_id],  sources:arg[:url]).first
       log(arg[:location], arg[:thread], arg[:page], "!!! Нашли ссылку на работу. Уже присутсвует в БД !!! #{arg[:url]} | #{arg[:title]} }")
       :same_sources
     elsif Job.where(title: arg[:title], company_id: Company.find_by_names_or_name(arg[:company]), location_id: arg[:location_id]).first
