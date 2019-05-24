@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :client_with_resume,  only: [:new, :create]
+    resources :companies, only: [:edit, :update]
   end
 
   # devise_for :clients
@@ -33,6 +34,7 @@ Rails.application.routes.draw do
   get "/settings_company", to: 'companies#settings_company'
   get '/company_jobs/:id', to:'companies#company_jobs', as: 'jobs_at_company'
   patch '/update_logo', to:"companies#update_logo", as: 'update_logo'
+
 
   resources :clients, only: [:create, :edit, :update]#, :destroy
   get '/team/new/', to: 'clients#new_member', as: 'team_new'
@@ -68,18 +70,15 @@ Rails.application.routes.draw do
   get '/admin/customers/:id', to: 'clients#admin_show', as: 'admin_client_show'
   get '/admin/customers/:id/edit', to: 'clients#admin_edit', as: 'admin_client_edit'
   post '/admin/customers/', to: 'clients#admin_create', as: 'admin_client_create'
-  patch '/admin/customers/:id', to: 'clients#admin_update', as: 'admin_client_update'
   delete '/admin/customers/:id', to: 'clients#admin_destroy', as: 'admin_client_destroy'
   get '/admin/', to: 'index#admin', as: "admin"
 
   #ADMINISTRATION COMPANIES
-  get '/admin/companies/', to: 'companies#admin_index', as: 'admin_company'
+  get '/admin/companies/', to: 'companies#admin_index', as: 'admin_company_index'
   get '/admin/companies/edit_logo/:id', to: 'companies#admin_edit_logo', as: 'admin_company_edit_logo'
   get '/admin/companies/new', to: 'companies#admin_new', as: 'admin_company_new'
   get '/admin/companies/:id', to: 'companies#admin_show', as: 'admin_company_show'
-  get '/admin/companies/:id/edit', to: 'companies#admin_edit', as: 'admin_company_edit'
   post '/admin/companies/', to: 'companies#admin_create', as: 'admin_company_create'
-  patch '/admin/companies/:id', to: 'companies#admin_update', as: 'admin_company_update'
   delete '/admin/companies/:id', to: 'companies#admin_destroy', as: 'admin_company_destroy'
 
   #ADMINISTRATION  Team

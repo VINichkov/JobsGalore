@@ -19,23 +19,6 @@ class ApplyJob extends React.Component{
         if (this.props.resumes != null) {
             tinymce.init(tinyEditorOptions);
         }
-        /*if (this.props.resumes !== null && this.medium == null ) {
-            let dom = ReactDOM.findDOMNode(this._divEditableL.current);
-            this.setState({inputLetter:dom.innerHTML});
-            this.medium = tinymce.init(dom, this._options);
-            this.medium.subscribe('editableInput', (e) => {
-                this.setState({inputLetter:dom.innerHTML});
-            });
-        }*/
-    }
-
-
-    componentDidUpdate() {
-        //this.medium.restoreSelection();
-    }
-
-    componentWillUnmount() {
-        //this.medium.destroy();
     }
 
     componentWillReceiveProps(nextProps) {

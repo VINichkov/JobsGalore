@@ -321,7 +321,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    react-rails (2.4.7)
+    react-rails (2.5.0)
       babel-transpiler (>= 0.7.0)
       connection_pool
       execjs
@@ -464,7 +464,7 @@ DEPENDENCIES
   prawn
   puma
   rails (~> 5.2.0)
-  react-rails (~> 2.4.7)
+  react-rails (~> 2.5.0)
   redis-objects
   rubyzip
   sass-rails

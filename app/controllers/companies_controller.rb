@@ -50,8 +50,7 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1
   # GET /companies/1.json
-  def show
-  end
+  def show;  end
 
   def highlight_view
     @query = params[:text]

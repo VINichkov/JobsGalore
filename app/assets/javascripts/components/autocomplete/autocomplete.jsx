@@ -45,6 +45,7 @@ class Autocomplete extends React.Component{
     }
     handleInput(){
         if ( this.state.autocomplete.val().length>0) {
+            console.log(this.props.route+this.state.autocomplete.val()+".json");
             this.handleSearchLocations(this.props.route+this.state.autocomplete.val()+".json");
         }
     }
@@ -63,11 +64,27 @@ class Autocomplete extends React.Component{
         const ilStyle={display:'none'};
         let input_id = null;
         if (this.state.input) {
-            input_id = <input ref={this.props.idRef} key={this.props.name + "_id]"} id={"input_get"+this.props.id} name={this.props.name + "_id]"} defaultValue = {this.state.defaultId} className={this.props.className+" typeahead"} style = {ilStyle}/>;
+            input_id = <input ref={this.props.idRef}
+                              key={this.props.name + "_id]"}
+                              id={"input_get"+this.props.id}
+                              name={this.props.name + "_id]"}
+                              defaultValue = {this.state.defaultId}
+                              className={this.props.className+" typeahead"}
+                              style = {ilStyle}/>;
         }
         return(
             <div>
-                <input   ref={this.props.nameRef} key = {this.state.input ? this.props.name + "_name]" : this.props.name} name={this.state.input ? this.props.name + "_name]" : this.props.name} autoComplete = "off" className={this.props.className} onInput={this.handleInput}  defaultValue = {this.state.defaultName} placeholder={this.props.place_holder} type="text"  id={this.props.id} style={this.props.style}/>
+                <input   ref={this.props.nameRef}
+                         key = {this.state.input ? this.props.name + "_name]" : this.props.name}
+                         name={this.state.input ? this.props.name + "_name]" : this.props.name}
+                         autoComplete = "off"
+                         className={this.props.className}
+                         onInput={this.handleInput}
+                         defaultValue = {this.state.defaultName}
+                         placeholder={this.props.place_holder}
+                         type="text"
+                         id={this.props.id}
+                         style={this.props.style}/>
                 {input_id}
             </div>
         );

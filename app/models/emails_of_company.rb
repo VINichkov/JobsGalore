@@ -1,3 +1,0 @@
-class EmailOfCompany < ApplicationRecord
-
-end

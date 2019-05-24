@@ -12,7 +12,7 @@ gem 'sass-rails'#, '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'#, '>= 1.3.0'
 # Use react as the JavaScript library
-gem 'react-rails', '~>2.4.7'
+gem 'react-rails', '~>2.5.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "font-awesome-rails"
 gem 'redis-objects'

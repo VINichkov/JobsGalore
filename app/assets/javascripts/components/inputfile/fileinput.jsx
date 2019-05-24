@@ -63,7 +63,7 @@ class Fileinput extends React.Component{
     modalShow(preview,previw_title){
         this.setState({ preview:preview,
                         previw_title:previw_title});
-        $("#file_input_preview").modal()
+        $("#file_input_preview").modal('show');
     }
 
     handleChange(event) {

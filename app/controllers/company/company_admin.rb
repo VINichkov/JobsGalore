@@ -19,10 +19,6 @@ module Admin
     @company = Company.new
   end
 
-  # GET /companies/1/edit
-  def admin_edit
-  end
-
   # POST /companies
   # POST /companies.json
   def admin_create
@@ -33,20 +29,6 @@ module Admin
         format.json { render :show, status: :created, location: @company }
       else
         format.html { render :admin_new }
-        format.json { render json: @company.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /companies/1
-  # PATCH/PUT /companies/1.json
-  def admin_update
-    respond_to do |format|
-      if @company.update(company_params)
-        format.html { redirect_to admin_company_show_path(@company), notice: 'Company was successfully updated.' }
-        format.json { render :show, status: :ok, location: @company }
-      else
-        format.html { render :admin_edit }
         format.json { render json: @company.errors, status: :unprocessable_entity }
       end
     end

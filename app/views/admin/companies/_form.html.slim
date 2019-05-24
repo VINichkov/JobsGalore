@@ -1,0 +1,20 @@
+=javascript_include_tag("editor.js")
+= form_for @company, url:option[:url] do |f|
+  - if @company.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@company.errors.count, "error")} prohibited this company from being saved:"
+      ul
+        - @company.errors.full_messages.each do |message|
+          li = message
+  hr.colorgraph
+    = company_description(@company)
+    hr.colorgraph
+    h3
+      |Not verified email ids
+    = input_emails(@company)
+    hr.colorgraph
+    .row
+      .col-xs-12.col-md-6.col-sm-6.col-lg-6
+        = link_to 'Back', :back, class: "btn btn-success btn-block"
+        p
+
