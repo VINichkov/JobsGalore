@@ -1,6 +1,7 @@
 class ResumesController < ApplicationController
   #before_action :authenticate_client!, only:[:edit, :update, :destroy]
   load_and_authorize_resource :resume
+  before_action :authenticate_client!, only: [:message]
   before_action :set_resume, only: [:message,:views, :highlight_view, :show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
   before_action :action_view, only:[:show, :highlight_view]
   #before_action :applicant!, only: :new
