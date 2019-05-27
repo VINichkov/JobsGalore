@@ -7,7 +7,7 @@ class Grid_Inputs extends React.Component{
                         modal_email: null,
                         modal_fio: null,
                         modal_phone: null,
-                        modal_send_email: null,
+                        modal_send_email: true,
                         modal_contact: null,
                         flag: true,
                         notSave: true};
@@ -74,8 +74,8 @@ class Grid_Inputs extends React.Component{
     }
     pushItem(index){
         item = {
-            location_name:this._fieldLocationId.current.value,
-            location_id:this._fieldLocationName.current.value,
+            location_name: this._fieldLocationName.current.value,
+            location_id: this._fieldLocationId.current.value,
             email:this._fieldEmail.current.value,
             fio:this._fieldFio.current.value,
             phone: this._fieldPhone.current.value,
