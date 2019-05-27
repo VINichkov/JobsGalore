@@ -8,10 +8,10 @@ class Admin::EmailsOfCompany
   attribute :name, String
   attribute :size_id, Integer
   attribute :location, Location
-  attribute :site, String
+  attribute :site
   attribute :logo_uid
-  attribute :recrutmentagency, Boolean
-  attribute :description, String
+  attribute :recrutmentagency
+  attribute :description
   attribute :realy
   attribute :emails, Array
   attribute :industry_id, Integer
