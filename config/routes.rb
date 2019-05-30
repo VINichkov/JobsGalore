@@ -21,9 +21,14 @@ Rails.application.routes.draw do
   #  post '/create_employer'=> "clients/registrations#create_employer"
   # end
 
-  namespace :admin do
+  namespace :admin  do
     resources :client_with_resume,  only: [:new, :create]
+
+    #companies
     resources :companies, only: [:edit, :update]
+    get 'companies/:id/edit/get_company', to: "companies#get_company", as: "get_company"
+    get 'companies/:id/edit/get_emails', to: "companies#get_emails", as: "get_emails"
+    get 'companies/:id/edit/get_logo', to: "companies#get_logo", as: "get_logo"
   end
 
   # devise_for :clients

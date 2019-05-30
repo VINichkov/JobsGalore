@@ -11,18 +11,16 @@ div[style=title_email]
   div[style=h1_email]
     |Send us your resume by email
 div[style=body_email]
-  |You can also email us your resume and we will post it. For that you have to send by #{link_to 'email@jobsgalore.eu', "mailto:email@jobsgalore.eu?subject=The resume for posting on jobsgalore"}:
+  |You may also send us your resume and we will post it. For that you have to send by #{link_to 'email@jobsgalore.eu', "mailto:email@jobsgalore.eu?subject=The resume for posting on jobsgalore"}:
   div[style=message_email]
     ul
       li
-        |Your resume in format MS Word 2007(*.docx);
+        |Your resume in MS Word 2007(*.docx) format;
       li
         |Your profession or skills;
       li
         |Your location;
       li
-        |Your phone number (Optional);
-      li
-        |Desired Salary (Optional).
+        |Your phone number (Optional).
   div[style=button_email]
-    = link_to 'Email a resume', "mailto:email@jobsgalore.eu?subject=The resume for posting on jobsgalore", style: link_email
+      = link_to 'Email a resume', "mailto:email@jobsgalore.eu?subject=The resume for posting on jobsgalore", style: link_email

@@ -17,6 +17,7 @@ class Grid_Inputs extends React.Component{
         this.pushItem = this.pushItem.bind(this);
         this.pushToServer = this.pushToServer.bind(this);
         this.notSave = this.notSave.bind(this);
+        this.update = this.update.bind(this);
         this._modalWindow = React.createRef();
         this._fieldEmail = React.createRef();
         this._fieldPhone = React.createRef();
@@ -25,6 +26,17 @@ class Grid_Inputs extends React.Component{
         this._fieldLocationName = React.createRef();
         this._fieldSendEmail = React.createRef();
         this._fieldContact = React.createRef();
+    }
+
+    update(){
+        $.ajax({
+            type: "GET",
+            url: this.props.update_route,
+            success: function (data) {
+                this.setState({emails: data ? data : []});
+            }.bind(this),
+            dataType: 'json'
+        });
     }
 
     editItem(index){
@@ -68,9 +80,11 @@ class Grid_Inputs extends React.Component{
                 }.bind(this),
             dataType: 'json'
         });
+
     }
     notSave(){
         this.setState({notSave: true});
+        this.update();
     }
     pushItem(index){
         item = {

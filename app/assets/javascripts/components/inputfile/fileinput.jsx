@@ -123,7 +123,7 @@ class Fileinput extends React.Component{
                         <div className='btn btn-primary btn-file' >
                             <i className="glyphicon glyphicon-folder-open"></i>
                             <span className="hidden-xs"> Selected</span>
-                            <input onChange={this.handleChange} id={this.props.id} name={this.props.name}  type="file" accept="image/*,image/jpeg" />
+                            <input ref={this.props.refInput} onChange={this.handleChange} id={this.props.id} name={this.props.name}  type="file" accept="image/*,image/jpeg" />
                         </div>
                     </div>
                 </div>

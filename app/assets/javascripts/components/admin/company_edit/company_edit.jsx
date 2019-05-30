@@ -1,7 +1,15 @@
 class CompanyEdit extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {notSave: true};
+        this.state = {  notSave: true,
+                        name: this.props.name,
+                        site: this.props.site,
+                        size: this.props.size.value,
+                        locationDefaultName: this.props.location.defaultName,
+                        locationDefaultId: this.props.location.defaultId,
+                        industry: this.props.industry.value,
+                        agency: this.props.recruitmentagency,
+                        description: this.props.description};
         this.save = this.save.bind(this);
         this.notSave = this.notSave.bind(this);
         this._fieldName = React.createRef();
@@ -60,17 +68,17 @@ class CompanyEdit extends React.Component {
             <div className="form-group">
                 <label>Name</label>
                 <br/>
-                <input ref={this._fieldName} className="form-control" type="text" defaultValue={this.props.name}/>
+                <input ref={this._fieldName} className="form-control" type="text" defaultValue={this.state.name}/>
             </div>
             <div className="form-group">
                 <label >Site</label>
                 <br/>
-                <input ref={this._fieldSite} className="form-control" type="text" defaultValue={this.props.site}/>
+                <input ref={this._fieldSite} className="form-control" type="text" defaultValue={this.state.site}/>
             </div>
             <div className="form-group">
                 <label>Size</label>
                 <br/>
-                <select ref={this._fieldSize} defaultValue={this.props.size.value} className="selectpicker form-control" data-style="btn-default">
+                <select ref={this._fieldSize} defaultValue={this.state.size} className="selectpicker form-control" data-style="btn-default">
                     {sizes}
                 </select>
             </div>
@@ -84,31 +92,30 @@ class CompanyEdit extends React.Component {
                                 name = {this.props.location.name}
                                 id = {this.props.location.id}
                                 route = {this.props.location.route}
-                                defaultName = {this.props.location.defaultName}
-                                defaultId = {this.props.location.defaultId} />
+                                defaultName = {this.state.locationDefaultName}
+                                defaultId = {this.state.locationDefaultId} />
             </div>
             <div className="form-group">
                 <label>Industry</label>
                 <br/>
-                <select ref={this._fieldIndustry} defaultValue={this.props.industry.value} className="form-control">
+                <select ref={this._fieldIndustry} defaultValue={this.state.industry} className="form-control">
                 {industries}
                 </select>
             </div>
             <div className="form-group">
                 <div className="custom-control custom-checkbox">
-                    <input type="checkbox" ref={this._fieldAgency} defaultChecked={this.props.recruitmentagency} className="custom-control-input"/> &nbsp;
+                    <input type="checkbox" ref={this._fieldAgency} defaultChecked={this.state.agency} className="custom-control-input"/> &nbsp;
                     <label>Recruitment agency</label>
                 </div>
             </div>
             <div className="form-group">
                 <label>Description</label>
                 <br/>
-                <textarea name="letter[text]" defaultValue={this.props.description}  ref={this._fieldDescription} className="markdown none"/>
+                <textarea name="letter[text]" defaultValue={this.state.description}  ref={this._fieldDescription} className="markdown none"/>
             </div>
             <div className="row">
                 <div className="col-sm-offset-6 col-md-offset-6 col-lg-offset-6 col-xs-12 col-md-6 col-sm-6 col-lg-6">
                     {btn_save}
-
                 </div>
             </div>
         </div>);

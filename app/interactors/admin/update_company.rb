@@ -6,8 +6,10 @@ class Admin::UpdateCompany
   def call
     services = LazyHash.new(
       'update_emails' => -> { emails },
-      'update_company' => -> { company }
+      'update_company' => -> { company },
+      'update_logo' => -> { logo}
     )
+    Rails.logger.info(context.params)
     services[context.params['action_executed']]
   end
 
@@ -33,6 +35,12 @@ class Admin::UpdateCompany
       saved_company.try("#{attr}=", value)
     end
     saved_company.save if need_to_save
+  end
+
+  def logo
+    saved_company = Company.find_by_id(context.params['id'])
+    saved_company.logo = context.params['data']["img"]
+    saved_company.save
   end
 
   private

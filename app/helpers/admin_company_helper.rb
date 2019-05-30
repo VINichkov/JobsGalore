@@ -14,7 +14,8 @@ module AdminCompanyHelper
         site: company.site,
         recruitmentagency: company.recrutmentagency,
         description: company.description,
-        route: admin_company_url
+        route: admin_company_url,
+        update_route: admin_get_company_url
     )
   end
 
@@ -24,7 +25,18 @@ module AdminCompanyHelper
         emails: company.emails_to_grid,
         location_name: company.location ? company.location.name : Location.default.name,
         location_id: company.location ? company.location.id : Location.default.id,
-        route: admin_company_url
+        route: admin_company_url,
+        update_route: admin_get_emails_url
+    )
+  end
+
+  def input_logo(company)
+    react_component(
+        'EditPicture',
+        image: company.logo_uid ? Dragonfly.app.remote_url_for(company.logo_uid) : company.logo_uid,
+        defaultImage: image_url("company_profile.jpg"),
+        route: admin_company_url,
+        update_route: admin_get_logo_url
     )
   end
 end
