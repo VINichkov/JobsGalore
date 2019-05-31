@@ -42,6 +42,7 @@ class Admin::EmailsOfCompany
                 email: email.email,
                 fio: email.fio,
                 phone: email.phone,
+                main: email.main,
                 send_email: email.send_email,
                 contact: email.contact }
         if email.location_id

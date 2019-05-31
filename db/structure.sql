@@ -262,7 +262,8 @@ CREATE TABLE public.email_hrs (
     location_id bigint,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    fio character varying
+    fio character varying,
+    main boolean
 );
 
 
@@ -1630,6 +1631,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190514065624'),
 ('20190514070814'),
 ('20190517062747'),
-('20190517072016');
+('20190517072016'),
+('20190531141930');
 
 

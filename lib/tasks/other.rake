@@ -51,13 +51,18 @@ namespace :other do
     report = {}
     report[:new_resumes] = Resume.where("created_at >= :date", date: Time.now - 1.day).count
     report[:new_jobs] = Job.where("created_at >= :date", date: Time.now - 1.day).count
-    report[:new_client] = Client.where("created_at >= :date and send_email = true", date: Time.now - 1.day).count
-    report[:new_company] = Company.where("created_at >= :date and description is not null", date: Time.now - 1.day).count
+    report[:new_client_applicants] = Client.where("created_at >= :date and send_email = true and caracter = 'applicant'", date: Time.now - 1.day).count
+    report[:new_client_employers] = Client.where("created_at >= :date and send_email = true and caracter != 'applicant'", date: Time.now - 1.day).count
+    report[:new_client_alert] = ClientForAlert.where("created_at >= :date", date: Time.now - 1.day).count
+    report[:new_company] = Company.where("create_at >= :date", date: Time.now - 1.day).count
+    report[:new_company_description] = Company.where("update_at >= :date and description is not null", date: Time.now - 1.day).count
     report[:new_pay_count] = Payment.where("created_at >= :date", date: Time.now - 1.day).count
     report[:new_pay_sum] = Payment.where("created_at >= :date and kindpay = 1", date: Time.now - 1.day).count * 10 + Payment.where("created_at >= :date and kindpay = 3", date: Time.now - 1.day).count * 5
-    report[:new_viewed] = Viewed.where("created_at >= :date", date: Time.now - 1.day).count
+    report[:new_viewed_resume] = Viewed.where("created_at >= :date and doc_type = 'Resume'" , date: Time.now - 1.day).count
+    report[:new_viewed_job] = Viewed.where("created_at >= :date and doc_type = 'Job'" , date: Time.now - 1.day).count
+    report[:new_respondeds] = Responded.where("created_at >= :date" , date: Time.now - 1.day).count
     if report[:new_resumes] or report[:new_jobs] or report[:new_client] or report[:new_company] or report[:new_pay_count] or report[:new_pay_sum] or report[:new_viewed]
-      ContactUsMailer.alert_of_change(report).deliver_now
+      ContactUsMailer.  alert_of_change(report).deliver_now
     end
     puts "! Task:report: End #{Time.now - t}"
   end

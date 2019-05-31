@@ -11,18 +11,43 @@ div[style=body_email]
   =@arg[:new_jobs]
   =space_email
   div[style=h3_email]
-    |Новые клиенты
-  =@arg[:new_client]
+    |Новые клиенты соискатели
+  =@arg[:new_client_applicants]
   = space_email
   div[style=h3_email]
-    |Заполенные компании
+    |Новые клиенты работодатели
+  = @arg[:new_client_employers]
+  = space_email
+  div[style=h3_email]
+    |Новые клиенты
+  = @arg[:new_client_alert]
+  = space_email
+  div[style=h3_email]
+    |Новых компаний
   =@arg[:new_company]
   = space_email
   div[style=h3_email]
-    |Новые транзакции
-  |#{@arg[:new_pay_count]} || #{@arg[:new_pay_sum]}
+    |Заполенные компании
+  = @arg[:new_company_description]
   = space_email
   div[style=h3_email]
-    |Новые просмотры
+    |Новые транзакции
+  |#{@arg[:new_pay_count]} всего || #{@arg[:new_pay_sum]} $
+  = space_email
+  div[style=h3_email]
+    |Новые просмотры резюме
+  = @arg[:new_viewed_resume]
+  = space_email
+  div[style=h3_email]
+    |Новые просмотры работы
+  = @arg[:new_viewed_job]
+  = space_email
+  div[style=h3_email]
+    |Новые переходы
   = @arg[:new_viewed]
+  = space_email
+  div[style=h3_email]
+    |Новые переходы
+  = @arg[:new_respondeds]
+  = space_email
 

@@ -25,6 +25,7 @@ class Grid_Inputs extends React.Component{
         this._fieldLocationId = React.createRef();
         this._fieldLocationName = React.createRef();
         this._fieldSendEmail = React.createRef();
+        this._fieldMain = React.createRef();
         this._fieldContact = React.createRef();
     }
 
@@ -47,6 +48,7 @@ class Grid_Inputs extends React.Component{
                         modal_fio: this.state.emails[index].fio,
                         modal_phone:this.state.emails[index].phone,
                         modal_send_email: this.state.emails[index].send_email,
+                        modal_main: this.state.emails[index].main,
                         modal_contact: this.state.emails[index].contact});
         $(this._modalWindow.current).modal('show');
     }
@@ -64,7 +66,8 @@ class Grid_Inputs extends React.Component{
                         modal_email: null,
                         modal_fio: null,
                         modal_phone: null,
-                        modal_send_email: null});
+                        modal_send_email: true,
+                        modal_main: null});
         $(this._modalWindow.current).modal('show');
     }
 
@@ -94,6 +97,7 @@ class Grid_Inputs extends React.Component{
             fio:this._fieldFio.current.value,
             phone: this._fieldPhone.current.value,
             send_email:this._fieldSendEmail.current.checked,
+            main:this._fieldMain.current.checked,
             contact:this._fieldContact.current.checked
         };
         arr = this.state.emails;
@@ -162,6 +166,13 @@ class Grid_Inputs extends React.Component{
                                     </div>
                                     <div className="form-group">
                                         <div className="custom-control custom-checkbox">
+                                            <input type="checkbox" ref={this._fieldMain} defaultChecked={this.state.modal_main} className="custom-control-input" id="main" />
+                                            &nbsp;
+                                            <label className="custom-control-label" htmlFor="main">Main</label>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <div className="custom-control custom-checkbox">
                                             <input type="checkbox" ref={this._fieldSendEmail} defaultChecked={this.state.modal_send_email} className="custom-control-input" id="send_email" />
                                             &nbsp;
                                             <label className="custom-control-label" htmlFor="send_email">Send Email</label>
@@ -201,11 +212,11 @@ class Grid_Inputs extends React.Component{
             tbody = this.state.emails.map(function (email, index) {
                 return (
                     <tr key={index}>
-                        <td>{index}</td>
                         <td>{email.id}</td>
                         <td>{email.email}</td>
                         <td>{email.fio}</td>
                         <td>{email.phone}</td>
+                        <td>{email.main ? "true" : "false"}</td>
                         <td>{email.send_email ? "true" : "false"}</td>
                         <td>{email.contact ? "true" : "false"}</td>
                         <td>{email.location_name}</td>
@@ -217,11 +228,11 @@ class Grid_Inputs extends React.Component{
                     <table className="table table-bordered table-striped table-hover">
                         <thead>
                             <tr scope="col">
-                                <th>Index</th>
                                 <th>ID</th>
                                 <th>Email</th>
                                 <th>Full Name</th>
                                 <th>Phone number</th>
+                                <th>Main</th>
                                 <th>Send Email</th>
                                 <th>Contact</th>
                                 <th>Location</th>
