@@ -34,8 +34,8 @@ class CompanyEdit extends React.Component {
             location_id: this._fieldLocationId.current.value,
             industry_id: this._fieldIndustry.current.value,
             recrutmentagency: this._fieldAgency.current.checked,
-            description: this._fieldDescription.current.value
-        };
+            description: tinyMCE.activeEditor.getContent()
+    };
          $.ajax({
              type: "PATCH",
              url: this.props.route,
@@ -111,7 +111,7 @@ class CompanyEdit extends React.Component {
             <div className="form-group">
                 <label>Description</label>
                 <br/>
-                <textarea name="letter[text]" defaultValue={this.state.description}  ref={this._fieldDescription} className="markdown none"/>
+                <textarea name="letter[text]" defaultValue={this.state.description}  ref={this._fieldDescription} className="tinymce" id="letter_description"/>
             </div>
             <div className="row">
                 <div className="col-sm-offset-6 col-md-offset-6 col-lg-offset-6 col-xs-12 col-md-6 col-sm-6 col-lg-6">
