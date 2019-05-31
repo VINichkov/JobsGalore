@@ -136,14 +136,14 @@ class Grid_Inputs extends React.Component{
                                         <input id="fio" ref={this._fieldFio} defaultValue={this.state.modal_fio} className = "form-control" required="required" type ="text"/>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="email">Email *</label>
-                                        <br/>
-                                        <input id="email" ref={this._fieldEmail} defaultValue={this.state.modal_email} className="form-control" required="required" type="text"/>
-                                    </div>
-                                    <div className="form-group">
                                         <label htmlFor="phone">Phone number</label>
                                         <br/>
                                         <input id="phone" ref={this._fieldPhone} defaultValue={this.state.modal_phone} className="form-control" required="required" type="text"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="email">Email *</label>
+                                        <br/>
+                                        <input id="email" ref={this._fieldEmail} defaultValue={this.state.modal_email} className="form-control" required="required" type="text"/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="location">Location</label>
