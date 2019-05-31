@@ -54,8 +54,8 @@ namespace :other do
     report[:new_client_applicants] = Client.where("created_at >= :date and send_email = true and character = 'applicant'", date: Time.now - 1.day).count
     report[:new_client_employers] = Client.where("created_at >= :date and send_email = true and character != 'applicant'", date: Time.now - 1.day).count
     report[:new_client_alert] = Clientforalert.where("created_at >= :date", date: Time.now - 1.day).count
-    report[:new_company] = Company.where("create_at >= :date", date: Time.now - 1.day).count
-    report[:new_company_description] = Company.where("update_at >= :date and description is not null", date: Time.now - 1.day).count
+    report[:new_company] = Company.where("created_at >= :date", date: Time.now - 1.day).count
+    report[:new_company_description] = Company.where("updated_at >= :date and description is not null", date: Time.now - 1.day).count
     report[:new_pay_count] = Payment.where("created_at >= :date", date: Time.now - 1.day).count
     report[:new_pay_sum] = Payment.where("created_at >= :date and kindpay = 1", date: Time.now - 1.day).count * 10 + Payment.where("created_at >= :date and kindpay = 3", date: Time.now - 1.day).count * 5
     report[:new_viewed_resume] = Viewed.where("created_at >= :date and doc_type = 'Resume'" , date: Time.now - 1.day).count
