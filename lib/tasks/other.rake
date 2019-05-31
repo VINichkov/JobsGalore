@@ -61,6 +61,8 @@ namespace :other do
     report[:new_viewed_resume] = Viewed.where("created_at >= :date and doc_type = 'Resume'" , date: Time.now - 1.day).count
     report[:new_viewed_job] = Viewed.where("created_at >= :date and doc_type = 'Job'" , date: Time.now - 1.day).count
     report[:new_respondeds] = Responded.where("created_at >= :date" , date: Time.now - 1.day).count
+    report[:percent_of_full] = Company.where("description is not null").count.to_f / Company.all.count.to_f * 100
+    report[:amont_of_emails] = EmailHr.where("send_email = true").count
     if report[:new_resumes] or report[:new_jobs] or report[:new_client] or report[:new_company] or report[:new_pay_count] or report[:new_pay_sum] or report[:new_viewed]
       ContactUsMailer.  alert_of_change(report).deliver_now
     end
