@@ -19,6 +19,7 @@ class Admin::UpdateCompany
     delete_excess_emails(array_of_emails, company_id)
     if array_of_emails.present?
       array_of_emails.each do |t|
+        t[:location_id] = nil if t[:location_name].blank?
         t.delete(:location_name)
         t[:company_id] = company_id
         t[:id].present? ? update_email(t) : EmailHr.create(t)
