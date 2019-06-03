@@ -49,7 +49,7 @@ class Company < ApplicationRecord
   end
 
   def absorb(company)
-    unless self.names.include? company.name
+    unless self.names.includes? company.name
       self.add_name company.name
     end
     company.job.each do |t|
