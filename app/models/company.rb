@@ -53,7 +53,7 @@ class Company < ApplicationRecord
       self.add_name company.name
     end
     company.job.each do |t|
-      t.update(company_id: self.id, client_id: self.client_id)
+      t.update(company_id: self.id, client_id: self.client.first.id)
     end
 
     company.client.destroy_all
