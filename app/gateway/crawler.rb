@@ -136,8 +136,8 @@ class Crawler
   def compare_with_index(arg)
     block_list = []
     block_list.push("Jora Local")
-    if block_list.include?(arg[:title])
-      log(arg[:location], arg[:thread], arg[:page], "!!! Компания в блок листе !!! #{arg[:title]}")
+    if block_list.include?(arg[:company])
+      log(arg[:location], arg[:thread], arg[:page], "!!! Компания в блок листе !!! #{arg[:company]}")
       :block_list
     elsif Job.where(location_id: arg[:location_id],  sources:arg[:url]).first
       log(arg[:location], arg[:thread], arg[:page], "!!! Нашли ссылку на работу. Уже присутсвует в БД !!! #{arg[:url]} | #{arg[:title]} }")
