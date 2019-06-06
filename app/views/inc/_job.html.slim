@@ -28,7 +28,7 @@
           .row.text-center
             = link_to(job.company.name.truncate(50, separator: " "), job.company)
           .row.text-center
-            = link_to(image_bg(job.company.logo_url, "130px", "130px", "100px"), job.company)
+            = link_to(image_bg(job.company.logo_url, "contain", "130px", "100px"), job.company)
       .row.text-center
         = "Posted: " +job.posted_date
 .row.border_top.hidden-lg.hidden-md.hidden-sm[class=" #{class_extras(job)}"]

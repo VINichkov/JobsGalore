@@ -18,12 +18,12 @@
           - if current_client && (current_client.resp? || (resume.client.id == current_client.id) || current_client.admin?)
             h4.text-center
               = resume.client.full_name
-            = image_bg(resume.client.photo_url, "300px", "300px", "250px")
+            = image_bg(resume.client.photo_url, "contain", "300px", "250px")
           - else
             h4.text-center
               |Anonymous
             p
-            = image_bg(image_path("avatar.jpg"), "300px", "300px", "250px")
+            = image_bg(image_path("avatar.jpg"), "contain", "300px", "250px")
           .well
             = render 'inc/summary', object: resume
             .btn_margin
@@ -40,12 +40,12 @@
           - if current_client && (current_client.resp? || (resume.client.id == current_client.id) || current_client.admin?)
             h4.text-center
               = resume.client.full_name
-            = image_bg(resume.client.photo_url, "300px", "300px", "250px")
+            = image_bg(resume.client.photo_url, "contain", "300px", "250px")
           - else
             h4.text-center
               |Anonymous
             p
-            = image_bg(image_path("avatar.jpg"), "300px", "300px", "250px")
+            = image_bg(image_path("avatar.jpg"), "contain", "300px", "250px")
           p
           .text-center
             = social_share_button_tag resume.title, url: resume_url(resume), title:resume.title

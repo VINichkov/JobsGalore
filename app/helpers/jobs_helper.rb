@@ -13,7 +13,7 @@ module JobsHelper
       link_to(object.name,object)
     }
     html+= content_tag(:span,object.logo_url, class: "hidden-xs hidden-md hidden-lg hidden-sm",itemprop:"image" )
-    html+= image_bg(object.logo_url, "300px", "300px", "250px" )
+    html+= image_bg(object.logo_url, "contain", "300px", "250px" )
   end
 
   def last_job(job)

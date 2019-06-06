@@ -3,7 +3,7 @@
     h1 My Jobs
     .col-lg-3.col-md-3.hidden-sm.hidden-xs
       .row.well.text-center
-        = image_bg(@client.photo_url,  "200px", "200px", "200px")
+        = image_bg(@client.photo_url,  "contain", "200px", "200px")
         p
         = link_to "Post new job", new_job_path, class: "btn btn-primary btn-block btn_margin"
     .col-sm-9.col-md-9.col-sm-12.col-xs-12
@@ -18,7 +18,7 @@
     h1 My Resumes
     .col-lg-3.col-md-3.hidden-sm.hidden-xs
       .row.well.text-center
-        = image_bg(@client.photo_url, "200px", "200px", "200px")
+        = image_bg(@client.photo_url, "contain", "200px", "200px")
         p
         = link_to "Post new resume", new_resume_path, class: "btn btn-primary btn-block btn_margin"
     .col-sm-9.col-md-9.col-sm-12.col-xs-12

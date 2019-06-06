@@ -21,7 +21,7 @@
           .row.text-center
             = resume.client&.full_name
           .row.text-center
-            = image_bg(resume.client&.photo_url, "130px", "130px", "100px")
+            = image_bg(resume.client&.photo_url, "contain", "130px", "100px")
           .row.text-center
             = "Posted: " +resume.posted_date
       - else
@@ -29,7 +29,7 @@
           .row.text-center
             = "Anonymous"
           .row.text-center
-            = image_bg(image_url("avatar.jpg"), "130px", "130px", "100px")
+            = image_bg(image_url("avatar.jpg"), "contain", "130px", "100px")
           .row.text-center
             = "Posted: " +resume.posted_date
 .row.border_top.hidden-lg.hidden-md.hidden-sm[class=" #{class_extras(resume)}"]

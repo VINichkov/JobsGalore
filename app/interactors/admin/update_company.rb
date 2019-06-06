@@ -9,7 +9,6 @@ class Admin::UpdateCompany
       'update_company' => -> { company },
       'update_logo' => -> { logo}
     )
-    Rails.logger.info(context.params)
     services[context.params['action_executed']]
   end
 
@@ -22,6 +21,9 @@ class Admin::UpdateCompany
         t[:location_id] = nil if t[:location_name].blank?
         t.delete(:location_name)
         t[:company_id] = company_id
+        t[:fio] = t[:fio].squish
+        t[:email] = t[:email].squish
+        t[:phone] = t[:phone].squish
         t[:id].present? ? update_email(t) : EmailHr.create(t)
       end
     end

@@ -34,7 +34,9 @@ Rails.application.routes.draw do
   # devise_for :clients
   #
   # mailing
-  get "contacts", to: "mailing#contacts", as: "index_contacts"
+  get "contacts_of_companies", to: "mailing#contacts_of_companies", as: "contacts_of_companies"
+  get "contact_of_seekers", to: "mailing#contact_of_seekers", as: "contact_of_seekers"
+  get "contacts/:id", to: "mailing#contact_of_conpany", as: "contact_of_conpany"
 
   resources :companies, only: [:new,:create, :show, :edit, :update, :destroy]
   get "companies/:id/:text", to: "companies#highlight_view", as: 'company_highlight_view'

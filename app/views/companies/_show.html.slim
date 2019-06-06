@@ -33,7 +33,7 @@
         .row.text-center
           span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="image"]
             =company.logo_url
-          = image_bg(company.logo_url, "300px", "300px", "250px")
+          = image_bg(company.logo_url, "contain", "300px", "250px")
         .row
           h3.text-center
             |Summary
@@ -51,7 +51,7 @@
     .row
       .col-xs-12.col-sm-6
         .row.text-center
-          = image_bg(company.logo_url, "300px", "300px", "250px")
+          = image_bg(company.logo_url, "contain", "300px", "250px")
           = social_share_button_tag company.name, class: "center-block"
       .col-xs-12.col-sm-6
         h3.text-center

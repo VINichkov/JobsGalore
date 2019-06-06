@@ -1,7 +1,7 @@
 .panel.panel-default.hidden-xs
   .panel-body
     .col-lg-3.col-md-3.col-sm-3.text-center
-      = link_to(image_bg(company.logo_url, "150px", "150px", "120px"), company)
+      = link_to(image_bg(company.logo_url, "contain", "150px", "120px"), company)
       span
         = link_industry(company.industry.name, company.industry, Objects::COMPANIES, class: 'text-success')
         | &nbsp; - &nbsp;

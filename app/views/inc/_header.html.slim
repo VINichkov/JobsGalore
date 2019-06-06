@@ -4,7 +4,7 @@
     ul.nav.navbar-nav
       - if client_signed_in?
         .text-center
-          = image_bg(current_client.photo_url, "50px", "50px", "50px")
+          = image_bg(current_client.photo_url, "contain", "50px", "50px")
         .text-center
           | &nbsp; #{current_client.full_name} &nbsp;
         -if current_client.resp?
@@ -94,12 +94,12 @@
             span.icon-bar
             span.icon-bar
           = link_to root_path do
-            = image_bg(image_path("jg.png"), "200px", "200px", "50px", class: "avatar")
+            = image_bg(image_path("jg.png"), "contain", "200px", "50px", class: "avatar")
         .hidden-xs
           ul.nav.navbar-nav
             li.nav-item
               = link_to root_path do
-                = image_bg(image_path("jg.png"), "300px", "300px", "65px", class: "avatar")
+                = image_bg(image_path("jg.png"), "contain", "300px", "65px", class: "avatar")
             li.nav-item
               a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
                 |Jobs
