@@ -129,6 +129,18 @@ class Job < ApplicationRecord
     save
   end
 
+  def emails
+    if client.send_email
+      [client.email]
+    else
+      company.email_hr.select(:email).where(main: true).pluck(:email)
+    end
+  end
+
+  def send_email?
+    emails.present?
+  end
+
   def salary
     @salary ||= calc_salary
   end

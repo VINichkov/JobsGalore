@@ -24,10 +24,10 @@ class ResumesMailer < ApplicationMailer
     mail(to: resume.client.email, subject: "The option \"#{option}\" was turned off")
   end
 
-  def send_to_employer(resume, job, pdf, letter, copy =nil)
+  def send_to_employer(resume, job, email, pdf, letter, copy =nil)
     @utm = create_utm(:letter_to_employer)
     @resume, @job, @letter = resume, job, letter
-    client = (!copy ? job.client.email : PropertsHelper::ADMIN)
+    client = (!copy ? email : PropertsHelper::ADMIN)
     attachments["#{@resume.client.full_name}.pdf"] = pdf
     mail(to: client, subject: job.title)
   end

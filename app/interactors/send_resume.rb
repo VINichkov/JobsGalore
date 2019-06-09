@@ -5,7 +5,9 @@ class SendResume
     begin
       resume = create_resume(context.params)
       context.job = Job.find_by_id(context.params[:job])
-      send(resume, context.job, context.params[:text])
+      context.job.emails.each do |t|
+        send(resume, context.job, t, context.params[:text])
+      end
       context.msg = 'Your resume was successfully sent!'
     rescue
       Rails.logger.debug("ERROR #{$!}")
@@ -37,9 +39,9 @@ class SendResume
     resume.decorate
   end
 
-  def send(resume, job, letter)
+  def send(resume, job, email, letter)
     pdf = resume.to_pdf
-    ResumesMailer.send_to_employer(resume, job, pdf, letter).deliver_later
-    ResumesMailer.send_to_employer(resume, job, pdf, letter, true).deliver_later
+    ResumesMailer.send_to_employer(resume, job, email, pdf, letter).deliver_later
+    ResumesMailer.send_to_employer(resume, job, email, pdf, letter, true).deliver_later
   end
 end

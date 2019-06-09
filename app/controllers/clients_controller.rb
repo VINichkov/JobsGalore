@@ -184,9 +184,9 @@ class ClientsController < ApplicationController
     @send_resume = SendResume.call(params:send_params, current_client_id: current_client.id)
     respond_to do |format|
       if @send_resume.success?
-          format.html { redirect_to job_path(@send_resume.job), notice: @send_resume.msg }
+        format.html { redirect_to job_path(@send_resume.job), notice: @send_resume.msg }
       else
-          format.html { redirect_to job_path(@send_resume.job), alert:  @send_resume.msg }
+        format.html { redirect_to job_path(@send_resume.job), alert:  @send_resume.msg }
       end
     end
   end
