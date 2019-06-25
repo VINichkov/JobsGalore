@@ -23,15 +23,15 @@ class Admin::EmailsOfCompany
     new(
       uuid: company.id,
       name: company.name,
-      size_id: company.size.id,
+      size_id: company.size&.id,
       location: company.location,
       site: company.site,
       logo_uid: company.logo_uid,
       recrutmentagency: company.recrutmentagency,
       description: company.description,
       realy: company.realy,
-      emails: company.email_hr.to_a,
-      industry_id: company.industry.id,
+      emails: company.email_hr&.to_a,
+      industry_id: company.industry&.id,
     )
   end
 
