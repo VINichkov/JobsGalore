@@ -11,7 +11,7 @@ module PaymentsHelper
         item_name: params[:item_name],
         currency_code: 'AUD',
         amount: params[:price]}
-    puts values
-    "https://www.paypal.com/cgi-bin/webscr?#{values.to_query}"
+    domain = ENV["TEST"].nil? ? 'paypal' : 'sandbox.paypal'
+    "https://www.#{domain}.com/cgi-bin/webscr?#{values.to_query}"
   end
 end
