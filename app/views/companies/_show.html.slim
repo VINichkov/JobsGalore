@@ -39,7 +39,15 @@
             |Summary
         .well
           =company_summary(company)
-          = buttons("col-lg-12 col-md-12")
+          .row
+            .col-lg-12.col-md-12
+              a.btn.btn-primary.btn-block[ href= contacts_of_company_url(company.name)]
+                |Contact
+              p
+            .col-lg-12.col-md-12
+              button.btn.btn-primary.btn-block[ onclick= "history.back()"]
+                |Back
+              p
           = social_share_button_tag company.name
 .col-sm-12.col-xs-12.hidden-md.hidden-lg
   .panel-body
@@ -57,7 +65,15 @@
         h3.text-center
           |Summary
         = company_summary(company)
-        = buttons("col-xs-6")
+        .row
+          .col-xs-6
+            a.btn.btn-primary.btn-block[ href= contacts_of_company_url(company.name)]
+              |Contact
+            p
+          .col-xs-6
+            button.btn.btn-primary.btn-block[ onclick= "history.back()"]
+              |Back
+            p
     .row
       .col-xs-12.col-sm-12
         p

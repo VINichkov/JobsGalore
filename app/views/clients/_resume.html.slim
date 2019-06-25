@@ -7,13 +7,13 @@
       ul.dropdown-menu
         - if PropertsHelper::URGENT=="true"
           li
-            = link_to "Urgent $10 (7 day)", bill_path(bill: {id: resume.id, kind: 3, option: 1})
+            = link_to "Urgent $#{Services::URGENT.price_integer} (7 day)", bill_path(bill: {id: resume.id, kind: 3, option: 1})
         - if PropertsHelper::TOP == "true"
           li
             = link_to "Top $20 (7 day)", bill_path(bill: {id: resume.id, kind: 3, option: 2})
         - if PropertsHelper::HIGHLIGHT == "true"
           li
-            = link_to "Highlight $5 (7 day)", bill_path(bill: {id: resume.id, kind: 3, option: 3})
+            = link_to "Highlight $#{Services::HIGHLIGHT.price_integer} (7 day)", bill_path(bill: {id: resume.id, kind: 3, option: 3})
     .btn-group
       = link_to edit_resume_path(resume), class: "btn btn-success btn-block" do
         span.glyphicon.glyphicon-pencil
@@ -45,13 +45,13 @@
       ul.dropdown-menu
         - if PropertsHelper::URGENT=="true"
           li
-            = link_to "Urgent $10 (7 day)", bill_path(bill: {id: resume.id, kind: 3, option: 1})
+            = link_to "Urgent $#{Services::URGENT.price_integer} (7 day)", bill_path(bill: {id: resume.id, kind: 3, option: 1})
         - if PropertsHelper::TOP == "true"
           li
             = link_to "Top $20 (7 day)", bill_path(bill: {id: resume.id, kind: 3, option: 2})
         - if PropertsHelper::HIGHLIGHT == "true"
           li
-            = link_to "Highlight $5 (7 day)", bill_path(bill: {id: resume.id, kind: 3, option: 3})
+            = link_to "Highlight $#{Services::HIGHLIGHT.price_integer} (7 day)", bill_path(bill: {id: resume.id, kind: 3, option: 3})
       p
     .col-sm-12.col-lg-12.col-md-12
       = link_to "Edit", edit_resume_path(resume), class: "btn btn-success btn-block"

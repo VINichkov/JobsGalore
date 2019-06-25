@@ -70,7 +70,7 @@ class Search extends React.Component{
                 <input type="checkbox" defaultChecked={this.state.urgent}
                        name={this.props.name + '[urgent]'}/>
                 &nbsp;
-                <span className="badge badge-error"><strong> &nbsp; Only urgent </strong></span>
+                <span className="badge badge-error"><strong> &nbsp; ONLY URGENT </strong></span>
             </label>
         </div>;
         if (this.state.active_options) {

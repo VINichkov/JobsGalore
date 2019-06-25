@@ -21,7 +21,7 @@ class Bill
 
   def urgent
     context.ad.urgent = Date.today
-    context.title = "You are buying - Urgent $10 (7 days)"
+    context.title = "You are buying - Urgent $#{Services::URGENT.price_integer} (7 days)"
     Services::URGENT
   end
 
@@ -33,7 +33,7 @@ class Bill
 
   def highlight
     context.ad.highlight = Date.today
-    context.title = "You are buying - Highlight $5 (7 days)"
+    context.title = "You are buying - Highlight $#{Services::HIGHLIGHT.price_integer} (7 days)"
     Services::HIGHLIGHT
   end
 

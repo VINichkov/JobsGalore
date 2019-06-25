@@ -46,12 +46,10 @@ module CompanyHelper
 
   def buttons( class_name)
     content_tag(:div,class:"row") do
-=begin
       buttons  = content_tag(:div, class:class_name) do
-        div = button_tag "Contact", class: "btn btn-primary btn-block", "data-toggle":"modal", "data-target":"#contact"
+        div = content_tag :a,"Contact", class: "btn btn-primary btn-block", href: contacts_of_companies
         div += content_tag(:p)
       end
-=end
       buttons  = content_tag(:div, class:class_name) do
         div = button_tag "Back", class: "btn btn-success btn-block", onclick:"history.back()"
         div += content_tag(:p)

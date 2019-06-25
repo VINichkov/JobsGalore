@@ -23,6 +23,11 @@
             | &nbsp;
             span.glyphicon.glyphicon-cog
             | &nbsp; Settings
+        li
+          = link_to show_mailings_path do
+            | &nbsp;
+            span.glyphicon.glyphicon-envelope
+            | &nbsp; Mailbox
         - if current_client.employer?
           li
             = link_to settings_company_path do

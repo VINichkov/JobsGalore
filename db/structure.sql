@@ -541,6 +541,43 @@ ALTER SEQUENCE public.locations_id_seq OWNED BY public.locations.id;
 
 
 --
+-- Name: mailings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.mailings (
+    id bigint NOT NULL,
+    client_id bigint,
+    message character varying,
+    resume_id bigint,
+    price double precision,
+    offices jsonb[] DEFAULT '{}'::jsonb[],
+    type_letter character varying,
+    aasm_state character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: mailings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.mailings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: mailings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.mailings_id_seq OWNED BY public.mailings.id;
+
+
+--
 -- Name: payments; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -841,6 +878,13 @@ ALTER TABLE ONLY public.locations ALTER COLUMN id SET DEFAULT nextval('public.lo
 
 
 --
+-- Name: mailings id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mailings ALTER COLUMN id SET DEFAULT nextval('public.mailings_id_seq'::regclass);
+
+
+--
 -- Name: payments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -976,6 +1020,14 @@ ALTER TABLE ONLY public.jobs
 
 ALTER TABLE ONLY public.locations
     ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mailings mailings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mailings
+    ADD CONSTRAINT mailings_pkey PRIMARY KEY (id);
 
 
 --
@@ -1294,6 +1346,20 @@ CREATE INDEX index_locations_on_parent_id ON public.locations USING btree (paren
 
 
 --
+-- Name: index_mailings_on_client_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mailings_on_client_id ON public.mailings USING btree (client_id);
+
+
+--
+-- Name: index_mailings_on_resume_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mailings_on_resume_id ON public.mailings USING btree (resume_id);
+
+
+--
 -- Name: index_respondeds_on_doc_id_and_doc_type; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1433,6 +1499,14 @@ ALTER TABLE ONLY public.industryexperiences
 
 
 --
+-- Name: mailings fk_rails_57b95fc162; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mailings
+    ADD CONSTRAINT fk_rails_57b95fc162 FOREIGN KEY (client_id) REFERENCES public.clients(id);
+
+
+--
 -- Name: resumes fk_rails_58be162534; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1518,6 +1592,14 @@ ALTER TABLE ONLY public.jobs
 
 ALTER TABLE ONLY public.email_hrs
     ADD CONSTRAINT fk_rails_c06729e589 FOREIGN KEY (company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: mailings fk_rails_c7f9f6df8d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mailings
+    ADD CONSTRAINT fk_rails_c7f9f6df8d FOREIGN KEY (resume_id) REFERENCES public.resumes(id);
 
 
 --
@@ -1632,6 +1714,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190514070814'),
 ('20190517062747'),
 ('20190517072016'),
-('20190531141930');
+('20190531141930'),
+('20190621140649');
 
 
