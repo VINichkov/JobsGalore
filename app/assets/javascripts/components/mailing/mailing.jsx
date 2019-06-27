@@ -59,7 +59,7 @@ class Mailing extends React.Component{
             data:   letter,
             success: function (data, textStatus) {
                 if (data.url !== null) {
-                    //window.location.href = data.url;
+                    window.location.href = data.url;
                 }
             }.bind(this),
             dataType: 'json'
