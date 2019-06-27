@@ -15,7 +15,7 @@ class CreatePayment
       status: context.params[:payment_status],
       transaction_id: context.params[:txn_id]
     )
-    case type
+    case @type
     when 1..2
       promote
     when 4
