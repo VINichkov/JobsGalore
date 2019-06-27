@@ -13,7 +13,7 @@ class Search extends React.Component{
                         location_id: this.props.search ? this.props.search.location_id : '',
                         salary: this.props.search ? this.props.search.salary : '',
                         urgent: this.props.search ? this.props.search.urgent : false,
-                        category: this.props.search ? {id:Number(this.props.search.category)} : ''};
+                        category: (this.props.search.category !== '' && this.props.search.category !== null && this.props.search.category !== undefined )  ? {id:Number(this.props.search.category)} : ''};
         this.handleClickItem =  this.handleClickItem.bind(this);
         this.handleOnClickOptions = this.handleOnClickOptions.bind(this);
     }

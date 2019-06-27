@@ -41,7 +41,11 @@ class Mailing extends React.Component{
     }
 
     sendDateToServer(){
-        let letter = { recipients: this.state.elements.filter(elem => elem.check === true).map(elem => elem.id),
+        let letter = { recipients: this.state.elements.filter(elem => elem.check === true).map(function (elem){
+                    return({id: elem.id,
+                            type_client: elem.type_client});
+            }
+        ),
                         price: this.state.price,
                         message: this.state.message,
                         type: this.state.view ? this.props.type.resume : this.props.type.ad
@@ -54,7 +58,9 @@ class Mailing extends React.Component{
             url: this.props.route,
             data:   letter,
             success: function (data, textStatus) {
-                console.log("Good");
+                if (data.url !== null) {
+                    //window.location.href = data.url;
+                }
             }.bind(this),
             dataType: 'json'
         });

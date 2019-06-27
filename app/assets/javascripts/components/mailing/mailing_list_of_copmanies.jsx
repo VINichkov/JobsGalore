@@ -74,11 +74,7 @@ class MailingListOfCompanies extends React.Component {
         let tbody = this.props.viewElements().map(function (row) {
             return (
                 <tr key={row.index} onClick={() => this.onClickRow(row.index)} className={row.check ? "success" : null}>
-                    <th scope="row" key={row.index}>
-                        <div className="custom-control custom-checkbox">
-                            <input key={row.index} type="checkbox" className="custom-control-input" checked={row.check}/>
-                        </div>
-                    </th>
+                    <td style={CENTER}> <input key={row.index} type="checkbox" checked={row.check}/></td>
                     <td>{row.company}</td>
                     <td className="hidden-xs">{row.office}</td>
                     <td style={CENTER} className="hidden-xs">{star(row.main)}</td>
@@ -89,11 +85,7 @@ class MailingListOfCompanies extends React.Component {
         }.bind(this));
         let thead = <thead>
         <tr>
-            <th>
-                <div className="custom-control custom-checkbox">
-                    <input type="checkbox" onClick={this.onClickCheckAll}/>
-                </div>
-            </th>
+            <th style={CENTER}><input type="checkbox" onClick={this.onClickCheckAll}/></th>
             <th>Company</th>
             <th className="hidden-xs">Recipient</th>
             <th className="hidden-xs">Head office</th>
@@ -102,7 +94,7 @@ class MailingListOfCompanies extends React.Component {
             <th>Area</th>
         </tr>
         <tr className="info">
-            <th style={CENTER}><input ref={this._filterCheck} onChange={this.onChangeFilter} type="checkbox"/></th>
+            <th><input ref={this._filterCheck} onChange={this.onChangeFilter} type="checkbox"/></th>
             <th><input ref={this._filterCompany} type="text" onChange={this.onChangeFilter} className="form-control" placeholder="Filter.." defaultValue={this.props.filterCompany}/></th>
             <th className="hidden-xs"><input ref={this._filterOffice} type="text" onChange={this.onChangeFilter} className="form-control" placeholder="Filter.."/></th>
             <th className="hidden-xs" style={CENTER}><input ref={this._filterMain} onChange={this.onChangeFilter} type="checkbox"/></th>

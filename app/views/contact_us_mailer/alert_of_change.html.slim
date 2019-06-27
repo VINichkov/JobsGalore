@@ -54,4 +54,8 @@ div[style=body_email]
     |Новые емейлы для рассылки
   = @arg[:amont_of_emails]
   = space_email
+  div[style=h3_email]
+    |Всего рассылок | Рассылки ожидающие оплаты | Рассылки ожидающие подтверждения
+  = "#{@arg[:all_mailings]} | #{@arg[:expect_of_payment_mailings]} | #{@arg[:approval_mailings]}"
+  = space_email
 

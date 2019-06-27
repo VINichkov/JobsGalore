@@ -10,7 +10,8 @@ class Bill
                       type: context.params[:type],
                       item_number:"#{context.params[:option]}#{context.params[:type]}#{context.params[:id]}",
                       item_name:services.name,
-                      price: services.price}
+                      price: services.price,
+                      return_url: context.ad.url}
       if context.ad.blank? or services.price.blank?
         context.fail!
       end

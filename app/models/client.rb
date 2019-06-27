@@ -94,6 +94,31 @@ class Client < ApplicationRecord
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
+  def self.all_for_view
+    sql = <<-SQL
+      select
+        e.id,
+        'client' as "type_client",
+        c.name as "company",
+        e.firstname ||' '|| e.lastname  as "office",
+        false as "main",
+        l.suburb || ', '|| l.state as "location",
+        i.name as "industry",
+        c.recrutmentagency as "recrutmentagency"
+      from clients e,
+        locations l,
+        companies c,
+        industries i
+      where e.company_id = c.id
+            and c.industry_id = i.id
+            and l.id = e.location_id
+            and e.send_email = true
+      order by c.name ASC, "location" ASC
+    SQL
+
+    ActiveRecord::Base.connection.exec_query(sql).to_hash
+  end
+
   def rename()
     return unless self.photo.present?
     begin

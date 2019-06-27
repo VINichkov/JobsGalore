@@ -2,10 +2,11 @@ class EmailHr < ApplicationRecord
   belongs_to :company
   belongs_to :location
 
-  def self.all_for_view(filter=nil)
+  def self.all_for_view
     sql = <<-SQL
     select
-        e.id,  
+        e.id,
+        'email' as "type_client",  
         c.name as "company", 
         e.fio  as "office", 
         e.main as "main", 
@@ -23,17 +24,6 @@ class EmailHr < ApplicationRecord
     order by c.name ASC, "location" ASC
     SQL
 
-
-    ActiveRecord::Base.connection.exec_query(sql).to_hash.map.with_index do |row, index|
-      {index: index,
-       check: (filter ==  row['company']) ? true : false,
-       id: row['id'],
-       company: row['company'],
-       office: row['office'],
-       main:row['main'],
-       recrutmentagency: row['recrutmentagency'],
-       industry:row['industry'],
-       location:row['location'] ? row['location'] : 'Australia'}
-    end
+    ActiveRecord::Base.connection.exec_query(sql).to_hash
   end
 end

@@ -6,12 +6,7 @@ class CreateLetter
   def call
     letter = context.params
     mailing = {}
-    mailing[:offices] = EmailHr.where(id: letter['recipients']).includes(:location, :company).map do |recipient|
-      { company: recipient.company.name,
-        recipient: recipient.fio,
-        main: recipient.main,
-        area: recipient.location_id ? recipient.location.name : 'Australia' }
-    end
+    mailing[:offices] = recipients_from_client(letter['recipients']) + recipients_from_email(letter['recipients'])
     mailing[:message] = letter['message']
     mailing[:client_id] = context.client
     mailing[:resume_id] = letter['resume']
@@ -19,12 +14,39 @@ class CreateLetter
     mailing[:type_letter] = letter['type']
     new_letter = Mailing.new(mailing)
     context.fail! unless new_letter.save
-    content.url(
-      id: new_letter.id,
-      type: 4,
-      item_number: "44#{new_letter.id}",
-      item_name: 'mailing',
-      price: new_letter.price
-    )
+    context.payment_url = new_letter.decorate.payment_url
   end
+
+  private
+
+  def ids_of_emails(recipients, type)
+    recipients.values.map do |t|
+      t['id'] if t['type_client'] == type
+    end.compact
+  end
+
+  def recipients_from_email(recipients )
+    EmailHr.where(id: ids_of_emails(recipients, 'email' )).includes(:location, :company).map do |recipient|
+      {id: recipient.id,
+       type_client: 'email',
+       company: recipient.company.name,
+       recipient: recipient.fio,
+       main: recipient.main,
+       email: recipient.email,
+       area: recipient.location_id ? recipient.location.name : 'Australia' }
+    end
+  end
+
+  def recipients_from_client(recipients )
+    Client.where(id: ids_of_emails(recipients, 'client' )).includes(:location, :company).map do |recipient|
+      {id: recipient.id,
+       type_client: 'client',
+       company: recipient.company.name,
+       recipient: recipient.full_name,
+       main: false,
+       email: recipient.email,
+       area:  recipient.location.name }
+    end
+  end
+
 end

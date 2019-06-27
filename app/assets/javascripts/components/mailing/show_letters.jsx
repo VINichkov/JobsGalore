@@ -47,7 +47,7 @@ class ShowLetters extends React.Component{
         let tbody = this.state.letters.map(function (row, index) {
             let btnPay;
             if (row.pay_url !== null) {
-                btnPay = <div className="btn_margin"><a className="btn btn-info btn-block" href="#">Pay</a></div>;
+                btnPay = <div className="btn_margin"><a className="btn btn-info btn-block" href={row.pay_url}>Pay</a></div>;
             }
             return (
                 <tr key={index}>

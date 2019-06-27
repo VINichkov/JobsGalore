@@ -5,12 +5,23 @@ class MailingController < ApplicationController
   before_action :authenticate_client!, only: [:contacts_of_companies, :show, :destroy]
 
   def contacts_of_companies
-    @elements = EmailHr.all_for_view(@filter)
+    @elements = (Client.all_for_view + EmailHr.all_for_view).map.with_index do |row, index|
+      {index: index,
+       type_client: row['type_client'],
+       check: (@filter ==  row['company']) ? true : false,
+       id: row['id'],
+       company: row['company'],
+       office: row['office'],
+       main:row['main'],
+       recrutmentagency: row['recrutmentagency'],
+       industry:row['industry'],
+       location:row['location'] ? row['location'] : 'Australia'}
+    end #TODO  Присоединить реальных клиентов и адаптировать для сохранения типов и ИД
   end
 
   def create
     letter = CreateLetter.call(params:params, client: current_client.id)
-    redirect_to paypal_url(letter.url) #TODO проверить и доделать переход в платежый шлюз
+    render json:  {url: letter.payment_url}, status: :ok
   end
 
   def destroy
@@ -19,10 +30,10 @@ class MailingController < ApplicationController
   end
 
   def show
-    @mailings = Mailing.where(client_id: current_client).order(created_at: :desc).map do |t|
+    @mailings = Mailing.where(client_id: current_client).order(created_at: :desc).limit(20).decorate.map do |t|
       res = t.to_h
       res[:destroy_url] = mailing_url(t.id)
-      res[:pay_url] = 'nil'
+      res[:pay_url] = t.payment_url
       res
     end
   end

@@ -11,9 +11,12 @@ class ResumeDecorator < ApplicationDecorator
     self.turn swich[arg]
   end
 
+  def url
+    h.resume_url(object)
+  end
 
   def turn(extra)
-    eval ("object.#{extra} ? object.#{extra}_off : object.#{extra}_on")
+    eval("object.#{extra} ? object.#{extra}_off : object.#{extra}_on")
   end
 
   def salary
