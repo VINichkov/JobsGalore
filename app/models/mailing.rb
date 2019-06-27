@@ -19,6 +19,7 @@ class Mailing < ApplicationRecord
     state :approval
     state :finished
 
+    after  :affirm, :sending_emails
     event :pay do
       transitions from: :expect_the_payment, to: :approval
     end
