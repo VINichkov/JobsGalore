@@ -41,13 +41,12 @@ class Mailing < ApplicationRecord
   end
 
   def sending_emails
-    if type_letter == "resume to companies" && resume.present?
-      pdf = resume.to_pdf
-      title = resume.title
+    if type_letter == 'resume to companies' || type_letter == 'ad to copmanies'
+      pdf = resume.to_pdf if resume.present?
       self.offices.each do |t|
-        MailingMailer.send_resume_to_company(self, t["email"], pdf, title).deliver_later
+        MailingMailer.send_resume_to_company(self, t["email"], pdf).deliver_later
       end
-      MailingMailer.send_resume_to_company(self, PropertsHelper::ADMIN, pdf, title).deliver_later
+      MailingMailer.send_resume_to_company(self, PropertsHelper::ADMIN, pdf).deliver_later
     end
   end
 end
