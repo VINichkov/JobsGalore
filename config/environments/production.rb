@@ -102,27 +102,28 @@ Rails.application.configure do
   #config.force_ssl = true
   #config.ssl_options = {  redirect: { status: 307} }
   #config.active_job.queue_adapter = :sidekiq
-  config.action_mailer.default_url_options = { host: "https://jobsgalore.eu"}
   config.action_mailer.delivery_method = :smtp
-  #config.action_mailer.default_options = { from: "#{PropertsHelper::COMPANY} <#{PropertsHelper::EMAIL}>" }
-  #config.action_mailer.smtp_settings = :sendmail#{
-  #config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_options = {from: 'noreply@jobsgalore.eu'}
-  config.action_mailer.smtp_settings = {
-      address:              '127.0.0.1',
-      port:                 25,
-      domain:               'jobsgalore.eu',
-      enable_starttls_auto: true,
-      openssl_verify_mode:  'none'}
-      #user_name:            ENV["EMAIL_LOGIN"]}
-      #address:              '127.0.0.1',
-      #port:                 25,
-      #domain:               'jobsgalore.ru'}
-      #user_name:            #ENV["EMAIL_LOGIN"],
-      #password:             ENV["EMAIL_PASSWORD"],
-      #authentication:       'plain',
-      #enable_starttls_auto: true  }
+  if ENV["TEST"].nil?
+    config.action_mailer.default_url_options = { host: "https://jobsgalore.eu"}
+    config.action_mailer.default_options = {from: 'noreply@jobsgalore.eu'}
+    config.action_mailer.smtp_settings = {
+        address:              '127.0.0.1',
+        port:                 25,
+        domain:               'jobsgalore.eu',
+        enable_starttls_auto: true,
+        openssl_verify_mode:  'none'}
+  else
+    config.action_mailer.default_url_options = { host: 'https://free-talents.herokuapp.com' }
+    config.action_mailer.smtp_settings = {
+        address:              'smtp.yandex.ru',
+        port:                 25,
+        domain:               'yandex.ru',
+        authentication:       'plain',
+        user_name:            ENV["EMAIL_LOGIN"],
+        password:             ENV["EMAIL_PASSWORD"],
+        enable_starttls_auto: true }
+  end
   config.action_mailer.raise_delivery_errors = true
-  #config.action_controller.page_cache_directory = "#{Rails.root}/public/cached_pages"
+
 end
 
