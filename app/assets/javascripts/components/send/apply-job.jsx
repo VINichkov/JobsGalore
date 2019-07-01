@@ -4,7 +4,7 @@ class ApplyJob extends React.Component{
         this.state={inputLetter:""};
         this._divEditableL = React.createRef();
         let resumes= {new_resume:{checked:false}};
-        if (this.props.resumes !==null) {
+        if (this.props.resumes !==null && this.props.resumes.length > 0) {
             this.props.resumes.map(function (resume, i) {
                 resumes["resume_" + i] = {resume: resume, checked: false};
             }.bind(this));

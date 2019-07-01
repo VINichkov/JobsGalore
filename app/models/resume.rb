@@ -5,7 +5,7 @@ class Resume < ApplicationRecord
   belongs_to :location
   belongs_to :industry
   has_many :viewed, as: :doc, dependent: :destroy
-  has_many :mailing
+  has_many :mailing, dependent: :destroy
 
   validates :title, presence: true
   validates :location, presence: true

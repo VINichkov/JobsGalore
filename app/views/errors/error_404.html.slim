@@ -14,7 +14,7 @@
   .row
     h3.text-center
       |More jobs in real time – Search&nbsp;
-      strong #{Location.select(:counts_jobs).inject(0) {|rez, elem| rez +=elem.counts_jobs}}
+      strong #{Location.select(:counts_jobs)&.inject(0) {|rez, elem| rez +=elem.counts_jobs if elem.counts_jobs}}
       |&nbsp;jobs now.
     p
   .row.hidden-lg.hidden-md

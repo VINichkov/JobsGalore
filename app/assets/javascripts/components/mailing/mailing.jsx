@@ -2,7 +2,8 @@ class Mailing extends React.Component{
     constructor(props){
         super(props);
         let resumes = {};
-        if (this.props.seeker && this.props.resumes !== null) {
+        console.log(this.props.resumes);
+        if (this.props.seeker && this.props.resumes.length > 0) {
             this.props.resumes.map(function (resume, i) {
                 resumes["resume_" + i] = {resume: resume, checked: false};
             }.bind(this));
