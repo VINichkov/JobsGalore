@@ -20,7 +20,8 @@ module MailingHelper
     react_component(
       'ShowLetters',
       letters: letters,
-      newMessage: contacts_of_companies_url
+      newMessage: contacts_of_companies_url,
+      url_for_synchronization: show_mailings_url
     )
   end
 

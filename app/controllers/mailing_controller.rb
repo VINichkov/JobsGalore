@@ -36,6 +36,7 @@ class MailingController < ApplicationController
       res[:pay_url] = t.payment_url
       res
     end
+
   end
 
   private

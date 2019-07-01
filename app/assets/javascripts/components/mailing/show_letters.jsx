@@ -8,12 +8,30 @@ class ShowLetters extends React.Component{
         this._modalWindow = React.createRef();
         this.handlerShowModal = this.handlerShowModal.bind(this);
         this.handlerDeleteLetter = this.handlerDeleteLetter.bind(this);
-        this.handlerPay = this.handlerPay.bind(this);
+        this.handlerSynchronization = this.handlerSynchronization.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+    }
+
+    componentDidMount(){
+        setTimeout(this.handlerSynchronization,20000);
     }
 
     handlerShowModal(index){
         this.setState({currentListOfRecipients: this.state.letters[index].recipients});
         $(this._modalWindow.current).modal('show');
+    }
+
+
+    handlerSynchronization(){
+        $.ajax({
+            type: "get",
+            url: this.props.url_for_synchronization,
+            success: function (data) {
+                this.setState({letters: data});
+            }.bind(this),
+            dataType: 'json'
+        });
+        setTimeout(this.handlerSynchronization,20000);
     }
 
     handlerDeleteLetter(url, key){
@@ -28,9 +46,6 @@ class ShowLetters extends React.Component{
         });
     }
 
-    handlerPay(index){
-
-    }
 
     render(){
         const CENTER = {"text-align": "center", "vertical-align": "middle"};
