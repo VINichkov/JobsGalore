@@ -45,6 +45,7 @@ set :puma_init_active_record, true  # Change to false when not using ActiveRecor
 ## Linked Files & Directories (Default None):
  set :linked_files, %w{key/private.pem config/application.yml}
  set :linked_dirs,   %w{log tmp}
+ set :init_system, :systemd
 
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
@@ -86,10 +87,18 @@ namespace :deploy do
     end
   end
 
-  before :starting,     :check_revision
-  after  :finishing,    :compile_assets
-  after  :finishing,    :cleanup
-  after  :finishing,    :restart
+  desc 'DB:MIGRATE'
+  task :migrate do
+    on roles(:app) do
+      invoke 'db:migrate'
+    end
+  end
+
+  before :starting,:check_revision
+  after  :finishing,:migrate
+  after  :finishing,:compile_assets
+  after  :finishing,:cleanup
+  after  :finishing,:restart
 end
 
 # ps aux | grep puma    # Get puma pid

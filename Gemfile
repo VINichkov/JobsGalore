@@ -6,6 +6,7 @@ gem 'rails', '~> 5.2.0'#, '~> 5.0.4'#, '>= 5.0.0.1'
 # Use postgresql as the database for Active Record
 gem 'pg'#, '~> 0.18'
 # Use Puma as the app server
+gem 'sidekiq'
 
 # Use SCSS for stylesheets
 gem 'sass-rails'#, '~> 5.0'
@@ -19,13 +20,13 @@ gem 'redis-objects'
 gem 'aasm'
 gem 'pdf-reader','~> 2.1.0'
 gem 'prawn'
-gem 'oga'
-gem "oink"
+gem 'oga' #Нужен для создания PDF
+#gem "oink"
 gem 'tinymce-rails','~> 5.0.3'
 #gem 'pdf2html'
 #gem 'origami'
 gem "docx"
-gem "ffi"
+#gem "ffi"
 
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -70,6 +71,7 @@ gem 'figaro'
 group :development, :test do
   gem 'capistrano',         require: false
   gem 'capistrano-rvm',     require: false
+  gen 'capistrano-sidekiq', require: false
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false

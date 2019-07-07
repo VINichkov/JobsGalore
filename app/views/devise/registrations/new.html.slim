@@ -2,4 +2,4 @@
   .row
     .col-xs-12.col-sm-12.col-md-8.col-lg-8.col-md-offset-2.col-lg-offset-2
       h2 Register
-      = render 'clients/form', option:{as: resource_name, html:{enctype: "multipart/form-data"}, url: registration_path(resource_name), method: :post, devise: true}, client: @client_wf.client
+      = render 'clients/form', option:{as: resource_name, html:{enctype: "multipart/form-data"}, url: registration_path(resource_name), method: :post, devise: true}, client: @client_wf&.client || resource

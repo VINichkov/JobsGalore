@@ -3,10 +3,11 @@ class Ability
 
   def initialize(user)
     user ||= Client.new
-    Rails.logger.debug "#{user.id} #{user.firstname} #{user.lastname} #{user.character} #{user.email}"
+    #Rails.logger.debug "#{user.id} #{user.firstname} #{user.lastname} #{user.character} #{user.email}"
     if user.admin?
       Rails.logger.debug "Cancan:: Admin"
       can :manage, :all
+      can :manage, Sidekiq
     elsif user.employer?
       Rails.logger.debug "Cancan:: Employer"
       ##############################################
@@ -27,7 +28,7 @@ class Ability
   end
 
   def can?(action, subject, *extra_args)
-    Rails.logger.debug "Cancan:: action #{action}  | subject #{subject}"
+    #Rails.logger.debug "Cancan:: action #{action}  | subject #{subject}"
     if subject.class < Draper::Decorator
       subject = subject.model
     end

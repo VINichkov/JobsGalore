@@ -26,6 +26,7 @@ Rails.application.configure do
   #  config.cache_store = :null_store
   #end
   #config.consider_all_requests_local       = false #from production
+  config.active_job.queue_adapter = :sidekiq
   config.action_controller.perform_caching = false
   # Don't care if the mailer can't send.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?#from production
@@ -56,7 +57,8 @@ Rails.application.configure do
 
   #config.action_controller.asset_host = "http://localhost:3000"
   #
-
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -68,4 +70,3 @@ Rails.application.configure do
       password:             ENV["EMAIL_PASSWORD"],
       enable_starttls_auto: true }
 end
-Rails.application.middleware.use Oink::Middleware

@@ -1,19 +1,19 @@
+# frozen_string_literal: true
+
 class JobsController < ApplicationController
   load_and_authorize_resource :job
-  before_action :authenticate_client!, only: [:apply, :prolong]
-  before_action :set_job, only: [:prolong, :apply, :views,:highlight_view ,:show, :edit, :update, :destroy, :admin_show, :admin_edit, :admin_update, :admin_destroy]
-  before_action :action_view, only:[:show, :highlight_view]
-  #before_action :employer!, only: :new
+  before_action :authenticate_client!, only: %i[apply prolong]
+  before_action :set_job, only: %i[prolong apply views highlight_view show edit update destroy admin_show admin_edit admin_update admin_destroy]
+  before_action :action_view, only: %i[show highlight_view]
+  # before_action :employer!, only: :new
 
-  def show
-  end
+  def show; end
 
   def highlight_view
-    @query = params[:text].split("/")
+    @query = params[:text].split('/')
   end
 
-  def views
-  end
+  def views; end
 
   # GET /jobs/new
   def new
@@ -24,23 +24,22 @@ class JobsController < ApplicationController
   end
 
   # GET /jobs/1/edit
-  def edit
-  end
+  def edit; end
 
   def prolong
     if @job.prolong
       respond_to do |format|
-        format.html {redirect_to job_path(@job), notice:'The job opportunity was successfully prolonged.'}
+        format.html { redirect_to job_path(@job), notice: 'The job opportunity was successfully prolonged.' }
       end
     end
   end
 
   def create_temporary
     job_workflow = restore_workflow_object(session[:workflow])
-    job_workflow&.update_state(job:Job.new(job_params), client: current_client)
+    job_workflow&.update_state(job: Job.new(job_params), client: current_client)
     job_workflow&.save!(session[:workflow])
     respond_to do |format|
-      format.html { redirect_to workflow_link(job_workflow)}
+      format.html { redirect_to workflow_link(job_workflow) }
     end
   end
 
@@ -52,22 +51,22 @@ class JobsController < ApplicationController
     respond_to do |format|
       if @job.save
         job_workflow.save!(session[:workflow])
-        format.html {redirect_to workflow_link(job_workflow) , notice: current_client ?  'The job opportunity was successfully created.' : flash[:notice]}
+        format.html { redirect_to workflow_link(job_workflow), notice: current_client ? 'The job opportunity was successfully created.' : flash[:notice] }
       else
-        format.html {render :new}
+        format.html { render :new }
       end
     end
   end
 
   def apply
-    if @job.apply and !@job.send_email?
+    if @job.apply && !@job.send_email?
       unless current_client&.admin?
-        @job.add_responded({client_id:current_client&.id, ip:request.remote_ip, lang:request.env['HTTP_ACCEPT_LANGUAGE'], agent:request.env['HTTP_USER_AGENT']})
+        @job.add_responded(client_id: current_client&.id, ip: request.remote_ip, lang: request.env['HTTP_ACCEPT_LANGUAGE'], agent: request.env['HTTP_USER_AGENT'])
       end
-      redirect_to @job.apply, status:307
+      redirect_to @job.apply, status: 307
     end
-    resume_workflow = add_new_workflow(class: :Redirect, route: apply_url(@job), session: session) #TODO Убрать
-    resume_workflow.save!(session[:workflow]) #TODO Убрать
+    resume_workflow = add_new_workflow(class: :Redirect, route: apply_url(@job), session: session) # TODO: Убрать
+    resume_workflow.save!(session[:workflow]) # TODO: Убрать
     redirect_to new_client_session_path if current_client.blank?
   end
 
@@ -93,24 +92,22 @@ class JobsController < ApplicationController
   end
 
   def admin_index
-    @not_id = Industryjob.all.map {|t| t.job_id} if @not_id.nil?
-    @jobs = Job.where('id not in (?)', @not_id).includes(:location,:company, :client).order(:close).paginate(page: params[:page], per_page:21)
+    @not_id = Industryjob.all.map(&:job_id) if @not_id.nil?
+    @jobs = Job.where('id not in (?)', @not_id).includes(:location, :company, :client).order(:close).paginate(page: params[:page], per_page: 21)
   end
 
   # GET /jobs/1
   # GET /jobs/1.json
-  def admin_show
-  end
+  def admin_show; end
 
   # GET /jobs/new
   def admin_new
-      @job = Job.new
-      @job.location_id = 9509
+    @job = Job.new
+    @job.location_id = 9509
   end
 
   # GET /jobs/1/edit
-  def admin_edit
-  end
+  def admin_edit; end
 
   # POST /jobs
   # POST /jobs.json
@@ -120,7 +117,7 @@ class JobsController < ApplicationController
     param.delete(:ind)
     @job = Job.new(param)
     @job.client = current_client
-    @job.industryjob.new(industry:Industry.find_by_id(industry))
+    @job.industryjob.new(industry: Industry.find_by_id(industry))
     respond_to do |format|
       if @job.save
         format.html { redirect_to admin_jobs_show_path(@job), notice: 'The job opportunity was successfully created.' }
@@ -148,7 +145,7 @@ class JobsController < ApplicationController
   def admin_destroy
     @job.destroy
     respond_to do |format|
-      format.html { redirect_to admin_jobs_url,  notice: 'The job opportunity was successfully destroyed.' }
+      format.html { redirect_to admin_jobs_url, notice: 'The job opportunity was successfully destroyed.' }
     end
   end
 
@@ -166,20 +163,25 @@ class JobsController < ApplicationController
 
   private
 
-    def action_view
-      unless current_client&.admin? or current_client == @job.client
-        @job.add_viewed({client_id:current_client&.id, ip:request.remote_ip, lang:request.env['HTTP_ACCEPT_LANGUAGE'], agent:request.env['HTTP_USER_AGENT']})
-      end
-
+  def action_view
+    unless current_client&.admin? || (current_client == @job.client)
+      ViewObjectJob.perform_later(
+        @job,
+        client_id: current_client&.id,
+        ip: request.remote_ip,
+        lang: request.env['HTTP_ACCEPT_LANGUAGE'],
+        agent: request.env['HTTP_USER_AGENT']
+      )
     end
-    # Use callbacks to share common setup or constraints between actions.
-    def set_job
-      @job = Job.find(params[:id]).decorate
-    end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def job_params
-      params.require(:job).permit(:id,:title, :location_id, :salarymin, :salarymax, :description, :company_id, :client_id, :industry_id, :close, :page, :option)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_job
+    @job = Job.find(params[:id]).decorate
+  end
 
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def job_params
+    params.require(:job).permit(:id, :title, :location_id, :salarymin, :salarymax, :description, :company_id, :client_id, :industry_id, :close, :page, :option)
+  end
 end

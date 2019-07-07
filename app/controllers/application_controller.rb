@@ -59,7 +59,6 @@ class ApplicationController < ActionController::Base
       if current_client.company.nil?
         client = add_new_workflow(class: :ClientWorkflow, client:current_client, session: session)
         client.save!(session[:workflow])
-        Rails.logger.debug("_______________ #{session[:workflow]}")
         redirect_to workflow_link(client), notice: 'Please, enter information about your company.'
         nil
       else

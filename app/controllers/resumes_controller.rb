@@ -185,14 +185,7 @@ class ResumesController < ApplicationController
   end
 
   def message
-    #if @job.apply
-      #unless current_client&.admin?
-      #  @job.add_responded({user:current_client&.id, company: current_company&.id, time:Time.now, ip:request.remote_ip, lang:request.env['HTTP_ACCEPT_LANGUAGE'], agent:request.env['HTTP_USER_AGENT']})
-      #end
-      #redirect_to @job.apply, status:307
-    #end
     resume_workflow = add_new_workflow(class: :Redirect, route: msg_url(@resume), session: session) #TODO Убрать
-    Rails.logger.debug("_______________ #{session[:workflow]}")
     resume_workflow.save!(session[:workflow]) #TODO Убрать
   end
 
@@ -200,17 +193,17 @@ class ResumesController < ApplicationController
 
   def action_view
     unless current_client&.admin? or current_client == @resume.client
-      @resume.add_viewed({client_id:current_client&.id, lang:request.env['HTTP_ACCEPT_LANGUAGE'], agent:request.env['HTTP_USER_AGENT']})
+      ViewObjectJob.perform_later(
+          @resume,
+          client_id: current_client&.id,
+          ip: request.remote_ip,
+          lang: request.env['HTTP_ACCEPT_LANGUAGE'],
+          agent: request.env['HTTP_USER_AGENT']
+      )
     end
   end
 
-  #def applicant!
-  #  if current_client.resp?
-  #    redirect_to root_path, alert: "Please register as an applicant"
-  #  end
-  #end
 
-    # Use callbacks to share common setup or constraints between actions.
   def set_resume
     @resume = Resume.find(params[:id]).decorate
   end
