@@ -37,15 +37,45 @@ set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
 
 ## Defaults:
- set :branch,        :master
- set :format,        :pretty
- set :log_level,     :info
- set :keep_releases, 5
+set :branch,        :master
+set :format,        :pretty
+set :log_level,     :info
+set :keep_releases, 5
 
 ## Linked Files & Directories (Default None):
- set :linked_files, %w{key/private.pem config/application.yml}
- set :linked_dirs,   %w{log tmp}
- set :init_system, :systemd
+set :linked_files, %w{key/private.pem config/application.yml}
+set :linked_dirs,   %w{log tmp}
+set :init_system, :upstart
+set :upstart_service_name, 'sidekiq'
+
+#---------------------------------------#
+=begin
+set :sidekiq_default_hooks => true
+set :sidekiq_pid => File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid') # ensure this path exists in production before deploying.
+set :sidekiq_env => fetch(:rack_env, fetch(:rails_env, fetch(:stage)))
+set :sidekiq_log => File.join(shared_path, 'log', 'sidekiq.log')
+set :sidekiq_options => nil
+set :sidekiq_require => nil
+set :sidekiq_tag => nil
+set :sidekiq_config => nil # if you have a config/sidekiq.yml, do not forget to set this.
+set :sidekiq_queue => nil
+set :sidekiq_timeout => 10
+set :sidekiq_roles => :app
+set :sidekiq_processes => 1
+set :sidekiq_options_per_process => nil
+set :sidekiq_concurrency => nil
+# sidekiq monit
+set :sidekiq_monit_templates_path => 'config/deploy/templates'
+set :sidekiq_monit_conf_dir => '/etc/monit/conf.d'
+set :sidekiq_monit_use_sudo => true
+set :monit_bin => '/usr/bin/monit'
+set :sidekiq_monit_default_hooks => true
+set :sidekiq_monit_group => nil
+set :sidekiq_service_name => "sidekiq_#{fetch(:application)}_#{fetch(:sidekiq_env)}" + (index ? "_#{index}" : '')
+
+set :sidekiq_user => :ubuntu #user to run sidekiq as
+=end
+#---------------------------------------#
 
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
@@ -87,17 +117,19 @@ namespace :deploy do
     end
   end
 
+=begin
   desc 'DB:MIGRATE'
   task :migrate do
     on roles(:app) do
-      invoke 'db:migrate'
+      invoke 'deploy:migrate'
     end
   end
+=end
 
   before :starting,:check_revision
-  after  :finishing,:migrate
   after  :finishing,:compile_assets
   after  :finishing,:cleanup
+  #after  :finishing,:migrate
   after  :finishing,:restart
 end
 

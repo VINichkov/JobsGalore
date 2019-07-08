@@ -9,10 +9,10 @@ require 'capistrano/figaro'
 require "capistrano/bundler"
 require 'capistrano/rails'
 require 'capistrano/rails/console'
+require 'capistrano/sidekiq'
+# require 'capistrano/sidekiq/monit'
 require 'capistrano/puma'
 install_plugin Capistrano::Puma
 require "capistrano/rails/assets"
 require "capistrano/rails/migrations"
-require 'capistrano/sidekiq'
-require 'capistrano/sidekiq/monit'
 Dir.glob("lib/capistrano/tasks/*.rake").each {|r| import r}

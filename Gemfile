@@ -26,7 +26,7 @@ gem 'tinymce-rails','~> 5.0.3'
 #gem 'pdf2html'
 #gem 'origami'
 gem "docx"
-#gem "ffi"
+gem "ffi"
 
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

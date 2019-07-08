@@ -450,6 +450,7 @@ DEPENDENCIES
   dragonfly (~> 1.1.5)
   dragonfly-s3_data_store
   draper
+  ffi
   figaro
   fog-aws
   font-awesome-rails
