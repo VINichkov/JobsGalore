@@ -6,7 +6,7 @@ class JobsMailerPreview < ActionMailer::Preview
   end
 
   def daily_job_alert
-    JobsMailer.daily_job_alert("mail@email.com", Job.where(company_id: 8159).limit(10))
+    JobsMailer.daily_job_alert("mail@email.com", Job.where(company_id: 8159).limit(3))
   end
 
   def turn_on_option

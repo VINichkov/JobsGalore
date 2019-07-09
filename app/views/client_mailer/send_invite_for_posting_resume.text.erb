@@ -1,13 +1,8 @@
 Do you want to get a dream job?
 
 Do you want to get a dream job? Let employers find you. Post your resume on Jobsgalore.eu and the resume will be seen by thousands of employers.
-<%= link_to 'Post a new resume', new_resume_url + "?" + @utm, style: link_email, target: "_blank"%>
+<%="#{new_resume_url}?#{@utm}"%>
 
-Send us your resume by email
+<%=render "inc_mailer/mailing" %>
 
-You may also email us your resume and we will post it.
-For that you have to email email@jobsgalore.eu:
-- Your resume in MS Word 2007(*.docx) format;
-- Your profession or skills;
-- Your location;
-- Your phone number (Optional).
+<%= render "inc_mailer/resume_to_us"%>

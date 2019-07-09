@@ -45,8 +45,8 @@ set :keep_releases, 5
 ## Linked Files & Directories (Default None):
 set :linked_files, %w{key/private.pem config/application.yml}
 set :linked_dirs,   %w{log tmp}
-set :init_system, :upstart
-set :upstart_service_name, 'sidekiq'
+set :init_system, :systemd
+
 
 #---------------------------------------#
 =begin

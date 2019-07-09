@@ -5,6 +5,8 @@ Dear <%=@resume.client.firstname%>,
 You've successfully posted your resume on Jobs Galore.
 The link to the resume <%=resume_url(@resume.id)%>
 
+<%= render 'inc_mailer/mailing' %>
+
 You can take extras:
 
 Highlight

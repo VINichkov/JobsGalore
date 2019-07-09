@@ -10,11 +10,15 @@ div[style=body_email]
     = link_to 'Show', resume_url(@resume.id) + "?" + @utm, style: link_email, target: "_blank"
   =space_email
   =space_email
-  div[style=h3_email]
+= render "inc_mailer/mailing"
+hr
+div[style=title_email]
+  div[style=h1_email]
     |You can promote your resume:
-  =space_email
-  =render 'resumes_mailer/party_of_email/highlight'
-  hr
-  =space_email
-  =render 'resumes_mailer/party_of_email/urgent'
+div[style=body_email]
+    =space_email
+    =render 'resumes_mailer/party_of_email/highlight'
+    hr[style="border: 1px dotted;"]
+    =space_email
+    =render 'resumes_mailer/party_of_email/urgent'
 

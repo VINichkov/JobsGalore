@@ -8,7 +8,7 @@ namespace :send do
     Resume.find_each do |resume|
       begin
         jobs = Job.includes(:company,:location).search_for_send(value: resume.key, location:resume.location_id)
-        if jobs.present? and jobs.count ==10
+        if jobs.present? and jobs.count == 3
           JobsMailer.daily_job_alert(resume.client.email, jobs).deliver_now
         end
       rescue
@@ -19,7 +19,7 @@ namespace :send do
     Clientforalert.find_each do |client|
       begin
         jobs = Job.includes(:company,:location).search_for_send(value: Search.str_to_search(client.key.delete("<>{}#@!,:*&()'`\"’|")), location:client.location_id)
-        if jobs.present? and jobs.count ==10
+        if jobs.present? and jobs.count == 3
           JobsMailer.daily_job_alert(client.email, jobs).deliver_now
         end
       rescue
@@ -35,7 +35,8 @@ namespace :send do
     client_for_sending = Clientforalert.all.map do |t|
       client = Client.find_by_email(t.email)
       if client.present?
-        t.email if client.resume.count == 0
+        t.destroy
+        nil
       else
         t.email
       end

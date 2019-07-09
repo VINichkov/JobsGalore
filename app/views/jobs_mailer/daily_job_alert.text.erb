@@ -9,3 +9,5 @@ Daily Jobs Alert
   <%=HtmlToPlainText.plain_text(job.description).squish.truncate(300, separator: ' ',omission: '') + "..." %>
 
 <% end %>
+
+<%= render "inc_mailer/mailing"%>

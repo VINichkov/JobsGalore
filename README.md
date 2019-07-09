@@ -1,20 +1,21 @@
-# Project Mango
+# Project Jobsgalore
 
-This is an attempt to create an analogue of the popular sites hh.ru, monster.com, careere.com.au, superjob.ru, jora.com.au, seek.com.au
+JobsGalore is a job search aggregator in Australia. Find jobs and career related information. Find your dream job. Make job search easy with us!
 
 ## Software Requirements
 
 * Ruby and Rails
+* Sidekiq
 * PostgresSQL
 * Redis
-* React js
+* React Js
 * Slim
 
 ## Installation
 
-    git clone git://github.com/vnochkov/gobsgalore.git
-    cd gobsgalore
-    bundle
+    git clone git://github.com/VINichkov/jobsgalore.git
+    cd jobsgalore
+    bundle install
     
 Then initialize the database and start the server:
 
