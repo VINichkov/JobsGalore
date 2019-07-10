@@ -18,7 +18,7 @@ class Resume < ApplicationRecord
   alias_attribute  :title, :desiredjobtitle
   alias_attribute :salary_form, :salary
 
-  after_create :send_email
+  after_create_commit :after_create
   before_destroy :send_email_before_destroy
 
   def full_keywords(count_keys = 1, min_length_word = 4)
@@ -137,11 +137,12 @@ class Resume < ApplicationRecord
             begin
               pdf.image open(url, read_timeout: 10), height: 150
             rescue StandardError
-              Rails.logger.error("Error: При отправлении резюме не смогли дастать аватар для клиента #{client.id})")
+              Rails.logger.error("Error: При отправлении резюме не смогли достать аватар для клиента #{client.id})")
               pdf.image Rails.root.join('app/assets/images/avatar.jpg'), height: 150
             end
             Rails.logger.debug("Получили аватар время: #{Time.now - t1} s")
           else
+            t1 = Time.now
             pdf.image Rails.root.join('app/assets/images/avatar.jpg'), height: 150
             Rails.logger.debug("Получили аватар время: #{Time.now - t1} s")
           end
@@ -192,6 +193,16 @@ class Resume < ApplicationRecord
   def send_email_before_destroy
     ResumesMailer.remove_resume(self).deliver_later if client.send_email
   end
+
+  def after_create
+    send_email
+    send_to_recruitment
+  end
+
+  def send_to_recruitment
+    SendToRecruitmentJob.perform_later( id: self.id)
+  end
+
 
   def send_email
     ResumesMailer.add_resume(self).deliver_later if client.send_email?

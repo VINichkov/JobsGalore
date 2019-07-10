@@ -55,10 +55,10 @@
                 ul.nav.nav-list
                   - @main.jobs[0..(@main.jobs.count >=5 ? 4 : @main.jobs.count - 1)].each do |job|
                     = last_job(job)
-                  - else
-              - if @main.jobs.count >=6
+              - if @main.jobs.count >= 6
                 .col-lg-6.col-md-6
                   ul.nav.nav-list
                     - @main.jobs[5..@main.jobs.count-1].each do |job|
                       = last_job(job)
+
 

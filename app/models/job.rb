@@ -5,7 +5,8 @@ class Job < ApplicationRecord
   include PgSearch
   serialize :preferences, Hash
 
-  after_create :send_email_after_add_job
+  after_create_commit :send_email_after_add_job
+
   before_destroy :send_email_before_destroy
   before_save :date_close
   include Rails.application.routes.url_helpers

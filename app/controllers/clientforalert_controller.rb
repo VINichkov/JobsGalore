@@ -1,5 +1,6 @@
-class ClientforalertController < ApplicationController
+# frozen_string_literal: true
 
+class ClientforalertController < ApplicationController
   def create
     param = clientforalert_params
     user = Clientforalert.where(email: param[:email]).first_or_initialize

@@ -40,7 +40,7 @@ class SendResume
   end
 
   def send(resume, job, email, letter)
-    pdf = resume.to_pdf
+    pdf = Base64.encode64(resume.to_pdf)
     ResumesMailer.send_to_employer(resume, job, email, pdf, letter).deliver_later
     ResumesMailer.send_to_employer(resume, job, email, pdf, letter, true).deliver_later
   end

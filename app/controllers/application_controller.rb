@@ -1,9 +1,8 @@
 class ApplicationController < ActionController::Base
   extend ActiveSupport::Concern
   include Session
-  rescue_from ActiveRecord::RecordNotFound, with:  :render_404
-  #rescue_from ActionController::RoutingError, with:  :render_404
-  rescue_from CanCan::AccessDenied, with:  :render_404
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  rescue_from CanCan::AccessDenied, with: :render_404
   include ApplicationHelper
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -14,10 +13,9 @@ class ApplicationController < ActionController::Base
 
   def redirect_back_to_url
     full_url = URI(request.original_fullpath)
-    Rails.logger.info(full_url)
+    Rails.logger.debug(full_url)
     query = full_url.query
-    Rails.logger.info(query)
-    #CGI.parse(URI(request.original_url).query))[:url]
+    Rails.logger.debug(query)
   end
 
   def get_cookies
@@ -50,14 +48,18 @@ class ApplicationController < ActionController::Base
 
   # In ApplicationController
   def current_ability
-    @current_ability ||=Ability.new(current_client)
+    @current_ability ||= Ability.new(current_client)
   end
 
 
   def current_company
     if current_client&.resp?
       if current_client.company.nil?
-        client = add_new_workflow(class: :ClientWorkflow, client:current_client, session: session)
+        client = add_new_workflow(
+          class: :ClientWorkflow,
+          client: current_client,
+          session: session
+        )
         client.save!(session[:workflow])
         redirect_to workflow_link(client), notice: 'Please, enter information about your company.'
         nil

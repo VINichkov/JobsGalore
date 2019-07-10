@@ -14,7 +14,7 @@ class ClientsController < ApplicationController
 
   def jobs
     if @client.employer?
-       @jobs = Job.where(company_id: @client.company_id).includes(:location, :client, :company).order(location_id: :asc, created_at:  :desc).paginate(page: @page, per_page:21).decorate
+      @jobs = Job.where(company_id: @client.company_id).includes(:location, :client, :company).order(location_id: :asc, created_at:  :desc).paginate(page: @page, per_page:21).decorate
     elsif  @client.employee?
       @jobs =  Job.where(client_id: @client.id).includes(:location, :client, :company).order(location_id: :asc, created_at:  :desc).paginate(page: @page, per_page:21).decorate
     end

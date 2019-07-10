@@ -28,7 +28,7 @@ class ResumesMailer < ApplicationMailer
     @utm = create_utm(:letter_to_employer)
     @resume, @job, @letter = resume, job, letter
     client = (!copy ? email : PropertsHelper::ADMIN)
-    attachments["#{@resume.client.full_name}.pdf"] = pdf if pdf
+    attachments["#{@resume.client.full_name}.pdf"] = Base64.decode64(pdf) if pdf
     mail(to: client, subject: job.title)
   end
 
