@@ -15,14 +15,7 @@
 // Custom bootstrap variables must be set or imported before bootstrap itself.
 
 @import "bootstrap-sprockets";
-@import "bootstrap.min";
-@import "fileinput";
-@import "social-share-button";
-@import 'bootstrap-datepicker';
-@import "jasny-bootstrap";
-@import "print";
-@import "search_hidden";
-@import "font-awesome";
+@import "bootstrap";
 
 @font-face {
   font-family: 'FontAwesome';
