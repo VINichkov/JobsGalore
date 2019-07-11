@@ -9,7 +9,7 @@ gem 'pg'#, '~> 0.18'
 gem 'sidekiq'
 
 # Use SCSS for stylesheets
-gem 'sass-rails'#, '~> 5.0'
+gem 'sassc-rails'#, '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'#, '>= 1.3.0'
 # Use react as the JavaScript library
@@ -31,7 +31,9 @@ gem "ffi"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'
+#gem "twitter-bootstrap-rails"
 gem 'bootstrap-sass'#, '~> 3.3.6'
+gem 'sprockets-rails'
 gem 'jquery-rails'
 gem 'will_paginate'#, '~> 3.1.0'
 gem 'social-share-button'
