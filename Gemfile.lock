@@ -479,7 +479,6 @@ DEPENDENCIES
   social-share-button
   spring
   spring-watcher-listen
-  sprockets-rails
   tinymce-rails (~> 5.0.3)
   twitter
   tzinfo-data
