@@ -13,13 +13,11 @@
  */
 
 
-
 // Custom bootstrap variables must be set or imported before bootstrap itself.
-
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "jasny-bootstrap";
-
+@import "print";
 
 @font-face {
   font-family: 'FontAwesome';
