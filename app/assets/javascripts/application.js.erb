@@ -5,7 +5,8 @@
 //= require bootstrap-datepicker
 //= require bootstrap-typeahead
 //= require social-share-button
-//=require jasny-bootstrap
+//= require jasny-bootstrap
+//= require blazy.min
 //=#require datalist-polyfill.min
 //= require react
 //= require components
@@ -49,6 +50,23 @@ var uploadPdfDocx = function(uploadFile,tiny_id) {
         processData: false
     });
 };
+
+var bLazy = new Blazy({
+    //Загрузка маленьких изображений. Возможно в будующем!!!
+    //breakpoints: [{
+        //width: 420 // Max-width
+        //, src: 'data-src-small'
+    //}],
+     success: function(element){
+        setTimeout(function(){
+            // We want to remove the loader gif now.
+            // First we find the parent container
+            // then we remove the "loading" class which holds the loader image
+            var parent = element.parentNode;
+            parent.className = parent.className.replace(/\bloading\b/,'');
+        }, 200);
+    }
+});
 
 var readURL = function (input, tiny_id) {
     if (input.files) {

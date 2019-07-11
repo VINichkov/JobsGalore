@@ -24,6 +24,9 @@
 @import "search_hidden";
 @import "font-awesome";
 
+@font-face {
+  font-display: fallback; /* Задаем поведение браузера на время загрузки */
+}
 
 
 .colorgraph {
