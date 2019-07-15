@@ -17,7 +17,7 @@ module ApplicationHelper
     content_for :noindex, true
   end
 
-  def image_bg(url, bgsize,width, height, option={} )
+  def image_bg(url, bgsize, width, height, option={} )
     content_tag(:div,'', class: "#{option[:class] ? option[:class] : "text-center img-thumbnail center-block avatar"}", style: "background-image: url('#{url}');background-size: #{bgsize}; width: #{width}; height: #{height};")
   end
 
