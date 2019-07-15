@@ -78,20 +78,20 @@ class IndexController < ApplicationController
           when '1'
             @objs << {url: root_url, date:time,changefreq:"hourly" }
           when '2'
-            Company.select(:id, :updated_at).order(:id).paginate(page: params[:page], per_page:10000).find_each do |company|
+            Company.select(:id, :updated_at).paginate(page: params[:page], per_page:5000).each do |company|
               @objs <<{url: company_url(company), date:company.updated_at.strftime("%Y-%m-%d"),changefreq:"hourly" }
               @objs <<{url: jobs_at_company_url(company), date: time,changefreq:"hourly" }
             end
           when '3'
-            Resume.select(:id, :updated_at).order(:id).paginate(page: params[:page], per_page:10000).find_each do |resume|
+            Resume.select(:id, :updated_at).paginate(page: params[:page], per_page:10000).find_each do |resume|
               @objs <<{url: resume_url(resume), date:resume.updated_at.strftime("%Y-%m-%d"),changefreq:"hourly" }
             end
           when '4'
-            Job.select(:id, :updated_at).order(:id).paginate(page: params[:page], per_page:10000).find_each do |job|
+            Job.select(:id, :updated_at).paginate(page: params[:page], per_page:10000).find_each do |job|
               @objs <<{url: job_url(job), date:job.updated_at.strftime("%Y-%m-%d"),changefreq:"hourly" }
             end
           when '5'
-            Location.select(:id).order(:id).find_each do |location|
+            Location.select(:id).find_each do |location|
               @objs <<{url: local_object_url(location.id, Objects::JOBS.code), date:time,changefreq:"hourly" }
               @objs <<{url: local_object_url(location.id, Objects::RESUMES.code), date:time,changefreq:"hourly" }
               @objs <<{url: local_object_url(location.id, Objects::COMPANIES.code), date:time,changefreq:"hourly" }
@@ -136,4 +136,5 @@ class IndexController < ApplicationController
     res = count / 10000
     res += 1 if (count % 10000)>0
   end
+
 end
