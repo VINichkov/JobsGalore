@@ -31,5 +31,6 @@ class SendToRecruitmentJob < ApplicationJob
     ).each do |recipient|
       MailingMailer.send_resume_to_company(letter, recipient, nil).deliver_later
     end
+    MailingMailer.send_resume_to_company(letter, PropertsHelper::ADMIN, nil).deliver_later
   end
 end
