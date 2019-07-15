@@ -232,7 +232,7 @@ GEM
     mimemagic (0.3.2)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
-    minitest (5.11.3)
+    minitest (5.10.3)
     multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
@@ -312,6 +312,7 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
+    rails-perftest (0.0.7)
     railties (5.2.0)
       actionpack (= 5.2.0)
       activesupport (= 5.2.0)
@@ -339,6 +340,7 @@ GEM
     ruby-ll (2.1.2)
       ansi
       ast
+    ruby-prof (0.17.0)
     ruby-rc4 (0.1.5)
     ruby_dep (1.5.0)
     rubyzip (1.2.2)
@@ -458,6 +460,7 @@ DEPENDENCIES
   jquery-rails
   listen
   mechanize
+  minitest (= 5.10.3)
   oga
   omniauth-facebook
   omniauth-google-oauth2
@@ -468,8 +471,10 @@ DEPENDENCIES
   prawn
   puma
   rails (~> 5.2.0)
+  rails-perftest
   react-rails (~> 2.5.0)
   redis-objects
+  ruby-prof (~> 0.17.0)
   rubyzip
   sassc-rails
   sidekiq

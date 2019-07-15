@@ -1,3 +1,4 @@
+=begin
 require 'test_helper'
 
 class JobsControllerTest < ActionDispatch::IntegrationTest
@@ -46,3 +47,4 @@ class JobsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to jobs_url
   end
 end
+=end

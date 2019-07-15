@@ -1,3 +1,4 @@
+=begin
 require 'test_helper'
 
 class SkillsresumesControllerTest < ActionDispatch::IntegrationTest
@@ -46,3 +47,4 @@ class SkillsresumesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to skillsresumes_url
   end
 end
+=end

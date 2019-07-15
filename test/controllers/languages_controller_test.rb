@@ -1,3 +1,4 @@
+=begin
 require 'test_helper'
 
 class LanguagesControllerTest < ActionDispatch::IntegrationTest
@@ -46,3 +47,4 @@ class LanguagesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to languages_url
   end
 end
+=end

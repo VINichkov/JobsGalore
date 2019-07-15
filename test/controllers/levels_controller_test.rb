@@ -1,3 +1,4 @@
+=begin
 require 'test_helper'
 
 class LevelsControllerTest < ActionDispatch::IntegrationTest
@@ -46,3 +47,4 @@ class LevelsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to levels_url
   end
 end
+=end

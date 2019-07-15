@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class ClientsControllerTest < ActionDispatch::IntegrationTest
+=begin
   setup do
     @client = Client.first
   end
@@ -9,7 +10,9 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
     get clients_url
     assert_response :success
   end
+=end
 
+=begin
   test "should get new" do
     get new_client_url
     assert_response :success
@@ -45,4 +48,5 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to clients_url
   end
+=end
 end

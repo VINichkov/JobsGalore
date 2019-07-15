@@ -1,3 +1,4 @@
+=begin
 require 'test_helper'
 
 class IndustryexperiencesControllerTest < ActionDispatch::IntegrationTest
@@ -46,3 +47,4 @@ class IndustryexperiencesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to industryexperiences_url
   end
 end
+=end

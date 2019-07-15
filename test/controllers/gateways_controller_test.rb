@@ -1,3 +1,4 @@
+=begin
 require 'test_helper'
 
 class GatewaysControllerTest < ActionDispatch::IntegrationTest
@@ -46,3 +47,4 @@ class GatewaysControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to gateways_url
   end
 end
+=end

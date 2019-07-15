@@ -1,3 +1,4 @@
+=begin
 require 'test_helper'
 
 class LocationsControllerTest < ActionDispatch::IntegrationTest
@@ -46,3 +47,4 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to locations_url
   end
 end
+=end

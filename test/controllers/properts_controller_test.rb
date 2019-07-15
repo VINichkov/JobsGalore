@@ -1,3 +1,4 @@
+=begin
 require 'test_helper'
 
 class PropertsControllerTest < ActionDispatch::IntegrationTest
@@ -46,3 +47,4 @@ class PropertsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to properts_url
   end
 end
+=end

@@ -1,3 +1,4 @@
+=begin
 require 'test_helper'
 
 class SizesControllerTest < ActionDispatch::IntegrationTest
@@ -46,3 +47,4 @@ class SizesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to sizes_url
   end
 end
+=end
