@@ -28,13 +28,13 @@ class SendToRecruitmentJob < ApplicationJob
       'email_hrs.email'
     ).joins(:company).where(
       'email_hrs.send_email = true and companies.recrutmentagency = true and email_hrs.location_id = :location_id',
-      location_id: args[:resume].location_id
+      location_id: resume.location_id
     ).pluck(:email)
     emails += Client.select(
         'clients.email'
     ).joins(:company).where(
         'clients.send_email = true and companies.recrutmentagency = true and clients.location_id = :location_id',
-        location_id: args[:resume].location_id
+        location_id: resume.location_id
     ).pluck(:email)
     emails.push(PropertsHelper::ADMIN)
     emails.each do |recipient|
