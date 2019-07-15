@@ -99,12 +99,12 @@
             span.icon-bar
             span.icon-bar
           = link_to root_path do
-            = image_bg(image_path("jg_mini.png"), "contain", "200px", "50px", class: "avatar")
+            = image_bg(image_path("jg_mini.png"), "contain", "200px", "50px", class: "avatar", autoload:false)
         .hidden-xs
           ul.nav.navbar-nav
             li.nav-item
               = link_to root_path do
-                = image_bg(image_path("jg.png"), "contain", "300px", "65px", class: "avatar")
+                = image_bg(image_path("jg.png"), "contain", "300px", "65px", class: "avatar", autoload:false)
             li.nav-item
               a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
                 |Jobs

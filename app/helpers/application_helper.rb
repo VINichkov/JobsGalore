@@ -18,11 +18,19 @@ module ApplicationHelper
   end
 
   def image_bg(url, bgsize, width, height, **option)
+    if option[:autoload] == false
+      default_image = "url('#{url}')"
+      data_src = nil
+    else
+      default_image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+      data_src = "url('#{url}')"
+    end
     content_tag(
         :div,
         '',
+        "data-src": data_src,
         class: "#{option[:class] ? (option[:class].to_s + ' b-lazy')  : "text-center img-thumbnail center-block avatar b-lazy"}",
-        style: "background-image: url('#{url}');background-size: #{bgsize}; width: #{width}; height: #{height};")
+        style: "background-image: #{default_image}; background-size: #{bgsize}; width: #{width}; height: #{height};")
   end
 
   def meta_head(arg={})
