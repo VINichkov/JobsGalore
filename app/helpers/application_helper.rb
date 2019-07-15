@@ -19,11 +19,11 @@ module ApplicationHelper
 
   def image_bg(url, bgsize, width, height, **option)
     if option[:autoload] == false
-      default_image = "url('#{url}')"
-      data_src = nil
+    default_image = "url('#{url}')"
+    data_src = nil
     else
       default_image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-      data_src = "url('#{url}')"
+      data_src = url
     end
     content_tag(
         :div,
