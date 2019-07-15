@@ -105,6 +105,7 @@ var tinyEditorOptions={
     }
 };
 
+
 $(function() {
 
     $('.datepicker_reg').datepicker({
@@ -112,5 +113,8 @@ $(function() {
         language: "en-AU",
         autoclose: true
     });
-
+    $(document).ready(function() {
+        $("head").append('<%= stylesheet_link_tag( 'footer', media: 'all').to_s %>');
+    });
 });
+
