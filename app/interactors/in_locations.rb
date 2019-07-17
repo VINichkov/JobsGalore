@@ -19,7 +19,7 @@ class InLocations
 
   def company
     loc = Location.find_by_id @location
-    context.objs = Company.where(location_id: @location).order(:name).paginate(page: @page, per_page:21, total_entries: count_jobs(loc)).includes(:industry).decorate
+    context.objs = Company.where(location_id: @location).order(:name).paginate(page: @page, per_page:21, total_entries: count_jobs(loc)).includes(:industry, :location).decorate
     location=loc
     context.name = location.name
     context.query = {type: Objects::COMPANIES.code, value:"", location_id:location.id, location_name:location.name, open:false}
@@ -31,7 +31,7 @@ class InLocations
 
   def job
     loc = Location.find_by_id @location
-    context.objs = Job.where(location_id: @location).order(created_at: :desc).paginate(page: @page, per_page:25, total_entries: count_jobs(loc)).includes(:company).decorate
+    context.objs = Job.where(location_id: @location).order(created_at: :desc).paginate(page: @page, per_page:25, total_entries: count_jobs(loc)).includes(:company, :location).decorate
     location=loc
     context.name = location.name
     context.query = {type: Objects::JOBS.code, value:"", location_id:location.id, location_name:location.name, open:false}

@@ -176,6 +176,10 @@ class Resume < ApplicationRecord
     end.sort { |x, y| y.values[0] <=> x.values[0] }[0..2].map { |t| t.keys.first }.join(' ')
   end
 
+  def send_to_recruitment
+    SendToRecruitmentJob.perform_later( id: self.id)
+  end
+
   protected
 
   def turn_on_option(option)
@@ -196,13 +200,8 @@ class Resume < ApplicationRecord
 
   def after_create
     send_email
-    send_to_recruitment
+    #send_to_recruitment
   end
-
-  def send_to_recruitment
-    SendToRecruitmentJob.perform_later( id: self.id)
-  end
-
 
   def send_email
     ResumesMailer.add_resume(self).deliver_later if client.send_email?
