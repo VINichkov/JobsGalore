@@ -215,13 +215,12 @@ class Resume < ApplicationRecord
     text_query << 'urgent is not null' if query[:urgent].present?
 
 
-    if query[:location_name].present?
-      locations = Location.search((query[:location_name].split(' ').map { |t| t += ':*' }).join('|'))
-      if locations.present?
-        text_query << 'location_id in ' + locations.ids.to_s.sub('[', '(').sub(']', ')')
-      end
-    elsif query[:location_id].present?
+
+    if query[:location_id].present? && query[:location_name].present?
       text_query << 'location_id = :location_id'
+    elsif query[:location_name].present?
+      locations = Location.search((query[:location_name].split(' ').map { |t| t += ':*' }).join('|'))
+      text_query << 'location_id in ' + locations.ids.to_s.sub('[', '(').sub(']', ')') if locations.present?
     end
 
     text_query << 'fts @@ to_tsquery(:value)' if query[:value] != ''

@@ -80,10 +80,10 @@ class Company < ApplicationRecord
     text_query << "fts @@ to_tsquery(:value)" if query[:value].present?
     text_query << "industry_id = :category" if  query[:category].present?
 
-    if query[:location_id].present?
+    if query[:location_id].present? && query[:location_name].present?
       text_query << "location_id = :location_id"
     elsif query[:location_name].present?
-      locations = Location.search((query[:location_name].split(" ").map {|t| t=t+":*"}).join("|"))
+      locations = Location.search((query[:location_name].split(" ").map {|t| t+":*"}).join("|"))
       text_query << "location_id in "+locations.ids.to_s.sub("[","(").sub("]",")") if locations.present?
     end
 

@@ -269,15 +269,16 @@ class Job < ApplicationRecord
     text_query << 'urgent is not null' if query[:urgent].present?
     flag = true
 
-    if query[:location_name].present?
-      locations = Location.search((query[:location_name].split(' ').map { |t| t += ':*' }).join('|'))
+
+    if query[:location_id].present? &&  query[:location_name].present?
+      text_query << 'location_id = :location_id'
+      flag = false
+    elsif query[:location_name].present?
+    locations = Location.search((query[:location_name].split(' ').map { |t| t += ':*' }).join('|'))
       if locations.present?
         text_query << 'location_id in ' + locations.ids.to_s.sub('[', '(').sub(']', ')')
         flag = false
       end
-    elsif query[:location_id].present?
-      text_query << 'location_id = :location_id'
-      flag = false
     end
 
     if flag
