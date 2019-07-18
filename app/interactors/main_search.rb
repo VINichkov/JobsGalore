@@ -5,12 +5,13 @@ class MainSearch
   def call
     context.sort = context.params.to_h
     @page, @param = context.params[:page], context.params[:main_search]
+    @param ||= {}
     if @param[:location_name].blank?
       @param[:location_name] = "Australia"
       @param[:location_id] = ''
     end
     context.param = @param.clone
-    @param[:value].delete!("<>{}#@!,:*&()'`\"’|")
+    @param[:value]&.delete!("<>{}#@!,:*&()'`\"’|")
     if @param[:value].blank?
       context.query = ''
       @param[:value] = ''

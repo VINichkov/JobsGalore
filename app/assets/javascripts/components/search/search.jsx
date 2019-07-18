@@ -4,8 +4,8 @@ class Search extends React.Component{
         let type_arr = [{code:1, name:"Companies "},
                         {code:2, name:"Jobs "},
                         {code:3, name:"Resumes"}];
-        this.state = {  type_search_code: this.props.search ? type_arr[Number(this.props.search.type)-1].code : null,
-                        type_search_name:this.props.search ? type_arr[Number(this.props.search.type)-1].name : null,
+        this.state = {  type_search_code: this.props.search ? type_arr[Number(this.props.search.type || 2)-1].code : null,
+                        type_search_name:this.props.search ? type_arr[Number(this.props.search.type || 2)-1].name : null,
                         list_type:type_arr,
                         active_options: this.props.search ? this.props.search.open == 'true' : false,
                         value: this.props.search ? this.props.search.value : '',
