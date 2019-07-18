@@ -18,7 +18,7 @@ module ApplicationHelper
   end
 
   def image_bg(url, bgsize, width, height, **option)
-    if option[:autoload] == false
+    if !option[:autoload]
       default_image = "url('#{url}')"
       data_src = nil
     else
