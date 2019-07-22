@@ -28,7 +28,7 @@ gem 'tinymce-rails','~> 5.0.3'
 #gem 'origami'
 gem "docx"
 gem "ffi"
-
+gem "nokogiri", ">= 1.8.5"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'
@@ -45,6 +45,9 @@ gem 'interactor'
 gem 'omniauth-linkedin-oauth2', '~> 0.2.5'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
+gem "actionview", ">= 5.2.2.1"
+gem "activejob", ">= 5.2.1.1"
+gem "activestorage", ">= 5.2.1.1"
 
 gem 'rubyzip'
 
