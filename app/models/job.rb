@@ -2,7 +2,7 @@
 
 class Job < ApplicationRecord
   SHELF_LIFE = 15
-  include PgSearch
+  include PgSearch::Model
   serialize :preferences, Hash
 
   after_create_commit :send_email_after_add_job

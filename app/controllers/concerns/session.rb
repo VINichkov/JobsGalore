@@ -9,7 +9,7 @@ module Session
   end
 
   def add_new_workflow(arg = {})
-    arg[:session][:workflow] = arg[:session].id
+    arg[:session][:workflow] = SecureRandom.uuid
     Workflow.new(arg)
   end
 
