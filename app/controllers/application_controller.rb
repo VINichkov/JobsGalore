@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+
   extend ActiveSupport::Concern
   include Session
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
@@ -9,7 +10,6 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :clear_session
   before_action :get_cookies
-
   private
 
   def redirect_back_to_url
@@ -21,7 +21,6 @@ class ApplicationController < ActionController::Base
 
   def get_cookies
     if @search.blank?
-      Rails.logger.debug(cookies[:query])
       if cookies[:query].present?
         @search = JSON.parse(cookies[:query])
       else

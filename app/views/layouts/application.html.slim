@@ -3,6 +3,9 @@ html[lang="en"]
   head
     title
       = content_for?(:title) ? yield(:title) : PropertsHelper::TITLE
+    script[async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]
+    script
+      |(adsbygoogle = window.adsbygoogle || []).push({google_ad_client: "ca-pub-8494804402686328", enable_page_level_ads: true});
     link[href=image_path("icon.png") rel="shortcut icon" type="image/png"]
     - if yield_meta_tag("canonical")!= ''
       link[href=yield_meta_tag("canonical") rel="canonical"]
