@@ -134,7 +134,7 @@
       .row
         .col-md-12
           = form_tag('/search', method: :get, class: 'navbar-form')  do
-            = react_component("Search", name: 'main_search', categories: industries, search: search)
+            = react_component("Search", name: 'main_search', url_industries: industries_url, search: search)
 -unless notice.nil? then
   .container
     p.alert-success = notice

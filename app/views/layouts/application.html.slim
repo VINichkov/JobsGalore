@@ -32,7 +32,7 @@ html[lang="en"]
     = stylesheet_link_tag('application', media: 'all')
     = csrf_meta_tags
   body
-    =render 'inc/header', industries: Industry.select(:id,:name).all, search: @search
+    =render 'inc/header', search: @search
     = yield
     =render 'inc/footer'
     script.async

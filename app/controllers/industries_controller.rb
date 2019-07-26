@@ -1,10 +1,14 @@
 class IndustriesController < ApplicationController
   before_action :set_industry, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  #load_and_authorize_resource
   # GET /industries
   # GET /industries.json
   def index
-    @industries = Industry.select(:id, :name).all
+    @industries = Industry.select(:id, :name)
+    respond_to do |format|
+        format.html { render :index }
+        format.json { render inline: @industries.to_json }
+    end
   end
 
   # GET /industries/1

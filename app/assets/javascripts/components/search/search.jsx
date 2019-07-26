@@ -29,6 +29,7 @@ class Search extends React.Component{
         }
     }
 
+
     handleClickItem(e) {
         if (e.target.id.indexOf('Search') !== -1) {
             this.setState({ type_search_name: e.target.text,
@@ -42,15 +43,19 @@ class Search extends React.Component{
             this.setState({active_options:true});
         }
     }
+
     render() {
         let ilStyle = {display: 'none'};
         let options = null;
         let cat = <div className="form-group" style={{display: 'inline'}}>
             <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                <Category key="category" style={{width: '100%'}}
+                <Category key="category"
+                          style={{width: '100%'}}
                           defaultValue={this.state.category}
-                          name={this.props.name + '[category]'} categories={this.props.categories}
-                          id="category_search" className="form-control navbar-btn"/>
+                          name={this.props.name + '[category]'}
+                          id="category_search"
+                          className="form-control navbar-btn"
+                          url_industries = {this.props.url_industries}/>
             </div>
         </div>;
         let salary = <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12">

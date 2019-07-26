@@ -121,6 +121,7 @@ class Ability
     can [:show, :highlight_view], Job
     can [:search, :in_location], Location
     can [:bill, :cancel_url, :create], Payment
+    can [:index], Industry
   end
 
 end

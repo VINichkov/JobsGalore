@@ -20,6 +20,7 @@ class IndexController < ApplicationController
     a = @result.param.to_h
     cookies[:query] = {value: JSON.generate({ type: a["type"],
                                               value:"",
+                                              category: a["category"],
                                               location_id:a["location_id"],
                                               location_name:a["location_name"],
                                               open:false}),
