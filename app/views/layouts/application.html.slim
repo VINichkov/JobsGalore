@@ -31,7 +31,7 @@ html[lang="en"]
     = javascript_include_tag('application')
     = stylesheet_link_tag('application', media: 'all')
     = csrf_meta_tags
-    =render 'script_ads'
+    = render 'inc/script_ads'
   body
     =render 'inc/header', search: @search
     = yield
