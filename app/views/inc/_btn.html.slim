@@ -1,5 +1,5 @@
 div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' : "btn-group #{option[:min] ? 'pull-right' : 'btn-group-justified'}")}"]
-  - if can? :admin_extras, object
+  - if current_client&.admin?
     div[class = "#{option[:cl]}"]
       span.btn.btn-warning.btn-block[data-toggle="dropdown"]
         - if option[:min]
@@ -33,7 +33,7 @@ div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' : "btn-group #{option[:m
                 bill_path(bill: {id: object, type: option[:type], option: 3}),
                 class: "btn btn-warning btn-block",
                 rel: "nofollow")
-  - if can?(:destroy, object) || 1==1
+  - if can?(:destroy, object)
     div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
       = link_to eval("edit_#{option[:class]}_path(object)"), class: "btn btn-primary btn-block" do
         - if option[:min]

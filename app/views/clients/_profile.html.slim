@@ -10,7 +10,8 @@
       .row
         .col-sm-4.col-xs-12.hidden-lg.hidden-md
           = link_to "Post new job", new_job_path, class: "btn btn-primary btn-block btn_margin"
-      = render partial: 'inc/job', collection: @jobs, locals:{query:''}
+      = render partial: 'inc/job/job_md', collection: @jobs, as: :job, locals: {query: ''} if md?
+      = render partial: 'inc/job/job_xs', collection: @jobs, as: :job, locals: {query: ''} unless md?
 
     .text-center
       = will_paginate_mini @jobs if @jobs

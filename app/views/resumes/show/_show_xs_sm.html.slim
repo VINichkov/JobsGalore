@@ -1,0 +1,23 @@
+- meta_for_resume(resume)
+-cache([resume,query]) do
+  .col-xs-12
+    .panel-body
+      .row
+        .col-xs-12
+          h3.text-center
+            = highlight(resume.title, Search.str_to_highlight(query))
+          = render 'inc/summary', object: resume
+          p
+          .btn-group.btn-group-justified
+            = render 'inc/btn/btn_edit_xs_sm', object: resume, option: {cl: "dropdown", class: 'resume', type: 3} if can? :destroy, resume
+      .row
+        .col-sm-12
+          p
+            = highlight(resume.render_description, Search.str_to_highlight(query))
+      = render 'inc/btn/btn_apply_xs_sm', object: resume, option: {cl: "dropdown", class: 'resume', type: 3, show: true} unless can? :destroy, resume
+      p
+        .text-center
+          = social_share_button_tag resume.title, url: resume_url(resume), title:resume.title
+  -if client_signed_in?
+    -if current_client.resp?
+      =render 'inc/contact', object: resume.client, title: "#{resume.title} on #{PropertsHelper::COMPANY}.eu"

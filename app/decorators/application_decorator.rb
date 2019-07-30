@@ -5,7 +5,7 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   def description_meta
-    @description_meta ||= markdown_to_text(object.description, 300)
+    @description_meta ||= description_text
   end
 
   def title
@@ -21,7 +21,7 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   def render_description
-    (@render_description ||= self.description_html&.gsub('<img',"<img class=\"img-thumbnail center-block\"")&.gsub('<a',"<a rel=\"nofollow\"")&.html_safe)
+    (@render_description ||= self.description_html&.gsub('<img',"<img class=\"img-thumbnail center-block\"")&.gsub('<a',"<a rel=\"nofollow\""))
   end
 
   def posted_date

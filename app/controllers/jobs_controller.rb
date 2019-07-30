@@ -8,12 +8,12 @@ class JobsController < ApplicationController
   # before_action :employer!, only: :new
 
   def show
-    render('jobs/show/show_md', locals:{job:@job, query:''}) if md?
-    render('jobs/show/show_xs_sm', locals:{job:@job, query:''}) unless md?
+    @query=''
   end
 
   def highlight_view
     @query = params[:text].split('/')
+    render :show
   end
 
   def views;  end

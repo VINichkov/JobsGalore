@@ -27,10 +27,6 @@
             = link_to settings_company_path do
               span.glyphicon.glyphicon-cd
               | &nbsp; Company
-          li
-            = link_to team_path do
-              span.glyphicon.glyphicon-heart
-              | &nbsp; Team
         - if current_client.admin?
           li
             = link_to admin_path do

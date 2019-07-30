@@ -45,7 +45,6 @@ class Autocomplete extends React.Component{
     }
     handleInput(){
         if ( this.state.autocomplete.val().length>0) {
-            console.log(this.props.route+this.state.autocomplete.val()+".json");
             this.handleSearchLocations(this.props.route+this.state.autocomplete.val()+".json");
         }
     }

@@ -1,1 +1,2 @@
-=render 'show', resume:@resume, query:''
+=render 'resumes/show/show_md', resume:@resume, query: @query if md?
+=render 'resumes/show/show_xs_sm', resume:@resume, query: @query unless md?

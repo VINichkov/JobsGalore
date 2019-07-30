@@ -4,9 +4,7 @@
 .container
   h1 ="#{@category_view.name[:name]} #{@category_view.name[:industry]}"
   .col-lg-8.col-md-9.col-sm-12
-    - if @category_view.type == Objects::JOBS
-      = render partial:'inc/job', collection: @category_view.objs, locals:{query:''}
-    - elsif @category_view.type==Objects::COMPANIES
+    - if @category_view.type==Objects::COMPANIES
       = render partial:'inc/company', collection: @category_view.objs, locals:{query:''}
     - elsif @category_view.type==Objects::RESUMES
       = render partial:'inc/resume', collection: @category_view.objs, locals:{query:''}

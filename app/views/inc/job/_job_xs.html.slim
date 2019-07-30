@@ -1,6 +1,4 @@
 .row.border_top[class=" #{class_extras(job)}"]
-  - if current_client && ((current_client.employer? && job.company ==  current_client.company) || job.client == current_client || current_client.admin?)
-    = render 'inc/btn', object: job, option: {cl:"btn-group", min:true, class:'job', type:2}
   h3
     = link_to(highlight(job.title_capitalize, Search.str_to_highlight(query)), job_highlight_view_path(id:job, text:query))
   span
@@ -23,3 +21,7 @@
       span
         | &nbsp; - &nbsp;
         |Responded #{job.responded.count}
+  - if can? :destroy, job
+    .text-center
+      = render 'inc/btn/btn_edit_xs_sm', object: job, option: {cl: "btn-group", min: true, class: 'job', type: 2}
+    p

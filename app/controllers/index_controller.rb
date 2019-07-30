@@ -31,8 +31,6 @@ class IndexController < ApplicationController
     if @result.failure?
       render_404
     end
-    render 'index/main_search/main_search_md' if md?
-    render 'index/main_search/main_search_xs' unless md?
   end
 
   def by_category

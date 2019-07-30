@@ -10,10 +10,12 @@ class ResumesController < ApplicationController
   # GET /resumes/1
   # GET /resumes/1.json
   def show
+    @query = ''
   end
 
   def highlight_view
     @query = params[:text]
+    render :show
   end
 
   def views
