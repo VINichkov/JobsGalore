@@ -1,0 +1,19 @@
+.container
+  h1 =@result.name
+  .col-xs-12
+    =sort_by_search(@result.sort)
+    .row
+      p.col-xs-6
+        strong
+          = link_to "Upload your resume", new_resume_url
+          |&nbsp;-&nbsp;Let employers find you
+      p.col-xs-12
+        = page_entries_info @result.objs, {model: @result.type.name}
+    - if @result.type == Objects::JOBS
+      = render partial: 'inc/job/job_xs', collection: @result.objs, as: :job, locals:{query: @result.query}
+    - elsif @result.type==Objects::COMPANIES
+      = render partial: 'inc/company/company_xs', collection: @result.objs, as: :company, locals:{query: @result.query}
+    - else @result.type==Objects::RESUMES
+      = render partial: 'inc/resume/resume_xs', collection: @result.objs, as: :resume, locals:{query: @result.query}
+.text-center
+  = will_paginate_mini @result.objs

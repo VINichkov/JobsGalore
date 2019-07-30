@@ -1,5 +1,5 @@
 div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' : "btn-group #{option[:min] ? 'pull-right' : 'btn-group-justified'}")}"]
-  - if can? :admin_extras, object
+  - if current_client&.admin?
     div[class = "#{option[:cl]}"]
       span.btn.btn-warning.btn-block[data-toggle="dropdown"]
         - if option[:min]
@@ -23,35 +23,26 @@ div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' : "btn-group #{option[:m
   - else
     - if PropertsHelper::URGENT== "true"
       div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
-        = link_to("Urgent",
+        = link_to("Urgent $#{Services::URGENT.price_integer} (7 day)",
                 bill_path(bill: {id: object, type: option[:type], option: 1}),
-                class: "btn btn-danger btn-block",
+                class: "btn btn-primary btn-block",
                 rel: "nofollow")
     - if PropertsHelper::HIGHLIGHT == "true"
       div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
-        = link_to("Highlight",
+        = link_to("Highlight $#{Services::HIGHLIGHT.price_integer} (7 day)",
                 bill_path(bill: {id: object, type: option[:type], option: 3}),
-                class: "btn btn-warning btn-block",
+                class: "btn btn-primary btn-block",
                 rel: "nofollow")
-  - if can?(:destroy, object) || 1==1
-    div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
-      = link_to eval("edit_#{option[:class]}_path(object)"), class: "btn btn-primary btn-block" do
-        - if option[:min]
-          i.glyphicon.glyphicon-pencil
-        - else
-          |Edit
-    div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
-      = link_to object, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-default btn-block" do
-        - if option[:min]
-          i.glyphicon.glyphicon-remove
-        - else
-          |Delete
-    - if current_client&.admin?
-      = render 'inc/btn/btn_send', object: object, option: option
-    = render 'inc/btn/btn_prolong', object: object, option: option
-  - else
-    = render 'inc/btn/btn_send', object: object, option: option
-  -if option[:show]
-    div[class =  'btn_margin']
-      button.btn.btn-success.btn-block[onclick="history.back()"]
-        |Back
+  div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
+    = link_to eval("edit_#{option[:class]}_path(object)"), class: "btn btn-default btn-block" do
+      - if option[:min]
+        i.glyphicon.glyphicon-pencil
+      - else
+        |Edit
+  div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
+    = link_to object, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-danger btn-block" do
+      - if option[:min]
+        i.glyphicon.glyphicon-remove
+      - else
+        |Delete
+  = render 'inc/btn/btn_prolong', object: object, option: option

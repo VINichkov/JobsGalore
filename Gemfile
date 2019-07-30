@@ -29,6 +29,7 @@ gem 'tinymce-rails','~> 5.0.3'
 gem "docx"
 gem "ffi"
 gem "nokogiri", ">= 1.8.5"
+gem 'browser'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'

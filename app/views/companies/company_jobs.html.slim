@@ -11,6 +11,7 @@
         = link_to @company.name, @company
         = image_bg(@company.logo_url, "contain", "200px", "200px")
   .col-sm-9.col-md-9.col-sm-12.col-xs-12
-    = render partial: 'inc/job', collection: @objs, locals:{query:''}
+    = render partial: 'inc/job/job_md', collection: @objs, as: :job, locals:{query: ''} if md?
+    = render partial: 'inc/job/job_xs', collection: @objs, as: :job, locals:{query: ''} unless md?
 .text-center
   = will_paginate_mini @objs

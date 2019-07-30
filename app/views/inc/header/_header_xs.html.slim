@@ -82,62 +82,16 @@
             span.glyphicon.glyphicon-log-out
             | &nbsp; Log out
   nav.navbar.navbar-static-top.navbar-default[itemscope itemtype="http://schema.org/WebSite"]
-    meta[itemprop="url" content=root_url]
-    meta[itemprop="name" content=PropertsHelper::TITLE]
-    meta[itemprop="image" content=image_path("jg.png")]
-    meta[itemprop="description" content="JobsGalore is a job search aggregator in Australia. Find jobs and career related information. Find your dream job. Make job search easy with us!"]
-    form[class="none" itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction"]
-      meta[itemprop="target" content="#{root_url}search?value={search_term_string}&type=2"]
-      input[itemprop="query-input" type="text" name="search_term_string" required]
-      input[type="submit"]
+    = render 'inc/header/inc/google_addon'
     .container
       .row
-        .col-xs-12.hidden-sm.hidden-md.hidden-lg
+        .col-xs-12
           button.navbar-toggle.navbar-left[type="button" data-toggle="offcanvas" data-target="#mainnav" data-canvas="body" aria-expanded="true" aria-controls="navbar"]
             span.sr-only Toggle navigation
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          = link_to root_path do
-            = image_bg(image_path("jg_mini.png"), "contain", "200px", "50px", class: "avatar", autoload:false)
-        .hidden-xs
-          ul.nav.navbar-nav
-            li.nav-item
-              = link_to root_path do
-                = image_bg(image_path("jg.png"), "contain", "300px", "65px", class: "avatar", autoload:false)
-            li.nav-item
-              a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
-                |Jobs
-                b.caret
-              ul.dropdown-menu
-                li
-                  = link_to "Post new job", new_job_path
-            li.nav-item
-              a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
-                |Resumes
-                b.caret
-              ul.dropdown-menu
-                li
-                  = link_to "Post new resume", new_resume_path
-                li
-                  =link_to"Resumes by category",'/by_category/3'
-            li.nav-item.hidden-sm
-              a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
-                |Companies
-                b.caret
-              ul.dropdown-menu
-                li
-                  a[href= '/by_category/1']
-                    |Companies by category
-        .hidden-xs.navbar-right
-          =render 'inc/header/client_drop_menu'
-      .row
-        .col-md-12
-          = form_tag('/search', method: :get, class: 'navbar-form')  do
-            = react_component("Search", name: 'main_search', url_industries: industries_url, search: search)
--unless notice.nil? then
-  .container
-    p.alert-success = notice
--unless alert.nil? then
-  .container
-    p.alert-warning = alert
+          .text-center
+            = link_to root_path do
+              = image_bg(image_path("jg_mini.png"), "contain", "200px", "50px", class: "avatar", autoload:false)
+      = render('inc/header/inc/search', search: search)

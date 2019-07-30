@@ -5,16 +5,11 @@ class CompanyDecorator < ApplicationDecorator
   decorates_association :client
 
   def logo_url
-    @logo_url ||= object.logo_uid ? Dragonfly.app.remote_url_for(object.logo_uid) : h.image_url("company_profile.jpg")
+    @logo_url ||= object.logo_uid.blank? || ENV["RAILS_ENV"]!='production' ? h.image_url("company_profile.jpg") : Dragonfly.app.remote_url_for(object.logo_uid)
   end
 
   def jobs_count
     @jobs_count ||= object.job.count
-  end
-
-
-  def jobs_of_company_to_xml
-
   end
 
   def keywords

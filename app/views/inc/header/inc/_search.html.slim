@@ -1,0 +1,4 @@
+.row
+  .col-md-12
+    = form_tag('/search', method: :get)  do
+      = react_component("Search", name: 'main_search', url_industries: industries_url, search: search)

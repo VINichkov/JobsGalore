@@ -33,6 +33,26 @@
   }
 }
 
+.btn-circle {
+  border-radius: 22px;
+  text-align: center;
+  padding-top: 7px;
+  padding-left: 0;
+  padding-right: 0;
+  margin: 5px;
+  font-size: 18px;
+}
+
+.sticky {
+  position: sticky;
+  bottom: 10px;
+  min-height: 2em;
+}
+
+.after_footer{
+  width: 40px
+}
+
 @font-face {
   font-family: 'FontAwesome';
   font-display: swap;
@@ -62,11 +82,13 @@ body {
 
 $size: 32px;
 
-.social-share-button {
-  .ssb-icon {
-    background-size: $size $size;
-    height: $size;
-    width: $size;
+.text-center {
+  .social-share-button {
+    .ssb-icon {
+      background-size: $size $size;
+      height: $size;
+      width: $size;
+    }
   }
 }
 

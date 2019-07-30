@@ -14,7 +14,7 @@ p
   span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="validThrough"]
     =object.try(:close)
 -if   object.class==JobDecorator
-  .hidden-md.hidden-lg.hidden-sm
+  .hidden-md.hidden-lg.hidden-sm[itemprop="hiringOrganization" itemscope itemtype="http://schema.org/Organization"]
     p
       strong
         |Company: &nbsp;
@@ -22,14 +22,14 @@ p
 p
   strong
     |Location: &nbsp;
+  = link_location(object.location.name, object.location, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-warning')
   .hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="jobLocation" itemscope itemtype="http://schema.org/Place"]
     span[itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"]
       span[itemprop="addressLocality"]
         =object.location.suburb
       span[itemprop="addressRegion"]
         =object.location.state
-  = link_location(object.location.name, object.location, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-warning')
-- unless object.salary.blank?
+- if object.salary.present?
   p
     strong
       |Salary: &nbsp;
@@ -50,11 +50,10 @@ p
     strong
       |Professional area:
   ul
-
-      li
-        span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="industry"]
-          =object.industry.name
-        =link_industry(object.industry.name, object.industry,  Objects::RESUMES, class: 'text-success')
+    li
+      span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="industry"]
+        =object.industry.name
+      =link_industry(object.industry.name, object.industry,  Objects::RESUMES, class: 'text-success')
 - if object.highlight
   p
     span.glyphicon.glyphicon-paperclip

@@ -1,0 +1,3 @@
+-if cookies[:alert].blank? and !client_signed_in?
+  -cookies[:alert]= true
+  =react_component("Alert", keys: query.present? ? query.join : job.title, location_id:job.location_id, location_name:job.location.name, url: root_url)

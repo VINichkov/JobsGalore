@@ -33,21 +33,25 @@ class ApplicationDecorator < Draper::Decorator
   end
   private
   def markdown_to_keywords (arg)
-    if arg
-      keys = markdown_to_text(arg, 400).split(' ').map do |key|
-        key.delete!(',')
-        key = nil unless key&.length>3
-        key
+    TimeExecut.ms 'markdown_to_keywords' do
+      if arg
+        keys = markdown_to_text(arg, 400).split(' ').map do |key|
+          key.delete!(',')
+          key = nil unless key&.length > 3
+          key
+        end
+        keys.compact.uniq.join(', ')
       end
-      keys.compact.uniq.join(', ')
     end
   end
 
   def markdown_to_text (arg, truncate=nil)
-    if arg
-      text = HtmlToPlainText.plain_text(arg).squish
-      if truncate
-        text= text.truncate(truncate, separator: ' ',omission: '')
+    TimeExecut.ms 'markdown_to_text' do
+      if arg
+        text = HtmlToPlainText.plain_text(arg).squish
+        if truncate 
+          text= text.truncate(truncate, separator: ' ',omission: '')
+        end
       end
     end
   end

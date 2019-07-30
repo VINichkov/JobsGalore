@@ -27,4 +27,16 @@ module JobsHelper
     }
   end
 
+  def meta_for_jobs(job)
+    meta_head({ description: job.description_meta,
+                  title: job.title,
+                  keywords: job.keywords,
+                  url: job_url(job),
+                  canonical: job_url(job),
+                  image: job.company.logo_url,
+                  published: job.updated_at,
+                  card: 'summary_large_image',
+                  user: 'jobsGalore_AU'})
+  end
+
 end

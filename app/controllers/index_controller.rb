@@ -3,6 +3,8 @@ class IndexController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:file_to_html]
   def main
     @main = Main.call(query:@search)
+    render 'index/main/main_md' if md?
+    render 'index/main/main_xs' unless md?
   end
 
   def advertising_terms_of_use
@@ -29,6 +31,8 @@ class IndexController < ApplicationController
     if @result.failure?
       render_404
     end
+    render 'index/main_search/main_search_md' if md?
+    render 'index/main_search/main_search_xs' unless md?
   end
 
   def by_category
@@ -79,7 +83,7 @@ class IndexController < ApplicationController
           when '1'
             @objs << {url: root_url, date:time,changefreq:"hourly" }
           when '2'
-            Company.select(:id, :updated_at).paginate(page: params[:page], per_page:5000).each do |company|
+            Company.select(:id, :updated_at).paginate(page: params[:page], per_page:10000).each do |company|
               @objs <<{url: company_url(company), date:company.updated_at.strftime("%Y-%m-%d"),changefreq:"hourly" }
               @objs <<{url: jobs_at_company_url(company), date: time,changefreq:"hourly" }
             end

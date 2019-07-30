@@ -57,7 +57,7 @@ class MainSearch
   end
 
   def job
-    context.objs = Job.includes(:company,:location).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:25, total_entries: count_jobs(@param[:value], @param[:location_id])).decorate
+    context.objs = Job.includes(:company,:location, :client).search(@param).order(sort(@param[:sort], @param[:value])).paginate(page: @page, per_page:25, total_entries: count_jobs(@param[:value], @param[:location_id])).decorate
     context.type = Objects::JOBS
     true
   end

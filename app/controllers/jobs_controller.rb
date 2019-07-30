@@ -7,13 +7,16 @@ class JobsController < ApplicationController
   before_action :action_view, only: %i[show highlight_view]
   # before_action :employer!, only: :new
 
-  def show; end
+  def show
+    render('jobs/show/show_md', locals:{job:@job, query:''}) if md?
+    render('jobs/show/show_xs_sm', locals:{job:@job, query:''}) unless md?
+  end
 
   def highlight_view
     @query = params[:text].split('/')
   end
 
-  def views; end
+  def views;  end
 
   # GET /jobs/new
   def new
