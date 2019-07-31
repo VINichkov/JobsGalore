@@ -31,7 +31,6 @@ html[lang="en"]
     = javascript_include_tag('application')
     = stylesheet_link_tag('application', media: 'all')
     = csrf_meta_tags
-    = render 'inc/script_ads'
   body
     - if md?
       =render('inc/header/header_md', search: @search)
