@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
 
-  extend ActiveSupport::Concern
   include Session
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
   rescue_from CanCan::AccessDenied, with: :render_404

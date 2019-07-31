@@ -1,4 +1,6 @@
 module Session
+  extend ActiveSupport::Concern
+
   def restore_workflow_object(arg)
     begin
       Workflow.find_by_session(arg)
