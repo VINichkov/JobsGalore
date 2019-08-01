@@ -94,7 +94,6 @@ Rails.application.configure do
   config.action_controller.asset_host = "https://d3dv41bs0cmiw6.cloudfront.net"
   config.action_mailer.asset_host ="https://d3dv41bs0cmiw6.cloudfront.net"
 
-
   # Do not dump schema after migrations.educations_id_seq
   config.active_record.dump_schema_after_migration = false
 
@@ -104,7 +103,7 @@ Rails.application.configure do
   config.active_job.queue_adapter = :sidekiq
   config.action_mailer.delivery_method = :smtp
   if ENV["TEST"].nil?
-    config.action_mailer.default_url_options = { host: "https://jobsgalore.eu", protocol: 'https'}
+    config.action_mailer.default_url_options = { host: "https://jobsgalore.eu"}
     config.action_mailer.default_options = {from: 'noreply@jobsgalore.eu'}
     config.action_mailer.smtp_settings = {
         address:              '127.0.0.1',
@@ -113,7 +112,7 @@ Rails.application.configure do
         enable_starttls_auto: true,
         openssl_verify_mode:  'none'}
   else
-    config.action_mailer.default_url_options = { host: 'https://free-talents.herokuapp.com', protocol: 'https'}
+    config.action_mailer.default_url_options = { host: 'https://free-talents.herokuapp.com' }
     config.action_mailer.smtp_settings = {
         address:              'smtp.yandex.ru',
         port:                 25,
