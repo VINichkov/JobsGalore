@@ -48,6 +48,7 @@ class ApplicationDecorator < Draper::Decorator
   def markdown_to_text (arg, truncate=nil)
     TimeExecut.ms 'markdown_to_text' do
       if arg
+        arg = arg[0..truncate*2] if truncate
         text = HtmlToPlainText.plain_text(arg).squish
         if truncate 
           text= text.truncate(truncate, separator: ' ',omission: '')

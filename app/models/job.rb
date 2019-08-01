@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Job < ApplicationRecord
-  include Other
 
   SHELF_LIFE = 15
   include PgSearch::Model
@@ -25,10 +24,6 @@ class Job < ApplicationRecord
   validates :client, presence: true
 
   attr_accessor :location_name
-
-  def self.create_sitemap(url, limit, page ,time=nil)
-    Other.create_sitemap(url, limit, page ,self.table_name ,time)
-  end
 
   def full_keywords(count_keys = 1, min_length_word = 4)
     if title

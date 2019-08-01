@@ -68,37 +68,16 @@ class IndexController < ApplicationController
   end
 
   def sitemap
-    @max_page_companies = count_page(Company.count)
-    @max_page_resumes = count_page(Resume.count)
-    @max_page_jobs = count_page(Location.select(:counts_jobs).inject(0){|rez, elem| rez +=elem.counts_jobs if elem.counts_jobs}.to_i)
-    @max_page_companies_with_jobs = count_page(Job.find_by_sql('select j.company_id from jobs j group by j.company_id').count)
-    render :sitemap, formats: :xml
+    render file: 'public/sitemap/sitemap.xml', formats: :xml
   end
 
   def sitemaps
-    @objs =[]
-        time = Time.now.strftime("%Y-%m-%d")
-        case params[:id]
-        when '1'
-            @objs << {url: root_url, date:time,changefreq:"hourly" }
-            render :sitemaps, formats: :xml
-        when '2'
-          render xml: Company.create_sitemap(companies_url, 10000,params[:page].to_i)
-        when '3'
-          render xml: Resume.create_sitemap(resumes_url, 10000,params[:page].to_i)
-        when '4'
-          render xml: Job.create_sitemap(jobs_url, 10000,params[:page].to_i)
-        when '5'
-            Location.select(:id).find_each do |location|
-              @objs <<{url: local_object_url(location.id, Objects::JOBS.code), date:time,changefreq:"hourly" }
-              @objs <<{url: local_object_url(location.id, Objects::RESUMES.code), date:time,changefreq:"hourly" }
-              @objs <<{url: local_object_url(location.id, Objects::COMPANIES.code), date:time,changefreq:"hourly" }
-            end
-            render :sitemaps, formats: :xml
-        when '6'
-          render xml: Company.create_sitemap('http://0.0.0.0:3000/company_jobs', 10000,params[:page].to_i, time)
-        end
-    #render :sitemaps, formats: :xml
+    begin
+      render file: "public/sitemap/sitemaps#{params[:id]}.xml", formats: :xml
+    rescue
+      Rails.logger.info("Error : Запрос несуществующего sitemaps")
+      render inline: '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>'
+    end
   end
 
   def robot
@@ -133,9 +112,6 @@ class IndexController < ApplicationController
     params.permit(:page, main_search: [:type, :value, :page, :salary,  :options, :category, :location_id, :location_name, :urgent, :open, :sort])
   end
 
-  def count_page(count)
-    res = count / 10000
-    res += 1 if (count % 10000)>0
-  end
+
 
 end

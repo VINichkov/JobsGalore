@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Resume < ApplicationRecord
-  include Other
   serialize :preferences, Hash
 
   belongs_to :client
@@ -21,10 +20,6 @@ class Resume < ApplicationRecord
 
   after_create_commit :after_create
   before_destroy :send_email_before_destroy
-
-  def self.create_sitemap(url, limit, page ,time=nil)
-    Other.create_sitemap(url, limit, page ,self.table_name ,time)
-  end
 
   def full_keywords(count_keys = 1, min_length_word = 4)
     if title
