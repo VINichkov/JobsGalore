@@ -47,7 +47,7 @@ set :linked_files, %w{key/private.pem config/application.yml}
 set :linked_dirs,   %w{log tmp}
 set :init_system, :systemd
 
-
+append :linked_dirs,  "public/sitemap"
 #---------------------------------------#
 =begin
 set :sidekiq_default_hooks => true
