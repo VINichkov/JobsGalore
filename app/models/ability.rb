@@ -118,7 +118,7 @@ class Ability
     can [:new, :create_temporary, :create_resume, :message], Resume
     can [:show, :company_jobs, :highlight_view], Company
     can [:show, :highlight_view], Resume
-    can [:show, :highlight_view], Job
+    can [:show, :highlight_view, :similar_jobs], Job
     can [:search, :in_location], Location
     can [:bill, :cancel_url, :create], Payment
     can [:index], Industry

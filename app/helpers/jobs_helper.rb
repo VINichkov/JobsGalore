@@ -39,4 +39,8 @@ module JobsHelper
                   user: 'jobsGalore_AU'})
   end
 
+  def similar_vacancies(job ,size)
+    react_component("Loder", url_similar_for_job: similar_jobs_url(job), size: size)
+  end
+
 end

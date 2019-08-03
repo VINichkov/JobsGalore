@@ -5,11 +5,12 @@
     .col-md-8
       .row.well
         h1.text-center[itemprop="title"]
-          = highlight(job.title_capitalize, Search.str_to_highlight(query))
+          = highlight(job.title.capitalize, Search.str_to_highlight(query))
         p
           = highlight(job.render_description, Search.str_to_highlight(query))
         span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
           = job.description_text
+      =similar_vacancies(job, 'md')
     .col-md-4
       .panel.panel-default
         .panel-body
@@ -22,5 +23,5 @@
             .text-center
               =social_share_button_tag  job.title, url: job_url(job), title:job.title
   - unless job.apply
-    =render 'inc/contact', object: job.client, title: "#{job.title} at #{PropertsHelper::COMPANY}.eu"
-  =render 'inc/header/inc/alert', job: job, query: query
+    = render 'inc/contact', object: job.client, title: "#{job.title} at #{PropertsHelper::COMPANY}.eu"
+  = render 'jobs/show/inc/alert', job: job, query: query

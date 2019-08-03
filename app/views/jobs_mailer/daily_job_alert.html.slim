@@ -4,7 +4,7 @@ div[style=title_email]
 div[style=body_email]
   -@list_of_jobs.each do |job|
     div[style=h3_email]
-      = link_to job.title_capitalize, job_url(job) + @utm, style: "color:#66512c"
+      = link_to job.title.capitalize, job_url(job) + @utm, style: "color:#66512c"
     | #{link_to job.company.name, company_url(job.company)  + @utm, style: "color: #3c763d; "} - #{link_to job.location.name , local_object_url(job.location.id,Objects::JOBS.code)+ @utm, style: "color: #66512c;"}
     = space_email
     - if not job.salary.blank?

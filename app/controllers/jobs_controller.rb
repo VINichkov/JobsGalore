@@ -3,7 +3,7 @@
 class JobsController < ApplicationController
   load_and_authorize_resource :job
   before_action :authenticate_client!, only: %i[apply prolong]
-  before_action :set_job, only: %i[prolong apply views highlight_view show edit update destroy admin_show admin_edit admin_update admin_destroy]
+  before_action :set_job, only: %i[similar_jobs prolong apply views highlight_view show edit update destroy admin_show admin_edit admin_update admin_destroy]
   before_action :action_view, only: %i[show highlight_view]
   # before_action :employer!, only: :new
 
@@ -14,6 +14,28 @@ class JobsController < ApplicationController
   def highlight_view
     @query = params[:text].split('/')
     render :show
+  end
+
+  def similar_jobs
+    jobs = @job.similar_vacancies.decorate.map do |job|
+        {id: job.id,
+         url: job_url(job),
+         apply: apply_path(job),
+         title: job.title.capitalize,
+         location: job.location.name,
+         location_url: local_object_url(job.location, Objects::JOBS.code),
+         salary: job.salary,
+         description: job.description_text,
+         company: job.company.name,
+         company_url: company_url(job.company),
+         company_logo: job.company.logo_url,
+         posted_date: job.posted_date,
+         highlight: job.highlight.present?,
+         urgent: job.urgent.present?
+        }
+    end.to_json
+    puts jobs
+    render json: jobs
   end
 
   def views;  end

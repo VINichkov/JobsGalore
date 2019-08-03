@@ -151,10 +151,6 @@ class Job < ApplicationRecord
     @salary ||= calc_salary
   end
 
-  def title_capitalize
-    @cap ||= title.capitalize
-  end
-
   def save
     self.industry = Industry.find_by_name('Other') if industry.nil?
     self.company = client.company if company.nil? && client.company
@@ -193,7 +189,9 @@ class Job < ApplicationRecord
                 apply: job[:apply])
   end
 
-
+  def similar_vacancies
+    self.class.search_for_send(value: self.full_keywords(3).join(' '), location: self.location_id, exclude: id)
+  end
 
   protected
 
@@ -232,16 +230,24 @@ class Job < ApplicationRecord
     end
   end
 
+
   scope :search_for_send, lambda { |**arg|
+    arg[:limit] ||=3
     text_query = []
+    mode = "ARRAY['phrase', 'plain', 'none']"
     query = {}#{ date: Time.now - 1.days }
     if arg[:location]
       text_query << 'location_id = :location'
       query[:location] = arg[:location]
     end
+    if arg[:exclude]
+      text_query << 'id != :id'
+      query[:id] = arg[:exclude]
+    end
     #text_query << 'created_at >= :date'
     text_query << 'fts @@ to_tsquery(:value)'
-    query[:value] = arg[:value].split(' ').map { |t| t += ':*' }.join('|')
+    query[:old_value] = arg[:value]
+    query[:value] = Search.str_to_search(arg[:value]).split(' ').map { |t| t += ':*' }.join('|')
     text_query = text_query.join(' and ')
     select(
         :id,
@@ -261,8 +267,8 @@ class Job < ApplicationRecord
         :industry_id,
         :twitter,
         :viewed_count,
-        "ts_rank_cd(fts,  to_tsquery('#{query[:value]}')) AS \"rank\""
-    ).where(text_query, query).order('rank DESC').limit(10).to_a
+        "user_rank(fts, '#{query[:old_value]}', '#{query[:value]}', #{mode}) AS \"rank\""
+    ).where(text_query, query).order('rank DESC').limit(arg[:limit])
   }
 
   scope :search, lambda { |query|

@@ -2,7 +2,7 @@
   div[class="panel-body #{class_extras(job)}"]
     .col-md-10
       h3
-        = link_to(highlight(job.title_capitalize, Search.str_to_highlight(query)), job_highlight_view_path(id:job, text:query), class: 'text-warning')
+        = link_to(highlight(job.title.capitalize, Search.str_to_highlight(query)), job_highlight_view_path(id:job, text:query), class: 'text-warning')
       - if job.salary.present?
         p = job.salary
       = highlight(job.description_text + "...",  Search.str_to_highlight(query))
@@ -20,14 +20,17 @@
         span
           | &nbsp; - &nbsp;
           |Responded #{job.responded.count}
+      span.pull-right
+        a[href= apply_path(job) role= "button"  aria-disabled="true"  rel="nofollow"]
+          |Apply
     .col-md-2
       - if job.client == current_client || current_client&.admin? || job.company ==  current_client&.company
         = render 'inc/btn', object: job, option: {cl:"dropdown", class:'job', type:2}
       - else
         .row
-          .row.text-center
+          .text-center
             = link_to(job.company.name.truncate(50, separator: " "), job.company)
-          .row.text-center
+          .text-center
             = link_to(image_bg(job.company.logo_url, "contain", "130px", "100px"), job.company)
       .row.text-center
         = "Posted: " +job.posted_date
