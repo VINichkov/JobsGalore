@@ -30,14 +30,14 @@
 .hide + .label_not_checked:before {
     background-color: #286090;
     color: #fff;
-    content: "\002B";
+    content: "+";
     display: block;
     float: left;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bold;
     height: 16px;
     line-height: 16px;
-    margin: 3px 5px;
+    margin: 3px 3px;
     text-align: center;
     width: 16px;
     -webkit-border-radius: 50%;

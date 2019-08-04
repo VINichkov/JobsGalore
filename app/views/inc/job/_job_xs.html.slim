@@ -23,7 +23,4 @@
         |Responded #{job.responded.count}
     span.align-right
       =render 'inc/btn/apply_search', object:job
-  - if can? :destroy, job
-    .text-center
-      = render 'inc/btn/btn_edit_xs_sm', object: job, option: {cl: "btn-group", min: true, class: 'job', type: 2}
-    p
+

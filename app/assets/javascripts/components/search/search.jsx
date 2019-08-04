@@ -12,10 +12,11 @@ class Search extends React.Component{
                         location_name: this.props.search ? this.props.search.location_name : '',
                         location_id: this.props.search ? this.props.search.location_id : '',
                         salary: this.props.search ? this.props.search.salary : '',
-                        urgent: this.props.search ? this.props.search.urgent : false,
+                        urgent: this.props.search ? this.props.search.urgent === "on" : false,
                         category: (this.props.search.category !== '' && this.props.search.category !== null && this.props.search.category !== undefined )  ? {id:Number(this.props.search.category)} : ''};
         this.handleClickItem =  this.handleClickItem.bind(this);
         this.handleOnClickOptions = this.handleOnClickOptions.bind(this);
+        this.handleOnClickUrgent = this.handleOnClickUrgent.bind(this);
     }
     componentWillMount(){
         if (this.state.type_search_code ===null){
@@ -44,10 +45,16 @@ class Search extends React.Component{
         }
     }
 
+    handleOnClickUrgent(){
+        let urgent = !this.state.urgent;
+        this.setState({urgent: urgent});
+    }
+
     render() {
-        let ilStyle = {display: 'none'};
+        const indent = {paddingBottom: 10};
+        const ilStyle = {display: 'none'};
         let options = null;
-        let cat = <div className="form-group" style={{display: 'inline'}}>
+        let cat = <div className="form-group" style={{display: 'inline'}} style={indent}>
             <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                 <Category key="category"
                           style={{width: '100%'}}
@@ -58,25 +65,47 @@ class Search extends React.Component{
                           url_industries = {this.props.url_industries}/>
             </div>
         </div>;
-        let salary = <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-            <div className="input-group" style={{width: '100%'}}>
-                                <span className="input-group-addon" style={{width: '1%'}}>
+        let salary = <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12" style={indent}>
+            <div className="input-group" style={{width: '100%', height:36}}>
+                                <span className="input-group-addon" style={{width: 51}}>
                                     $
                                 </span>
-                <InputMask style={{width: '100%'}} dataformat="dddddddddddd" autocomplete="off" id="salary"
+                <InputMask style={{width: '100%', height:36}} dataformat="dddddddddddd" autocomplete="off" id="salary"
                            class_name="form-control"
                            defaultValue={this.state.salary}
                            name={this.props.name + '[salary]'} pattern="^[ 0-9]+$" type="text"
                            placeholder="Salary" not_required={true}/>
             </div>
         </div>;
-        let urgent = <div className=" col-md-6 col-lg-6 col-sm-12 col-xs-12">
-            <label>
-                <input type="checkbox" defaultChecked={this.state.urgent}
-                       name={this.props.name + '[urgent]'}/>
-                &nbsp;
-                <span className="badge badge-error"><strong> &nbsp; ONLY URGENT </strong></span>
+        let urgentValue, urgentStyle;
+        if(this.state.urgent){
+            urgentValue = "ON";
+            urgentStyle = {
+                width: 51,
+                color: '#fff',
+                borderColor: '#4cae4c',
+                backgroundColor: '#5cb85c'}
+        }    else   {
+            urgentValue = "OFF";
+            urgentStyle ={width: 51};
+        }
+        let urgent = <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12" style={style={indent}}>
+            <div className="input-group" style={{width: '100%', height:36}}>
+            <span className="input-group-addon" style={urgentStyle} onClick={this.handleOnClickUrgent}>
+                {urgentValue}
+                                </span>
+            <label htmlFor="urgent_inbox" className= "btn btn-default btn-block" style={{display: 'flex'}} >
+
+                <span>Only urgent</span>
+                    <input  type="checkbox"
+                            id="urgent_inbox"
+                            className="none"
+                            defaultChecked={this.props.urgent}
+                            checked={this.state.urgent}
+                            name={this.props.name + '[urgent]'}
+                            onChange={this.handleOnClickUrgent}/>
             </label>
+            </div>
         </div>;
         if (this.state.active_options) {
             if (this.state.type_search_code == 1) {
@@ -96,6 +125,8 @@ class Search extends React.Component{
                 </div>;
             }
         }
+        let AdvancedSearchClass = this.state.active_options ? "btn btn-success btn-xs" : "btn btn-default btn-xs";
+        let AdvancedSearchGlyphicon = this.state.active_options ? "glyphicon glyphicon-triangle-top" : "glyphicon glyphicon-triangle-bottom";
         return(<div>
                 <div className="form-group  " style={{display: 'inline'}}>
                     <div className=" col-md-6 col-lg-6 col-sm-12 col-xs-12">
@@ -136,8 +167,13 @@ class Search extends React.Component{
                     </div>
                 </div>
                 <div className=" col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                    <input className="hide" id="hd-1" type="checkbox" onClick={this.handleOnClickOptions} />
-                    <label htmlFor="hd-1" className={this.state.active_options ? "label_checked" : "label_not_checked"}><span>-----</span>&nbsp; Advanced Search &nbsp;<span>-----</span></label>
+                    <p/>
+                    <label htmlFor="hd-1" className={AdvancedSearchClass}>
+                         <i className={AdvancedSearchGlyphicon}/>
+                         <span>&nbsp; Advanced Search</span>
+                    </label>
+                    <input  className="none" id="hd-1" type="checkbox" onClick={this.handleOnClickOptions} />
+                    <p/>
                         {options}
                 </div>
             </div>

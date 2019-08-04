@@ -1,13 +1,13 @@
 -cache(current_client) do
-  = print_header
+  = render 'inc/header/inc/print'
   nav.navbar.navbar-static-top.navbar-default[itemscope itemtype="http://schema.org/WebSite"]
-    = render 'inc/header/inc/google_addon'
     .container
       .row
         ul.nav.navbar-nav
           li.nav-item
             = link_to root_path do
-              = image_bg(image_path("jg.png"), "contain", "300px", "65px", class: "avatar", autoload: false)
+              div[style="width: 300px; height: 65px;" ]
+                =render 'inc/logo'
           li.nav-item
             a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
               |Jobs

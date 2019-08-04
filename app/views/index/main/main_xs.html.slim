@@ -1,16 +1,16 @@
+-content_for(:hide_search, true)
 h1.none Jobsgalore. Jobs in Australia.
 .container
-  = render 'index/main/inc/numbers of jobs'
   .row
-    .col-sm-12.col-xs-12.text-center
-      |Do you want to get a dream job?
-    .col-sm-6.col-xs-6.align-center
-      |Let employers find you
-    .col-sm-6.col-xs-6
-      = link_to "Post new resume", new_resume_path, class: "btn btn-danger btn-block", rel: "nofollow"
-      p
+    = render 'index/main/inc/numbers of jobs'
+    = render('inc/header/inc/search', search: @search)
   .row
-    = render 'index/main/inc/major_cities'
+    .col-xs-12.text-center
+      h3
+        |Are you hiring?
+    .col-xs-12.text-center
+      = link_to "Post a job", new_job_path, class: "btn btn-default btn-circle btn-block", rel: "nofollow"
+  p
 
 
 

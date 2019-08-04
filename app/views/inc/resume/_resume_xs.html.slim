@@ -17,7 +17,4 @@
       span
         | &nbsp; - &nbsp;
         |Views #{resume.viewed_count}
-  - if can? :destroy, resume
-    .text-center
-      = render 'inc/btn/btn_edit_xs_sm', object: resume, option: {cl: "btn-group", min: true, class: 'resume', type: 3}
-    p
+

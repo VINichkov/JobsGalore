@@ -63,7 +63,7 @@ gem 'mechanize'
 gem 'virtus'
 
 gem "pg_search"#, '~> 2.0.1'
-
+gem 'trix'
 
 # Use Redis adapter to run Action Cable in production
 # Use ActiveModel has_secure_password
