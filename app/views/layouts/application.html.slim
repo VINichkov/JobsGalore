@@ -28,7 +28,6 @@ html[lang="en"]
     meta[name="lang" content="en-US"]
     meta[name="description" content=yield_meta_tag("description", "JobsGalore is a job search aggregator in Australia. Find jobs and career related information. Find your dream job. Make job search easy with us!")]
     meta[name="keywords" content=yield_meta_tag("keywords","Jobs Galore, work, job, vacancy search, resume, jobs, Australia, vacancies, employment, looking for a job, search, seek, galore, money, solary, indeed, JobsGalore, jobs in university, post job free,  post jobs for free, look for job, seeking, job board")]
-    = javascript_include_tag('application')
     = stylesheet_link_tag('application', media: 'all')
     = csrf_meta_tags
   body
@@ -39,6 +38,7 @@ html[lang="en"]
     =render 'inc/header/inc/alert', alert: alert, notice: notice if alert || notice
     = yield
     =render('inc/footer')
+    = javascript_include_tag('application', async: true)
     script.async
       |(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       |(i[r].q=i[r].q||[  ]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

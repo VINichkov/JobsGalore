@@ -1,10 +1,2 @@
 //= #require bootstrap-sprockets
-//= require react
-//= require components
-//= require react_ujs
-//= require trix
-//= require bootstrap
-//= require bootstrap-datepicker
-//= require bootstrap-typeahead
-//= require social-share-button
-//= require jasny-bootstrap
+
