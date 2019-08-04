@@ -14,7 +14,6 @@ var
                         rule = valid_elements[rules[i]];
                     }
                 }
-                console.log(rule);
                 return rule;
             },
 
@@ -42,7 +41,6 @@ var
                 if (typeof valid_styles === 'string' && node.style.length) {
                     for (i = node.style.length - 1; i >= 0; i--) {
                         re = new RegExp('(?:^|,)' + node.style[i] + '(?:,|$)');
-                        console.log(re);
                         if (!re.test(valid_styles)) {
                             node.style[node.style[i]] = '';
                         }

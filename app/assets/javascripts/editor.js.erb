@@ -3,20 +3,5 @@
 //= require tinymce
 //= require html-formatting.js
 $(function() {
-    $("#inp").change(function() {
-        readURL(this, tinyName);
-    });
 
-    $(".linkedin_click").click( function () {
-        $.get("<%=Rails.application.routes.url_helpers.linkedin_resume_path%>", function(data) {
-            let ed = tinymce.get(tinyName);
-            ed.setProgressState(1);
-            $("[name='resume[title]']").val(data.title);
-            window.setTimeout(function() {
-                ed.setContent(data.description, { format: 'html' });
-                ed.setProgressState(0); // Hide progress
-            }, 3000);
-            $("[name='resume[industry_id]']").val(data.industry_id);
-        });
-    });
 });

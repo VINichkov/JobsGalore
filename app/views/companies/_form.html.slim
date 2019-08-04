@@ -40,8 +40,8 @@
       .form-group
         = f.label :description
         br
-        = f.text_area :description, class: "tinymce", contenteditable: false, :rows => 20
-        = tinymce_script
+        = f.text_area :description, id: "editor", class: "none", contenteditable: false
+        trix-editor[input="editor" ]
       hr.colorgraph
         .row
           .col-xs-12.col-md-6.col-sm-6.col-lg-6

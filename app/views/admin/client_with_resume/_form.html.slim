@@ -47,8 +47,8 @@
   .form-group
     = f.label :description, "Resume (CV)"
     br
-    = f.text_area :description, class: "tinymce", contenteditable: false, :rows => 20
-    = tinymce_script
+    = f.text_area :description, id: "editor_resume", class: "none", contenteditable: false
+    trix-editor[input="editor_resume" ]
   h2
     |Email
   hr.colorgraph

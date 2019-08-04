@@ -14,10 +14,8 @@ class EditPicture extends React.Component {
     }
     save(){
         let fd = new FormData();
-        console.log(this.refInput.current);
         fd.append("action_executed", "update_logo");
         fd.append("data[img]", this.refInput.current.files[0]);
-        console.log(fd);
         $.ajax({
             type: "PATCH",
             url: this.props.route,
@@ -39,7 +37,6 @@ class EditPicture extends React.Component {
             url: this.props.update_route,
             success: function (data) {
                 this.setState({image: data.logo_uid});
-                console.log(data);
             }.bind(this),
             dataType: 'json'
         });

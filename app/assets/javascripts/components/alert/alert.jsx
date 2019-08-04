@@ -114,7 +114,6 @@ class Alert extends React.Component{
     }
 
     handleSearchLocations(url){
-        console.log(url);
         $.ajax({url:url,
             success: function (data) {
                 this.setState({dataset:data});
@@ -127,7 +126,6 @@ class Alert extends React.Component{
         let dataset;
         if ( this.state.dataset !== null ) {
             dataset = this.state.dataset.map(function(location) {
-                console.log("Создаем");
                 return(
                     <option key={location.id} data-id = {location.id} value={location.name} />);
             }.bind(this));

@@ -16,7 +16,6 @@ class Category extends React.Component{
     }
 
     render(){
-        console.log(this.props.defaultValue);
         let options = this.state.categories.map(function (category) {
             return (<option key={category.id} selected={category.id === this.props.defaultValue.id} value={category.id}>{category.name}</option>);
         }.bind(this));

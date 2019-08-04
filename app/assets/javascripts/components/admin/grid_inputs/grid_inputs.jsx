@@ -72,7 +72,6 @@ class Grid_Inputs extends React.Component{
     }
 
     pushToServer(){
-        console.log(this.props.route);
         $.ajax({
             type: "PATCH",
             url: this.props.route,

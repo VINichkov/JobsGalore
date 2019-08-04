@@ -12,7 +12,6 @@ class JobXsSm extends React.Component{
             width: 130,
             height: 100
         };
-        console.log(this.props.job);
         let pSalary;
         if (salary !== "") {
             pSalary = <p>{salary}</p>;
