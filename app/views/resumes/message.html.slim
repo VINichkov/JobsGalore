@@ -1,4 +1,3 @@
-=javascript_include_tag("editor.js")
 .container
   .row
     .col-xs-12.col-sm-12.col-md-8.col-lg-8.col-md-offset-2.col-lg-offset-2
@@ -14,3 +13,4 @@
               resumes: current_client&.resumes_for_apply,
               url_for_parse: file_to_html_url,
               send_url:send_msg_url)
+=javascript_include_tag("editor.js", async: true)

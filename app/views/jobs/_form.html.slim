@@ -1,5 +1,4 @@
 -option||={}
-=javascript_include_tag("editor.js")
 = form_for @job , url:option[:url] do |f|
   hr.colorgraph
   - if @job.errors.any?
@@ -64,3 +63,4 @@
     .col-xs-6.col-lg-6
       = f.submit class: "btn btn-primary btn-block "
   br
+=javascript_include_tag("editor.js", async: true)
