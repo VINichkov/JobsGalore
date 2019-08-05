@@ -28,8 +28,7 @@ html[lang="en"]
     meta[name="lang" content="en-US"]
     meta[name="description" content=yield_meta_tag("description", "JobsGalore is a job search aggregator in Australia. Find jobs and career related information. Find your dream job. Make job search easy with us!")]
     meta[name="keywords" content=yield_meta_tag("keywords","Jobs Galore, work, job, vacancy search, resume, jobs, Australia, vacancies, employment, looking for a job, search, seek, galore, money, solary, indeed, JobsGalore, jobs in university, post job free,  post jobs for free, look for job, seeking, job board")]
-    = stylesheet_link_tag('application', media: 'all')
-    = javascript_include_tag('application')
+
     = csrf_meta_tags
   body
     - if md?
@@ -46,5 +45,7 @@ html[lang="en"]
       |})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
       |ga('create', 'UA-102893446-1', 'auto');
       |ga('send', 'pageview');
+    = stylesheet_link_tag('application', media: 'all')
+    = javascript_include_tag('application', defer: true)
     = stylesheet_link_tag('footer', media: 'all', async: true)
     = javascript_include_tag('footer', async: true)
