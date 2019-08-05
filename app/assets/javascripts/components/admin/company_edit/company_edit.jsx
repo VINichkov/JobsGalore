@@ -21,9 +21,7 @@ class CompanyEdit extends React.Component {
         this._fieldAgency = React.createRef();
         this._fieldDescription = React.createRef();
     }
-    componentDidMount(){
-        tinymce.init(tinyEditorOptions);
-    }
+
     notSave(){
         this.setState({notSave: true});
     }
@@ -34,7 +32,7 @@ class CompanyEdit extends React.Component {
             location_id: this._fieldLocationId.current.value,
             industry_id: this._fieldIndustry.current.value,
             recrutmentagency: this._fieldAgency.current.checked,
-            description: tinyMCE.activeEditor.getContent()
+            description: this._fieldDescription.current.value
     };
          $.ajax({
              type: "PATCH",
@@ -111,7 +109,8 @@ class CompanyEdit extends React.Component {
             <div className="form-group">
                 <label>Description</label>
                 <br/>
-                <textarea name="letter[text]" defaultValue={this.state.description}  ref={this._fieldDescription} className="tinymce" id="letter_description"/>
+                <textarea name="letter[text]" defaultValue={this.state.description}  ref={this._fieldDescription} className="none" id="letter_description"/>
+                <trix-editor input="letter_description"  />
             </div>
             <div className="row">
                 <div className="col-sm-offset-6 col-md-offset-6 col-lg-offset-6 col-xs-12 col-md-6 col-sm-6 col-lg-6">

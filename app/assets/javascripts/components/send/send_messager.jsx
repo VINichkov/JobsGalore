@@ -1,19 +1,8 @@
 class SendMessage extends React.Component{
     constructor(props){
         super(props);
-        this.state={inputLetter:""};
-        this._divEditableL = React.createRef();
-    }
-    componentDidMount(){
-        tinymce.init(tinyEditorOptions);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.text !== this.state.text && !this._updated) {
-            this.setState({ text: nextProps.text });
-        }
-        if (this._updated) this._updated = false;
-    }
 
     render(){
         let step;
@@ -30,7 +19,8 @@ class SendMessage extends React.Component{
                     <div className="form-group">
                         <label>A brief message</label>
                         <br/>
-                        <textarea name="letter[text]" value={this.state.inputLetter} className="markdown none" id="letter_description"></textarea>
+                        <textarea name="letter[text]" className="none" id="letter_description"/>
+                        <trix-editor input="letter_description"  />
                         <input type="text" value={this.props.title.id} name="letter[resume]" className="none" />
                     </div>
                     <div className="row">

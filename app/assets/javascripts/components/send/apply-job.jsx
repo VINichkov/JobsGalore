@@ -15,11 +15,7 @@ class ApplyJob extends React.Component{
         }
         this.handleChangeFocus =  this.handleChangeFocus.bind(this);
     }
-    componentDidMount(){
-        if (this.props.resumes != null) {
-            tinymce.init(tinyEditorOptions);
-        }
-    }
+
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.text !== this.state.text && !this._updated) {
@@ -40,6 +36,7 @@ class ApplyJob extends React.Component{
     }
 
     render(){
+        const defaultString = `<p>Hi,</p><p>I\'m interested in the ${this.props.title.name} job which I found on <a href=\"www.jobsgalore.eu\">Jobs Galore</a>. I believe I have the appropriate experience for this role. Please contact me if you would like to discuss further.</p><p>I look forward to hearing from you.</p>`;
         let step;
         if (this.props.resumes == null){
             step = <Autorization title = {this.props.title}
@@ -63,7 +60,7 @@ class ApplyJob extends React.Component{
                             <input type="text" name="letter[job]" className="none" defaultValue={this.props.job} value={this.props.job}/>
                             <NewResume location = {this.props.location}
                                        check = {this.state.resumes.new_resume.checked}
-                                       categories = {this.props.categories}
+                                       url_industries = {this.props.url_industries}
                                        onchange = {this.handleChangeFocus}
                                        url_for_parse = {this.props.url_for_parse}
                                        user_from_linkedin = {this.props.user_from_linkedin}
@@ -78,9 +75,10 @@ class ApplyJob extends React.Component{
                             <div className="form-group">
                                 <label>A brief message to employer (optional)</label>
                                 <br/>
-                                <textarea name="letter[text]" className="tinymce" id="letter_description" rows="10">
-                                    {"<p>Hi,</p><p>I\'m interested in the " +this.props.title.name+" job which I found on <a href=\"www.jobsgalore.eu\">Jobs Galore</a>. I believe I have the appropriate experience for this role. Please contact me if you would like to discuss further.</p><p>I look forward to hearing from you.</p>"}
+                                <textarea name="letter[text]" className="none" id="letter_description" rows="10" >
+                                    {defaultString}
                                </textarea>
+                                <trix-editor input="letter_description"  />
                             </div>
                             <div className="row">
                                 <div className="col-xs-6 col-lg-6">

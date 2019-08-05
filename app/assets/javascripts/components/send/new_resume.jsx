@@ -7,22 +7,12 @@ class NewResume extends React.Component{
             industry:null,
             location_name:this.props.location.name,
             location_id:this.props.location.id};
-        this.tinyName = 'resume_description';
         this._fileInput = React.createRef();
         this.handleOnClickResume =  this.handleOnClickResume.bind(this);
         this.handleLinkedIn = this.handleLinkedIn.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidUpdate() {
-        if (this.props.check) {
-            tinymce.init(tinyEditorOptions);
-        }
-    }
-
-    componentWillUnmount() {
-        tinymce.remove("textarea#resume_description")
-    }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.text !== this.state.text && !this._updated) {
@@ -42,17 +32,14 @@ class NewResume extends React.Component{
                             location_id:data.location_id,
                             location_name:data.location_name,
                             flagVisible: !this.state.flagVisible});
-            let ed = tinymce.get(this.tinyName);
-            ed.setProgressState(1); // Show progress
-            window.setTimeout(function() {
-                ed.setContent(data.description, { format: 'html' });
-                ed.setProgressState(0); // Hide progress
-            }, 3000);
+            let ed = $("trix-editor")[0];
+            ed.editor.setSelectedRange([0, 0]);
+            ed.editor.insertHTML(data.description);
         }.bind(this));
     }
 
     handleChange(){
-        readURL(this._fileInput.current, this.tinyName)
+        readURL(this._fileInput.current)
     };
     render(){
         let flag;
@@ -116,19 +103,21 @@ class NewResume extends React.Component{
                 <div className="form-group">
                     <label>Professional area </label>
                     <br/>
-                    <Category style={{width:'100%'}}  key = {this.state.flagVisible} defaultValue={this.state.industry} className="form-control navbar-btn" name={this.props.name+"[category]"} categories = {this.props.categories}/>
+                    <Category style={{width:'100%'}}
+                              key = {this.state.flagVisible}
+                              defaultValue={this.state.industry}
+                              className="form-control navbar-btn"
+                              name={this.props.name+"[category]"}
+                              url_industries = {this.props.url_industries}/>
                 </div>
                 <div className="form-group">
                     <label>Resume (CV)</label>
                     <br/>
-                    <textarea name={this.props.name+"[description]"} className="tinymce"  rows="20"  id="resume_description" />
-
+                    <textarea name={this.props.name+"[description]"} className="none"   id="resume_description" />
+                    <trix-editor input="resume_description"  />
                 </div>
-
             </div>;
-        }else{
-            tinymce.remove("textarea#resume_description");
-        }
+        };
         return(
             <div>
                 <div className="panel panel-info" >

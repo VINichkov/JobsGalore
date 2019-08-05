@@ -10,7 +10,7 @@
               linkedin_url: client_linkedin_omniauth_authorize_url,
               user_from_linkedin: current_client&.linkedin?,
               linkedin_resume_url: linkedin_resume_url,
-              categories: Industry.select(:id,:name).all,
+              url_industries: industries_url,
               resumes: current_client&.resumes_for_apply,
               url_for_parse: file_to_html_url,
               send_url:send_url)

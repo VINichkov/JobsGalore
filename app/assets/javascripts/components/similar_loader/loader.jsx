@@ -1,7 +1,7 @@
-class Loder extends React.Component{
+class Loader extends React.Component{
     constructor(props){
         super(props);
-        this.state = {jobs:[]}
+        this.state = {jobs:[]};
         this.componentDidMount = this.componentDidMount.bind(this);
     }
 
