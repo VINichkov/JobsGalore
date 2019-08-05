@@ -14,9 +14,11 @@
 
 
 // Custom bootstrap variables must be set or imported before bootstrap itself.
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "jasny-bootstrap";
+
 
 @at-root {
   // Import the fonts
@@ -113,7 +115,7 @@ $size: 32px;
 }
 
 .avatar{
-  display: inline-block;
+  //display: inline-block;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;

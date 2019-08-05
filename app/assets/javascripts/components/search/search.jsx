@@ -94,7 +94,7 @@ class Search extends React.Component{
             <span className="input-group-addon" style={urgentStyle} onClick={this.handleOnClickUrgent}>
                 {urgentValue}
                                 </span>
-            <label htmlFor="urgent_inbox" className= "btn btn-default btn-block" style={{display: 'flex'}} >
+            <label htmlFor="urgent_inbox" className= "btn btn-default btn-block" style={{display: 'flex', height:36}} >
 
                 <span>Only urgent</span>
                     <input  type="checkbox"

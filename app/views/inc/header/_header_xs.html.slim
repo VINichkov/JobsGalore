@@ -97,6 +97,6 @@
       .row
         .col-xs-12
           = link_to root_path do
-            .avatar
+            .avatar[style="height: 53px"]
               = render 'inc/logo'
       = render('inc/header/inc/search', search: search) unless content_for? :hide_search
