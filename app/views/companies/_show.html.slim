@@ -1,2 +1,3 @@
-= render('companies/show/show_md', company:company, query:@query) if md?
-= render('companies/show/show_xs_sm', company:company, query:@query) unless md?
+.container
+  = render('companies/show/show_md', company:company, query:@query) if md?
+  = render('companies/show/show_xs_sm', company:company, query:@query) unless md?

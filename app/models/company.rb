@@ -16,7 +16,7 @@ class Company < ApplicationRecord
 
   def self.create_sitemap_jobs(url, limit, page ,time=nil)
     sql = <<-SQL
-              select '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><urlset>'||array_to_string(
+              select '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'||array_to_string(
                       ARRAY(
                             SELECT  '<url><loc>#{url}/'||c.id||'</loc>'||
                                     '<lastmod>'||TO_CHAR(c.updated_at, 'YYYY-mm-dd')||'</lastmod>'||

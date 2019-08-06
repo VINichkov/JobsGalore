@@ -1,2 +1,3 @@
-= render('jobs/show/show_md.html.slim', job:@job, query:@query) if md?
-= render('jobs/show/show_xs_sm', job:@job, query:@query) unless md?
+.container
+  = render('jobs/show/show_md.html.slim', job:@job, query:@query) if md?
+  = render('jobs/show/show_xs_sm', job:@job, query:@query) unless md?
