@@ -388,6 +388,9 @@ GEM
     trix (0.10.1)
       rails
     ttfunk (1.5.1)
+    turbolinks (5.2.0)
+      turbolinks-source (~> 5.2)
+    turbolinks-source (5.2.0)
     twitter (6.2.0)
       addressable (~> 2.3)
       buftok (~> 0.2.0)
@@ -490,6 +493,7 @@ DEPENDENCIES
   sprockets-rails
   tinymce-rails (~> 5.0.3)
   trix
+  turbolinks
   twitter
   tzinfo-data
   uglifier

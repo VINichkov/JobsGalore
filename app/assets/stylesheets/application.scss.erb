@@ -23,6 +23,7 @@
 @import 'bootstrap-datepicker';
 @import "font-awesome";
 @import 'trix';
+@import "btn";
 
 @font-face {
   font-family: 'FontAwesome';
@@ -35,7 +36,6 @@
 
 
 @at-root {
-  // Import the fonts
   @font-face {
     font-family: "Glyphicons Halflings";
     font-display: swap;
@@ -52,30 +52,10 @@ mark{
   padding: 0;
 }
 
-.btn-circle {
-  border-radius: 22px;
-  text-align: center;
-  padding-top: 7px;
-  padding-left: 0;
-  padding-right: 0;
-  margin: 5px;
-  font-size: 18px;
-}
-
 trix-editor {
   height: 300px !important;
   max-height: 500px !important;
   overflow-y: auto !important;
-}
-
-.sticky {
-  position: sticky;
-  bottom: 10px;
-  min-height: 2em;
-}
-
-.after_footer{
-  width: 40px
 }
 
 @font-face {
@@ -209,29 +189,10 @@ $size: 32px;
 .badge-error:hover {
   background-color: #953b39;
 }
-
-.btn-linkedin {
-  color: #fff;
-  background-color: #00a0dc;
-  border-color: rgba(0, 0, 0, 0.2);
+.navbar-top{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1071;
 }
 
-.btn-google{
-  color: #fff;
-  background-color: #db4e3f;
-  border-color: rgba(0, 0, 0, 0.2);
-}
-
-.btn-facebook{
-  color: #fff;
-  background-color: #4267b2;
-  border-color: rgba(0, 0, 0, 0.2);
-}
-
-.btn-social {
-  position: relative;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}

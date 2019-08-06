@@ -3,7 +3,6 @@ class SendMessage extends React.Component{
         super(props);
     }
 
-
     render(){
         let step;
         if (this.props.resumes == null){
