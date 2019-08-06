@@ -69,29 +69,31 @@
           = link_to new_client_registration_path do
             |&nbsp;
             span.glyphicon.glyphicon-registration-mark
-            |&nbsp; Register
+            |&nbsp; Sign up
       - else
         li
           = link_to destroy_client_session_path, :method => :delete do
             | &nbsp;
             span.glyphicon.glyphicon-log-out
             | &nbsp; Log out
-  nav.navbar.navbar-static-top.navbar-default[itemscope itemtype="http://schema.org/WebSite"]
+  nav.navbar.navbar-static-top.navbar-blue.navbar-top[itemscope itemtype="http://schema.org/WebSite"]
     = render 'inc/header/inc/google_addon'
-    .container
-      .row
-        .col-xs-12
-          button.navbar-toggle.navbar-left[type="button" data-toggle="offcanvas" data-target="#mainnav" data-canvas="body" aria-expanded="true" aria-controls="navbar"]
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          span.pull-right[style ="margin: 17px 5px;"]
-            - unless client_signed_in?
-              = link_to 'Upload resume', new_resume_path, style:"margin: 17px 5px;"
-              = link_to 'Sign up', new_client_registration_path, style:"margin: 17px 5px;"
-            - if current_client&.resp?
-              = link_to 'Post a job', new_job_path, style:"margin: 17px 5px;"
-            - if current_client&.applicant?
-              = link_to 'Upload resume', new_resume_path, style:"margin: 17px 5px;"
-      = render('inc/header/inc/search', search: search) unless content_for? :hide_search
+    .container-fluid
+      .navbar-header
+        button.navbar-toggle.navbar-left[type="button" data-toggle="offcanvas" data-target="#mainnav" data-canvas="body" aria-expanded="true" aria-controls="navbar"]
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        = head_menu(search)
+
+
+              //span.pull-right[style ="margin: 17px 5px;"]
+                - unless client_signed_in?
+                  = link_to 'Upload resume', new_resume_path, style:"margin: 17px 5px;", class: "link"
+                  = link_to 'Sign up', new_client_registration_path, style:"margin: 17px 5px;", class: "link"
+                - if current_client&.resp?
+                  = link_to 'Post a job', new_job_path, style:"margin: 17px 5px;", class: "link"
+                - if current_client&.applicant?
+                  = link_to 'Upload resume', new_client_registration_path, style:"margin: 17px 5px;", class: "link"
+

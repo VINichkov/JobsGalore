@@ -7,20 +7,6 @@ class StepTwo extends React.Component {
 
     }
 
-    componentDidMount(){
-        let option = tinyEditorOptions;
-        option.setup = function(ed) {
-            ed.on('change', function(e) {
-                this.handleChangeMessage(ed.getContent());
-            }.bind(this));
-        }.bind(this);
-        tinymce.init(option);
-
-    }
-
-    componentWillUnmount() {
-        tinymce.remove("textarea#letter_description")
-    }
 
     handleChangeFocus(e){
         let resumes = this.props.resumes;
@@ -67,7 +53,8 @@ class StepTwo extends React.Component {
                 <div className="form-group">
                     <label>A brief message </label>
                     <br/>
-                    <textarea name="letter[text]" className="tinymce" defaultValue={this.props.message} rows="10" onInput={this.handleChangeMessage}/>
+                    <textarea name="letter[text]" id="letter_description" className="none" defaultValue={this.props.message} onInput={this.handleChangeMessage}/>
+                    <trix-editor input="letter_description" />
                 </div>
             </div>
         </div>);

@@ -15,3 +15,4 @@
     = render partial: 'inc/job/job_xs', collection: @objs, as: :job, locals:{query: ''} unless md?
 .text-center
   = will_paginate_mini @objs
+= render 'inc/btn/btn_new_resume_xs_sm' unless md?

@@ -17,3 +17,7 @@
       = render partial: 'inc/resume', collection: @result.objs, as: :resume, locals:{query: @result.query}
 .text-center
   = will_paginate_mini @result.objs
+- if @result.type == Objects::JOBS
+  =render 'inc/btn/btn_new_resume_xs_sm'
+- if @result.type==Objects::RESUMES
+  =render 'inc/btn/btn_new_job_xs_sm'

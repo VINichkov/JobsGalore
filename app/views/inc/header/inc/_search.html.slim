@@ -1,4 +1,5 @@
 .row
   .col-md-12
     = form_tag('/search', method: :get)  do
-      = react_component("Search", name: 'main_search', url_industries: industries_url, search: search)
+      - name ||= "main_search"
+      = react_component("Search", {name: name, key: key, url_industries: industries_url, search: search, show: true})

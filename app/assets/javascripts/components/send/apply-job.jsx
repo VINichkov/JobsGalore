@@ -9,10 +9,10 @@ class ApplyJob extends React.Component{
                 resumes["resume_" + i] = {resume: resume, checked: false};
             }.bind(this));
             resumes.resume_0 != null ? resumes.resume_0.checked = true : resumes.new_resume.checked = true;
-            this.state = {
-                resumes: resumes
-            };
+        } else {
+            resumes= {new_resume:{checked:true}};
         }
+        this.state = {resumes: resumes};
         this.handleChangeFocus =  this.handleChangeFocus.bind(this);
     }
 
@@ -80,12 +80,14 @@ class ApplyJob extends React.Component{
                                </textarea>
                                 <trix-editor input="letter_description"  />
                             </div>
-                            <div className="row">
-                                <div className="col-xs-6 col-lg-6">
-                                    <a href={this.props.title.link} className="btn btn-success btn-block">Back</a>
-                                </div>
-                                <div className="col-xs-6 col-lg-6">
+                            <div className="row hidden-sm hidden-xs">
+                                <div className="col-xs-6 col-lg-6 col-md-offset-6 col-lg-offset-6" >
                                     <input type="submit" className="btn btn-primary btn-block" value="Apply"/>
+                                </div>
+                            </div>
+                            <div className="row sticky hidden-lg hidden-md" >
+                                <div className="col-xs-12 col-lg-12 btn_margin text-center" >
+                                    <input type="submit" className="btn btn-primary btn-block btn-circle" value="Apply for job"/>
                                 </div>
                             </div>
                             <br/>

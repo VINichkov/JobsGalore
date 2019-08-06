@@ -1,7 +1,5 @@
 
 //= require trix
-///= require tinymce
-///= require html-formatting.js
 
 var readURL = function (input) {
     if (input.files) {
@@ -33,7 +31,7 @@ var uploadPdfDocx = function(uploadFile) {
     });
 };
 
-var uploadTXT = function(uploadFile,tiny_id) {
+var uploadTXT = function(uploadFile) {
     let ed = $("trix-editor")[0];
     let reader = new FileReader();
     reader.onload = function (e) {

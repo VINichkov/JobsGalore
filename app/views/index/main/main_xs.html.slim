@@ -2,8 +2,16 @@
 h1.none Jobsgalore. Jobs in Australia.
 .container
   .row
+    p.col-md-6.text-center
+      strong
+        = link_to "Upload your resume", new_resume_url
+        |&nbsp;-&nbsp;Let employers find you
+  br
+  br
+  .row
     = render 'index/main/inc/numbers of jobs'
-    = render('inc/header/inc/search', search: @search)
+    = render('inc/header/inc/search', name: 'main_search' , search: @search, key: "main")
+  br
   .row
     .col-xs-12.text-center
       h3

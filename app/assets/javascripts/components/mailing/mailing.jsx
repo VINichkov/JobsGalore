@@ -132,15 +132,17 @@ class Mailing extends React.Component{
                                message = {this.state.message}
                                onChangePrice = {this.onChangePrice}
                                updateDate = {this.handleDataUpdate}/>;
-        let btn =   <div className="row">
+        let btn = <div className="row hidden-sm hidden-xs">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <hr className="colorgraph" />
                         </div>
-                        <div className="col-xs-6 col-md-6">
-                            <button className="btn btn-success btn-block" onClick={this.state.isStepTwo ? this.onClickNext : "history.back()"}>Back</button>
-                        </div>
-                        <div className="col-xs-6 col-md-6">
+                        <div className="col-md-offset-6 col-lg-offset-6 col-xs-6 col-md-6">
                             <button className="btn btn-primary btn-block" onClick={this.state.isStepTwo ?  this.sendDateToServer  : this.onClickNext }>{this.state.isStepTwo ? "Pay $" +this.state.price.toFixed(2) : "Next"}</button>
+                        </div>
+                   </div>;
+        let btn_min = <div className="row sticky hidden-lg hidden-md">
+                        <div className="col-xs-12 col-md-12">
+                            <button className="btn btn-primary btn-circle btn-block" onClick={this.state.isStepTwo ?  this.sendDateToServer  : this.onClickNext }>{this.state.isStepTwo ? "Pay $" +this.state.price.toFixed(2) : "Next"}</button>
                         </div>
                     </div>;
         let size = this.state.isStepTwo ? null :<div className="col-lg-5 col-md-5 col-sm-5 col-xs-12">
@@ -167,6 +169,7 @@ class Mailing extends React.Component{
                     </div>
                     {this.state.isStepTwo ? stepTwo : stepOne}
                     {btn}
+                    {btn_min}
                     <br />
                 </div>
             </div>

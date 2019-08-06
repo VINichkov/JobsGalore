@@ -83,7 +83,7 @@ class ShowLetters extends React.Component{
         return(<div className="col-lg-8 col-md-9 col-sm-12">
                 <h1> Mailbox</h1>
                     <div className="row">
-                        <div className="col-md-offset-9 col-md-3">
+                        <div className="col-md-offset-9 col-md-3 hidden-xs hidden-sm">
                             <a className="btn btn-block btn-primary" href={this.props.newMessage}>New message</a>
                         </div>
                         <br/>
@@ -101,6 +101,9 @@ class ShowLetters extends React.Component{
                 <Recipients modalWindow = {this._modalWindow}
                             keyForModal = {keyForModal}
                             recipients = {this.state.currentListOfRecipients}/>
+                <div className="hidden-lg hidden-md sticky">
+                    <a className="btn btn-block btn-circle btn-primary" href={this.props.newMessage}>New message</a>
+                </div>
                 </div>
         );
     }

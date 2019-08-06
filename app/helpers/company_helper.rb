@@ -58,6 +58,14 @@ module CompanyHelper
   end
 
 
+  def meta_for_company(company)
+    meta_head(  title:company.name,
+                description: company.description_meta,
+                keywords: company.keywords,
+                url: company_url(company),
+                canonical: company_url(company),
+                image: company.logo_url)
+  end
 
 
 end

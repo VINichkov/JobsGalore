@@ -21,6 +21,7 @@
       span
         | &nbsp; - &nbsp;
         |Responded #{job.responded.count}
-    span.align-right
-      =render 'inc/btn/apply_search', object:job
+    span.pull-right
+      a[href= apply_path(job) role='button' aria-disabled='true' rel="nofollow"]
+        |Apply
 

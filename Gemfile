@@ -23,7 +23,6 @@ gem 'pdf-reader','~> 2.1.0'
 gem 'prawn'
 gem 'oga' #Нужен для создания PDF
 #gem "oink"
-gem 'tinymce-rails','~> 5.0.3'
 #gem 'pdf2html'
 #gem 'origami'
 gem "docx"
