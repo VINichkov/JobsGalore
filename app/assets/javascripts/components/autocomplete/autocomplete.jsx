@@ -25,8 +25,7 @@ class Autocomplete extends React.Component{
             input_id = $('#input_get' + this.props.id).first();
             this.setState({input_id: input_id});
         }
-        let autocomplete = $('#' + this.props.id).first();
-
+        let autocomplete = $('#' + this.props.id);
         if (autocomplete !=null) {
             autocomplete.typeahead({
                 hint: true,

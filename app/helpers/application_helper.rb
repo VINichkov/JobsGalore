@@ -86,4 +86,8 @@ module ApplicationHelper
     "?url=#{request.original_url}"
   end
 
+  def search_for_main_page
+    react_component("Search", {name: name, key: key, url_industries: industries_url, search: search, show: true})
+  end
+
 end

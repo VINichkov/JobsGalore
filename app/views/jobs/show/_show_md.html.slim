@@ -24,4 +24,4 @@
               =social_share_button_tag  job.title, url: job_url(job), title:job.title
   - unless job.apply
     = render 'inc/contact', object: job.client, title: "#{job.title} at #{PropertsHelper::COMPANY}.eu"
-  = render 'jobs/show/inc/alert', job: job, query: query
+  = render 'jobs/show/inc/alert', job: job, query: query if cookies[:alert].blank? and !client_signed_in?

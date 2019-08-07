@@ -17,7 +17,7 @@ class Search extends React.Component{
         this.handleClickItem =  this.handleClickItem.bind(this);
         this.handleOnClickOptions = this.handleOnClickOptions.bind(this);
         this.handleOnClickUrgent = this.handleOnClickUrgent.bind(this);
-        this.uuid = Date.now() + Math.random();
+        this.uuid = parseInt(Math.random()*1000000);
     }
     componentWillMount(){
         if (this.state.type_search_code ===null){

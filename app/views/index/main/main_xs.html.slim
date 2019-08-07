@@ -10,7 +10,7 @@ h1.none Jobsgalore. Jobs in Australia.
   br
   .row
     = render 'index/main/inc/numbers of jobs'
-    = render('inc/header/inc/search', name: 'main_search' , search: @search, key: "main")
+    = main_page_search(@search)
   br
   .row
     .col-xs-12.text-center
