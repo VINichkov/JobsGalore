@@ -2,4 +2,5 @@
 :concurrency: 4
 :queues:
   - default
+  - conveer_get_list
   - [mailers, 2]
