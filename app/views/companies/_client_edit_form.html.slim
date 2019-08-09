@@ -41,10 +41,6 @@
     .form-group
       = f.label "Your birthday"
       br
-      .input-group.date.datepicker_reg
-        input.form-control[type="text" value =(@client.birth ? @client.birth.strftime("%d %B %Y").to_s : "Empty") name="client[birth]"]
-        span.input-group-addon
-            i.glyphicon.glyphicon-calendar
     .form-group
       = f.label "Your location"
       br
