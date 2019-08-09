@@ -30,7 +30,6 @@ gem "ffi"
 gem "nokogiri", ">= 1.8.5"
 gem 'browser'
 gem 'turbolinks'
-gem 'turbolinks-form'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'
