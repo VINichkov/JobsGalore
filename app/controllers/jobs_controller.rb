@@ -34,7 +34,6 @@ class JobsController < ApplicationController
          urgent: job.urgent.present?
         }
     end.to_json
-    puts jobs
     render json: jobs
   end
 

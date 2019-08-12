@@ -29,11 +29,7 @@ namespace :other do
 
   desc "ping to twitter bots"
   task :ping => :environment  do
-    begin
-      open( "https://botmelbourne.herokuapp.com/")
-    rescue
-      puts "____________________Error: #{$!}"
-    end
+
   end
 
   task :count_jobs => :environment  do
