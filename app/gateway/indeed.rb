@@ -1,4 +1,4 @@
-class Indeed < Crawler
+class IndeedOld < CrawlerOld
   MAX_PAGE = 10
   ST = "date"
 

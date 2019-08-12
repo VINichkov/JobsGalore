@@ -1,7 +1,7 @@
 require 'nokogiri'
 require './app/addon/Proxy'
 
-class Crawler
+class CrawlerOld
 
   def initialize
     @proxy = Proxy.new

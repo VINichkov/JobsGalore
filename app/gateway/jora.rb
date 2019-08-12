@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Jora < Crawler
+class JoraOld< CrawlerOld
   SP = 'facet_listed_date'
   MAX_PAGE = 10
   ST = 'date'

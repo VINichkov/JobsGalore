@@ -136,9 +136,9 @@ class Job < ApplicationRecord
     return [client.email] if client.send_email
     any_emails_in_location = company.client.where(location_id: location_id, send_email: true).pluck(:email)
     return [any_emails_in_location] if any_emails_in_location.present?
-    any_emails = company.client.where(location_id: location_id).pluck(:email)
+    any_emails = company.client.where(send_email: true).pluck(:email)
     return [any_emails] if any_emails.present?
-    not_registration_email = company.email_hr.select(:email).where(main: true).pluck(:email)
+    not_registration_email = company.email_hr.select(:email, send_email: true).where(main: true).pluck(:email)
     return [not_registration_email] if not_registration_email.present?
     nil
   end

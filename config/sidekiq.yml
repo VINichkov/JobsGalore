@@ -1,6 +1,9 @@
 ---
-:concurrency: 4
+:concurrency: 22
 :queues:
   - default
   - conveer_get_list
-  - [mailers, 2]
+  - conveer_prepare_job
+  - conveer_get_job
+  - conveer_save_job
+  - mailers

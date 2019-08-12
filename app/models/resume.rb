@@ -19,7 +19,7 @@ class Resume < ApplicationRecord
   alias_attribute :salary_form, :salary
 
   after_create_commit :after_create
-  before_destroy :send_email_before_destroy
+  before_commit  :send_email_before_destroy , on: [:destroy]
 
   def full_keywords(count_keys = 1, min_length_word = 4)
     if title
