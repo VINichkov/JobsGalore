@@ -79,3 +79,7 @@ WARNING: Use strings for Figaro configuration. 10 was converted to "10".
 ! Task:add_jobs: start
 ! Task:add_jobs: End
 2019-08-12T08:42:08.600Z 18089 TID-gp093quzh CreateSitemapsJob JID-426b1e13e8cfb517a81b9262 INFO: done: 57.923 sec
+2019-08-13T06:02:15.051Z 18089 TID-gp08ekgr1 INFO: Shutting down
+2019-08-13T06:02:15.057Z 18089 TID-gp08ekgr1 INFO: Terminating quiet workers
+2019-08-13T06:02:15.057Z 18089 TID-gp093qxjl INFO: Scheduler exiting...
+2019-08-13T06:02:15.558Z 18089 TID-gp08ekgr1 INFO: Pausing to allow workers to finish...

@@ -5,7 +5,6 @@ class Crawler
   ST = 'date'
 
   def initialize
-    puts "Инициализация класса #{self.class}"
     @proxy = Proxy.new
     @query_for_url = { tracking: :jobsgalore, utm_source: :jobsgaloreeu, utm_campaign: :jobsgaloreeu, utm_medium: :organic }
   end
@@ -15,7 +14,7 @@ class Crawler
     count_page = nil
     iter = nil
     MAX_PAGE.times do |i|
-      break if end_job || var(variable).include?(obj[:code])
+      break if end_job || var(variable).nil? ||var(variable)&.include?(obj[:code])
       query = create_query(obj[:name], i)
       request = get_list_jobs(query, obj[:name], i + 1)
       if request
@@ -134,7 +133,7 @@ class Crawler
     get_page(url)
   end
 
-  private
+  #private
 
   def to_file(text, name)
     puts "Не нашли количества страниц всего сохраняем страницу полностью"
@@ -166,6 +165,7 @@ class Crawler
         if resp
           uri = URI(resp[:uri])
           if  uri.host != URI(@host).host
+            #if uri.host
             log(obj[:location_name], obj[:page], "Старый линк = #{uri.to_s}")
             query_from_site  =  Rack::Utils.parse_nested_query(uri.query)
             query_from_site['source'] = 'jobsgaloreeu' if query_from_site['source']
@@ -232,11 +232,13 @@ class Crawler
   end
 
   def log(location = nil, page = nil, message = nil)
-    puts "#{Time.now} | location = #{location}, page = #{page}, message = #{message}"
+    if ENV['RAILS_ENV']=='development'
+      puts "#{Time.now} | location = #{location}, page = #{page}, message = #{message}"
+    end
   end
 
   def var(id)
-    Variable.find_by_id(id).value
+    Variable.find_by_id(id)&.value
   end
 
   def var_push(id, val)

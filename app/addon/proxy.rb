@@ -26,7 +26,7 @@ class Proxy
       flag = true
       respond = nil
       i = 0
-      while flag and i<9 do
+      while flag and i<3 do
         begin
           i +=1
           uri = URI('https://blooming-lake-12024.herokuapp.com/redirect?' +arg.to_query)

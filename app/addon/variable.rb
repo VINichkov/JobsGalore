@@ -28,7 +28,7 @@ class Variable
   def save
     Rails.logger.debug  "Сохраняем переменную #{@value}"
     redis  = self.class.connect()
-    redis.set(@id, @value.to_json.to_s, ex:7200)
+    redis.set(@id, @value.to_json.to_s, ex:14400)
   end
 
   private
