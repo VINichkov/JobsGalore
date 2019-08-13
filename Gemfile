@@ -31,8 +31,9 @@ gem "nokogiri", ">= 1.8.5"
 gem 'browser'
 gem 'turbolinks'
 gem 'httpclient'
+#gem 'stimulus-rails'
 
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+    # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'
 #gem "twitter-bootstrap-rails"
 gem 'bootstrap-sass'#, '~> 3.3.6'
