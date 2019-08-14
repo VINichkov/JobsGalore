@@ -20,15 +20,12 @@ class HeadMenu extends React.Component{
                     <span className="glyphicon glyphicon-home" style={sizeGlyphicon}/>
                 </a>
             </div>
-            <div className="row">
-                <div className="col-xs-12">
-                    <form action="/search"
-                          accept-charset="UTF-8"
-                          method="get">
-                        <Search key="mobile_search" name ='main_search' url_industries = {industries_url} search={search} show={this.state.show}/>
-
-                     </form>
-                </div>
+            <div className="col-xs-12">
+                <form action="/search"
+                      accept-charset="UTF-8"
+                      method="get">
+                      <Search key="mobile_search" name ='main_search' url_industries = {industries_url} search={search} show={this.state.show}/>
+                </form>
             </div>
         </div>);
     }
