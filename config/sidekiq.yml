@@ -1,5 +1,6 @@
 ---
 :concurrency: 15
+:logfile: nil
 :queues:
   - default
   - conveer_get_list
