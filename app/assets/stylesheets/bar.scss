@@ -5,6 +5,12 @@
   z-index: 1071;
 }
 
+.navbar-botton{
+  position: relative;
+  vertical-align: middle;
+  z-index: 1071;
+}
+
 /* цвет фона и рамки навигационного меню */
 .navbar-blue {
   background-color: #337ab7;
@@ -19,15 +25,21 @@
 .navbar-blue .navbar-brand:focus {
   color: #d1ffed;
 }
+
+/* Цвет пунктов навигационного меню */
+.navbar-blue .navbar-nav > li {
+  border-color:  #ffffff;
+}
+
 /* Цвет пунктов навигационного меню */
 .navbar-blue .navbar-nav > li > a {
   color:  #ffffff;
 }
-/* Цвет пункта меню, при поднесении к нему курсора мышки или при его нахождении в фокусе */
-.navbar-blue .navbar-nav > li > a:hover,
-.navbar-blue .navbar-nav > li > a:focus {
+
+.navbar-blue .navbar-nav > .text-center {
   color:  #ffffff;
 }
+
 /* Цвет и фон активного пункта меню, а также поднесении к нему курсора мышки или при его нахождении в фокусе */
 .navbar-blue .navbar-nav > .active > a,
 .navbar-blue .navbar-nav > .active > a:hover,

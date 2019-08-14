@@ -4,12 +4,17 @@
 //= require blazy.min
 //= require react
 //= require react_ujs
+//#= require stimulus
+//#= require init
 //= require components
 //= require bootstrap-typeahead
 //= require bootstrap.min
 //= require social-share-button
 //= require jasny-bootstrap
 //= require trix
+//#= require_tree ./controllers
+
+var stimulus = Stimulus.Application.start()
 
 var bLazy = new Blazy({
     //Загрузка маленьких изображений. Возможно в будующем!!!

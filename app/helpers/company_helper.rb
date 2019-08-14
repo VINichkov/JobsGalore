@@ -2,12 +2,10 @@ module CompanyHelper
 
   def jobs_of_company (object)
     if object.jobs_count>0
-       content_tag :div, class:"row" do
-         content_tag :h3 do
-          link_to "#{object.jobs_count} jobs at #{object.name}", jobs_at_company_path(object)
-         end
-       end
-    end
+      content_tag :h3 do
+        link_to "#{object.jobs_count} jobs at #{object.name}", jobs_at_company_path(object)
+      end
+     end
   end
 
   def company_summary (object)

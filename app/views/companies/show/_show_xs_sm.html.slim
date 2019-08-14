@@ -1,7 +1,7 @@
 - meta_for_company(company)
 -cache([company,query]) do
-  .col-xs-12[itemscope itemtype="http://schema.org/Organization"]
-    .panel-body
+  .row
+    .col-xs-12[itemscope itemtype="http://schema.org/Organization"]
       span[itemprop="name"]
         h1.text-center
           = highlight(company.name, Search.str_to_highlight(query))
@@ -23,13 +23,15 @@
           = company.logo_url
       .row
         .col-xs-12
-          .row.text-center
+          .text-center
             = image_bg(company.logo_url, "contain", "300px", "250px")
             = social_share_button_tag company.name, class: "center-block"
+      .row
         .col-xs-12
           h3.text-center
             |Summary
           = company_summary(company)
+      .row
         .col-xs-12.col-sm-12
           -if company.description
             p
