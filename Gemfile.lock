@@ -190,7 +190,6 @@ GEM
       domain_name (~> 0.5)
     http-form_data (2.1.1)
     http_parser.rb (0.6.0)
-    httpclient (2.8.3)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -462,7 +461,6 @@ DEPENDENCIES
   fog-aws
   font-awesome-rails
   html_truncator
-  httpclient
   interactor
   jbuilder
   jquery-rails
