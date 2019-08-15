@@ -34,13 +34,15 @@ namespace :integrate do
   task :jora => :environment  do
     t = Time.now
     puts "! Task:Jora: start #{t}"
-    MasterJob.perform_later(site:'Jora')
-    MasterJob.perform_later(site:'Indeed')
+    Jora.new.run
     puts "! Task:Jora: End #{Time.now}   - #{Time.now - t}"
   end
 
   task :indeed => :environment  do
     t = Time.now
+    puts "! Task:Indeed: start #{t}"
+    Indeed.new.run
+    puts "! Task:Indeed: End #{Time.now}   - #{Time.now - t}"
   end
 
   task :careerone => :environment  do
