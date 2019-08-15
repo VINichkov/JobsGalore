@@ -1,6 +1,6 @@
 require 'nokogiri'
 
-class CrawlerNew
+class Crawler
   MAX_PAGE = 10
   ST = 'date'
 

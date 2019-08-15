@@ -1,4 +1,4 @@
-class IndeedNew < CrawlerNew
+class Indeed < Crawler
 
   def initialize
     super
