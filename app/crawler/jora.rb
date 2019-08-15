@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Jora < Crawler
+class JoraNew < CrawlerNew
   SP = 'facet_listed_date'
 
   def initialize

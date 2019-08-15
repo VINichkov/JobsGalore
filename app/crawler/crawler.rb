@@ -1,6 +1,6 @@
 require 'nokogiri'
 
-class Crawler
+class CrawlerNew
   MAX_PAGE = 10
   ST = 'date'
 
@@ -124,8 +124,13 @@ class Crawler
   end
 
   def create_jobs(job)
-    log(job[:location_name], nil, "create job #{job[:link]}")
-    Job.automatic_create(job)
+    begin
+      log(job[:location_name], nil, "create job #{job[:link]}")
+      Job.automatic_create(job)
+    rescue
+      log(job[:location_name], nil, "ERROR create job #{job[:link]}")
+    end
+
   end
 
   def get_list_jobs(arg, location, page)
