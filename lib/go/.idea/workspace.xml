@@ -2,42 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="124ec8c4-9ea9-4494-bb84-3f20959e9953" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../app/assets/javascripts/editor.js.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/doc_to_html.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/../../Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../app/addon/docx.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../app/assets/javascripts/application.js.erb" beforeDir="false" afterPath="$PROJECT_DIR$/../../app/assets/javascripts/application.js.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../app/interactors/office_document_to_html.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../../app/interactors/office_document_to_html.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../app/views/companies/_form.html.slim" beforeDir="false" afterPath="$PROJECT_DIR$/../../app/views/companies/_form.html.slim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../app/views/jobs/_form.html.slim" beforeDir="false" afterPath="$PROJECT_DIR$/../../app/views/jobs/_form.html.slim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../app/views/jobs/apply.html.slim" beforeDir="false" afterPath="$PROJECT_DIR$/../../app/views/jobs/apply.html.slim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../app/views/resumes/_form.html.slim" beforeDir="false" afterPath="$PROJECT_DIR$/../../app/views/resumes/_form.html.slim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../app/views/resumes/message.html.slim" beforeDir="false" afterPath="$PROJECT_DIR$/../../app/views/resumes/message.html.slim" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../app/assets/stylesheets/application_xs.scss.erb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../app/assets/stylesheets/bootstrap_min_for_xs.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crawler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../app/assets/stylesheets/bar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../app/assets/stylesheets/bar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../app/views/inc/header/_header_xs.html.slim" beforeDir="false" afterPath="$PROJECT_DIR$/../../app/views/inc/header/_header_xs.html.slim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../app/views/layouts/application.html.slim" beforeDir="false" afterPath="$PROJECT_DIR$/../../app/views/layouts/application.html.slim" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../config/initializers/assets.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../../config/initializers/assets.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/doc_to_html.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="13" column="87" lean-forward="true" selection-start-line="13" selection-start-column="87" selection-end-line="13" selection-end-column="87" />
-              <folding>
-                <element signature="e#14#54#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -50,120 +28,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/doc_to_html.go" />
-      </list>
-    </option>
-  </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="293" />
     <option name="y" value="53" />
     <option name="width" value="1390" />
     <option name="height" value="1000" />
   </component>
+  <component name="ProjectId" id="1PRxkLoRUtroCw49pIcJInbl1aX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="go" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;go&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-            </path>
-            <path>
-              <item name="go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;go&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;go&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;go&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="moovweb" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;go&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="moovweb" type="462c0819:PsiDirectoryNode" />
-              <item name="gokogiri" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;go&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="moovweb" type="462c0819:PsiDirectoryNode" />
-              <item name="gokogiri" type="462c0819:PsiDirectoryNode" />
-              <item name="help" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;go&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="moovweb" type="462c0819:PsiDirectoryNode" />
-              <item name="gokogiri" type="462c0819:PsiDirectoryNode" />
-              <item name="xml" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;go&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="pebbe" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;go&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="pebbe" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
-  </component>
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -181,7 +61,15 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Go Build.go build crawler.go">
+    <configuration name="go build crawler.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="go" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/crawler.go" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build doc_to_html.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="go" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -192,69 +80,23 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build crawler.go" />
         <item itemvalue="Go Build.go build doc_to_html.go" />
       </list>
     </recent_temporary>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.255119" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.28833693" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.25701943" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" />
-    </layout>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file:///usr/lib/go-1.10/src/encoding/xml/read.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="126" column="5" selection-start-line="126" selection-start-column="5" selection-end-line="126" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/go/src/github.com/moovweb/gokogiri/xml/node.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-93">
-          <caret line="585" column="31" selection-start-line="585" selection-start-column="31" selection-end-line="585" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/go/src/github.com/pebbe/util/errors.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/doc_to_html.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="13" column="87" lean-forward="true" selection-start-line="13" selection-start-column="87" selection-end-line="13" selection-end-column="87" />
-          <folding>
-            <element signature="e#14#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

@@ -1,28 +1,29 @@
 .form-group
-  .row
-    .hidden-xs.col-md-4.col-sm-4.col-lg-4
+  .row.hidden-xs
+    .col-md-4.col-lg-4
       = link_to client_linkedin_omniauth_authorize_path, class: "btn btn-linkedin btn-block" do
         i.fa.fa-linkedin.text-left[aria-hidden="true"]
         |&nbsp;|&nbsp;Sign in with LinkedIn
-    .hidden-xs.col-md-4.col-sm-4.col-lg-4
+    .col-md-4.col-lg-4
       = link_to client_google_oauth2_omniauth_authorize_path, class: "btn btn-google btn-block" do
         i.fa.fa-google.text-left[aria-hidden="true"]
         |&nbsp;|&nbsp;Sign in with Google
-    .hidden-xs.col-md-4.col-sm-4.col-lg-4
+    .hidden-xs.col-md-4.col-lg-4
       = link_to client_facebook_omniauth_authorize_path, class: "btn btn-facebook btn-block" do
         i.fa.fa-facebook.text-left[aria-hidden="true"]
         |&nbsp;|&nbsp;Continue with Facebook
-    .col-xs-12.hidden-md.hidden-sm.hidden-lg
+  .row.social-share-button.hidden-md.hidden-sm.hidden-lg
+    .col-xs-12
       = link_to client_linkedin_omniauth_authorize_path, class: "btn btn-linkedin btn-block" do
-        i.fa.fa-linkedin.text-left[aria-hidden="true"]
+        i.ssb-icon.ssb-linkedin.text-left[style="background-size: 22px 22px; width: 20px;" aria-hidden="true"]
         |&nbsp;|&nbsp;Sign in with LinkedIn
       p
-    .col-xs-12.hidden-md.hidden-sm.hidden-lg
+    .col-xs-12
       = link_to client_google_oauth2_omniauth_authorize_path, class: "btn btn-google btn-block" do
-        i.fa.fa-google.text-left[aria-hidden="true"]
+        i.ssb-icon.ssb-google_plus.text-left[style="background-size: 22px 22px; width: 22px; height: 18px;"aria-hidden="true"]
         |&nbsp;|&nbsp;Sign in with Google
       p
-    .col-xs-12.hidden-md.hidden-sm.hidden-lg
+    .col-xs-12
       = link_to client_facebook_omniauth_authorize_path, class: "btn btn-facebook btn-block" do
-        i.fa.fa-facebook.text-left[aria-hidden="true"]
+        i.ssb-icon.ssb-facebook.text-left[aria-hidden="true" style="background-size: 22px 22px; width: 20px;"]
         |&nbsp;|&nbsp;Continue with Facebook

@@ -20,10 +20,18 @@
 .navbar-blue .navbar-brand {
   color: #ecf0f1;
 }
-/* цвет текста (название сайта или бренда), при поднесении к нему курсора мышки или при его нахождении в фокусе */
+
 .navbar-blue .navbar-brand:hover,
 .navbar-blue .navbar-brand:focus {
-  color: #d1ffed;
+  color: #ff2846;
+}
+
+
+/* цвет текста (название сайта или бренда), при поднесении к нему курсора мышки или при его нахождении в фокусе */
+.navbar-blue .navbar-nav> li > a:hover,
+.navbar-blue .navbar-nav > li > a:hover {
+  background-color: #b73328;
+  border-color: #2e6da4;
 }
 
 /* Цвет пунктов навигационного меню */
@@ -40,37 +48,10 @@
   color:  #ffffff;
 }
 
-/* Цвет и фон активного пункта меню, а также поднесении к нему курсора мышки или при его нахождении в фокусе */
-.navbar-blue .navbar-nav > .active > a,
-.navbar-blue .navbar-nav > .active > a:hover,
-.navbar-blue .navbar-nav > .active > a:focus {
-  color: #d1ffed;
-  background-color:  #337ab7;
-}
-/* Цвет и фон открытого пункта меню, а также поднесении к нему курсора мышки или при его нахождении в фокусе */
-.navbar-blue .navbar-nav > .open > a,
-.navbar-blue .navbar-nav > .open > a:hover,
-.navbar-blue .navbar-nav > .open > a:focus {
-  color: #d1ffed;
-  background-color:  #337ab7;
-}
-/* Цвет стрелочки (треугольничка) у раскрывающихся пунктов меню */
-.navbar-blue .navbar-nav > .dropdown > a .caret {
-  border-top-color: #ecf0f1;
-  border-bottom-color: #ecf0f1;
-}
-/* Цвет стрелочки (треугольничка) при поднесении к нему курсора мышки или при его нахождении в фокусе */
-.navbar-blue .navbar-nav > .dropdown > a:hover .caret,
-.navbar-blue .navbar-nav > .dropdown > a:focus .caret {
-  border-top-color: #d1ffed;
-  border-bottom-color:  #ffffff;
-}
-/* Цвет стрелочки (треугольничка), открывшегося пункта меню */
-.navbar-blue .navbar-nav > .open > a .caret,
-.navbar-blue .navbar-nav > .open > a:hover .caret,
-.navbar-blue .navbar-nav > .open > a:focus .caret {
-  border-top-color:  #ffffff;
-  border-bottom-color:  #ffffff;
+.navbar-blue .navbar-nav > li:hover,
+.navbar-blue .navbar-nav > li:focus {
+  color: #7b2eff;
+  background-color: #b7482a;
 }
 
 .link {
@@ -91,14 +72,3 @@
     background-color:  #ffffff;
   }
   /* Цвет пунктов меню в раскрывающихся списках */
-  @media (max-width: 767px) {
-    .navbar-blue .navbar-nav .open .dropdown-menu > li > a {
-      color: #ecf0f1;
-    }
-    /* Цвет и фон пункта меню в раскрывающихся списках, при поднесении к нему курсора мышки или при нахождении его в фокусе */
-    .navbar-blue .navbar-nav .open .dropdown-menu > li > a:hover,
-    .navbar-blue .navbar-nav .open .dropdown-menu > li > a:focus {
-      color: #d1ffed;
-      background-color:  #337ab7;
-    }
-  }
