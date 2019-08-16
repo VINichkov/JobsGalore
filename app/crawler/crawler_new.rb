@@ -39,7 +39,7 @@ class CrawlerNew
 
   def get_list(list_of_jobs, variable)
     #Десериализация
-    list_of_jobs[:jobs] =  Nokogiri::HTML(list_of_jobs[:jobs]).css('div.result, a.result, div.job')
+    list_of_jobs[:jobs] =  Nokogiri::HTML(list_of_jobs[:jobs])
     #
     end_job = false
     log(list_of_jobs[:location_name],  list_of_jobs[:page], "На странице #{list_of_jobs[:jobs].count} работ")

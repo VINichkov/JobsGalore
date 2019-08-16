@@ -1,6 +1,14 @@
 require 'nokogiri'
 
 class Crawler
+  MAX_PAGE = 10
+  ST = 'date'
+  QUERY_FOR_URL = {
+      "tracking"=> :jobsgalore,
+      "utm_source"=> :jobsgaloreeu,
+      "utm_campaign"=> :jobsgaloreeu,
+      "utm_medium"=> :organic
+  }
 
   def initialize
     @proxy = Proxy.new
@@ -94,6 +102,129 @@ class Crawler
     end
     threads
   end
+  #_______________________________________________________
+  #
+  #
+  def get_main_page(obj, thread)
+    end_job = false
+    count_page = nil
+    iter = nil
+    MAX_PAGE.times do |i|
+      break if end_job || @block_list.include?(obj[:code])
+      query = create_query(obj[:name], i)
+      request = get_list_jobs(query, nil, obj[:name], i + 1)
+      if request
+        if i == 0
+          count_ads = count_ads(request)
+          break if count_ads.nil? || (count_ads == 0)
+          count_page = count_ads / 10
+          count_page += 1 if count_ads % 10 > 0
+          log(obj[:name], j, i + 1, "Количество страниц всего #{count_page}")
+          iter = count_page > MAX_PAGE ? MAX_PAGE : count_page
+        end
+        @queue_for_prepare_jobs.push(
+            {jobs: request.css('div.result, a.result, div.job'),
+             location: obj[:code],
+             location_name: obj[:name],
+             page: i + 1
+            }
+        )
+      end
+      break if (i + 1) == iter
+    end
+  end
+
+  def get_list(list_of_jobs, thread)
+    end_job = false
+    log(list_of_jobs[:location_name], thread, list_of_jobs[:page], "На странице #{list_of_jobs[:jobs].count} работ")
+    end_job = true if list_of_jobs[:jobs].count == 0
+    list_of_jobs[:jobs].each do |job|
+      title = title(job)
+      if title
+        if how_long(age_of_job_content(job), thread, list_of_jobs[:location_name], list_of_jobs[:page], title[:title])
+          url = url_to_job(title[:href])
+          company = company(job)
+          log(list_of_jobs[:location_name], list_of_jobs[:page], "title: #{title[:title]} | company: #{company}")
+          if company
+            compare = compare_with_index(
+                url:url,
+                title: title[:title],
+                company:company,
+                location_id: list_of_jobs[:location],
+                location: list_of_jobs[:location_name],
+                page: list_of_jobs[:page]
+            )
+            if compare == :same_sources
+              end_job = true
+              @block_list.push(list_of_jobs[:location])
+              break
+            elsif %i[same_title_and_company block_list].include?(compare)
+              nil
+            else
+              salary = salary(job)
+              @queue_tasks_get_jobs.push({
+                link: url,
+                title: title[:title],
+                company: company,
+                salary_min: salary.present? ? salary[0] : nil,
+                salary_max: salary.present? ? salary[1] : nil,
+                location: list_of_jobs[:location],
+                location_name: list_of_jobs[:location_name],
+                page: list_of_jobs[:page]
+                }
+              )
+            end
+          else
+            log(list_of_jobs[:location_name], thread,  list_of_jobs[:page], "ВНИМАНИЕ для #{title[:title]} компания пуста")
+          end
+        else
+          log(list_of_jobs[:location_name], thread,  list_of_jobs[:page], "title:#{title[:title]} Работа старая")
+        end
+      else
+        log(list_of_jobs[:location_name], thread,  list_of_jobs[:page], "ERROR: Title is null #{obj[:link]}")
+      end
+    end
+    end_job
+  end
+
+  def get_job(obj, thread)
+    log(obj[:location_name], thread, obj[:page], "title: #{obj[:title]} работа ---> url: #{obj[:link]}")
+    job = get_page(obj[:link])
+    apply_link = apply_link(job)
+    apply = apply_calculate(obj, apply_link)
+    log(obj[:location_name], thread, obj[:page], "title: #{obj[:title]} apply_link #{apply}")
+    description = description(job)
+    if description
+      @queue_jobs_for_save.push(
+          link: obj[:link],
+          title: obj[:title],
+          company: obj[:company],
+          salary_min: obj[:salary_min],
+          salary_max: obj[:salary_max],
+          location: obj[:location],
+          location_name: obj[:location_name],
+          description: html_to_markdown(description),
+          apply: apply
+      )
+    else
+      log(obj[:location_name], thread, obj[:page], "title: #{obj[:title]} ERROR description is null #{obj[:link]}")
+      nil
+    end
+  end
+
+  def create_jobs(job, thread)
+    begin
+      @count_job[job[:location_name]] ? @count_job[job[:location_name]] +=1 : @count_job[job[:location_name]] = 1
+      log(job[:location_name], thread, nil, "create job #{job[:link]}")
+      Job.automatic_create(job)
+    rescue
+      log(job[:location_name], thread,nil, "ERROR create job #{job[:link]}")
+    end
+  end
+
+  #___________________________________________________________
+
+  private
 
   def get_page(url)
     begin
@@ -104,10 +235,38 @@ class Crawler
     end
   end
 
-  def create_jobs(job, thread)
-    @count_job[job[:location_name]] ? @count_job[job[:location_name]] +=1 : @count_job[job[:location_name]] = 1
-    log(job[:location_name], thread, nil, "create job #{job[:link]}")
-    Job.automatic_create(job)
+  def apply_calculate(obj, apply_link)
+    if apply_link && apply_link[:href]
+      link = URI(apply_link[:href])
+      if link.host.blank?
+        url_from_button = @host + apply_link[:href]
+      else
+        url_from_button = apply_link[:href]
+      end
+      begin
+        resp = JSON.parse(@proxy.redirect(url_from_button), opts={symbolize_names:true})
+        if resp
+          uri = URI(resp[:uri])
+          if  uri.host != URI(@host).host
+            #if uri.host
+            log(obj[:location_name], obj[:page], "Старый линк = #{uri.to_s}")
+            query_from_site  =  Rack::Utils.parse_nested_query(uri.query)
+            query_from_site['source'] = 'jobsgaloreeu' if query_from_site['source']
+            query_from_site = query_from_site.merge(QUERY_FOR_URL)
+            log(obj[:location_name], obj[:page], "query_from_site  = #{query_from_site.to_s} query_from_site.class = #{query_from_site.class}")
+            uri.query = query_from_site.to_query
+            log(obj[:location_name], obj[:page], "Новый линк = #{uri.to_s}")
+            return uri.to_s
+          end
+        end
+      rescue
+        log(obj[:location_name], obj[:page], "ERROR #{$!} getting a good url#{url_from_button}")
+        nil
+      end
+      url_from_button
+    else
+      obj[:link]
+    end
   end
 
   def to_file(text, name)
@@ -156,7 +315,7 @@ class Crawler
           if attr != 'href'
             elem.remove_attribute(attr)
           else
-            href_edit(elem, attr, value)
+            href_edit(elem, value)
           end
         end
       end
@@ -164,7 +323,7 @@ class Crawler
     attr.to_s
   end
 
-  def href_edit(elem, attr, value)
+  def href_edit(elem, value)
     value[0] == '/' ? elem[:href] = @host+value : elem[:href] = 'http://'+value
   end
 

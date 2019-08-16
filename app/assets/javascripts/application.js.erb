@@ -15,14 +15,13 @@
 //#= require_tree ./controllers
 
 var stimulus = Stimulus.Application.start()
-
 var bLazy = new Blazy({
     //Загрузка маленьких изображений. Возможно в будующем!!!
-  //    breakpoints: [{
-   //     width: 740,
-   //     src: 'data-src-small'
-   // }],
-     success: function(element){
+    //    breakpoints: [{
+    //     width: 740,
+    //     src: 'data-src-small'
+    // }],
+    success: function(element){
         setTimeout(function(){
             // We want to remove the loader gif now.
             // First we find the parent container
@@ -32,6 +31,18 @@ var bLazy = new Blazy({
         }, 200);
     }
 });
+
+document.addEventListener("turbolinks:before-cache", function() {
+    var bLazy = new Blazy({
+        success: function(element){
+            setTimeout(function(){
+                let parent = element.parentNode;
+                parent.className = parent.className.replace(/\bloading\b/,'');
+            }, 200);
+        }
+    });
+})
+
 
 var readURL = function (input) {
     if (input.files) {
