@@ -1,11 +1,12 @@
 module MailingHelper
 
-  def grid_contacts(elements, filter = nil)
+  def grid_contacts(elements, filter = nil, amount = 0)
      react_component(
         'Mailing',
         route: mailing_create_url,
         filterCompany: filter,
         elements: elements,
+        amount: amount,
         minPriceForResume: Services::MAILING_RESUME_TO_COMPANY.min_price_int,
         minPriceForAd:Services::MAILING_ANY_AD_TO_COMPANY.min_price_int,
         oneEmailForResume:Services::MAILING_RESUME_TO_COMPANY.one_email_price_float,

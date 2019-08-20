@@ -5,10 +5,11 @@ class MailingController < ApplicationController
   before_action :authenticate_client!, only: [:contacts_of_companies, :show, :destroy]
 
   def contacts_of_companies
+    @amount = 0
     @elements = (Client.all_for_view + EmailHr.all_for_view).map.with_index do |row, index|
       {index: index,
        type_client: row['type_client'],
-       check: (@filter ==  row['company']) ? true : false,
+       check: consider(row['company']),
        id: row['id'],
        company: row['company'],
        office: row['office'],
@@ -40,6 +41,14 @@ class MailingController < ApplicationController
   end
 
   private
+  def consider(name)
+    if @filter ==  name
+      @amount +=1
+      true
+    else
+      false
+    end
+  end
 
   def set_company
     @filter = params[:name]

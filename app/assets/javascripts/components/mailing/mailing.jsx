@@ -16,7 +16,7 @@ class Mailing extends React.Component{
                         filterAgency:false,
                         filterIndustry:null,
                         filterLocation:null,
-                        amount: 0,
+                        amount: Number(this.props.amount),
                         price: this.props.minPriceForAd,
                         page_size: PAGE_SIZE.small,
                         page: 0,
@@ -98,7 +98,7 @@ class Mailing extends React.Component{
 
     onChangePrice(amount, view = false){
         if (amount===null){
-            amount=this.state.amount;
+            amount= this.state.amount;
         }
 
         let priceOfEmail = view ?  this.props.oneEmailForResume : this.props.oneEmailForAd;
