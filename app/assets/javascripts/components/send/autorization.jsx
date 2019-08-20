@@ -12,13 +12,13 @@ class Autorization extends React.Component{
                         <div className="col-xs-6 col-sm-6 col-md-6">
                             <a className="btn btn-success btn-block" href={this.props.sign_in}>Sign in</a>
                         </div>
-                        <div className="hidden-xs col-sm-6 col-md-6">
+                        <div className="hidden-xs col-sm-6 col-md-6 social-share-button">
                             <a className="btn btn-linkedin btn-block" href={this.props.linkedin_url}>
-                                <i className="i fa fa-linkedin text-left" aria-hidden="true"/>&nbsp;Sign in with linkedIn</a>
+                                <i className="i ssb-icon ssb-linkedin text-left btn" aria-hidden="true"/>&nbsp;Sign in with linkedIn</a>
                         </div>
-                        <div className="col-xs-6 hidden-md hidden-sm hidden-lg">
+                        <div className="col-xs-6 hidden-md hidden-sm hidden-lg social-share-button">
                             <a className="btn btn-linkedin btn-block" href={this.props.linkedin_url}>
-                                <i className="i fa fa-linkedin text-left" aria-hidden="true"/>&nbsp;LinkedIn</a>
+                                <i className="i ssb-icon ssb-linkedin text-left btn" aria-hidden="true"/>&nbsp;LinkedIn</a>
                         </div>
                     </div>
                 </div>

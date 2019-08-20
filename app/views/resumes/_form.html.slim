@@ -11,13 +11,13 @@
     .form-group
       - if current_client&.linkedin?
         .col-xs-12.col-md-6.col-sm-6.col-lg-6
-          a.btn.btn-linkedin.btn-block.linkedin_click
-            i.fa.fa-linkedin.text-left[aria-hidden="true"]
+          a.btn.btn-linkedin.btn-block.linkedin_click.social-share-button
+            i.ssb-icon.ssb-linkedin.text-left.btn[aria-hidden="true"]
             |&nbsp;|&nbsp;Resume from LinkedIn
       - elsif current_client.nil?
-        .col-xs-12.col-md-6.col-sm-6.col-lg-6
+        .col-xs-12.col-md-6.col-sm-6.col-lg-6.social-share-button
           = link_to client_linkedin_omniauth_authorize_path(resume: true), class: "btn btn-linkedin btn-block" do
-            i.fa.fa-linkedin.text-left[aria-hidden="true"]
+            i.ssb-icon.ssb-linkedin.text-left.btn[aria-hidden="true"]
             |&nbsp;|&nbsp;Resume from LinkedIn
       .col-xs-12.col-md-6.col-sm-6.col-lg-6
         .hidden-md.hidden-lg.hidden-sm

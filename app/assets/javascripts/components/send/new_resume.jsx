@@ -48,9 +48,9 @@ class NewResume extends React.Component{
         if (this.props.user_from_linkedin){
             buttonLinkedIn = <div className="row">
                                 <div className="form-group">
-                                    <div className="col-md-12 col-md-6 col-sm-6 col-lg-6">
+                                    <div className="col-md-12 col-md-6 col-sm-6 col-lg-6 social-share-button">
                                         <a className="btn btn-linkedin btn-block" onClick={this.handleLinkedIn}>
-                                            <i className="fa fa-linkedin text-left" aria-hidden="true"/>
+                                            <i className="ssb-icon ssb-linkedin text-left btn" aria-hidden="true"/>
                                             &nbsp;|&nbsp;Resume from LinkedIn
                                         </a>
                                     </div>
