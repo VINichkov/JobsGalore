@@ -142,6 +142,7 @@ Rails.application.routes.draw do
   resources :properts, only:[:index, :new, :create, :edit, :update, :destroy]
   resources :payments, only:[:show,:index]
 
+  resources :create_job, only:[:new, :create]
   resources :jobs, only:[:new, :show, :edit, :update, :destroy]
   get "jobs/:id/:text", to: "jobs#highlight_view", as: 'job_highlight_view'
   get "views_of_a_job/:id", to: "jobs#views", as: 'job_views'
@@ -150,6 +151,7 @@ Rails.application.routes.draw do
   get "apply_job/:id", to: "jobs#apply", as: 'apply'
   get "prolong/:id", to: "jobs#prolong", as: 'prolong'
   get "similar_jobs/:id", to: "jobs#similar_jobs", as: 'similar_jobs'
+
 
   resources :resumes, only:[:new, :show, :edit, :update, :destroy]
   get "resumes/:id/:text", to: "resumes#highlight_view", as: 'resume_highlight_view'

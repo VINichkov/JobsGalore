@@ -12,6 +12,7 @@
 //= require social-share-button
 //= require jasny-bootstrap
 //= require trix
+//= require trix_conf
 //#= require_tree ./controllers
 
 var stimulus = Stimulus.Application.start()
@@ -91,33 +92,9 @@ var uploadTXT = function(uploadFile) {
     reader.readAsText(uploadFile);
 };
 
-var trixConfigerating = function(){
-    let conf =   Trix.config.blockAttributes;
-    conf.heading1.tagName="h3";
-    conf.heading2 = {breakOnReturn: true,
-        nestable: true,
-        group: false,
-        tagName: "h1",
-        terminal: truetagName="h3"};
-    conf.heading3 = {breakOnReturn: true,
-        nestable: true,
-        group: false,
-        tagName: "h2",
-        terminal: truetagName="h2"};
-    conf.heading4 = {breakOnReturn: true,
-        nestable: true,
-        group: false,
-        tagName: "h4",
-        terminal: truetagName="h4"};
-    conf.img = {  tagName: "img", parse: false};
-    conf.a = {  tagName: "a", parse: false};
-};
-
-
 
 $(function() {
 
-    trixConfigerating();
     $("#inp").change(function() {
         readURL(this);
     });

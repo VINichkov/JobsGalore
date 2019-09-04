@@ -5,7 +5,8 @@
         = link_to(highlight(job.title.capitalize, Search.str_to_highlight(query)), job_highlight_view_path(id:job, text:query), class: 'text-warning')
       - if job.salary.present?
         p = job.salary
-      = highlight(job.description_text + "...",  Search.str_to_highlight(query))
+      - if job.description
+        = highlight(job.description_text + "...",  Search.str_to_highlight(query))
       p
       span
         = link_to job.company.name, job.company, class: 'text-success'

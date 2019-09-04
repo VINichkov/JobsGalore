@@ -52,3 +52,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+// Trix conf
+trix-toolbar > .button_row > .button_group > .link, .strike, .nesting-level {
+  display: none;
+}

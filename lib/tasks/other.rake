@@ -33,12 +33,9 @@ namespace :other do
   end
 
   task :count_jobs => :environment  do
-    t = Time.now
-    puts "! Task:count_jobs: start  #{t}"
-    Location.all.each do |t|
-      t.update!(counts_jobs: t.job.count)
+    TimeExecut.ms 'calculate jobs' do
+      Location.update_number_of_jobs
     end
-    puts "! Task:count_jobs: End #{Time.now - t}"
   end
 
   task :report => :environment  do

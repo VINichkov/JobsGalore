@@ -95,10 +95,11 @@ group :development, :test do
 
 end
 gem 'web-console', group: :development
-group :test do
-  gem 'rails-perftest'
-  gem 'ruby-prof', '~> 0.17.0'
-  gem 'minitest', '5.10.3'
+
+group :development, :test do
+  gem 'simplecov'
+  gem 'rspec-rails'
+  gem 'rspec-virtus'
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
