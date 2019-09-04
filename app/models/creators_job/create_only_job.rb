@@ -1,4 +1,4 @@
-class CreatorsJob::CreateOnlyJob < CreateJobParent
+class CreatorsJob::CreateOnlyJob < CreatorsJob::CreateJobParent
 
   def save(user)
     self.validate!
