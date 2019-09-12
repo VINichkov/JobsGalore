@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
 
-#ruby '2.6.3'
+ruby '2.6.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'#, '~> 5.0.4'#, '>= 5.0.0.1'
 
 # Use postgresql as the database for Active Record
-gem  'pg_jruby'#'pg'#, '~> 0.18'
+gem  'pg', platforms: [:mri, :mingw, :x64_mingw]#, '~> 0.18'
+#gem 'activerecord-jdbcpostgresql-adapter', github: 'jruby/activerecord-jdbc-adapter', platforms: [:jruby]
 # Use Puma as the app server
 gem 'sidekiq'
 
@@ -63,7 +64,7 @@ gem 'dragonfly', '~> 1.1.5'
 gem 'mechanize'
 gem 'virtus'
 
-gem "pg_search"#, '~> 2.0.1'
+#gem "pg_search"#, '~> 2.0.1'
 gem 'trix'
 
 # Use Redis adapter to run Action Cable in production

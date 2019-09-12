@@ -289,9 +289,6 @@ GEM
       ruby-rc4
       ttfunk
     pg (1.1.4)
-    pg_search (2.3.0)
-      activerecord (>= 4.2)
-      activesupport (>= 4.2)
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
@@ -512,7 +509,6 @@ DEPENDENCIES
   omniauth-linkedin-oauth2 (~> 1.0.0)
   pdf-reader (~> 2.1.0)
   pg
-  pg_search
   prawn
   puma
   rails (~> 5.2.0)
