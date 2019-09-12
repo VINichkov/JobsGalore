@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.6.3'
+#ruby '2.6.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.0'#, '~> 5.0.4'#, '>= 5.0.0.1'
+gem 'rails'#, '~> 5.2.0'#, '~> 5.0.4'#, '>= 5.0.0.1'
 
 # Use postgresql as the database for Active Record
 gem  'pg', platforms: [:mri, :mingw, :x64_mingw]#, '~> 0.18'
@@ -48,9 +48,9 @@ gem 'interactor'
 gem 'omniauth-linkedin-oauth2', '~> 1.0.0'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
-gem "actionview", ">= 5.2.2.1"
-gem "activejob", ">= 5.2.1.1"
-gem "activestorage", ">= 5.2.1.1"
+gem "actionview"#, ">= 5.2.2.1"
+gem "activejob"#, ">= 5.2.1.1"
+gem "activestorage"#, ">= 5.2.1.1"
 
 gem 'rubyzip'
 
