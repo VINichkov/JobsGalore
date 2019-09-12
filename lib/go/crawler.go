@@ -14,7 +14,7 @@ import (
 func main() {
 	start := time.Now()
 	//Crawl("https://golang.org/", 4, fetcher)
-	response, err := http.Get("https://jobsgalore.eu")
+	response, err := http.Get("https://au.jora.com")
 
 	if err != nil {
 		log.Fatal(err)
@@ -34,6 +34,6 @@ func main() {
 	fmt.Println(doc.Attr("id"))
 	end := time.Now()
 
-	fmt.Println("Звакончили за %s",  end.Sub(start))
+	fmt.Println("Звакончили за ",  end.Sub(start))
 } // fakeFetcher is Fetcher that returns canned results.
 

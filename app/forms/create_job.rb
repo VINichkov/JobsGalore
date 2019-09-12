@@ -23,9 +23,9 @@ class CreateJob
   attribute :password
   attribute :company_name
 
-  validates :location_id, :title, presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"}
-  validates :company_name , presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"} unless is_employer?
-  validates :full_name, :email, :password, presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"} if first_time?
+  #validates :location_id, :title, presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"}
+  #validates :company_name , presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"} unless is_employer?
+  #validates :full_name, :email, :password, presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"} if first_time?
 
 
   validates_each  :full_name, :email, :password  do |record, attr, value|
