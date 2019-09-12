@@ -18,7 +18,7 @@ class CreateJobController < ApplicationController
   private
 
   def job_params
-    params.require(:create_job).permit(:email, :phone, :location_id, :location_name, :title, :salarymin, :salarymax, :description, :password, :company_name)
+    params.require(:create_job).permit(:full_name, :email, :phone, :location_id, :location_name, :title, :salarymin, :salarymax, :description, :password, :company_name)
   end
 
 end

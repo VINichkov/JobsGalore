@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
 class CreateJob
+
   include Virtus.model(strict: true)
   include ActiveModel::Model
   ATTR_NAMES={
       email: "Email",
       location_id: "City",
       title: "Title",
+      full_name: "Full name",
       password: "Password",
       company_name: "Company name"}
+  attribute :type, Symbol, default: :first_time
+  attribute :full_name
   attribute :email
   attribute :location_id
   attribute :location_name
@@ -19,29 +23,29 @@ class CreateJob
   attribute :password
   attribute :company_name
 
-  validates_each  :email, :password  do |record, attr, value|
-    record.errors.add(:base, "The field '#{ATTR_NAMES[attr]}' can't be blank") if value.blank?
-  end if
+  validates :location_id, :title, presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"}
+  validates :company_name , presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"} unless is_employer?
+  validates :full_name, :email, :password, presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"} if first_time?
 
-  validates_each :company_name , on: [:save_first_time, :save_job_from_applicant]  do |record, attr, value|
-    record.errors.add(:base, "The field '#{ATTR_NAMES[attr]}' can't be blank") if value.blank?
-    record.errors.add(:base, "This company name is already in use") if Company.find_by_name(value).present?
-  end
 
-  validates_each :location_id, :title,  on: :save do |record, attr, value|
-    record.errors.add(:base, "The field '#{ATTR_NAMES[attr]}' can't be blank") if value.blank?
-  end
-
-  validates_each :email, on: :save_first_time do |record, attr, value|
-    record.errors.add(:base, "This email address is already in use") if Client.find_by_email(value).present?
+  validates_each  :full_name, :email, :password  do |record, attr, value|
+    if value.blank? && (record.type == :first_time || record.type == :is_applicant)
+      record.errors.add(:base, "The field '#{ATTR_NAMES[attr]}' can't be blank")
+    end
+    if attr == :company_name && Company.find_by_name(value).present?
+      record.errors.add(:base, "This company name is already in use")
+    end
+    if attr == :email && Client.find_by_email(value).present?
+      record.errors.add(:base, "This email address is already in use")
+    end
   end
 
   def save(user)
       begin
         Job.transaction do
-          if user.blank?
+          if first_time?
             save_first_time
-          elsif user.applicant?
+          elsif is_applicant?
             save_job_from_applicant(user)
           else
             save_job_from_employer(user)
@@ -101,6 +105,18 @@ class CreateJob
         company: company,
         client: client
   )
+  end
+
+  def is_applicant?
+    type == :is_applicant
+  end
+
+  def is_employer?
+    type == :is_employer
+  end
+
+  def first_time?
+    type == :first_time
   end
 
 end

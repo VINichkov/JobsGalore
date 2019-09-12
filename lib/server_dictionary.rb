@@ -2,10 +2,11 @@ require 'singleton'
 class ServerDictionary
   include Singleton
 
+  attr_accessor :arr_word
+
   def initialize
     Rails.logger.debug("ServerDictionary::initialize: load dictionary")
-    @arr_word ? @arr_word : @arr_word = File.open('db/dictionary.txt').map{|file| file.delete("\n")}
-    index
+    @arr_word = index(File.open('db/dictionary.txt').map{|file| file.delete("\n")})
   end
 
   def where(query=nil, arg={limit:10})
@@ -35,14 +36,13 @@ class ServerDictionary
 
   private
 
-  def index
+  def index(arg)
     Rails.logger.debug("ServerDictionary::index: add index")
-    t = Time.now
     index = {}
-    @arr_word.each do |word|
-      index[:"#{word[0]}"] ?  index[:"#{word[0]}"]<<word : index[:"#{word[0]}"] = [word]
+    arg.each do |word|
+      index[:"#{word[0]}"] ?  index[:"#{word[0]}"] << word : index[:"#{word[0]}"] = [word]
     end
-    @arr_word = index
+    index
   end
 
 end

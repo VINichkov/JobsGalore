@@ -41,10 +41,10 @@ gem 'jquery-rails'
 gem 'will_paginate'#, '~> 3.1.0'
 gem 'social-share-button'
 gem 'cancancan'#, '~> 2.0.0'
-gem 'devise','~> 4.4.3'
+gem 'devise','~> 4.7.1'  #4.4.3'
 gem 'dkim'
 gem 'interactor'
-gem 'omniauth-linkedin-oauth2', '~> 0.2.5'
+gem 'omniauth-linkedin-oauth2', '~> 1.0.0'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem "actionview", ">= 5.2.2.1"
@@ -96,10 +96,13 @@ group :development, :test do
 end
 gem 'web-console', group: :development
 
-group :development, :test do
+group :test do
   gem 'simplecov'
   gem 'rspec-rails'
   gem 'rspec-virtus'
+  gem 'database_cleaner'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

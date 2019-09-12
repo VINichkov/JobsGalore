@@ -1,3 +1,1 @@
-class Email < ApplicationRecord
-
-end
+class Email < ApplicationRecord; end

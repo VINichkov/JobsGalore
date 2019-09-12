@@ -1,4 +1,1 @@
-class Payment < ActiveRecord::Base
-
-
-end
+class Payment < ActiveRecord::Base; end

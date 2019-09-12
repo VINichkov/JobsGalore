@@ -1,4 +1,4 @@
--content_for(:hide_search, true)
+- content_for(:hide_search, true)
 h1.none Jobsgalore. Jobs in Australia.
 .container
   .row
@@ -9,7 +9,7 @@ h1.none Jobsgalore. Jobs in Australia.
   br
   br
   .row
-    = render 'index/main/inc/numbers of jobs'
+    = render 'index/main/inc/numbers of jobs', number_of_jobs: @number_of_jobs
     = main_page_search(@search)
   br
   .row

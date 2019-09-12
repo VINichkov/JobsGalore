@@ -39,6 +39,16 @@ module JobsHelper
                   user: 'jobsGalore_AU'})
   end
 
+  def meta_for_new_job
+    meta_head({
+                title: 'Post Job Ads for Free | JobsGalore',
+                keywords: 'Jobs Galore, work, job, vacancy search, resume, jobs, Australia, vacancies, employment,'\
+                          'looking for a job, search, seek, galore, money, solary, indeed, JobsGalore,'\
+                          'jobs in university, post job free, post jobs for free, look for job, seeking, job board,'\
+                          'Post Job Ads for Free'
+              }
+    )
+  end
   def similar_vacancies(job ,size)
     react_component("Loader", url_similar_for_job: similar_jobs_url(job), size: size)
   end

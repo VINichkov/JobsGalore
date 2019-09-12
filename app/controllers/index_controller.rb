@@ -2,13 +2,16 @@ class IndexController < ApplicationController
   #authorize_resource only:[:admin]
   skip_before_action :verify_authenticity_token, only: [:file_to_html]
   def main
-    @main = Main.call(query:@search)
-    render 'index/main/main_md' if md?
-    render 'index/main/main_xs' unless md?
+    if md?
+      @main = Main.call(query:@search)
+      render 'index/main/main_md'
+    else
+      @number_of_jobs = NumberOfJobsQuery.new.call
+      render 'index/main/main_xs'
+    end
   end
 
-  def advertising_terms_of_use
-  end
+  def advertising_terms_of_use;  end
 
   def category_view
     @category_view = CategoryView.call(params:params.permit(:category, :object, :page))
@@ -20,13 +23,17 @@ class IndexController < ApplicationController
   def main_search
     @result = MainSearch.call(params:main_search_params)
     a = @result.param.to_h
-    cookies[:query] = {value: JSON.generate({ type: a["type"],
-                                              value:"",
-                                              category: a["category"],
-                                              location_id:a["location_id"],
-                                              location_name:a["location_name"],
-                                              open:false}),
-                       expires: 1.year}
+    cookies[:query] = {
+        value: JSON.generate({
+                                 type: a["type"],
+                                 value: "",
+                                 category: a["category"],
+                                 location_id: a["location_id"],
+                                 location_name: a["location_name"],
+                                 open: false
+                             }),
+        expires: 1.year
+    }
     @search = @result.param
     if @result.failure?
       render_404
@@ -40,11 +47,9 @@ class IndexController < ApplicationController
     end
   end
 
-  def about
-  end
+  def about;  end
 
-  def contact
-  end
+  def contact;  end
 
   def send_mail
     ContactUsMailer.send_mail(params.require(:contact).permit(:firstname, :lastname, :email, :subject, :message, :phone).to_h).deliver_later
@@ -58,14 +63,11 @@ class IndexController < ApplicationController
     redirect_to(root_path, notice: "Show must go on!!!")
   end
 
-  def terms_and_conditions
-  end
+  def terms_and_conditions;  end
 
-  def privacy
-  end
+  def privacy;  end
 
-  def admin
-  end
+  def admin;  end
 
   def sitemap
     render file: 'public/sitemap/sitemap.xml', formats: :xml
@@ -111,7 +113,6 @@ class IndexController < ApplicationController
   def main_search_params
     params.permit(:page, main_search: [:type, :value, :page, :salary,  :options, :category, :location_id, :location_name, :urgent, :open, :sort])
   end
-
 
 
 end

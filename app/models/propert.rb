@@ -1,2 +1,1 @@
-class Propert < ApplicationRecord
-end
+class Propert < ApplicationRecord; end

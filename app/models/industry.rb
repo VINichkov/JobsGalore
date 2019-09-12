@@ -1,13 +1,9 @@
 class Industry < ApplicationRecord
-  @@all_cache=nil
+
   has_many :company, dependent: :destroy
   has_many :job, dependent: :destroy
   has_many :resume, dependent: :destroy
   has_many :gateway, dependent: :destroy
-
-  def self.all
-    @@all_cache ||=super
-  end
 
   def self.find_by_linkedin(arg)
     linkedin_match = LazyHash.new("Accounting"=>->{Industry.find_by_name('Accounting')},

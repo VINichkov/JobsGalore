@@ -1,3 +1,1 @@
-class Clientforalert < ApplicationRecord
-
-end
+class Clientforalert < ApplicationRecord; end
