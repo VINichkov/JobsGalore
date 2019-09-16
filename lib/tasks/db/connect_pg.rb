@@ -4,8 +4,15 @@ require 'pg'
 class ConnectPg
   attr_accessor :connect
   def initialize
-    ENV['RAILS_ENV'] ||= 'development'
-    config = YAML.load_file("#{Rails.root}/config/database.yml")[ENV['RAILS_ENV']]
+    if ENV['RAILS_ENV'] == 'production'
+      config = YAML.load_file("#{Rails.root}/config/database.yml")[ENV['RAILS_ENV']]
+      conf_app = YAML.load_file("#{Rails.root}/config/application.yml")[ENV['RAILS_ENV']]
+      config['username'] = conf_app['MONGO_DATABASE_USER']
+      config['password'] = conf_app['MONGO_DATABASE_PASSWORD']
+    else
+      ENV['RAILS_ENV'] ||= 'development'
+      config = YAML.load_file("#{Rails.root}/config/database.yml")[ENV['RAILS_ENV']]
+    end
     @connect = PG.connect(
       dbname: config['database'],
       user: config['username'],
