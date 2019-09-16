@@ -17,6 +17,7 @@ class ConnectPg
     puts "config['database'] = #{config['username']}"
     puts "config['database'] = #{config['password']}"
     @connect = PG.connect(
+      host: 'localhost',
       dbname: config['database'],
       user: config['username'],
       password: config['password']
