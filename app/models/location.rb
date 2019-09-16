@@ -12,19 +12,11 @@ class Location < ApplicationRecord
 
 
   def name
-    @name ||= self.suburb+', '+self.state
+    @name ||= self.suburb + ', ' + self.state
   end
 
   def update_number_of_jobs
-    sql = <<-SQL
-      update locations as l set counts_jobs = q.counts_jobs
-      from (select jobs.location_id, count(jobs.location_id) as counts_jobs
-            from jobs
-            group by jobs.location_id
-      ) q
-      where l.id = q.location_id;
-    SQL
-    ActiveRecord::Base.connection.exec_query(sql)
+
   end
 
   protected

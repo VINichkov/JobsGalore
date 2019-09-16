@@ -1,7 +1,7 @@
 class Unsw < Adapter
   def initialize
     @jobs=[]
-    agent = Mechanize.new
+    #agent = Mechanize.new
     @doc = agent.get('https://applicant.cghrm.unsw.edu.au/psc/hrm/NS_CAREERS/HRMS/c/HRS_HRAM.HRS_APP_SCHJOB.GBL?FOCUS=Applicant&FolderPath=PORTAL_ROOT_OBJECT.HC_HRS_CE_GBL2&IsFolder=false&IgnoreParamTempl=FolderPath%252cIsFolder&PortalActualURL=https%3a%2f%2fapplicant.cghrm.unsw.edu.au%2fpsc%2fhrm%2fNS_CAREERS%2fHRMS%2fc%2fHRS_HRAM.HRS_APP_SCHJOB.GBL%3fFOCUS%3dApplicant&PortalRegistryName=NS_CAREERS&PortalServletURI=https%3a%2f%2fapplicant.cghrm.unsw.edu.au%2fpsp%2fhrm%2f&PortalURI=https%3a%2f%2fapplicant.cghrm.unsw.edu.au%2fpsc%2fhrm%2f&PortalHostNode=PSFT_HR&NoCrumbs=yes&PortalKeyStruct=yes')
   end
 

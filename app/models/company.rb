@@ -13,22 +13,6 @@ class Company < ApplicationRecord
   # validates :location_id, presence: true
 
 
-
-  def self.create_sitemap_jobs(url, limit, page ,time=nil)
-    sql = <<-SQL
-              select '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'||array_to_string(
-                      ARRAY(
-                            SELECT  '<url><loc>#{url}/'||c.id||'</loc>'||
-                                    '<lastmod>'||TO_CHAR(c.updated_at, 'YYYY-mm-dd')||'</lastmod>'||
-                                    '<changefreq>hourly</changefreq></url>'
-                            FROM (select j.company_id as id ,max(j.updated_at) as updated_at
-                            from jobs j
-                            group by j.company_id
-                            limit  #{limit} OFFSET #{(page-1)*limit}) as c),'')|| '</urlset>'
-    SQL
-    ActiveRecord::Base.connection.exec_query(sql).rows[0][0]
-  end
-
   def full_keywords(count_keys=1 , min_length_word=4)
     if self.name
       array_keywords = []

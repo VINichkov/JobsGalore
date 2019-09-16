@@ -2,10 +2,6 @@ namespace :integrate do
   desc "Executes to add jobs"
   task :add_jobs => :environment  do
     puts "! Task:add_jobs: start"
-    Gateway.all.each do |gate|
-      gate.execute
-    end
-    separate
     begin
       open("http://google.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
       open("http://www.bing.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")

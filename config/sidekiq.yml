@@ -3,7 +3,7 @@
 :queues:
   - default
   - conveer_get_list
-  - [conveer_prepare_job, 1]
+  - conveer_prepare_job
   - conveer_get_job
-  - [conveer_save_job, 1]
+  - conveer_save_job
   - mailers

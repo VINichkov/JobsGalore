@@ -17,7 +17,7 @@ gem 'uglifier'#, '>= 1.3.0'
 # Use react as the JavaScript library
 gem 'react-rails', '~>2.5.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem "font-awesome-rails"
+#gem "font-awesome-rails"
 gem 'redis-objects'
 gem 'aasm'
 gem 'pdf-reader','~> 2.1.0'
@@ -60,8 +60,8 @@ gem 'will_paginate-bootstrap'# ,'~> 1.0.1'
 gem "html_truncator"#, "~>0.4"
 gem 'slim'
 
-gem 'dragonfly', '~> 1.1.5'
-gem 'mechanize'
+gem 'dragonfly'#, '~> 1.1.5'
+#gem 'mechanize'
 gem 'virtus'
 
 #gem "pg_search"#, '~> 2.0.1'

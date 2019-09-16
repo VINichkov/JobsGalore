@@ -11,20 +11,10 @@ class CreateSitemapsJob < ApplicationJob
     max_page_jobs = count_page(Location.select(:counts_jobs).inject(0){|rez, elem| rez +=elem.counts_jobs if elem.counts_jobs}.to_i)
     max_page_companies_with_jobs = count_page(Job.find_by_sql('select j.company_id from jobs j group by j.company_id').count)
     time = Time.now.strftime("%Y-%m-%d")
-    @count = max_page_companies + max_page_resumes + max_page_jobs + max_page_companies_with_jobs + 1
+    @count = max_page_companies + max_page_resumes + max_page_jobs + max_page_companies_with_jobs
     @index = 1
     create_index
 
-    create_files(1) do |i|
-      objs = []
-      objs << create_item(root_url, time)
-      Location.select(:id).order(:id).find_each do |location|
-        objs << create_item(local_object_url(location.id, Objects::JOBS.code), time) if location.job.limit(1).present?
-        objs << create_item(local_object_url(location.id, Objects::RESUMES.code), time) if location.resume.limit(1).present?
-        objs << create_item(local_object_url(location.id, Objects::COMPANIES.code),time) if location.company.limit(1).present?
-      end
-      create_xml_sitemaps(objs)
-    end
 
     create_files(max_page_companies) do |i|
       objs = []

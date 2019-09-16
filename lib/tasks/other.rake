@@ -29,13 +29,12 @@ namespace :other do
 
   desc "ping to twitter bots"
   task :ping => :environment  do
-
+    #Восстановить.
   end
 
-  task :count_jobs => :environment  do
-    TimeExecut.ms 'calculate jobs' do
-      Location.update_number_of_jobs
-    end
+  task :count_jobs do
+    require "#{Rails.root}/lib/tasks/count_jobs/update_number_of_jobs_in_location"
+    UpdateNumberOfJobsInLocation.new.call
   end
 
   task :report => :environment  do

@@ -1,7 +1,7 @@
 class Deakin < Adapter
   def initialize
     @jobs=[]
-    agent = Mechanize.new
+    #agent = Mechanize.new
     @doc = agent.get('https://jobs.deakin.edu.au/psc/HCMP/EMPLOYEE/HRMS/c/HRS_HRAM_FL.HRS_CG_SEARCH_FL.GBL?FOCUS=Applicant&SiteId=1')
     @host = 'https://jobs.deakin.edu.au'
   end

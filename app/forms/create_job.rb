@@ -23,15 +23,10 @@ class CreateJob
   attribute :password
   attribute :company_name
 
-  #validates :location_id, :title, presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"}
-  #validates :company_name , presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"} unless is_employer?
-  #validates :full_name, :email, :password, presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"} if first_time?
+  validates :full_name, :email, :password, :company_name, :location_id, :title,
+            presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"}
 
-
-  validates_each  :full_name, :email, :password  do |record, attr, value|
-    if value.blank? && (record.type == :first_time || record.type == :is_applicant)
-      record.errors.add(:base, "The field '#{ATTR_NAMES[attr]}' can't be blank")
-    end
+  validates_each   :email, :company_name do |record, attr, value|
     if attr == :company_name && Company.find_by_name(value).present?
       record.errors.add(:base, "This company name is already in use")
     end

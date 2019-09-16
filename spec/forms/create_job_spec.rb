@@ -1,8 +1,10 @@
 require 'rails_helper'
+
 describe CreateJob  do
+
   let(:object) {  FactoryBot.build :create_job }
   context 'validation' do
-    let(:object_for_valid) {  CreateJob.new  }
+    let(:object_for_valid) {  described_class.new  }
     it 'validates empty fields' do
       fragments_of_massage = ["can't be blank", 'Email', 'Password', 'Company', 'City', 'Title', 'Email']
       object_for_valid.valid?

@@ -7,9 +7,23 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 ##Загрузка json файлов
-require 'mechanize'
+#require 'mechanize'
 require 'bcrypt'
-
+if ENV["RAILS_ENV"] == "test"
+  Propert.create([
+    {code: 'port', name: 'port', value:  80},
+    {code: 'host_name', name: 'host', value:  'https://www.jobsgalore.eu'},
+    {code: 'title', name: 'Name this site', value:  'JobsGalore'},
+    {code: 'company', name: 'Company', value:  'JobsGalore'},
+    {code: 'email', name: 'Email', value:  'email@jobsgalore.eu'},
+    {code: 'confirm', name: "confirm's Email", value:  'email@jobsgalore.eu'},
+    {code: 'admin', name: "Admin's email", value:  'v.nichkov@hotmail.com'},
+    {code: 'recoverable', name: 'recoverable email', value:  'email@jobsgalore.eu'},
+    {code: 'urgent', name: 'Urgent', value:  'true'},
+    {code: 'highlight', name: 'Highlight', value:  'true'},
+    {code: 'top', name: 'Ad Top', value:  'false'}
+  ])
+end
 #version 1
 if 1 == 2
 
