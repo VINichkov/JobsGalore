@@ -1,19 +1,20 @@
 require 'nokogiri'
+require "#{Rails.root}/lib/tasks/crawler/path.rb"
 
 class Crawler
   MAX_PAGE = 10
   ST = 'date'
   QUERY_FOR_URL = {
-      "tracking"=> :jobsgalore,
-      "utm_source"=> :jobsgaloreeu,
-      "utm_campaign"=> :jobsgaloreeu,
-      "utm_medium"=> :organic
+      'tracking'=> :jobsgalore,
+      'utm_source'=> :jobsgaloreeu,
+      'utm_campaign'=> :jobsgaloreeu,
+      'utm_medium'=> :organic
   }
 
   def initialize
+    @connect = ConnectPg.instance.connect
     @proxy = Proxy.new
-    @queue_local = Thread::Queue.new()
-    Location.select(:id, :suburb, :state).all.each{|city| @queue_local << {name:city.suburb,code:city.id}}
+    @queue_local =  Location.new(@connect).call.inject(Thread::Queue.new, :push)
     @queue_jobs_for_save = Thread::Queue.new()
     @queue_for_prepare_jobs = Thread::Queue.new()
     @queue_tasks_get_jobs = Thread::Queue.new()
@@ -35,6 +36,7 @@ class Crawler
     #@threads.each(&:join)
     (@group_a.list + @group_b.list + @group_c.list + @group_d.list).each{|t| t.join(60)}
     puts @count_job
+    @connect.close
   end
 
   def conveer_get_list(i)
@@ -155,11 +157,11 @@ class Crawler
                 location: list_of_jobs[:location_name],
                 page: list_of_jobs[:page]
             )
-            if compare == :same_sources
+            if compare[:flag] == :same_sources
               end_job = true
               @block_list.push(list_of_jobs[:location])
               break
-            elsif %i[same_title_and_company block_list].include?(compare)
+            elsif %i[same_title_and_company block_list].include?(compare[:flag])
               nil
             else
               salary = salary(job)
@@ -167,6 +169,7 @@ class Crawler
                 link: url,
                 title: title[:title],
                 company: company,
+                company_id: compare[:company_id],
                 salary_min: salary.present? ? salary[0] : nil,
                 salary_max: salary.present? ? salary[1] : nil,
                 location: list_of_jobs[:location],
@@ -200,6 +203,7 @@ class Crawler
           link: obj[:link],
           title: obj[:title],
           company: obj[:company],
+          company_id: obj[:company_id],
           salary_min: obj[:salary_min],
           salary_max: obj[:salary_max],
           location: obj[:location],
@@ -293,20 +297,34 @@ class Crawler
   end
 
   def compare_with_index(arg)
+    result = {flag: false, company_id: nil}
     block_list = []
     block_list.push("Jora Local")
     if block_list.include?(arg[:company])
       log(arg[:location], arg[:thread], arg[:page], "!!! Компания в блок листе !!! #{arg[:company]}")
-      :block_list
-    elsif Job.where(location_id: arg[:location_id],  sources:arg[:url]).first
-      log(arg[:location], arg[:thread], arg[:page], "!!! Нашли ссылку на работу. Уже присутсвует в БД !!! #{arg[:url]} | #{arg[:title]} }")
-      :same_sources
-    elsif Job.where(title: arg[:title], company_id: Company.find_by_names_or_name(arg[:company]), location_id: arg[:location_id]).first
-      log(arg[:location], arg[:thread], arg[:page], "!!! Нашли работу по наименованию компании и заглавию #{arg[:title] + " || " + arg[:company]} !!!")
-      :same_title_and_company
-    else
-      false
+      return result[:flag]= :block_list
     end
+
+    company_id = Company.new(@connect).call(arg[:company])
+    return result unless company_id
+
+    result[:company_id] = company_id
+    job = Job.new(@connect).call(
+        location:arg[:location_id],
+        sources: arg[:url],
+        title:arg[:title],
+        company: company_id
+    )
+    return result unless job
+    if job[:"sources"] == arg[:url]
+      log(arg[:location], arg[:thread], arg[:page], "!!! Нашли ссылку на работу. Уже присутсвует в БД !!! #{arg[:url]} | #{arg[:title]} }")
+      return result[:flag]= :same_sources
+    end
+    if job[:"title"] == arg[:title]
+      log(arg[:location], arg[:thread], arg[:page], "!!! Нашли работу по наименованию компании и заглавию #{arg[:title] + " || " + arg[:company]} !!!")
+      return result[:flag]= :same_title_and_company
+    end
+    result
   end
 
   def update_attr(attr)

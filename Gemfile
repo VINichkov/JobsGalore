@@ -27,12 +27,17 @@ gem 'oga' #Нужен для создания PDF
 #gem 'pdf2html'
 #gem 'origami'
 gem "docx"
-gem "ffi"
+#gem "ffi"
 gem "nokogiri", ">= 1.8.5"
 gem 'browser'
 gem 'turbolinks'
 gem 'stimulusjs-rails'
 
+####
+
+
+
+# ####
     # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'
 #gem "twitter-bootstrap-rails"
@@ -87,6 +92,10 @@ group :development, :test do
   gem 'capistrano-figaro',   require: false
   gem 'capistrano-rails-console',   require: false
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+
+
+  gem 'get_process_mem'
+
 
   gem 'byebug', platform: :mri
   gem 'listen'#, '~> 3.0.5'

@@ -10,7 +10,7 @@ class UpdateNumberOfJobsInLocation
       ) q
       where l.id = q.location_id;
     SQL
-    connect = ConnectPg.new.connect
+    connect = ConnectPg.instance.connect
     result = connect.exec_params(sql)
     connect.close
     result

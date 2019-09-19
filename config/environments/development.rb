@@ -22,7 +22,7 @@ Rails.application.configure do
   #  }
   #else
   #  config.action_controller.perform_caching = false
-
+  config.cache_store = :memory_store, { size: 64.megabytes }
   #  config.cache_store = :null_store
   #end
   #config.consider_all_requests_local       = false #from production

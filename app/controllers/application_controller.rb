@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
 
+  #before_action :profile_start
   include Session
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
   rescue_from CanCan::AccessDenied, with: :render_404
@@ -9,7 +10,18 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :clear_session
   before_action :get_cookies
+
+  #after_action :profile_stop
   private
+
+  def profile_start
+    MemoryProfiler.start
+  end
+
+  def profile_stop
+    report = MemoryProfiler.stop
+    report.pretty_print
+  end
 
   def redirect_back_to_url
     full_url = URI(request.original_fullpath)

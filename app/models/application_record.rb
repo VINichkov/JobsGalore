@@ -1,4 +1,5 @@
 class ApplicationRecord < ActiveRecord::Base
+
   extend Dragonfly::Model
   self.abstract_class = true
 

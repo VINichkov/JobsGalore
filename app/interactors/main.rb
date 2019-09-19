@@ -2,6 +2,7 @@ class Main
   include Interactor
 
   def call
+    mem = GetProcessMem.new
     context.title = "Latest urgent jobs"
     if context.query && context.query["location_id"].present?
       context.jobs = JobDecorator.decorate_collection(Job.select(:id, :title,:description, :location_id, :company_id, :updated_at).where("location_id = :location and urgent is not null", location: context.query["location_id"]).includes(:location,:company).order(:urgent).last(10))
@@ -17,5 +18,7 @@ class Main
       end
     end
     context.city = Location.major
+    puts mem.inspect
   end
+
 end

@@ -5,7 +5,8 @@ class NumberOf
   end
 
   def call
-    @connect.exec_params(@sql)[0]["count"].to_i
+    result = @connect.exec_params(@sql)
+    result.to_a.blank? ? false : result[0]['count'].to_i
   end
 
 end

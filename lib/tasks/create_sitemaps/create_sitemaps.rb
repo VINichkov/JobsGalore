@@ -8,7 +8,7 @@ class CreateSitemaps
 
 
   def initialize
-    @connect = ConnectPg.new.connect
+    @connect = ConnectPg.instance.connect
   end
 
   def call

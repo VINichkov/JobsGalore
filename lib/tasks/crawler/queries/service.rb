@@ -1,4 +1,4 @@
-class CollectionObjects
+class Service
 
   def initialize(connect)
     @connect = connect
