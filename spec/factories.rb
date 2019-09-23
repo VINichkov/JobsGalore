@@ -13,15 +13,12 @@ FactoryBot.define do
     counts_jobs { 21 }
   end
 
-  city = FactoryBot.create :location_omsk
-
   factory :client, class: Client do
     firstname { 'Nikol' }
     lastname { 'Kidman' }
     email { 'nikol.k@mail.com' }
     phone { Faker::PhoneNumber.phone_number }
     password { '11111111' }
-    location_id { city.id }
   end
 
   factory :job, class:Job do
@@ -37,8 +34,6 @@ FactoryBot.define do
   factory :create_job do
     email    { Faker::Internet.email }
     password { '11111111' }
-    location_id { city.id }
-    location_name { city.suburb }
     title { 'Barista' }
     salarymin { 10000 }
     salarymax { 1000000 }

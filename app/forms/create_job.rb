@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class CreateJob
-
   include Virtus.model(strict: true)
   include ActiveModel::Model
   ATTR_NAMES={
@@ -23,14 +22,18 @@ class CreateJob
   attribute :password
   attribute :company_name
 
-  validates :full_name, :email, :password, :company_name, :location_id, :title,
-            presence: {message: "The field '#{ATTR_NAMES[attr]}' can't be blank"}
 
-  validates_each   :email, :company_name do |record, attr, value|
-    if attr == :company_name && Company.find_by_name(value).present?
+  validates_each  :full_name, :email, :password, :company_name, :location_id, :title   do |record, attr, value|
+    if value.blank? &&
+        (  record.first_time? ||
+          (record.is_employer? || [:location_id, :title].include?(attr))||
+          (record.is_applicant? || [:company_name, :location_id, :title].include?(attr)))
+      record.errors.add(:base, "The field '#{ATTR_NAMES[attr]}' can't be blank")
+    end
+    if attr == :company_name && Company.find_by_name(value).present? && !record.is_employer?
       record.errors.add(:base, "This company name is already in use")
     end
-    if attr == :email && Client.find_by_email(value).present?
+    if attr == :email && Client.find_by_email(value).present? && record.first_time?
       record.errors.add(:base, "This email address is already in use")
     end
   end
@@ -50,6 +53,18 @@ class CreateJob
         false
       end
     end
+
+  def is_applicant?
+    type == :is_applicant
+  end
+
+  def is_employer?
+    type == :is_employer
+  end
+
+  def first_time?
+    type == :first_time
+  end
 
   private
 
@@ -100,18 +115,6 @@ class CreateJob
         company: company,
         client: client
   )
-  end
-
-  def is_applicant?
-    type == :is_applicant
-  end
-
-  def is_employer?
-    type == :is_employer
-  end
-
-  def first_time?
-    type == :first_time
   end
 
 end
