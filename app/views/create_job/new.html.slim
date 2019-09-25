@@ -2,7 +2,7 @@
 .container
   .row
     .col-xs-12.col-sm-12.col-md-8.col-lg-8.col-md-offset-2.col-lg-offset-2
-      h1 Post a Job Ad Free
+      h1 Post a job ad for free
       = form_for @job, url: create_job_index_path do |f|
         hr.colorgraph
         - if @job.errors.any?
@@ -43,11 +43,11 @@
           br
           = react_component('Autocomplete',
                   className: "form-control dropdown-toggle",
-                  name: "email[location",
+                  name: "create_job[location",
                   id: "job_location_id",
                   route: '/search_locations/',
-                  defaultName: @job.location_name ? @job.location.name : (current_client ? current_client.location.name : Location.default.name),
-                  defaultId: @job.location_id ? @job.location.id : (current_client ? current_client.location.id: Location.default.id))
+                  defaultName: @job.location_name ? @job.location_name : (current_client ? current_client.location.name : Location.default.name),
+                  defaultId: @job.location_id ? @job.location_id : (current_client ? current_client.location.id: Location.default.id))
         - unless current_client
           .form-group
             = f.label :full_name, 'Your full name'

@@ -28,7 +28,6 @@ FactoryBot.define do
 
   factory :company, class: Company do
     name { 'Best Company' }
-    location { city }
   end
 
   factory :create_job do
@@ -40,5 +39,14 @@ FactoryBot.define do
     description { '<p> We created a new job! </p>' }
     company_name { 'Best Company'}
     full_name { 'Sarah Smith' }
+  end
+
+  factory :size do
+    size    { '1..20' }
+  end
+
+  factory :industry do
+    name    { 'Other' }
+    level   { 1 }
   end
 end

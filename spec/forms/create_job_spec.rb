@@ -1,80 +1,72 @@
 require 'rails_helper'
 
 describe CreateJob  do
-
-  let(:object) {  FactoryBot.build :create_job }
+  let(:city) { FactoryBot.create :location_omsk }
+  let(:object) {  FactoryBot.build :create_job, location_id:city.id }
+  let(:empty_object) {  described_class.new  }
+  before(:all) do
+    FactoryBot.create(:size)
+    FactoryBot.create(:industry)
+  end
   context 'validation' do
-    context 'first_time' do
-      let(:city) { FactoryBot.create :location_omsk }
-      let(:object_for_valid) {  described_class.new  }
-      it 'validates empty fields' do
-        object_for_valid.valid?
-        object_for_valid.errors.full_messages.each  do |massage|
-          expect(massage).to include("can't be blank")
-        end
-      end
-
-      it 'validates email uniqueness' do
-        client =  FactoryBot.create(:client, location_id: city.id)
-        object.email = client.email
-        object.valid?
-        expect(object.errors.full_messages).to include('This email address is already in use')
-      end
-
-      it 'validates company uniqueness' do
-        company =  FactoryBot.create(:company, location_id: city.id)
-        object.company_name = company.name
-        object.valid?
-        puts object.errors.full_messages
-        expect(object.errors.full_messages).to include('This company name is already in use')
+    it 'validates empty fields' do
+      empty_object.valid?
+      empty_object.errors.full_messages.each do |massage|
+        expect(massage).to include('Email')
+                               .or include('Password')
+                                       .or include('Company')
+                                               .or include('City')
+                                                       .or include('Title')
+                                                               .or include('Full name')
+        expect(massage).to include("can't be blank")
       end
     end
 
-    context 'is_employer' do
-      before(:all) do
-        object.type = :is_employer
-      end
-
-      it 'validates empty fields' do
-        fragments_of_massage = ["can't be blank", 'Email', 'Password', 'Company', 'City', 'Title', 'Email']
-        object_for_valid.valid?
-        object_for_valid.errors.full_messages.each  do |massage|
-          expect(massage).to include("can't be blank")
-        end
-      end
-
-      it 'validates email uniqueness' do
-        client =  FactoryBot.create(:client, location_id: city.id)
-        object.email = client.email
-        object.valid?
-        expect(object.errors.full_messages).to include('This email address is already in use')
-      end
-
-      it 'validates company uniqueness' do
-        company =  FactoryBot.create(:company, location_id: city.id)
-        object.company_name = company.name
-        object.valid?
-        puts object.errors.full_messages
-        expect(object.errors.full_messages).to include('This company name is already in use')
-      end
+    it 'validates email uniqueness' do
+      object.email = FactoryBot.create(:client, location_id: city.id).email
+      object.valid?
+      expect(object.errors.full_messages).to include('This email address is already in use')
     end
+
+    it 'validates company uniqueness' do
+      object.company_name = FactoryBot.create(:company, location_id: city.id).name
+      object.valid?
+      expect(object.errors.full_messages).to include('This company name is already in use')
+    end
+
+    it 'validates company uniqueness when user is applicant' do
+      object.type = :is_applicant
+      object.company_name = FactoryBot.create(:company, location_id: city.id).name
+      object.valid?
+      expect(object.errors.full_messages).to include('This company name is already in use')
+    end
+
   end
 
   it "should create a new client, a company and a new job"  do
-    expect(1).to eq(1)
+    company, client, job = object.save.values
+    expect(company.present?).to eq(true)
+    expect(client.present?).to eq(true)
+    expect(job.present?).to eq(true)
   end
 
   it "should create a company, a new job and changes type of client"  do
-    expect(1).to eq(1)
+    user = FactoryBot.create(:client, character: 'applicant', location_id: city.id)
+    object.type = :is_applicant
+    company, client, job = object.save(user).values
+    expect(company.present?).to eq(true)
+    expect(client.character).to eq('employer')
+    expect(job.present?).to eq(true)
   end
 
   it "should create only a new job"  do
-    expect(1).to eq(1)
+    company = FactoryBot.create(:company, location_id: city.id)
+    user = FactoryBot.create(:client, location_id: city.id, company_id: company.id)
+    object.type = :is_employer
+    _, _, job = object.save(user).values
+    expect(job.present?).to eq(true)
   end
 
-  it "rises an error in a transaction" do
-    expect(1).to eq(1)
-  end
 
 end
 

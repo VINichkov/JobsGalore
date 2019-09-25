@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="124ec8c4-9ea9-4494-bb84-3f20959e9953" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../app/models/algorithm.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../app/models/order.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../app/models/product.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../app/forms/create_job.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../../app/forms/create_job.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../app/models/payment.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../../app/models/payment.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../db/structure.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../db/structure.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crawler.go" beforeDir="false" afterPath="$PROJECT_DIR$/crawler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../spec/forms/create_job_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../../spec/forms/create_job_spec.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

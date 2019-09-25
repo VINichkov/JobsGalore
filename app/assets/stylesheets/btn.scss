@@ -9,6 +9,7 @@
 }
 
 .sticky {
+  z-index: 4;
   position: sticky;
   bottom: 10px;
   min-height: 2em;

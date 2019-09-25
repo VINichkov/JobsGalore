@@ -5,11 +5,12 @@ class CreateJobController < ApplicationController
   end
 
   def create
-    @job = CreateJob.new(job_params)
+    @job_service = CreateJobService.call(params: job_params, client: current_client)
     respond_to do |format|
-      if @job.save(current_client)
-        format.html { redirect_to @job }
+      if @job_service.success?
+        format.html { redirect_to job_path(@job_service.job), notice:  @job_service.msg}
       else
+        @job = @job_service.object
         format.html { render :new}
       end
     end

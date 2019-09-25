@@ -5,11 +5,11 @@
       .row.well.text-center
         = image_bg(@client.photo_url,  "contain", "200px", "200px")
         p
-        = link_to "Post new job", new_job_path, class: "btn btn-primary btn-block btn_margin"
+        = link_to "Post a job ad for free", new_job_path, class: "btn btn-primary btn-block btn_margin"
     .col-sm-9.col-md-9.col-sm-12.col-xs-12
       .row
         .col-sm-4.col-xs-12.hidden-lg.hidden-md
-          = link_to "Post new job", new_job_path, class: "btn btn-primary btn-block btn_margin"
+          = link_to "Post a job ad for free", new_job_path, class: "btn btn-primary btn-block btn_margin"
       = render partial: 'inc/job/job_md', collection: @jobs, as: :job, locals: {query: ''} if md?
       = render partial: 'inc/job/job_xs', collection: @jobs, as: :job, locals: {query: ''} unless md?
 

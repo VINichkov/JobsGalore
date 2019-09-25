@@ -5,7 +5,7 @@ ruby '2.6.3'
 gem 'rails'#, '~> 5.2.0'#, '~> 5.0.4'#, '>= 5.0.0.1'
 
 # Use postgresql as the database for Active Record
-gem  'pg', platforms: [:mri, :mingw, :x64_mingw]#, '~> 0.18'
+gem  'pg', platforms: [:mri, :mingw, :x64_mingw, :truffleruby]#, '~> 0.18'
 #gem 'activerecord-jdbcpostgresql-adapter', github: 'jruby/activerecord-jdbc-adapter', platforms: [:jruby]
 # Use Puma as the app server
 gem 'sidekiq'

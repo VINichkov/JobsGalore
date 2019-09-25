@@ -142,8 +142,9 @@ Rails.application.routes.draw do
   resources :properts, only:[:index, :new, :create, :edit, :update, :destroy]
   resources :payments, only:[:show,:index]
 
-  resources :create_job, only:[:new, :create]
-  resources :jobs, only:[:new, :show, :edit, :update, :destroy]
+  resources :create_job, only:[ :create]
+  resources :create_job, only:[ :new], as: 'job'
+  resources :jobs, only:[ :show, :edit, :update, :destroy]
   get "jobs/:id/:text", to: "jobs#highlight_view", as: 'job_highlight_view'
   get "views_of_a_job/:id", to: "jobs#views", as: 'job_views'
   post "job_create/", to: "jobs#create_temporary", as: 'create_job'

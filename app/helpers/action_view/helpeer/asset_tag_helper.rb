@@ -9,10 +9,12 @@ require "action_view/helpers/asset_url_helper"
 require "action_view/helpers/tag_helper"
 
 module ActionView::Helpeer::AssetTagHelper
+=begin
   def image_tag(source, options = {})
     options[:class] = options[:class].to_s + ' b-lazy'
     options["data-src"] = source
     source = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
     super(source, options)
   end
+=end
 end
