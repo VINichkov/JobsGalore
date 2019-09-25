@@ -195,7 +195,7 @@ class Resume < ApplicationRecord
   end
 
   def send_email_before_destroy
-    ResumesMailer.remove_resume(self).deliver_later if client.send_email
+    ResumesMailer.remove_resume(email: self.client.email, title: self.title).deliver_later if client.send_email
   end
 
   def after_create

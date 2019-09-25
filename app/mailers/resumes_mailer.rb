@@ -6,10 +6,10 @@ class ResumesMailer < ApplicationMailer
     mail(to:@resume.client.email, subject: "Your resume was just posted on Jobs Galore!")
   end
 
-  def remove_resume(resume)
+  def remove_resume(email:, title:)
     @utm = "?"+create_utm(:remove_resume)
-    @resume = resume
-    mail(to: @resume.client.email, subject: "The resume was just removed")
+    @title = title
+    mail(to: email, subject: "The resume was just removed")
   end
 
   def turn_on_option(option, resume)

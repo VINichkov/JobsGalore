@@ -6,7 +6,8 @@ class ResumesMailerPreview < ActionMailer::Preview
   end
 
   def remove_resume
-    ResumesMailer.remove_resume(Resume.last)
+    resume = Resume.last
+    ResumesMailer.remove_resume(email: resume.client.email, title:resume.title)
   end
 
   def turn_on_option
