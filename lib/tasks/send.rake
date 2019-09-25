@@ -37,6 +37,18 @@ namespace :send do
 
   end
 
+  task :test => :environment do
+    t = Time.now
+    Resume.find_each do |resume|
+      puts resume.key
+    end
+
+    Clientforalert.find_each do |client|
+      puts client.key
+    end
+    puts "! Task:Send daily job alert: End #{(t- Time.now) * 1000} ms"
+  end
+
   desc "Send invitation to post resume"
   task :send_invate_to_post_resume => :environment do
     puts "! Task:Send invitation to post resume #{Time.now}"
