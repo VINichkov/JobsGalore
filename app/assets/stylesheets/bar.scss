@@ -18,25 +18,25 @@
 }
 /* цвет текста, содержащий название сайта или бренда */
 .navbar-blue .navbar-brand {
-  color: #ecf0f1;
+  color: #75a8ff;
 }
 
 .navbar-blue .navbar-brand:hover,
 .navbar-blue .navbar-brand:focus {
-  color: #ff2846;
+  color: #75a8ff;
 }
 
 
 /* цвет текста (название сайта или бренда), при поднесении к нему курсора мышки или при его нахождении в фокусе */
 .navbar-blue .navbar-nav> li > a:hover,
 .navbar-blue .navbar-nav > li > a:hover {
-  background-color: #b73328;
+  background-color: #75a8ff;
   border-color: #2e6da4;
 }
 
 /* Цвет пунктов навигационного меню */
 .navbar-blue .navbar-nav > li {
-  border-color:  #ffffff;
+  border-color:  #75a8ff;
 }
 
 /* Цвет пунктов навигационного меню */
@@ -51,7 +51,7 @@
 .navbar-blue .navbar-nav > li:hover,
 .navbar-blue .navbar-nav > li:focus {
   color: #7b2eff;
-  background-color: #b7482a;
+  background-color: #75a8ff;
 }
 
 .link {

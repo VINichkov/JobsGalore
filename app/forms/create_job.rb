@@ -26,8 +26,8 @@ class CreateJob
   validates_each  :full_name, :email, :password, :company_name, :location_id, :title   do |record, attr, value|
     if value.blank? &&
         (  record.first_time? ||
-          (record.is_employer? || [:location_id, :title].include?(attr))||
-          (record.is_applicant? || [:company_name, :location_id, :title].include?(attr)))
+          (record.is_employer? && [:location_id, :title].include?(attr))||
+          (record.is_applicant? && [:company_name, :location_id, :title].include?(attr)))
       record.errors.add(:base, "The field '#{ATTR_NAMES[attr]}' can't be blank")
     end
     if attr == :company_name && Company.find_by_name(value).present? && !record.is_employer?
@@ -100,7 +100,6 @@ class CreateJob
   end
 
   def create_client(company)
-    puts 'Создаем клиента'
     client = Client.new(
         email: email,
         character: TypeOfClient::EMPLOYER,
@@ -120,12 +119,10 @@ class CreateJob
   end
 
   def create_company
-    puts 'Создаем компанию'
     Company.create(name: company_name, location_id: location_id, size: Size.first)
   end
 
   def create_job(company:, client:)
-    puts 'Создаем работу'
     Job.create(
         title: self.title,
         description: self.description,
