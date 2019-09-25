@@ -10,8 +10,7 @@ class JobsMailer < ApplicationMailer
   def daily_job_alert(email:, keys:, location_id:)
     @utm = "?"+create_utm(:resume_alert)
     @list_of_jobs = Job.includes(:company,:location).search_for_send(value: keys, location:location_id).to_a
-    if jobs.present? and jobs.count == 3
-      JobsMailer.daily_job_alert(resume.client.email, keys).deliver_now
+    if @list_of_jobs.present? and @list_of_jobs.count == 3
       mail(to: email, subject: "Daily Jobs Alert")
     end
   end
