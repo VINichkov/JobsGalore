@@ -245,20 +245,7 @@ class Crawler
       end
       begin
         resp = JSON.parse(@proxy.redirect(url_from_button), opts={symbolize_names:true})
-        if resp
-          uri = URI(resp[:uri])
-          if  uri.host != URI(@host).host
-            #if uri.host
-            log(obj[:location_name], obj[:page], "Старый линк = #{uri.to_s}")
-            query_from_site  =  Rack::Utils.parse_nested_query(uri.query)
-            query_from_site['source'] = 'jobsgaloreeu' if query_from_site['source']
-            query_from_site = query_from_site.merge(QUERY_FOR_URL)
-            log(obj[:location_name], obj[:page], "query_from_site  = #{query_from_site.to_s} query_from_site.class = #{query_from_site.class}")
-            uri.query = query_from_site.to_query
-            log(obj[:location_name], obj[:page], "Новый линк = #{uri.to_s}")
-            return uri.to_s
-          end
-        end
+        return resp["uri"].to_s  if resp.class == Hash && resp["uri"]
       rescue
         log(obj[:location_name], obj[:page], "ERROR #{$!} getting a good url#{url_from_button}")
         nil

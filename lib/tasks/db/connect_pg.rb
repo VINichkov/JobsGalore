@@ -13,9 +13,7 @@ class ConnectPg
       ENV['RAILS_ENV'] ||= 'development'
       config = YAML.load_file("#{Rails.root}/config/database.yml")[ENV['RAILS_ENV']]
     end
-    puts "config['database'] = #{config['database']}"
-    puts "config['database'] = #{config['username']}"
-    puts "config['database'] = #{config['password']}"
+
     @connect = PG.connect(
       host: 'localhost',
       dbname: config['database'],

@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   before_action :clear_session
   before_action :get_cookies
   private
-
   def redirect_back_to_url
     full_url = URI(request.original_fullpath)
     Rails.logger.debug(full_url)
