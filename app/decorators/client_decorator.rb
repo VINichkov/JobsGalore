@@ -5,6 +5,6 @@ class ClientDecorator < ApplicationDecorator
   decorates_association :company
 
   def photo_url
-    @photo_url ||= object.photo_uid.blank? || ENV["RAILS_ENV"]!='production'  ? h.image_url("avatar.jpg") : Dragonfly.app.remote_url_for(object.photo_uid)
+    @photo_url ||= object.photo.blank? || ENV["RAILS_ENV"]!='production'  ? h.image_url("avatar.jpg") : Dragonfly.app.remote_url_for(object.photo_uid)
   end
 end

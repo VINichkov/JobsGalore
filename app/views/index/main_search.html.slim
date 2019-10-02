@@ -15,8 +15,8 @@
       = render partial: 'inc/company', collection: @result.objs, as: :company, locals:{query: @result.query}
     - else @result.type==Objects::RESUMES
       = render partial: 'inc/resume', collection: @result.objs, as: :resume, locals:{query: @result.query}
-  .text-center
-    = will_paginate_mini @result.objs
+    .text-center
+      = will_paginate_mini @result.objs
   .row
   - if @result.type == Objects::JOBS
     = render 'inc/btn/btn_new_resume_xs_sm'

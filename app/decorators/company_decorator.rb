@@ -5,7 +5,7 @@ class CompanyDecorator < ApplicationDecorator
   decorates_association :client
 
   def logo_url
-    @logo_url ||= object.logo_uid.blank? || ENV["RAILS_ENV"]!='production' ? h.image_url("company_profile.jpg") : Dragonfly.app.remote_url_for(object.logo_uid)
+    @logo_url ||= (object.logo.blank? || (ENV["RAILS_ENV"]!='production' ? h.image_url("company_profile.jpg") : Dragonfly.app.remote_url_for(object.logo_uid)))
   end
 
   def jobs_count
