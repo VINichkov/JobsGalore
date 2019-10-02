@@ -6,7 +6,7 @@ class ClientDecorator < ApplicationDecorator
 
   def photo_url
     if @photo_url.blank?
-      if object.photo.blank? || ENV["RAILS_ENV"] != 'production'
+      if object.photo_uid.blank? || ENV["RAILS_ENV"] != 'production'
         @photo_url = h.image_url("avatar.jpg")
       else
         @photo_url = Dragonfly.app.remote_url_for(object.photo_uid)

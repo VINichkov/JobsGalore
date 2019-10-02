@@ -6,7 +6,7 @@ class CompanyDecorator < ApplicationDecorator
 
   def logo_url
     if @logo_url.blank?
-      if object.logo.blank? || ENV["RAILS_ENV"] != 'production'
+      if object.logo_uid.blank? || ENV["RAILS_ENV"] != 'production'
         @logo_url = h.image_url("company_profile.jpg")
       else
         @logo_url = Dragonfly.app.remote_url_for(object.logo_uid)
