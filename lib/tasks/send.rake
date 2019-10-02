@@ -14,7 +14,7 @@ namespace :send do
               email:resume.client.email,
               keys: resume.key,
               location_id:resume.location_id)
-              .deliver_later
+              .deliver_now
         end
       rescue
         puts "Error:resume.id =#{resume.id} :#{$!} "
@@ -27,7 +27,7 @@ namespace :send do
             email: client.email,
             keys: Search.str_to_search(client.key.delete("<>{}#@!,:*&()'`\"’|")),
             location_id:client.location_id)
-            .deliver_later
+            .deliver_now
       rescue
         puts "Error:client.email =#{client.email} :#{$!} "
       end

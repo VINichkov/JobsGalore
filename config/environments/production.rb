@@ -100,7 +100,7 @@ Rails.application.configure do
   config.assets.prefix = "/#{ENV['RAILS_ENV']}/assets/test" if ENV["TEST"]
   #config.force_ssl = true
   #config.ssl_options = {  redirect: { status: 307} }
-  config.active_job.queue_adapter = :sidekiq
+  #config.active_job.queue_adapter = :sidekiq
   config.action_mailer.delivery_method = :smtp
   if ENV["TEST"].nil?
     config.action_mailer.default_url_options = { host: "https://jobsgalore.eu"}
