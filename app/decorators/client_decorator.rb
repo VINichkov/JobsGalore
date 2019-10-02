@@ -5,13 +5,6 @@ class ClientDecorator < ApplicationDecorator
   decorates_association :company
 
   def photo_url
-    if @photo_url.blank?
-      if object.photo_uid.blank? || ENV["RAILS_ENV"] != 'production'
-        @photo_url = h.image_url("avatar.jpg")
-      else
-        @photo_url = Dragonfly.app.remote_url_for(object.photo_uid)
-      end
-    end
-    @photo_url
+    @photo_url ||= object.photo_uid ? Dragonfly.app.remote_url_for(object.photo_uid) : h.image_url("avatar.jpg")
   end
 end
