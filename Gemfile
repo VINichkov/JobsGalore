@@ -8,7 +8,7 @@ gem 'rails'#, '~> 5.2.0'#, '~> 5.0.4'#, '>= 5.0.0.1'
 gem  'pg', platforms: [:mri, :mingw, :x64_mingw, :truffleruby]#, '~> 0.18'
 #gem 'activerecord-jdbcpostgresql-adapter', github: 'jruby/activerecord-jdbc-adapter', platforms: [:jruby]
 # Use Puma as the app server
-gem 'sidekiq'
+#gem 'sidekiq'
 
 # Use SCSS for stylesheets
 gem 'sassc-rails'#, '~> 5.0'
@@ -32,7 +32,7 @@ gem "nokogiri", ">= 1.8.5"
 gem 'browser'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
-gem 'stimulusjs-rails'
+#gem 'stimulusjs-rails'
 
     # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'
@@ -81,7 +81,7 @@ gem 'figaro'
 group :development, :test do
   gem 'capistrano',         require: false
   gem 'capistrano-rvm',     require: false
-  gem 'capistrano-sidekiq', require: false
+ # gem 'capistrano-sidekiq', require: false
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false

@@ -1,11 +1,8 @@
 //= require turbolinks
 //= require jquery.min.js
 //= require jquery_ujs
-//= require blazy.min
 //= require react
 //= require react_ujs
-//#= require stimulus
-//#= require init
 //= require components
 //= require bootstrap-typeahead
 //= require bootstrap.min
@@ -29,7 +26,7 @@ function experiment(name, variant) {
         });
 }
 
-var stimulus = Stimulus.Application.start()
+/*var stimulus = Stimulus.Application.start()
 var bLazy = new Blazy({
     //Загрузка маленьких изображений. Возможно в будующем!!!
     //    breakpoints: [{
@@ -45,7 +42,7 @@ var bLazy = new Blazy({
             parent.className = parent.className.replace(/\bloading\b/,'');
         }, 200);
     }
-});
+});*/
 
 document.addEventListener("turbolinks:before-cache", function() {
     var bLazy = new Blazy({
