@@ -14,6 +14,7 @@ class ApplyJob extends React.Component{
         }
         this.state = {resumes: resumes};
         this.handleChangeFocus =  this.handleChangeFocus.bind(this);
+        this.handlerExperiment = this.handlerExperiment.bind(this);
     }
 
 
@@ -33,6 +34,10 @@ class ApplyJob extends React.Component{
             resumes[e].checked = true;
             this.setState({resumes: resumes});
         }
+    }
+
+    handlerExperiment(){
+        experiment('create_resume', 'Заходим из реакт.' );
     }
 
     render(){
@@ -82,12 +87,12 @@ class ApplyJob extends React.Component{
                             </div>
                             <div className="row hidden-sm hidden-xs">
                                 <div className="col-xs-6 col-lg-6 col-md-offset-6 col-lg-offset-6" >
-                                    <input type="submit" className="btn btn-primary btn-block" value="Apply"/>
+                                    <input type="submit" className="btn btn-primary btn-block" value="Apply" onClick={this.handlerExperiment}/>
                                 </div>
                             </div>
                             <div className="row sticky hidden-lg hidden-md" >
                                 <div className="col-xs-12 col-lg-12 btn_margin text-center" >
-                                    <input type="submit" className="btn btn-primary btn-block btn-circle" value="Apply for job"/>
+                                    <input type="submit" className="btn btn-primary btn-block btn-circle" value="Apply for job" onClick={this.handlerExperiment}/>
                                 </div>
                             </div>
                             <br/>

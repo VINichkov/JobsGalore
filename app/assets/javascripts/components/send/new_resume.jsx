@@ -26,6 +26,7 @@ class NewResume extends React.Component{
     }
 
     handleLinkedIn(){
+        experiment('create_resume', 'Заходим из реакт. Загрузка из LinkedIn' );
         $.get(this.props.linkedin_resume_url, function(data) {
             this.setState({ title:data.title,
                             industry: {id: data.industry_id},
@@ -39,6 +40,7 @@ class NewResume extends React.Component{
     }
 
     handleChange(){
+        experiment('create_resume', 'Заходим из реакт. Загрузка файла' );
         readURL(this._fileInput.current)
     };
     render(){
@@ -62,10 +64,25 @@ class NewResume extends React.Component{
                                             <i className="glyphicon glyphicon-upload" />
                                             &nbsp;|&nbsp;Upload a resume (.txt .docx)
                                         </label>
-                                        <input id="inp" ref = {this._fileInput} onChange={this.handleChange} type="file" accept=".txt, .docx, .pdf" style={{"display":"none"}} />
+                                        <input id="inp" ref = {this._fileInput} onChange={this.handleChange} type="file" accept=".txt, .docx" style={{"display":"none"}} />
                                     </div>
                                 </div>
                             </div>
+        } else {
+            buttonLinkedIn = <div className="row">
+                <div className="form-group">
+                    <div className="col-xs-12 col-md-6 col-sm-6 col-lg-6">
+                        <div className = "hidden-md hidden-lg hidden-sm">
+                            <p/>
+                        </div>
+                        <label className="btn btn-warning btn-block" htmlFor="inp">
+                            <i className="glyphicon glyphicon-upload" />
+                            &nbsp;|&nbsp;Upload a resume (.txt .docx)
+                        </label>
+                        <input id="inp" ref = {this._fileInput} onChange={this.handleChange} type="file" accept=".txt, .docx" style={{"display":"none"}} />
+                    </div>
+                </div>
+            </div>
         }
         if (this.props.check){
             field_new_resume =  <div className="panel-body">

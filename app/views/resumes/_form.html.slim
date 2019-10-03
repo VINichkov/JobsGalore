@@ -11,12 +11,12 @@
     .form-group
       - if current_client&.linkedin?
         .col-xs-12.col-md-6.col-sm-6.col-lg-6
-          a.btn.btn-linkedin.btn-block.linkedin_click.social-share-button
+          a.btn.btn-linkedin.btn-block.linkedin_click.social-share-button[onclick = "experiment('create_resume', 'Резюме из линкдин. Заходим из кнопки. Авторизованы');"]
             i.ssb-icon.ssb-linkedin.text-left.btn[aria-hidden="true"]
             |&nbsp;|&nbsp;Resume from LinkedIn
       - elsif current_client.nil?
         .col-xs-12.col-md-6.col-sm-6.col-lg-6.social-share-button
-          = link_to client_linkedin_omniauth_authorize_path(resume: true), class: "btn btn-linkedin btn-block" do
+          = link_to client_linkedin_omniauth_authorize_path(resume: true), class: "btn btn-linkedin btn-block", onclick: "experiment('create_resume', 'Резюме из линкдин. Заходим из кнопки. НЕ Авторизованы');" do
             i.ssb-icon.ssb-linkedin.text-left.btn[aria-hidden="true"]
             |&nbsp;|&nbsp;Resume from LinkedIn
       .col-xs-12.col-md-6.col-sm-6.col-lg-6
@@ -25,7 +25,7 @@
         label.btn.btn-warning.btn-block[for="inp"]
           i.glyphicon.glyphicon-upload
           |&nbsp;|&nbsp;Upload a resume (.txt .docx)
-          input#inp[type="file" accept=".txt, .docx, .pdf" style="display:none;" ]
+          input#inp[type="file" accept=".txt, .docx" style="display:none;" ]
   p
   .form-group
     = f.label :title, "Title"
@@ -66,5 +66,5 @@
       .col-lg-6.col-md-6.col-xs-6.col-sm-6
         = link_to 'Back', :back, class: "btn btn-success btn-block"
       .col-xs-6.col-md-6.col-sm-6.col-lg-6
-        = f.submit class: "btn btn-primary btn-block "
+        = f.submit class: "btn btn-primary btn-block ", onclick: "experiment('create_resume', 'Заходим из кнопки.');"
     br

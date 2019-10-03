@@ -386,6 +386,39 @@ ALTER SEQUENCE public.experiences_id_seq OWNED BY public.experiences.id;
 
 
 --
+-- Name: experiments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.experiments (
+    id bigint NOT NULL,
+    name character varying,
+    variant character varying,
+    params jsonb DEFAULT '"{}"'::jsonb NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: experiments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.experiments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: experiments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.experiments_id_seq OWNED BY public.experiments.id;
+
+
+--
 -- Name: gateways; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -949,6 +982,13 @@ ALTER TABLE ONLY public.experiences ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: experiments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.experiments ALTER COLUMN id SET DEFAULT nextval('public.experiments_id_seq'::regclass);
+
+
+--
 -- Name: gateways id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1108,6 +1148,14 @@ ALTER TABLE ONLY public.emails
 
 ALTER TABLE ONLY public.experiences
     ADD CONSTRAINT experiences_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: experiments experiments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.experiments
+    ADD CONSTRAINT experiments_pkey PRIMARY KEY (id);
 
 
 --
@@ -1907,6 +1955,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190621140649'),
 ('20190923070505'),
 ('20190923070838'),
-('20190923072126');
+('20190923072126'),
+('20191003053319');
 
 

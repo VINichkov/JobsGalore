@@ -70,6 +70,7 @@ Rails.application.routes.draw do
   post 'send_resume', to: 'clients#send_resume', as: 'send'
   post 'send_message', to: 'clients#send_message', as: 'send_msg'
 
+  resources :experiment, only: [:create]
   resources :locations
   get '/search_locations/:query', to: 'locations#search'
   get 'in_location/:location/:object', to: 'locations#in_location', as: "local_object"

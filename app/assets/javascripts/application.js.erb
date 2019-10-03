@@ -14,6 +14,20 @@
 //= require trix
 //= require trix_conf
 //#= require_tree ./controllers
+function experiment(name, variant) {
+   $.post("/experiment",
+        {
+            experiment: {
+                name: name,
+                variant: variant,
+                params: {
+                    browser: navigator.userAgent,
+                    lang: navigator.language,
+                    platform: navigator.platform
+                }
+            }
+        });
+}
 
 var stimulus = Stimulus.Application.start()
 var bLazy = new Blazy({
@@ -96,6 +110,7 @@ var uploadTXT = function(uploadFile) {
 $(function() {
 
     $("#inp").change(function() {
+        experiment('create_resume', 'Заходим из кнопки. Загрузка резюме');
         readURL(this);
     });
 
