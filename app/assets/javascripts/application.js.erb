@@ -107,14 +107,12 @@ var uploadTXT = function(uploadFile) {
 };
 
 
-$(function() {
-
-    $("#inp").change(function() {
+//$(function() {
+$(document).on('change', '#inp', function() {
         experiment('create_resume', 'Заходим из кнопки. Загрузка резюме');
         readURL(this);
-    });
-
-    $(".linkedin_click").click( function () {
+});
+$(document).on('click', '.linkedin_click', function () {
         $.get("<%=Rails.application.routes.url_helpers.linkedin_resume_path%>", function(data) {
             let ed = $("trix-editor")[0];
             $("[name='resume[title]']").val(data.title);
@@ -122,6 +120,6 @@ $(function() {
             ed.editor.insertHTML(data.description);
             $("[name='resume[industry_id]']").val(data.industry_id);
         });
-    });
 });
+
 
