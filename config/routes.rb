@@ -1,10 +1,10 @@
-require 'sidekiq/web'
+#require 'sidekiq/web'
 
 Rails.application.routes.default_url_options[:host] = ENV["HOST"]
 Rails.application.routes.draw do
-  constraints CanAccessResque do
-    mount Sidekiq::Web => '/sidekiq'
-  end
+  #constraints CanAccessResque do
+  #  mount Sidekiq::Web => '/sidekiq'
+  #end
   resources :gateways
   get '/gatetway/execute/:id', to: "gateways#execute", as: "gateway_execute"
   get 'robot', to: 'index#robot'

@@ -7,7 +7,7 @@ class Ability
     if user.admin?
       Rails.logger.debug "Cancan:: Admin"
       can :manage, :all
-      can :manage, Sidekiq
+      #can :manage, Sidekiq
     elsif user.employer?
       Rails.logger.debug "Cancan:: Employer"
       ##############################################

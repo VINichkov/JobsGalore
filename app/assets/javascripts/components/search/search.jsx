@@ -125,28 +125,29 @@ class Search extends React.Component{
         let AdvancedSearchClass = this.state.active_options ? "btn btn-success btn-xs" : "btn btn-default btn-xs";
         let AdvancedSearchGlyphicon = this.state.active_options ? "glyphicon glyphicon-triangle-top" : "glyphicon glyphicon-triangle-bottom";
         return(<div className={this.props.show ? "" : "hidden"}>
-                <div className="form-group  " style={{display: 'inline'}}>
-                    <div className=" col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        <Autocomplete style={{width: '100%'}} className="form-control" route='/dictionary/'
+                <div className="input-group">
+                    <input type="text" className="form-control"/>
+                    <span className="input-group-btn"></span>
+                    <input type="text" className="form-control"/>
+                </div>
+                <div className="input-group">
+                    <Autocomplete style={{width: '100%'}} className="form-control" route='/dictionary/'
                                       defaultName={this.state.value}
                                       name={this.props.name + '[value]'}
                                       id={"input_search_value_" +this.uuid}
                                       place_holder="What: title, keywords" not_id={true}/>
-                    </div>
-                    <div className="hidden-md hidden-lg col-sm-12 col-xs-12">
-                        <p/>
-                    </div>
+                    <span className="input-group-btn" style={{width: 0}}></span>
+                    <Autocomplete style={{width: '100%'}} className="form-control" route='/search_locations/'
+                                  defaultId={this.state.location_id}
+                                  defaultName={this.state.location_name}
+                                  name={this.props.name + '[location'}
+                                  id={"location_search_" +this.uuid}
+                                  place_holder="Where: city"/>
                     <div className=" col-md-6 col-lg-6 col-sm-12 col-xs-12" style={{display: 'table'}}>
                         <input id="input_action" name={this.props.name + '[open]'} value={this.state.active_options}
                                style={ilStyle} readOnly={true}/>
                         <input id="input_search" name={this.props.name + '[type]'} value={this.state.type_search_code}
                                style={ilStyle} readOnly={true}/>
-                        <Autocomplete style={{width: '100%'}} className="form-control" route='/search_locations/'
-                                      defaultId={this.state.location_id}
-                                      defaultName={this.state.location_name}
-                                      name={this.props.name + '[location'}
-                                      id={"location_search_" +this.uuid}
-                                      place_holder="Where: city"/>
                         <div className="input-group-btn" style={{width: '1%'}}>
                             <button className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
                                     aria-haspopup="true">
