@@ -1,3 +1,4 @@
+- edit ||=false
 .panel.panel-default
   div[class="panel-body #{class_extras(job)}"]
     .col-md-10
@@ -25,8 +26,8 @@
         a[href= apply_path(job) role= "button"  aria-disabled="true"  rel="nofollow"]
           |Apply
     .col-md-2
-      - if job.client == current_client || current_client&.admin? || job.company ==  current_client&.company
-        = render 'inc/btn', object: job, option: {cl:"dropdown", class:'job', type:2}
+      - if edit && (job.client == current_client || current_client&.admin? || job.company ==  current_client&.company)
+        = render 'inc/btn', object: job, option: {class:'job', type:2, edit: edit}
       - else
         .row
           .text-center

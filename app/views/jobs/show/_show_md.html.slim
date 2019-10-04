@@ -19,7 +19,7 @@
         .well
           = render 'inc/summary', object: job
           .btn_margin
-            = render 'inc/btn', object: job, option:{cl:"dropdown", class:'job', type:2, show: true}
+            = render 'inc/btn', object: job, option:{class:'job', type:2, show: true}
             .text-center
               =social_share_button_tag  job.title, url: job_url(job), title:job.title
   - unless job.apply

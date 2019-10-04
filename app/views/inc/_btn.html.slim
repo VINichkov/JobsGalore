@@ -1,57 +1,47 @@
-div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' : "btn-group #{option[:min] ? 'pull-right' : 'btn-group-justified'}")}"]
-  - if current_client&.admin?
-    div[class = "#{option[:cl]}"]
-      span.btn.btn-warning.btn-block[data-toggle="dropdown"]
-        - if option[:min]
-          i.glyphicon.glyphicon-th-large
-        - else
-          |Promote
-        span.caret
-      ul.dropdown-menu
-        - if PropertsHelper::URGENT== "true"
-          li
-            - if object.urgent
-              = link_to "Urgent -", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 1})"), method: :post
-            - else
-              = link_to "Urgent +", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 1})"), method: :post
-        - if PropertsHelper::HIGHLIGHT == "true"
-          li
-            - if object.highlight
-              = link_to "Highlight -", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
-            - else
-              = link_to "Highlight +", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
-  - else
-    - if PropertsHelper::URGENT== "true"
-      div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
-        = link_to("Urgent",
-                bill_path(bill: {id: object, type: option[:type], option: 1}),
-                class: "btn btn-danger btn-block",
-                rel: "nofollow")
-    - if PropertsHelper::HIGHLIGHT == "true"
-      div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
-        = link_to("Highlight",
-                bill_path(bill: {id: object, type: option[:type], option: 3}),
-                class: "btn btn-warning btn-block",
-                rel: "nofollow")
+.dropdown
   - if can?(:destroy, object)
-    div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
+    - if current_client&.admin?
+      .dropdown
+        span.btn.btn-warning.btn-block[data-toggle="dropdown"]
+          |Find quickly
+          span.caret
+        ul.dropdown-menu
+          - if PropertsHelper::URGENT== "true"
+            li
+              - if object.urgent
+                = link_to "Urgent -", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 1})"), method: :post
+              - else
+                = link_to "Urgent +", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 1})"), method: :post
+          - if PropertsHelper::HIGHLIGHT == "true"
+            li
+              - if object.highlight
+                = link_to "Highlight -", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
+              - else
+                = link_to "Highlight +", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
+    - else
+      - if PropertsHelper::URGENT== "true"
+        .btn_margin
+          = link_to("Urgent",
+                  bill_path(bill: {id: object, type: option[:type], option: 1}),
+                  class: "btn btn-danger btn-block",
+                  rel: "nofollow")
+      - if PropertsHelper::HIGHLIGHT == "true"
+        .btn_margin
+          = link_to("Highlight",
+                  bill_path(bill: {id: object, type: option[:type], option: 3}),
+                  class: "btn btn-warning btn-block",
+                  rel: "nofollow")
+    .btn_margin
       = link_to eval("edit_#{option[:class]}_path(object)"), class: "btn btn-primary btn-block" do
-        - if option[:min]
-          i.glyphicon.glyphicon-pencil
-        - else
-          |Edit
-    div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
+        |Edit
+    .btn_margin
       = link_to object, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-default btn-block" do
-        - if option[:min]
-          i.glyphicon.glyphicon-remove
-        - else
-          |Delete
+        |Delete
     - if current_client&.admin?
       = render 'inc/btn/btn_send', object: object, option: option
-    = render 'inc/btn/btn_prolong', object: object, option: option
+    - if object.class == JobDecorator && object.can_prolong?
+      .btn_margin
+        a.btn.btn-info.btn-block[href= prolong_path(object) rel="nofollow"]
+          |Prolong
   - else
     = render 'inc/btn/btn_send', object: object, option: option
-  -if option[:show]
-    div[class =  'btn_margin']
-      button.btn.btn-success.btn-block[onclick="history.back()"]
-        |Back

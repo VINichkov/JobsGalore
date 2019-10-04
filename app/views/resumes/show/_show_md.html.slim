@@ -22,7 +22,7 @@
           .well
             = render 'inc/summary', object: resume
             .btn_margin
-              = render 'inc/btn', object: resume, option: {cl: "dropdown", class: 'resume', type: 3}
+              = render 'inc/btn', object: resume, option: {class: 'resume', type: 3}
               .text-center
                 = social_share_button_tag resume.title, url: resume_url(resume), title:resume.title
   -if client_signed_in?

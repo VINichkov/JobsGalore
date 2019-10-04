@@ -1,2 +1,3 @@
-= render 'inc/resume/resume_md', resume: resume, query: query if md?
+- edit ||=false
+= render 'inc/resume/resume_md', resume: resume, query: query, edit: edit if md?
 = render 'inc/resume/resume_xs', resume: resume, query: query unless md?

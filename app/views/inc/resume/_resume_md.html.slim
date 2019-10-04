@@ -14,8 +14,8 @@
           | &nbsp; - &nbsp;
           |Views #{resume.viewed_count}
     .col-lg-2.col-md-2.col-sm-2
-      - if current_client && (resume.client == current_client || current_client.admin?)
-        = render 'inc/btn', object: resume, option: {cl: "dropdown", class: 'resume', type: 3}
+      - if edit && current_client && (resume.client == current_client || current_client.admin?)
+        = render 'inc/btn', object: resume, option: {class: 'resume', type: 3}
       - elsif current_client&.resp?
         .row
           .row.text-center

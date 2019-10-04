@@ -5,12 +5,6 @@ p
     | Posted:&nbsp;
   span[itemprop="datePosted"]
     =object.posted_date
-  -if object.class==JobDecorator
-    p
-      strong
-        | Will be removed:&nbsp;
-      span
-        = object.close_date
   span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="validThrough"]
     =object.try(:close)
 -if   object.class==JobDecorator
