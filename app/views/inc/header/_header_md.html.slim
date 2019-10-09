@@ -1,11 +1,13 @@
 -cache(current_client) do
   = render 'inc/header/inc/print'
-  nav.navbar.navbar-default[itemscope itemtype="http://schema.org/WebSite" role="navigation"]
+  nav.navbar.navbar-blue[itemscope itemtype="http://schema.org/WebSite" role="navigation"]
     .container
       .navbar-header
         = link_to root_path ,  class: "navbar-brand" do
-          div[style="width: 150px; height: 33px;" ]
-            =render 'inc/logo'
+            strong
+              |JobsGalore.
+            small
+              |eu
       = render('inc/header/inc/search', search: search, key: "search")
       .navbar-right
         =render 'inc/header/client_drop_menu'

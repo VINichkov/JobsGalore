@@ -82,19 +82,14 @@ class SearchNew extends React.Component{
         let options = null;
 
         // Кнопка выбора З.П
-        let salary = <div className="form-group">
-                <DropdownButton elements ={Salary} name = "main_search[salary]" defaultValue = {this.state.salary}/>
-            </div>;
+        let salary = <DropdownButton key = "main_search[salary]" elements ={Salary} name = "main_search[salary]" defaultValue = {this.state.salary}/>
+
 
         //Кнопка срочности
-        let urgent = <div className="form-group">
-            <DropdownButton elements ={Urgent} name = "main_search[urgent]" defaultValue = {this.state.urgent}/>
-        </div>;
+        let urgent = <DropdownButton key = "main_search[urgent]"  elements ={Urgent} name = "main_search[urgent]" defaultValue = {this.state.urgent}/>
 
         //Кнопка категорий
-        let cat = <div className="form-group">
-            <DropdownButton elements ={categories} name = "main_search[category]" defaultValue = {category}/>
-        </div>;
+        let cat = <DropdownButton key = "main_search[category]"  elements ={categories} name = "main_search[category]" defaultValue = {category}/>
 
         //В зависимости от класса отображаем разные кнопки
         if (active_options) {

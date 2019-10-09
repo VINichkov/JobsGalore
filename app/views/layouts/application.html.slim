@@ -40,12 +40,13 @@ html[lang="en"]
       |ga('send', 'pageview');
     = csrf_meta_tags
   body
-    - if md?
-      =render('inc/header/header_md', search: @search)
-    -else
-      =render('inc/header/header_xs', search: @search)
-    =render 'inc/header/inc/alert', alert: alert, notice: notice if alert || notice
-    = yield
+    .wrapper
+      - if md?
+        =render('inc/header/header_md', search: @search)
+      -else
+        =render('inc/header/header_xs', search: @search)
+      =render 'inc/header/inc/alert', alert: alert, notice: notice if alert || notice
+      = yield
     =render('inc/footer') if md?
 
 

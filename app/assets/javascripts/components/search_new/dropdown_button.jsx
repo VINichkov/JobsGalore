@@ -24,7 +24,7 @@ class DropdownButton extends React.Component{
     render(){
         const {elements, name} = this.props;
         let li = elements.map(function (elem, i) {
-            return(<li key={i}>
+            return(<li key={`${name}_${i}`}>
                 <a id={`${name}_${i}`}  data-id={elem.code}  onClick={this.handleClickItem}>
                     {elem.name}
                 </a>
@@ -34,8 +34,8 @@ class DropdownButton extends React.Component{
         if (this.state.code != elements[0].code ){
             input = <input id="input_action" name={name} hidden={true} value={this.state.code} readOnly={true}/>;
         }
-        return(<div className="form-group button_margin">
-                <div className="dropdown">
+        return(<div key={name} className="form-group" >
+                <div className="dropdown" key={name}>
                     <button className="btn btn-default dropdown-toggle btn-lg select_search max_button" type="button" data-toggle="dropdown"
                             aria-haspopup="true">
                         {this.state.name}
