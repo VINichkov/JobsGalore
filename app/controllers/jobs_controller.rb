@@ -3,7 +3,7 @@
 class JobsController < ApplicationController
   load_and_authorize_resource :job
   before_action :authenticate_client!, only: %i[apply prolong]
-  before_action :set_job, only: %i[similar_jobs prolong apply views highlight_view show edit update destroy admin_show admin_edit admin_update admin_destroy]
+  before_action :set_job, only: %i[options similar_jobs prolong apply views highlight_view show edit update destroy admin_show admin_edit admin_update admin_destroy]
   before_action :action_view, only: %i[show highlight_view]
   # before_action :employer!, only: :new
 
@@ -14,6 +14,9 @@ class JobsController < ApplicationController
   def highlight_view
     @query = params[:text].split('/')
     render :show
+  end
+
+  def options
   end
 
   def similar_jobs

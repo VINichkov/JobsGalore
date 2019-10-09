@@ -1,11 +1,8 @@
 //= require turbolinks
 //= require jquery.min.js
 //= require jquery_ujs
-//= require blazy.min
 //= require react
 //= require react_ujs
-//#= require stimulus
-//#= require init
 //= require components
 //= require bootstrap-typeahead
 //= require bootstrap.min
@@ -13,7 +10,7 @@
 //= require jasny-bootstrap
 //= require trix
 //= require trix_conf
-//#= require_tree ./controllers
+//require_tree ./controllers
 function experiment(name, variant) {
    $.post("/experiment",
         {
@@ -29,7 +26,7 @@ function experiment(name, variant) {
         });
 }
 
-var stimulus = Stimulus.Application.start()
+/*var stimulus = Stimulus.Application.start()
 var bLazy = new Blazy({
     //Загрузка маленьких изображений. Возможно в будующем!!!
     //    breakpoints: [{
@@ -45,9 +42,9 @@ var bLazy = new Blazy({
             parent.className = parent.className.replace(/\bloading\b/,'');
         }, 200);
     }
-});
+});*/
 
-document.addEventListener("turbolinks:before-cache", function() {
+/*document.addEventListener("turbolinks:before-cache", function() {
     var bLazy = new Blazy({
         success: function(element){
             setTimeout(function(){
@@ -56,7 +53,7 @@ document.addEventListener("turbolinks:before-cache", function() {
             }, 200);
         }
     });
-})
+})*/
 
 
 var readURL = function (input) {

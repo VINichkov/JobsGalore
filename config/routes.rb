@@ -1,10 +1,10 @@
-require 'sidekiq/web'
+#require 'sidekiq/web'
 
 Rails.application.routes.default_url_options[:host] = ENV["HOST"]
 Rails.application.routes.draw do
-  constraints CanAccessResque do
-    mount Sidekiq::Web => '/sidekiq'
-  end
+  #constraints CanAccessResque do
+  #  mount Sidekiq::Web => '/sidekiq'
+  #end
   resources :gateways
   get '/gatetway/execute/:id', to: "gateways#execute", as: "gateway_execute"
   get 'robot', to: 'index#robot'
@@ -146,6 +146,7 @@ Rails.application.routes.draw do
   resources :create_job, only:[ :create]
   resources :create_job, only:[ :new], as: 'job'
   resources :jobs, only:[ :show, :edit, :update, :destroy]
+  get "job_options/:id", to: "jobs#options", as: 'job_options'
   get "jobs/:id/:text", to: "jobs#highlight_view", as: 'job_highlight_view'
   get "views_of_a_job/:id", to: "jobs#views", as: 'job_views'
   post "job_create/", to: "jobs#create_temporary", as: 'create_job'
