@@ -111,6 +111,7 @@ $(document).on('change', '#inp', function() {
 });
 $(document).on('click', '.linkedin_click', function () {
         $.get("<%=Rails.application.routes.url_helpers.linkedin_resume_path%>", function(data) {
+            console.log(data);
             let ed = $("trix-editor")[0];
             $("[name='resume[title]']").val(data.title);
             ed.editor.setSelectedRange([0, 0]);
