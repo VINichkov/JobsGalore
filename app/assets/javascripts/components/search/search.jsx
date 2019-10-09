@@ -1,19 +1,19 @@
 class Search extends React.Component{
     constructor(props){
-    super(props);
+        super(props);
         let type_arr = [{code:1, name:"Companies "},
-                        {code:2, name:"Jobs "},
-                        {code:3, name:"Resumes"}];
+            {code:2, name:"Jobs "},
+            {code:3, name:"Resumes"}];
         this.state = {  type_search_code: this.props.search ? type_arr[Number(this.props.search.type || 2)-1].code : null,
-                        type_search_name:this.props.search ? type_arr[Number(this.props.search.type || 2)-1].name : null,
-                        list_type:type_arr,
-                        active_options: this.props.search ? this.props.search.open == 'true' : false,
-                        value: this.props.search ? this.props.search.value : '',
-                        location_name: this.props.search ? this.props.search.location_name : '',
-                        location_id: this.props.search ? this.props.search.location_id : '',
-                        salary: this.props.search ? this.props.search.salary : '',
-                        urgent: this.props.search ? this.props.search.urgent === "on" : false,
-                        category: (this.props.search.category !== '' && this.props.search.category !== null && this.props.search.category !== undefined )  ? {id:Number(this.props.search.category)} : ''};
+            type_search_name:this.props.search ? type_arr[Number(this.props.search.type || 2)-1].name : null,
+            list_type:type_arr,
+            active_options: this.props.search ? this.props.search.open == 'true' : false,
+            value: this.props.search ? this.props.search.value : '',
+            location_name: this.props.search ? this.props.search.location_name : '',
+            location_id: this.props.search ? this.props.search.location_id : '',
+            salary: this.props.search ? this.props.search.salary : '',
+            urgent: this.props.search ? this.props.search.urgent === "on" : false,
+            category: (this.props.search.category !== '' && this.props.search.category !== null && this.props.search.category !== undefined )  ? {id:Number(this.props.search.category)} : ''};
         this.handleClickItem =  this.handleClickItem.bind(this);
         this.handleOnClickOptions = this.handleOnClickOptions.bind(this);
         this.handleOnClickUrgent = this.handleOnClickUrgent.bind(this);
@@ -35,7 +35,7 @@ class Search extends React.Component{
     handleClickItem(e) {
         if (e.target.id.indexOf('Search') !== -1) {
             this.setState({ type_search_name: e.target.text,
-                            type_search_code: e.target.dataset.id });
+                type_search_code: e.target.dataset.id });
         }
     }
     handleOnClickOptions() {
@@ -91,9 +91,9 @@ class Search extends React.Component{
             <span className="input-group-addon" style={urgentStyle} onClick={this.handleOnClickUrgent}>
                 {urgentValue}
                                 </span>
-            <label htmlFor={`urgent_inbox_${this.uuid}`} className= "btn btn-default btn-block" style={{display: 'flex', height:36}} >
+                <label htmlFor={`urgent_inbox_${this.uuid}`} className= "btn btn-default btn-block" style={{display: 'flex', height:36}} >
 
-                <span>Only urgent</span>
+                    <span>Only urgent</span>
                     <input  type="checkbox"
                             id={`urgent_inbox_${this.uuid}`}
                             className="none"
@@ -101,7 +101,7 @@ class Search extends React.Component{
                             checked={this.state.urgent}
                             name={this.props.name + '[urgent]'}
                             onChange={this.handleOnClickUrgent}/>
-            </label>
+                </label>
             </div>
         </div>;
         if (this.state.active_options) {
@@ -125,29 +125,28 @@ class Search extends React.Component{
         let AdvancedSearchClass = this.state.active_options ? "btn btn-success btn-xs" : "btn btn-default btn-xs";
         let AdvancedSearchGlyphicon = this.state.active_options ? "glyphicon glyphicon-triangle-top" : "glyphicon glyphicon-triangle-bottom";
         return(<div className={this.props.show ? "" : "hidden"}>
-                <div className="input-group">
-                    <input type="text" className="form-control"/>
-                    <span className="input-group-btn"></span>
-                    <input type="text" className="form-control"/>
-                </div>
-                <div className="input-group">
-                    <Autocomplete style={{width: '100%'}} className="form-control" route='/dictionary/'
+                <div className="form-group  " style={{display: 'inline'}}>
+                    <div className=" col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                        <Autocomplete style={{width: '100%'}} className="form-control" route='/dictionary/'
                                       defaultName={this.state.value}
                                       name={this.props.name + '[value]'}
                                       id={"input_search_value_" +this.uuid}
                                       place_holder="What: title, keywords" not_id={true}/>
-                    <span className="input-group-btn" style={{width: 0}}></span>
-                    <Autocomplete style={{width: '100%'}} className="form-control" route='/search_locations/'
-                                  defaultId={this.state.location_id}
-                                  defaultName={this.state.location_name}
-                                  name={this.props.name + '[location'}
-                                  id={"location_search_" +this.uuid}
-                                  place_holder="Where: city"/>
+                    </div>
+                    <div className="hidden-md hidden-lg col-sm-12 col-xs-12">
+                        <p/>
+                    </div>
                     <div className=" col-md-6 col-lg-6 col-sm-12 col-xs-12" style={{display: 'table'}}>
                         <input id="input_action" name={this.props.name + '[open]'} value={this.state.active_options}
                                style={ilStyle} readOnly={true}/>
                         <input id="input_search" name={this.props.name + '[type]'} value={this.state.type_search_code}
                                style={ilStyle} readOnly={true}/>
+                        <Autocomplete style={{width: '100%'}} className="form-control" route='/search_locations/'
+                                      defaultId={this.state.location_id}
+                                      defaultName={this.state.location_name}
+                                      name={this.props.name + '[location'}
+                                      id={"location_search_" +this.uuid}
+                                      place_holder="Where: city"/>
                         <div className="input-group-btn" style={{width: '1%'}}>
                             <button className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
                                     aria-haspopup="true">
@@ -169,12 +168,12 @@ class Search extends React.Component{
                 <div className=" col-md-12 col-lg-12 col-sm-12 col-xs-12">
                     <p/>
                     <label htmlFor={`AS_${this.uuid}`} className={AdvancedSearchClass}>
-                         <i className={AdvancedSearchGlyphicon}/>
-                         <span>&nbsp; Advanced Search</span>
+                        <i className={AdvancedSearchGlyphicon}/>
+                        <span>&nbsp; Advanced Search</span>
                     </label>
                     <input  className="none" id={`AS_${this.uuid}`} type="checkbox" onClick={this.handleOnClickOptions} />
                     <p/>
-                        {options}
+                    {options}
                 </div>
                 <div className="hidden-lg hidden-md col-xs-12">
                     <p/>

@@ -155,4 +155,5 @@ class Industry < ApplicationRecord
                  "Writing and Editing"=>->{Industry.find_by_name("Editorial & Writing")})
     linkedin_match[arg]
   end
+
 end
