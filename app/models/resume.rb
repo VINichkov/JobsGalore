@@ -212,7 +212,7 @@ class Resume < ApplicationRecord
     text_query = []
 
     text_query << 'industry_id = :category' if query[:category].present?
-    text_query << 'urgent is not null' if query[:urgent].present?
+    text_query << 'urgent is not null' if query[:urgent].present? &&  query[:urgent] != 'false'
 
 
 
