@@ -32,7 +32,7 @@ class LinkedInClient
   def get_profile(token)
     Rails.logger.debug("LinkedInClient.get_profile token=  #{token.to_s}")
     if token
-      url = URI.parse('https://api.linkedin.com/v1/people/~:(id,email-address,first-name,last-name,headline,location,industry,picture-url,public-profile-url,summary,positions)?format=json')
+      url = URI.parse('https://api.linkedin.com/v2/me/~:(id,email-address,first-name,last-name,headline,location,industry,picture-url,public-profile-url,summary,positions)?format=json')
       connect = Net::HTTP::Get.new(url.to_s)
       connect.add_field(:authorization, "Bearer "+token.to_s)
       connect.add_field(:connection, 'Keep-Alive')
