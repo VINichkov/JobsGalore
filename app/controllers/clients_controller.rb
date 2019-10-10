@@ -50,9 +50,11 @@ class ClientsController < ApplicationController
   def linkedin_resume_update
     if current_client
       if Rails.env.production?
+        Rails.logger.debug('----- Продакшни------')
         client = LinkedInClient.new
         @response = client.linkedin_to_h(client.get_profile(current_client.token))
       else
+        Rails.logger.debug('----- Тестовый стенд------')
         @response = {:title=>"Administrator JobsGalore.eu",
                      :industry_id=>19,
                      :location_id=>23,

@@ -3,6 +3,7 @@ class LinkedInClient
   def linkedin_to_h(auth)
     begin
     if auth
+      Rails.logger.debug(auth.to_json)
       experience = auth&.extra&.raw_info&.positions[:values]&.last
       summary = ''
       summary = auth&.extra&.raw_info&.summary.split("\n").compact.map{|t| "<p>#{t}</p>"}.join if auth.extra.raw_info.summary
