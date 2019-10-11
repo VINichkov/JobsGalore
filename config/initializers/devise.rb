@@ -253,7 +253,7 @@ Devise.setup do |config|
   config.omniauth :linkedin,
                   ENV["LINKEDIN_APP_ID"],
                   ENV["LINKEDIN_APP_SECRET"],
-                  scope: [:r_emailaddress, :r_fullprofile],
+                  scope: 'r_emailaddress, r_fullprofile',
                   token_params: { parse: :json }
 
   config.omniauth :google_oauth2, ENV["GOOGLE_APP_ID"], ENV["GOOGLE_APP_SECRET"], {}
