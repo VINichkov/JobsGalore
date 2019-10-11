@@ -1,5 +1,6 @@
 class LinkedInClient
 
+  #TODO It do not work
   def linkedin_to_h(auth)
     begin
     if auth
