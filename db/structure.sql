@@ -100,37 +100,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: algorithms; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.algorithms (
-    id bigint NOT NULL,
-    code character varying NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: algorithms_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.algorithms_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: algorithms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.algorithms_id_seq OWNED BY public.algorithms.id;
-
-
---
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -647,7 +616,6 @@ ALTER SEQUENCE public.mailings_id_seq OWNED BY public.mailings.id;
 
 CREATE TABLE public.orders (
     id bigint NOT NULL,
-    algorithm_id bigint,
     product_id bigint,
     params jsonb DEFAULT '"{}"'::jsonb NOT NULL,
     payment_id bigint,
@@ -719,10 +687,10 @@ ALTER SEQUENCE public.payments_id_seq OWNED BY public.payments.id;
 CREATE TABLE public.products (
     id bigint NOT NULL,
     name character varying NOT NULL,
-    price integer DEFAULT 0,
     addition jsonb DEFAULT '"{}"'::jsonb NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    price jsonb DEFAULT '"{}"'::jsonb NOT NULL
 );
 
 
@@ -933,13 +901,6 @@ ALTER SEQUENCE public.vieweds_id_seq OWNED BY public.vieweds.id;
 
 
 --
--- Name: algorithms id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.algorithms ALTER COLUMN id SET DEFAULT nextval('public.algorithms_id_seq'::regclass);
-
-
---
 -- Name: clientforalerts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1084,14 +1045,6 @@ ALTER TABLE ONLY public.sizes ALTER COLUMN id SET DEFAULT nextval('public.sizes_
 --
 
 ALTER TABLE ONLY public.vieweds ALTER COLUMN id SET DEFAULT nextval('public.vieweds_id_seq'::regclass);
-
-
---
--- Name: algorithms algorithms_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.algorithms
-    ADD CONSTRAINT algorithms_pkey PRIMARY KEY (id);
 
 
 --
@@ -1552,13 +1505,6 @@ CREATE INDEX index_mailings_on_resume_id ON public.mailings USING btree (resume_
 
 
 --
--- Name: index_orders_on_algorithm_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_orders_on_algorithm_id ON public.orders USING btree (algorithm_id);
-
-
---
 -- Name: index_orders_on_payment_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1685,14 +1631,6 @@ ALTER TABLE ONLY public.industries
 
 ALTER TABLE ONLY public.companies
     ADD CONSTRAINT fk_rails_1e99f51bd6 FOREIGN KEY (location_id) REFERENCES public.locations(id);
-
-
---
--- Name: orders fk_rails_29b16d43d2; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.orders
-    ADD CONSTRAINT fk_rails_29b16d43d2 FOREIGN KEY (algorithm_id) REFERENCES public.algorithms(id);
 
 
 --
@@ -1956,6 +1894,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190923070505'),
 ('20190923070838'),
 ('20190923072126'),
-('20191003053319');
+('20191003053319'),
+('20191011080806'),
+('20191011090825');
 
 

@@ -25,4 +25,4 @@
       = render 'inc/btn/btn_apply_xs_sm', object: job, option: {cl: "dropdown", class: 'job', type: 2, show: true} unless can? :destroy, job
   - unless job.apply
     =render 'inc/contact', object: job.client, title: "#{job.title} at #{PropertsHelper::COMPANY}.eu"
-  =render 'jobs/show/inc/alert', job: job, query: query if cookies[:alert].blank? and !client_signed_in?
+=render 'jobs/show/inc/alert', job: job, query: query if !cookies[:alert] and !client_signed_in?

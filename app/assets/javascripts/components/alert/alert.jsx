@@ -147,7 +147,7 @@ class Alert extends React.Component{
                             Back
                         </button>;
         }else {
-            display = <p><strong>{this.props.keys}</strong> jobs in <strong>{this.props.location_name}</strong> (<a
+            display = <p><strong>{this.props.keys}</strong> in <strong>{this.props.location_name}</strong> (<a
                 onClick={this.handlerEdit}>edit</a>) </p>;
             buttonBack = null;
         }
@@ -161,7 +161,7 @@ class Alert extends React.Component{
                                             &times;
                                         </span>
                             </button>
-                            <h3 className="modal-title">Email me jobs for:</h3>
+                            <h3 className="modal-title">Send daily alerts for similar jobs to this email:</h3>
                         </div>
                         <div className="modal-body">
                             <div className="container-fluid">

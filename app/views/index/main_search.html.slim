@@ -22,4 +22,4 @@
     = render 'inc/btn/btn_new_resume_xs_sm'
   - if @result.type==Objects::RESUMES
     = render 'inc/btn/btn_new_job_xs_sm'
-= render 'index/inc/alert', query: @search if @result.type == Objects::JOBS && cookies[:alert].blank? && !client_signed_in? && @search && @search[:value] && @search[:value] != ''
+= render 'index/inc/alert', query: @search if @result.type == Objects::JOBS && !cookies[:alert] && !client_signed_in? && @search && @search[:value] && @search[:value] != ''

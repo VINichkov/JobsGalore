@@ -29,7 +29,11 @@ gem 'oga' #Нужен для создания PDF
 gem "docx"
 gem "ffi"
 gem "nokogiri", ">= 1.8.5"
-gem 'browser'
+
+gem 'browser' #определяет браузер
+gem 'geocoder' #определяет страну
+
+
 gem 'turbolinks'
 gem 'jquery-turbolinks'
 #gem 'stimulusjs-rails'
