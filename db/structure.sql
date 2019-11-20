@@ -121,7 +121,8 @@ CREATE TABLE public.clientforalerts (
     key character varying,
     location_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    send_email boolean DEFAULT true
 );
 
 
@@ -1896,6 +1897,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190923072126'),
 ('20191003053319'),
 ('20191011080806'),
-('20191011090825');
+('20191011090825'),
+('20191120065340');
 
 

@@ -1,3 +1,6 @@
+-if @unsubscribe.present?
+  - content_for :unsubscribe do
+    |#{link_to("Unsubscribe", unsubscribe_not_client_url(@unsubscribe))} #{@email} from this email
 div[style=title_email]
   div[style=h1_email]
     |Daily Jobs Alert
@@ -16,3 +19,4 @@ div[style=body_email]
     = space_email true
     = space_email
 = render "inc_mailer/mailing"
+

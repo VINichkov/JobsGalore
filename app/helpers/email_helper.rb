@@ -31,5 +31,4 @@ module EmailHelper
   def message_email
     "text-align: left;"
   end
-
 end

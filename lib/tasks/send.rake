@@ -13,7 +13,8 @@ namespace :send do
           JobsMailer.daily_job_alert(
               email:resume.client.email,
               keys: resume.key,
-              location_id:resume.location_id)
+              location_id:resume.location_id,
+              unsubscribe: nil)
               .deliver_now
         end
       rescue
@@ -26,7 +27,8 @@ namespace :send do
         JobsMailer.daily_job_alert(
             email: client.email,
             keys: Search.str_to_search(client.key.delete("<>{}#@!,:*&()'`\"’|")),
-            location_id:client.location_id)
+            location_id:client.location_id,
+            unsubscribe: client.id)
             .deliver_now
       rescue
         puts "Error:client.email =#{client.email} :#{$!} "

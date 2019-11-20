@@ -48,7 +48,7 @@ set :linked_dirs,   %w{log tmp}
 set :init_system, :systemd
 
 append :linked_dirs,  "public/sitemap"
-set :bundle_env_variables, {rubyopt: "--jit"}                                   # this is default
+set :bundle_env_variables                                 # this is default
 #---------------------------------------#
 =begin
 set :sidekiq_default_hooks => true

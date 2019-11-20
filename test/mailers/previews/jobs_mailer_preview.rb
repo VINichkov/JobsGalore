@@ -6,8 +6,13 @@ class JobsMailerPreview < ActionMailer::Preview
   end
 
   def daily_job_alert
-    JobsMailer.daily_job_alert("mail@email.com", Job.where(company_id: 8159).limit(3))
+    JobsMailer.daily_job_alert(email:"mail@email.com", keys: "Ruby web java", location_id:22, unsubscribe: nil)
   end
+
+  def daily_job_alert_unsubscribe
+    JobsMailer.daily_job_alert(email:"mail@email.com", keys: "Ruby web java", location_id:22, unsubscribe: 6)
+  end
+
 
   def turn_on_option
     JobsMailer.turn_on_option("Urgent", Job.find_by_id(275320))

@@ -24,6 +24,8 @@ html
                           |Please do not hesitate to contact us with any questions.
                         div
                           |E-mail: #{link_to PropertsHelper::EMAIL, "mailto:#{PropertsHelper::EMAIL}"}
+                        - if content_for?(:unsubscribe)
+                          = content_for :unsubscribe
                         div[style="direction: ltr;"]
                           |© #{link_to PropertsHelper::COMPANY,root_url} All rights reserved.
                   td[style="width: 8px;" width="8"]
