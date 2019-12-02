@@ -4,12 +4,26 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
   rescue_from CanCan::AccessDenied, with: :render_404
   rescue_from ArgumentError, with: :render_404
+  rescue_from ActiveRecord::ActiveRecordError, with: :perform
   include ApplicationHelper
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :clear_session
   before_action :get_cookies
+
   private
+
+  def perform
+    puts "connectpool size #{ActiveRecord::Base.connection_pool.instance_eval {@size}}"
+    puts "connections #{ActiveRecord::Base.connection_pool.instance_eval {@connections}.length}"
+    puts "Threads = #{Thread.list.count}"
+    Thread.list.each_with_index do |t, i|
+      puts "---- trhead #{i}: #{t.inspect}"
+      puts t.backtrace.take(5)
+    end
+    ActiveRecord::Base.connection_pool.clear_reloadable_connections!
+  end
+
   def redirect_back_to_url
     full_url = URI(request.original_fullpath)
     Rails.logger.debug(full_url)
@@ -40,7 +54,6 @@ class ApplicationController < ActionController::Base
 
   protected
 
-
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys:[:location_id, :firstname, :lastname, :phone, :character, :photo, :photo, :gender, :birth])
   end
@@ -49,7 +62,6 @@ class ApplicationController < ActionController::Base
   def current_ability
     @current_ability ||= Ability.new(current_client)
   end
-
 
   def current_company
     if current_client&.resp?
@@ -73,11 +85,9 @@ class ApplicationController < ActionController::Base
     render "errors/error_404", status: :not_found, formats: :html
   end
 
-
   Draper.configure do |config|
     config.default_controller = ApplicationController
   end
-
 
   def current_client
     super&.decorate
@@ -96,5 +106,4 @@ class ApplicationController < ActionController::Base
   def md?
     !(browser.device.mobile? || browser.device.tablet?)
   end
-
 end
