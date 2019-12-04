@@ -1,5 +1,5 @@
 class ApplicationJob < ActiveJob::Base
-  rescue_from ActiveRecord::ActiveRecordError, with: :perform_debug
+  rescue_from ActiveRecord::ConnectionTimeoutError, with: :perform_debug
 
   def perform_debug
     puts "connectpool size #{ActiveRecord::Base.connection_pool.instance_eval {@size}}"

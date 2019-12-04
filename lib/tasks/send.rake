@@ -15,7 +15,7 @@ namespace :send do
               keys: resume.key,
               location_id:resume.location_id,
               unsubscribe: nil)
-              .deliver_now
+              .deliver_later
         end
       rescue
         puts "Error:resume.id =#{resume.id} :#{$!} "
@@ -29,7 +29,7 @@ namespace :send do
             keys: Search.str_to_search(client.key.delete("<>{}#@!,:*&()'`\"’|")),
             location_id:client.location_id,
             unsubscribe: client.id)
-            .deliver_now
+            .deliver_later
       rescue
         puts "Error:client.email =#{client.email} :#{$!} "
       end
@@ -37,18 +37,6 @@ namespace :send do
     puts "! Task:Send daily job alert: End #{Time.now}"
 
 
-  end
-
-  task :test => :environment do
-    t = Time.now
-    Resume.find_each do |resume|
-      puts resume.key
-    end
-
-    Clientforalert.find_each do |client|
-      puts client.key
-    end
-    puts "! Task:Send daily job alert: End #{(t- Time.now) * 1000} ms"
   end
 
   desc "Send invitation to post resume"
