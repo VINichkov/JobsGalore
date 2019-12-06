@@ -21,7 +21,7 @@ default: &default
   encoding: unicode
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 12 } %>
+  pool: <%= (ENV.fetch("RAILS_MAX_THREADS") { 12 }) * 2 %>
   username: postgres
   password: root
 

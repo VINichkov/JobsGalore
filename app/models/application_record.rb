@@ -1,5 +1,6 @@
 class ApplicationRecord < ActiveRecord::Base
   extend Dragonfly::Model
+
   self.abstract_class = true
 
   def markdown_to_text (arg, truncate=nil)

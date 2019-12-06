@@ -7,7 +7,7 @@ class CreatePayment
     @option = context.params[:item_number][0]
     @type = context.params[:item_number][1].to_i
     @product_id = context.params[:item_number][2..context.params[:item_number].length - 1]
-    Payment.create(
+    @payment = Payment.create(
       params: context.params.to_s,
       product_id: @product_id,
       kind: @type,
@@ -20,6 +20,8 @@ class CreatePayment
       promote
     when 4
       mailing
+    when 5
+      order_pay
     else
       Rails.logger.error('Не опознанный платеж')
     end
@@ -35,5 +37,9 @@ class CreatePayment
 
   def mailing
     Mailing.find_by_id(@product_id).pay!
+  end
+
+  def order_pay
+    Order.find_by_id(@product_id).pay(@payment.id)
   end
 end

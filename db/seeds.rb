@@ -8,75 +8,73 @@
 
 a = Product.find_or_create_by(name: 'Job_Urgent')
 a.update(price: {
-    'AUD':  {price: '15.00', price_integer: 15},
-    'USD':  {price: '15.00', price_integer: 15},
-    'CAD':  {price: '15.00', price_integer: 15},
-    'GBR':  {price: '12.00', price_integer: 12},
-    'EUR':  {price: '13.00', price_integer: 12},
-    'INR':  {price: '400', price_integer: 400},
-    'RUB':  {price: '400', price_integer: 400},
-    'CNY':  {price: '100', price_integer: 100}
+    'AUD':  {price: 14.99},
+    'USD':  {price: 14.99},
+    'CAD':  {price: 14.99},
+    'GBR':  {price: 11.99},
+    'EUR':  {price: 12.99},
+    'INR':  {price: 399},
+    'RUB':  {price: 399},
+    'CNY':  {price: 71}
 })
 
 a = Product.find_or_create_by(name: 'Job_Highlight')
 a.update(price: {
-    'AUD':  {price: '10.00', price_integer: 10},
-    'USD':  {price: '10.00', price_integer: 10},
-    'CAD':  {price: '10.00', price_integer: 10},
-    'GBR':  {price: '8.00', price_integer: 8},
-    'EUR':  {price: '9.00', price_integer: 9},
-    'INR':  {price: '250', price_integer: 250},
-    'RUB':  {price: '300', price_integer: 300},
-    'CNY':  {price: '65', price_integer: 65}
+    'AUD':  {price: 9.99},
+    'USD':  {price: 9.99},
+    'CAD':  {price: 9.99},
+    'GBR':  {price: 7.99},
+    'EUR':  {price: 8.99},
+    'INR':  {price: 249},
+    'RUB':  {price: 299},
+    'CNY':  {price: 47}
 })
 
 a = Product.find_or_create_by(name: 'Job_Urgent_And_Highlight')
 a.update(price: {
-    'AUD':  {price: '22.00', price_integer: 22},
-    'USD':  {price: '22.00', price_integer: 22},
-    'CAD':  {price: '22.00', price_integer: 22},
-    'GBR':  {price: '18.00', price_integer: 18},
-    'EUR':  {price: '20.00', price_integer: 20},
-    'INR':  {price: '550', price_integer: 550},
-    'RUB':  {price: '600', price_integer: 600},
-    'CNY':  {price: '150', price_integer: 150}
+    'AUD':  {price: 21.99},
+    'USD':  {price: 21.99},
+    'CAD':  {price: 21.99},
+    'GBR':  {price: 17.99},
+    'EUR':  {price: 19.99},
+    'INR':  {price: 549},
+    'RUB':  {price: 599},
+    'CNY':  {price: 99}
 })
-
-
 
 a = Product.find_or_create_by(name: 'Resume_Urgent')
 a.update(price: {
-    'AUD':  {price: '8.00', price_integer: 8},
-    'USD':  {price: '8.00', price_integer: 8},
-    'CAD':  {price: '8.00', price_integer: 8},
-    'GBR':  {price: '6.00', price_integer: 6},
-    'EUR':  {price: '6.00', price_integer: 6},
-    'INR':  {price: '200', price_integer: 200},
-    'RUB':  {price: '200', price_integer: 200},
-    'CNY':  {price: '50', price_integer: 50}
+    'AUD':  {price: 5.99},
+    'USD':  {price: 5.99},
+    'CAD':  {price: 5.99},
+    'GBR':  {price: 4.99},
+    'EUR':  {price: 4.99},
+    'INR':  {price: 159},
+    'RUB':  {price: 199},
+    'CNY':  {price: 28}
 })
 
 a = Product.find_or_create_by(name: 'Resume_Highlight')
 a.update(price: {
-    'AUD':  {price: '5.00', price_integer: 5},
-    'USD':  {price: '5.00', price_integer: 5},
-    'CAD':  {price: '5.00', price_integer: 5},
-    'GBR':  {price: '4.00', price_integer: 4},
-    'EUR':  {price: '4.00', price_integer: 4},
-    'INR':  {price: '130', price_integer: 130},
-    'RUB':  {price: '150', price_integer: 150},
-    'CNY':  {price: '35', price_integer: 35}
+    'AUD':  {price: 4.99},
+    'USD':  {price: 4.99},
+    'CAD':  {price: 4.99},
+    'GBR':  {price: 3.99},
+    'EUR':  {price: 3.99},
+    'INR':  {price: 129},
+    'RUB':  {price: 149},
+    'CNY':  {price: 23}
 })
 
 a = Product.find_or_create_by(name: 'Resume_Urgent_And_Highlight')
 a.update(price: {
-    'AUD':  {price: '11.00', price_integer: 11},
-    'USD':  {price: '11.00', price_integer: 11},
-    'CAD':  {price: '11.00', price_integer: 11},
-    'GBR':  {price: '9.00', price_integer: 9},
-    'EUR':  {price: '9.00', price_integer: 9},
-    'INR':  {price: '280', price_integer: 280},
-    'RUB':  {price: '300', price_integer: 300},
-    'CNY':  {price: '75', price_integer: 75}
+    'AUD':  {price: 8.99},
+    'USD':  {price: 8.99},
+    'CAD':  {price: 8.99},
+    'GBR':  {price: 6.99},
+    'EUR':  {price: 6.99},
+    'INR':  {price: 259},
+    'RUB':  {price: 329},
+    'CNY':  {price: 45}
 })
 

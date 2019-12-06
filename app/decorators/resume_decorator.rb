@@ -15,6 +15,10 @@ class ResumeDecorator < ApplicationDecorator
     h.resume_url(object)
   end
 
+  def path
+    h.resume_path(object)
+  end
+
   def turn(extra)
     eval("object.#{extra} ? object.#{extra}_off : object.#{extra}_on")
   end

@@ -9,7 +9,7 @@ module PaymentsHelper
         notify_url:  params[:notify_url] || payments_url,
         item_number: params[:item_number],
         item_name: params[:item_name],
-        currency_code: 'AUD',
+        currency_code: params[:currency] || 'AUD',
         amount: params[:price]}
     domain = ENV["TEST"].nil? ? 'paypal' : 'sandbox.paypal'
     "https://www.#{domain}.com/cgi-bin/webscr?#{values.to_query}"

@@ -167,12 +167,6 @@ class Doc
     end
 
   end
-  ###########################################################################################
-  #
-  #
-  extend FFI::Library
-  ffi_lib 'lib/go/libadd.so'
-  attach_function :decode, [:string] , :int
 
   def initialize(path)
     t = Time.now

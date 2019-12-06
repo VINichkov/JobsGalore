@@ -61,37 +61,37 @@ class Resume < ApplicationRecord
   def highlight_on
     self.highlight = Date.today
     save
-    turn_on_option('Highlight')
+    #turn_on_option('Highlight')
   end
 
   def urgent_on
     self.urgent = Date.today
     save
-    turn_on_option('Urgent')
+    #turn_on_option('Urgent')
   end
 
   def top_on
     self.top = Date.today
     save
-    turn_on_option('Top')
+    #turn_on_option('Top')
   end
 
   def highlight_off
     self.highlight = nil
     save
-    turn_off_option('Highlight')
+    #turn_off_option('Highlight')
   end
 
   def urgent_off
     self.urgent = nil
     save
-    turn_off_option('Urgent')
+    #turn_off_option('Urgent')
   end
 
   def top_off
     self.top = nil
     save
-    turn_off_option('Top')
+    #turn_off_option('Top')
   end
 
   def to_short_h

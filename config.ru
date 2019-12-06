@@ -3,3 +3,4 @@
 require_relative 'config/environment'
 use Rack::Deflater
 run Rails.application
+

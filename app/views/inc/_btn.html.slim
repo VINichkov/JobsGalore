@@ -19,16 +19,9 @@
               - else
                 = link_to "Highlight +", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
     - else
-      - if PropertsHelper::URGENT== "true"
-        .btn_margin
-          = link_to("Urgent",
-                  bill_path(bill: {id: object, type: option[:type], option: 1}),
-                  class: "btn btn-danger btn-block",
-                  rel: "nofollow")
-      - if PropertsHelper::HIGHLIGHT == "true"
-        .btn_margin
-          = link_to("Highlight",
-                  bill_path(bill: {id: object, type: option[:type], option: 3}),
+      .btn_margin
+        = link_to("Find quickly",
+                  new_order_path(object, option[:class]),
                   class: "btn btn-warning btn-block",
                   rel: "nofollow")
     .btn_margin

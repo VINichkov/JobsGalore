@@ -102,7 +102,19 @@ var uploadTXT = function(uploadFile) {
     };
     reader.readAsText(uploadFile);
 };
+$(document).on('click', '.radio_button_customer', function(e) {
+    $('.radio_button_customer').each(function (i,elem) {
+        if (elem === e.target){
+            $(this).addClass("glyphicon-ok active");
+            $(this).removeClass("glyphicon-unchecked");
+            $(this).children()[0].checked = true;
+        }else{
+            $(this).addClass("glyphicon-unchecked");
+            $(this).removeClass("glyphicon-ok active");
+        }
+    });
 
+});
 
 //$(function() {
 $(document).on('change', '#inp', function() {

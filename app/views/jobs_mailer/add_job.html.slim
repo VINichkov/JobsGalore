@@ -7,13 +7,19 @@ div[style=body_email]
     = link_to 'Show', job_url(@job.id) + "?"+@utm, style: link_email, target: "_blank"
   =space_email
   =space_email
+hr
+div[style=title_email]
+  div[style=h1_email]
+    |Find the best applicants quickly:
+div[style=body_email]
   strong
-    |You can promote your job opportunity:
-  =space_email true
+    |Urgent
+  = space_email
+  |In a hurry? Add an Urgent tag to your job opportunity. It's a great way to attract serious offers quickly.
   =space_email
-  =render 'jobs_mailer/party_of_email/highlight'
-  =space_email
-  =space_email true
-  =space_email
-  =render 'jobs_mailer/party_of_email/urgent'
-
+  strong
+    |Highlight
+  = space_email
+  |A highlighted job opportunity stands out from the other ads on the search and browse results due to the orange background colour. A highlighted job opportunity has greater visibility and therefore receive more visits and replies than other Ads.
+  div[style=button_email]
+    = link_to 'Find quickly', new_order_url(@job, :job),style: link_email, target: "_blank"

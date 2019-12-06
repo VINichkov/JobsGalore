@@ -51,7 +51,8 @@ class ResumesController < ApplicationController
     respond_to do |format|
       if @resume.save
         resume_workflow.save!(session[:workflow])
-        format.html {redirect_to workflow_link(resume_workflow) , notice: current_client ? 'The CV was successfully created.' : flash[:notice]}
+        #format.html {redirect_to workflow_link(resume_workflow) , notice: current_client ? 'The Resume was successfully created.' : flash[:notice]}
+        format.html {redirect_to new_order_path(@resume.object, :resume), notice: current_client ? 'The Resume was successfully created.' : flash[:notice]}
       else
         format.html {render :new}
       end

@@ -63,8 +63,6 @@
     trix-editor[input="editor_resume" ]
   hr.colorgraph
     .row
-      .col-lg-6.col-md-6.col-xs-6.col-sm-6
-        = link_to 'Back', :back, class: "btn btn-success btn-block"
-      .col-xs-6.col-md-6.col-sm-6.col-lg-6
+      .col-md-6.col-md-offset-6
         = f.submit class: "btn btn-primary btn-block ", onclick: "experiment('create_resume', 'Заходим из кнопки.');"
     br

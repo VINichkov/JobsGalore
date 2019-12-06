@@ -48,6 +48,9 @@ Rails.application.routes.draw do
   post "mailing", to: "mailing#create", as:  "mailing_create"
   get "contact_of_seekers", to: "mailing#contact_of_seekers", as: "contact_of_seekers"
 
+  #ORDER
+  get "orders/new/:id/:type", to: "new_order_visual#new", as: "new_order"
+  resources :new_order_visual, only: [:create]
 
   resources :companies, only: [:new,:create, :show, :edit, :update, :destroy]
   get "companies/:id/:text", to: "companies#highlight_view", as: 'company_highlight_view'
@@ -193,7 +196,13 @@ Rails.application.routes.draw do
   #resources :languages
   #resources :level
 
-
+  def path_for_object(object)
+    if object.job?
+      job_path(object.id)
+    else
+      resume_path(object.id)
+    end
+  end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

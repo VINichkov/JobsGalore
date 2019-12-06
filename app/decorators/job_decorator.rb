@@ -11,6 +11,10 @@ class JobDecorator < ApplicationDecorator
     h.job_url(object)
   end
 
+  def path
+    h.job_path(object)
+  end
+
   def extras(arg)
     swich = {'1'=>:urgent, '2'=> :top, '3'=> :highlight}
     self.turn swich[arg]

@@ -8,7 +8,7 @@ class CreateJobController < ApplicationController
     @job_service = CreateJobService.call(params: job_params, client: current_client)
     respond_to do |format|
       if @job_service.success?
-        format.html { redirect_to job_path(@job_service.job), notice:  @job_service.msg}
+        format.html { redirect_to new_order_path(@job_service.job, :job), notice:  @job_service.msg}
       else
         @job = @job_service.object
         format.html { render :new}

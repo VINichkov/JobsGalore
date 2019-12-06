@@ -21,18 +21,10 @@ div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' :  'row')}"]
             - else
               = link_to "Highlight +", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
   - else
-    - if PropertsHelper::URGENT== "true"
-      div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
-        = link_to("Urgent",
-                bill_path(bill: {id: object, type: option[:type], option: 1}),
-                class: "btn btn-danger btn-block",
-                rel: "nofollow")
-    - if PropertsHelper::HIGHLIGHT == "true"
-      div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
-        = link_to("Highlight",
-                bill_path(bill: {id: object, type: option[:type], option: 3}),
-                class: "btn btn-warning btn-block",
-                rel: "nofollow")
+    = link_to("Find quickly",
+            new_order_path(object, option[:class]),
+            class: "btn btn-warning btn-block",
+            rel: "nofollow")
   div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
     = link_to eval("edit_#{option[:class]}_path(object)"), class: "btn btn-primary btn-block" do
       - if option[:min]
