@@ -1,11 +1,11 @@
 namespace :integrate do
   desc "Executes to add jobs"
-  task :add_jobs => :environment  do
+  task :ping_sitemap => :environment  do
     puts "! Task:ping_sitemap: start"
     begin
       open("http://www.google.com/webmasters/sitemaps/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
       open("http://www.bing.com/webmaster/ping.aspx?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
-      open("http://submissions.ask.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
+      #open("http://submissions.ask.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
       # open("http://submissions.ask.com/ping?sitemap=#{PropertsHelper::HOST_NAME}/sitemap.xml")
       # http://www.bing.com/webmaster/ping.aspx?siteMap=http://example.com/sitemap.xml
     rescue
