@@ -1,6 +1,6 @@
 module CurrencyHelper
   def currency(cur, sum)
-    log.info("Валюта = #{cur} сумма #{sum}")
+    logger.info("Валюта = #{cur} сумма #{sum}")
     select_format = {
         'RUB' => rub(sum),
         'AUD' => aud(sum),
