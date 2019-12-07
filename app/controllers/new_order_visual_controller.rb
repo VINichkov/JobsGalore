@@ -18,11 +18,10 @@ class NewOrderVisualController < ApplicationController
     respond_to do |format|
       if @order_service.success? #TODO Отправляем на paypal
         format.html do
-          puts "Валюта в контроллере #{@order_service.object.current}"
           redirect_to(
             PayPal.new(
-                return_url: @order_service.object.object.path,
-                cancel_return: @order_service.object.object.path,
+                return_url: @order_service.object.object.url,
+                cancel_return: @order_service.object.object.url,
                 notify_url: payments_url,
                 item_number:@order_service.object.id_for_paypal,
                 item_name: @order_service.object.product.name,

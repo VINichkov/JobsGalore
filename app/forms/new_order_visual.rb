@@ -68,7 +68,6 @@ class NewOrderVisual
 
   def save
     return false unless self.valid?
-    puts "Валюта #{self.current}"
     params = []
     params.push({
                      type: self.type,

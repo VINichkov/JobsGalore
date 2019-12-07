@@ -5,7 +5,6 @@ class PayPal
 
   attr_accessor :domain, :return, :cancel_return, :notify_url, :item_number, :item_name, :currency_code , :amount
   def initialize(return_url:,cancel_return:,notify_url:,item_number:, item_name:, currency_code:'AUD' ,amount: )
-    puts "Валюта в классе PayPal #{currency_code}"
     @domain = ENV["TEST"].nil? ? 'paypal' : 'sandbox.paypal'
     @return = return_url
     @cancel_return = cancel_return
