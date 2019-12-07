@@ -18,6 +18,7 @@ class NewOrderVisualController < ApplicationController
     respond_to do |format|
       if @order_service.success? #TODO Отправляем на paypal
         format.html do
+          puts "Валюта в контроллере #{@order_service.object.current}"
           redirect_to(
             PayPal.new(
                 return_url: @order_service.object.object.path,

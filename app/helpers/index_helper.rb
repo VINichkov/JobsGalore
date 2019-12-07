@@ -5,7 +5,6 @@ module IndexHelper
       search["location_id"] = default.id
       search["location_name"] = default.name
     end
-    puts search
     react_component("MainPageSearch", name: "main_search", search: search)
   end
 end
