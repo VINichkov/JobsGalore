@@ -7,7 +7,6 @@ class Location < ApplicationRecord
   has_many :job, dependent: :destroy
   has_many :experience, dependent: :destroy
   has_many :resume, dependent: :destroy
-  has_many :gateway, dependent: :destroy
   has_many :email_hr, dependent: :destroy
 
 

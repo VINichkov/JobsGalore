@@ -1,12 +1,12 @@
 async function moreConnectionsPlease() {
     // maximum limit of Connect buttons clicked
-    const LIMIT = 150;
+    const LIMIT = 40;
     // wait in ms before each scroll
     const SCROLL_TIMEOUT = 300;
     // bulk scroll will scroll this amount of times
     const BULK_SCROLL_COUNT = 15;
     // wait in ms before each click
-    const CLICK_DELAY = 300;
+    const CLICK_DELAY = 1500;
     // if this amount of connections in the page, time to click
     const MINIMUM_CONNECTS_TO_CLICK = 60;
     // if this amount of connections in the page, time to scroll
@@ -87,7 +87,7 @@ moreConnectionsPlease();
 
 async function moreConnectionsPleaseFromQuery() {
     // maximum limit of Connect buttons clicked
-    const LIMIT = 100;
+    const LIMIT = 40;
     // wait in ms before each scroll
     const SCROLL_TIMEOUT = 600;
     // bulk scroll will scroll this amount of times

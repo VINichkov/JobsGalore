@@ -1,4 +1,5 @@
 namespace :post do
+=begin
   desc "Post at Twitter"
   task :twitter => :environment  do
     puts "! Task:Post at Twitter: start"
@@ -18,6 +19,7 @@ namespace :post do
     end
     puts "! Task:Post at Twitter: End"
   end
+=end
 
   task :twitt => :environment  do
     puts "! Task:Post at Twitter: start"

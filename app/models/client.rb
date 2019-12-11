@@ -10,7 +10,6 @@ class Client < ApplicationRecord
 
   belongs_to :location
   belongs_to :company
-  has_many :gateway, dependent: :destroy
   has_many :resume, dependent: :destroy
   has_many :job, dependent: :destroy
   has_many :responded

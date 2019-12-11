@@ -5,7 +5,6 @@ class Company < ApplicationRecord
   has_many :job, dependent: :destroy
   belongs_to :industry
   has_many :client
-  has_many :gateway, dependent: :destroy
   has_many :email_hr, dependent: :destroy
 
   dragonfly_accessor :logo
