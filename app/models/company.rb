@@ -50,19 +50,21 @@ class Company < ApplicationRecord
   end
 
   def absorb(id)
-    company = Company.find_by_id(id)
-    if company.present?
-      unless self.names&.include? company.name
-        self.add_name company.name
-      end
-
-      company.job.each do |t|
-        t.update(company_id: self.id, client_id: self.client.first.id)
-      end
-
+    if self.id != id
       company = Company.find_by_id(id)
-      company.client.destroy_all
-      company.destroy
+      if company.present?
+        unless self.names&.include? company.name
+          self.add_name company.name
+        end
+
+        company.job.each do |t|
+          t.update(company_id: self.id, client_id: self.client.first.id)
+        end
+
+        company = Company.find_by_id(id)
+        company.client.destroy_all
+        company.destroy
+      end
     end
   end
 
