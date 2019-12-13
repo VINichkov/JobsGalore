@@ -26,6 +26,8 @@ p
   .hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="jobLocation" itemscope itemtype="http://schema.org/Place"]
     span[itemprop="name"]
       = object.location.name
+    span[itemprop="telephone"]
+      = object.client.phone || "empty"
     span[itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"]
       span[itemprop="name"]
         =object.location.name
