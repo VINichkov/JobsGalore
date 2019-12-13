@@ -3,21 +3,27 @@ h4.text-center
 p
   strong
     | Posted:&nbsp;
-  span[itemprop="datePosted"]
+  span
     =object.posted_date
+  span.none[itemprop="datePosted"]
+    =object.t.created_at.strftime("%F")
   span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="validThrough"]
     =object.try(:close)
 -if   object.class==JobDecorator
   .hidden-md.hidden-lg.hidden-sm[itemprop="hiringOrganization" itemscope itemtype="http://schema.org/Organization"]
-    p
-      strong[itemprop="name"]
-        |Company: &nbsp;
-      =link_to(object.company.name,object.company)
+    span[itemprop="name"]
+      =object.company.name
+    span[itemprop="address"]
+      =object.company.name
+    span[itemprop="telephone"]
+      = object.client.phone || "empty"
 p
   strong
     |Location: &nbsp;
   = link_location(object.location.name, object.location, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-warning')
   .hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="jobLocation" itemscope itemtype="http://schema.org/Place"]
+    span[itemprop="address"]
+      =object.name
     span[itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"]
       span[itemprop="addressLocality"]
         =object.location.suburb
