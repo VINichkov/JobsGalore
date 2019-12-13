@@ -6,7 +6,7 @@ p
   span
     =object.posted_date
   span.none[itemprop="datePosted"]
-    =object.t.created_at.strftime("%F")
+    =object.created_at.strftime("%F")
   span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="validThrough"]
     =object.try(:close)
 -if   object.class==JobDecorator
