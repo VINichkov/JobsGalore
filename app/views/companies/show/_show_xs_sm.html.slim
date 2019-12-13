@@ -2,6 +2,11 @@
 -cache([company,query]) do
   .row
     .col-xs-12[itemscope itemtype="http://schema.org/Organization"]
+      span.hidden-xs.hidden-md.hidden-lg.hidden-sm
+        span[itemprop="address"]
+          = object.company.name
+        span[itemprop="telephone"]
+          = object.client.phone || "empty"
       span[itemprop="name"]
         h1.text-center
           = highlight(company.name, Search.str_to_highlight(query))
