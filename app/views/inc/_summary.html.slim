@@ -10,7 +10,7 @@ p
 -if   object.class==JobDecorator
   .hidden-md.hidden-lg.hidden-sm[itemprop="hiringOrganization" itemscope itemtype="http://schema.org/Organization"]
     p
-      strong
+      strong[itemprop="name"]
         |Company: &nbsp;
       =link_to(object.company.name,object.company)
 p
