@@ -28,10 +28,10 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
     meta[name="lang" content="en-US"]
     meta[name="description" content=yield_meta_tag("description", "JobsGalore is a job search aggregator in Australia. Find jobs and career related information. Find your dream job. Make job search easy with us!")]
     meta[name="keywords" content=yield_meta_tag("keywords","Jobs Galore, work, job, vacancy search, resume, jobs, Australia, vacancies, employment, looking for a job, search, seek, galore, money, solary, indeed, JobsGalore, jobs in university, post job free,  post jobs for free, look for job, seeking, job board")]
-    = javascript_include_tag('application', defer: true)
-    //= stylesheet_link_tag('application', media: :NOT_USE,  onload: "this.media='all'") if md?
     = stylesheet_link_tag('application', media: :all) if md?
     = stylesheet_link_tag('application_xs', media: :all) unless md?
+    = javascript_include_tag('application', defer: true)
+    //= stylesheet_link_tag('application', media: :NOT_USE,  onload: "this.media='all'") if md?
 
     = csrf_meta_tags
   body
