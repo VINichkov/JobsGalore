@@ -5,9 +5,9 @@
       .row.well
         span.hidden-xs.hidden-md.hidden-lg.hidden-sm
           span[itemprop="address"]
-            = object.company.name
+            = company.location.name
           span[itemprop="telephone"]
-            = object.client.phone || "empty"
+            = company.client.first.phone || "empty"
         span[itemprop="name"]
           h1.text-center
             = highlight(company.name, Search.str_to_highlight(query))
