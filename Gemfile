@@ -117,5 +117,5 @@ group :production do
   gem 'dragonfly-s3_data_store'
   gem "asset_sync"
   gem "fog-aws"
-  gem 'puma'
+  gem 'puma', ">= 4.2.1"
 end
