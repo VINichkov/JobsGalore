@@ -22,9 +22,8 @@ p
     |Location: &nbsp;
   = link_location(object.location.name, object.location, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-warning')
   .hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="jobLocation" itemscope itemtype="http://schema.org/Place"]
-    span[itemprop="address"]
-      =object.location.name
     span[itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"]
+      =object.location.name
       span[itemprop="addressLocality"]
         =object.location.suburb
       span[itemprop="addressRegion"]
