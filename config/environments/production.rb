@@ -91,8 +91,8 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
   #config.gem 'sitemap_generator'
-  config.action_controller.asset_host = "https://d3dv41bs0cmiw6.cloudfront.net"
-  config.action_mailer.asset_host ="https://d3dv41bs0cmiw6.cloudfront.net"
+  config.action_controller.asset_host = "https://d30l9c85j8u7xv.cloudfront.net"
+  config.action_mailer.asset_host ="https://d30l9c85j8u7xv.cloudfront.net"
 
   # Do not dump schema after migrations.educations_id_seq
   config.active_record.dump_schema_after_migration = false

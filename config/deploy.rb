@@ -13,8 +13,7 @@ server 'jobsgalore.eu',
            forward_agent: false,
            auth_methods: %w(publickey),
        }
-#set :ssh_options, proxy: Net::SSH::Proxy::Command.new('ssh -i "Vyacheslav2406.pem" ec2-18-188-218-128.us-east-2.compute.amazonaws.com')
-#set :rvm_custom_path, '/usr/share/rvm'
+
 set :application, "JobsGalore"
 set :repo_url, "git@github.com:VINichkov/JobsGalore.git"
 #set :puma_threads,    [4, 16]
