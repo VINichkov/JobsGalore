@@ -87,6 +87,6 @@ test:
 #
 production:
   <<: *default
-  database: jobsgalore
+  database: mango_production
   username: <%= ENV['MANGO_DATABASE_USER'] %>
   password: <%= ENV['MANGO_DATABASE_PASSWORD'] %>
