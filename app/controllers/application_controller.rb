@@ -32,6 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_cookies
+    Rails.logger.info(request.env['HTTP_USER_AGENT'])
     if @search.blank?
       if cookies[:query].present?
         @search = JSON.parse(cookies[:query])
