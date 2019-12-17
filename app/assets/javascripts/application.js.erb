@@ -116,6 +116,38 @@ $(document).on('click', '.radio_button_customer', function(e) {
 
 });
 
+document.addEventListener("turbolinks:load", function() {
+    var infolinks_pid = 3225129;
+    var infolinks_wsid = 0;
+    let head =  document.getElementsByTagName("head")[0];
+    let script = document.createElement("script");
+    script.src = "//resources.infolinks.com/js/infolinks_main.js";
+    script.type = "text/javascript";
+    head.appendChild(script);
+    /*const jstype = 'text/javascript';
+    const none = 'none'
+    document.querySelectorAll(`script[type='${none}']`).forEach(function(entry) {
+        entry.setAttribute("type", jstype);
+
+    });*/
+});
+
+/*$(document).on('load', function(e) {
+    alert("sdadadad");
+    $('.radio_button_customer').each(function (i,elem) {
+        if (elem === e.target){
+            $(this).addClass("glyphicon-ok active");
+            $(this).removeClass("glyphicon-unchecked");
+            $(this).children()[0].checked = true;
+        }else{
+            $(this).addClass("glyphicon-unchecked");
+            $(this).removeClass("glyphicon-ok active");
+        }
+    });
+
+});
+*/
+
 //$(function() {
 $(document).on('change', '#inp', function() {
         experiment('create_resume', 'Заходим из кнопки. Загрузка резюме');
