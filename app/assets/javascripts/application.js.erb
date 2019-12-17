@@ -119,11 +119,14 @@ $(document).on('click', '.radio_button_customer', function(e) {
 document.addEventListener("turbolinks:load", function() {
     var infolinks_pid = 3225129;
     var infolinks_wsid = 0;
-    let head =  document.getElementsByTagName("head")[0];
-    let script = document.createElement("script");
-    script.src = "//resources.infolinks.com/js/infolinks_main.js";
-    script.type = "text/javascript";
-    head.appendChild(script);
+
+    setTimeout(function () {
+          let head = document.getElementsByTagName("head")[0];
+          let script = document.createElement("script");
+          script.src = "//resources.infolinks.com/js/infolinks_main.js";
+          script.type = "text/javascript";
+          head.appendChild(script);
+      }, 1000)
     /*const jstype = 'text/javascript';
     const none = 'none'
     document.querySelectorAll(`script[type='${none}']`).forEach(function(entry) {
