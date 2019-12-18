@@ -1,7 +1,6 @@
 -meta_for_jobs(job)
 -cache([job,query]) do
   div[itemscope itemtype="http://schema.org/JobPosting"]
-    /! INFOLINKS_ON
     meta[itemprop="specialCommitments" content="VeteranCommit"]
     .col-md-8
       .row.well
@@ -11,9 +10,16 @@
           = highlight(job.render_description, Search.str_to_highlight(query))
         span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
           = job.description_text
+      .row.well
+        div[id="283631115"]
+          javascript:
+            try {
+              window._mNHandle.queue.push(function (){
+                        window._mNDetails.loadTag("283631115", "728x90", "283631115");
+              });
+            }
+            catch (error) {}
       =similar_vacancies(job, 'md')
-    //script[type="text/javascript" src="https://resources.infolinks.com/js/infolinks_main.js"]
-    /! INFOLINKS_OFF
     .col-md-4
       .panel.panel-default
         .panel-body
