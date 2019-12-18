@@ -3,6 +3,7 @@
   div[itemscope itemtype="http://schema.org/JobPosting"]
     meta[itemprop="specialCommitments" content="VeteranCommit"]
     .col-md-8
+      =render 'ad/before_ad_md'
       .row.well
         h1.text-center[itemprop="title"]
           = highlight(job.title.capitalize, Search.str_to_highlight(query))
@@ -10,15 +11,7 @@
           = highlight(job.render_description, Search.str_to_highlight(query))
         span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
           = job.description_text
-      .row.well
-        div[id="283631115"]
-          javascript:
-            try {
-              window._mNHandle.queue.push(function (){
-                        window._mNDetails.loadTag("283631115", "728x90", "283631115");
-              });
-            }
-            catch (error) {}
+      =render 'ad/before_similar_job_md'
       =similar_vacancies(job, 'md')
     .col-md-4
       .panel.panel-default
@@ -31,6 +24,7 @@
             = render 'inc/btn', object: job, option:{class:'job', type:2, show: true}
             .text-center
               =social_share_button_tag  job.title, url: job_url(job), title:job.title
+      =render 'ad/after_summary_md'
   - unless job.apply
     = render 'inc/contact', object: job.client, title: "#{job.title} at #{PropertsHelper::COMPANY}.eu"
 = render 'jobs/show/inc/alert', job: job, query: query if !cookies[:alert] and !client_signed_in?

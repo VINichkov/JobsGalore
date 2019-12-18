@@ -2,11 +2,13 @@
 -cache([resume,query]) do
   .container
     .col-md-8
+      =render 'ad/before_ad_md'
       .row.well
         h1.text-center
           = highlight(resume.title, Search.str_to_highlight(query))
         p
           = highlight(resume.render_description, Search.str_to_highlight(query))
+      = render 'ad/before_similar_job_md'
     .col-md-4
       .panel.panel-default
         .panel-body
@@ -25,6 +27,7 @@
               = render 'inc/btn', object: resume, option: {class: 'resume', type: 3}
               .text-center
                 = social_share_button_tag resume.title, url: resume_url(resume), title:resume.title
+      =render 'ad/after_summary_md'
   -if client_signed_in?
     -if current_client.resp?
       =render 'inc/contact', object: resume.client, title: "#{resume.title} on #{PropertsHelper::COMPANY}.eu"
