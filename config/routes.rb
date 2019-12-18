@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   #  mount Sidekiq::Web => '/sidekiq'
   #end
   get 'robot', to: 'index#robot'
+  get 'ads', to: 'index#ads'
   get 'sitemap', to: 'index#sitemap'
   get 'sitemaps/:id', to: 'index#sitemaps', as: "sitemap_object"
   # get 'rss', to: 'index#rss'

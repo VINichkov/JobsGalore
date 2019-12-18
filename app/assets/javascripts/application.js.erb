@@ -101,6 +101,7 @@ var uploadTXT = function(uploadFile) {
     };
     reader.readAsText(uploadFile);
 };
+
 $(document).on('click', '.radio_button_customer', function(e) {
     $('.radio_button_customer').each(function (i,elem) {
         if (elem === e.target){
@@ -112,7 +113,6 @@ $(document).on('click', '.radio_button_customer', function(e) {
             $(this).removeClass("glyphicon-ok active");
         }
     });
-
 });
 
 /*document.addEventListener("turbolinks:load", function() {
