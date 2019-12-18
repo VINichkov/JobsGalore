@@ -1,6 +1,7 @@
 -meta_for_jobs(job)
 -cache([job,query]) do
   div[itemscope itemtype="http://schema.org/JobPosting"]
+    /! INFOLINKS_ON
     meta[itemprop="specialCommitments" content="VeteranCommit"]
     .col-md-8
       .row.well
@@ -11,6 +12,8 @@
         span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
           = job.description_text
       =similar_vacancies(job, 'md')
+    script[type="text/javascript" src="http://resources.infolinks.com/js/infolinks_main.js"]
+    /! INFOLINKS_OFF
     .col-md-4
       .panel.panel-default
         .panel-body

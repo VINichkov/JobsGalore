@@ -1,5 +1,3 @@
 .container
-  /! INFOLINKS_ON
   = render('jobs/show/show_md.html.slim', job:@job, query:@query) if md?
   = render('jobs/show/show_xs_sm', job:@job, query:@query) unless md?
-  script[type="text/javascript" src="http://resources.infolinks.com/js/infolinks_main.js"]
