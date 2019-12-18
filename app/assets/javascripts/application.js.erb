@@ -4,13 +4,16 @@
 //= require react
 //= require react_ujs
 //= require components
-//= require bootstrap-typeahead
+//= require bootstrap-typeahead.min
 //= require bootstrap.min
 //= require social-share-button
 //= require jasny-bootstrap
 //= require trix
 //= require trix_conf
 //require_tree ./controllers
+
+//Без jQuery работает  turbolinks, react, social-share-button, trix
+//Переделать bootstrap-typeahead,
 function experiment(name, variant) {
    $.post("/experiment",
         {
@@ -95,10 +98,6 @@ var uploadTXT = function(uploadFile) {
         html = html.replace(new RegExp('>','g'), "&gt;");
         ed.editor.setSelectedRange([0, 0]);
         ed.editor.insertHTML(html);
-        //window.setTimeout(function() {
-        //   ed.setContent(html, { format: 'html' });
-        //   ed.setProgressState(0); // Hide progress
-        //}, 3000);
     };
     reader.readAsText(uploadFile);
 };
