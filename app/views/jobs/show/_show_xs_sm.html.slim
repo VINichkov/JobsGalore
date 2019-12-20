@@ -22,7 +22,7 @@
       p
         .text-center
           = social_share_button_tag job.title, url: job_url(job), title:job.title
-      =render 'ad/before_ad_xs'
+      //=render 'ad/before_ad_xs'
       = similar_vacancies(job, 'xs')
       = render 'inc/btn/btn_apply_xs_sm', object: job, option: {cl: "dropdown", class: 'job', type: 2, show: true} unless can? :destroy, job
   - unless job.apply
