@@ -34,8 +34,8 @@ gem 'browser' #определяет браузер
 gem 'geocoder' #определяет страну
 
 
-gem 'turbolinks'
-gem 'jquery-turbolinks'
+#gem 'turbolinks'
+#gem 'jquery-turbolinks'
 #gem 'stimulusjs-rails'
 
     # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
