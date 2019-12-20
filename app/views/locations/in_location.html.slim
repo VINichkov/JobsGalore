@@ -2,8 +2,9 @@
         description: "Explore #{@in_location.suburb} jobs and career resources. Find all the information you need to land a job in Melbourne and build a career.",
         keywords: "#{@in_location.key}")
 .container
-  h1 ="#{@in_location.name}"
-  .col-lg-8.col-md-9.col-sm-12
+  .col-lg-8.col-md-8.col-sm-12
+    h1 ="#{@in_location.name}"
+  .col-lg-8.col-md-8.col-sm-12
     - if @in_location.type == Objects::JOBS
       = render partial: 'inc/job/job_md', collection: @in_location.objs, as: :job, locals: {query: ''} if md?
       = render partial: 'inc/job/job_xs', collection: @in_location.objs, as: :job, locals: {query: ''} unless md?
@@ -13,6 +14,8 @@
       = render partial:'inc/resume', collection: @in_location.objs, locals:{query:''}
     .text-center
       = will_paginate_mini @in_location.objs
+  .col-lg-4.col-md-4.hidden-xs.hidden-sm
+    = render "ad/after_summary_skyscraper_md"
   .row
   - if @in_location.type == Objects::JOBS
     =render 'inc/btn/btn_new_resume_xs_sm'

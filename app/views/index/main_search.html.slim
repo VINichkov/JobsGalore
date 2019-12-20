@@ -1,25 +1,32 @@
 .container
   h1 =@result.name
-  .col-lg-8.col-md-9.col-sm-12
-    =sort_by_search(@result.sort)
+  .col-sm-12
     .row
-      p.col-md-6
-        strong
-          = link_to "Upload your resume", new_resume_url
-          |&nbsp;-&nbsp;Let employers find you
-      p.col-md-6.col-xs-12.text-right
-        = page_entries_info @result.objs, {model:@result.type.name}
+      .col-lg-8.col-md-8.col-sm-12
+        .row
+          p.col-md-6
+            strong
+              = link_to "Upload your resume", new_resume_url
+              |&nbsp;-&nbsp;Let employers find you
+        p
+          =sort_by_search(@result.sort)
+        p.text-right
+          = page_entries_info @result.objs, {model:@result.type.name}
+    .row
+      .col-lg-8.col-md-8.col-sm-12
+        - if @result.type == Objects::JOBS
+          = render partial: 'inc/job', collection: @result.objs, as: :job, locals:{query: @result.query}
+        - elsif @result.type==Objects::COMPANIES
+          = render partial: 'inc/company', collection: @result.objs, as: :company, locals:{query: @result.query}
+        - else @result.type==Objects::RESUMES
+          = render partial: 'inc/resume', collection: @result.objs, as: :resume, locals:{query: @result.query}
+        .text-center
+          = will_paginate_mini @result.objs
+      .col-lg-4.col-md-4.hidden-xs.hidden-sm
+        =render "ad/after_summary_skyscraper_md"
+    .row
     - if @result.type == Objects::JOBS
-      = render partial: 'inc/job', collection: @result.objs, as: :job, locals:{query: @result.query}
-    - elsif @result.type==Objects::COMPANIES
-      = render partial: 'inc/company', collection: @result.objs, as: :company, locals:{query: @result.query}
-    - else @result.type==Objects::RESUMES
-      = render partial: 'inc/resume', collection: @result.objs, as: :resume, locals:{query: @result.query}
-    .text-center
-      = will_paginate_mini @result.objs
-  .row
-  - if @result.type == Objects::JOBS
-    = render 'inc/btn/btn_new_resume_xs_sm'
-  - if @result.type==Objects::RESUMES
-    = render 'inc/btn/btn_new_job_xs_sm'
+      = render 'inc/btn/btn_new_resume_xs_sm'
+    - if @result.type==Objects::RESUMES
+      = render 'inc/btn/btn_new_job_xs_sm'
 = render 'index/inc/alert', query: @search if @result.type == Objects::JOBS && !cookies[:alert] && !client_signed_in? && @search && @search[:value] && @search[:value] != ''
