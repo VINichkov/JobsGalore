@@ -9,10 +9,15 @@ p
     =object.created_at.strftime("%F")
   span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="validThrough"]
     =object.try(:close)
--if   object.class==JobDecorator
+-if object.class==JobDecorator
+  .hidden-md.hidden-lg.hidden-sm
+    p
+      strong
+        |Company: &nbsp;
+      = link_to(object.company.name,object.company)
   .hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="employmentType"]
     |full-time
-  .hidden-md.hidden-lg.hidden-sm[itemprop="hiringOrganization" itemscope itemtype="http://schema.org/Organization"]
+  .hidden-md.hidden-lg.hidden-sm.hidden-xs[itemprop="hiringOrganization" itemscope itemtype="http://schema.org/Organization"]
     span[itemprop="name"]
       =object.company.name
     span[itemprop="address"]
