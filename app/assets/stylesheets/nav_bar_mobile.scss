@@ -1,4 +1,17 @@
+.navbar-top{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1071;
+}
+
 .navbar-blue {
+  background-color: #337ab7;
+  border-color: #2e6da4;
+  color: white;
+}
+
+.nav {
   /*  ширна произвольная, не стесняйтесь экспериментировать */
   width: 320px;
   min-width: 320px;
@@ -132,9 +145,6 @@
  * см: http://timpietrusky.com/advanced-checkbox-hack
  */
 
-/*body {
-  -webkit-animation: bugfix infinite 1s;
-}*/
 
 @-webkit-keyframes bugfix {
   to {
@@ -143,40 +153,14 @@
 }
 
 /**
- * позаботьтимся о средних и маленьких экранах
- * мобильных устройств
- */
-/*
-@media screen and (min-width: 320px) {
-  html,
-  body {
-    margin: 0;
-    overflow-x: hidden;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  html,
-  body {
-    margin: 0;
-    overflow-x: hidden;
-  }
-  .nav {
-    width: 100%;
-    box-shadow: none
-  }
-}*/
-
-/**
  * Формируем стиль заголовка (логотип) панели
 */
 
-.navbar-blue h2 {
+.nav h2 {
   width: 90%;
   padding: 0;
   margin: 10px 0;
   text-align: center;
-  text-shadow: rgba(255, 255, 255, .1) -1px -1px 1px, rgba(0, 0, 0, .5) 1px 1px 1px;
   font-size: 1.3em;
   line-height: 1.3em;
   opacity: 0;
@@ -194,8 +178,8 @@
   -webkit-transition: opacity 0.8s, -webkit-transform 0.8s;
 }
 
-.navbar-blue h2 a {
-  color: #dadada;
+.nav h2 a {
+  color: #fbf6ff;
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -217,14 +201,14 @@
  * прикрутим трансфомации и плавные переходы
  */
 
-.navbar-blue > ul {
+.nav > ul {
   display: block;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.navbar-blue > ul > li {
+.navbar-blue  > ul > li {
   line-height: 2.5;
   opacity: 0;
   -webkit-transform: translateX(-50%);
@@ -247,32 +231,32 @@
 
 /* определяем интервалы появления пунктов меню */
 
-.navbar-blue > ul > li:nth-child(2) {
+.nav > ul > li:nth-child(2) {
   -webkit-transition: opacity .5s .2s, -webkit-transform .5s .2s;
   transition: opacity .5s .2s, transform .5s .2s;
 }
 
-.navbar-blue > ul > li:nth-child(3) {
+.nav > ul > li:nth-child(3) {
   -webkit-transition: opacity .5s .3s, -webkit-transform .5s .3s;
   transition: opacity .5s .3s, transform .5s .3s;
 }
 
-.navbar-blue > ul > li:nth-child(4) {
+.nav > ul > li:nth-child(4) {
   -webkit-transition: opacity .5s .4s, -webkit-transform .5s .4s;
   transition: opacity .5s .4s, transform .5s .4s;
 }
 
-.navbar-blue > ul > li:nth-child(5) {
+.nav > ul > li:nth-child(5) {
   -webkit-transition: opacity .5s .5s, -webkit-transform .5s .5s;
   transition: opacity .5s .5s, transform .5s .5s;
 }
 
-.navbar-blue > ul > li:nth-child(6) {
+.nav > ul > li:nth-child(6) {
   -webkit-transition: opacity .5s .6s, -webkit-transform .5s .6s;
   transition: opacity .5s .6s, transform .5s .6s;
 }
 
-.navbar-blue > ul > li:nth-child(7) {
+.nav > ul > li:nth-child(7) {
   -webkit-transition: opacity .5s .7s, -webkit-transform .5s .7s;
   transition: opacity .5s .7s, transform .5s .7s;
 }
@@ -282,14 +266,14 @@
  * оформление ссылок пунктов меню
  */
 
-.navbar-blue > ul > li > a {
+.nav > ul > li > a {
   display: inline-block;
   position: relative;
   padding: 0;
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   font-size: 1.2em;
-  color: #dadada;
+  color: #fbf6ff;
   width: 100%;
   text-decoration: none;
   /* плавный переход */
@@ -302,17 +286,12 @@
  * состояние ссылок меню при наведении
  */
 
-.navbar-blue > ul > li > a:hover,
-.navbar-blue > ul > li > a:focus {
-  color: white;
-  padding-left: 15px;
-}
 
 /**
  * линия подчеркивания ссылок меню
  */
 
-.navbar-blue > ul > li > a:before {
+.nav > ul > li > a:before {
   content: '';
   display: block;
   position: absolute;
@@ -324,7 +303,7 @@
   transition: width 0s ease;
 }
 
-.navbar-blue > ul > li > a:after {
+.nav > ul > li > a:after {
   content: '';
   display: block;
   position: absolute;
@@ -332,7 +311,7 @@
   bottom: 0;
   height: 1px;
   width: 100%;
-  background: #3bc1a0;
+  background: #fbf6ff;
   -webkit-transition: width .5s ease;
   transition: width .5s ease;
 }
@@ -341,20 +320,6 @@
  * анимируем линию подчеркивания
  * ссылок при наведении
  */
-
-.navbar-blue > ul > li > a:hover:before {
-  width: 0%;
-  background: #3bc1a0;
-  -webkit-transition: width .5s ease;
-  transition: width .5s ease;
-}
-
-.navbar-blue > ul > li > a:hover:after {
-  width: 0%;
-  background: transparent;
-  -webkit-transition: width 0s ease;
-  transition: width 0s ease;
-}
 
 /* CSS стили для мобильных устройств */
 /* Цвет рамки у кнопки, которая открывает меню */
@@ -370,33 +335,9 @@
 .navbar-blue .navbar-toggle .icon-bar {
   background-color:  #ffffff;
 }
-/* Цвет пунктов меню в раскрывающихся списках */
 
 
-/* фон затемнения на основной контент
- * при этом элементы блокируютя
- * спорная такая фича, если оно вам надо
- * просто раскомментируйте
-*/
-
-/*
-.mask-content {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    visibility: hidden;
-    opacity: 0;
+/* Цвет кнопок меню */
+.link {
+  color: #ffffff;
 }
-
-[id='nav-toggle']:checked ~ .mask-content {
-    visibility: visible;
-    opacity: 1;
-    -webkit-transition: opacity .5s, visibility .5s;
-    transition: opacity .5s, visibility .5s;
-}
-*/
