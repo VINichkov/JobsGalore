@@ -1,4 +1,4 @@
-.nav {
+.navbar-blue {
   /*  ширна произвольная, не стесняйтесь экспериментировать */
   width: 320px;
   min-width: 320px;
@@ -171,7 +171,7 @@
  * Формируем стиль заголовка (логотип) панели
 */
 
-.nav h2 {
+.navbar-blue h2 {
   width: 90%;
   padding: 0;
   margin: 10px 0;
@@ -194,7 +194,7 @@
   -webkit-transition: opacity 0.8s, -webkit-transform 0.8s;
 }
 
-.nav h2 a {
+.navbar-blue h2 a {
   color: #dadada;
   text-decoration: none;
   text-transform: uppercase;
@@ -217,14 +217,14 @@
  * прикрутим трансфомации и плавные переходы
  */
 
-.nav > ul {
+.navbar-blue > ul {
   display: block;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.nav > ul > li {
+.navbar-blue > ul > li {
   line-height: 2.5;
   opacity: 0;
   -webkit-transform: translateX(-50%);
@@ -247,32 +247,32 @@
 
 /* определяем интервалы появления пунктов меню */
 
-.nav > ul > li:nth-child(2) {
+.navbar-blue > ul > li:nth-child(2) {
   -webkit-transition: opacity .5s .2s, -webkit-transform .5s .2s;
   transition: opacity .5s .2s, transform .5s .2s;
 }
 
-.nav > ul > li:nth-child(3) {
+.navbar-blue > ul > li:nth-child(3) {
   -webkit-transition: opacity .5s .3s, -webkit-transform .5s .3s;
   transition: opacity .5s .3s, transform .5s .3s;
 }
 
-.nav > ul > li:nth-child(4) {
+.navbar-blue > ul > li:nth-child(4) {
   -webkit-transition: opacity .5s .4s, -webkit-transform .5s .4s;
   transition: opacity .5s .4s, transform .5s .4s;
 }
 
-.nav > ul > li:nth-child(5) {
+.navbar-blue > ul > li:nth-child(5) {
   -webkit-transition: opacity .5s .5s, -webkit-transform .5s .5s;
   transition: opacity .5s .5s, transform .5s .5s;
 }
 
-.nav > ul > li:nth-child(6) {
+.navbar-blue > ul > li:nth-child(6) {
   -webkit-transition: opacity .5s .6s, -webkit-transform .5s .6s;
   transition: opacity .5s .6s, transform .5s .6s;
 }
 
-.nav > ul > li:nth-child(7) {
+.navbar-blue > ul > li:nth-child(7) {
   -webkit-transition: opacity .5s .7s, -webkit-transform .5s .7s;
   transition: opacity .5s .7s, transform .5s .7s;
 }
@@ -282,7 +282,7 @@
  * оформление ссылок пунктов меню
  */
 
-.nav > ul > li > a {
+.navbar-blue > ul > li > a {
   display: inline-block;
   position: relative;
   padding: 0;
@@ -302,8 +302,8 @@
  * состояние ссылок меню при наведении
  */
 
-.nav > ul > li > a:hover,
-.nav > ul > li > a:focus {
+.navbar-blue > ul > li > a:hover,
+.navbar-blue > ul > li > a:focus {
   color: white;
   padding-left: 15px;
 }
@@ -312,7 +312,7 @@
  * линия подчеркивания ссылок меню
  */
 
-.nav > ul > li > a:before {
+.navbar-blue > ul > li > a:before {
   content: '';
   display: block;
   position: absolute;
@@ -324,7 +324,7 @@
   transition: width 0s ease;
 }
 
-.nav > ul > li > a:after {
+.navbar-blue > ul > li > a:after {
   content: '';
   display: block;
   position: absolute;
@@ -342,19 +342,36 @@
  * ссылок при наведении
  */
 
-.nav > ul > li > a:hover:before {
+.navbar-blue > ul > li > a:hover:before {
   width: 0%;
   background: #3bc1a0;
   -webkit-transition: width .5s ease;
   transition: width .5s ease;
 }
 
-.nav > ul > li > a:hover:after {
+.navbar-blue > ul > li > a:hover:after {
   width: 0%;
   background: transparent;
   -webkit-transition: width 0s ease;
   transition: width 0s ease;
 }
+
+/* CSS стили для мобильных устройств */
+/* Цвет рамки у кнопки, которая открывает меню */
+.navbar-blue .navbar-toggle {
+  border-color: #ffffff;
+}
+/* Цвет фона кнопки (которая открывает меню) при поднесении к ней курсора мышки или при нахождении её в фокусе */
+.navbar-blue .navbar-toggle:hover,
+.navbar-blue .navbar-toggle:focus {
+  background-color:  #2e6da4;
+}
+/* Цвет полосочек в кнопочке, которая открывает меню */
+.navbar-blue .navbar-toggle .icon-bar {
+  background-color:  #ffffff;
+}
+/* Цвет пунктов меню в раскрывающихся списках */
+
 
 /* фон затемнения на основной контент
  * при этом элементы блокируютя

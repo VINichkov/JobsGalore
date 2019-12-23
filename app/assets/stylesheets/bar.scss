@@ -59,18 +59,3 @@
 .link {
   color: #ffffff;
 }
-  /* CSS стили для мобильных устройств */
-  /* Цвет рамки у кнопки, которая открывает меню */
-  .navbar-blue .navbar-toggle {
-    border-color: #ffffff;
-  }
-  /* Цвет фона кнопки (которая открывает меню) при поднесении к ней курсора мышки или при нахождении её в фокусе */
-  .navbar-blue .navbar-toggle:hover,
-  .navbar-blue .navbar-toggle:focus {
-    background-color:  #2e6da4;
-  }
-  /* Цвет полосочек в кнопочке, которая открывает меню */
-  .navbar-blue .navbar-toggle .icon-bar {
-    background-color:  #ffffff;
-  }
-  /* Цвет пунктов меню в раскрывающихся списках */
