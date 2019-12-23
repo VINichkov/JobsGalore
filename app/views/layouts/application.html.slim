@@ -43,11 +43,6 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
       |google_ad_client: "ca-pub-8494804402686328",
       |enable_page_level_ads: true
       |});
-    script[type="text/javascript"]
-      |window._mNHandle = window._mNHandle || {};
-      |window._mNHandle.queue = window._mNHandle.queue || [];
-      |medianet_versionId = "3121199";
-    script[src="//contextual.media.net/dmedianet.js?cid=8CU7K51EM" async="async"]
     = javascript_include_tag('application', defer: true)
     = csrf_meta_tags
   body
@@ -59,3 +54,8 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
       =render 'inc/header/inc/alert', alert: alert, notice: notice if alert || notice
       = yield
     =render('inc/footer') if md?
+  script[type="text/javascript" async]
+    |window._mNHandle = window._mNHandle || {};
+    |window._mNHandle.queue = window._mNHandle.queue || [];
+    |medianet_versionId = "3121199";
+  script[src="//contextual.media.net/dmedianet.js?cid=8CU7K51EM" async]
