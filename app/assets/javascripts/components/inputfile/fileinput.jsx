@@ -29,11 +29,9 @@ class Picture extends React.Component{
         /*this.setState({photo: this.props.file});*/
         return (
             <div className="file-preview-frame"  onClick={this.parrentModalShow} data-template="image">
-                <div className="kv-file-content">
-                    <img className="kv-preview-data file-preview-image" src ={this.state.patch}  title ={this.props.file.name}  style={this.state.imgStype}></img>
-                </div>
-                <div className="file-thumbnail-footer">
-                    <div className="file-footer-caption" title={this.props.file.name}>
+                <img className="img-thumbnail" src ={this.state.patch}  title ={this.props.file.name}  style={this.state.imgStype}></img>
+                <div>
+                        <div title={this.props.file.name}>
                         {this.props.file.name}
                         <br />
                         <samp>{Math.round(this.props.file.size/1024*100)/100} кб</samp>
@@ -60,11 +58,6 @@ class Fileinput extends React.Component{
         this.handleChange = this.handleChange.bind(this);
         this.handleDeleteAll = this.handleDeleteAll.bind(this);
     }
-    modalShow(preview,previw_title){
-        this.setState({ preview:preview,
-                        previw_title:previw_title});
-        $("#file_input_preview").modal('show');
-    }
 
     handleChange(event) {
         var files = [];
@@ -84,26 +77,26 @@ class Fileinput extends React.Component{
     }
 
     render(){
-        var photos;
-        var index=0;
+        let photos;
+        let index=0;
         if (this.state.files !='') {
             photos = this.state.files.map(function (file) {
                 index++;
                 return  <Picture key ={index.toString()} file={file} self={this} />;
             });
         }
-        var fileCaptionName = function (files) {
+        let fileCaptionName = function (files) {
             if (files =='' ) {
-                return(<div className="file-caption-name" >File not selected</div>);
+                return(<div>File not selected</div>);
             } else {
-                return(<div className="file-caption-name" title={files[0].name}>{files[0].name}</div>);
+                return(<div title={files[0].name}>{files[0].name}</div>);
             }
 
         };
-        var clear = function(files,method) {
+        let clear = function(files,method) {
             if (files !='') {
                 return (
-                    <button className="btn btn-default fileinput-remove fileinput-remove-button"
+                    <button className="btn btn-default"
                             onClick={method} type="button" tabIndex={500}
                             title="Очистить выбранные файлы">
                         <i className="glyphicon glyphicon-trash"/>
@@ -115,7 +108,7 @@ class Fileinput extends React.Component{
             <div className="file-input">
                 {photos}
                 <div className={'input-group file-caption-main'}>
-                    <div className='form-control file-caption  kv-fileinput-caption '  tabIndex={500}>
+                    <div className='form-control'  tabIndex={500}>
                         {fileCaptionName(this.state.files)}
                     </div>
                     <div className='input-group-btn'>
@@ -124,19 +117,6 @@ class Fileinput extends React.Component{
                             <i className="glyphicon glyphicon-folder-open"></i>
                             <span className="hidden-xs"> Selected</span>
                             <input ref={this.props.refInput} onChange={this.handleChange} id={this.props.id} name={this.props.name}  type="file" accept="image/*,image/jpeg" />
-                        </div>
-                    </div>
-                </div>
-                <div id="file_input_preview" className="modal fade">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <button className="close" type="button" data-dismiss="modal">X</button>
-                                <h4 className="modal-title">{this.state.previw_title}</h4>
-                            </div>
-                            <div className="modal-body">
-                                <img src={this.state.preview} className="img-thumbnail"/>
-                            </div>
                         </div>
                     </div>
                 </div>

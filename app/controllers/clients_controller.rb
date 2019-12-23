@@ -222,7 +222,7 @@ class ClientsController < ApplicationController
   end
 
   def set_current_client
-    @client=current_client
+    @client = current_client
   end
     # Never trust parameters from the scary internet, only allow the white list through.
   def client_params
