@@ -30,9 +30,9 @@
         = render 'inc/btn', object: job, option: {class:'job', type:2, edit: edit}
       - else
         .row
-          .text-center
+          .text-center.col
             = link_to(job.company.name.truncate(50, separator: " "), job.company)
-          .text-center
+          .text-center.col
             = link_to(image_bg(job.company.logo_url, "contain", "130px", "100px"), job.company)
-      .row.text-center
+      .row.text-center.col
         = "Posted: " +job.posted_date

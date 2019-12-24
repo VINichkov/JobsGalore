@@ -4,7 +4,7 @@
     .col-md-8
       =render 'ad/before_ad_md'
       .row.well
-        h1.text-center
+        h1.text-center.col
           = highlight(resume.title, Search.str_to_highlight(query))
         p
           = highlight(resume.render_description, Search.str_to_highlight(query))
@@ -13,11 +13,11 @@
       .panel.panel-default
         .panel-body
           - if current_client && (current_client.resp? || (resume.client.id == current_client.id) || current_client.admin?)
-            h4.text-center
+            h4.text-center.col
               = resume.client.full_name
             = image_bg(resume.client.photo_url, "contain", "300px", "250px", autoload: false)
           - else
-            h4.text-center
+            h4.text-center.col
               |Anonymous
             p
             = image_bg(image_path("avatar.jpg"), "contain", "300px", "250px", autoload: false)
@@ -25,7 +25,7 @@
             = render 'inc/summary', object: resume
             .btn_margin
               = render 'inc/btn', object: resume, option: {class: 'resume', type: 3}
-              .text-center
+              .text-center.col
                 = social_share_button_tag resume.title, url: resume_url(resume), title:resume.title
       =render 'ad/after_summary_md'
   -if client_signed_in?

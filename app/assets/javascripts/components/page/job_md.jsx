@@ -42,16 +42,16 @@ class JobMd extends React.Component{
                         </div>
                         <div className="col-md-2">
                             <div className="row">
-                                <div className="text-center">
+                                <div className="text-center col">
                                     <a href={company_url}>{company}</a>
                                 </div>
-                                <div className="text-center">
+                                <div className="text-center col">
                                     <a href={company_url}>
-                                        <div className="text-center img-thumbnail center-block avatar b-lazy b-error" style={image_style} />
+                                        <div className="text-center col img-thumbnail center-block avatar b-lazy b-error" style={image_style} />
                                     </a>
                                 </div>
                             </div>
-                            <div className="row text-center">
+                            <div className="row text-center col">
                                 Posted:  {posted_date}
                             </div>
                         </div>

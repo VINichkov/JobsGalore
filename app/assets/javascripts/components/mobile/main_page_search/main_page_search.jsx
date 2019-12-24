@@ -37,7 +37,7 @@ class MainPageSearch extends React.Component{
                         <input id="input_search" name="main_search[type]" readOnly="" value="2" style={hidden}/>
                         <input id="input_action" name="main_search[open]" readOnly="" value="false"
                                    style={hidden}/>
-                        <div className="text-center" >
+                        <div className="text-center col" >
                             <input type="submit" className="btn btn-primary  btn-circle btn-block" value="Search jobs"/>
                         </div>
                      </form>

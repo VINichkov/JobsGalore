@@ -11,7 +11,7 @@
               - @client.errors.full_messages.each do |message|
                 li = message
         hr.colorgraph
-        .form-group.text-center
+        .form-group.text-center.col
           - if current_client.photo.nil?
             = image_tag(image_path("avatar.jpg"), size: "300x300", class: 'img-thumbnail', alt:current_client.full_name )
           - else

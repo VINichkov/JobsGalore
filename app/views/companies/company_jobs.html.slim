@@ -7,14 +7,14 @@
   h1 Jobs at #{@company.name}
   .col-lg-3.col-md-3.hidden-sm.hidden-xs
     .panel.panel-default
-      .panel-body.text-center
+      .panel-body.text-center.col
         = link_to @company.name, @company
         = image_bg(@company.logo_url, "contain", "200px", "200px")
     =render 'ad/after_summary_skyscraper_md'
   .col-sm-9.col-md-9.col-sm-12.col-xs-12
     = render partial: 'inc/job/job_md', collection: @objs, as: :job, locals:{query: ''} if md?
     = render partial: 'inc/job/job_xs', collection: @objs, as: :job, locals:{query: ''} unless md?
-  .text-center
+  .text-center.col
     = will_paginate_mini @objs
   .row
   = render 'inc/btn/btn_new_resume_xs_sm' unless md?

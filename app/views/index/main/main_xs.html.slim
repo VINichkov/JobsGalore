@@ -2,7 +2,7 @@
 h1.none Jobsgalore. Jobs in Australia.
 .container
   .row
-    p.col-md-6.text-center
+    p.col-md-6.text-center.col
       strong
         = link_to "Upload your resume", new_resume_url
         |&nbsp;-&nbsp;Let employers find you
@@ -13,10 +13,10 @@ h1.none Jobsgalore. Jobs in Australia.
     = main_page_search(@search)
   br
   .row
-    .col-xs-12.text-center
+    .col-xs-12.text-center.col
       h3
         |Are you hiring?
-    .col-xs-12.text-center
+    .col-xs-12.text-center.col
       = link_to "Post a job ad for free", new_job_path, class: "btn btn-default btn-circle btn-block", rel: "nofollow"
   p
 

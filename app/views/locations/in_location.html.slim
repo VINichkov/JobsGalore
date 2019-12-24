@@ -12,7 +12,7 @@
       = render partial:'inc/company', collection: @in_location.objs, locals:{query:''}
     - elsif @in_location.type==Objects::RESUMES
       = render partial:'inc/resume', collection: @in_location.objs, locals:{query:''}
-    .text-center
+    .text-center.col
       = will_paginate_mini @in_location.objs
   .col-lg-4.col-md-4.hidden-xs.hidden-sm
     = render "ad/after_summary_skyscraper_md"

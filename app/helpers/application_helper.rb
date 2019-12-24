@@ -31,7 +31,7 @@ module ApplicationHelper
         :div,
         '',
         #"data-src": data_src,
-        class: "#{option[:class] ? (option[:class].to_s + ' b-lazy')  : "text-center img-thumbnail center-block avatar b-lazy"}",
+        class: "#{option[:class] ? (option[:class].to_s + ' b-lazy')  : "text-center col img-thumbnail center-block avatar b-lazy"}",
         style: "background-image: url('#{url}'); background-size: #{bgsize}; width: #{width}; height: #{height};")
   end
 

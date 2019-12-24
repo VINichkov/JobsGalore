@@ -18,17 +18,17 @@
         = render 'inc/btn', object: resume, option: {class: 'resume', type: 3}
       - elsif current_client&.resp?
         .row
-          .row.text-center
+          .row.text-center.col
             = resume.client&.full_name
-          .row.text-center
+          .row.text-center.col
             = image_bg(resume.client&.photo_url, "contain", "130px", "100px")
-          .row.text-center
+          .row.text-center.col
             = "Posted: " +resume.posted_date
       - else
         .row
-          .row.text-center
+          .row.text-center.col
             = "Anonymous"
-          .row.text-center
+          .row.text-center.col
             = image_bg(image_url("avatar.jpg"), "contain", "130px", "100px")
-          .row.text-center
+          .row.text-center.col
             = "Posted: " +resume.posted_date

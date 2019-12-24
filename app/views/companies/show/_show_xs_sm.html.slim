@@ -8,7 +8,7 @@
         span[itemprop="telephone"]
           = company.client.first.phone || "empty"
       span[itemprop="name"]
-        h1.text-center
+        h1.text-center.col
           = highlight(company.name, Search.str_to_highlight(query))
           - if company.realy?
             span.glyphicon.glyphicon-ok
@@ -28,12 +28,12 @@
           = company.logo_url
       .row
         .col-xs-12
-          .text-center
+          .text-center.col
             = image_bg(company.logo_url, "contain", "300px", "250px")
             = social_share_button_tag company.name, class: "center-block"
       .row
         .col-xs-12
-          h3.text-center
+          h3.text-center.col
             |Summary
           = company_summary(company)
       =render 'ad/before_ad_xs'
@@ -42,7 +42,7 @@
           -if company.description
             p
               = highlight(company.render_description, Search.str_to_highlight(query))
-          .text-center
+          .text-center.col
             = jobs_of_company(company)
       .row.sticky
         .col-xs-12

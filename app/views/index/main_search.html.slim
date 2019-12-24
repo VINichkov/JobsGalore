@@ -20,7 +20,7 @@
           = render partial: 'inc/company', collection: @result.objs, as: :company, locals:{query: @result.query}
         - else @result.type==Objects::RESUMES
           = render partial: 'inc/resume', collection: @result.objs, as: :resume, locals:{query: @result.query}
-        .text-center
+        .text-center.col
           = will_paginate_mini @result.objs
       .col-lg-4.col-md-4.hidden-xs.hidden-sm
         =render "ad/after_summary_skyscraper_md"

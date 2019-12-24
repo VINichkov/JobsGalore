@@ -12,13 +12,13 @@
           p
 .container
   .row
-    h3.text-center
+    h3.text-center.col
       |More jobs in real time – Search&nbsp;
       strong #{Location.select(:counts_jobs)&.inject(0) {|rez, elem| rez +=elem.counts_jobs if elem.counts_jobs}}
       |&nbsp;jobs now.
     p
   .row.hidden-lg.hidden-md
-    .col-sm-12.col-xs-12.text-center
+    .col-sm-12.col-xs-12.text-center.col
       |Do you want to get a dream job?
     .col-sm-6.col-xs-6.align-center
       |Let employers find you

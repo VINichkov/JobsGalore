@@ -9,7 +9,7 @@ module JobsHelper
 
 
   def company_in_jobs(object)
-    html = content_tag(:h4, class: "text-center", itemprop:"name"){
+    html = content_tag(:h4, class: "text-center col", itemprop:"name"){
       link_to(object.name,object)
     }
     html+= content_tag(:span,object.logo_url, class: "hidden-xs hidden-md hidden-lg hidden-sm",itemprop:"image" )

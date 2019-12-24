@@ -74,7 +74,7 @@ class Pagination extends React.Component {
             }
 
         }
-        return(<div className="text-center">
+        return(<div className="text-center col">
                     <ul className="pagination pagination">
                         {paginate}
                     </ul>

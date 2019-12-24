@@ -1,7 +1,7 @@
 .container.hidden-xs.hidden-sm
   .col-lg-8.col-md-8
     .row.well
-      h1.text-center
+      h1.text-center.col
         = object.title.capitalize
       p
         = object.render_description
@@ -13,14 +13,14 @@
 .col-xs-12.hidden-md.hidden-lg
   .panel-body
     .col-sm-12.hidden-md.hidden-lg.hidden-xs
-      h2.text-center
+      h2.text-center.col
         = object.title.capitalize
     .row
       .col-sm-6.hidden-xs
 
       .col-sm-6.col-xs-12
         .hidden-md.hidden-lg.hidden-sm
-          h3.text-center
+          h3.text-center.col
             = object.title.capitalize
         = render 'inc/summary', object: object
     .row

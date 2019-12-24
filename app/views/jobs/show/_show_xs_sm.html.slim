@@ -3,7 +3,7 @@
   .row
     .col-xs-12[itemscope itemtype="http://schema.org/JobPosting"]
       meta[itemprop="specialCommitments" content="VeteranCommit"]
-      h1.text-center[itemprop="title"]
+      h1.text-center.col[itemprop="title"]
         = highlight(job.title.capitalize, Search.str_to_highlight(query))
       hr
       .row
@@ -20,7 +20,7 @@
           span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
             = job.description_text
       p
-        .text-center
+        .text-center.col
           = social_share_button_tag job.title, url: job_url(job), title:job.title
       //=render 'ad/before_ad_xs'
       = similar_vacancies(job, 'xs')

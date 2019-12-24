@@ -52,7 +52,7 @@ class EditPicture extends React.Component {
                 Done
             </button>;
         }
-        return(<div className="form-group text-center">
+        return(<div className="form-group col text-center">
                     <img className="img-thumbnail"
                          src={this.state.image}
                          width="300" height="300" />

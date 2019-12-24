@@ -5,7 +5,7 @@
     .col-md-8
       =render 'ad/before_ad_md'
       .row.well
-        h1.text-center[itemprop="title"]
+        h1.text-center.col[itemprop="title"]
           = highlight(job.title.capitalize, Search.str_to_highlight(query))
         p
           = highlight(job.render_description, Search.str_to_highlight(query))
@@ -22,7 +22,7 @@
           = render 'inc/summary', object: job
           .btn_margin
             = render 'inc/btn', object: job, option:{class:'job', type:2, show: true}
-            .text-center
+            .text-center.col
               =social_share_button_tag  job.title, url: job_url(job), title:job.title
       =render 'ad/after_summary_md'
   - unless job.apply

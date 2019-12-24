@@ -2,7 +2,7 @@
 -cache([resume,query]) do
   .row
     .col-xs-12
-      h3.text-center
+      h3.text-center.col
         = highlight(resume.title, Search.str_to_highlight(query))
       = render 'inc/summary', object: resume
       = render 'ad/before_ad_xs'

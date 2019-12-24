@@ -91,7 +91,7 @@ class ApplyJob extends React.Component{
                                 </div>
                             </div>
                             <div className="row sticky hidden-lg hidden-md" >
-                                <div className="col-xs-12 col-lg-12 btn_margin text-center" >
+                                <div className="col-xs-12 col-lg-12 btn_margin text-center col" >
                                     <input type="submit" className="btn btn-primary btn-block btn-circle" value="Apply for job" onClick={this.handlerExperiment}/>
                                 </div>
                             </div>

@@ -9,7 +9,7 @@
           span[itemprop="telephone"]
             = company.client.first.phone || "empty"
         span[itemprop="name"]
-          h1.text-center
+          h1.text-center.col
             = highlight(company.name, Search.str_to_highlight(query))
             - if company.realy?
               span.glyphicon.glyphicon-ok
@@ -32,12 +32,12 @@
     .col-lg-4.col-md-4
       .panel.panel-default
         .panel-body
-          .row.text-center
+          .row.text-center.col
             span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="image"]
               =company.logo_url
             = image_bg(company.logo_url, "contain", "300px", "250px")
           .row
-            h3.text-center
+            h3.text-center.col
               |Summary
           .well
             =company_summary(company)
@@ -47,6 +47,6 @@
                   |Contact
                 p
             .btn_margin
-              .text-center
+              .text-center.col
                 = social_share_button_tag company.name
       =render 'ad/after_summary_md'

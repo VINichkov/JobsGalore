@@ -17,9 +17,9 @@ nav.navbar.navbar-blue.navbar-top[itemscope itemtype="http://schema.org/WebSite"
       |JobsGalore.eu
   ul
     - if client_signed_in?
-      .text-center
+      .text-center.col
         = image_bg(current_client.photo_url, "contain", "50px", "50px")
-      .text-center
+      .text-center.col
         | &nbsp; #{current_client.full_name} &nbsp;
       - if current_client.resp?
         li
