@@ -36,7 +36,7 @@
           h3.text-center
             |Summary
           = company_summary(company)
-      =render 'ad/before_ad_xs'
+      =render 'ad/before_ad_xs' if Propert.ads_turn_on?
       .row
         .col-xs-12.col-sm-12
           -if company.description

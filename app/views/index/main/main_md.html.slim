@@ -4,16 +4,20 @@ h1.none Jobsgalore. Jobs in Australia.
     .header
       .row
         .col-lg-3.col-md-3.col-sm-3.col-md-offset-9.col-lg-offset-9.col-sm-offset-9
-          = link_to "Post a job ad for free", new_job_path, class: "btn btn-primary btn-block", rel:"nofollow"
+          = link_to "Post a job ad for free", new_job_path, class: "btn btn-primary btn-block"
           p
       .row
         .col-lg-3.col-md-3.col-sm-3.col-md-offset-9.col-lg-offset-9.col-sm-offset-9
-          = link_to "Post new resume", new_resume_path, class: "btn btn-success btn-block", rel:"nofollow"
+          = link_to "Post new resume", new_resume_path, class: "btn btn-success btn-block"
+          p
+      .row
+        .col-lg-3.col-md-3.col-sm-3.col-md-offset-9.col-lg-offset-9.col-sm-offset-9
+          = link_to "Send message to employers", contacts_of_companies_path, class: "btn btn-warning btn-block"
           p
       - if current_client&.admin?
         .row
           .col-lg-3.col-md-3.col-sm-3.col-md-offset-9.col-lg-offset-9.col-sm-offset-9
-            = link_to "Post new resume for a client", new_admin_client_with_resume_path, class: "btn btn-warning btn-block", rel: "nofollow"
+            = link_to "Post new resume for a client", new_admin_client_with_resume_path, class: "btn btn-danger btn-block"
             p
 .container
   .row

@@ -137,21 +137,30 @@ class Mailing extends React.Component{
                             <hr className="colorgraph" />
                         </div>
                         <div className="col-md-offset-6 col-lg-offset-6 col-xs-6 col-md-6">
-                            <button className="btn btn-primary btn-block" onClick={this.state.isStepTwo ?  this.sendDateToServer  : this.onClickNext }>{this.state.isStepTwo ? "Pay $" +this.state.price.toFixed(2) : "Next"}</button>
+                            <button className="btn btn-primary btn-block" onClick={this.state.isStepTwo ?  this.sendDateToServer  : this.onClickNext }>{this.state.isStepTwo ? "Send and Pay $" +this.state.price.toFixed(2) : "Next"}</button>
                         </div>
                    </div>;
         let btn_min = <div className="row sticky hidden-lg hidden-md">
                         <div className="col-xs-12 col-md-12">
-                            <button className="btn btn-primary btn-circle btn-block" onClick={this.state.isStepTwo ?  this.sendDateToServer  : this.onClickNext }>{this.state.isStepTwo ? "Pay $" +this.state.price.toFixed(2) : "Next"}</button>
+                            <button className="btn btn-primary btn-circle btn-block" onClick={this.state.isStepTwo ?  this.sendDateToServer  : this.onClickNext }>{this.state.isStepTwo ? "Send and Pay $" +this.state.price.toFixed(2) : "Next"}</button>
                         </div>
                     </div>;
-        let size = this.state.isStepTwo ? null :<div className="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+        let size = this.state.isStepTwo ? null : <div className="col-lg-5 col-md-5 col-sm-5 col-xs-12">
             <ChangeSize onChangeSize = {this.handleDataUpdate} page_size = {this.state.page_size} length = {this.state.elements.length}/>
         </div>;
+        let tab = this.state.isStepTwo  ? null : <ul className="nav nav-tabs">
+            <li><a href={this.props.mailbox}>Mailbox</a></li>
+            <li className="active"><a>Mailing List</a></li>
+        </ul>;
         return (
             <div>
-                <h1>{this.state.isStepTwo ? "Message":"Mailing list"}</h1>
+
                 <div className = "col-lg-8 col-md-9 col-sm-12">
+
+                        <h1>{this.state.isStepTwo ? "Message":"Mailing List"}</h1>
+                        {tab}
+                        <br/>
+
                     <div className="row">
                         <div className={this.state.isStepTwo ? "col-lg-12 col-md-12 col-sm-12 col-xs-12":"col-lg-7 col-md-7 col-sm-7 col-xs-12"}>
                             <div className="panel panel-default">

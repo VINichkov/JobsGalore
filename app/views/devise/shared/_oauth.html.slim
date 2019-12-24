@@ -3,27 +3,22 @@
     .col-md-4.col-lg-4
       = link_to client_linkedin_omniauth_authorize_path, class: "btn btn-linkedin btn-block" do
         i.ssb-icon.ssb-linkedin.text-left.btn[aria-hidden="true"]
-        |&nbsp;|&nbsp;Sign in with LinkedIn
+        |&nbsp;|&nbsp;LinkedIn
     .col-md-4.col-lg-4
       = link_to client_google_oauth2_omniauth_authorize_path, class: "btn btn-google btn-block" do
         i.ssb-icon.ssb-google_plus.text-left.btn[aria-hidden="true"]
-        |&nbsp;|&nbsp;Sign in with Google
+        |&nbsp;|&nbsp;Google
     .hidden-xs.col-md-4.col-lg-4
       = link_to client_facebook_omniauth_authorize_path, class: "btn btn-facebook btn-block" do
         i.ssb-icon.ssb-facebook.text-left.btn[aria-hidden="true"]
-        |&nbsp;|&nbsp;Continue with Facebook
+        |&nbsp;|&nbsp;Facebook
   .row.social-share-button.hidden-md.hidden-sm.hidden-lg
-    .col-xs-12
+    .col-xs-4
       = link_to client_linkedin_omniauth_authorize_path, class: "btn btn-linkedin btn-block" do
         i.ssb-icon.ssb-linkedin.text-left.btn[aria-hidden="true"]
-        |&nbsp;|&nbsp;Sign in with LinkedIn
-      p
-    .col-xs-12
+    .col-xs-4
       = link_to client_google_oauth2_omniauth_authorize_path, class: "btn btn-google btn-block" do
         i.ssb-icon.ssb-google_plus.text-left.btn[aria-hidden="true"]
-        |&nbsp;|&nbsp;Sign in with Google
-      p
-    .col-xs-12
+    .col-xs-4
       = link_to client_facebook_omniauth_authorize_path, class: "btn btn-facebook btn-block" do
         i.ssb-icon.ssb-facebook.text-left.btn[aria-hidden="true"]
-        |&nbsp;|&nbsp;Continue with Facebook

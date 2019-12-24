@@ -4,10 +4,10 @@
     .container
       .navbar-header
         = link_to root_path ,  class: "navbar-brand" do
-            strong
-              |JobsGalore.
-            small
-              |eu
+          strong
+            |JobsGalore.
+          small
+            |eu
       = render('inc/header/inc/search', search: search, key: "search")
       .navbar-right
         =render 'inc/header/client_drop_menu'

@@ -2,9 +2,13 @@
   .row
     .col-xs-12.col-sm-12.col-md-8.col-lg-8.col-md-offset-2.col-lg-offset-2
       = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-        h2 Log in
-        hr.colorgraph
+        h2.line.text-center
+          |Log in with
+        br
         = render 'devise/shared/oauth'
+        h4.line.text-center
+          |or with email
+        br
         .form-group
           = f.label :email
           br
@@ -19,10 +23,9 @@
               = f.label :remember_me
                 = f.check_box :remember_me
                 |Remember me
-        hr.colorgraph
         .row
           .col-xs-6.col-md-6
-            = link_to "Register", new_registration_path(resource_name), class: "btn btn-success btn-block "
+            = link_to "Sign up", new_registration_path(resource_name), class: "btn btn-success btn-block "
             br
           .col-xs-6.col-md-6.col-sm-6.col-lg-6
             = f.submit "Log in", class: "btn btn-primary btn-block"

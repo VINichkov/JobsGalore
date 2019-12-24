@@ -27,7 +27,7 @@
               = stuff.phone
             span[itemprop="contactType"]
               |customer service
-      =render 'ad/before_similar_job_md'
+      =render 'ad/before_similar_job_md' if Propert.ads_turn_on?
       =jobs_of_company(company)
     .col-lg-4.col-md-4
       .panel.panel-default
@@ -49,4 +49,4 @@
             .btn_margin
               .text-center
                 = social_share_button_tag company.name
-      =render 'ad/after_summary_md'
+      =render 'ad/after_summary_md' if Propert.ads_turn_on?

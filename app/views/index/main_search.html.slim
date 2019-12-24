@@ -23,7 +23,7 @@
         .text-center
           = will_paginate_mini @result.objs
       .col-lg-4.col-md-4.hidden-xs.hidden-sm
-        =render "ad/after_summary_skyscraper_md"
+        =render "ad/after_summary_skyscraper_md" if Propert.ads_turn_on?
     .row
     - if @result.type == Objects::JOBS
       = render 'inc/btn/btn_new_resume_xs_sm'

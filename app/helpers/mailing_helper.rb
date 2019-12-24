@@ -4,6 +4,7 @@ module MailingHelper
      react_component(
         'Mailing',
         route: mailing_create_url,
+        mailbox: show_mailings_path,
         filterCompany: filter,
         elements: elements,
         amount: amount,

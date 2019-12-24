@@ -5,7 +5,7 @@
       h3.text-center
         = highlight(resume.title, Search.str_to_highlight(query))
       = render 'inc/summary', object: resume
-      = render 'ad/before_ad_xs'
+      = render 'ad/before_ad_xs' if Propert.ads_turn_on?
       p
       .btn-group.btn-group-justified
         = render 'inc/btn/btn_edit_xs_sm', object: resume, option: {cl: "dropdown", class: 'resume', type: 3} if can? :destroy, resume

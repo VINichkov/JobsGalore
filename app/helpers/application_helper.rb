@@ -3,12 +3,22 @@ module ApplicationHelper
   HIGHLIGHT = "highlight"
   URGENT = "urgent"
 
+  def ad_here
+    content_for :ad, true
+  end
+
+  def ad_is?
+    content_for? :ad
+  end
+
   def title(text)
     content_for :title, text
   end
+
   def meta_tag(tag, text)
     content_for :"meta_#{tag}", text
   end
+
   def yield_meta_tag(tag, default_text='')
     content_for?(:"meta_#{tag}") ? content_for(:"meta_#{tag}") : default_text
   end
