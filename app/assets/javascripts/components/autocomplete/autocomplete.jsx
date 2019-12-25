@@ -7,16 +7,9 @@ class Autocomplete extends React.Component{
                         locations: null,
                         defaultId: this.props.defaultId,
                         defaultName: this.props.defaultName,
-                        input: !this.props.not_id };
-        this.value_to_array = function (arg) {
-            if (arg !== null){
-                return arg.map(function (e) {
-                    return e.name;
-                })
-            } else{
-                return null;
-            }
-        };
+                        input: !this.props.not_id};
+        this._nameRef =  this.props.nameRef || React.createRef();
+        this._idRef =  this.props.idRef || React.createRef();
         this.handleInput = this.handleInput.bind(this);
     }
     componentDidMount(){
@@ -28,16 +21,9 @@ class Autocomplete extends React.Component{
         let autocomplete = $('#' + this.props.id);
         if (autocomplete !=null) {
             autocomplete.typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 1,
-                source:  '',
-                autoSelect: false,
-                onSelect: function(item) {
-                    if (this.state.input && input_id !== null) {
-                        input_id.val(item.value);
-                    }
-                 }.bind(this),
+                onSelect: (item)=> {
+                    this._idRef.current.value = item.value
+                }
             });
             this.setState({autocomplete: autocomplete});
         }
@@ -45,6 +31,7 @@ class Autocomplete extends React.Component{
     handleInput(){
         if ( this.state.autocomplete.val().length>0) {
             this.handleSearchLocations(this.props.route+this.state.autocomplete.val()+".json");
+
         }
     }
 
@@ -62,7 +49,7 @@ class Autocomplete extends React.Component{
         const ilStyle={display:'none'};
         let input_id = null;
         if (this.state.input) {
-            input_id = <input ref={this.props.idRef}
+            input_id = <input ref={this._idRef}
                               key={this.props.name + "_id]"}
                               id={"input_get"+this.props.id}
                               name={this.props.name + "_id]"}
@@ -72,7 +59,7 @@ class Autocomplete extends React.Component{
         }
         return(
             <div>
-                <input   ref={this.props.nameRef}
+                <input   ref={this._nameRef}
                          key = {this.state.input ? this.props.name + "_name]" : this.props.name}
                          name={this.state.input ? this.props.name + "_name]" : this.props.name}
                          autoComplete = "off"

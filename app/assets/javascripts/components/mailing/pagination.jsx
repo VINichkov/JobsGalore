@@ -66,7 +66,7 @@ class Pagination extends React.Component {
                         }
                         if (this.props.page_count >= 5) {
                             paginate.push(<li className={this.props.page + 1 === this.props.page_count ? "active" : null} ><a
-                                onClick={() => this.props.onClickPage(this.props.page_count - 1)}>{this.props.page_count}</a>
+                                onClick={() => this.onClick(this.props.page_count - 1)}>{this.props.page_count}</a>
                             </li>);
                         }
                     }

@@ -33,7 +33,7 @@ class CompanyEdit extends React.Component {
             industry_id: this._fieldIndustry.current.value,
             recrutmentagency: this._fieldAgency.current.checked,
             description: this._fieldDescription.current.value
-    };
+        };
          $.ajax({
              type: "PATCH",
              url: this.props.route,

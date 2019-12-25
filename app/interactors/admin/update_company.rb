@@ -36,6 +36,7 @@ class Admin::UpdateCompany
     need_to_save = false
     company.keys.each do |attr|
       value, need_to_save = comparison(saved_company.try(attr), company[attr], need_to_save)
+      puts "#{attr}= #{value}"
       saved_company.try("#{attr}=", value)
     end
     saved_company.save if need_to_save
