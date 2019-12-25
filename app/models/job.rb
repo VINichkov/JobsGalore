@@ -2,7 +2,7 @@
 
 class Job < ApplicationRecord
 
-  SHELF_LIFE = 15
+  SHELF_LIFE = 30
   #include PgSearch::Model
   serialize :preferences, Hash
 
