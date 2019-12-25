@@ -7,7 +7,8 @@ class Admin::UpdateCompany
     services = LazyHash.new(
       'update_emails' => -> { emails },
       'update_company' => -> { company },
-      'update_logo' => -> { logo}
+      'update_logo' => -> { logo },
+      'absorb' => -> { absorb }
     )
     services[context.params['action_executed']]
   end
@@ -42,8 +43,13 @@ class Admin::UpdateCompany
 
   def logo
     saved_company = Company.find_by_id(context.params['id'])
+    puts context.params['data']
     saved_company.logo = context.params['data']["img"]
     saved_company.save
+  end
+
+  def absorb
+    Company.find_by_id(context.params['id']).absorb(context.params['data']['dup_id'].to_i)
   end
 
   private

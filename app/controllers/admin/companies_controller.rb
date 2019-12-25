@@ -27,6 +27,6 @@ class Admin::CompaniesController < ApplicationController
   end
 
   def company_params
-    params.permit(:id, :action_executed, :data, data: :img)
+    params.permit(:id, :action_executed, :data, data: [:img, :dup_id])
   end
 end

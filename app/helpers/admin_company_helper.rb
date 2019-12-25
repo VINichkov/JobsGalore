@@ -39,4 +39,11 @@ module AdminCompanyHelper
         update_route: admin_get_logo_url
     )
   end
+
+  def duplicate
+    react_component(
+       'Duplicate',
+        route: admin_company_url,
+    )
+  end
 end
