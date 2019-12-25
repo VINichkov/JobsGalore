@@ -297,8 +297,6 @@ GEM
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
-    preact-rails (0.1.1)
-      railties (>= 3.2)
     public_suffix (4.0.1)
     puma (4.3.1)
       nio4r (~> 2.0)
@@ -518,7 +516,6 @@ DEPENDENCIES
   pdf-reader (~> 2.1.0)
   pg
   prawn
-  preact-rails
   puma (>= 4.2.1)
   rails
   react-rails (~> 2.5.0)
