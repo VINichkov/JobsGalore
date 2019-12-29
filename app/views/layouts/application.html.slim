@@ -30,26 +30,20 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
     meta[name="keywords" content=yield_meta_tag("keywords","Jobs Galore, work, job, vacancy search, resume, jobs, Australia, vacancies, employment, looking for a job, search, seek, galore, money, solary, indeed, JobsGalore, jobs in university, post job free,  post jobs for free, look for job, seeking, job board")]
     = stylesheet_link_tag('application', media: :all) if md?
     = stylesheet_link_tag('application_xs', media: :all) unless md?
-    script[type="text/javascript" async = 'true']
-      |(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      |(i[r].q=i[r].q||[  ]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      |m= s.getElementsByTagName(o)[0]; a.async=1; a.src=g;m.parentNode.insertBefore(a, m)
-      |})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      |ga('create', 'UA-102893446-1', 'auto');
-      |ga('send', 'pageview');
+
+    script async=true src="https://www.googletagmanager.com/gtag/js?id=UA-102893446-1"
+    javascript:
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-102893446-1');
     - if ad_is?
-      script[type="text/javascript" async = 'true']
-        |window._mNHandle = window._mNHandle || {};
-        |window._mNHandle.queue = window._mNHandle.queue || [];
-        |medianet_versionId = "3121199";
-    - if ad_is?
-      script[src="//contextual.media.net/dmedianet.js?cid=8CU7K51EM" async = 'true']
-    //script[async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]
-    //script.async
-      |(adsbygoogle = window.adsbygoogle || []).push({
-      |google_ad_client: "ca-pub-8494804402686328",
-      |enable_page_level_ads: true
-      |});
+      javascript:
+        window._mNHandle = window._mNHandle || {};
+        window._mNHandle.queue = window._mNHandle.queue || [];
+        medianet_versionId = "3121199";
+      script[src="//contextual.media.net/dmedianet.js?cid=8CU7K51EM" async = true]
     = javascript_include_tag('application', defer: true)
     = csrf_meta_tags
   body
