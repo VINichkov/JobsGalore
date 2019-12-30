@@ -17,14 +17,15 @@ module JobsHelper
   end
 
   def last_job(job)
-    content_tag(:li ) {
-      li =content_tag(:hr)
-      li+=content_tag(:p, link_to(job.title.capitalize, job))
-      li+=content_tag(:p, job.description_text + "...")
-      li+=content_tag(:span, link_to(job.company.name, job.company, class: 'text-success'), class: "small")
-      li+="&nbsp; - &nbsp;".html_safe
-      li+=content_tag(:span, link_location(job.location.name, job.location, Objects::JOBS, class: 'text-warning'), class: "small")
-    }
+    html='<li>'+
+            '<hr/>'+
+            "<p>#{link_to(job.title.capitalize, job)}</p>"+
+            "<p>#{job.description_text}... </p>"+
+            "<span class='small'>#{link_to(job.company.name, job.company, class: 'text-success')}</span>"+
+            '&nbsp; - &nbsp;'+
+            "<span class='small'>#{link_location(job.location.name, job.location, Objects::JOBS, class: 'text-warning')}</span>"+
+          '</li>'
+    html.html_safe
   end
 
   def meta_for_jobs(job)
