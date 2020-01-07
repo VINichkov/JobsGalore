@@ -223,7 +223,7 @@ class Resume < ApplicationRecord
       text_query << 'location_id in ' + locations.ids.to_s.sub('[', '(').sub(']', ')') if locations.present?
     end
 
-    text_query << 'fts @@ to_tsquery(:value)' if query[:value] != ''
+    text_query << 'fts @@ to_tsquery(\'english\',:value)' if query[:value] != ''
     if query[:salary].present?
       query[:salary] = query[:salary].to_i
       text_query << '(salary <= :salary or salary is NULL)'
@@ -231,6 +231,6 @@ class Resume < ApplicationRecord
 
     text_query = text_query.join(' and ')
 
-    select(:id, :desiredjobtitle, :location_id, :salary_form, :abouteme, :created_at, :updated_at, :highlight, :top, :urgent, :client_id, :industry_id, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"", :viewed_count).where(text_query, query)
+    select(:id, :desiredjobtitle, :location_id, :salary_form, :abouteme, :created_at, :updated_at, :highlight, :top, :urgent, :client_id, :industry_id, "ts_rank_cd(fts,  plainto_tsquery('english', '#{query[:value]}')) AS \"rank\"", :viewed_count).where(text_query, query)
   }
 end

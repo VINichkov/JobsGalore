@@ -20,7 +20,7 @@ class Location < ApplicationRecord
 
   protected
 
-  scope :search, ->(query = 'none') {where("locations.fts @@ to_tsquery(:query)",{query:query})}
+  scope :search, ->(query = 'none') {where("locations.fts @@ to_tsquery('english',:query)",{query:query})}
 
   def self.major
     #@@major_city ||= select(:id,:suburb).where(suburb:["Sydney", "Melbourne", "Brisbane"]).all

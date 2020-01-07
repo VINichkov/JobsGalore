@@ -11,8 +11,8 @@ namespace :other do
       db.execute("update resumes set highlight=null where highlight+7 < to_date(\'#{t}\',\'YYYY-MM-DD\')")
       db.execute("update resumes set urgent=null where urgent+7 < to_date(\'#{t}\',\'YYYY-MM-DD\')")
       db.execute("update resumes set top=null where top+7 < to_date(\'#{t}\',\'YYYY-MM-DD\')")
-      Job.where("created_at > :date and fts @@ to_tsquery(:value) and urgent is null",{date: Time.now.beginning_of_day - 1.day,value:"urgent"}).update_all(urgent:Time.now)
-      a = Job.where("created_at > :date and fts @@ to_tsquery(:value)",{date: Time.now.beginning_of_day - 1.day,value:"urgent"})
+      Job.where("created_at > :date and fts @@ to_tsquery('english',:value) and urgent is null",{date: Time.now.beginning_of_day - 1.day,value:"urgent"}).update_all(urgent:Time.now)
+      a = Job.where("created_at > :date and fts @@ to_tsquery('english',:value)",{date: Time.now.beginning_of_day - 1.day,value:"urgent"})
       (a.count / 2).times do
         a.sample.update(highlight:Time.now)
       end

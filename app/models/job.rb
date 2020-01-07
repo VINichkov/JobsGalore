@@ -245,7 +245,7 @@ class Job < ApplicationRecord
       query[:id] = arg[:exclude]
     end
     #text_query << 'created_at >= :date'
-    text_query << 'fts @@ to_tsquery(:value)'
+    text_query << 'fts @@ to_tsquery(\'english\',:value)'
     query[:old_value] = arg[:value]
     query[:value] = Search.str_to_search(arg[:value]).split(' ').map { |t| t += ':*' }.join('|')
     text_query = text_query.join(' and ')
@@ -298,9 +298,9 @@ class Job < ApplicationRecord
               end
       text_query << "created_at >= TO_DATE('#{date.to_date}', 'yyyy-mm-dd')"
       mode = "ARRAY['phrase', 'plain']"
-      text_query << 'fts @@ plainto_tsquery(:old_value)' if query[:old_value].present?
+      text_query << 'fts @@ plainto_tsquery(\'english\',:old_value)' if query[:old_value].present?
     else
-      text_query << 'fts @@ to_tsquery(:value)' if query[:value].present?
+      text_query << 'fts @@ to_tsquery(\'english\',:value)' if query[:value].present?
     end
 
 

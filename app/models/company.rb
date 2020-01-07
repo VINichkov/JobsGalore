@@ -80,7 +80,7 @@ class Company < ApplicationRecord
     query = query.to_h if query.class != Hash
     text_query=[]
 
-    text_query << "fts @@ to_tsquery(:value)" if query[:value].present?
+    text_query << "fts @@ to_tsquery('english',:value)" if query[:value].present?
     text_query << "industry_id = :category" if  query[:category].present?
 
     if query[:location_id].present? && query[:location_name].present?
