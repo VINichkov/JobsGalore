@@ -45,6 +45,8 @@ module ApplicationHelper
         style: "background-image: url('#{url}'); background-size: #{bgsize}; width: #{width}; height: #{height};")
   end
 
+
+
   def meta_head(arg={})
     title arg[:title]
     meta_tag "description",   arg[:description]
