@@ -19,7 +19,7 @@ class ConnectPg
       config = YAML.load_file("#{Rails.root}/config/database.yml")[ENV['RAILS_ENV']]
     end
     if connect_string
-      @connect = PG.connect(connect_string)
+      @connect = PG.connect
     else
       @connect = PG.connect(
         host: 'localhost',

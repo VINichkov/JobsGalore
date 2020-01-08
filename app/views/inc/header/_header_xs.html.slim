@@ -62,7 +62,12 @@ nav.navbar.navbar-blue.navbar-top[itemscope itemtype="http://schema.org/WebSite"
       = link_to new_resume_path do
         |&nbsp;
         span.glyphicon.glyphicon-paperclip
-        |&nbsp; Uoload a  resume
+        |&nbsp; Upload your resume
+    li
+      = link_to contacts_of_companies_path do
+        |&nbsp;
+        span.glyphicon.glyphicon-envelope
+        |&nbsp; Send a message to employers
     - unless client_signed_in?
       li
         = link_to new_client_session_path do
