@@ -1,11 +1,20 @@
-- ad_here
 .row
   //script[async src="//ap.lijit.com/www/delivery/fpi.js?z=670768&width=728&height=90"]
-  .col-xs-12[id="261542341"]
-    javascript:
-        try {
-            window._mNHandle.queue.push(function (){
-                window._mNDetails.loadTag("261542341", "300x50", "261542341");
-            });
-        }
-        catch (error) {}
+  #yandex_rtb_R-A-494123-6
+  javascript:
+      (function (w, d, n, s, t) {
+          w[n] = w[n] || [];
+          w[n].push(function () {
+              Ya.Context.AdvManager.render({
+                  blockId: "R-A-494123-6",
+                  renderTo: "yandex_rtb_R-A-494123-6",
+                  async: true
+              });
+          });
+          t = d.getElementsByTagName("script")[0];
+          s = d.createElement("script");
+          s.type = "text/javascript";
+          s.src = "//an.yandex.ru/system/context.js";
+          s.async = true;
+          t.parentNode.insertBefore(s, t);
+      })(this, this.document, "yandexContextAsyncCallbacks");
