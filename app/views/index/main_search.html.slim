@@ -14,6 +14,7 @@
           = page_entries_info @result.objs, {model:@result.type.name}
     .row
       .col-lg-8.col-md-8.col-sm-12
+        = render 'ad/before_and_after_shearch' if Propert.ads_turn_on?
         - if @result.type == Objects::JOBS
           = render partial: 'inc/job', collection: @result.objs, as: :job, locals:{query: @result.query}
         - elsif @result.type==Objects::COMPANIES
@@ -22,6 +23,7 @@
           = render partial: 'inc/resume', collection: @result.objs, as: :resume, locals:{query: @result.query}
         .text-center
           = will_paginate_mini @result.objs
+        = render 'ad/before_and_after_shearch' if Propert.ads_turn_on?
       .col-lg-4.col-md-4.hidden-xs.hidden-sm
         =render "ad/after_summary_skyscraper_md" if Propert.ads_turn_on?
     .row
