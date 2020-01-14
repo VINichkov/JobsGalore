@@ -31,4 +31,6 @@
             = f.submit "Log in", class: "btn btn-primary btn-block"
             br
           = render "devise/shared/links"
-
+        br
+      .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        =render 'ad/before_similar_job_md' if Propert.ads_turn_on?

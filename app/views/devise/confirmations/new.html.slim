@@ -19,4 +19,5 @@
               br
           .row
             = render "devise/shared/links"
-
+      .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        =render 'ad/before_similar_job_md' if Propert.ads_turn_on?
