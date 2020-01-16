@@ -50,7 +50,7 @@
         p
           .text-center
             = social_share_button_tag @job.title, url: job_url(@job), title:@job.title
-        = render 'ad/before_ad_xs' if Propert.ads_turn_on?
+        = render 'ad/before_similar_ads_xs' if Propert.ads_turn_on?
         = similar_vacancies(@job, 'xs')
         - unless @job.deleted?
           = render 'inc/btn/btn_apply_xs_sm', object: @job, option: {cl: "dropdown", class: 'job', type: 2, show: true} unless can? :destroy, @job

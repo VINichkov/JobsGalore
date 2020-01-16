@@ -9,8 +9,8 @@ require 'capistrano/figaro'
 require "capistrano/bundler"
 require 'capistrano/rails'
 require 'capistrano/rails/console'
-#require 'capistrano/sidekiq'
-# require 'capistrano/sidekiq/monit'
+require 'capistrano/sidekiq'
+require 'capistrano/sidekiq/monit'
 require 'capistrano/puma'
 install_plugin Capistrano::Puma
 require "capistrano/rails/assets"

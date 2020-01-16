@@ -26,7 +26,7 @@ Rails.application.configure do
   #  config.cache_store = :null_store
   #end
   #config.consider_all_requests_local       = false #from production
-  #config.active_job.queue_adapter = :sidekiq
+  config.active_job.queue_adapter = :sidekiq
   config.action_controller.perform_caching = false
   # Don't care if the mailer can't send.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?#from production
