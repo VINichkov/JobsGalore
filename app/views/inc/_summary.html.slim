@@ -5,68 +5,34 @@ p
     | Posted:&nbsp;
   span
     =object.posted_date
-  span.none[itemprop="datePosted"]
-    =object.created_at.strftime("%F")
-  span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="validThrough"]
-    =object.try(:close)
 -if object.class==JobDecorator
   .hidden-md.hidden-lg.hidden-sm
     p
       strong
         |Company: &nbsp;
       = link_to(object.company.name,object.company)
-  .hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="employmentType"]
-    |full-time
-  .hidden-md.hidden-lg.hidden-sm.hidden-xs[itemprop="hiringOrganization" itemscope itemtype="http://schema.org/Organization"]
-    span[itemprop="name"]
-      =object.company.name
-    span[itemprop="address"]
-      =object.company.location.name
-    span[itemprop="telephone"]
-      = object.client.phone || "empty"
 p
   strong
     |Location: &nbsp;
   = link_location(object.location.name, object.location, object.class==JobDecorator ? Objects::JOBS : Objects::RESUMES, class: 'text-warning')
-  .hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="jobLocation" itemscope itemtype="http://schema.org/Place"]
-    span[itemprop="name"]
-      = object.location.name
-    span[itemprop="telephone"]
-      = object.client.phone || "empty"
-    span[itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"]
-      span[itemprop="name"]
-        =object.location.name
-      span[itemprop="addressLocality"]
-        =object.location.suburb
-      span[itemprop="postalCode"]
-        |empty
-      span[itemprop="streetAddress"]
-        |empty
-      span itemprop="addressRegion"
-        =object.location.state
 - if object.salary.present?
   p
     strong
       |Salary: &nbsp;
-    span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="baseSalary" itemscope itemtype="http://schema.org/MonetaryAmount"]
-      -if object.class==JobDecorator
-        span[itemprop="currency" content="AUD"]
-        span[itemprop="minValue" content= "#{object.salarymin || 0}"]
-        span[itemprop="maxValue" content= "#{object.salarymax || 0}"]
     span
       | #{object.salary}
--else
-  span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="baseSalary" itemscope itemtype="http://schema.org/MonetaryAmount"]
-    span[itemprop="currency" content="AUD"]
 -if object.class==ResumeDecorator
   p
     strong
       |Professional area:
   ul
     li
-      span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="industry"]
-        =object.industry.name
       =link_industry(object.industry.name, object.industry,  Objects::RESUMES, class: 'text-success')
+- if object.class==JobDecorator && object.deleted?
+  p
+    span.glyphicon.glyphicon-remove
+    strong
+      | &nbsp; CLOSED
 - if object.highlight
   p
     span.glyphicon.glyphicon-paperclip

@@ -1,3 +1,59 @@
-.container
-  = render('jobs/show/show_md.html.slim', job:@job, query:@query) if md?
-  = render('jobs/show/show_xs_sm', job:@job, query:@query) unless md?
+- meta_for_jobs(@job)
+- cache([@job, @query]) do
+  =render 'jobs/show/markup_job', object: @job
+  .container
+    .hidden-xs
+      .col-md-8
+        = render 'ad/before_ad_md' if Propert.ads_turn_on?
+        .row.well
+          h1.text-center[itemprop="title"]
+            = highlight(@job.title, Search.str_to_highlight(@query))
+          p
+            = highlight(@job.render_description, Search.str_to_highlight(@query))
+          span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
+            = @job.description_text
+        = render 'ad/before_similar_job_md' if Propert.ads_turn_on?
+        = similar_vacancies(@job, 'md')
+      .col-md-4
+        .panel.panel-default
+          .panel-body
+            = company_in_jobs(@job.company)
+            p
+          .well
+            = render 'inc/summary', object: @job
+            .btn_margin
+              - unless @job.deleted?
+                = render 'inc/btn', object: @job, option: {class: 'job', type: 2, show: true}
+              .text-center
+                = social_share_button_tag @job.title, url: job_url(@job), title:@job.title
+        = render 'ad/after_summary_md' if Propert.ads_turn_on?
+    .row.hidden-sm.hidden-md.hidden-lg
+      .col-xs-12[itemscope itemtype="http://schema.org/JobPosting"]
+        meta[itemprop="specialCommitments" content="VeteranCommit"]
+        h1.text-center[itemprop="title"]
+          = highlight(@job.title, Search.str_to_highlight(@query))
+        hr
+        .row
+          .col-xs-12
+            = render 'inc/summary', object: @job
+            p
+        hr
+          = render 'ad/before_ad_xs' if Propert.ads_turn_on?
+        - unless @job.deleted?
+          = render 'inc/btn/btn_edit_xs_sm', object: @job, option: {cl: "dropdown", class: 'job', type: 2, show: true} if can? :destroy, @job
+        .row
+          .col-sm-12
+            p
+              = highlight(@job.render_description, Search.str_to_highlight(@query))
+            span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
+              = @job.description_text
+        p
+          .text-center
+            = social_share_button_tag @job.title, url: job_url(@job), title:@job.title
+        = render 'ad/before_ad_xs' if Propert.ads_turn_on?
+        = similar_vacancies(@job, 'xs')
+        - unless @job.deleted?
+          = render 'inc/btn/btn_apply_xs_sm', object: @job, option: {cl: "dropdown", class: 'job', type: 2, show: true} unless can? :destroy, @job
+        - else
+          = render 'inc/btn/btn_new_resume_xs_sm'
+= render 'jobs/show/inc/alert', job: @job, query: @query if !cookies[:alert] and !client_signed_in?

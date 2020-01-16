@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class JobsController < ApplicationController
-  load_and_authorize_resource :job
+  load_and_authorize_resource :job, except: [:show, :highlight_view, :similar_jobs]
   before_action :authenticate_client!, only: %i[apply prolong]
-  before_action :set_job, only: %i[options similar_jobs prolong apply views highlight_view show edit update destroy admin_show admin_edit admin_update admin_destroy]
+  before_action :set_job, only: %i[options prolong apply views edit update destroy admin_edit admin_update admin_destroy]
+  before_action :set_job_with_deleted, only: %i[highlight_view show admin_show similar_jobs]
   before_action :action_view, only: %i[show highlight_view]
   # before_action :employer!, only: :new
 
@@ -191,7 +192,7 @@ class JobsController < ApplicationController
   private
 
   def action_view
-    unless current_client&.admin? || (current_client == @job.client)
+    unless current_client&.admin? || (current_client == @job.client) || @job.deleted?
       ViewObjectJob.perform_later(
         @job,
         client_id: current_client&.id,
@@ -202,9 +203,13 @@ class JobsController < ApplicationController
     end
   end
 
-  # Use callbacks to share common setup or constraints between actions.
+
   def set_job
     @job = Job.find(params[:id]).decorate
+  end
+
+  def set_job_with_deleted
+    @job = Job.find_by_id_with_deleted(params[:id]).decorate
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

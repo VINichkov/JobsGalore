@@ -250,6 +250,44 @@ ALTER SEQUENCE public.companies_id_seq OWNED BY public.companies.id;
 
 
 --
+-- Name: deleted_jobs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.deleted_jobs (
+    id bigint NOT NULL,
+    original_id integer,
+    title character varying,
+    location_id bigint,
+    salarymin double precision,
+    salarymax double precision,
+    description character varying,
+    begin date,
+    company_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: deleted_jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.deleted_jobs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: deleted_jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.deleted_jobs_id_seq OWNED BY public.deleted_jobs.id;
+
+
+--
 -- Name: email_hrs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -923,6 +961,13 @@ ALTER TABLE ONLY public.companies ALTER COLUMN id SET DEFAULT nextval('public.co
 
 
 --
+-- Name: deleted_jobs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.deleted_jobs ALTER COLUMN id SET DEFAULT nextval('public.deleted_jobs_id_seq'::regclass);
+
+
+--
 -- Name: email_hrs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1078,6 +1123,14 @@ ALTER TABLE ONLY public.clients
 
 ALTER TABLE ONLY public.companies
     ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: deleted_jobs deleted_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.deleted_jobs
+    ADD CONSTRAINT deleted_jobs_pkey PRIMARY KEY (id);
 
 
 --
@@ -1307,6 +1360,27 @@ CREATE INDEX index_companies_on_name ON public.companies USING btree (name);
 --
 
 CREATE INDEX index_companies_on_size_id ON public.companies USING btree (size_id);
+
+
+--
+-- Name: index_deleted_jobs_on_company_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_deleted_jobs_on_company_id ON public.deleted_jobs USING btree (company_id);
+
+
+--
+-- Name: index_deleted_jobs_on_location_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_deleted_jobs_on_location_id ON public.deleted_jobs USING btree (location_id);
+
+
+--
+-- Name: index_deleted_jobs_on_original_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_deleted_jobs_on_original_id ON public.deleted_jobs USING btree (original_id);
 
 
 --
@@ -1583,13 +1657,6 @@ CREATE INDEX index_vieweds_on_doc_id_and_doc_type ON public.vieweds USING btree 
 
 
 --
--- Name: locations tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.locations FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'suburb', 'postcode', 'state');
-
-
---
 -- Name: companies tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -1601,6 +1668,13 @@ CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.companies FOR EA
 --
 
 CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.jobs FOR EACH ROW EXECUTE PROCEDURE public.jobs_trigger();
+
+
+--
+-- Name: locations tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.locations FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('fts', 'pg_catalog.english', 'suburb', 'postcode', 'state');
 
 
 --
@@ -1683,6 +1757,14 @@ ALTER TABLE ONLY public.jobs
 
 
 --
+-- Name: deleted_jobs fk_rails_662a38c691; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.deleted_jobs
+    ADD CONSTRAINT fk_rails_662a38c691 FOREIGN KEY (location_id) REFERENCES public.locations(id);
+
+
+--
 -- Name: companies fk_rails_81ca530391; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1720,6 +1802,14 @@ ALTER TABLE ONLY public.gateways
 
 ALTER TABLE ONLY public.companies
     ADD CONSTRAINT fk_rails_9b863559a5 FOREIGN KEY (size_id) REFERENCES public.sizes(id);
+
+
+--
+-- Name: deleted_jobs fk_rails_a36d47e766; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.deleted_jobs
+    ADD CONSTRAINT fk_rails_a36d47e766 FOREIGN KEY (company_id) REFERENCES public.companies(id);
 
 
 --
@@ -1898,6 +1988,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191003053319'),
 ('20191011080806'),
 ('20191011090825'),
-('20191120065340');
+('20191120065340'),
+('20200115052934');
 
 

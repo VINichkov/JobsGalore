@@ -115,7 +115,7 @@ class Client < ApplicationRecord
       order by c.name ASC, "location" ASC
     SQL
 
-    ActiveRecord::Base.connection.exec_query(sql).to_hash
+    ActiveRecord::Base.connection.exec_query(sql).to_a
   end
 
   def rename()

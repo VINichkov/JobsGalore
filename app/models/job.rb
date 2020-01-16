@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+DELETED = 'DELETED'
 class Job < ApplicationRecord
 
   SHELF_LIFE = 30
@@ -9,6 +9,7 @@ class Job < ApplicationRecord
   after_create_commit :send_email_after_add_job
 
   before_destroy :send_email_before_destroy
+  before_destroy :clone_to_deleted_jobs
   before_save :date_close
   include Rails.application.routes.url_helpers
   belongs_to :client
@@ -24,6 +25,13 @@ class Job < ApplicationRecord
   validates :client, presence: true
 
   attr_accessor :location_name
+  attr_accessor :state
+
+  def self.find_by_id_with_deleted(id)
+    job = self.find_by_id(id) || Deleted_Job.find_by_original_id(id)&.to_job
+    return job if job.present?
+    raise ActiveRecord::RecordNotFound
+  end
 
   def full_keywords(count_keys = 1, min_length_word = 4)
     if title
@@ -47,6 +55,10 @@ class Job < ApplicationRecord
       end
       array_keywords.sort { |x, y| y.values[0] <=> x.values[0] }[0..count_keys - 1].map { |t| t.keys.first }
     end
+  end
+
+  def deleted?
+    state == DELETED
   end
 
   def add_viewed(arg = {})
@@ -204,6 +216,19 @@ class Job < ApplicationRecord
 
   def send_email_before_destroy
     JobsMailer.remove_job(self).deliver_later if client.send_email
+  end
+
+  def clone_to_deleted_jobs
+    Deleted_Job.create(
+      original_id: id,
+      title: title,
+      salarymin: salarymin,
+      salarymax: salarymax,
+      description: description,
+      location_id: location_id,
+      company_id: company_id,
+      begin: created_at
+    )
   end
 
   def turn_on_option(option)

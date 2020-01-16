@@ -25,7 +25,7 @@ class ChangeSize extends React.Component {
                     <div style={RIGHT}>
                         <ul style={SIZE_MARGIN} className="pagination pagination">
                             {Object.values(PAGE_SIZE).map(function(size) {
-                                return(<li className={this.props.page_size === size ? "active" : null}><a onClick={() => this.onChangeSize(size)}>{size}</a></li>);
+                                return(<li  className={this.props.page_size === size ? "active" : null}><a onClick={() => this.onChangeSize(size)}>{size}</a></li>);
                             }.bind(this))}
                         </ul>
                     </div>

@@ -22,7 +22,7 @@ class MainPageSearch extends React.Component{
         };
         return(<div>
                 <div className="col-xs-12">
-                    <form action="/search" accept-charset="UTF-8" method="get">
+                    <form action="/search" acceptCharset="UTF-8" method="get">
                         <Autocomplete style={style} className="form-control" route='/dictionary/'
                                       defaultName={value}
                                       name={name + '[value]'}

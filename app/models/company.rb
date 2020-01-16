@@ -3,6 +3,7 @@ class Company < ApplicationRecord
   belongs_to :size
   belongs_to :location
   has_many :job, dependent: :destroy
+  has_many :deleted_job, dependent: :destroy
   belongs_to :industry
   has_many :client
   has_many :email_hr, dependent: :destroy

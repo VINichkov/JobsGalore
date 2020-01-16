@@ -4,7 +4,17 @@ class StepTwo extends React.Component {
         this.handleChangeFocus =  this.handleChangeFocus.bind(this);
         this.handleChangeViewing =  this.handleChangeViewing.bind(this);
         this.handleChangeMessage =  this.handleChangeMessage.bind(this);
+        this._trixRef = React.createRef();
+    }
 
+    handleChangeMessage(message){
+        this.props.updateDate({message: message});
+    }
+
+    componentDidMount(){
+        this._trixRef.current.addEventListener('trix-change', function (a) {
+            this.handleChangeMessage(a.target.value);
+        }.bind(this));
     }
 
 
@@ -25,13 +35,11 @@ class StepTwo extends React.Component {
                                price: this.props.onChangePrice(null, !this.props.view) });
     }
 
-    handleChangeMessage(message){
-        this.props.updateDate({message: message});
-    }
+
 
     render(){
         let old_resumes;
-        if (this.props.seeker) {
+        if (this.props.seeker && this.props.resumes.count > 0) {
             old_resumes = <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <button type="button" className={"btn btn-default " + (this.props.view ? "btn-primary" : "btn-success") + " btn-md"} onClick={this.handleChangeViewing}>
                    <span className= {this.props.view ? "glyphicon glyphicon-ok" : "glyphicon glyphicon-plus"} /> Select a resume
@@ -53,8 +61,8 @@ class StepTwo extends React.Component {
                 <div className="form-group">
                     <label>A brief message </label>
                     <br/>
-                    <textarea name="letter[text]" id="letter_description" className="none" defaultValue={this.props.message} onInput={this.handleChangeMessage}/>
-                    <trix-editor input="letter_description" />
+                    <textarea id="letter_description" className="none" defaultValue={this.props.message}/>
+                    <trix-editor ref={this._trixRef} input={"letter_description"} />
                 </div>
             </div>
         </div>);
