@@ -5,6 +5,7 @@
   .col-lg-8.col-md-8.col-sm-12
     h1 ="#{@in_location.name}"
   .col-lg-8.col-md-8.col-sm-12
+    = render('ad/after_search', query: @result.query, location: @result.param[:location_name]) if Propert.ads_turn_on?
     - if @in_location.type == Objects::JOBS
       = render partial: 'inc/job/job_md', collection: @in_location.objs, as: :job, locals: {query: ''} if md?
       = render partial: 'inc/job/job_xs', collection: @in_location.objs, as: :job, locals: {query: ''} unless md?
@@ -14,6 +15,7 @@
       = render partial:'inc/resume', collection: @in_location.objs, locals:{query:''}
     .text-center
       = will_paginate_mini @in_location.objs
+  = render('ad/after_search', query: @result.query, location: @result.param[:location_name]) if Propert.ads_turn_on?
   .col-lg-4.col-md-4.hidden-xs.hidden-sm
     = render "ad/after_summary_skyscraper_md" if Propert.ads_turn_on?
   .row
