@@ -5,6 +5,7 @@
   .col-lg-8.col-md-8.col-sm-12
     h1 ="#{@in_location.name}"
   .col-lg-8.col-md-8.col-sm-12
+    = render('ad/before_search_ss', query: nil, location: @in_location.name) if Propert.ads_turn_on?
     = render('ad/before_search', query: nil, location: @in_location.name) if Propert.ads_turn_on?
     - if @in_location.type == Objects::JOBS
       = render partial: 'inc/job/job_md', collection: @in_location.objs, as: :job, locals: {query: ''} if md?
