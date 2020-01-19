@@ -24,12 +24,14 @@ namespace :send do
 
     Clientforalert.find_each do |client|
       begin
-        JobsMailer.daily_job_alert(
-            email: client.email,
-            keys: Search.str_to_search(client.key.delete("<>{}#@!,:*&()'`\"’|")),
-            location_id:client.location_id,
-            unsubscribe: client.id)
-            .deliver_later
+        if client.send_email
+          JobsMailer.daily_job_alert(
+              email: client.email,
+              keys: Search.str_to_search(client.key.delete("<>{}#@!,:*&()'`\"’|")),
+              location_id:client.location_id,
+              unsubscribe: client.id)
+              .deliver_later
+        end
       rescue
         puts "Error:client.email =#{client.email} :#{$!} "
       end

@@ -5,7 +5,7 @@ class JobsController < ApplicationController
   before_action :authenticate_client!, only: %i[apply prolong]
   before_action :set_job, only: %i[options prolong apply views edit update destroy admin_edit admin_update admin_destroy]
   before_action :set_job_with_deleted, only: %i[highlight_view show admin_show similar_jobs]
-  before_action :action_view, only: %i[show highlight_view]
+  # before_action :action_view, only: %i[show highlight_view]
   # before_action :employer!, only: :new
 
   def show
