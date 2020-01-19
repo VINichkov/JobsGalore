@@ -28,9 +28,8 @@
                 = social_share_button_tag @job.title, url: job_url(@job), title:@job.title
         = render 'ad/after_summary_md' if Propert.ads_turn_on?
     .row.hidden-sm.hidden-md.hidden-lg
-      .col-xs-12[itemscope itemtype="http://schema.org/JobPosting"]
-        meta[itemprop="specialCommitments" content="VeteranCommit"]
-        h1.text-center[itemprop="title"]
+      .col-xs-12
+        h1.text-center
           = highlight(@job.title, Search.str_to_highlight(@query))
         hr
         .row
@@ -45,8 +44,6 @@
           .col-sm-12
             p
               = highlight(@job.render_description, Search.str_to_highlight(@query))
-            span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="description"]
-              = @job.description_text
         p
           .text-center
             = social_share_button_tag @job.title, url: job_url(@job), title:@job.title
