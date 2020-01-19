@@ -7,7 +7,7 @@ javascript:
                 blockId: "D-A-496513-1",
                 renderTo: "yandex_direct_D-A-496513-1",
                 searchText: "#{query.present? ? query : 'jobs'} in #{location}",
-                searchPageNumber: 1
+                searchPageNumber: parseInt("#{page || 1}")
             });
         });
         t = d.getElementsByTagName("script")[0];

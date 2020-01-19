@@ -12,6 +12,7 @@ class InLocations
   def call
     @page, @location = context.params[:page], context.params[:location]
     switch = LazyHash.new('1'=>->{company}, '2'=>->{job}, '3'=>->{resume})
+    context.page  = @page
     unless switch[context.params[:object]]
       context.fail!
     end

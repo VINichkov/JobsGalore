@@ -5,6 +5,7 @@ class MainSearch
   def call
     context.sort = context.params.to_h
     @page, @param = context.params[:page], context.params[:main_search]
+    context.page = @page
     @param ||= {}
     if @param[:location_name].blank?
       @param[:location_name] = "Australia"
