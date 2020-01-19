@@ -5,8 +5,8 @@
     .hidden-xs
       .col-md-8
         = render 'ad/before_ad_md' if Propert.ads_turn_on?
-        .row.well
-          h1.text-center[itemprop="title"]
+        .row.well.word_wrap
+          h1.text-center
             = highlight(@job.title, Search.str_to_highlight(@query))
           p
             = highlight(@job.render_description, Search.str_to_highlight(@query))
@@ -38,7 +38,7 @@
           = render 'ad/before_ad_xs' if Propert.ads_turn_on?
         - unless @job.deleted?
           = render 'inc/btn/btn_edit_xs_sm', object: @job, option: {cl: "dropdown", class: 'job', type: 2, show: true} if can? :destroy, @job
-        .row
+        .row.word_wrap
           .col-sm-12
             p
               = highlight(@job.render_description, Search.str_to_highlight(@query))

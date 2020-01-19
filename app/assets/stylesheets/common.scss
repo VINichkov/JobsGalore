@@ -153,6 +153,10 @@ a{
   word-wrap: break-word;
 }
 
+.word_wrap{
+  word-wrap: break-word;
+}
+
 .line {
   /* чтобы линии не выходили за ширину блока заголовка */
   overflow: hidden;
