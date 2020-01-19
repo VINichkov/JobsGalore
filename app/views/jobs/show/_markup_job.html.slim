@@ -35,7 +35,12 @@
     span[itemprop="baseSalary" itemscope itemtype="http://schema.org/MonetaryAmount"]
       span[itemprop="currency" content="AUD"]
       span[itemprop="minValue" content= "#{object.salarymin || 0}"]
-      span[itemprop="maxValue" content= "#{object.salarymax || 0}"]
+      -if object.salarymax
+        span[itemprop="maxValue" content= "#{object.salarymax || 0}"]
+
   - else
     span[itemprop="baseSalary" itemscope itemtype="http://schema.org/MonetaryAmount"]
       span[itemprop="currency" content="AUD"]
+      span[itemprop="value" content= "0"]
+  span[itemprop="description"]
+    = object.render_description
