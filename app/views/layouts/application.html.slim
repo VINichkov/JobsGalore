@@ -38,16 +38,16 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
 
       gtag('config', 'UA-102893446-1');
     = javascript_include_tag('application', defer: true)
-    javascript:
-        var vglnk = {key: '04c11f652b0b8fd193b7b045b3d23d3f'};
-        (function (d, t) {
-            var s = d.createElement(t);
-            s.type = 'text/javascript';
-            s.async = true;
-            s.src = '//cdn.viglink.com/api/vglnk.js';
-            var r = d.getElementsByTagName(t)[0];
-            r.parentNode.insertBefore(s, r);
-        }(document, 'script'));
+    script[type="text/javascript"]
+      |var vglnk = {key: '04c11f652b0b8fd193b7b045b3d23d3f'};
+      |(function (d, t) {
+      |var s = d.createElement(t);
+      |s.type = 'text/javascript';
+      |s.async = true;
+      |s.src = '//cdn.viglink.com/api/vglnk.js';
+      |var r = d.getElementsByTagName(t)[0];
+      |r.parentNode.insertBefore(s, r);
+      |}(document, 'script'));
     = csrf_meta_tags
   body
     .wrapper
