@@ -11,10 +11,10 @@ namespace :send do
       begin
         if resume.client.send_email
           JobsMailer.daily_job_alert(
-              email:resume.client.email,
-              keys: resume.key,
-              location_id:resume.location_id,
-              unsubscribe: nil)
+              resume.client.email,
+              resume.key,
+              resume.location_id,
+              nil)
               .deliver_later
         end
       rescue
@@ -26,10 +26,10 @@ namespace :send do
       begin
         if client.send_email
           JobsMailer.daily_job_alert(
-              email: client.email,
-              keys: Search.str_to_search(client.key.delete("<>{}#@!,:*&()'`\"’|")),
-              location_id:client.location_id,
-              unsubscribe: client.id)
+              client.email,
+              Search.str_to_search(client.key.delete("<>{}#@!,:*&()'`\"’|")),
+              client.location_id,
+              client.id)
               .deliver_later
         end
       rescue

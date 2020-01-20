@@ -7,7 +7,7 @@ class JobsMailer < ApplicationMailer
     mail(to:client, subject: "New job opportunity «#{@job.title}» in #{@job.location.name} was just posted on Jobs Galore!")
   end
 
-  def daily_job_alert(email:, keys:, location_id:, unsubscribe:)
+  def daily_job_alert(email, keys, location_id, unsubscribe = nil)
     @utm = "?"+create_utm(:resume_alert)
     @list_of_jobs = Job.includes(:company,:location).search_for_send(value: keys, location:location_id).to_a
     @email = email
