@@ -67,8 +67,8 @@ Rails.application.configure do
       port:                 587,
       authentication:       :login,
       #region:               "ap-southeast-2",
-      #domain:               'jobsgalore.eu',
-      user_name:            'AKIAVDF7KYZX4F4QN4FG',
-      password:             'BM4pephQFbn9d5J1IZ/OP0T4ZDzJbitsH/4mIsgofmP0',
+      domain:               'jobsgalore.eu',
+      user_name:            ENV["EMAIL_LOGIN"],
+      password:             ENV["EMAIL_PASSWORD"],
       enable_starttls_auto: true}
 end
