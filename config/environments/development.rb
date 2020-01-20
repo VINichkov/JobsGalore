@@ -57,16 +57,18 @@ Rails.application.configure do
 
   #config.action_controller.asset_host = "http://localhost:3000"
   #
-  config.action_mailer.perform_deliveries = false
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000}
+  config.action_mailer.default_options = {from: 'noreply@jobsgalore.eu'}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      address:              'smtp.yandex.ru',
-      port:                 25,
-      domain:               'yandex.ru',
-      authentication:       'plain',
-      user_name:            ENV["EMAIL_LOGIN"],
-      password:             ENV["EMAIL_PASSWORD"],
-      enable_starttls_auto: true }
+      address:              'email-smtp.ap-southeast-2.amazonaws.com',
+      port:                 587,
+      authentication:       :login,
+      #region:               "ap-southeast-2",
+      #domain:               'jobsgalore.eu',
+      user_name:            'AKIAVDF7KYZX4F4QN4FG',
+      password:             'BM4pephQFbn9d5J1IZ/OP0T4ZDzJbitsH/4mIsgofmP0',
+      enable_starttls_auto: true}
 end
