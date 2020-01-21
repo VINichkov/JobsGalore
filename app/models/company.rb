@@ -62,6 +62,10 @@ class Company < ApplicationRecord
           t.update(company_id: self.id, client_id: self.client.first.id)
         end
 
+        company.deleted_job.each do |t|
+          t.update(company_id: self.id)
+        end
+
         company = Company.find_by_id(id)
         company.client.destroy_all
         company.destroy

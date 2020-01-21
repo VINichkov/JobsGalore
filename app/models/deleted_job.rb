@@ -1,4 +1,4 @@
-class Deleted_Job < ApplicationRecord
+class DeletedJob < ApplicationRecord
 
 
   belongs_to :location
