@@ -78,7 +78,7 @@ gem 'bcrypt'#, '~> 3.1.7'
 gem 'draper'
 gem 'figaro'
 # Use Capistrano for deployment
-gem 'aws-sdk-rails'
+
 
 
 
