@@ -91,8 +91,8 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
   #config.gem 'sitemap_generator'
-  config.action_controller.asset_host = "https://d30l9c85j8u7xv.cloudfront.net"
-  config.action_mailer.asset_host ="https://d30l9c85j8u7xv.cloudfront.net"
+  config.action_controller.asset_host = "https://d30qnkq1l7ijwo.cloudfront.net"
+  config.action_mailer.asset_host ="https://d30qnkq1l7ijwo.cloudfront.net"
 
   # Do not dump schema after migrations.educations_id_seq
   config.active_record.dump_schema_after_migration = false
@@ -100,19 +100,17 @@ Rails.application.configure do
   config.assets.prefix = "/#{ENV['RAILS_ENV']}/assets/test" if ENV["TEST"]
   #config.force_ssl = true
   #config.ssl_options = {  redirect: { status: 307} }
-  config.active_job.queue_adapter = :sidekiq
+  #config.active_job.queue_adapter = :sidekiq
   config.action_mailer.delivery_method = :smtp
   if ENV["TEST"].nil?
     config.action_mailer.default_url_options = { host: "https://jobsgalore.eu"}
     config.action_mailer.default_options = {from: 'noreply@jobsgalore.eu'}
     config.action_mailer.smtp_settings = {
-        address:              'email-smtp.ap-southeast-2.amazonaws.com',
+        address:              '127.0.0.1',
         port:                 25,
-        authentication:       :login,
-        №domain:               'jobsgalore.eu',
-        user_name:            ENV["EMAIL_LOGIN"],
-        password:             ENV["EMAIL_PASSWORD"],
-        enable_starttls_auto: true}
+        domain:               'jobsgalore.eu',
+        enable_starttls_auto: true,
+        openssl_verify_mode:  'none'}
   else
     config.action_mailer.default_url_options = { host: 'https://free-talents.herokuapp.com' }
     config.action_mailer.smtp_settings = {

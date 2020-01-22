@@ -8,7 +8,7 @@ gem 'rails'#, '~> 5.2.0'#, '~> 5.0.4'#, '>= 5.0.0.1'
 gem  'pg', platforms: [:mri, :mingw, :x64_mingw, :truffleruby]#, '~> 0.18'
 #gem 'activerecord-jdbcpostgresql-adapter', github: 'jruby/activerecord-jdbc-adapter', platforms: [:jruby]
 # Use Puma as the app server
-gem 'sidekiq'
+#gem 'sidekiq'
 
 # Use SCSS for stylesheets
 gem 'sassc-rails'#, '~> 5.0'
