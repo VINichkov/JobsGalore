@@ -5,4 +5,5 @@ class CanAccessResque
     return false if current_user.blank?
     Ability.new(current_user).can? :manage, Sidekiq
   end
-end=end
+end
+=end
