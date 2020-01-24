@@ -30,22 +30,22 @@ h1.none Jobsgalore. Jobs in Australia.
     .col-lg-3.col-md-3
       = render 'index/main/inc/major_cities'
       = render 'ad/after_summary_md' if Propert.ads_turn_on?
-    -if md?
-      .col-lg-9.col-md-9.hidden-sm.hidden-xs
-        -cache @main.jobs do
-          - if @main.jobs.present?
-            .well
-              .nav.nav-list
-                h4
-                  |#{@main.title}
+    .col-lg-6.col-md-6.hidden-sm.hidden-xs
+      - cache @main.jobs do
+        - if @main.jobs.present?
+          .well
+            .nav.nav-list
+              h4
+                |#{@main.title}
+              .col-lg-6.col-md-6
+                ul.nav.nav-list
+                  - @main.jobs[0..(@main.jobs.count >= 5 ? 4 : @main.jobs.count - 1)].each do |job|
+                    = last_job(job)
+              - if @main.jobs.count >= 6
                 .col-lg-6.col-md-6
                   ul.nav.nav-list
-                    - @main.jobs[0..(@main.jobs.count >=5 ? 4 : @main.jobs.count - 1)].each do |job|
+                    - @main.jobs[5..@main.jobs.count- 1].each do |job|
                       = last_job(job)
-                - if @main.jobs.count >= 6
-                  .col-lg-6.col-md-6
-                    ul.nav.nav-list
-                      - @main.jobs[5..@main.jobs.count-1].each do |job|
-                        = last_job(job)
+    .col-lg-3.col-md-4.hidden-sm.hidden-xs
 
 
