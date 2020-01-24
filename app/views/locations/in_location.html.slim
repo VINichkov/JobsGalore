@@ -3,7 +3,7 @@
         keywords: "#{@in_location.key}")
 .container
   .col-lg-8.col-md-8.col-sm-12
-    h1 ="#{@in_location.name}"
+    h1.text-center ="#{@in_location.name}"
   .col-lg-8.col-md-8.col-sm-12
     = render('ad/before_search_ss', query: nil, location: @in_location.name, page: @in_location.page) if Propert.ads_turn_on?
     = render('ad/before_search', query: nil, location: @in_location.name, page: @in_location.page) if Propert.ads_turn_on?
