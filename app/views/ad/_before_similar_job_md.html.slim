@@ -5,18 +5,11 @@
             w[n] = w[n] || [];
             w[n].push(function () {
                 let id = "yandex_rtb_R-A-494123-4";
-                console.log(w.isRussia);
                 if (w.isRussia){
                     Ya.Context.AdvManager.render({
                         blockId: "R-A-494123-4",
                         renderTo: id,
-                        async: true,
-                        onRender: function (data) {
-                            console.log(data);
-                        },
-                        onError: function (data) {
-                            console.log("navigator.language || navigator.userLanguage");
-                        },
+                        async: true
                     });
                 }else{
                     let block = document.getElementById(id);
