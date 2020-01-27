@@ -5,13 +5,13 @@
         image: @company.logo_url)
 .container
   h1 Jobs at #{@company.name}
-  .col-lg-3.col-md-3.hidden-sm.hidden-xs
+  .col-lg-4.col-md-4.hidden-sm.hidden-xs
     .panel.panel-default
       .panel-body.text-center
         = link_to @company.name, @company
         = image_bg(@company.logo_url, "contain", "200px", "200px")
     =render 'ad/after_logo_md' if Propert.ads_turn_on?
-  .col-sm-9.col-md-9.col-sm-12.col-xs-12
+  .col-sm-8.col-md-8.col-sm-12.col-xs-12
     = render partial: 'inc/job/job_md', collection: @objs, as: :job, locals:{query: ''} if md?
     = render partial: 'inc/job/job_xs', collection: @objs, as: :job, locals:{query: ''} unless md?
   .text-center

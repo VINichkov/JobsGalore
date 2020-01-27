@@ -19,7 +19,7 @@ module JobsHelper
   def last_job(job)
     html='<li>'+
             '<hr/>'+
-            "<p>#{link_to(job.title.capitalize, job)}</p>"+
+            "<p>#{link_to(job.title, job)}</p>"+
             "<span class='small'>#{link_to(job.company.name, job.company, class: 'text-success')}</span>"+
             '&nbsp; - &nbsp;'+
             "<span class='small'>#{link_location(job.location.name, job.location, Objects::JOBS, class: 'text-warning')}</span>"+
