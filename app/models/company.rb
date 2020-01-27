@@ -97,7 +97,7 @@ class Company < ApplicationRecord
 
     text_query = text_query.join(" and ")
 
-    select(:id, :name, :size_id, :logo_uid, :site, :location_id, :recrutmentagency, :description, :created_at, :updated_at, :realy, :industry_id, "ts_rank_cd(fts,  plainto_tsquery('#{query[:value]}')) AS \"rank\"").where(text_query,query)
+    select(:id, :name, :size_id, :logo_uid, :site, :location_id, :recrutmentagency, :description, :created_at, :updated_at, :realy, :industry_id, "ts_rank_cd(fts,  plainto_tsquery('english','#{query[:value]}')) AS \"rank\"").where(text_query,query)
   end
 
   def rename()
