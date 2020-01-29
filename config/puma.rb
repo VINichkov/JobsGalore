@@ -47,3 +47,14 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # Allow puma to be restarted by `rails restart` command.
 #plugin :heroku
 plugin :tmp_restart
+
+before_fork do
+ require 'puma_worker_killer'
+ PumaWorkerKiller.config do |config|
+  config.ram           = 600 # mb
+  config.frequency     = 20    # seconds
+  config.percent_usage = 0.98
+ end
+
+ PumaWorkerKiller.start
+end
