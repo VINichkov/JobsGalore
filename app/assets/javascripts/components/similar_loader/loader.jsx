@@ -18,7 +18,7 @@ class Loader extends React.Component{
 
     render() {
         const {size} = this.props;
-        let jobs = this.state.jobs.map((job)=> size ==='md' ? <JobMd key={job.id} job={job} /> : <JobXsSm key={job.id} job={job}/>);
+        let jobs = this.state.jobs.map((job)=> <JobMd key={job.id} job={job} /> );
         return (
        <div>
             <h3>Similar vacancies</h3>

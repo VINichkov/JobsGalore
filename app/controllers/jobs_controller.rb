@@ -25,7 +25,7 @@ class JobsController < ApplicationController
         {id: job.id,
          url: job_url(job),
          apply: apply_path(job),
-         title: job.title.capitalize,
+         title: job.title,
          location: job.location.name,
          location_url: local_object_url(job.location, Objects::JOBS.code),
          salary: job.salary,

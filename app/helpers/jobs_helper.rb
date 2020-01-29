@@ -49,8 +49,8 @@ module JobsHelper
               }
     )
   end
-  def similar_vacancies(job ,size)
-    react_component("Loader", url_similar_for_job: similar_jobs_url(job), size: size)
+  def similar_vacancies(job )
+    react_component("Loader", url_similar_for_job: similar_jobs_url(job))
   end
 
 end
