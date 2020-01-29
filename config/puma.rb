@@ -52,7 +52,7 @@ plugin :tmp_restart
 before_fork do
   require 'puma_worker_killer'
   PumaWorkerKiller.config do |config|
-    config.ram           = 120 # mb
+    config.ram           = 600 # mb
     config.frequency     = 20    # seconds
     config.percent_usage = 0.98
   end
