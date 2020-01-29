@@ -504,6 +504,7 @@ DEPENDENCIES
   trix
   tzinfo-data
   uglifier
+  virtus
   web-console
   will_paginate
   will_paginate-bootstrap
