@@ -27,7 +27,7 @@ gem 'oga' #Нужен для создания PDF
 #gem 'pdf2html'
 #gem 'origami'
 gem "docx"
-gem "ffi"
+#gem "ffi"
 gem "nokogiri", ">= 1.8.5"
 
 gem 'browser' #определяет браузер
@@ -59,7 +59,8 @@ gem "activestorage"#, ">= 5.2.1.1"
 
 gem 'rubyzip'
 
-gem 'twitter'
+
+#gem 'twitter'
 gem 'will_paginate-bootstrap'# ,'~> 1.0.1'
 
 gem "html_truncator"#, "~>0.4"
@@ -67,7 +68,7 @@ gem 'slim'
 
 gem 'dragonfly'#, '~> 1.1.5'
 #gem 'mechanize'
-gem 'virtus'
+#gem 'virtus'
 
 #gem "pg_search"#, '~> 2.0.1'
 gem 'trix'
@@ -83,6 +84,15 @@ gem 'figaro'
 
 
 group :development, :test do
+  ##############
+  #gem 'rack-mini-profiler', require: false
+  #gem 'flamegraph'
+  #gem 'memory_profiler'
+  #gem 'stackprof'
+  #gem 'get_process_mem'
+  #gem 'derailed_benchmarks'
+  ######
+
   gem 'capistrano',         require: false
   gem 'capistrano-rvm',     require: false
  # gem 'capistrano-sidekiq', require: false
@@ -112,8 +122,9 @@ group :test do
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-group :production do
 
+group :production do
+  #gem 'puma_worker_killer'
   gem 'dragonfly-s3_data_store'
   gem "asset_sync"
   gem "fog-aws"

@@ -18,6 +18,6 @@ class CompanyDecorator < ApplicationDecorator
   end
 
   def keywords
-    @keywords ||= "Jobs Galore, Australia, Job, Jobs, Galore, Jobsgalore, #{object.name}, #{object.full_keywords(14).join(", ")}"
+    "Jobs Galore, Australia, Job, Jobs, Galore, Jobsgalore, #{object.name}, #{object.full_keywords(14).join(", ")}"
   end
 end
