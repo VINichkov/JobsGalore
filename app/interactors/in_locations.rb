@@ -60,7 +60,7 @@ class InLocations
     context.type = Objects::RESUMES
     context.key = ([
     'CV', 'resume online', 'recrutment', 'Jobs Galore', 'Australia', 'Job', 'Jobs', 'Galore', 'Jobsgalore', location.name,
-    " Resumes in #{location.suburb}", "Talents in #{location.suburb}", "#{location.suburb} career",
+   " Resumes in #{location.suburb}", "Talents in #{location.suburb}", "#{location.suburb} career",
     "#{location.suburb} employment", "#{location.suburb} talent", "#{location.suburb} job", "#{location.suburb} employment",
     "careers in #{location.suburb}", "in #{location.suburb}", "#{location.suburb} #{location.state}"] +
     context.objs.pluck(:title).map{|t| t.gsub('|',',')}).uniq.join(', ').squish

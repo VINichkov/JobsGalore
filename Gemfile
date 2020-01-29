@@ -59,7 +59,6 @@ gem "activestorage"#, ">= 5.2.1.1"
 
 gem 'rubyzip'
 
-
 gem 'twitter'
 gem 'will_paginate-bootstrap'# ,'~> 1.0.1'
 
@@ -122,9 +121,8 @@ group :test do
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
 group :production do
-  gem 'puma_worker_killer'
+  #gem 'puma_worker_killer'
   gem 'dragonfly-s3_data_store'
   gem "asset_sync"
   gem "fog-aws"

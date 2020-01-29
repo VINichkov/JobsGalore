@@ -4,7 +4,7 @@ class JobDecorator < ApplicationDecorator
   decorates_association :company
 
   def keywords
-    "Jobs Galore, Australia, Job, Jobs, Galore, job hunting, Jobsgalore,#{object.title}, Job in #{object.location.name}, Job at #{object.company.name}, #{object.company.name} , Company is #{object.company.name}, , #{object.full_keywords(9).join(", ")}"
+    @keywords ||= "Jobs Galore, Australia, Job, Jobs, Galore, job hunting, Jobsgalore,#{object.title}, Job in #{object.location.name}, Job at #{object.company.name}, #{object.company.name} , Company is #{object.company.name}, , #{object.full_keywords(9).join(", ")}"
   end
 
   def url
