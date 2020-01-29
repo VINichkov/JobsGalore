@@ -27,7 +27,7 @@
         = render 'ad/before_similar_ads_xs' if Propert.ads_turn_on?
       .hidden-xs
         = render 'ad/before_similar_job_md' if Propert.ads_turn_on?
-      = similar_vacancies(@job)
+      //= similar_vacancies(@job)
       - unless @job.deleted?
         = render 'inc/btn/btn_apply_xs_sm', object: @job, option: {cl: "dropdown", class: 'job', type: 2, show: true} unless can? :destroy, @job
       - else
