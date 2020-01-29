@@ -122,8 +122,9 @@ group :test do
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'puma_worker_killer'
+
 group :production do
+  #gem 'puma_worker_killer'
   gem 'dragonfly-s3_data_store'
   gem "asset_sync"
   gem "fog-aws"

@@ -49,6 +49,7 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 plugin :tmp_restart
 
 
+=begin
 before_fork do
   require 'puma_worker_killer'
   PumaWorkerKiller.config do |config|
@@ -60,3 +61,4 @@ before_fork do
   PumaWorkerKiller.start
 
 end
+=end
