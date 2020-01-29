@@ -28,7 +28,7 @@ class Job < ApplicationRecord
   attr_accessor :state
 
   def self.find_by_id_with_deleted(id)
-    job = self.find_by_id(id) || Deleted_Job.find_by_original_id(id)&.to_job
+    job = self.find_by_id(id) || DeletedJob.find_by_original_id(id)&.to_job
     return job if job.present?
     raise ActiveRecord::RecordNotFound
   end
