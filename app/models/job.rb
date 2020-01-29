@@ -299,7 +299,6 @@ class Job < ApplicationRecord
   scope :search, lambda { |query|
     query = query.to_h if query.class != Hash
     text_query = []
-    text_query << 'industry_id = :category' if query[:category].present?
     text_query << 'urgent is not null' if query[:urgent].present? && query[:urgent] != 'false'
     flag = true
 

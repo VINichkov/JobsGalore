@@ -16,11 +16,7 @@ namespace :integrate do
 
   task :destroy_jobs => :environment do
     puts "! Task:Destroy: start #{Time.now}"
-    Job.where("close <= :data and urgent is null and top is null and highlight is null", data: Time.now).destroy_all
-    time = Time.new 2019,3,10,0,0,0
-    if Time.now < time
-      Job.where("created_at <= :data and urgent is null and top is null and highlight is null", data: Time.now - 30.days).destroy_all
-    end
+    Job.where("created_at <= :data and urgent is null and top is null and highlight is null", data: Time.now - 18.days).destroy_all
     biggest_company
     puts "! Task:Destroy: end #{Time.now}"
   end
