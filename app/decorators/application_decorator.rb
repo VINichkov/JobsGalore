@@ -32,6 +32,7 @@ class ApplicationDecorator < Draper::Decorator
     @close ||= object.dt_close.strftime("%d %B %Y")
   end
   private
+
   def markdown_to_keywords (arg)
     if arg
       keys = markdown_to_text(arg, 400).split(' ').map do |key|
@@ -40,19 +41,6 @@ class ApplicationDecorator < Draper::Decorator
         key
       end
       keys.compact.uniq.join(', ')
-    end
-  end
-
-  def markdown_to_text (arg, truncate=nil)
-    if arg
-      arg = arg[0..truncate * 2] if truncate
-      text = HtmlToPlainText.plain_text(arg).squish
-      if truncate
-        text = text.truncate(truncate, separator: ' ', omission: '')
-      end
-
-    else
-      ''
     end
   end
 

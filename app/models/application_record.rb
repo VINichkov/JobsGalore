@@ -10,6 +10,8 @@ class ApplicationRecord < ActiveRecord::Base
       if truncate
         text = text.truncate(truncate, separator: ' ',omission: '')
       end
+    else
+      ''
     end
   end
 
