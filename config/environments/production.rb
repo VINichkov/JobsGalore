@@ -106,11 +106,13 @@ Rails.application.configure do
     config.action_mailer.default_url_options = { host: "https://jobsgalore.eu"}
     config.action_mailer.default_options = {from: 'noreply@jobsgalore.eu'}
     config.action_mailer.smtp_settings = {
-        address:              '127.0.0.1',
-        port:                 25,
+        address:              'email-smtp.ap-southeast-2.amazonaws.com',
+        port:                 587,
+        authentication:       :login,
         domain:               'jobsgalore.eu',
-        enable_starttls_auto: true,
-        openssl_verify_mode:  'none'}
+        user_name:            ENV["EMAIL_LOGIN"],
+        password:             ENV["EMAIL_PASSWORD"],
+        enable_starttls_auto: true}
   else
     config.action_mailer.default_url_options = { host: 'https://free-talents.herokuapp.com' }
     config.action_mailer.smtp_settings = {
