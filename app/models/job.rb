@@ -290,7 +290,6 @@ class Job < ApplicationRecord
         :client_id,
         :close,
         :industry_id,
-        :twitter,
         :viewed_count,
         "user_rank(fts, '#{query[:old_value]}', '#{query[:value]}', #{mode}) AS \"rank\""
     ).where(text_query, query).order('rank DESC').limit(arg[:limit])
@@ -336,6 +335,6 @@ class Job < ApplicationRecord
     text_query = text_query.join(' and ')
     Rails.logger.info('Query::' + text_query + query.to_s)
     Rails.logger.info('Mode query::' + mode + query.to_s)
-    select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight, :top, :urgent, :client_id, :close, :industry_id, :twitter, :viewed_count, "user_rank(fts, '#{query[:old_value]}', '#{query[:value]}', #{mode}) AS \"rank\"").where(text_query, query)
+    select(:id, :title, :location_id, :salarymax, :salarymin, :description, :company_id, :created_at, :updated_at, :highlight, :top, :urgent, :client_id, :close, :industry_id, :viewed_count, "user_rank(fts, '#{query[:old_value]}', '#{query[:value]}', #{mode}) AS \"rank\"").where(text_query, query)
   }
 end
