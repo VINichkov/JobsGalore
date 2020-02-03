@@ -1,6 +1,6 @@
 class ApplicationMailer < ActionMailer::Base
   helper(EmailHelper)
-  default from: "#{PropertsHelper::COMPANY} <#{ENV["EMAIL_LOGIN"]}>"
+  default from: "#{PropertsHelper::COMPANY} <noreply@jobsgalore.eu>"
   layout 'mailer'
 
   def create_utm(utm_campaign)
