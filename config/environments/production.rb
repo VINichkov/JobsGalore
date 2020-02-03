@@ -105,7 +105,6 @@ Rails.application.configure do
   if ENV["TEST"].nil?
     config.action_mailer.default_url_options = { host: "https://jobsgalore.eu"}
     config.action_mailer.default_options = {from: 'noreply@jobsgalore.eu'}
-    config.action_mailer.default_options = { from: 'noreply@mycustomdomain.com' }
     config.action_mailer.smtp_settings = {
         address:              'email-smtp.ap-southeast-2.amazonaws.com',
         port:                 587,
