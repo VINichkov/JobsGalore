@@ -75,7 +75,7 @@ Rails.application.configure do
 =end
   config.action_mailer.smtp_settings = {
       address:              'email-smtp.ap-southeast-2.amazonaws.com',
-      port:                 25,
+      port:                 587,
       authentication:       :login,
       domain:               'jobsgalore.eu',
       user_name:            ENV["EMAIL_LOGIN"],
