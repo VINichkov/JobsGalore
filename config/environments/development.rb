@@ -62,11 +62,21 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000}
   config.action_mailer.default_options = {from: 'noreply@jobsgalore.eu'}
   config.action_mailer.delivery_method = :smtp
+=begin
   config.action_mailer.smtp_settings = {
       address:              'email-smtp.ap-southeast-2.amazonaws.com',
       port:                 587,
       authentication:       :login,
       #region:               "ap-southeast-2",
+      domain:               'jobsgalore.eu',
+      user_name:            ENV["EMAIL_LOGIN"],
+      password:             ENV["EMAIL_PASSWORD"],
+      enable_starttls_auto: true}
+=end
+  config.action_mailer.smtp_settings = {
+      address:              'email-smtp.ap-southeast-2.amazonaws.com',
+      port:                 25,
+      authentication:       :login,
       domain:               'jobsgalore.eu',
       user_name:            ENV["EMAIL_LOGIN"],
       password:             ENV["EMAIL_PASSWORD"],

@@ -1,28 +1,15 @@
 .row.well
-  //script[async src="//ap.lijit.com/www/delivery/fpi.js?z=670768&width=728&height=90"]
-  .adaptive#yandex_rtb_R-A-494123-3
+  /! Yandex.RTB R-A-506880-3
+  .adaptive#yandex_rtb_R-A-506880-3
   javascript:
       (function (w, d, n, s, t) {
           w[n] = w[n] || [];
           w[n].push(function () {
-              let id = "yandex_rtb_R-A-494123-3";
-              if (w.isRussia) {
-                  Ya.Context.AdvManager.render({
-                      blockId: "R-A-494123-3",
-                      renderTo: id,
-                      async: true
-                  });
-              } else {
-                  let block = document.getElementById(id);
-                  let ad = document.createElement('a');
-                  let img = document.createElement('img');
-                  ad.href = "http://s.click.aliexpress.com/e/_rvCXxr?bz=725*90";
-                  ad.target = "_parent";
-                  img.src = "https://ae01.alicdn.com/kf/H37f6986d2aab4d4cb87fbf9c56302ee7T.png";
-                  img.className = "img_ad";
-                  ad.appendChild(img);
-                  block.appendChild(ad);
-              }
+              Ya.Context.AdvManager.render({
+                  blockId: "R-A-506880-3",
+                  renderTo: "yandex_rtb_R-A-506880-3",
+                  async: true
+              });
           });
           t = d.getElementsByTagName("script")[0];
           s = d.createElement("script");

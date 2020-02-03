@@ -15,7 +15,7 @@
     .row
       .col-lg-8.col-md-8.col-sm-12
         = render('ad/before_search_ss', query: @result.query, location: @result.param[:location_name], page: @result.page) if Propert.ads_turn_on?
-        = render('ad/before_search', query: @result.query, location: @result.param[:location_name], page: @result.page) if Propert.ads_turn_on?
+        //= render('ad/before_search', query: @result.query, location: @result.param[:location_name], page: @result.page) if Propert.ads_turn_on?
         - if @result.type == Objects::JOBS
           = render partial: 'inc/job', collection: @result.objs, as: :job, locals:{query: @result.query}
         - elsif @result.type==Objects::COMPANIES
