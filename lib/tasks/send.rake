@@ -15,7 +15,7 @@ namespace :send do
               resume.key,
               resume.location_id,
               nil)
-              .deliver_later
+              .deliver_now
         end
       rescue
         puts "Error:resume.id =#{resume.id} :#{$!} "
@@ -30,7 +30,7 @@ namespace :send do
               Search.str_to_search(client.key.delete("<>{}#@!,:*&()'`\"’|")),
               client.location_id,
               client.id)
-              .deliver_later
+              .deliver_now
         end
       rescue
         puts "Error:client.email =#{client.email} :#{$!} "
@@ -45,7 +45,7 @@ namespace :send do
   task :send_invate_to_post_resume => :environment do
     puts "! Task:Send invitation to post resume #{Time.now}"
     ClientsForInvate.new.call.each do |email|
-      ClientMailer.send_invite_for_posting_resume(email).deliver_later
+      ClientMailer.send_invite_for_posting_resume(email).deliver_now
     end
     puts "! Task:Send invitation to post resume: End #{Time.now}"
   end
