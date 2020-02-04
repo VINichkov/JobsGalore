@@ -12,7 +12,7 @@ module Services
     one_email_price_float: 0.2
   )
   MAILING_ANY_AD_TO_COMPANY = OpenStruct.new(
-    name: 'ad to copmanies',
+    name: 'ad to companies',
     min_price: '10.00',
     one_email_price: '0.30',
     min_price_int: 10,
