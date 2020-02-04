@@ -41,7 +41,8 @@ class Mailing < ApplicationRecord
   end
 
   def sending_emails
-    if type_letter == 'resume to companies' || type_letter == 'ad to companies'
+    if self.type_letter == 'resume to companies' || self.type_letter == 'ad to companies'
+      Rails.logger.info("Send email from #{self.client.email}")
       pdf = Base64.encode64(resume.to_pdf) if resume.present?
       self.offices.each do |t|
         MailingMailer.send_resume_to_company(self, t["email"], pdf).deliver_now
