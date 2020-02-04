@@ -29,7 +29,6 @@ class Mailing < ApplicationRecord
 
   end
 
-  private
 
   def status
     res = {
