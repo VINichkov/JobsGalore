@@ -44,9 +44,9 @@ class Mailing < ApplicationRecord
     if type_letter == 'resume to companies' || type_letter == 'ad to companies'
       pdf = Base64.encode64(resume.to_pdf) if resume.present?
       self.offices.each do |t|
-        MailingMailer.send_resume_to_company(self, t["email"], pdf).deliver_later
+        MailingMailer.send_resume_to_company(self, t["email"], pdf).deliver_now
       end
-      MailingMailer.send_resume_to_company(self, PropertsHelper::ADMIN, pdf).deliver_later
+      MailingMailer.send_resume_to_company(self, PropertsHelper::ADMIN, pdf).deliver_now
     end
   end
 end
