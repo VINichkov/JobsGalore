@@ -34,6 +34,7 @@ class IndexController < ApplicationController
                              }),
         expires: 1.year
     }
+    puts cookies[:query]
     @search = @result.param
     if @result.failure?
       render_404

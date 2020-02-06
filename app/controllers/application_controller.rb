@@ -31,11 +31,20 @@ class ApplicationController < ActionController::Base
     Rails.logger.debug(query)
   end
 
-  def get_cookies
+    def get_cookies
     Rails.logger.info(request.env['HTTP_USER_AGENT'])
     if @search.blank?
       if cookies[:query].present?
-        @search = JSON.parse(cookies[:query])
+        puts "__________________________________________"
+        puts cookies.to_json
+        puts "__________________________________________"
+        begin
+          @search = JSON.parse(cookies[:query])
+        rescue
+          Rails.logger.info("Error in cookies query")
+          cookies[:query] = nil
+          @search = { type: Objects::JOBS.code,value:"", location_id:'', location_name:"Australia", open:false}
+        end
       else
         @search = { type: Objects::JOBS.code,value:"", location_id:'', location_name:"Australia", open:false}
       end
