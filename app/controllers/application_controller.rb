@@ -35,13 +35,10 @@ class ApplicationController < ActionController::Base
     Rails.logger.info(request.env['HTTP_USER_AGENT'])
     if @search.blank?
       if cookies[:query].present?
-        begin
-          @search = JSON.parse(cookies[:query])
-          return @search
-        rescue
-        end
+        @search = JSON.parse(cookies[:query])
+      else
+        @search = { type: Objects::JOBS.code,value:"", location_id:'', location_name:"Australia", open:false}
       end
-      @search = { type: Objects::JOBS.code,value:"", location_id:'', location_name:"Australia", open:false}
     end
   end
 
