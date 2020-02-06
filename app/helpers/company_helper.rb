@@ -42,6 +42,27 @@ module CompanyHelper
            end
   end
 
+  def company_logo(object, width, height, **option)
+    if object.logo.blank? || ENV["RAILS_ENV"]!='production'
+      content_tag(
+          :div,
+          '',
+          #"data-src": data_src,
+          class: option[:class] ? option[:class]  : "text-center img-thumbnail center-block avatar",
+          style: "background-image: url('#{image_url("company_profile.jpg")}'); background-size: contain; width: #{width}; height: #{height};")
+    else
+      image_tag(
+          Dragonfly.app.remote_url_for(object.logo_uid),
+          height: height,
+          width: width,
+          alt: "#{object.name} by #{PropertsHelper::COMPANY}",
+          title: "#{object.name} by #{PropertsHelper::COMPANY}",
+          class: "text-center img-thumbnail center-block avatar" ,
+          option: option
+      )
+    end
+  end
+
   def buttons( class_name)
     content_tag(:div,class:"row") do
       buttons  = content_tag(:div, class:class_name) do
