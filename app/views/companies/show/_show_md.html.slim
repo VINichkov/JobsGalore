@@ -2,7 +2,7 @@
 -cache([company,query]) do
   .container[itemscope itemtype="http://schema.org/Organization"]
     .col-lg-8.col-md-8
-      .row.card.card-body
+      .row.well
         span.hidden-xs.hidden-md.hidden-lg.hidden-sm
           span[itemprop="address"]
             = company.location.name
@@ -30,8 +30,8 @@
       =render 'ad/before_similar_job_md' if Propert.ads_turn_on?
       =jobs_of_company(company)
     .col-lg-4.col-md-4
-      .card
-        .card-body
+      .panel.panel-default
+        .panel-body
           .row.text-center
             span.hidden-xs.hidden-md.hidden-lg.hidden-sm[itemprop="image"]
               =company.logo_url
@@ -39,7 +39,7 @@
           .row
             h3.text-center
               |Summary
-          .card.card-body
+          .well
             =company_summary(company)
             .row
               .col-lg-12.col-md-12

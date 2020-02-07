@@ -33,7 +33,7 @@ h1.none Jobsgalore. Jobs in Australia.
     .col-lg-6.col-md-6.hidden-sm.hidden-xs
       - cache @main.jobs do
         - if @main.jobs.present?
-          .card.card-body
+          .well
             .nav.nav-list
               h4
                 |#{@main.title}

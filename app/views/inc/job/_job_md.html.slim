@@ -1,6 +1,6 @@
 - edit ||=false
-.card
-  div[class="card-body #{class_extras(job)}"]
+.panel.panel-default
+  div[class="panel-body #{class_extras(job)}"]
     .col-md-10
       h3
         = link_to(highlight(job.title, Search.str_to_highlight(query)), job_highlight_view_path(id:job, text:query), class: 'text-warning')
