@@ -1,4 +1,4 @@
-.row.card.card-body
+.row.well
   .col-md-4.col-lg-4
     -if @client.photo.nil?
       = image_tag(image_path("avatar.jpg"), class: 'img-thumbnail', size:"300x300", alt: @client.full_name)
@@ -70,16 +70,16 @@
     .row
       - @client.job.all.each do |job|
         -if not(job.highlight.nil?) and job.urgent.nil?
-          .card-body.well.highlight
+          .panel-body.well.highlight
             =render 'clients/job', job:job
         -elsif job.highlight.nil? and not(job.urgent.nil?)
-          .card-body.well.urgent
+          .panel-body.well.urgent
             = render 'clients/job', job: job
         - elsif not(job.highlight.nil?) and not (job.urgent.nil?)
-          .card-body.well.highlight.urgent
+          .panel-body.well.highlight.urgent
             = render 'clients/job', job: job
         - elsif job.highlight.nil? and job.urgent.nil?
-          .card-body.well
+          .panel-body.well
             = render 'clients/job', job: job
   -else
     .row
@@ -88,14 +88,14 @@
       - if @client.resume.count>0
         -@client.resume.all.each do |resume|
           - if not (resume.highlight.nil?) and resume.urgent.nil?
-            .card-body.well.highlight
+            .panel-body.well.highlight
               = render 'clients/resume', resume: resume
           - elsif resume.highlight.nil? and not (resume.urgent.nil?)
-            .card-body.well.urgent
+            .panel-body.well.urgent
               = render 'clients/resume', resume: resume
           - elsif not (resume.highlight.nil?) and not (resume.urgent.nil?)
-            .card-body.well.highlight.urgent
+            .panel-body.well.highlight.urgent
               = render 'clients/resume', resume: resume
           - elsif resume.highlight.nil? and resume.urgent.nil?
-            .card-body.well
+            .panel-body.well
               = render 'clients/resume', resume: resume

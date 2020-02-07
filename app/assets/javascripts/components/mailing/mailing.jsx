@@ -163,8 +163,8 @@ class Mailing extends React.Component{
 
                     <div className="row">
                         <div className={this.state.isStepTwo ? "col-lg-12 col-md-12 col-sm-12 col-xs-12":"col-lg-7 col-md-7 col-sm-7 col-xs-12"}>
-                            <div className="card">
-                                <div className="card">
+                            <div className="panel panel-default">
+                                <div className="panel-body">
                                     <div className="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                         <strong>Selected recipients: </strong><span className="badge">{this.state.amount}</span>
                                     </div>
