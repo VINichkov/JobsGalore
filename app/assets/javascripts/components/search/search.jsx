@@ -137,9 +137,9 @@ class Search extends React.Component{
                         <p/>
                     </div>
                     <div className=" col-md-6 col-lg-6 col-sm-12 col-xs-12" style={{display: 'table'}}>
-                        <input id="input_action" name={this.props.name + '[open]'} value={this.state.active_options}
+                        <input id={"input_action" + this.uuid} name={this.props.name + '[open]'} value={this.state.active_options}
                                style={ilStyle} readOnly={true}/>
-                        <input id="input_search" name={this.props.name + '[type]'} value={this.state.type_search_code}
+                        <input id={"input_search_type_" + this.uuid} name={this.props.name + '[type]'} value={this.state.type_search_code}
                                style={ilStyle} readOnly={true}/>
                         <Autocomplete style={{width: '100%'}} className="form-control" route='/search_locations/'
                                       defaultId={this.state.location_id}
