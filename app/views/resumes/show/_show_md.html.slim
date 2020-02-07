@@ -3,15 +3,15 @@
   .container
     .col-md-8
       =render 'ad/before_ad_md' if Propert.ads_turn_on?
-      .row.well
+      .row.card.card-body
         h1.text-center
           = highlight(resume.title, Search.str_to_highlight(query))
         p
           = highlight(resume.render_description, Search.str_to_highlight(query))
       = render 'ad/before_similar_job_md' if Propert.ads_turn_on?
     .col-md-4
-      .panel.panel-default
-        .panel-body
+      .card
+        .card-body
           - if current_client && (current_client.resp? || (resume.client.id == current_client.id) || current_client.admin?)
             h4.text-center
               = resume.client.full_name
@@ -21,7 +21,7 @@
               |Anonymous
             p
             = image_bg(image_path("avatar.jpg"), "contain", "300px", "250px", autoload: false)
-          .well
+          .card.card-body
             = render 'inc/summary', object: resume
             .btn_margin
               = render 'inc/btn', object: resume, option: {class: 'resume', type: 3}

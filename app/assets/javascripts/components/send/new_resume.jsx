@@ -85,7 +85,7 @@ class NewResume extends React.Component{
             </div>
         }
         if (this.props.check){
-            field_new_resume =  <div className="panel-body">
+            field_new_resume =  <div className="card-body">
                 {buttonLinkedIn}
                 <br/>
                 <div className="form-group">
@@ -137,8 +137,8 @@ class NewResume extends React.Component{
         };
         return(
             <div>
-                <div className="panel panel-info" >
-                    <div className="panel-heading " onClick={this.handleOnClickResume} >
+                <div className="card " >
+                    <div className="card-header " onClick={this.handleOnClickResume} >
                         <input type="radio" id="new_resume_head" name={this.props.nameCheckbox} value="New resume" checked={this.props.check}/> New resume
                     </div>
                     {field_new_resume}

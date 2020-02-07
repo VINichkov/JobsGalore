@@ -18,8 +18,8 @@ class JobMd extends React.Component{
         }
         return (
             <div className="row">
-                <div className='panel'>
-                    <div className={`panel-body ${highlight ? 'highlight' : ''} ${urgent ? 'urgent' : ''}`}>
+                <div className='card'>
+                    <div className={`card-body ${highlight ? 'highlight' : ''} ${urgent ? 'urgent' : ''}`}>
                         <div className="row">
                             <div className='col-md-10 col-xs-12 '>
                                 <h3>
