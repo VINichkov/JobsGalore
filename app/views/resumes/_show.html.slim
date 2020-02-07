@@ -7,14 +7,14 @@
           published: resume.updated_at})
   .container.hidden-xs.hidden-sm
     .col-lg-8.col-md-8
-      .row.well
+      .row.card.card-body
         h1.text-center
           = highlight(resume.title, Search.str_to_highlight(query))
         p
           = highlight(resume.render_description, Search.str_to_highlight(query))
     .col-lg-4.col-md-4
-      .panel.panel-default
-        .panel-body
+      .card
+        .card-body
           - if current_client && (current_client.resp? || (resume.client.id == current_client.id) || current_client.admin?)
             h4.text-center
               = resume.client.full_name
@@ -24,14 +24,14 @@
               |Anonymous
             p
             = image_bg(image_path("avatar.jpg"), "contain", "300px", "250px", autoload: false)
-          .well
+          .card.card-body
             = render 'inc/summary', object: resume
             .btn_margin
               = render 'inc/btn', object: resume, option: {class: 'resume', type: 3}
               .text-center
                 = social_share_button_tag resume.title, url: resume_url(resume), title:resume.title
   .col-xs-12.hidden-md.hidden-lg
-    .panel-body
+    .card-body
       .col-sm-12.hidden-md.hidden-lg.hidden-xs
         h2.text-center
           = highlight(resume.title, Search.str_to_highlight(query))

@@ -1,5 +1,5 @@
-.panel.panel-default
-  div[class="panel-body #{class_extras(resume)}"]
+.card
+  div[class="card-body #{class_extras(resume)}"]
     .col-lg-10.col-md-10.col-sm-10
       h3
         = link_to(highlight(resume.title, Search.str_to_highlight(query)),  resume_highlight_view_path(id:resume, text:query), class: 'text-warning')

@@ -75,7 +75,7 @@ GEM
       mime-types (>= 2.99)
       unf
     ast (2.4.0)
-    autoprefixer-rails (9.6.1.1)
+    autoprefixer-rails (9.7.4)
       execjs
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
@@ -88,9 +88,10 @@ GEM
     bcrypt (3.1.13)
     bcrypt (3.1.13-java)
     bindex (0.8.1)
-    bootstrap-sass (3.4.1)
-      autoprefixer-rails (>= 5.2.1)
-      sassc (>= 2.0.0)
+    bootstrap (4.4.1)
+      autoprefixer-rails (>= 9.1.0)
+      popper_js (>= 1.14.3, < 2)
+      sassc-rails (>= 2.0.0)
     browser (2.6.1)
     buftok (0.2.0)
     builder (3.2.3)
@@ -296,6 +297,7 @@ GEM
       ruby-rc4
       ttfunk
     pg (1.1.4)
+    popper_js (1.16.0)
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
@@ -484,7 +486,7 @@ DEPENDENCIES
   activestorage
   asset_sync
   bcrypt
-  bootstrap-sass
+  bootstrap
   browser
   byebug
   cancancan

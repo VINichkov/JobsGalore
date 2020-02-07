@@ -6,8 +6,8 @@
 .container
   h1 Jobs at #{@company.name}
   .col-lg-4.col-md-4.hidden-sm.hidden-xs
-    .panel.panel-default
-      .panel-body.text-center
+    .card
+      .card-body.text-center
         = link_to @company.name, @company
         = image_bg(@company.logo_url, "contain", "200px", "200px")
     =render 'ad/after_logo_md' if Propert.ads_turn_on?
