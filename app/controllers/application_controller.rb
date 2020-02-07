@@ -35,9 +35,6 @@ class ApplicationController < ActionController::Base
     Rails.logger.info(request.env['HTTP_USER_AGENT'])
     if @search.blank?
       if cookies[:query].present?
-        puts "__________________________________________"
-        puts cookies.to_json
-        puts "__________________________________________"
         begin
           @search = JSON.parse(cookies[:query])
         rescue
