@@ -41,7 +41,8 @@ gem 'geocoder' #определяет страну
     # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'#, '~> 2.5'
 #gem "twitter-bootstrap-rails"
-gem 'bootstrap-sass'#, '~> 3.3.6'
+#gem 'bootstrap-sass'#, '~> 3.3.6'
+gem 'bootstrap'
 gem 'sprockets-rails'
 gem 'jquery-rails'
 gem 'will_paginate'#, '~> 3.1.0'

@@ -27,17 +27,17 @@
         = render 'ad/before_similar_ads_xs' if Propert.ads_turn_on?
       .hidden-xs
         = render 'ad/before_similar_job_md' if Propert.ads_turn_on?
-      = similar_vacancies(@job)
+      /= similar_vacancies(@job) TODO включить после партиционирования
       - unless @job.deleted?
         = render 'inc/btn/btn_apply_xs_sm', object: @job, option: {cl: "dropdown", class: 'job', type: 2, show: true} unless can? :destroy, @job
       - else
         = render 'inc/btn/btn_new_resume_xs_sm'
     .col-md-4.hidden-xs
-      .panel.panel-default
-        .panel-body
+      .card
+        .card-body
           = company_in_jobs(@job.company)
           p
-        .panel-body
+        .card-body
           = render 'inc/summary', object: @job
           .btn_margin
             - unless @job.deleted?

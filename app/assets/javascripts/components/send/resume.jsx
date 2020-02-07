@@ -17,10 +17,10 @@ class Resume extends React.Component{
 
     render(){
         let styleResume;
-        (this.props.keyResume % 2 == 0) ? styleResume = "panel panel-success" :  styleResume = "panel panel-warning";
+        (this.props.keyResume % 2 == 0) ? styleResume = "card panel-success" :  styleResume = "card panel-warning";
         let description;
         if (this.state.visible){
-            description = <div className="panel-body">
+            description = <div className="card-body">
                             <p>
                                 <span><strong>Location:&nbsp;</strong></span>
                                 <span className="text-warning">{this.props.resume.location}</span>
@@ -40,7 +40,7 @@ class Resume extends React.Component{
         }
         return(
                 <div className={styleResume} key={this.props.keyResume} onClick={this.handleOnClickResume}>
-                    <div className="panel-heading">
+                    <div className="card-header">
                         <input type="radio" id={"contactChoice"+this.props.keyResume} checked={this.props.check} name={this.props.name} value={this.props.resume.id} />
                         <span>&nbsp;{this.props.resume.title}</span>
                         <span style={{float: "right"}}> <a  onClick={this.handleClickItem}>Show</a></span>
