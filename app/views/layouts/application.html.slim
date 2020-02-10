@@ -31,7 +31,7 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
     meta[name="keywords" content=yield_meta_tag("keywords","Jobs Galore, work, job, vacancy search, resume, jobs, Australia, vacancies, employment, looking for a job, search, seek, galore, money, solary, indeed, JobsGalore, jobs in university, post job free,  post jobs for free, look for job, seeking, job board")]
     = stylesheet_link_tag('application', media: :all)
     /! Гуугл adSence
-    script async=true data-ad-client="ca-pub-5536717032651177" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+    //script async=true data-ad-client="ca-pub-5536717032651177" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
     /! Гуугл аналитик
     script async=true src="https://www.googletagmanager.com/gtag/js?id=UA-102893446-1"
     javascript:
@@ -41,11 +41,9 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
 
       gtag('config', 'UA-102893446-1');
     = javascript_include_tag('application', defer: true)
-    /! Ezoic Code
-    /script
-      |var ezoicId = 173146;
-    /script[type="text/javascript" src="//go.ezoic.net/ezoic/ezoic.js"]
-    /! Ezoic Code
+    /! HillTopAds
+    meta[name="hilltopads-site-verification" content="d3334fee16c11498d6cd421047d7ed7cda1494c1"]
+    /! HillTopAds
     = csrf_meta_tags
   body
     .wrapper
