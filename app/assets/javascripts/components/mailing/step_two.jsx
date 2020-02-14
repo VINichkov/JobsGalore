@@ -20,6 +20,7 @@ class StepTwo extends React.Component {
 
     handleChangeFocus(e){
         let resumes = this.props.resumes;
+
         if (!resumes[e].checked){
             Object.keys(resumes).forEach(function (value) {
                 resumes[value].checked = false;
@@ -39,7 +40,7 @@ class StepTwo extends React.Component {
 
     render(){
         let old_resumes;
-        if (this.props.seeker && this.props.resumes.count > 0) {
+        if (this.props.resumes !== null) {
             old_resumes = <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <button type="button" className={"btn btn-default " + (this.props.view ? "btn-primary" : "btn-success") + " btn-md"} onClick={this.handleChangeViewing}>
                    <span className= {this.props.view ? "glyphicon glyphicon-ok" : "glyphicon glyphicon-plus"} /> Select a resume

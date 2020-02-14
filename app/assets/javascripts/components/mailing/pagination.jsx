@@ -44,28 +44,28 @@ class Pagination extends React.Component {
         }.bind(this);
         let paginate =  [];
         if (this.props.page_count>1) {
-            paginate.push(<li className={this.props.page === 0 ? "active" : null}><a
+            paginate.push(<li key = "0" className={this.props.page === 0 ? "active" : null}><a
                onClick={() => this.onClick(0)}>1</a></li>);
             if (this.props.page_count >= 2) {
                 if (this.props.page_count > 5 && this.props.page > 2) {
-                    paginate.push(<li><a>...</a></li>)
+                    paginate.push(<li key = "empty1"><a>...</a></li>)
                 }
-                paginate.push(<li className={this.props.page === 1 ? "active" : null}><a
+                paginate.push(<li key = "1" className={this.props.page === 1 ? "active" : null}><a
                     onClick={() => this.onClick(funTwoButton())}>{funTwoButton()+1}</a>
                 </li>);
                 if (this.props.page_count >= 3) {
-                    paginate.push(<li className={this.props.page_count <= 5 && this.props.page === 2 || this.props.page_count > 5 && this.props.page >= 2 && this.props.page + 1 <= this.props.page_count - 2 ? "active" : null}><a
+                    paginate.push(<li key = "2" className={this.props.page_count <= 5 && this.props.page === 2 || this.props.page_count > 5 && this.props.page >= 2 && this.props.page + 1 <= this.props.page_count - 2 ? "active" : null}><a
                         onClick={() => this.onClick(funThreeButton())}>{funThreeButton() + 1}</a>
                     </li>);
                     if (this.props.page_count >= 4) {
-                        paginate.push(<li className={this.props.page_count <= 5 && this.props.page === 3 || this.props.page_count > 5 && this.props.page + 1 === this.props.page_count -1 ? "active" : null}><a
+                        paginate.push(<li key = "3" className={this.props.page_count <= 5 && this.props.page === 3 || this.props.page_count > 5 && this.props.page + 1 === this.props.page_count -1 ? "active" : null}><a
                             onClick={() => this.onClick(funFourButton())}>{funFourButton()+ 1}</a>
                         </li>);
                         if ( this.props.page_count > 5 && this.props.page < this.props.page_count - 3) {
-                            paginate.push(<li><a>...</a></li>)
+                            paginate.push(<li key = "empty2"><a>...</a></li>)
                         }
                         if (this.props.page_count >= 5) {
-                            paginate.push(<li className={this.props.page + 1 === this.props.page_count ? "active" : null} ><a
+                            paginate.push(<li key = "4" className={this.props.page + 1 === this.props.page_count ? "active" : null} ><a
                                 onClick={() => this.onClick(this.props.page_count - 1)}>{this.props.page_count}</a>
                             </li>);
                         }

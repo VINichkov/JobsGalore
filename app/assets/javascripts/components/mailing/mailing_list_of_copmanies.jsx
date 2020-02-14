@@ -16,6 +16,7 @@ class MailingListOfCompanies extends React.Component {
 
     onChangeFilter(){
         let filter = {
+            page: 0,
             filterCheck: this._filterCheck.current.checked,
             filterCompany:  this._filterCompany.current.value,
             filterOffice:this._filterOffice.current.value,
@@ -65,7 +66,7 @@ class MailingListOfCompanies extends React.Component {
 
 
     render() {
-        const CENTER = {"text-align": "center", "vertical-align": "middle"};
+        const CENTER = {"textAlign": "center", "verticalAlign": "middle"};
         let star = function (bool) {
             if (bool){
                 return(<span className="glyphicon glyphicon-star"/>);

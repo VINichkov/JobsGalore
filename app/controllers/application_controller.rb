@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
     def get_cookies
-    Rails.logger.info(request.env['HTTP_USER_AGENT'])
+    #Rails.logger.info("#{request.env['HTTP_USER_AGENT']}  #{request.env['HTTP_ACCEPT_LANGUAGE']}")
     if @search.blank?
       if cookies[:query].present?
         begin

@@ -64,7 +64,7 @@ nav.navbar.navbar-blue.navbar-top[itemscope itemtype="http://schema.org/WebSite"
         span.glyphicon.glyphicon-paperclip
         |&nbsp; Upload your resume
     li
-      = link_to contacts_of_companies_path do
+      = link_to contacts_of_companies_path, onclick: "experiment('contacts_of_companies', 'Вход');" do
         |&nbsp;
         span.glyphicon.glyphicon-envelope
         |&nbsp; Send a message to employers

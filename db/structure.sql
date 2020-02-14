@@ -540,7 +540,6 @@ CREATE TABLE public.jobs (
     salarymax double precision,
     description character varying,
     company_id integer,
-    career character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     fts tsvector,
@@ -549,7 +548,6 @@ CREATE TABLE public.jobs (
     urgent date,
     client_id integer,
     close date,
-    twitter character varying,
     industry_id integer,
     sources character varying,
     apply character varying,
@@ -626,7 +624,8 @@ CREATE TABLE public.mailings (
     type_letter character varying,
     aasm_state character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    cur character varying
 );
 
 
@@ -1989,6 +1988,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191011080806'),
 ('20191011090825'),
 ('20191120065340'),
-('20200115052934');
+('20200115052934'),
+('20200130034755'),
+('20200214142853');
 
 

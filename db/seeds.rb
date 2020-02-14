@@ -66,3 +66,42 @@ a.update(price: {
     'RUB':  {price: 329},
 })
 
+a = Product.find_or_create_by(name: 'Mailing_Resume_To_Company_Min_Price')
+a.update(price: {
+    'AUD':  {price: 4.99},
+    'USD':  {price: 4.99},
+    'CAD':  {price: 4.99},
+    'GBR':  {price: 3.99},
+    'EUR':  {price: 3.99},
+    'RUB':  {price: 149},
+})
+
+a = Product.find_or_create_by(name: 'Mailing_Resume_To_Company_One_Email_Price')
+a.update(price: {
+    'AUD':  {price: 0.20},
+    'USD':  {price: 0.20},
+    'CAD':  {price: 0.20},
+    'GBR':  {price: 0.15},
+    'EUR':  {price: 0.15},
+    'RUB':  {price: 12},
+})
+
+a = Product.find_or_create_by(name: 'Mailing_Any_Ads_To_Company_Min_Price')
+a.update(price: {
+    'AUD':  {price: 9.99},
+    'USD':  {price: 9.99},
+    'CAD':  {price: 9.99},
+    'GBR':  {price: 6.99},
+    'EUR':  {price: 6.99},
+    'RUB':  {price: 299},
+})
+
+a = Product.find_or_create_by(name: 'Mailing_Any_Ads_To_Company_One_Email_Price')
+a.update(price: {
+    'AUD':  {price: 0.30},
+    'USD':  {price: 0.30},
+    'CAD':  {price: 0.30},
+    'GBR':  {price: 0.20},
+    'EUR':  {price: 0.20},
+    'RUB':  {price: 18},
+})

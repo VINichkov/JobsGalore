@@ -12,7 +12,7 @@ h1.none Jobsgalore. Jobs in Australia.
           p
       .row
         .col-lg-3.col-md-3.col-sm-3.col-md-offset-9.col-lg-offset-9.col-sm-offset-9
-          = link_to "Send a message to employers", contacts_of_companies_path, class: "btn btn-warning btn-block"
+          = link_to "Send a message to employers", contacts_of_companies_path, class: "btn btn-warning btn-block", onclick: "experiment('contacts_of_companies', 'Вход');"
           p
       - if current_client&.admin?
         .row

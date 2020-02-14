@@ -12,6 +12,7 @@ class CreateLetter
     mailing[:resume_id] = letter['resume']
     mailing[:price] = letter['price'].to_f
     mailing[:type_letter] = letter['type']
+    mailing[:cur] = letter['cur']
     new_letter = Mailing.new(mailing)
     context.fail! unless new_letter.save
     context.payment_url = new_letter.decorate.payment_url

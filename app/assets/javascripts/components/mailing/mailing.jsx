@@ -2,15 +2,18 @@ class Mailing extends React.Component{
     constructor(props){
         super(props);
         let resumes = {};
-        if (this.props.seeker && this.props.resumes.length > 0) {
+        if (this.props.resumes.length > 0) {
             this.props.resumes.map(function (resume, i) {
                 resumes["resume_" + i] = {resume: resume, checked: false};
             }.bind(this));
             resumes.resume_0.checked = true;
+        } else {
+            resumes = null;
         }
+
         this.state = {  elements: this.props.elements,
                         filterCheck: false,
-                        filterCompany: this.props.filterCompany,
+                        filterCompany: this.props.filterCompany && this.props.filterCompany.replace(/[\f\n\r\t\v\u00A0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u2028\u2029\u202f\u205f\u3000'"]/g, ""),
                         filterOffice:null,
                         filterMain:false,
                         filterAgency:false,
@@ -48,7 +51,8 @@ class Mailing extends React.Component{
         ),
                         price: this.state.price,
                         message: this.state.message,
-                        type: this.state.view ? this.props.type.resume : this.props.type.ad
+                        type: this.state.view ? this.props.type.resume : this.props.type.ad,
+                        cur: this.props.cur
         };
         if (this.state.view){
             letter.resume = Object.values(this.state.resumes).filter(elem => elem.checked === true)[0].resume.id
@@ -64,6 +68,7 @@ class Mailing extends React.Component{
             }.bind(this),
             dataType: 'json'
         });
+        experiment('contacts_of_companies', 'Оплата');
     }
 
 
@@ -119,12 +124,14 @@ class Mailing extends React.Component{
     }
 
     render() {
-        let stepOne = [<MailingListOfCompanies viewElements = {this.viewElements}
-                                              filterCompany = {this.state.filterCompany}
-                                              onChangeFilterState = {this.handleDataUpdate}
-                                              onClickRow = {this.onClickRow}
-                                              elements = {this.state.elements}
-                                              amount = {this.state.amount}/>,
+        let price_formatted = new Current(this.props.cur, this.state.price);
+        let stepOne = [<MailingListOfCompanies  viewElements = {this.viewElements}
+                                                key = {this.viewElements.id}
+                                                filterCompany = {this.state.filterCompany}
+                                                onChangeFilterState = {this.handleDataUpdate}
+                                                onClickRow = {this.onClickRow}
+                                                elements = {this.state.elements}
+                                                amount = {this.state.amount}/>,
                         <Pagination key = {this.state.page} page_count = {this.state.page_count} page={this.state.page} onClickPage = {this.handleDataUpdate}/>];
         let stepTwo = <StepTwo resumes ={this.state.resumes}
                                seeker = {this.props.seeker}
@@ -137,12 +144,12 @@ class Mailing extends React.Component{
                             <hr className="colorgraph" />
                         </div>
                         <div className="col-md-offset-6 col-lg-offset-6 col-xs-6 col-md-6">
-                            <button className="btn btn-primary btn-block" onClick={this.state.isStepTwo ?  this.sendDateToServer  : this.onClickNext }>{this.state.isStepTwo ? "Send and Pay $" +this.state.price.toFixed(2) : "Next"}</button>
+                            <button className="btn btn-primary btn-block" onClick={this.state.isStepTwo ?  this.sendDateToServer  : this.onClickNext }>{this.state.isStepTwo ? `Send and Pay ${price_formatted.to_format()}` : "Next"}</button>
                         </div>
                    </div>;
         let btn_min = <div className="row sticky hidden-lg hidden-md">
                         <div className="col-xs-12 col-md-12">
-                            <button className="btn btn-primary btn-circle btn-block" onClick={this.state.isStepTwo ?  this.sendDateToServer  : this.onClickNext }>{this.state.isStepTwo ? "Send and Pay $" +this.state.price.toFixed(2) : "Next"}</button>
+                            <button className="btn btn-primary btn-circle btn-block" onClick={this.state.isStepTwo ?  this.sendDateToServer  : this.onClickNext }>{this.state.isStepTwo ? `Send and Pay ${price_formatted.to_format()}` : "Next"}</button>
                         </div>
                     </div>;
         let size = this.state.isStepTwo ? null : <div className="col-lg-5 col-md-5 col-sm-5 col-xs-12">
@@ -169,7 +176,7 @@ class Mailing extends React.Component{
                                         <strong>Selected recipients: </strong><span className="badge">{this.state.amount}</span>
                                     </div>
                                     <div className="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                                        <strong>Price: </strong><span className="badge">${this.state.price.toFixed(2)}</span>
+                                        <strong>Price: </strong><span className="badge">{price_formatted.to_format()}</span>
                                     </div>
                                 </div>
                             </div>

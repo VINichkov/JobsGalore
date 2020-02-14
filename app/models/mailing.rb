@@ -3,6 +3,15 @@ class Mailing < ApplicationRecord
   belongs_to :client
   belongs_to :resume
 
+  def self.price(ip)
+    cur = Country.currency_by_country(ip)
+    {min_price_resume: Product.find_by_name('Mailing_Resume_To_Company_Min_Price').price_by_currency(cur),
+    min_price_message: Product.find_by_name('Mailing_Any_Ads_To_Company_Min_Price').price_by_currency(cur),
+    per_email_resume: Product.find_by_name('Mailing_Resume_To_Company_One_Email_Price').price_by_currency(cur),
+    per_email_message: Product.find_by_name('Mailing_Any_Ads_To_Company_One_Email_Price').price_by_currency(cur),
+    cur: cur}
+  end
+
   def to_h
     {id: id,
      recipients: offices,

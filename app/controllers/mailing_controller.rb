@@ -5,6 +5,7 @@ class MailingController < ApplicationController
   before_action :authenticate_client!, only: [:contacts_of_companies, :show, :destroy]
 
   def contacts_of_companies
+    @price = Mailing.price(request.remote_ip)
     @amount = 0
     @elements = (Client.all_for_view + EmailHr.all_for_view).map.with_index do |row, index|
       {index: index,
@@ -17,7 +18,7 @@ class MailingController < ApplicationController
        recrutmentagency: row['recrutmentagency'],
        industry:row['industry'],
        location:row['location'] ? row['location'] : 'Australia'}
-    end #TODO  Присоединить реальных клиентов и адаптировать для сохранения типов и ИД
+    end
   end
 
   def create

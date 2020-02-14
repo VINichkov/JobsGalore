@@ -4,7 +4,7 @@ class Recipients extends React.Component {
     }
 
     render(){
-        const CENTER = {"text-align": "center", "vertical-align": "middle"};
+        const CENTER = {"textAlign": "center", "verticalAlign": "middle"};
         let star = function (bool) {
             if (bool){
                 return(<span className="glyphicon glyphicon-star"/>);
@@ -38,7 +38,7 @@ class Recipients extends React.Component {
                         </button>
                         <div className="modal-body">
                             <div className="row">
-                                <div className="col-md-12 table-responsive" style={{ 'max-height': '600px'}}>
+                                <div className="col-md-12 table-responsive" style={{ 'maxHeight': '600px'}}>
                                     <table className="table table-condensed table-bordered table-striped table-hover">
                                         {thead}
                                         <tbody>

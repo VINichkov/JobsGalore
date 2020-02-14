@@ -48,7 +48,7 @@ class ShowLetters extends React.Component{
 
 
     render(){
-        const CENTER = {"text-align": "center", "vertical-align": "middle"};
+        const CENTER = {"textAlign": "center", "verticalAlign": "middle"};
         let thead = <thead>
                         <tr>
                             <th className="hidden-xs col-md-1">Date Created</th>
@@ -62,13 +62,13 @@ class ShowLetters extends React.Component{
         let tbody = this.state.letters.map(function (row, index) {
             let btnPay;
             if (row.pay_url !== null) {
-                btnPay = <div className="btn_margin"><a className="btn btn-info btn-block" href={row.pay_url}>Pay</a></div>;
+                btnPay = <div className="btn_margin"><a className="btn btn-info btn-block" href={row.pay_url} onClick={() => {experiment('contacts_of_companies', 'Оплата')}}>Pay</a></div>;
             }
             return (
                 <tr key={index}>
                     <td style={CENTER} className="hidden-xs">{row.created_at}</td>
                     <td style={CENTER} className="hidden-xs"><a onClick={() => this.handlerShowModal(index)}> Show </a></td>
-                    <td>{row.message}</td>
+                    <td  style={{'wordBreak': 'break-all'}}>{row.message}</td>
                     <td style={CENTER}>${row.amount.toFixed(2)}</td>
                     <td style={CENTER} className="hidden-xs">{row.status}</td>
                     <td style={CENTER}>

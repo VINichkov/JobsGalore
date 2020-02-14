@@ -8,13 +8,14 @@ module MailingHelper
         filterCompany: filter,
         elements: elements,
         amount: amount,
-        minPriceForResume: Services::MAILING_RESUME_TO_COMPANY.min_price_int,
-        minPriceForAd:Services::MAILING_ANY_AD_TO_COMPANY.min_price_int,
-        oneEmailForResume:Services::MAILING_RESUME_TO_COMPANY.one_email_price_float,
-        oneEmailForAd:Services::MAILING_ANY_AD_TO_COMPANY.one_email_price_float,
-        type: {ad: Services::MAILING_ANY_AD_TO_COMPANY.name, resume: Services::MAILING_RESUME_TO_COMPANY.name},
+        minPriceForResume: @price[:min_price_resume],
+        minPriceForAd: @price[:min_price_message],
+        oneEmailForResume: @price[:per_email_resume],
+        oneEmailForAd: @price[:per_email_message],
+        cur: @price[:cur],
+        type: {ad: 'ad to companies', resume: 'resume to companies'},
         seeker: current_client&.applicant?,
-        resumes: current_client&.applicant? ? current_client.resumes_for_apply : nil
+        resumes: current_client.resumes_for_apply
     )
   end
 

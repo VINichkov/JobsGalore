@@ -68,7 +68,6 @@ class SearchNew extends React.Component{
     }
 
     handleOnClickOptions() {
-        console.log('Вошли');
         this.setState({active_options: !this.state.active_options});
     }
 
@@ -98,7 +97,6 @@ class SearchNew extends React.Component{
                     {cat}
                 </div>;
             } else if (type_search_code == 2) {
-                console.log(type_search_code);
                 options = <div className="row" style={{marginTop: 10}}>
                     {salary}
                     <div className="form-group indent"/>
