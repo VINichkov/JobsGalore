@@ -7,35 +7,28 @@ class Current {
 
     to_format() {
         let result;
-        switch(this._cur) {
-            case 'RUB': {
+        switch(this.cur) {
+            case 'RUB':
                 result = this.rub();
                 break;
-            }
-            case 'AUD': {
+            case 'AUD':
                 result = this.aud();
                 break;
-            }
-            case 'EUR': {
+            case 'EUR':
                 result = this.eur();
                 break;
-            }
-            case 'USD': {
+            case 'USD':
                 result = this.usd();
                 break;
-            }
-            case 'INR': {
+            case 'INR':
                 result = this.inr();
                 break;
-            }
-            case 'CAD': {
+            case 'CAD':
                 result = this.cad();
                 break;
-            }
-            default: {
+            default:
                 result = this.aud();
                 break;
-            }
         }
             return result;
     }
