@@ -1,9 +1,9 @@
 class Current {
-    #cur;
-    #sum;
+    cur;
+    sum;
     constructor(cur, sum){
-      this.#cur = cur;
-      this.#sum = sum;
+      this.cur = cur;
+      this.sum = sum;
     }
 
     to_format() {
@@ -42,27 +42,27 @@ class Current {
     }
 
     eur(){
-        return `€${this.#sum}`
+        return `€${this.sum}`
     }
 
     rub(){
-        return `${this.#sum} RUB`
+        return `${this.sum} RUB`
     }
 
     aud(){
-        return `$${this.#sum}`
+        return `$${this.sum}`
     }
 
     usd() {
-        return `$${this.#sum}`
+        return `$${this.sum}`
     }
 
     inr() {
-        return `${this.#sum} INR`
+        return `${this.sum} INR`
     }
 
     cad() {
-        return `$${this.#sum}`
+        return `$${this.sum}`
     }
 
 }
