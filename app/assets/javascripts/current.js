@@ -1,6 +1,5 @@
 class Current {
-    cur;
-    sum;
+
     constructor(cur, sum){
       this.cur = cur;
       this.sum = sum;
