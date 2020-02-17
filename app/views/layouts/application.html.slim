@@ -53,4 +53,4 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
       = yield
     .footer
       =render('inc/footer')
-      =render('ad/propeller_push_notifications_cmp')
+      =render('ad/propeller_push_notifications_cmp') if Propert.ads_turn_on?
