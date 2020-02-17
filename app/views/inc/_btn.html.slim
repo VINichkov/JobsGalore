@@ -24,6 +24,13 @@
                   new_order_path(object, option[:class]),
                   class: "btn btn-warning btn-block",
                   rel: "nofollow")
+    - if object.class == ResumeDecorator
+      div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
+        = link_to(contacts_of_companies_path, class: "btn btn-success btn-block", onclick: "experiment('contacts_of_companies', 'Отправил резюме');") do
+          - if option[:min]
+            i.glyphicon.glyphicon-envelope
+          - else
+            | Send to employers
     .btn_margin
       = link_to eval("edit_#{option[:class]}_path(object)"), class: "btn btn-primary btn-block" do
         |Edit

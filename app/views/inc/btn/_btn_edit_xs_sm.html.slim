@@ -1,4 +1,4 @@
-div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' :  'row')}"]
+div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' :  'btn-group')}"]
   - if current_client&.admin?
     div[class = "#{option[:cl]}"]
       span.btn.btn-warning.btn-block[data-toggle="dropdown"]
@@ -21,10 +21,19 @@ div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' :  'row')}"]
             - else
               = link_to "Highlight +", eval("admin_#{option[:class]}_extras_path(#{option[:class]}: {id: object, option: 3})"), method: :post
   - else
-    = link_to("Find quickly",
-            new_order_path(object, option[:class]),
-            class: "btn btn-warning btn-block",
-            rel: "nofollow")
+    div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
+      = link_to(new_order_path(object, option[:class]),  class: "btn btn-warning btn-block", rel: "nofollow") do
+        - if option[:min]
+          i.glyphicon.glyphicon-arrow-up
+        - else
+          |Find quickly
+  - if object.class == ResumeDecorator
+    div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
+      = link_to(contacts_of_companies_path, class: "btn btn-success btn-block", onclick: "experiment('contacts_of_companies', 'Отправил резюме');") do
+        - if option[:min]
+          i.glyphicon.glyphicon-envelope
+        - else
+          | Send to employers
   div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
     = link_to eval("edit_#{option[:class]}_path(object)"), class: "btn btn-primary btn-block" do
       - if option[:min]

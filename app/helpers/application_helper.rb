@@ -37,17 +37,6 @@ module ApplicationHelper
         style: "background-image: url('#{url}'); background-size: #{bgsize}; width: #{width}; height: #{height};")
   end
 
-  def image_logo(url, width, height, alt, **option)
-    image_tag(
-        url,
-        height: height,
-        width: width,
-        alt: alt,
-        title: "#{alt} by #{PropertsHelper::COMPANY}",
-        class: "text-center img-thumbnail center-block avatar" ,
-        option: option
-    )
-  end
 
 
   def meta_head(arg={})

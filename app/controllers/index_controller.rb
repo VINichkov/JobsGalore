@@ -2,13 +2,8 @@ class IndexController < ApplicationController
   #authorize_resource only:[:admin]
   skip_before_action :verify_authenticity_token, only: [:file_to_html]
   def main
-    if md?
       @main = Main.call(query:@search)
-      render 'index/main/main_md'
-    else
       @number_of_jobs = NumberOfJobsQuery.new.call
-      render 'index/main/main_xs'
-    end
   end
 
   def advertising_terms_of_use;  end

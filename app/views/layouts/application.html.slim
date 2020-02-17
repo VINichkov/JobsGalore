@@ -46,9 +46,11 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
     /! HillTopAds
     = csrf_meta_tags
   body
+    .head_menu
+      = render('inc/header', search: @search)
+      = render 'inc/header/inc/alert', alert: alert, notice: notice if alert || notice
     .wrapper
-      =render('inc/header', search: @search)
-      =render 'inc/header/inc/alert', alert: alert, notice: notice if alert || notice
       = yield
-    =render('inc/footer') if md?
-    =render('ad/propeller_push_notifications_cmp')
+    .footer
+      =render('inc/footer')
+      =render('ad/propeller_push_notifications_cmp')

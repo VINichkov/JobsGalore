@@ -3,13 +3,12 @@ input[type="checkbox" id="nav-toggle" hidden]
 nav.navbar.navbar-blue.navbar-top[itemscope itemtype="http://schema.org/WebSite"]
   = render 'inc/header/inc/google_addon'
   .container-fluid
-    .navbar-header
-      label.navbar-toggle.navbar-left[for="nav-toggle" onclick]
-        span.sr-only
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-      = head_menu(search)
+    label.navbar-toggle.navbar-left[for="nav-toggle" onclick]
+      span.sr-only
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+    = head_menu(search)
 .navmenu.nav_menu.navbar-blue
   label.nav-toggle[for="nav-toggle" onclick]
   h2.logo
