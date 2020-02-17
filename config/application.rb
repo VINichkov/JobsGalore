@@ -13,6 +13,9 @@ module Mango
       Devise::Mailer.layout "mailer"
       Devise::Mailer.helper :email
     end
+    config.action_dispatch.default_headers = {
+        'X-Frame-Options' => 'ALLOW-FROM https://vk.com/'
+    }
     #config.public_file_server.headers = {
      #   'Cache-Control' => 'public, max-age = 604800',
     #    'Expires' => "#{1.year.from_now.to_formatted_s(:rfc822)}"
