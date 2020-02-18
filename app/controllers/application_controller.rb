@@ -113,4 +113,8 @@ class ApplicationController < ActionController::Base
   def md?
     !(browser.device.mobile? || browser.device.tablet?)
   end
+
+  def i_frame_app?
+    params["vk_app_id"].present?
+  end
 end

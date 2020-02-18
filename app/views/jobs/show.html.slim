@@ -23,7 +23,7 @@
       .hidden-md.hidden-lg
         p
           .text-center
-            = social_share_button_tag @job.title, url: job_url(@job), title:@job.title
+            = social_share_button_tag @job.title, url: job_url(@job), title:@job.title, desc:@job.description
       .hidden-sm.hidden-md.hidden-lg
         = render 'ad/before_similar_ads_xs' if Propert.ads_turn_on?
       .hidden-xs

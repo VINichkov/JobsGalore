@@ -87,15 +87,17 @@ class JobsController < ApplicationController
   end
 
   def apply
-    if @job.apply && !@job.send_email?
+    if @job.apply && !@job.send_email? && !i_frame_app?
       unless current_client&.admin?
         @job.add_responded(client_id: current_client&.id, ip: request.remote_ip, lang: request.env['HTTP_ACCEPT_LANGUAGE'], agent: request.env['HTTP_USER_AGENT'])
       end
       redirect_to @job.apply, status: 307
+    elsif @job.apply && !@job.send_email? && i_frame_app?
+      @url = current_client&.resume&.count > 0 ? contacts_of_companies_url : new_resume_url
+      render 'jobs/apply_iframe'
+    else
+      render 'jobs/apply'
     end
-    resume_workflow = add_new_workflow(class: :Redirect, route: apply_url(@job), session: session) # TODO: Убрать
-    resume_workflow.save!(session[:workflow]) # TODO: Убрать
-    redirect_to new_client_session_path if current_client.blank?
   end
 
   # PATCH/PUT /jobs/1

@@ -2,6 +2,7 @@ class IndexController < ApplicationController
   #authorize_resource only:[:admin]
   skip_before_action :verify_authenticity_token, only: [:file_to_html]
   def main
+      i_frame_app?
       @main = Main.call(query:@search)
       @number_of_jobs = NumberOfJobsQuery.new.call
   end
