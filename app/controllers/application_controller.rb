@@ -114,7 +114,13 @@ class ApplicationController < ActionController::Base
     !(browser.device.mobile? || browser.device.tablet?)
   end
 
+  def i_frame_app
+    if params["vk_app_id"].present?
+      cookies[:iframe] = true
+    end
+  end
+
   def i_frame_app?
-    params["vk_app_id"].present?
+    cookies[:iframe] || false
   end
 end
