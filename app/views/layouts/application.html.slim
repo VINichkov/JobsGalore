@@ -46,6 +46,26 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
     /! HillTopAds
     = csrf_meta_tags
   body
+    javascript:
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '430364631037006',
+                xfbml: true,
+                version: 'v6.0'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
     .head_menu
       = render('inc/header', search: @search)
       = render 'inc/header/inc/alert', alert: alert, notice: notice if alert || notice
