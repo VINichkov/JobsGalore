@@ -16,6 +16,7 @@
 window.addEventListener("load", function() {
     elem = document.getElementById("first");
     if (elem != null){
+        console.log('!!Это VK!!');
         connect.send('VKWebAppGetEmail').then(data => {
             // Handling received data
             console.log(data.email);
