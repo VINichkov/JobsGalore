@@ -17,14 +17,7 @@ window.addEventListener("load", function() {
     elem = document.getElementById("first");
     if (elem != null){
         console.log('!!Это VK!!');
-        connect.send('VKWebAppGetEmail')
-            .then(function (date) {
-            console.log('!!Отправили привет VK!!');
-            console.log(data.email);
-        }).catch(function (error){
-            console.log('!!Ошибка VK!!');
-            console.log(error);
-        });
+        connect.send('VKWebAppInit');
     }
 });
 //import {default as vk} from './connect.js';
