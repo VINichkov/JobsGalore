@@ -17,12 +17,13 @@ window.addEventListener("load", function() {
     elem = document.getElementById("first");
     if (elem != null){
         console.log('!!Это VK!!');
-        connect.send('VKWebAppGetEmail').then(data => {
-            // Handling received data
+        connect.send('VKWebAppGetEmail')
+            .then(function (date) {
+            console.log('!!Отправили привет VK!!');
             console.log(data.email);
-        }).catch(error => {
-                console.log(error);
-            // Handling an error
+        }).catch(function (error){
+            console.log('!!Ошибка VK!!');
+            console.log(error);
         });
     }
 });
