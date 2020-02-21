@@ -1,1 +1,364 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var __assign=function(){return(__assign=Object.assign||function(e){for(var n,r=1,t=arguments.length;r<t;r++)for(var o in n=arguments[r])Object.prototype.hasOwnProperty.call(n,o)&&(e[o]=n[o]);return e}).apply(this,arguments)};function __rest(e,n){var r={};for(var t in e)Object.prototype.hasOwnProperty.call(e,t)&&n.indexOf(t)<0&&(r[t]=e[t]);if(null!=e&&"function"==typeof Object.getOwnPropertySymbols){var o=0;for(t=Object.getOwnPropertySymbols(e);o<t.length;o++)n.indexOf(t[o])<0&&Object.prototype.propertyIsEnumerable.call(e,t[o])&&(r[t[o]]=e[t[o]])}return r}function __spreadArrays(){for(var e=0,n=0,r=arguments.length;n<r;n++)e+=arguments[n].length;var t=Array(e),o=0;for(n=0;n<r;n++)for(var i=arguments[n],a=0,p=i.length;a<p;a++,o++)t[o]=i[a];return t}function createCounter(){return{current:0,next:function(){return++this.current}}}function createRequestResolver(){var r=createCounter(),o={};return{add:function(e){var n=r.next();return o[n]=e,n},resolve:function(e,n,r){var t=o[e];t&&(r(n)?t.resolve(n):t.reject(n),o[e]=null)}}}function promisifySend(i,e){var a=createRequestResolver();return e(function(e){if(e.detail&&e.detail.data){var n=e.detail.data,r=n.request_id,t=__rest(n,["request_id"]);r&&a.resolve(r,t,function(e){return!("error_type"in e)})}}),function(t,o){return void 0===o&&(o={}),new Promise(function(e,n){var r=null==o.request_id?a.add({resolve:e,reject:n}):o.request_id;i(t,__assign(__assign({},o),{request_id:r}))})}}var IS_CLIENT_SIDE="undefined"!=typeof window,IS_ANDROID_WEBVIEW=Boolean(IS_CLIENT_SIDE&&window.AndroidBridge),IS_IOS_WEBVIEW=Boolean(IS_CLIENT_SIDE&&window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.VKWebAppClose),IS_WEB=!IS_ANDROID_WEBVIEW&&!IS_IOS_WEBVIEW,EVENT_TYPE=IS_WEB?"message":"VKWebAppEvent",DESKTOP_METHODS=["VKWebAppInit","VKWebAppGetCommunityAuthToken","VKWebAppAddToCommunity","VKWebAppGetUserInfo","VKWebAppSetLocation","VKWebAppGetClientVersion","VKWebAppGetPhoneNumber","VKWebAppGetEmail","VKWebAppGetGeodata","VKWebAppSetTitle","VKWebAppGetAuthToken","VKWebAppCallAPIMethod","VKWebAppJoinGroup","VKWebAppAllowMessagesFromGroup","VKWebAppDenyNotifications","VKWebAppAllowNotifications","VKWebAppOpenPayForm","VKWebAppOpenApp","VKWebAppShare","VKWebAppShowWallPostBox","VKWebAppScroll","VKWebAppResizeWindow","VKWebAppShowOrderBox","VKWebAppShowLeaderBoardBox","VKWebAppShowInviteBox","VKWebAppShowRequestBox","VKWebAppAddToFavorites","VKWebAppShowCommunityWidgetPreviewBox"],androidBridge=IS_CLIENT_SIDE?window.AndroidBridge:void 0,iosBridge=IS_IOS_WEBVIEW?window.webkit.messageHandlers:void 0;function createVKConnect(r){var i=void 0,a=[];function e(e){a.push(e)}window.addEventListener(EVENT_TYPE,function(n){if(IS_IOS_WEBVIEW||IS_ANDROID_WEBVIEW)return __spreadArrays(a).map(function(e){return e.call(null,n)});if(IS_WEB&&n&&n.data){var e=n.data,r=e.type,t=e.data,o=e.frameId;r&&"VKWebAppSettings"===r?i=o:__spreadArrays(a).map(function(e){return e({detail:{type:r,data:t}})})}});var n=promisifySend(function(e,n){androidBridge&&androidBridge[e]?androidBridge[e](JSON.stringify(n)):iosBridge&&iosBridge[e]&&"function"==typeof iosBridge[e].postMessage?iosBridge[e].postMessage(n):IS_WEB&&parent.postMessage({handler:e,params:n,type:"vk-connect",webFrameId:i,connectVersion:r},"*")},e);return{send:n,sendPromise:n,subscribe:e,unsubscribe:function(e){var n=a.indexOf(e);-1<n&&a.splice(n,1)},supports:function(e){return IS_ANDROID_WEBVIEW?!(!androidBridge||"function"!=typeof androidBridge[e]):IS_IOS_WEBVIEW?!(!iosBridge||!iosBridge[e]||"function"!=typeof iosBridge[e].postMessage):!!IS_WEB&&-1<DESKTOP_METHODS.indexOf(e)},isWebView:function(){return IS_IOS_WEBVIEW||IS_ANDROID_WEBVIEW}}}function createCustomEventPolyfill(){function e(e,n){var r=n||{bubbles:!1,cancelable:!1,detail:void 0},t=document.createEvent("CustomEvent");return t.initCustomEvent(e,!!r.bubbles,!!r.cancelable,r.detail),t}return e.prototype=Event.prototype,e}var version="1.8.7";function applyMiddleware(){for(var t=[],e=0;e<arguments.length;e++)t[e]=arguments[e];return t.includes(void 0)||t.includes(null)?applyMiddleware.apply(void 0,t.filter(function(e){return"function"==typeof e})):function(r){if(0===t.length)return r;var e,n={subscribe:r.subscribe,send:function(){for(var e=[],n=0;n<arguments.length;n++)e[n]=arguments[n];return r.send.apply(r,e)}};return e=t.filter(function(e){return"function"==typeof e}).map(function(e){return e(n)}).reduce(function(n,r){return function(e){return n(r(e))}})(r.send),__assign(__assign({},r),{send:e})}}"undefined"==typeof window||window.CustomEvent||(window.CustomEvent=createCustomEventPolyfill());var index=createVKConnect(version);exports.applyMiddleware=applyMiddleware,exports.default=index;
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+}
+
+/**
+ * Creates counter interface.
+ */
+function createCounter() {
+    return {
+        current: 0,
+        next: function () {
+            return ++this.current;
+        }
+    };
+}
+/**
+ * Creates interface for resolving request promises by request id's (or not).
+ */
+function createRequestResolver() {
+    var counter = createCounter();
+    var promiseControllers = {};
+    return {
+        /**
+         * Adds new controller with resolve/reject methods.
+         *
+         * @param resolve Resolve function.
+         * @param reject Reject function.
+         * @returns New request id of the added controller.
+         */
+        add: function (controller) {
+            var id = counter.next();
+            promiseControllers[id] = controller;
+            return id;
+        },
+        /**
+         * Resolves/rejects an added promise by request id and the `isSuccess`
+         * predicate.
+         *
+         * @param requestId Request ID.
+         * @param data Data to pass to the resolve- or reject-function.
+         * @param isSuccess Predicate to select the desired function.
+         */
+        resolve: function (requestId, data, isSuccess) {
+            var requestPromise = promiseControllers[requestId];
+            if (requestPromise) {
+                if (isSuccess(data)) {
+                    requestPromise.resolve(data);
+                }
+                else {
+                    requestPromise.reject(data);
+                }
+                promiseControllers[requestId] = null;
+            }
+        }
+    };
+}
+/**
+ * Returns send function that returns promises.
+ *
+ * @param sendEvent Send event function.
+ * @param subscribe Subscribe event function.
+ * @returns Send function which returns the Promise object.
+ */
+function promisifySend(sendEvent, subscribe) {
+    var requestResolver = createRequestResolver();
+    // Subscribe to receive a data
+    subscribe(function (event) {
+        if (!event.detail || !event.detail.data) {
+            return;
+        }
+        var _a = event.detail.data, requestId = _a.request_id, data = __rest(_a, ["request_id"]);
+        if (requestId) {
+            requestResolver.resolve(requestId, data, function (data) { return !('error_type' in data); });
+        }
+    });
+    return function promisifiedSend(method, props) {
+        if (props === void 0) { props = {}; }
+        return new Promise(function (resolve, reject) {
+            var requestId = props.request_id == null ? requestResolver.add({ resolve: resolve, reject: reject }) : props.request_id;
+            sendEvent(method, __assign(__assign({}, props), { request_id: requestId }));
+        });
+    };
+}
+
+/** Is the client side runtime environment */
+var IS_CLIENT_SIDE = typeof window !== 'undefined';
+/** Is the runtime environment an Android app */
+var IS_ANDROID_WEBVIEW = Boolean(IS_CLIENT_SIDE && window.AndroidBridge);
+/** Is the runtime environment an iOS app */
+var IS_IOS_WEBVIEW = Boolean(IS_CLIENT_SIDE &&
+    window.webkit &&
+    window.webkit.messageHandlers &&
+    window.webkit.messageHandlers.VKWebAppClose);
+/** Is the runtime environment a browser */
+var IS_WEB = !IS_ANDROID_WEBVIEW && !IS_IOS_WEBVIEW;
+/** Type of subscribe event */
+var EVENT_TYPE = IS_WEB ? 'message' : 'VKWebAppEvent';
+/** Methods supported on the desktop */
+var DESKTOP_METHODS = [
+    'VKWebAppInit',
+    'VKWebAppGetCommunityAuthToken',
+    'VKWebAppAddToCommunity',
+    'VKWebAppGetUserInfo',
+    'VKWebAppSetLocation',
+    'VKWebAppGetClientVersion',
+    'VKWebAppGetPhoneNumber',
+    'VKWebAppGetEmail',
+    'VKWebAppGetGeodata',
+    'VKWebAppSetTitle',
+    'VKWebAppGetAuthToken',
+    'VKWebAppCallAPIMethod',
+    'VKWebAppJoinGroup',
+    'VKWebAppAllowMessagesFromGroup',
+    'VKWebAppDenyNotifications',
+    'VKWebAppAllowNotifications',
+    'VKWebAppOpenPayForm',
+    'VKWebAppOpenApp',
+    'VKWebAppShare',
+    'VKWebAppShowWallPostBox',
+    'VKWebAppScroll',
+    'VKWebAppResizeWindow',
+    'VKWebAppShowOrderBox',
+    'VKWebAppShowLeaderBoardBox',
+    'VKWebAppShowInviteBox',
+    'VKWebAppShowRequestBox',
+    'VKWebAppAddToFavorites',
+    'VKWebAppShowCommunityWidgetPreviewBox'
+];
+/** Android VK Connect interface. */
+var androidBridge = IS_CLIENT_SIDE
+    ? window.AndroidBridge
+    : undefined;
+/** iOS VK Connect interface. */
+var iosBridge = IS_IOS_WEBVIEW
+    ? window.webkit.messageHandlers
+    : undefined;
+/**
+ * Creates a VK Connect API that holds functions for interact with runtime
+ * environment.
+ *
+ * @param version Version of the package
+ */
+function createVKConnect(version) {
+    /** Current frame id. */
+    var webFrameId = undefined;
+    /** List of functions that subscribed on events. */
+    var subscribers = [];
+    /**
+     * Sends an event to the runtime env. In the case of Android/iOS application
+     * env is the application itself. In the case of the browser, the parent
+     * frame in which the event handlers is located.
+     *
+     * @param method The method (event) name to send
+     * @param [props] Method properties
+     */
+    function send(method, props) {
+        // Sending data through Android bridge
+        if (androidBridge && androidBridge[method]) {
+            androidBridge[method](JSON.stringify(props));
+        }
+        // Sending data through iOS bridge
+        else if (iosBridge && iosBridge[method] && typeof iosBridge[method].postMessage === 'function') {
+            iosBridge[method].postMessage(props);
+        }
+        // Sending data through web bridge
+        else if (IS_WEB) {
+            parent.postMessage({
+                handler: method,
+                params: props,
+                type: 'vk-connect',
+                webFrameId: webFrameId,
+                connectVersion: version
+            }, '*');
+        }
+    }
+    /**
+     * Adds an event listener. It will be called any time a data is received.
+     *
+     * @param listener A callback to be invoked on every event receive.
+     */
+    function subscribe(listener) {
+        subscribers.push(listener);
+    }
+    /**
+     * Removes an event listener which has been subscribed for event listening.
+     *
+     * @param listener A callback to unsubscribe.
+     */
+    function unsubscribe(listener) {
+        var index = subscribers.indexOf(listener);
+        if (index > -1) {
+            subscribers.splice(index, 1);
+        }
+    }
+    /**
+     * Checks if a method is supported on runtime platform.
+     *
+     * @param method Method (event) name to check.
+     * @returns Result of checking.
+     */
+    function supports(method) {
+        if (IS_ANDROID_WEBVIEW) {
+            // Android support check
+            return !!(androidBridge && typeof androidBridge[method] === 'function');
+        }
+        else if (IS_IOS_WEBVIEW) {
+            // iOS support check
+            return !!(iosBridge && iosBridge[method] && typeof iosBridge[method].postMessage === 'function');
+        }
+        else if (IS_WEB) {
+            // Web support check
+            return DESKTOP_METHODS.indexOf(method) > -1;
+        }
+        return false;
+    }
+    /**
+     * Checks whether the runtime is a WebView.
+     *
+     * @returns Result of checking.
+     */
+    function isWebView() {
+        return IS_IOS_WEBVIEW || IS_ANDROID_WEBVIEW;
+    }
+    // Subscribes to listening messages from a runtime for calling each
+    // subscribed event listener.
+    window.addEventListener(EVENT_TYPE, function (event) {
+        if (IS_IOS_WEBVIEW || IS_ANDROID_WEBVIEW) {
+            // If it's webview
+            return __spreadArrays(subscribers).map(function (fn) { return fn.call(null, event); });
+        }
+        else if (IS_WEB && event && event.data) {
+            // If it's web
+            var _a = event.data, type_1 = _a.type, data_1 = _a.data, frameId = _a.frameId;
+            if (type_1 && type_1 === 'VKWebAppSettings') {
+                webFrameId = frameId;
+            }
+            else {
+                __spreadArrays(subscribers).map(function (fn) { return fn({ detail: { type: type_1, data: data_1 } }); });
+            }
+        }
+    });
+    /**
+     * Enhanced send functions for the ability to receive response data in
+     * the Promise object.
+     */
+    var sendPromise = promisifySend(send, subscribe);
+    return {
+        send: sendPromise,
+        sendPromise: sendPromise,
+        subscribe: subscribe,
+        unsubscribe: unsubscribe,
+        supports: supports,
+        isWebView: isWebView
+    };
+}
+
+/**
+ * Creates the CustomEvent polyfill. VK apps use the CustomEvent for transfer
+ * data.
+ */
+function createCustomEventPolyfill() {
+    function CustomEvent(typeArg, eventInitDict) {
+        var params = eventInitDict || { bubbles: false, cancelable: false, detail: undefined };
+        var evt = document.createEvent('CustomEvent');
+        evt.initCustomEvent(typeArg, !!params.bubbles, !!params.cancelable, params.detail);
+        return evt;
+    }
+    CustomEvent.prototype = Event.prototype;
+    return CustomEvent;
+}
+
+var version = "1.8.7";
+
+/**
+ * Creates the VK Connect enhancer that applies middleware to the `send`
+ * method. This is handy for a variety of task such as logging every sent
+ * event.
+ *
+ * @param middlewares The middleware chain to be applied.
+ * @returns The VK Connect enhancer applying the middleware.
+ */
+function applyMiddleware() {
+    var middlewares = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        middlewares[_i] = arguments[_i];
+    }
+    if (middlewares.includes(undefined) || middlewares.includes(null)) {
+        return applyMiddleware.apply(void 0, middlewares.filter(function (item) { return typeof item === 'function'; }));
+    }
+    return function (connect) {
+        if (middlewares.length === 0) {
+            return connect;
+        }
+        var send = function () {
+            throw new Error('Sending events while constructing your middleware is not allowed. ' +
+                'Other middleware would not be applied to this send.');
+        };
+        var middlewareAPI = {
+            subscribe: connect.subscribe,
+            send: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                return connect.send.apply(connect, args);
+            }
+        };
+        var chain = middlewares
+            .filter(function (item) { return typeof item === 'function'; })
+            .map(function (middleware) { return middleware(middlewareAPI); }) //
+            .reduce(function (a, b) { return function (send) { return a(b(send)); }; });
+        send = chain(connect.send);
+        return __assign(__assign({}, connect), { send: send });
+    };
+}
+
+// Applying CustomEvent polyfill
+if (typeof window !== 'undefined' && !window.CustomEvent) {
+    window.CustomEvent = createCustomEventPolyfill();
+}
+// Export VK Connect API
+var connect = createVKConnect(version);

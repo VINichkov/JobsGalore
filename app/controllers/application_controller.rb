@@ -120,6 +120,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def i_frame_app_first
+    params["vk_app_id"].present?
+  end
+
   def i_frame_app?
     cookies[:iframe] || false
   end

@@ -10,7 +10,22 @@
 //= require trix
 //= require trix_conf
 //= require current
+//= require connect
 
+
+window.addEventListener("load", function() {
+    elem = document.getElementById("first");
+    if (elem != null){
+        connect.send('VKWebAppGetEmail').then(data => {
+            // Handling received data
+            console.log(data.email);
+        }).catch(error => {
+                console.log(error);
+            // Handling an error
+        });
+    }
+});
+//import {default as vk} from './connect.js';
 //require_tree ./controllers
 
 //Без jQuery работает  turbolinks, react, social-share-button, trix

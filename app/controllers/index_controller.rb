@@ -5,6 +5,7 @@ class IndexController < ApplicationController
 
   def main
       i_frame_app?
+      @first = i_frame_app_first
       @main = Main.call(query:@search)
       @number_of_jobs = NumberOfJobsQuery.new.call
   end
