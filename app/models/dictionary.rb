@@ -5,7 +5,7 @@ class Dictionary
     attribute :name, String
 
     def self.where(*arg)
-      t=Time.now
+      t = Time.now
       query = arg[0].downcase.split(' ')
       arg[0]= query.last
       query.delete_at(query.size-1)

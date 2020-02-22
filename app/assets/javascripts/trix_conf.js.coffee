@@ -67,11 +67,12 @@ Trix.config.blockAttributes = attributes =
     tagName: "span"
     parse: false
 Trix.HTMLParser.parse = (html, options) ->
-  html = html.replace(/<h[345]/gi, '<h5')
-  html = html.replace(/<\/h[345]/gi,'</h6>')
-  html = html.replace(/<h2/gi,'<h4').replace(/<h1/gi,'<h3')
-  html = html.replace(/<\/h2>/gi,'</h4>').replace(/<\/[hH]1>/gi,'</h3>')
-  html = html.replace(/<p[^>]*>\s*<br\/>\s*<\/p>/gi, '<p> </p>')
+  html = html.replace(/<[hH][345]/gi, '<strong')
+  html = html.replace(/<\/[hH][345]/gi,'</strong')
+  html = html.replace(/<[hH][123]/gi,'<h3')
+  html = html.replace(/<\/[hH][123]>/gi,'</h3>')
+  html = html.replace(/<\/[hH][123]>/gi,'</h3>')
+  #html = html.replace(/<p[^>]*>\s*<br\/>\s*<\/p>/gi, '<p></p>')
   parser = new this html, options
   parser.parse()
   parser
