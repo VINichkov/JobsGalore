@@ -57,7 +57,7 @@ module JobsHelper
   def social_button(job)
     social_share_button_tag(job.title,
                             url: job_url(job),
-                            desc:job.description,
+                            desc:job.description_text,
                             text_in_window: 'Email this job to yourself or a friend',
                             post_url: send_job_path,
                             params: {job: job.id}.to_json
