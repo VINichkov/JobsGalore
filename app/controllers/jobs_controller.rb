@@ -100,6 +100,13 @@ class JobsController < ApplicationController
     end
   end
 
+  def send_job
+    request = params.require(:send)
+    Email.create(email: request[:email])
+    JobsMailer.send_job(request[:job], request[:email]).deliver_later
+    head :ok
+  end
+
   # PATCH/PUT /jobs/1
   # PATCH/PUT /jobs/1.json
   def update

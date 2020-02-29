@@ -19,7 +19,7 @@ class JobsMailerPreview < ActionMailer::Preview
   end
 
   def turn_off_option
-    JobsMailer.turn_off_option("Urgent", Job.find_by_id(3399101))
+    JobsMailer.turn_off_option("Urgent", Job.find_by_id(6965558))
   end
 
   def notice_remove_job
@@ -28,5 +28,9 @@ class JobsMailerPreview < ActionMailer::Preview
 
   def remove_job
     JobsMailer.remove_job(Job.find_by_id(3399101))
+  end
+
+  def send_job
+    JobsMailer.send_job(6965558, "new_email@mail.com")
   end
 end

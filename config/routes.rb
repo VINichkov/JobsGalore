@@ -159,6 +159,7 @@ Rails.application.routes.draw do
   get "apply_job/:id", to: "jobs#apply", as: 'apply'
   get "prolong/:id", to: "jobs#prolong", as: 'prolong'
   get "similar_jobs/:id", to: "jobs#similar_jobs", as: 'similar_jobs'
+  post "send_job/", to: "jobs#send_job", as: 'send_job'
 
 
   resources :resumes, only:[:new, :show, :edit, :update, :destroy]

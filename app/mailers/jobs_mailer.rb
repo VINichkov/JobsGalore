@@ -41,5 +41,12 @@ class JobsMailer < ApplicationMailer
     mail(to: job.client.email, subject: "The job opportunity was just removed")
   end
 
+  def send_job(id, email)
+    @utm = "?"+create_utm(:send_job)
+    @job = Job.find_by_id id
+    @list_of_jobs = @job.similar_vacancies
+    mail(to: email, subject: @job.title)
+  end
+
 
 end

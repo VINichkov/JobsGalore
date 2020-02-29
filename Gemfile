@@ -33,6 +33,7 @@ gem "nokogiri", ">= 1.8.5"
 gem 'browser' #определяет браузер
 gem 'geocoder' #определяет страну
 #gem 'typescript-rails' Проблемы. Может позже
+gem 'coffee-script'
 
 #gem 'turbolinks'
 #gem 'jquery-turbolinks'
@@ -46,7 +47,6 @@ gem 'bootstrap-sass'#, '~> 3.3.6'
 gem 'sprockets-rails'
 gem 'jquery-rails'
 gem 'will_paginate'#, '~> 3.1.0'
-gem 'social-share-button'
 gem 'cancancan'#, '~> 2.0.0'
 gem 'devise','~> 4.7.1'  #4.4.3'
 gem 'dkim'
