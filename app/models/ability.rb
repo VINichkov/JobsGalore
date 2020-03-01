@@ -115,7 +115,7 @@ class Ability
     can [ :prolong ], Job do |job|
       user == nil or user == job.client
     end
-    can [:new, :create_temporary, :create_resume, :message], Resume
+    can [:new, :create_temporary, :create_resume, :message, :send_resume], Resume
     can [:show, :company_jobs, :highlight_view], Company
     can [:show, :highlight_view], Resume
     can [:show, :highlight_view, :similar_jobs, :options, :send_job], Job

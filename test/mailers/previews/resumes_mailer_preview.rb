@@ -38,4 +38,12 @@ class ResumesMailerPreview < ActionMailer::Preview
     ResumesMailer.send_message(Resume.last, letter, Client.offset(rand(Client.count)).first)
   end
 
+  def send_resume_without_clietn
+    ResumesMailer.send_resume(223, 'mail@mail.eu', nil)
+  end
+
+  def send_resume_with_clietn
+    ResumesMailer.send_resume(223, 'mail@mail.eu', true)
+  end
+
 end

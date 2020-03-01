@@ -42,6 +42,14 @@ class ResumesController < ApplicationController
   def edit
   end
 
+  def send_resume
+    request = params.require(:send)
+    puts request
+    Email.create(email: request[:email])
+    ResumesMailer.send_resume(request[:resume], request[:email], current_client).deliver_later
+    head :ok
+  end
+
   # POST /resumes
   # POST /resumes.json
   def create_resume

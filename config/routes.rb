@@ -168,6 +168,7 @@ Rails.application.routes.draw do
   post "resume_create/", to: "resumes#create_temporary", as: 'create_resume'
   get "resumes/", to: "resumes#create_resume", as: 'resumes'
   get "message/:id", to: "resumes#message", as: 'msg'
+  post "send_resume_to_me/", to: "resumes#send_resume", as: 'send_resume'
 
   get "/log_in/:id", to: "resumes#log_in", as: 'log_in'
   root  to: 'index#main'

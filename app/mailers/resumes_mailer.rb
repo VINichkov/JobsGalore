@@ -39,4 +39,12 @@ class ResumesMailer < ApplicationMailer
     mail(to:client, subject: @resume.title)
   end
 
+  def send_resume(id, email, current_client)
+    @utm = "?" + create_utm(:send_resume)
+    @current_client = current_client
+    @resume = Resume.find_by_id id
+    attachments["#{@resume.client.full_name}.pdf"] if @current_client
+    mail(to: email, subject: @resume.title)
+  end
+
 end
