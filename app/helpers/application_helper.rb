@@ -97,9 +97,9 @@ module ApplicationHelper
   end
 
   def social_button_in_invite
-    social_share_button_tag('Что то отправим',
+    social_share_button_tag('JobsGalore.eu',
                             url: root_url,
-                            desc: ' Какие то описания',
+                            desc: 'JobsGalore is a job search aggregator in Australia. Find jobs and career related information. Find your dream job. Make job search easy with us!',
                             allow_sites: SocialShareButtonStrategy::WITHOUT_EMAIL
 
     )
