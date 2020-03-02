@@ -72,6 +72,7 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
       = render 'inc/header/inc/alert', alert: alert, notice: notice if alert || notice
     .wrapper
       = yield
+    =render 'inc/invate_to_share' if cookies[:invite].blank?
     .footer
       =render('inc/footer')
       =render('ad/propeller_push_notifications_cmp') if Propert.ads_turn_on?

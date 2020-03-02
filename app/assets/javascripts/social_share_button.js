@@ -28,7 +28,7 @@ class SocialShareButton {
         let desc = encodeURIComponent($parent.getAttribute("data-desc") || ' ');
         let textInWindow = $parent.getAttribute("text_in_window") || ' ' ;
         let postUrl =   $parent.getAttribute("post_url") || '';
-        let params =   JSON.parse($parent.getAttribute("params")) || '';
+        let params = $parent.getAttribute("params") ? JSON.parse($parent.getAttribute("params")) : '';
         let ga = window[window['GoogleAnalyticsObject'] || 'ga'];
         if (typeof ga === 'function') {
             ga('send', 'event', 'Social Share Button', 'click', site);
@@ -39,7 +39,6 @@ class SocialShareButton {
 
         switch (site) {
             case "email":
-                console.log("mailto:?to=&subject=" + title + "&body=" + url);
                 let modal = new EmailJobs(titleText, textInWindow, postUrl, params);
                 modal.createModal();
                 modal.show();

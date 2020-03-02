@@ -27,7 +27,7 @@
             p
         .btn_margin
           .text-center
-            = social_share_button_tag company.name
+            = social_button_company company
       = render 'ad/after_summary_md' if Propert.ads_turn_on?
     .col-xs-12.col-sm-12.hidden-md.hidden-lg
       span
@@ -40,7 +40,8 @@
           .text-center
             = company_logo(company, "300px", "250px")
             br
-            = social_share_button_tag company.name, class: "center-block"
+            = social_button_company company
+            /= social_share_button_tag company.name, class: "center-block"
       .row
         .col-xs-12
           h3.text-center

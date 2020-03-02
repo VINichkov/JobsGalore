@@ -86,5 +86,14 @@ module CompanyHelper
                 image: company.logo_url)
   end
 
+  def social_button_company(company)
+    social_share_button_tag(company.name,
+                            url: company_url(company),
+                            desc:company.description_text,
+                            allow_sites: SocialShareButtonStrategy::WITHOUT_EMAIL
+
+    )
+  end
+
 
 end

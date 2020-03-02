@@ -96,4 +96,13 @@ module ApplicationHelper
     react_component("Search", {name: name, key: key, url_industries: industries_url, search: search, show: true})
   end
 
+  def social_button_in_invite
+    social_share_button_tag('Что то отправим',
+                            url: root_url,
+                            desc: ' Какие то описания',
+                            allow_sites: SocialShareButtonStrategy::WITHOUT_EMAIL
+
+    )
+  end
+
 end

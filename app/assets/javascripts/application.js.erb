@@ -170,4 +170,9 @@ $(document).on('click', '.linkedin_click', function () {
         });
 });
 
+$(document).ready(function () {
+    if ($("div[data-react-class='Alert']").length == 0 ) {
+        setTimeout(function () {$('#invate_to_share').modal({show: true})}, 2000);
+    }
+});
 
