@@ -1,4 +1,4 @@
-- search_code = Propert.find_by_code 'da'
+- search_code = Propert.find_by_code('da')&.code
 -if search_code.present?
   .adaptive[id = "yandex_direct_#{search_code}"]
   javascript:
