@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+=begin
 a = Product.find_or_create_by(name: 'Job_Urgent')
 a.update(price: {
     'AUD':  {price: 14.99},
@@ -104,4 +105,5 @@ a.update(price: {
     'GBR':  {price: 0.20},
     'EUR':  {price: 0.20},
     'RUB':  {price: 18},
-})
+})=end
+

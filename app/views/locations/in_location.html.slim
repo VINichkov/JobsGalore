@@ -8,7 +8,6 @@
     .row
       .col-lg-8.col-md-8.col-sm-8
         = render('ad/before_search_ss', query: nil, location: @in_location.name, page: @in_location.page) if Propert.ads_turn_on?
-        //= render('ad/before_search', query: nil, location: @in_location.name, page: @in_location.page) if Propert.ads_turn_on?
         - if @in_location.type == Objects::JOBS
           = render partial: 'inc/job', collection: @in_location.objs, as: :job, locals: {query: ''}
         - elsif @in_location.type==Objects::COMPANIES
