@@ -34,18 +34,19 @@ div[class = "#{(option[:cl] =='dropdown' ? 'btn_margin' :  'btn-group')}"]
           i.glyphicon.glyphicon-envelope
         - else
           | Send to employers
-  div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
-    = link_to eval("edit_#{option[:class]}_path(object)"), class: "btn btn-primary btn-block" do
-      - if option[:min]
-        i.glyphicon.glyphicon-pencil
-      - else
-        |Edit
-  div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
-    = link_to object, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-default btn-block" do
-      - if option[:min]
-        i.glyphicon.glyphicon-remove
-      - else
-        |Delete
+  - if can?(:destroy, object)
+    div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
+      = link_to eval("edit_#{option[:class]}_path(object)"), class: "btn btn-primary btn-block" do
+        - if option[:min]
+          i.glyphicon.glyphicon-pencil
+        - else
+          |Edit
+    div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
+      = link_to object, data: {confirm: 'Are you sure?'}, method: :delete, class: "btn btn-default btn-block" do
+        - if option[:min]
+          i.glyphicon.glyphicon-remove
+        - else
+          |Delete
   - if object.class == JobDecorator && object.can_prolong?
     div[class = "#{(option[:cl] == 'dropdown' ? 'btn_margin' : 'btn-group')}"]
       a.btn.btn-info.btn-block[href= prolong_path(object) rel="nofollow"]
