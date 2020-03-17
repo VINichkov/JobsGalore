@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
-  load_and_authorize_resource :client
-  before_action :set_client, only: [:show, :edit,:update, :destroy,:change_type, :destroy_member, :admin_edit_photo,:admin_show,:admin_edit,:admin_update,:admin_destroy ]
+  load_and_authorize_resource :client, except: [:unsubscribe]
+  before_action :set_client, only: [:unsubscribe, :show, :edit,:update, :destroy,:change_type, :destroy_member, :admin_edit_photo,:admin_show,:admin_edit,:admin_update,:admin_destroy ]
   before_action :current_company, only: [ :team]
   before_action :set_current_client, only: [ :resumes, :settings, :edit_photo]
   before_action :set_profile_params, only: :jobs
@@ -204,6 +204,11 @@ class ClientsController < ApplicationController
     end
   end
 
+  def unsubscribe
+    @client.update(alert: !@client.alert)
+    redirect_to root_path, notice: 'Your alert has been cancelled!'
+  end
+
   private
 
   def send_params
@@ -230,4 +235,7 @@ class ClientsController < ApplicationController
       params.require(:client).permit(:firstname, :lastname, :email, :phone, :password, :character, :photo, :gender, :location_id, :birth, :send_email, :page)
     end
   end
+
+
+
 end

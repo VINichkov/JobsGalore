@@ -13,8 +13,10 @@ Rails.application.routes.draw do
   # get 'rss', to: 'index#rss'
   post 'file_to_html', to: 'index#file_to_html', as: "file_to_html"
   post 'clientforalert', to: 'clientforalert#create', as: "clientforalert"
-  get 'clientforalert/unsubscribe/:id', to: 'clientforalert#unsubscribe', as: "unsubscribe_not_client"
 
+
+  get 'clientforalert/unsubscribe/:id', to: 'clientforalert#unsubscribe', as: "unsubscribe_not_client"
+  get 'client/unsubscribe/:id', to: 'clients#unsubscribe', as: "unsubscribe_client"
 
   devise_for  :clients, controllers:{ registrations: "clients/registrations",
                                       omniauthcallbacks: "clients/omniauthcallbacks",

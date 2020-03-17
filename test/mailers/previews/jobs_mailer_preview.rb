@@ -6,11 +6,15 @@ class JobsMailerPreview < ActionMailer::Preview
   end
 
   def daily_job_alert
-    JobsMailer.daily_job_alert("mail@email.com", "Ruby web java", 22, nil)
+    JobsMailer.daily_job_alert("mail@email.com", "Ruby web java", 22, nil, nil)
   end
 
   def daily_job_alert_unsubscribe
-    JobsMailer.daily_job_alert("mail@email.com", "Ruby web java", 22, 6)
+    JobsMailer.daily_job_alert("mail@email.com", "Ruby web java", 22, 6, 'Subscribe')
+  end
+
+  def daily_job_alert_client
+    JobsMailer.daily_job_alert("mail@email.com", "Ruby web java", 22, 6, 'Resume')
   end
 
 

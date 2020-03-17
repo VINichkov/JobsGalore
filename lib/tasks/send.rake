@@ -9,12 +9,13 @@ namespace :send do
 
     Resume.find_each do |resume|
       begin
-        if resume.client.send_email
+        if resume.client.alert
           JobsMailer.daily_job_alert(
               resume.client.email,
               resume.key,
               resume.location_id,
-              nil)
+              resume.client.id,
+              'Resume')
               .deliver_now
         end
       rescue
@@ -29,7 +30,8 @@ namespace :send do
               client.email,
               Search.str_to_search(client.key.delete("<>{}#@!,:*&()'`\"’|")),
               client.location_id,
-              client.id)
+              client.id,
+              'Subscribe')
               .deliver_now
         end
       rescue
