@@ -184,7 +184,8 @@ CREATE TABLE public.clients (
     provider character varying,
     uid character varying,
     sources character varying,
-    token character varying
+    token character varying,
+    alert boolean DEFAULT true NOT NULL
 );
 
 
@@ -1990,6 +1991,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191120065340'),
 ('20200115052934'),
 ('20200130034755'),
-('20200214142853');
+('20200214142853'),
+('20200317140204');
 
 

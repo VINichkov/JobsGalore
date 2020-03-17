@@ -105,5 +105,7 @@ a.update(price: {
     'GBR':  {price: 0.20},
     'EUR':  {price: 0.20},
     'RUB':  {price: 18},
-})=end
-
+})
+=end
+Client.where(send_email: true).update_all(alert: true)
+Client.where(send_email: false).update_all(alert: false)

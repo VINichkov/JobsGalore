@@ -17,7 +17,6 @@
 window.addEventListener("load", function() {
     elem = document.getElementById("first");
     if (elem != null){
-        console.log('!!Это VK!!');
         connect.send('VKWebAppInit');
     }
 });
@@ -174,5 +173,12 @@ $(document).ready(function () {
     if ($("div[data-react-class='Alert']").length == 0 ) {
         setTimeout(function () {$('#invate_to_share').modal({show: true})}, 2000);
     }
+   /* console.log(navigator);
+    if ('credentials' in navigator) {
+        navigator.credentials.get({password: true})
+            .then(function(creds) {
+                console.log(creds);
+            });
+        console.log("dcdsfsd");
+    }*/
 });
-

@@ -48,7 +48,6 @@ class Autocomplete1 extends React.Component{
     handleSearchLocations(url){
         $.ajax({url:url,
             success: function (data) {
-                console.log(data);
                 this.setState({locations:data});
                 if (this.state.autocomplete !==null && this.state.locations !== null)  {
                     this.state.autocomplete.data('typeahead').source = this.state.locations;
