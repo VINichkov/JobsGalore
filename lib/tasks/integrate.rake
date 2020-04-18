@@ -14,6 +14,26 @@ namespace :integrate do
     puts "! Task:add_jobs: End"
   end
 
+  task :ping_bot => :environment do
+    bots = Propert.find_by_code('bots')
+    begin
+      bots = JSON.parse(bots, opts={symbolize_names:true}) if bots.present?
+    rescue
+      puts "Error in parsing json #{$!}"
+      return
+    end
+    return if bots != Array
+
+    begin
+      bots.each do |t|
+       open(t[:server])
+      end
+    rescue
+      puts "Error in  opening server #{$!}"
+      return
+    end
+  end
+
   task :destroy_jobs => :environment do
     puts "! Task:Destroy: start #{Time.now}"
     Job.where("created_at <= :data and urgent is null and top is null and highlight is null", data: Time.now - 18.days).destroy_all
