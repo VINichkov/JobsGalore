@@ -6,7 +6,7 @@ module PropertsHelper
   end
 
   Propert.all.each do |prop|
-      if prop.code != 'bots'
+      if prop.code.present? and prop.code != 'bots'
         eval("#{prop.code.upcase} = \"#{prop.value}\"")
       end
   end
