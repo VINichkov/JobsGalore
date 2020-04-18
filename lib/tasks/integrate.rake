@@ -15,7 +15,7 @@ namespace :integrate do
   end
 
   task :ping_bot => :environment do
-    bots = Propert.find_by_code('bots')
+    bots = Propert.find_by_code('bots')&.value
     begin
       bots = JSON.parse(bots, opts={symbolize_names:true}) if bots.present?
     rescue
