@@ -20,17 +20,16 @@ namespace :integrate do
       bots = JSON.parse(bots, opts={symbolize_names:true}) if bots.present?
     rescue
       puts "Error in parsing json #{$!}"
-      return
     end
-    return if bots != Array
-
-    begin
-      bots.each do |t|
-       open(t[:server])
+    if bots == Array
+      begin
+        bots.each do |t|
+         open(t[:server])
+        end
+      rescue
+        puts "Error in  opening server #{$!}"
+        return
       end
-    rescue
-      puts "Error in  opening server #{$!}"
-      return
     end
   end
 
