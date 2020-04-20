@@ -21,10 +21,10 @@ namespace :integrate do
     rescue
       puts "Error in parsing json #{$!}"
     end
-    if bots == Array
+    if bots.class == Array
       begin
         bots.each do |t|
-         open(t[:server])
+          URI.open(t[:server])
         end
       rescue
         puts "Error in  opening server #{$!}"
