@@ -41,7 +41,7 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
       gtag('js', new Date());
 
       gtag('config', 'UA-102893446-1');
-    = javascript_include_tag('application', defer: true)
+    /= javascript_include_tag('application', defer: true)
     /! HillTopAds
     meta[name="hilltopads-site-verification" content="d3334fee16c11498d6cd421047d7ed7cda1494c1"]
     /! HillTopAds
@@ -77,3 +77,4 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
     .footer
       =render('inc/footer')
       //=render('ad/propeller_push_notifications_cmp') if Propert.ads_turn_on?
+  = javascript_include_tag('application', defer: true)
