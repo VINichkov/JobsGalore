@@ -12,7 +12,7 @@
           .panel-body.text-center
             = link_to @company.name, @company
             = image_bg(@company.logo_url, "contain", "200px", "200px")
-        =render 'ad/after_logo_md' if Propert.ads_turn_on?
+        = render 'ad/rtb_block', code: "after_logo_md" if Propert.ads_turn_on?
       .col-sm-8.col-md-8.col-sm-8.col-xs-12
         = render partial: 'inc/job', collection: @objs, as: :job, locals:{query: ''}
         .text-center

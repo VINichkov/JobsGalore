@@ -47,7 +47,7 @@ h1.none Jobsgalore. Jobs in Australia.
                       - @main.jobs[5..@main.jobs.count-1].each do |job|
                         = last_job(job)
       .col-lg-3.col-md-3.hidden-sm.hidden-xs
-        = render('ad/main_page_md') if Propert.ads_turn_on?
+        = render 'ad/rtb_block', code: "main_page_afte_locations_md" if Propert.ads_turn_on?
 .container.hidden-lg.hidden-md
   .row
     p.text-center

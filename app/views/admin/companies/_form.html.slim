@@ -1,5 +1,5 @@
 = form_for @company, url:option[:url] do |f|
-  = render 'ad/before_ad_md' if Propert.ads_turn_on?
+  = render 'ad/rtb_block', code: 'before_ad_md' if Propert.ads_turn_on?
   - if @company.errors.any?
     #error_explanation
       h2 = "#{pluralize(@company.errors.count, "error")} prohibited this company from being saved:"
@@ -20,7 +20,7 @@
     |Not verified email ids
   = input_emails(@company)
   br
-  = render 'ad/before_similar_job_md' if Propert.ads_turn_on?
+  = render 'ad/rtb_block', code: 'before_similar_job_md' if Propert.ads_turn_on?
   hr.colorgraph
   .row
     .col-xs-12.col-md-6.col-sm-6.col-lg-6

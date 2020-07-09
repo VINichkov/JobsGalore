@@ -10,7 +10,7 @@
             span.glyphicon.glyphicon-ok
       p
       = highlight(company.render_description, Search.str_to_highlight(query))
-      = render 'ad/before_similar_job_md' if Propert.ads_turn_on?
+      = render 'ad/rtb_block', code: 'before_similar_job_md' if Propert.ads_turn_on?
       = jobs_of_company(company)
     .col-lg-4.col-md-4.hidden-sm.hidden-xs
       .text-center
@@ -28,7 +28,7 @@
         .btn_margin
           .text-center
             = social_button_company company
-      = render 'ad/after_summary_md' if Propert.ads_turn_on?
+      = render 'ad/rtb_block', code: "after_summary_md" if Propert.ads_turn_on?
     .col-xs-12.col-sm-12.hidden-md.hidden-lg
       span
         h1.text-center
@@ -47,7 +47,7 @@
           h3.text-center
             |Summary
           = company_summary(company)
-      = render 'ad/before_ad_xs' if Propert.ads_turn_on?
+      = render 'ad/rtb_block', code: "before_ad_xs" if Propert.ads_turn_on?
       .row
         .col-xs-12.col-sm-12
           - if company.description

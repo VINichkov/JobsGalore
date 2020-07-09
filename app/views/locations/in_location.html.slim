@@ -18,7 +18,7 @@
           = will_paginate_mini @in_location.objs
         = render('ad/after_search', query: nil, location: @in_location.name, page: @in_location.page) if Propert.ads_turn_on?
       .col-lg-4.col-md-4.col-sm-4.hidden-xs
-        = render "ad/after_summary_skyscraper_md" if Propert.ads_turn_on?
+        = render 'ad/rtb_block', code: 'after_summary_skyscraper_md' if Propert.ads_turn_on?
   .row
   - if @in_location.type == Objects::JOBS
     =render 'inc/btn/btn_new_resume_xs_sm'

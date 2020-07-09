@@ -107,5 +107,12 @@ a.update(price: {
     'RUB':  {price: 18},
 })
 =end
-Client.where(send_email: true).update_all(alert: true)
-Client.where(send_email: false).update_all(alert: false)
+
+Propert.create(code: "after_summary_md", name: "Рекламный блок fter_summary_md", value: 'R-A-599821-1')
+Propert.create(code: "after_summary_skyscraper_md", name: "Рекламный блок after_summary_skyscraper_md", value: 'R-A-599821-2')
+Propert.create(code: "before_ad_md", name: "Рекламный блок before_ad_md", value: 'R-A-599821-3')
+Propert.create(code: "before_similar_job_md", name: "Рекламный блок before_similar_job_md", value: 'R-A-599821-4')
+Propert.create(code: "before_ad_xs", name: "Рекламный блок before_ad_xs", value: 'R-A-599821-5')
+Propert.create(code: "main_page_afte_locations_md", name: "Рекламный блок main_page_afte_locations_md", value: 'R-A-599821-6')
+Propert.create(code: "after_logo_md", name: "Рекламный блок after_logo_md", value: 'R-A-599821-7')
+Propert.create(code: "before_similar_ads_xs", name: "Рекламный блок before_similar_ads_xs", value: 'R-A-599821-8')

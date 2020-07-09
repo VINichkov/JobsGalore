@@ -4,7 +4,7 @@
   .container
     .col-md-8.col-lg-8.col-sm-12.col-xs-12
       .hidden-xs
-        = render 'ad/before_ad_md' if Propert.ads_turn_on?
+        = render 'ad/rtb_block', code: 'before_ad_md' if Propert.ads_turn_on?
       .row.word_wrap
         h1.text-center
           = highlight(@job.title, Search.str_to_highlight(@query))
@@ -15,7 +15,7 @@
               = render 'inc/summary', object: @job
               p
           hr
-            = render 'ad/before_ad_xs' if Propert.ads_turn_on?
+            = render 'ad/rtb_block', code: "before_ad_xs" if Propert.ads_turn_on?
           - unless @job.deleted?
             = render 'inc/btn/btn_edit_xs_sm', object: @job, option: {cl: "dropdown", class: 'job', type: 2, show: true} if can? :destroy, @job
         p
@@ -25,9 +25,9 @@
           .text-center
             = social_button(@job)
       .hidden-sm.hidden-md.hidden-lg
-        = render 'ad/before_similar_ads_xs' if Propert.ads_turn_on?
+        = render 'ad/rtb_block', code: "before_similar_ads_xs" if Propert.ads_turn_on?
       .hidden-xs
-        = render 'ad/before_similar_job_md' if Propert.ads_turn_on?
+        = render 'ad/rtb_block', code: 'before_similar_job_md' if Propert.ads_turn_on?
       /= similar_vacancies(@job) TODO включить после партиционирования
       - unless @job.deleted?
         = render 'inc/btn/btn_apply_xs_sm', object: @job, option: {cl: "dropdown", class: 'job', type: 2, show: true} unless can? :destroy, @job
@@ -45,5 +45,5 @@
               = render 'inc/btn', object: @job, option: {class: 'job', type: 2, show: true}
             .text-center
               = social_button(@job)
-      = render 'ad/after_summary_md' if Propert.ads_turn_on?
+      = render 'ad/rtb_block', code: "after_summary_md" if Propert.ads_turn_on?
 = render 'jobs/show/inc/alert', job: @job, query: @query if !cookies[:alert] and !client_signed_in?

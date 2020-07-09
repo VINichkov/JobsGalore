@@ -3,13 +3,13 @@
   .container
     .hidden-sm.hidden-xs
       .col-md-8
-        = render 'ad/before_ad_md' if Propert.ads_turn_on?
+        = render 'ad/rtb_block', code: 'before_ad_md' if Propert.ads_turn_on?
         .row.well
           h1.text-center
             = highlight(@resume.title, Search.str_to_highlight(@query))
           p
             = highlight(@resume.render_description, Search.str_to_highlight(@query))
-        = render 'ad/before_similar_job_md' if Propert.ads_turn_on?
+        = render 'ad/rtb_block', code: 'before_similar_job_md' if Propert.ads_turn_on?
       .col-md-4
         .panel.panel-default
           .panel-body
@@ -29,14 +29,14 @@
                 /= render 'inc/btn', object: @resume, option: {class: 'resume', type: 3}
                 .text-center
                   = social_button_resume(@resume)
-        = render 'ad/after_summary_md' if Propert.ads_turn_on?
+        = render 'ad/rtb_block', code: "after_summary_md" if Propert.ads_turn_on?
     .hidden-md.hidden-lg
       .row
         .col-xs-12
           h3.text-center
             = highlight(@resume.title, Search.str_to_highlight(@query))
           = render 'inc/summary', object: @resume
-          = render 'ad/before_ad_xs' if Propert.ads_turn_on?
+          = render 'ad/rtb_block', code: "before_ad_xs" if Propert.ads_turn_on?
           p
           .btn-group.btn-group-justified
             = render 'inc/btn/btn_edit_xs_sm', object: @resume, option: {cl: "dropdown", class: 'resume', type: 3} if can? :destroy, @resume
