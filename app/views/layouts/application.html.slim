@@ -26,8 +26,8 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
     meta[name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"]
     meta[http-equiv="Content-Type" content="text/html; charset=utf-8"]
     meta[name="lang" content="en-US"]
-    meta[name="propeller" content="fa1434c0b3d2ac30c4d92e34bb49a61c"]
-    =render 'layouts/inc/js'
+    /meta[name="propeller" content="fa1434c0b3d2ac30c4d92e34bb49a61c"]
+    /=render 'layouts/inc/js'
     meta[name="description" content=yield_meta_tag("description", "JobsGalore is a job search aggregator in Australia. Find jobs and career related information. Find your dream job. Make job search easy with us!")]
     meta[name="keywords" content=yield_meta_tag("keywords","Jobs Galore, work, job, vacancy search, resume, jobs, Australia, vacancies, employment, looking for a job, search, seek, galore, money, solary, indeed, JobsGalore, jobs in university, post job free,  post jobs for free, look for job, seeking, job board")]
     = stylesheet_link_tag('application', media: :all)
@@ -43,11 +43,11 @@ html[lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"
       gtag('config', 'UA-102893446-1');
     /= javascript_include_tag('application', defer: true)
     /! HillTopAds
-    meta[name="hilltopads-site-verification" content="d3334fee16c11498d6cd421047d7ed7cda1494c1"]
+    //meta[name="hilltopads-site-verification" content="d3334fee16c11498d6cd421047d7ed7cda1494c1"]
     /! HillTopAds
     = csrf_meta_tags
   body
-    javascript:
+    //javascript:
         window.fbAsyncInit = function () {
             FB.init({
                 appId: '430364631037006',
