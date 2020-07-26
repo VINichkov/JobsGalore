@@ -8,7 +8,7 @@
                 Ya.Context.AdvManager.render({
                     blockId: "#{search_code}",
                     renderTo: ["yandex_direct_#{search_code}"],
-                    searchText: "#{query.present? ? query : 'jobs'} in #{location}",
+                    searchText: "#{query.present? ? query.gsub('develop', '') : 'jobs'}",
                     searchPageNumber: parseInt("#{page || 1}")
                 });
             });
