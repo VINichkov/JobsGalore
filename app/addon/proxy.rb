@@ -9,7 +9,7 @@ class Proxy
     while flag and i<9 do
       begin
         i +=1
-        uri = URI('https://cryptic-dusk-29836.herokuapp.com/open?' +arg.to_query)
+        uri = URI(' https://pacific-tundra-23056.herokuapp.com/open?' +arg.to_query)
         respond = Net::HTTP.get(uri).force_encoding('UTF-8')
         flag = false
       rescue
@@ -29,7 +29,7 @@ class Proxy
       while flag and i<3 do
         begin
           i +=1
-          uri = URI('https://cryptic-dusk-29836.herokuapp.com/redirect?' +arg.to_query)
+          uri = URI(' https://pacific-tundra-23056.herokuapp.com/redirect?' +arg.to_query)
           respond = Net::HTTP.get(uri).force_encoding('UTF-8')
           flag = false
         rescue
