@@ -6,7 +6,7 @@
           w[n] = w[n] || [];
           w[n].push(function () {
               Ya.Context.AdvManager.render({
-                  blockId: "yandex_direct_#{search_code}",
+                  blockId: "#{search_code}",
                   renderTo: "yandex_direct_#{search_code}",
                   searchText: "#{query.present? ? query.gsub('develop', '') : 'jobs'}",
                   searchPageNumber: parseInt("#{page || 1}")
