@@ -28,6 +28,7 @@ default: &default
 development:
   <<: *default
   database: mango_development
+  host: localhost
 
 
 
@@ -64,6 +65,7 @@ development:
 test:
   <<: *default
   database: mango_test
+  host: localhost
 
 
 # As with config/secrets.yml, you never want to store sensitive information,

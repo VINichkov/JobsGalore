@@ -27,7 +27,7 @@ namespace :integrate do
           URI.open(t[:server])
         end
       rescue
-        puts "Error in  opening server #{$!}"
+        puts "Error in opening server #{$!}"
         return
       end
     end

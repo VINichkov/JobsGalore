@@ -2,7 +2,7 @@ class ContactUsMailer < ApplicationMailer
 
   def send_mail(email)
     @email = email
-    mail(to:'v.nichkov@hotmail.com', subject: "Contact")
+    mail(to: PropertsHelper::ADMIN, subject: "Contact")
   end
 
   def send_to_customers(mail)
